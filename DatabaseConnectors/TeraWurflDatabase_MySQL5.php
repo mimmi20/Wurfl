@@ -19,7 +19,8 @@
  * @see TeraWurflDatabase_MySQL5_NestedSet
  * @see TeraWurflDatabase_MySQL5_Profiling
  */
-class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
+class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase
+{
 
 	// Properties
 	public $errors;
@@ -46,7 +47,8 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 	protected static $CACHE_STORAGE_ENGINE = "MyISAM";
 	protected static $PERSISTENT_CONNECTION = true;
 
-	public function __construct(){
+	public function __construct()
+    {
 		if(version_compare(PHP_VERSION,'5.3.0','>=') && self::$PERSISTENT_CONNECTION){
 			$this->hostPrefix = 'p:';
 		}
@@ -55,12 +57,14 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 	/**
 	 * Destructor, disconnect from database
 	 */
-	public function __destruct(){
+	public function __destruct()
+    {
 		@$this->dbcon->close();
 	}
 
 	// Device Table Functions (device,hybrid,patch)
-	public function getDeviceFromID($wurflID){
+	public function getDeviceFromID($wurflID)
+    {
 		$this->numQueries++;
 		$res = $this->dbcon->query("SELECT * FROM `".TeraWurflConfig::$TABLE_PREFIX.'Merge'."` WHERE `deviceID`=".$this->SQLPrep($wurflID)) or die($this->dbcon->error);
 		if($res->num_rows == 0){
@@ -71,7 +75,9 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 		$res->close();
 		return unserialize($data['capabilities']);
 	}
-	public function getActualDeviceAncestor($wurflID){
+    
+	public function getActualDeviceAncestor($wurflID)
+    {
 		if($wurflID == "" || $wurflID == WurflConstants::$GENERIC)
 		return WurflConstants::$GENERIC;
 		$device = $this->getDeviceFromID($wurflID);
@@ -81,7 +87,9 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 			return $this->getActualDeviceAncestor($device['fall_back']);
 		}
 	}
-	public function getFullDeviceList($tablename){
+    
+	public function getFullDeviceList($tablename)
+    {
 		$this->numQueries++;
 		$res = $this->dbcon->query("SELECT `deviceID`, `user_agent` FROM `$tablename` WHERE `match`=1");
 		if($res->num_rows == 0){
@@ -94,8 +102,10 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 		}
 		return $data;
 	}
+    
 	// Exact Match
-	public function getDeviceFromUA($userAgent){
+	public function getDeviceFromUA($userAgent)
+    {
 		$this->numQueries++;
 		$query = "SELECT `deviceID` FROM `".TeraWurflConfig::$TABLE_PREFIX.'Merge'."` WHERE `user_agent`=".$this->SQLPrep($userAgent);
 		$res = $this->dbcon->query($query);
@@ -107,8 +117,10 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 		$res->close();
 		return $data['deviceID'];
 	}
+    
 	// RIS == Reduction in String (reduce string one char at a time)
-	public function getDeviceFromUA_RIS($userAgent,$tolerance,UserAgentMatcher &$matcher){
+	public function getDeviceFromUA_RIS($userAgent,$tolerance,UserAgentMatcher &$matcher)
+    {
 		$this->numQueries++;
 		$query = sprintf("CALL ".TeraWurflConfig::$TABLE_PREFIX."_RIS(%s,%s,%s)",$this->SQLPrep($userAgent),$tolerance,$this->SQLPrep($matcher->tableSuffix()));
 		$res = $this->dbcon->query($query);
@@ -121,9 +133,11 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 		$wurflid = $data['DeviceID'];
 		return ($wurflid == 'NULL' || is_null($wurflid))? WurflConstants::$GENERIC: $wurflid;
 	}
+    
 	// TODO: Implement with Stored Proc
 	// LD == Levesthein Distance
-	public function getDeviceFromUA_LD($userAgent,$tolerance,UserAgentMatcher &$matcher){
+	public function getDeviceFromUA_LD($userAgent,$tolerance,UserAgentMatcher &$matcher)
+    {
 		throw new Exception("Error: this function (LD) is not yet implemented in MySQL");
 		$safe_ua = $this->SQLPrep($userAgent);
 		$this->numQueries++;
@@ -136,7 +150,9 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 		$this->cleanConnection();
 		return $data;
 	}
-	public function getDeviceFallBackTree($wurflID){
+    
+	public function getDeviceFallBackTree($wurflID)
+    {
 		if($this->use_nested_set){
 			return $this->getDeviceFallBackTree_NS($wurflID);
 		}
@@ -158,6 +174,7 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 		}
 		return $data;
 	}
+    
 	/**
 	 * Returns an Array containing the complete capabilities array for each
 	 * device in the fallback tree.  These arrays would need to be flattened
@@ -165,7 +182,8 @@ class TeraWurflDatabase_MySQL5 extends TeraWurflDatabase{
 	 * @param $wurflID
 	 * @return array array of the capabilities arrays for all the devices in the fallback tree 
 	 */
-	public function getDeviceFallBackTree_NS($wurflID){
+	public function getDeviceFallBackTree_NS($wurflID)
+    {
 		$data = array();
 		$this->numQueries++;
 		$query = sprintf("SELECT `data`.capabilities FROM %s AS node, %s AS parent
@@ -184,14 +202,18 @@ ORDER BY parent.`rt`",
 		}
 		return $data;
 	}
-	protected function cleanConnection(){
+    
+	protected function cleanConnection()
+    {
 		while($this->dbcon->more_results()){
 			$this->dbcon->next_result();
 			$res = $this->dbcon->use_result();
 			if ($res instanceof mysqli_result){$res->free();}
 		}
 	}
-	public function loadDevices(&$tables){
+    
+	public function loadDevices(&$tables)
+    {
 		$insert_errors = array();
 		$insertcache = array();
 		$insertedrows = 0;
@@ -260,13 +282,15 @@ ORDER BY parent.`rt`",
 		}
 		return true;
 	}
+    
 	/**
 	 * Drops and creates the given device table
 	 *
 	 * @param string Table name (ex: TeraWurflConfig::$HYBRID)
 	 * @return boolean success
 	 */
-	public function createGenericDeviceTable($tablename){
+	public function createGenericDeviceTable($tablename)
+    {
 		$droptable = "DROP TABLE IF EXISTS ".$tablename;
 		$createtable = "CREATE TABLE `".$tablename."` (
 			`deviceID` ".self::$WURFL_ID_COLUMN_TYPE."(".self::$WURFL_ID_MAX_LENGTH.") binary NOT NULL default '',
@@ -287,24 +311,28 @@ ORDER BY parent.`rt`",
 		$this->dbcon->query($createtable);
 		return true;
 	}
+    
 	/**
 	 * Drops then creates all the UserAgentMatcher device tables
 	 * @return boolean success
 	 */
-	protected function clearMatcherTables(){
+	protected function clearMatcherTables()
+    {
 		foreach(UserAgentFactory::$matchers as $matcher){
 			$table = TeraWurflConfig::$TABLE_PREFIX."_".$matcher;
 			$this->createGenericDeviceTable($table);
 		}
 		return true;
 	}
+    
 	/**
 	 * Drops and creates the MERGE table
 	 *
 	 * @param array Table names
 	 * @return boolean success
 	 */
-	public function createMergeTable($tables){
+	public function createMergeTable($tables)
+    {
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Merge';
 		foreach($tables as &$table){$table="SELECT * FROM `$table`";}
 		$droptable = "DROP TABLE IF EXISTS ".$tablename;
@@ -314,12 +342,14 @@ ORDER BY parent.`rt`",
 		$this->dbcon->query($createtable) or die("ERROR: ".$this->dbcon->error);
 		return true;
 	}
+    
 	/**
 	 * Drops and creates the index table
 	 *
 	 * @return boolean success
 	 */
-	public function createIndexTable(){
+	public function createIndexTable()
+    {
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Index';
 		$droptable = "DROP TABLE IF EXISTS ".$tablename;
 		$createtable = "CREATE TABLE `".$tablename."` (
@@ -333,11 +363,13 @@ ORDER BY parent.`rt`",
 		$this->dbcon->query($createtable);
 		return true;
 	}
+    
 	/**
 	 * Creates the settings table if it does not already exist
 	 * @return boolean success
 	 */
-	public function createSettingsTable(){
+	public function createSettingsTable()
+    {
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Settings';
 		$checktable = "SHOW TABLES LIKE '$tablename'";
 		$this->numQueries++;
@@ -355,7 +387,8 @@ ORDER BY parent.`rt`",
 	// Cache Table Functions
 
 	// should return (bool)false or the device array
-	public function getDeviceFromCache($userAgent){
+	public function getDeviceFromCache($userAgent)
+    {
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Cache';
 		$this->numQueries++;
 		$res = $this->dbcon->query("SELECT * FROM `$tablename` WHERE `user_agent`=".$this->SQLPrep($userAgent)) or die("Error: ".$this->dbcon->error);
@@ -369,7 +402,9 @@ ORDER BY parent.`rt`",
 		return unserialize($data['cache_data']);
 
 	}
-	public function saveDeviceInCache($userAgent,$device){
+    
+	public function saveDeviceInCache($userAgent,$device)
+    {
 		if(strlen($userAgent)==0) return true;
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Cache';
 		$ua = $this->SQLPrep($userAgent);
@@ -381,7 +416,9 @@ ORDER BY parent.`rt`",
 		}
 		return false;
 	}
-	public function createCacheTable(){
+    
+	public function createCacheTable()
+    {
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Cache';
 		$droptable = "DROP TABLE IF EXISTS `$tablename`";
 		$createtable = "CREATE TABLE `$tablename` (
@@ -395,7 +432,9 @@ ORDER BY parent.`rt`",
 		$this->dbcon->query($createtable);
 		return true;
 	}
-	public function createTempCacheTable(){
+    
+	public function createTempCacheTable()
+    {
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Cache'.self::$DB_TEMP_EXT;
 		$droptable = "DROP TABLE IF EXISTS `$tablename`";
 		$createtable = "CREATE TABLE `$tablename` (
@@ -409,7 +448,9 @@ ORDER BY parent.`rt`",
 		$this->dbcon->query($createtable);
 		return true;
 	}
-	public function rebuildCacheTable(){
+    
+	public function rebuildCacheTable()
+    {
 		// We'll use this instance to rebuild the cache and to facilitate logging
 		$rebuilder = new TeraWurfl();
 		$cachetable = TeraWurflConfig::$TABLE_PREFIX.'Cache';
@@ -457,14 +498,17 @@ ORDER BY parent.`rt`",
 	// Supporting DB Functions
 
 	// truncate or drop+create given table
-	public function clearTable($tablename){
+	public function clearTable($tablename)
+    {
 		if($tablename == TeraWurflConfig::$TABLE_PREFIX.'Cache'){
 			$this->createCacheTable();
 		}else{
 			$this->createGenericDeviceTable($tablename);
 		}
 	}
-	public function createProcedures(){
+    
+	public function createProcedures()
+    {
 		$TeraWurfl_RIS = "CREATE PROCEDURE `".TeraWurflConfig::$TABLE_PREFIX."_RIS`(IN ua VARCHAR(255), IN tolerance INT, IN matcher VARCHAR(64))
 BEGIN
 DECLARE curlen INT;
@@ -500,10 +544,12 @@ END";
 		$this->dbcon->query($TeraWurfl_FallBackDevices);
 		return true;
 	}
+    
 	/**
 	 * Establishes connection to database (does not check for DB sanity)
 	 */
-	public function connect(){
+	public function connect()
+    {
 		$this->numQueries++;
 		if(strpos(TeraWurflConfig::$DB_HOST,':')){
 			list($host,$port) = explode(':',TeraWurflConfig::$DB_HOST,2);
@@ -524,13 +570,17 @@ END";
 		$this->connected = true;
 		return true;
 	}
-	public function updateSetting($key,$value){
+    
+	public function updateSetting($key,$value)
+    {
 		$tablename = TeraWurflConfig::$TABLE_PREFIX.'Settings';
 		$query = sprintf("REPLACE INTO `%s` (`%s`, `%s`) VALUES (%s, %s)", $tablename, 'id', 'value', $this->SQLPrep($key), $this->SQLPrep($value));
 		$this->numQueries++;
 		$this->dbcon->query($query);
 	}
-	public function getSetting($key){
+    
+	public function getSetting($key)
+    {
 		$query = "SELECT `value` FROM `".TeraWurflConfig::$TABLE_PREFIX.'Settings'."` WHERE `id` = ".$this->SQLPrep($key);
 		$this->numQueries++;
 		$res = $this->dbcon->query($query);
@@ -538,27 +588,35 @@ END";
 		$row = $res->fetch_assoc();
 		return $row['value'];
 	}
+    
 	// prep raw text for use in queries (adding quotes if necessary)
-	public function SQLPrep($value){
+	public function SQLPrep($value)
+    {
 		if($value == '') $value = 'NULL';
 		else if (!is_numeric($value) || $value[0] == '0') $value = "'" . $this->dbcon->real_escape_string($value) . "'"; //Quote if not integer
 		return $value;
 	}
-	public function getTableList(){
+    
+	public function getTableList()
+    {
 		$tablesres = $this->dbcon->query("SHOW TABLES");
 		$tables = array();
 		while($table = $tablesres->fetch_row())$tables[]=$table[0];
 		$tablesres->close();
 		return $tables;
 	}
-	public function getMatcherTableList(){
+    
+	public function getMatcherTableList()
+    {
 		$tablesres = $this->dbcon->query("SHOW TABLES LIKE '".TeraWurflConfig::$TABLE_PREFIX."\\_%'");
 		$tables = array();
 		while($table = $tablesres->fetch_row())$tables[]=$table[0];
 		$tablesres->close();
 		return $tables;
 	}
-	public function getTableStats($table){
+    
+	public function getTableStats($table)
+    {
 		$stats = array();
 		$fields = array();
 		$fieldnames = array();
@@ -583,14 +641,18 @@ END";
 		}
 		return $stats;
 	}
-	public function getCachedUserAgents(){
+    
+	public function getCachedUserAgents()
+    {
 		$uas = array();
 		$cacheres = $this->dbcon->query("SELECT user_agent FROM ".TeraWurflConfig::$TABLE_PREFIX.'Cache'." ORDER BY user_agent");
 		while($ua = $cacheres->fetch_row())$uas[]=$ua[0];
 		$cacheres->close();
 		return $uas;
 	}
-	public function verifyConfig(){
+    
+	public function verifyConfig()
+    {
 		$errors = array();
 		$createProc = "CREATE PROCEDURE `".TeraWurflConfig::$TABLE_PREFIX."_TestProc`()
 BEGIN
@@ -606,7 +668,9 @@ END";
 		$this->dbcon->query("DROP PROCEDURE IF EXISTS `".TeraWurflConfig::$TABLE_PREFIX."_TestProc`");
 		return $errors;
 	}
-	public function getServerVersion(){
+    
+	public function getServerVersion()
+    {
 		$res = $this->dbcon->query("SELECT version() AS `version`");
 		if(!$res || $res->num_rows == 0) return false;
 		$row = $res->fetch_assoc();

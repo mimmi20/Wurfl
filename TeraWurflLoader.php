@@ -1,4 +1,6 @@
 <?php
+namespace TeraWurfl;
+
 /**
  * Tera_WURFL - PHP MySQL driven WURFL
  * 
@@ -56,7 +58,8 @@ class TeraWurflLoader{
 	protected $PRESERVE_CACHE = true;
 	
 	// Constructor
-	public function __construct(TeraWurfl &$wurfl){
+	public function __construct(TeraWurfl $wurfl)
+    {
 		$this->errors = array();
 		$this->wurfl = $wurfl;
 		$this->devices = array();
@@ -71,7 +74,8 @@ class TeraWurflLoader{
 	 * Loads the WURFL and patch files into the database
 	 * @return Bool Success
 	 */
-	public function load(){
+	public function load()
+    {
 		$this->wurfl->toLog("Loading WURFL",LOG_INFO);
 		if(!is_readable($this->file)){
 			$this->wurfl->toLog("The main WURFL file could not be opened: ".$this->file,LOG_ERROR);
@@ -112,7 +116,8 @@ class TeraWurflLoader{
 	 * Validates the data from the WURFL file or Patch file
 	 * @return Bool Vaild
 	 */
-	public function validate(){
+	public function validate()
+    {
 		$this->timevalidate = microtime(true);
 		$before_errors = count($this->errors);
 		foreach($this->devices as $id => &$device){
@@ -144,7 +149,8 @@ class TeraWurflLoader{
 	 * based on the UserAgentMatcher that matches the device's user agent
 	 * @return Bool Success
 	 */
-	public function sort(){
+	public function sort()
+    {
 		$this->timesort = microtime(true);
 		foreach($this->devices as $id => &$device){
 			// This will return something like "Nokia", "Motorola", or "CatchAll"
@@ -162,7 +168,8 @@ class TeraWurflLoader{
 	 * Loads the WURFL devices into the database.
 	 * @return Bool Completed without error
 	 */
-	public function loadIntoDB(){
+	public function loadIntoDB()
+    {
 		$this->timedatabase = microtime(true);
 		if($this->wurfl->db->loadDevices($this->tables)){
 			return true;
@@ -175,7 +182,8 @@ class TeraWurflLoader{
 	 * Loads the patch files from TeraWurflConfig::PATCH_FILE
 	 * @return Bool Success
 	 */
-	public function loadPatches(){
+	public function loadPatches()
+    {
 		if(!TeraWurflConfig::$PATCH_ENABLE) return true;
 		$this->timepatch = microtime(true);
 		// Explode the patchfile string into an array of patch files (normally just one file)
@@ -201,7 +209,8 @@ class TeraWurflLoader{
 		}
 		return true;
 	}
-	public function getParserName(){
+	public function getParserName()
+    {
 		return get_class(TeraWurflXMLParser::getInstance());
 	}
 
@@ -209,25 +218,32 @@ class TeraWurflLoader{
 	 * Get performance information
 	 * @return int Duration in seconds
 	 */
-	public function totalLoadTime(){
+	public function totalLoadTime()
+    {
 		return ($this->timeend - $this->timestart);
 	}
-	public function parseTime(){
+	public function parseTime()
+    {
 		return ($this->timepatch - $this->timestart);
 	}
-	public function patchTime(){
+	public function patchTime()
+    {
 		return ($this->timevalidate - $this->timepatch);
 	}
-	public function validateTime(){
+	public function validateTime()
+    {
 		return ($this->timesort - $this->timevalidate);
 	}
-	public function sortTime(){
+	public function sortTime()
+    {
 		return ($this->timedatabase - $this->timesort);
 	}
-	public function databaseTime(){
+	public function databaseTime()
+    {
 		return ($this->timecache - $this->timedatabase);
 	}
-	public function cacheRebuildTime(){
+	public function cacheRebuildTime()
+    {
 		return ($this->timeend - $this->timecache);
 	}
 	/**#@-*/
@@ -237,7 +253,8 @@ class TeraWurflLoader{
 	 * @param String WURFL ID
 	 * @return Bool
 	 */
-	protected function validID($id){
+	protected function validID($id)
+    {
 		if(strlen($id)==0) return false;
 		return array_key_exists($id,$this->devices);
 	}

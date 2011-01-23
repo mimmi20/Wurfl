@@ -17,7 +17,8 @@
  * @package TeraWurflUtils
  * 
  */
-class TeraWurflDeviceImage {
+class TeraWurflDeviceImage 
+{
 	
 	protected $baseURL;
 	protected $imagesDirectory;
@@ -32,7 +33,8 @@ class TeraWurflDeviceImage {
 	 * @param TeraWurfl The instance of TeraWurfl (or TeraWurflRemoteClient) that detected the device
 	 * @return void
 	 */
-	public function __construct(&$wurfl){
+	public function __construct(TeraWurfl\TeraWurfl $wurfl)
+    {
 		$this->wurfl = $wurfl;
 		$this->deviceID = ($this->wurfl->getDeviceCapability('actual_root_device'))? $this->wurfl->getDeviceCapability('actual_root_device'): false;
 		$this->baseURL = '';
@@ -44,7 +46,8 @@ class TeraWurflDeviceImage {
 	 * @param string Web-accessible location of the device images  (e.g. "http://domain.com/device_pix/" or "../device_pix/")
 	 * @return void
 	 */
-	public function setBaseURL($baseURL){
+	public function setBaseURL($baseURL)
+    {
 		$this->baseURL = $baseURL;
 	}
 	/**
@@ -52,7 +55,8 @@ class TeraWurflDeviceImage {
 	 * @param string Local filesystem directory where the device images are located (e.g. "C:/device_pix/" or "../../device_pix/")
 	 * @return void
 	 */
-	public function setImagesDirectory($dir){
+	public function setImagesDirectory($dir)
+    {
 		$this->imagesDirectory = $dir;
 	}
 	/**
@@ -60,7 +64,8 @@ class TeraWurflDeviceImage {
 	 * otherwise returns only the filename (apple_iphone_ver1.gif)
 	 * @return string Device image filename
 	 */
-	public function getImage(){
+	public function getImage()
+    {
 		if(is_null($this->image)) $this->setImage();
 		return $this->image;
 	}
@@ -70,14 +75,16 @@ class TeraWurflDeviceImage {
 	 * @param bool false prevents using the device image from a different version of the device
 	 * @return void
 	 */
-	public function setDescendToFindImage($descend){
+	public function setDescendToFindImage($descend)
+    {
 		$this->descend = (bool)$descend;
 	}
 	/**
 	 * Sets the internal $this->image var with the complete path to the device image
 	 * @return void
 	 */
-	protected function setImage(){
+	protected function setImage()
+    {
 		if($this->deviceID === false){
 			$this->image = null;
 			return;
@@ -114,10 +121,13 @@ class TeraWurflDeviceImage {
 	 * @param string Device ID (WURFL ID)
 	 * @return bool Device image exists
 	 */
-	protected function imageExists($deviceID){
+	protected function imageExists($deviceID)
+    {
 		return file_exists(realpath($this->imagesDirectory) . DIRECTORY_SEPARATOR . $deviceID . $this->imageExt);
 	}
-	public function __toString(){
+    
+	public function __toString()
+    {
 		return $this->getImage();
 	}
 }

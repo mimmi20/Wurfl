@@ -1,4 +1,6 @@
 <?php
+namespace TeraWurfl;
+
 /**
  * Tera_WURFL - PHP MySQL driven WURFL
  * 
