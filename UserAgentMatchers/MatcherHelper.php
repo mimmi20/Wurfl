@@ -18,31 +18,14 @@ namespace TeraWurfl\UserAgentMatchers;
  * An abstract class that all UserAgentMatchers must extend.
  * @package TeraWurflUserAgentMatchers
  */
-abstract class MatcherHelper
+class MatcherHelper
 {
-	/**
-	 * @var TeraWurfl Running instance of Tera-WURFL
-	 */
-	protected $wurfl = null;
+    private $_userAgent = '';
     
-    protected $userAgent = '';
-    
-	/**
-	 * WURFL IDs that are hardcoded in this connector.  Used for compatibility testing against new WURFLs
-	 * @var array
-	 */
-	public static $constantIDs = array();
-    
-	/**
-	 * @var Array List of WURFL IDs => User Agents.  Typically used for matching user agents.
-	 */
-	public $deviceList;
-	
-	public function __construct(TeraWurfl\TeraWurfl $wurfl, $userAgent = '')
+    public function __construct($userAgent = '')
     {
-		$this->wurfl     = $wurfl;
-        $this->userAgent = $userAgent;
-	}
+        $this->_userAgent = $userAgent;
+    }
     
     /**
      * Check if user agent contains target string
@@ -52,17 +35,19 @@ abstract class MatcherHelper
      */
     public function contains($find)
     {
-    	if (is_array($find)) {
-    		foreach ($find as $part) {
+        if (is_array($find)) {
+            foreach ($find as $part) {
                 if ($this->contains($part)) {
-    				return true;
-    			}
-    		}
+                    return true;
+                }
+            }
             
-    		return false;
-    	} else {
-	    	return (strpos($this->userAgent, $find) !== false);
-    	}
+            return false;
+        } elseif ('' != $find) {
+            return (strpos($this->_userAgent, $find) !== false);
+        }
+        
+        return false;
     }
     
     /**
@@ -73,17 +58,19 @@ abstract class MatcherHelper
      */
     public function startsWith($find)
     {
-    	if (is_array($find)) {
-    		foreach ($find as $part) {
-    			if ($this->startsWith($part)) {
-    				return true;
-    			}
-    		}
+        if (is_array($find)) {
+            foreach ($find as $part) {
+                if ($this->startsWith($part)) {
+                    return true;
+                }
+            }
             
-    		return false;
-    	} else {
-	    	return (strpos($this->userAgent, $find)===0);
-    	}
+            return false;
+        } elseif ('' != $find) {
+            return (strpos($this->_userAgent, $find)===0);
+        }
+        
+        return false;
     }
     
     /**
@@ -94,61 +81,63 @@ abstract class MatcherHelper
      */
     public function regexContains($find)
     {
-	    if (is_array($find)) {
-    		foreach ($find as $part) {
-    			if ($this->regexContains($part)) {
-    				return true;
-    			}
-    		}
+        if (is_array($find)) {
+            foreach ($find as $part) {
+                if ($this->regexContains($part)) {
+                    return true;
+                }
+            }
             
-    		return false;
-    	}else{
-	    	return (preg_match($find, $this->userAgent));
-    	}
+            return false;
+        } elseif ('' != $find) {
+            return (preg_match($find, $this->_userAgent));
+        }
+        
+        return false;
     }
     
-	/**
-	 * The character position of the first slash.  If there are no slashes, returns string length
-	 * @param String User Agent
-	 * @return int Character position
-	 */
-	protected function firstSlash()
+    /**
+     * The character position of the first slash.  If there are no slashes, returns string length
+     * @param String User Agent
+     * @return int Character position
+     */
+    public function firstSlash()
     {
-		return $this->searchInAgent('/');
-	}
+        return $this->searchInAgent('/');
+    }
     
-	/**
-	 * The character position of the second slash.  If there is no second slash, returns string length
-	 * @param String User Agent
-	 * @return int Character position
-	 */
-	protected function secondSlash()
+    /**
+     * The character position of the second slash.  If there is no second slash, returns string length
+     * @param String User Agent
+     * @return int Character position
+     */
+    protected function secondSlash()
     {
-		$first = strpos($this->userAgent, '/');
-		$first++;
-		$position = strpos($this->userAgent, '/', $first);
-		return ($position !== false) ? $position : strlen($this->userAgent);
-	}
+        $first = strpos($this->_userAgent, '/');
+        $first++;
+        $position = strpos($this->_userAgent, '/', $first);
+        return ($position !== false) ? $position : strlen($this->_userAgent);
+    }
     
-	/**
-	 * The character position of the first open parenthisis.  If there are no open parenthisis, returns string length
-	 * @param String User Agent
-	 * @return int Character position
-	 */
-	protected function firstOpenParen()
+    /**
+     * The character position of the first open parenthisis.  If there are no open parenthisis, returns string length
+     * @param String User Agent
+     * @return int Character position
+     */
+    protected function firstOpenParen()
     {
-		return $this->searchInAgent('(');
-	}
+        return $this->searchInAgent('(');
+    }
     
-	/**
-	 * Number of slashes ('/') found in the given user agent
-	 * @param String User Agent
-	 * @return int Count
-	 */
-	protected function numSlashes()
+    /**
+     * Number of slashes ('/') found in the given user agent
+     * @param String User Agent
+     * @return int Count
+     */
+    protected function numSlashes()
     {
-		return substr_count($this->userAgent, '/');
-	}
+        return substr_count($this->_userAgent, '/');
+    }
     
     /**
      * Returns the character position (index) of the target string in the given user agent, starting from a given index.  If target is not in user agent, returns length of user agent.
@@ -157,35 +146,35 @@ abstract class MatcherHelper
      * @param int Character postition in the user agent at which to start looking for the target
      * @return int Character position (index) or user agent length
      */
-	protected function indexOfOrLength($target, $startingIndex) 
+    protected function indexOfOrLength($target, $startingIndex) 
     {
-		$length = strlen($this->userAgent);
+        $length = strlen($this->_userAgent);
         
-		if ($startingIndex === false) {
-			return $length;
-		}
-		$pos = strpos($this->userAgent, $target, $startingIndex);
-		return ($pos === false) ? $length : $pos;
-	}
+        if ($startingIndex === false) {
+            return $length;
+        }
+        $pos = strpos($this->_userAgent, $target, $startingIndex);
+        return ($pos === false) ? $length : $pos;
+    }
     
-	/**
-	 * The character position of the first space.  If there are no spaces, returns string length
-	 * @param String User Agent
-	 * @return int Character position
-	 */
-	protected function firstSpace()
+    /**
+     * The character position of the first space.  If there are no spaces, returns string length
+     * @param String User Agent
+     * @return int Character position
+     */
+    protected function firstSpace()
     {
-		return $this->searchInAgent(' ');
-	}
+        return $this->searchInAgent(' ');
+    }
     
-	/**
-	 * The character position of the first space.  If there are no spaces, returns string length
-	 * @param String User Agent
-	 * @return int Character position
-	 */
-	protected function searchInAgent($search)
+    /**
+     * The character position of the first space.  If there are no spaces, returns string length
+     * @param String User Agent
+     * @return int Character position
+     */
+    protected function searchInAgent($search)
     {
-		$position = strpos($this->userAgent, $search);
-		return ($position !== false) ? $position : strlen($this->userAgent);
-	}
+        $position = strpos($this->_userAgent, $search);
+        return ($position !== false) ? $position : strlen($this->_userAgent);
+    }
 }

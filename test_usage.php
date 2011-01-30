@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'iso-8859-1');
+namespace TeraWurfl;
+
 /**
  * Tera_WURFL - PHP MySQL driven WURFL
  * 

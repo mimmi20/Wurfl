@@ -20,44 +20,44 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Msie extends AbstractMatcher 
 {
-	public static $constantIDs = array("msie","msie_4","msie_5","msie_5_5","msie_6","msie_7","msie_8");
-	
-	public function applyConclusiveMatch() 
-    {
-		$matches = array();
-        
-		if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE (\d)\.(\d);/', $ua, $matches)) {
-			switch($matches[1]){
-				// cases are intentionally out of sequnce for performance
-				case 7:
-					return 'msie_7';
-					break;
-				case 8:
-					return 'msie_8';
-					break;
-				case 6:
-					return 'msie_6';
-					break;
-				case 4:
-					return 'msie_4';
-					break;
-				case 5:
-					return ($matches[2] == 5)? 'msie_5_5': 'msie_5';
-					break;
-				default:
-					return 'msie';
-					break;
-			}
-		}
-        
-		$ua = preg_replace('/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/','',$ua);
-		
-		return parent::applyConclusiveMatch($ua);
-	}
+    public static $constantIDs = array("msie","msie_4","msie_5","msie_5_5","msie_6","msie_7","msie_8");
     
-	public function recoveryMatch()
+    public function applyConclusiveMatch() 
     {
-		if (
+        $matches = array();
+        
+        if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE (\d)\.(\d);/', $ua, $matches)) {
+            switch($matches[1]){
+                // cases are intentionally out of sequnce for performance
+                case 7:
+                    return 'msie_7';
+                    break;
+                case 8:
+                    return 'msie_8';
+                    break;
+                case 6:
+                    return 'msie_6';
+                    break;
+                case 4:
+                    return 'msie_4';
+                    break;
+                case 5:
+                    return ($matches[2] == 5)? 'msie_5_5': 'msie_5';
+                    break;
+                default:
+                    return 'msie';
+                    break;
+            }
+        }
+        
+        $ua = preg_replace('/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/','',$ua);
+        
+        return parent::applyConclusiveMatch($ua);
+    }
+    
+    public function recoveryMatch()
+    {
+        if (
             $this->helper->contains(
                 $ua, 
                 array(
@@ -68,9 +68,9 @@ class Msie extends AbstractMatcher
                 ) 
             )
         ) {
-			return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
-		}
+            return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+        }
         
-		return TeraWurfl\Constants::GENERIC;
-	}
+        return TeraWurfl\Constants::GENERIC;
+    }
 }

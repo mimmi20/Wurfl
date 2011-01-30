@@ -20,17 +20,17 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Chrome extends AbstractMatcher 
 {
-	
-	public static $constantIDs = array("google_chrome");
-	
-	public function applyConclusiveMatch() 
-    {
-		$tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Chrome'));
-		return $this->risMatch($ua, $tolerance);
-	}
     
-	public function recoveryMatch()
+    public static $constantIDs = array("google_chrome");
+    
+    public function applyConclusiveMatch() 
     {
-		return 'google_chrome';
-	}
+        $tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Chrome'));
+        return $this->risMatch($ua, $tolerance);
+    }
+    
+    public function recoveryMatch()
+    {
+        return 'google_chrome';
+    }
 }

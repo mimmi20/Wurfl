@@ -51,8 +51,8 @@ INSTALLATION
 
 CONFIGURATION FILE
 3. Edit the TeraWurflConfig.php file.  Each setting is described in comments.
-	The only thing you NEED to modify is the database info (user, pass, db, etc)
-	NOTE: if you are using MySQL 4, you must set DB_CONNECTOR to MySQL4
+    The only thing you NEED to modify is the database info (user, pass, db, etc)
+    NOTE: if you are using MySQL 4, you must set DB_CONNECTOR to MySQL4
 
 FILE PERMISSIONS
 4. By default, the DATADIR is set to "data/".  This directory holds the
@@ -151,7 +151,7 @@ $wurflObj->getDeviceCapabilitiesFromAgent();
 
 // see if this client is on a wireless device (or if they can't be identified)
 if(!$wurflObj->getDeviceCapability("is_wireless_device")){
-	echo "<h2>You should not be here</h2>";
+    echo "<h2>You should not be here</h2>";
 }
 
 // see what this device's preferred markup language is

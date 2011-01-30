@@ -20,33 +20,33 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Motorola extends AbstractMatcher 
 {
-	
-	public static $constantIDs = array('mot_mib22_generic');
-	
-	public function applyConclusiveMatch($ua) 
+    
+    public static $constantIDs = array('mot_mib22_generic');
+    
+    public function applyConclusiveMatch($ua) 
     {
-		$tolerance = 5;
-		
-		if ($this->helper->startsWith($ua, "Mot-") 
+        $tolerance = 5;
+        
+        if ($this->helper->startsWith($ua, "Mot-") 
             || $this->helper->startsWith($ua, "MOT-") 
             || $this->helper->startsWith($ua, "Motorola")
         ) {
-			$deviceId = $this->risMatch($ua, $tolerance);
-			return $deviceId;
-		}
+            $deviceId = $this->risMatch($ua, $tolerance);
+            return $deviceId;
+        }
         
-		$deviceId = $this->ldMatch($ua, $tolerance);
-		return $deviceId;
-	}
+        $deviceId = $this->ldMatch($ua, $tolerance);
+        return $deviceId;
+    }
     
-	public function recoveryMatch($ua)
+    public function recoveryMatch($ua)
     {
-		if ($this->helper->contains($ua, 'MIB/2.2') 
+        if ($this->helper->contains($ua, 'MIB/2.2') 
             || $this->helper->contains($ua, 'MIB/BER2.2')
         ) {
-			return 'mot_mib22_generic';
-		}
+            return 'mot_mib22_generic';
+        }
         
-		return TeraWurfl\Constants::GENERIC;
-	}
+        return TeraWurfl\Constants::GENERIC;
+    }
 }

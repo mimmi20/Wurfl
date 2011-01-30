@@ -20,35 +20,35 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class OperaMini extends AbstractMatcher 
 {
-	
-	public static $constantIDs = array(
-		"browser_opera_mini_release1",
-		"browser_opera_mini_release2",
-		"browser_opera_mini_release3",
-		"browser_opera_mini_release4",
-		"browser_opera_mini_release4"
-	);
     
-	public function recoveryMatch()
+    public static $constantIDs = array(
+        "browser_opera_mini_release1",
+        "browser_opera_mini_release2",
+        "browser_opera_mini_release3",
+        "browser_opera_mini_release4",
+        "browser_opera_mini_release4"
+    );
+    
+    public function recoveryMatch()
     {
         if ($this->helper->contains("Opera Mini/1")) {
-    		return "browser_opera_mini_release1";
-    	}
-		if ($this->helper->contains("Opera Mini/2")) {
-    		return "browser_opera_mini_release2";
-    	}
-		if ($this->helper->contains("Opera Mini/3")) {
-    		return "browser_opera_mini_release3";
-    	}
-		if ($this->helper->contains("Opera Mini/4")) {
-    		return "browser_opera_mini_release4";
-    	}
-		if ($this->helper->contains("Opera Mini/5")) {
-    		return "browser_opera_mini_release5";
-    	}
-		if ($this->helper->contains("Opera Mobi")) {
-    		return "browser_opera_mini_release4";
-    	}
-		return "browser_opera_mini_release1";
-	}
+            return "browser_opera_mini_release1";
+        }
+        if ($this->helper->contains("Opera Mini/2")) {
+            return "browser_opera_mini_release2";
+        }
+        if ($this->helper->contains("Opera Mini/3")) {
+            return "browser_opera_mini_release3";
+        }
+        if ($this->helper->contains("Opera Mini/4")) {
+            return "browser_opera_mini_release4";
+        }
+        if ($this->helper->contains("Opera Mini/5")) {
+            return "browser_opera_mini_release5";
+        }
+        if ($this->helper->contains("Opera Mobi")) {
+            return "browser_opera_mini_release4";
+        }
+        return "browser_opera_mini_release1";
+    }
 }

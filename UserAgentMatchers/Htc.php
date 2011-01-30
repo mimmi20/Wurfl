@@ -20,8 +20,8 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Htc extends AbstractMatcher 
 {
-	public function recoveryMatch()
+    public function recoveryMatch()
     {
-		return $this->risMatch($ua, 6);
-	}
+        return $this->risMatch($ua, 6);
+    }
 }

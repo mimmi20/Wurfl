@@ -20,23 +20,23 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class BlackBerry extends AbstractMatcher 
 {
-	public static $constantIDs = array(
-		'blackberry_generic_ver2',
-		'blackberry_generic_ver3_sub2',
-		'blackberry_generic_ver3_sub30',
-		'blackberry_generic_ver3_sub50',
-		'blackberry_generic_ver3_sub60',
-		'blackberry_generic_ver3_sub70',
-		'blackberry_generic_ver4',
-	);
-	
-	public function applyConclusiveMatch($ua)
-    {
-		$ua = $this->_cleanUa($ua);
-		return parent::applyConclusiveMatch($ua);
-	}
+    public static $constantIDs = array(
+        'blackberry_generic_ver2',
+        'blackberry_generic_ver3_sub2',
+        'blackberry_generic_ver3_sub30',
+        'blackberry_generic_ver3_sub50',
+        'blackberry_generic_ver3_sub60',
+        'blackberry_generic_ver3_sub70',
+        'blackberry_generic_ver4',
+    );
     
-	public function recoveryMatch($ua)
+    public function applyConclusiveMatch($ua)
+    {
+        $ua = $this->_cleanUa($ua);
+        return parent::applyConclusiveMatch($ua);
+    }
+    
+    public function recoveryMatch($ua)
     {
         // BlackBerry
         $ua = $this->_cleanUa($ua);

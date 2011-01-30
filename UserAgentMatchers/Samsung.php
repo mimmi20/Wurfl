@@ -20,26 +20,26 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Samsung extends AbstractMatcher 
 {
-	public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($ua) 
     {
-		if ($this->helper->startsWith(array("SAMSUNG-", "SEC-", "SCH"))) {
-			$tolerance = $this->helper->firstSlash();
-		} elseif ($this->helper->startsWith("Samsung") || $this->helper->startsWith("SPH") || $this->helper->startsWith("SGH")) {
-			$tolerance = $this->helper->firstSpace();
-		} else {
-			$tolerance = $this->helper->secondSlash();
-		}
-		return $this->risMatch($ua, $tolerance);
-	}
+        if ($this->helper->startsWith(array("SAMSUNG-", "SEC-", "SCH"))) {
+            $tolerance = $this->helper->firstSlash();
+        } elseif ($this->helper->startsWith("Samsung") || $this->helper->startsWith("SPH") || $this->helper->startsWith("SGH")) {
+            $tolerance = $this->helper->firstSpace();
+        } else {
+            $tolerance = $this->helper->secondSlash();
+        }
+        return $this->risMatch($ua, $tolerance);
+    }
     
-	public function recoveryMatch($ua)
+    public function recoveryMatch($ua)
     {
-		if ($this->helper->startsWith("SAMSUNG")) {
-			$tolerance = 8;
-			return $this->ldMatch($ua,$tolerance);
-		} else {
-			$tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Samsung'));
-			return $this->risMatch($ua, $tolerance);
-		}
-	}
+        if ($this->helper->startsWith("SAMSUNG")) {
+            $tolerance = 8;
+            return $this->ldMatch($ua,$tolerance);
+        } else {
+            $tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Samsung'));
+            return $this->risMatch($ua, $tolerance);
+        }
+    }
 }

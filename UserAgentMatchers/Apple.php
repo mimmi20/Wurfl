@@ -20,31 +20,31 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Apple extends AbstractMatcher 
 {
-	public static $constantIDs = array("apple_ipod_touch_ver1","apple_ipad_ver1","apple_iphone_ver1");
-	
-	public function applyConclusiveMatch() 
-    {
-		$deviceId  = '';
-		$tolerance = $this->helper->indexOfOrLength(';', 0);
-		$deviceId  = $this->helper->risMatch($tolerance);
-        
-		return $deviceId;
-	}
+    public static $constantIDs = array("apple_ipod_touch_ver1","apple_ipad_ver1","apple_iphone_ver1");
     
-	public function recoveryMatch()
+    public function applyConclusiveMatch() 
     {
-		if ($this->helper->contains('iPod')) {
+        $deviceId  = '';
+        $tolerance = $this->helper->indexOfOrLength(';', 0);
+        $deviceId  = $this->helper->risMatch($tolerance);
+        
+        return $deviceId;
+    }
+    
+    public function recoveryMatch()
+    {
+        if ($this->helper->contains('iPod')) {
             return 'apple_ipod_touch_ver1';
         }
         
-		if ($this->helper->contains('iPad')) {
+        if ($this->helper->contains('iPad')) {
             return 'apple_ipad_ver1';
         }
         
-		if ($this->helper->contains("iPhone")) {
+        if ($this->helper->contains("iPhone")) {
             return 'apple_iphone_ver1';
         }
         
-		return TeraWurfl\Constants::GENERIC;
-	}
+        return TeraWurfl\Constants::GENERIC;
+    }
 }

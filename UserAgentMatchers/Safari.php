@@ -20,13 +20,13 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Safari extends AbstractMatcher 
 {
-	public function recoveryMatch($ua)
+    public function recoveryMatch($ua)
     {
         if ($this->helper->contains($ua, "Macintosh") 
             || $this->helper->contains($ua, "Windows")
         ) {
-        	return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+            return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
         }
         return TeraWurfl\Constants::GENERIC;
-	}
+    }
 }

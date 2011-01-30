@@ -5,9 +5,9 @@
 <title>Tera-WURFL Remote Client</title>
 <style type="text/css">
 .error {
-	color: #D00;
-	font-weight: bold;
-	padding-left: 10px;
+    color: #D00;
+    font-weight: bold;
+    padding-left: 10px;
 }
 </style>
 <script src="TeraWurflRemoteClient.js"></script>
@@ -20,44 +20,44 @@
 var webserviceURL = 'http://localhost/Tera-Wurfl/webservice.php';
 
 function callTeraWurfl(){
-	document.getElementById('result').innerHTML = "Loading...";
-	document.getElementById('device_model').innerHTML = "&nbsp";
+    document.getElementById('result').innerHTML = "Loading...";
+    document.getElementById('device_model').innerHTML = "&nbsp";
 
-	// The user agent you are looking for.  In Javascript this is 'navigator.userAgent' for the client
-	var userAgent = document.getElementById('user_agent').value;
-	// The capabilities you are looking for, in an array, example: search = ['product_info','tera_wurfl','playback'];
-	var search = document.getElementById('capabilities').value.split('|');
-	// Create new TeraWurfl Object
-	wurflObj = new TeraWurflRemoteClient(webserviceURL);
-	// Define callback option
-	wurflObj.onUpdate = handleResults;
-	// Call Tera-WURFL via the webservice
-	wurflObj.getCapabilitiesFromAgent(userAgent,search);
-	return false;
+    // The user agent you are looking for.  In Javascript this is 'navigator.userAgent' for the client
+    var userAgent = document.getElementById('user_agent').value;
+    // The capabilities you are looking for, in an array, example: search = ['product_info','tera_wurfl','playback'];
+    var search = document.getElementById('capabilities').value.split('|');
+    // Create new TeraWurfl Object
+    wurflObj = new TeraWurflRemoteClient(webserviceURL);
+    // Define callback option
+    wurflObj.onUpdate = handleResults;
+    // Call Tera-WURFL via the webservice
+    wurflObj.getCapabilitiesFromAgent(userAgent,search);
+    return false;
 }
 
 // This is the callback function that I've specified above; yours needs to receive 2 arrays like this one:
 function handleResults(capabilities,errors){
-	// Clear results
-	document.getElementById('result').innerHTML = "&nbsp;";
-	// Check for Errors
-	if(errors.length > 0){
-		errorstring = '<div class="error">The following errors were encountered:<br/>';
-		for (var i=0; i<errors.length;i++) {
-			// Display errors
-			errorstring += errors[i].name + ': ' +  errors[i].description + '<br/>';
-		}
-		errorstring += '</div>';
-		document.getElementById('result').innerHTML += errorstring;
-	}
-	// Display model name
-	document.getElementById('device_model').innerHTML += "<h3>"+capabilities['brand_name']+" "+capabilities['model_name']+" "+capabilities['marketing_name']+"</h3>";
-	// Display all capabilities.  Access individual capabilities like this: capabilities.is_wireless_device **OR** capabilities['is_wireless_device']
-	for (var name in capabilities) {
-		if (name != "length") {
-			document.getElementById('result').innerHTML += "<br/>"+name+": "+capabilities[name];
-		}
-	}
+    // Clear results
+    document.getElementById('result').innerHTML = "&nbsp;";
+    // Check for Errors
+    if(errors.length > 0){
+        errorstring = '<div class="error">The following errors were encountered:<br/>';
+        for (var i=0; i<errors.length;i++) {
+            // Display errors
+            errorstring += errors[i].name + ': ' +  errors[i].description + '<br/>';
+        }
+        errorstring += '</div>';
+        document.getElementById('result').innerHTML += errorstring;
+    }
+    // Display model name
+    document.getElementById('device_model').innerHTML += "<h3>"+capabilities['brand_name']+" "+capabilities['model_name']+" "+capabilities['marketing_name']+"</h3>";
+    // Display all capabilities.  Access individual capabilities like this: capabilities.is_wireless_device **OR** capabilities['is_wireless_device']
+    for (var name in capabilities) {
+        if (name != "length") {
+            document.getElementById('result').innerHTML += "<br/>"+name+": "+capabilities[name];
+        }
+    }
 }
  
 </script>

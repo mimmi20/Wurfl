@@ -20,25 +20,25 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Nokia extends AbstractMatcher 
 {
-	
-	public static $constantIDs = array("nokia_generic_series60","nokia_generic_series80");
-	
-	public function applyConclusiveMatch() 
-    {
-		$tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Nokia'));
-		return $this->risMatch($ua, $tolerance);
-	}
     
-	public function recoveryMatch()
+    public static $constantIDs = array("nokia_generic_series60","nokia_generic_series80");
+    
+    public function applyConclusiveMatch() 
     {
-		if ($this->helper->contains("Series60")) {
-			return "nokia_generic_series60";
+        $tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Nokia'));
+        return $this->risMatch($ua, $tolerance);
+    }
+    
+    public function recoveryMatch()
+    {
+        if ($this->helper->contains("Series60")) {
+            return "nokia_generic_series60";
         }
         
-		if ($this->helper->contains("Series80")) {
-			return "nokia_generic_series80";
+        if ($this->helper->contains("Series80")) {
+            return "nokia_generic_series80";
         }
         
-		return TeraWurfl\Constants::GENERIC;
-	}
+        return TeraWurfl\Constants::GENERIC;
+    }
 }

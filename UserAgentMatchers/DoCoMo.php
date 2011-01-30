@@ -20,29 +20,29 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class DoCoMo extends AbstractMatcher 
 {
-	
-	public static $constantIDs = array("docomo_generic_jap_ver2","docomo_generic_jap_ver1");
-	
-	public function applyConclusiveMatch() 
-    {
-		$deviceId = '';
-        
-		if ($this->helper->numSlashes() >= 2) {
-			$tolerance = $this->helper->secondSlash();
-		} else {
-			//  DoCoMo/2.0 F01A(c100;TB;W24H17)
-			$tolerance = $this->helper->firstOpenParen();
-		}
-		
-		$deviceId = $this->risMatch($ua, $tolerance);
-		return $deviceId;
-	}
     
-	public function recoveryMatch()
+    public static $constantIDs = array("docomo_generic_jap_ver2","docomo_generic_jap_ver1");
+    
+    public function applyConclusiveMatch() 
     {
-		$versionIndex = 7;
-		$version      = $ua[$versionIndex];
-		return ($version == '2') ? "docomo_generic_jap_ver2" : "docomo_generic_jap_ver1";
-	}
+        $deviceId = '';
+        
+        if ($this->helper->numSlashes() >= 2) {
+            $tolerance = $this->helper->secondSlash();
+        } else {
+            //  DoCoMo/2.0 F01A(c100;TB;W24H17)
+            $tolerance = $this->helper->firstOpenParen();
+        }
+        
+        $deviceId = $this->risMatch($ua, $tolerance);
+        return $deviceId;
+    }
+    
+    public function recoveryMatch()
+    {
+        $versionIndex = 7;
+        $version      = $ua[$versionIndex];
+        return ($version == '2') ? "docomo_generic_jap_ver2" : "docomo_generic_jap_ver1";
+    }
 }
 

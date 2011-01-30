@@ -20,22 +20,22 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Kddi extends AbstractMatcher 
 {
-	
-	public static $constantIDs = array('opwv_v62_generic');
-	
-	public function applyConclusiveMatch() 
-    {
-		if ($this->helper->startsWith('KDDI/')) {
-			$tolerance = $this->helper->secondSlash();
-		} else {
-			$tolerance = $this->helper->firstSlash();
-		}
-		
-		return $this->risMatch($ua, $tolerance);
-	}
     
-	public function recoveryMatch($ua)
+    public static $constantIDs = array('opwv_v62_generic');
+    
+    public function applyConclusiveMatch() 
     {
-		return "opwv_v62_generic";
-	}
+        if ($this->helper->startsWith('KDDI/')) {
+            $tolerance = $this->helper->secondSlash();
+        } else {
+            $tolerance = $this->helper->firstSlash();
+        }
+        
+        return $this->risMatch($ua, $tolerance);
+    }
+    
+    public function recoveryMatch($ua)
+    {
+        return "opwv_v62_generic";
+    }
 }

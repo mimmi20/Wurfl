@@ -20,20 +20,20 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Lg extends AbstractMatcher 
 {
-	public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($ua) 
     {
-		if ($this->helper->startsWith('LGE/')) {
-			$tolerance = $this->secondSlash();
-		} else {
-			$tolerance = $this->firstSlash();
-		}
+        if ($this->helper->startsWith('LGE/')) {
+            $tolerance = $this->secondSlash();
+        } else {
+            $tolerance = $this->firstSlash();
+        }
         
         return $this->risMatch($ua, $tolerance);
-	}
+    }
     
-	public function recoveryMatch()
+    public function recoveryMatch()
     {
-		$tolerance = 7;
-		return $this->risMatch($ua, $tolerance);
-	}
+        $tolerance = 7;
+        return $this->risMatch($ua, $tolerance);
+    }
 }

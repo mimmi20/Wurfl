@@ -20,45 +20,45 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class SimpleDesktop extends AbstractMatcher 
 {
-	public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch() 
     {
-		return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
-	}
+        return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+    }
     
-	/**
-	 * Is the given user agent very likely to be a desktop browser
-	 * @param String User agent
-	 * @return Bool
-	 */
-	public static function isDesktopBrowser($ua)
+    /**
+     * Is the given user agent very likely to be a desktop browser
+     * @param String User agent
+     * @return Bool
+     */
+    public function isDesktopBrowser()
     {
-		if (TeraWurfl\UserAgentUtils::isMobileBrowser($ua)) {
+        if (\TeraWurfl\UserAgentUtils::isMobileBrowser($this->userAgent)) {
             return false;
         }
         
-		if($this->contains($ua, array(
-			'HTC', // HTC; horrible user agents, especially with Opera
-			'PPC', // PowerPC; not always mobile, but we'll kick it out of SimpleDesktop and match it in the WURFL DB
-			'Nintendo' // too hard to distinguish from Opera
-		))) return false;
-		// Firefox
-		if($this->helper->contains($ua,"Firefox") && !$this->helper->contains($ua,'Tablet')) return true;
-		if(UserAgentUtils::isDesktopBrowser($ua)) return true;
-		if($this->helper->startsWith($ua,'Opera/')) return true;
-		if($this->helper->regexContains($ua, array(
-//			// Opera
-//			'/Opera\/\d/',
-			// Internet Explorer
-			'/^Mozilla\/4\.0 \(compatible; MSIE \d.\d; Windows NT \d.\d/'
-		))) return true;
-		if($this->helper->contains($ua,array(
-			"Chrome",
-			"yahoo.com",
-			"google.com",
-			"Comcast"
-		))){
-			return true;
-		}
-		return false;
-	}
+        if($this->helper->contains(array(
+            'HTC', // HTC; horrible user agents, especially with Opera
+            'PPC', // PowerPC; not always mobile, but we'll kick it out of SimpleDesktop and match it in the WURFL DB
+            'Nintendo' // too hard to distinguish from Opera
+        ))) return false;
+        // Firefox
+        if($this->helper->contains("Firefox") && !$this->helper->contains($this->userAgent,'Tablet')) return true;
+        if(\TeraWurfl\UserAgentUtils::isDesktopBrowser($this->userAgent)) return true;
+        if($this->helper->startsWith('Opera/')) return true;
+        if($this->helper->regexContains(array(
+//            // Opera
+//            '/Opera\/\d/',
+            // Internet Explorer
+            '/^Mozilla\/4\.0 \(compatible; MSIE \d.\d; Windows NT \d.\d/'
+        ))) return true;
+        if($this->helper->contains(array(
+            "Chrome",
+            "yahoo.com",
+            "google.com",
+            "Comcast"
+        ))){
+            return true;
+        }
+        return false;
+    }
 }

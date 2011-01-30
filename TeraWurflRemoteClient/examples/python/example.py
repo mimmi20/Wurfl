@@ -36,4 +36,4 @@ capabilities = properties["capabilities"]
  
 print "Response from Tera-WURFL " + properties['apiVersion'];
 for name, value in capabilities.items():
-	print "%s: %s" % (name, value)
+    print "%s: %s" % (name, value)

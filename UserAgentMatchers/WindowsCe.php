@@ -20,18 +20,18 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class WindowsCEUserAgentMatcher extends AbstractMatcher 
 {
-	
-	public static $constantIDs = array("generic_ms_mobile_browser_ver1");
-	
-	public function applyConclusiveMatch($ua) 
-    {
-		$tolerance = 3;
-		
-		return $this->ldMatch($ua, $tolerance);
-	}
     
-	public function recoveryMatch($ua)
+    public static $constantIDs = array("generic_ms_mobile_browser_ver1");
+    
+    public function applyConclusiveMatch($ua) 
     {
-		return "generic_ms_mobile_browser_ver1";
-	}
+        $tolerance = 3;
+        
+        return $this->ldMatch($ua, $tolerance);
+    }
+    
+    public function recoveryMatch($ua)
+    {
+        return "generic_ms_mobile_browser_ver1";
+    }
 }

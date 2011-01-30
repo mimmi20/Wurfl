@@ -20,13 +20,13 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Nec extends AbstractMatcher 
 {
-	public function applyConclusiveMatch() 
+    public function applyConclusiveMatch() 
     {
-		if ($this->helper->startsWith('NEC')) {
-			return parent::applyConclusiveMatch();
-		}
+        if ($this->helper->startsWith('NEC')) {
+            return parent::applyConclusiveMatch();
+        }
         
-		$tolerance = 2;
-		return $this->ldMatch($ua, $tolerance);
-	}
+        $tolerance = 2;
+        return $this->ldMatch($ua, $tolerance);
+    }
 }

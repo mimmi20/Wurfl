@@ -20,32 +20,32 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Vodafone extends UserAgentMatcher 
 {
-	public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($ua) 
     {
-		$clean_ua = $ua;
-		if($this->contains($ua,"/SN") && !$this->contains($ua,"XXXXXXXXXXXX")){
-			//not using RegEx for the time being
-			$start_idx = strpos($ua,"/SN")+3;
-			$sub_str = substr($ua,$start_idx);
-			$end_idx = strpos($sub_str," ");
-			if($end_idx !== false && $sub_str != "" && strlen($sub_str) > $end_idx){
-				$num_digits = strlen($sub_str) - $end_idx;
-				$new_ua = substr($ua,0,$start_idx);
-				for($i=0;$i<$end_idx;$i++){
-					$new_ua .= "X";
-				}
-				$new_ua .= substr($ua,$end_idx);
-				$clean_ua = $new_ua;
-			}
-		}
-		
-		$tolerance = $this->firstSlash($clean_ua);
-		//$this->wurfl->toLog("Applying ".get_class($this)." Conclusive Match: RIS with threshold $tolerance",LOG_INFO);
-		$match = $this->risMatch($clean_ua, $tolerance);
-		if($match == TeraWurfl\Constants::GENERIC){
-			//$this->wurfl->toLog("Applying ".get_class($this)." Conclusive Match: LD",LOG_INFO);
-			return $this->ldMatch($ua);
-		}
-		return $match;
-	}
+        $clean_ua = $ua;
+        if($this->contains($ua,"/SN") && !$this->contains($ua,"XXXXXXXXXXXX")){
+            //not using RegEx for the time being
+            $start_idx = strpos($ua,"/SN")+3;
+            $sub_str = substr($ua,$start_idx);
+            $end_idx = strpos($sub_str," ");
+            if($end_idx !== false && $sub_str != "" && strlen($sub_str) > $end_idx){
+                $num_digits = strlen($sub_str) - $end_idx;
+                $new_ua = substr($ua,0,$start_idx);
+                for($i=0;$i<$end_idx;$i++){
+                    $new_ua .= "X";
+                }
+                $new_ua .= substr($ua,$end_idx);
+                $clean_ua = $new_ua;
+            }
+        }
+        
+        $tolerance = $this->firstSlash($clean_ua);
+        //$this->wurfl->toLog("Applying ".get_class($this)." Conclusive Match: RIS with threshold $tolerance",LOG_INFO);
+        $match = $this->risMatch($clean_ua, $tolerance);
+        if($match == TeraWurfl\Constants::GENERIC){
+            //$this->wurfl->toLog("Applying ".get_class($this)." Conclusive Match: LD",LOG_INFO);
+            return $this->ldMatch($ua);
+        }
+        return $match;
+    }
 }

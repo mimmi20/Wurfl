@@ -15,18 +15,18 @@
 
 btnDetect.addEventListener(MouseEvent.CLICK,startDetection);
 function startDetection(event:Event):void {
-	var xml:XML;
-	 
-	var urlRequest:URLRequest = new URLRequest("http://localhost/Tera-Wurfl/webservice.php?ua=" + escape(txtUA.text) + "&search=" + txtCapabilities.text);
-	 
-	var urlLoader:URLLoader = new URLLoader();
-	urlLoader.addEventListener(Event.COMPLETE, urlLoader_complete);
-	urlLoader.load(urlRequest);
+    var xml:XML;
+     
+    var urlRequest:URLRequest = new URLRequest("http://localhost/Tera-Wurfl/webservice.php?ua=" + escape(txtUA.text) + "&search=" + txtCapabilities.text);
+     
+    var urlLoader:URLLoader = new URLLoader();
+    urlLoader.addEventListener(Event.COMPLETE, urlLoader_complete);
+    urlLoader.load(urlRequest);
 }
 function urlLoader_complete(evt:Event):void {
-	txtResult.text = 'Result:\n';
+    txtResult.text = 'Result:\n';
     var xml = new XML(evt.currentTarget.data);
-	for each( var i:Object in xml..capability){
-		txtResult.appendText(i.@name + ": " + i.@value + "\n");
-	}
+    for each( var i:Object in xml..capability){
+        txtResult.appendText(i.@name + ": " + i.@value + "\n");
+    }
 }

@@ -20,5 +20,5 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Qtek extends AbstractMatcher 
 {
-	//
+    //
 }

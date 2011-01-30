@@ -20,9 +20,9 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Mitsubishi extends AbstractMatcher 
 {
-	public function applyConclusiveMatch() 
+    public function applyConclusiveMatch() 
     {
-		$tolerance = $this->helper->firstSpace();
-		return $this->risMatch($ua, $tolerance);
-	}
+        $tolerance = $this->helper->firstSpace();
+        return $this->risMatch($ua, $tolerance);
+    }
 }

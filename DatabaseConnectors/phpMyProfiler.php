@@ -7,7 +7,7 @@
  * Originally downloaded from http://www.php-trivandrum.org/open-php-myprofiler/
  */
 class phpMyProfiler{
-	
+    
     private $link;
     private $error;
     private $log;
@@ -20,9 +20,9 @@ class phpMyProfiler{
     }
 
     function setLink(&$link){
-		$this->link = $link;
-		$this->stopProfiling();
-		$this->startProfiling();
+        $this->link = $link;
+        $this->stopProfiling();
+        $this->startProfiling();
     }
 
     function __destruct(){
@@ -34,7 +34,7 @@ class phpMyProfiler{
         $res = $this->link->query("show variables like 'profiling'");
         $row = $res->fetch_assoc();
         if($row['Value'] == "OFF"){
-        	throw new Exception("Cannot enable profiling in MySQL!");
+            throw new Exception("Cannot enable profiling in MySQL!");
         }
     }
     private function stopProfiling(){
@@ -44,14 +44,14 @@ class phpMyProfiler{
     private function collectData(){
         $rv = array();
         $rs = $this->link->query('show profiles') or die("Error: ".$this->link->error);
-   		if($rs->num_rows == 0) return;
+           if($rs->num_rows == 0) return;
         while($rd = $rs->fetch_assoc()){
             if($rd['Query_ID'] == 0) continue;
             if($detail = $this->getDetails($rd['Query_ID']))
                 $rd['detail'] = $detail;
             $rv[] = $rd;
         }
-		$rs->free_result();
+        $rs->free_result();
         return $rv;
     }
     
@@ -62,8 +62,8 @@ class phpMyProfiler{
                 . 'from information_schema.profiling '
                 . 'where query_id = ' . $qid
                 . ' group by state order by seq') or die($this->link->error);
-		    if($rsd->num_rows == 0) return;
-		    $rsv = array();
+            if($rsd->num_rows == 0) return;
+            $rsv = array();
             while($rdd = $rsd->fetch_assoc()){
                 $rsv[] = $rdd;
             }
@@ -72,21 +72,21 @@ class phpMyProfiler{
     
     public function log(){
         if(!$this->link or !$this->log){
-        	return;
+            return;
         }
         $this->stopProfiling();
         $logFile = $this->log . $_SERVER['HTTP_HOST'] .'-' . date('Ymd-G') . '.log';
-    	if(!file_exists($logFile)){
+        if(!file_exists($logFile)){
             file_put_contents($logFile, '#PhpMyProfiler' . "\n");
         }
         $data['instance'] = array('timestamp' => time(), 'request' => $_SERVER['REQUEST_URI' ]);
-	//ob_start();
+    //ob_start();
         $data['profiles'] = $this->collectData();
         //die(var_export($data,true));
-	//ob_get_clean();
+    //ob_get_clean();
         if(empty($data['profiles']) or count($data['profiles']) == 0){
-        	touch($this->log.'NOPROFILE');
-        	return;
+            touch($this->log.'NOPROFILE');
+            return;
         }
         $logData = base64_encode(gzcompress(serialize($data))) . "\n";
         file_put_contents($logFile, $logData, FILE_APPEND | LOCK_EX);

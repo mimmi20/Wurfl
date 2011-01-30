@@ -17,9 +17,9 @@ $time = round(microtime(true)-$start,6);
 echo "<h3>Response from Tera-WURFL ".$wurflObj->getAPIVersion()."</h3>";
 echo "<pre>".var_export($wurflObj->capabilities,true)."</pre>";
 if($wurflObj->errors){
-	foreach($wurflObj->errors as $name => $error){
-		echo "$name: $error<br/>";
-	}
+    foreach($wurflObj->errors as $name => $error){
+        echo "$name: $error<br/>";
+    }
 }
 echo "<hr/>Total Time: $time";
 ?>

@@ -26,22 +26,22 @@ require_once realpath(dirname(__FILE__).'/phpMyProfiler.php');
  * @package TeraWurflDatabase
  */
 class TeraWurflDatabase_MySQL5_Profiling extends TeraWurflDatabase_MySQL5{
-	protected $profiler;
-	/**
-	 * The path and file prefix to use for storing MySQL Query Profiles
-	 * @var string
-	 */
-	protected $profile_log = "/tmp/TeraWurflProfile-";
-	/**
-	 * Establishes connection to database (does not check for DB sanity)
-	 */
-	public function connect(){
-		parent::connect();
-		$this->profiler = new phpMyProfiler($this->dbcon,$this->profile_log);
-	}
-	public function getDeviceFromUA_RIS($userAgent,$tolerance,UserAgentMatcher &$matcher){
-		$return = parent::getDeviceFromUA_RIS($userAgent,$tolerance,$matcher);
-		$this->profiler->log();
-		return $return;
-	}
+    protected $profiler;
+    /**
+     * The path and file prefix to use for storing MySQL Query Profiles
+     * @var string
+     */
+    protected $profile_log = "/tmp/TeraWurflProfile-";
+    /**
+     * Establishes connection to database (does not check for DB sanity)
+     */
+    public function connect(){
+        parent::connect();
+        $this->profiler = new phpMyProfiler($this->dbcon,$this->profile_log);
+    }
+    public function getDeviceFromUA_RIS($userAgent,$tolerance,UserAgentMatcher &$matcher){
+        $return = parent::getDeviceFromUA_RIS($userAgent,$tolerance,$matcher);
+        $this->profiler->log();
+        return $return;
+    }
 }

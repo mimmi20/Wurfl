@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'iso-8859-1');
+namespace TeraWurfl;
+
 /**
  * Tera_WURFL - PHP MySQL driven WURFL
  * 
@@ -14,7 +17,7 @@
  *
  */
 if (!isset($_GET['force_ua'])) {
-	$_GET['force_ua'] = 'SonyEricssonK700i/R2AC SEMC-Browser/4.0.2 Profile/MIDP-2.0 Configuration/CLDC-1.1';
+    $_GET['force_ua'] = 'SonyEricssonK700i/R2AC SEMC-Browser/4.0.2 Profile/MIDP-2.0 Configuration/CLDC-1.1';
 }
 ?>
 <form action="check_wurfl.php" method="GET">

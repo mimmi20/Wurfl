@@ -20,28 +20,28 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Nintendo extends AbstractMatcher 
 {
-	public static $constantIDs = array("nintendo_wii_browser","nintendo_dsi_ver1","nintendo_ds_ver1");
-	
-	public function applyConclusiveMatch() 
-    {
-		return $this->ldMatch($ua);
-	}
+    public static $constantIDs = array("nintendo_wii_browser","nintendo_dsi_ver1","nintendo_ds_ver1");
     
-	public function recoveryMatch()
+    public function applyConclusiveMatch() 
     {
-		if ($this->helper->contains("Nintendo Wii")) {
-			return "nintendo_wii_browser";
-		}
-		if ($this->helper->contains("Nintendo DSi")) {
-			return "nintendo_dsi_ver1";
-		}
-		if ($this->helper->startsWith('Mozilla/') 
+        return $this->ldMatch($ua);
+    }
+    
+    public function recoveryMatch()
+    {
+        if ($this->helper->contains("Nintendo Wii")) {
+            return "nintendo_wii_browser";
+        }
+        if ($this->helper->contains("Nintendo DSi")) {
+            return "nintendo_dsi_ver1";
+        }
+        if ($this->helper->startsWith('Mozilla/') 
             && $this->helper->contains('Nitro') 
             && $this->helper->contains('Opera')
         ) {
-			return "nintendo_ds_ver1";
-		}
+            return "nintendo_ds_ver1";
+        }
         
-		return "nintendo_wii_browser";
-	}
+        return "nintendo_wii_browser";
+    }
 }

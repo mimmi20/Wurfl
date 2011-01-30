@@ -24,5 +24,5 @@ require_once realpath(dirname(__FILE__).'/TeraWurflDatabase_MySQL5.php');
  * @package TeraWurflDatabase
  */
 class TeraWurflDatabase_MySQL5_NestedSet extends TeraWurflDatabase_MySQL5{
-	public $use_nested_set = true;
+    public $use_nested_set = true;
 }

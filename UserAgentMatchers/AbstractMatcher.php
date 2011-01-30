@@ -20,44 +20,44 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 abstract class AbstractMatcher
 {
-	/**
-	 * @var TeraWurfl Running instance of Tera-WURFL
-	 */
-	protected $wurfl = null;
+    /**
+     * @var TeraWurfl Running instance of Tera-WURFL
+     */
+    protected $wurfl = null;
     
     protected $userAgent = '';
     
     protected $helper = null;
     
-	/**
-	 * WURFL IDs that are hardcoded in this connector.  Used for compatibility testing against new WURFLs
-	 * @var array
-	 */
-	public static $constantIDs = array();
+    /**
+     * WURFL IDs that are hardcoded in this connector.  Used for compatibility testing against new WURFLs
+     * @var array
+     */
+    public static $constantIDs = array();
     
-	/**
-	 * @var Array List of WURFL IDs => User Agents.  Typically used for matching user agents.
-	 */
-	public $deviceList;
-	
-	public function __construct(TeraWurfl\TeraWurfl $wurfl, $userAgent = '')
+    /**
+     * @var Array List of WURFL IDs => User Agents.  Typically used for matching user agents.
+     */
+    public $deviceList = array();
+    
+    public function __construct(\TeraWurfl\TeraWurfl $wurfl, $userAgent = '')
     {
-		$this->wurfl     = $wurfl;
+        $this->wurfl     = $wurfl;
         $this->userAgent = $userAgent;
         
-        $this->helper = new MatcherHelper($wurfl, $userAgent);
-	}
-	
+        $this->helper = new MatcherHelper($userAgent);
+    }
+    
     /**
      * Attempts to find a conclusively matching WURFL ID from a given user agent
      * @param String User agent
      * @return String Matching WURFL ID
      */
-	public function applyConclusiveMatch() 
+    public function applyConclusiveMatch() 
     {
-		$tolerance = $this->firstSlash();
-		return $this->risMatch($tolerance);
-	}
+        $tolerance = $this->firstSlash();
+        return $this->risMatch($tolerance);
+    }
     
     /**
      * Attempts to find a loosely matching WURFL ID from a given user agent
@@ -85,8 +85,11 @@ abstract class AbstractMatcher
      */
     protected function updateDeviceList()
     {
-    	if(is_array($this->deviceList) && count($this->deviceList)>0) return;
-    	$this->deviceList = $this->wurfl->db->getFullDeviceList($this->wurfl->fullTableName());
+        if(is_array($this->deviceList) && count($this->deviceList) > 0) {
+            return;
+        }
+        
+        $this->deviceList = array();//$this->wurfl->db->getFullDeviceList($this->wurfl->fullTableName());
     }
     
     /**
@@ -97,11 +100,13 @@ abstract class AbstractMatcher
      */
     public function risMatch($tolerance)
     {
-    	if($this->wurfl->db->db_implements_ris){
-    		return $this->wurfl->db->getDeviceFromUA_RIS($this->userAgent, $tolerance, $this);
-    	}
-    	$this->updateDeviceList();
-    	return UserAgentUtils::risMatch($this->userAgent,$tolerance,$this);
+        /*
+        if($this->wurfl->db->db_implements_ris){
+            return $this->wurfl->db->getDeviceFromUA_RIS($this->userAgent, $tolerance, $this);
+        }
+        */
+        $this->updateDeviceList();
+        return \TeraWurfl\UserAgentUtils::risMatch($this->userAgent,$tolerance,$this);
     }
     
     /**
@@ -112,11 +117,11 @@ abstract class AbstractMatcher
      */
     public function ldMatch($tolerance=null)
     {
-    	if($this->wurfl->db->db_implements_ld){
-    		return $this->wurfl->db->getDeviceFromUA_LD($this->userAgent,$tolerance,$this);
-    	}
-    	$this->updateDeviceList();
-    	return UserAgentUtils::ldMatch($this->userAgent, $tolerance, $this);
+        if($this->wurfl->db->db_implements_ld){
+            return $this->wurfl->db->getDeviceFromUA_LD($this->userAgent,$tolerance,$this);
+        }
+        $this->updateDeviceList();
+        return \TeraWurfl\UserAgentUtils::ldMatch($this->userAgent, $tolerance, $this);
     }
     
     /**
@@ -125,7 +130,7 @@ abstract class AbstractMatcher
      */
     public function matcherName()
     {
-    	return get_class($this);
+        return get_class($this);
     }
     
     /**
@@ -134,7 +139,7 @@ abstract class AbstractMatcher
      */
     public function tableSuffix()
     {
-    	$cname = $this->matcherName();
-    	return substr($cname, 0, strpos($cname, 'UserAgentMatcher'));
+        $cname = $this->matcherName();
+        return substr($cname, 0, strpos($cname, 'UserAgentMatcher'));
     }
 }

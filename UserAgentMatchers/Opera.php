@@ -20,27 +20,27 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Opera extends AbstractMatcher 
 {
-	public static $constantIDs = array("opera","opera_7","opera_8","opera_9","opera_10");
-	
-	public function applyConclusiveMatch() 
+    public static $constantIDs = array("opera","opera_7","opera_8","opera_9","opera_10");
+    
+    public function applyConclusiveMatch() 
     {
         if ($this->helper->contains("Opera/10")) {
-			return "opera_10";
-		} elseif ($this->helper->contains("Opera/9")) {
-			return "opera_9";
-		} elseif ($this->helper->contains("Opera/8")) {
-			return "opera_8";
-		} elseif ($this->helper->contains("Opera/7")) {
-			return "opera_7";
-		}
+            return "opera_10";
+        } elseif ($this->helper->contains("Opera/9")) {
+            return "opera_9";
+        } elseif ($this->helper->contains("Opera/8")) {
+            return "opera_8";
+        } elseif ($this->helper->contains("Opera/7")) {
+            return "opera_7";
+        }
         
-		$tolerance = 5;
-		
+        $tolerance = 5;
+        
         return $this->ldMatch($ua, $tolerance);
-	}
+    }
     
-	public function recoveryMatch()
+    public function recoveryMatch()
     {
-			return "opera";
-	}
+            return "opera";
+    }
 }

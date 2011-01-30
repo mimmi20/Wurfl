@@ -20,9 +20,9 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Bot extends AbstractMatcher 
 {
-	public function recoveryMatch($ua)
+    public function recoveryMatch($ua)
     {
-		//TODO: add more logic here
-		return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
-	}
+        //TODO: add more logic here
+        return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+    }
 }

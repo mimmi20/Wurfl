@@ -20,13 +20,13 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Pantech extends AbstractMatcher 
 {
-	public function applyConclusiveMatch() 
+    public function applyConclusiveMatch() 
     {
-		if ($this->helper->startsWith('pantech')) {
-			$tolerance = 5;
-			return $this->ldMatch($ua, $tolerance);
-		}
+        if ($this->helper->startsWith('pantech')) {
+            $tolerance = 5;
+            return $this->ldMatch($ua, $tolerance);
+        }
         
-		return parent::applyConclusiveMatch();
-	}
+        return parent::applyConclusiveMatch();
+    }
 }

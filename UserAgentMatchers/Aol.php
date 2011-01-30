@@ -20,9 +20,9 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Aol extends AbstractMatcher 
 {
-	public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($ua) 
     {
-		// I refuse to spend an extra microsecond thinking about AOL!
-		return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
-	}
+        // I refuse to spend an extra microsecond thinking about AOL!
+        return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+    }
 }
