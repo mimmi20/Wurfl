@@ -89,7 +89,7 @@ class TeraWurflWebservice {
     
     public function __construct($userAgent,$searchPhrase,$data_format='xml',$teraWurflInstance=null){
         set_exception_handler(array($this,'__handleExceptions'));
-        require_once realpath(dirname(__FILE__).'/TeraWurfl.php');
+        require_once realpath(__DIR__.'/TeraWurfl.php');
         $this->format = $data_format;
         $this->userAgent = $userAgent;
         if(!is_null($teraWurflInstance)){
@@ -333,7 +333,7 @@ class TeraWurflWebservice {
             $_SERVER['REMOTE_ADDR'],
             $this->userAgent
         )."\n";
-        $path = is_null($this->access_log_path)? dirname(__FILE__).'/'.TeraWurflConfig::$DATADIR: $this->access_log_path.'/';
+        $path = is_null($this->access_log_path)? __DIR__.'/'.TeraWurflConfig::$DATADIR: $this->access_log_path.'/';
         $logfile = $path.$this->access_log_filename;
         @file_put_contents($logfile,$_textToLog,FILE_APPEND);
     }
@@ -357,7 +357,7 @@ class TeraWurflWebservice {
             $warn_banner = '';
         }
         $_textToLog = date('r')." [".php_uname('n')." ".getmypid()."]"."[$func] ".$warn_banner . $text . "\n";
-        $path = is_null($this->access_log_path)? dirname(__FILE__).'/'.TeraWurflConfig::$DATADIR: $this->access_log_path.'/';
+        $path = is_null($this->access_log_path)? __DIR__.'/'.TeraWurflConfig::$DATADIR: $this->access_log_path.'/';
         $logfile = $path.$this->error_log_filename;
         @file_put_contents($logfile,$_textToLog,FILE_APPEND);
     }

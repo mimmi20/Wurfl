@@ -12,7 +12,7 @@
  * @version Stable 2.1.3 $Date: 2010/09/18 15:43:21
  * @license http://www.mozilla.org/MPL/ MPL Vesion 1.1
  */
-require_once realpath(dirname(__FILE__).'/../TeraWurfl.php');
+require_once realpath(__DIR__.'/../TeraWurfl.php');
 error_reporting(E_ERROR);
 @$tw = new TeraWurfl();
 

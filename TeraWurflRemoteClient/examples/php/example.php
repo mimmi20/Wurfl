@@ -7,7 +7,7 @@
 <body>
 <?php
 $start = microtime(true);
-require_once realpath(dirname(__FILE__).'/../../TeraWurflRemoteClient.php');
+require_once realpath(__DIR__.'/../../TeraWurflRemoteClient.php');
 $wurflObj = new TeraWurflRemoteClient('http://localhost/Tera-Wurfl/webservice.php');
 $capabilities = array("product_info","fake_capability");
 // NOTE: You must use $FORMAT_XML to communicate with Tera-WURFL 2.1.1 and earlier!

@@ -15,11 +15,11 @@
 /**
  * Include required files
  */
-require_once realpath(dirname(__FILE__).'/../TeraWurfl.php');
-require_once realpath(dirname(__FILE__).'/../TeraWurflLoader.php');
-require_once realpath(dirname(__FILE__).'/../TeraWurflXMLParsers/TeraWurflXMLParser.php');
-require_once realpath(dirname(__FILE__).'/../TeraWurflXMLParsers/TeraWurflXMLParser_XMLReader.php');
-require_once realpath(dirname(__FILE__).'/../TeraWurflXMLParsers/TeraWurflXMLParser_SimpleXML.php');
+require_once realpath(__DIR__.'/../TeraWurfl.php');
+require_once realpath(__DIR__.'/../TeraWurflLoader.php');
+require_once realpath(__DIR__.'/../TeraWurflXMLParsers/TeraWurflXMLParser.php');
+require_once realpath(__DIR__.'/../TeraWurflXMLParsers/TeraWurflXMLParser_XMLReader.php');
+require_once realpath(__DIR__.'/../TeraWurflXMLParsers/TeraWurflXMLParser_SimpleXML.php');
 
 error_reporting(E_ALL);
 if(TeraWurflConfig::$OVERRIDE_MEMORY_LIMIT) ini_set("memory_limit",TeraWurflConfig::$MEMORY_LIMIT);

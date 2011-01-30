@@ -38,7 +38,7 @@ class TeraWurflDeviceImage
         $this->wurfl = $wurfl;
         $this->deviceID = ($this->wurfl->getDeviceCapability('actual_root_device'))? $this->wurfl->getDeviceCapability('actual_root_device'): false;
         $this->baseURL = '';
-        $this->imagesDirectory = dirname(__FILE__) . '/device_pix/';
+        $this->imagesDirectory = __DIR__ . '/device_pix/';
     }
     /**
      * Sets the base URL of the device images

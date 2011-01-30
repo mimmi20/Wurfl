@@ -40,7 +40,7 @@ list($usec, $sec) = explode(" ", microtime());
 $start = ((float)$usec + (float)$sec); 
 
 // Include the Tera-WURFL file
-require_once realpath(dirname(__FILE__).'/TeraWurfl.php');
+require_once realpath(__DIR__.'/TeraWurfl.php');
 
 list($usec, $sec) = explode(" ", microtime());
 $load_class = ((float)$usec + (float)$sec); 

@@ -274,7 +274,7 @@ ORDER BY parent.`rt`",
         // Create Merge Table
         $this->createMergeTable(array_keys($tables));
         if($this->use_nested_set){
-            require_once realpath(dirname(__FILE__).'/TeraWurflMySQLNestedSet.php');
+            require_once realpath(__DIR__.'/TeraWurflMySQLNestedSet.php');
             $nest = new TeraWurflMySQLNestedSet($this->dbcon,'TeraWurflMerge','TeraWurflIndex','deviceID','fall_back','lt','rt');
             $nest->generateNestedSet('generic');
             $this->numQueries += $nest->numQueries;

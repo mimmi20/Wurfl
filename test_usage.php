@@ -16,7 +16,7 @@ namespace TeraWurfl;
  * @license http://www.mozilla.org/MPL/ MPL Vesion 1.1
  */
 // Include the Tera-WURFL file
-require_once realpath(dirname(__FILE__).'/TeraWurfl.php');
+require_once realpath(__DIR__.'/TeraWurfl.php');
 // Instantiate the Tera-WURFL object
 $wurflObj = new TeraWurfl();
 // Get the capabilities from the object

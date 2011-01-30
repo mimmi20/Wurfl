@@ -78,7 +78,7 @@ namespace TeraWurfl;
  * echo "<pre>".htmlspecialchars(var_export($webservice->getXMLResponse(),true))."</pre>";
  * </code>
  */
-require_once realpath(dirname(__FILE__).'/./TeraWurflWebservice.php');
+require_once realpath(__DIR__.'/./TeraWurflWebservice.php');
 $userAgent = array_key_exists('ua',$_REQUEST)? $_REQUEST['ua']: null;
 $searchPhrase = array_key_exists('search',$_REQUEST)? $_REQUEST['search']: null;
 $data_format = (array_key_exists('format',$_REQUEST) && $_REQUEST['format'])? $_REQUEST['format']: null;

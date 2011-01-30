@@ -50,10 +50,10 @@ abstract class TeraWurflXMLParser {
     
     final public static function getInstance(){
         if(function_exists('simplexml_load_file')){
-            require_once realpath(dirname(__FILE__).'/TeraWurflXMLParser_SimpleXML.php');
+            require_once realpath(__DIR__.'/TeraWurflXMLParser_SimpleXML.php');
             return new TeraWurflXMLParser_SimpleXML();
         }elseif(class_exists('XMLReader')){
-            require_once realpath(dirname(__FILE__).'/TeraWurflXMLParser_XMLReader.php');
+            require_once realpath(__DIR__.'/TeraWurflXMLParser_XMLReader.php');
             return new TeraWurflXMLParser_XMLReader();
         }else{
             throw new Exception("No suitable XML Parser was found.  Please enable XMLReader or SimpleXML");

@@ -15,11 +15,11 @@
 /**
  * Include required files
  */
-require_once realpath(dirname(__FILE__).'/TeraWurflDatabase_MySQL5.php');
+require_once realpath(__DIR__.'/TeraWurflDatabase_MySQL5.php');
 /**
  * Include required files
  */
-require_once realpath(dirname(__FILE__).'/phpMyProfiler.php');
+require_once realpath(__DIR__.'/phpMyProfiler.php');
 /**
  * Provides connectivity from Tera-WURFL to MySQL 5
  * This "Profiling" connector logs profile data from MySQL during its queries

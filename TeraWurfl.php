@@ -142,7 +142,7 @@ class TeraWurfl
     // Constructor
     public function __construct($config = null, $db = null)
     {
-        $this->_rootdir = dirname(__FILE__) . '/';
+        $this->_rootdir = __DIR__ . '/';
         
         if (is_object($config) && method_exists($config, 'toArray')) {
             $config = $config->toArray();
@@ -313,7 +313,7 @@ class TeraWurfl
         }
         // Check for Vodafone magic
         if($this->_userAgentMatcher->matcherName()!="Vodafone" && $this->_helper->contains("Vodafone")){
-            //@require_once realpath(dirname(__FILE__).'/UserAgentMatchers/VodafoneUserAgentMatcher.php');
+            //@require_once realpath(__DIR__.'/UserAgentMatchers/VodafoneUserAgentMatcher.php');
             $vodafoneUserAgentMatcher = new UserAgentMatchers\Vodafone($this, $this->_userAgent);
             $this->matcherHistory[] = $vodafoneUserAgentMatcher->matcherName() . "(conclusive)";
             $deviceID = $vodafoneUserAgentMatcher->applyConclusiveMatch();

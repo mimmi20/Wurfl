@@ -12,7 +12,7 @@
  * @version Stable 2.1.3 $Date: 2010/09/18 15:43:21
  * @license http://www.mozilla.org/MPL/ MPL Vesion 1.1
  */
-require_once realpath(dirname(__FILE__).'/../TeraWurfl.php');
+require_once realpath(__DIR__.'/../TeraWurfl.php');
 
 $tw = new TeraWurfl();
 
@@ -134,7 +134,7 @@ Table Size: <span class="setting"><?php echo WurflSupport::formatBytes($matcher[
         <tr>
             <th scope="col">Tera-WURFL Settings</th>
         </tr>
-        <tr><td>Installation Directory: <span class="setting"><?php echo dirname(dirname(__FILE__)); ?></span></td></tr>
+        <tr><td>Installation Directory: <span class="setting"><?php echo dirname(__DIR__); ?></span></td></tr>
         <tr>
             <td class="lightrow"><p>-- Database options --<br/>
                 DB_HOST <span class="setting">

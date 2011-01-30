@@ -15,7 +15,7 @@
 /**
  * Include required files
  */
-require_once realpath(dirname(__FILE__).'/TeraWurflDatabase_MySQL5.php');
+require_once realpath(__DIR__.'/TeraWurflDatabase_MySQL5.php');
 /**
  * Provides connectivity from Tera-WURFL to MySQL 5
  * This version adds a right and left nested-set value (`rt` and `lt`) to the TeraWurflIndex
