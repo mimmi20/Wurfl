@@ -32,33 +32,6 @@ class SimpleDesktop extends AbstractMatcher
      */
     public function isDesktopBrowser()
     {
-        if (\TeraWurfl\UserAgentUtils::isMobileBrowser($this->userAgent)) {
-            return false;
-        }
-        
-        if($this->helper->contains(array(
-            'HTC', // HTC; horrible user agents, especially with Opera
-            'PPC', // PowerPC; not always mobile, but we'll kick it out of SimpleDesktop and match it in the WURFL DB
-            'Nintendo' // too hard to distinguish from Opera
-        ))) return false;
-        // Firefox
-        if($this->helper->contains("Firefox") && !$this->helper->contains($this->userAgent,'Tablet')) return true;
-        if(\TeraWurfl\UserAgentUtils::isDesktopBrowser($this->userAgent)) return true;
-        if($this->helper->startsWith('Opera/')) return true;
-        if($this->helper->regexContains(array(
-//            // Opera
-//            '/Opera\/\d/',
-            // Internet Explorer
-            '/^Mozilla\/4\.0 \(compatible; MSIE \d.\d; Windows NT \d.\d/'
-        ))) return true;
-        if($this->helper->contains(array(
-            "Chrome",
-            "yahoo.com",
-            "google.com",
-            "Comcast"
-        ))){
-            return true;
-        }
-        return false;
+        return $this->helper->isDesktopBrowser();
     }
 }

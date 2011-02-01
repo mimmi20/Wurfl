@@ -126,7 +126,7 @@ class UserAgentUtils
                 return $index;
             }
             $found++;
-        }while($found < $ordinal);
+        } while($found < $ordinal);
         return $index;
     
     }
@@ -170,14 +170,17 @@ class UserAgentUtils
     public static function isMobileBrowser($ua)
     {
         $lowerua = strtolower($ua);
-        if(self::isDesktopBrowser($ua)){
+        if (self::isDesktopBrowser($ua)) {
             return false;
         }
         
         $helper = new UserAgentMatchers\MatcherHelper($ua);
         
-        if($helper->contains(Constants::$MOBILE_BROWSERS)) return true;
-        if($helper->regexContains(array(
+        if ($helper->contains(Constants::$MOBILE_BROWSERS)) {
+            return true;
+        }
+        
+        if ($helper->regexContains(array(
                 // ARM Processor
                 '/armv[5-9][l0-9]/',
                 // Screen resolution in UA

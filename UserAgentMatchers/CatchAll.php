@@ -72,7 +72,10 @@ class CatchAll extends AbstractMatcher
         $this->match_type = "none";
         //$this->wurfl->toLog("Applying CatchAll Recovery Match",LOG_INFO);
         $this->match = false;
-        if(SimpleDesktop::isDesktopBrowser($this->userAgent)) return \TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+        if($this->helper->isDesktopBrowser()) {
+            return \TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+        }
+        
         //Openwave
         if ($this->helper->contains("UP.Browser/7.2")){
             return "opwv_v72_generic";

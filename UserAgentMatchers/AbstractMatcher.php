@@ -106,7 +106,9 @@ abstract class AbstractMatcher
         }
         */
         $this->updateDeviceList();
-        return \TeraWurfl\UserAgentUtils::risMatch($this->userAgent,$tolerance,$this);
+        return \TeraWurfl\UserAgentUtils::risMatch(
+            $this->userAgent, $tolerance, $this
+        );
     }
     
     /**

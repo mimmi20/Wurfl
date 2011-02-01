@@ -177,4 +177,41 @@ class MatcherHelper
         $position = strpos($this->_userAgent, $search);
         return ($position !== false) ? $position : strlen($this->_userAgent);
     }
+    
+    /**
+     * Is the given user agent very likely to be a desktop browser
+     * @param String User agent
+     * @return Bool
+     */
+    public function isDesktopBrowser()
+    {
+        if (\TeraWurfl\UserAgentUtils::isMobileBrowser($this->_userAgent)) {
+            return false;
+        }
+        
+        if($this->contains(array(
+            'HTC', // HTC; horrible user agents, especially with Opera
+            'PPC', // PowerPC; not always mobile, but we'll kick it out of SimpleDesktop and match it in the WURFL DB
+            'Nintendo' // too hard to distinguish from Opera
+        ))) return false;
+        // Firefox
+        if($this->contains("Firefox") && !$this->contains($this->_userAgent,'Tablet')) return true;
+        if(\TeraWurfl\UserAgentUtils::isDesktopBrowser($this->_userAgent)) return true;
+        if($this->startsWith('Opera/')) return true;
+        if($this->regexContains(array(
+//            // Opera
+//            '/Opera\/\d/',
+            // Internet Explorer
+            '/^Mozilla\/4\.0 \(compatible; MSIE \d.\d; Windows NT \d.\d/'
+        ))) return true;
+        if($this->contains(array(
+            "Chrome",
+            "yahoo.com",
+            "google.com",
+            "Comcast"
+        ))){
+            return true;
+        }
+        return false;
+    }
 }
