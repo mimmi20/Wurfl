@@ -24,7 +24,7 @@ class MatcherHelper
     
     public function __construct($userAgent = '')
     {
-        $this->_userAgent = $userAgent;
+        $this->_userAgent = strtolower($userAgent);
     }
     
     /**

@@ -169,8 +169,7 @@ class UserAgentUtils
      */
     public static function isMobileBrowser($ua)
     {
-        $lowerua = strtolower($ua);
-        if (self::isDesktopBrowser($ua)) {
+        if (self::isDesktopBrowser($ua) || self::isRobot($ua)) {
             return false;
         }
         
@@ -199,12 +198,10 @@ class UserAgentUtils
      */
     public static function isDesktopBrowser($ua)
     {
-        $lowerua = strtolower($ua);
+        $helper = new UserAgentMatchers\MatcherHelper($ua);
         
-        foreach (Constants::$DESKTOP_BROWSERS as $signature) {
-            if (strpos($lowerua, $signature) !== false) {
-                return true;
-            }
+        if ($helper->contains(Constants::$DESKTOP_BROWSERS)) {
+            return true;
         }
         
         return false;
@@ -217,22 +214,18 @@ class UserAgentUtils
      */
     public static function isRobot($ua)
     {
-        $lowerua = strtolower($ua);
-        foreach(Constants::$ROBOTS as $browser_signature){
-            if(strstr($lowerua, $browser_signature)){
-                return true;
-            }
+        $helper = new UserAgentMatchers\MatcherHelper($ua);
+        
+        if ($helper->contains(Constants::$ROBOTS)) {
+            return true;
         }
+        
         return false;
     }
     
     public static function LD($s, $t)
     {
         // PHP's levenshtein() function requires arguments to be <= 255 chars
-        if (strlen($s) > 255 || strlen($t) > 255) {
-            return levenshtein(substr($s, 0, 255), substr($t, 0, 255));
-        }
-        
-        return levenshtein($s, $t);
+        return levenshtein(substr($s, 0, 255), substr($t, 0, 255));
     }
 }
