@@ -38,7 +38,7 @@ abstract class AbstractMatcher
     /**
      * @var Array List of WURFL IDs => User Agents.  Typically used for matching user agents.
      */
-    public $deviceList = array();
+    protected $deviceList = array();
     
     public function __construct(\TeraWurfl\TeraWurfl $wurfl, $userAgent = '')
     {
@@ -55,7 +55,7 @@ abstract class AbstractMatcher
      */
     public function applyConclusiveMatch() 
     {
-        $tolerance = $this->firstSlash();
+        $tolerance = $this->helper->firstSlash();
         return $this->risMatch($tolerance);
     }
     
@@ -79,17 +79,23 @@ abstract class AbstractMatcher
         return "generic";
     }
     
+    public function getDeviceList()
+    {
+        return $this->deviceList;
+    }
+    
     /**
      * Updates the deviceList Array to contain all the WURFL IDs that are related to the current UserAgentMatcher
      * @return void
      */
     protected function updateDeviceList()
     {
-        if(is_array($this->deviceList) && count($this->deviceList) > 0) {
+        if (is_array($this->deviceList) && count($this->deviceList) > 0) {
             return;
         }
         
-        $this->deviceList = array();//$this->wurfl->db->getFullDeviceList($this->wurfl->fullTableName());
+        $mergeModel       = new \TeraWurfl\Model\Merges();
+        $this->deviceList = $mergeModel->getFullDeviceList($mergeModel->getTablePrefix().'_'.$this->tableSuffix());
     }
     
     /**
@@ -142,6 +148,7 @@ abstract class AbstractMatcher
     public function tableSuffix()
     {
         $cname = $this->matcherName();
-        return substr($cname, 0, strpos($cname, 'UserAgentMatcher'));
+        //var_dump($cname, strrpos($cname, '\\'), substr($cname, strrpos($cname, '\\')));exit;
+        return substr($cname, strrpos($cname, '\\') + 1);
     }
 }

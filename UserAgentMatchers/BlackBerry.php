@@ -30,23 +30,23 @@ class BlackBerry extends AbstractMatcher
         'blackberry_generic_ver4',
     );
     
-    public function applyConclusiveMatch($ua)
+    public function applyConclusiveMatch($this->userAgent)
     {
-        $ua = $this->_cleanUa($ua);
-        return parent::applyConclusiveMatch($ua);
+        $this->userAgent = $this->_cleanUa($this->userAgent);
+        return parent::applyConclusiveMatch($this->userAgent);
     }
     
-    public function recoveryMatch($ua)
+    public function recoveryMatch($this->userAgent)
     {
         // BlackBerry
-        $ua = $this->_cleanUa($ua);
+        $this->userAgent = $this->_cleanUa($this->userAgent);
         
-        //$this->wurfl->toLog('Applying '.get_class($this).' recovery match ($ua)',LOG_INFO);
+        //$this->wurfl->toLog('Applying '.get_class($this).' recovery match ($this->userAgent)',LOG_INFO);
         if ($this->helper->startsWith('BlackBerry')) {
             $position = $this->helper->firstSlash();
             
-            if ($position !== false && ($position + 4) <= strlen($ua)) {
-                $version = substr($ua, $position + 1, $position + 4);
+            if ($position !== false && ($position + 4) <= strlen($this->userAgent)) {
+                $version = substr($this->userAgent, $position + 1, $position + 4);
                 
                 if ($this->helper->startsWith($version, '2.')) {
                     return 'blackberry_generic_ver2';
@@ -72,12 +72,12 @@ class BlackBerry extends AbstractMatcher
             }   
         }     
         
-        return TeraWurfl\Constants::GENERIC;
+        return \TeraWurfl\Constants::GENERIC;
     }
     
-    private function _cleanUa($ua)
+    private function _cleanUa($this->userAgent)
     {
-        return preg_replace('/^BlackBerry (\d+.*)$/', 'BlackBerry$1', $ua);
+        return preg_replace('/^BlackBerry (\d+.*)$/', 'BlackBerry$1', $this->userAgent);
     }
 }
 

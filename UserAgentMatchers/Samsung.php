@@ -20,7 +20,7 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Samsung extends AbstractMatcher 
 {
-    public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($this->userAgent) 
     {
         if ($this->helper->startsWith(array("SAMSUNG-", "SEC-", "SCH"))) {
             $tolerance = $this->helper->firstSlash();
@@ -29,17 +29,17 @@ class Samsung extends AbstractMatcher
         } else {
             $tolerance = $this->helper->secondSlash();
         }
-        return $this->risMatch($ua, $tolerance);
+        return $this->risMatch($this->userAgent, $tolerance);
     }
     
-    public function recoveryMatch($ua)
+    public function recoveryMatch($this->userAgent)
     {
         if ($this->helper->startsWith("SAMSUNG")) {
             $tolerance = 8;
-            return $this->ldMatch($ua,$tolerance);
+            return $this->ldMatch($this->userAgent,$tolerance);
         } else {
-            $tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Samsung'));
-            return $this->risMatch($ua, $tolerance);
+            $tolerance = $this->helper->indexOfOrLength('/', strpos($this->userAgent, 'Samsung'));
+            return $this->risMatch($this->userAgent, $tolerance);
         }
     }
 }

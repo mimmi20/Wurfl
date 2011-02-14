@@ -36,7 +36,7 @@ class Opera extends AbstractMatcher
         
         $tolerance = 5;
         
-        return $this->ldMatch($ua, $tolerance);
+        return $this->ldMatch($this->userAgent, $tolerance);
     }
     
     public function recoveryMatch()

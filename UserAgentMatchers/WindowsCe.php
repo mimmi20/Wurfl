@@ -23,14 +23,14 @@ class WindowsCEUserAgentMatcher extends AbstractMatcher
     
     public static $constantIDs = array("generic_ms_mobile_browser_ver1");
     
-    public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($this->userAgent) 
     {
         $tolerance = 3;
         
-        return $this->ldMatch($ua, $tolerance);
+        return $this->ldMatch($this->userAgent, $tolerance);
     }
     
-    public function recoveryMatch($ua)
+    public function recoveryMatch($this->userAgent)
     {
         return "generic_ms_mobile_browser_ver1";
     }

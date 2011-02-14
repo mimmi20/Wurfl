@@ -24,7 +24,7 @@ class Nintendo extends AbstractMatcher
     
     public function applyConclusiveMatch() 
     {
-        return $this->ldMatch($ua);
+        return $this->ldMatch($this->userAgent);
     }
     
     public function recoveryMatch()

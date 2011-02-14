@@ -45,6 +45,6 @@ class Apple extends AbstractMatcher
             return 'apple_iphone_ver1';
         }
         
-        return TeraWurfl\Constants::GENERIC;
+        return \TeraWurfl\Constants::GENERIC;
     }
 }

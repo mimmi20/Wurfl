@@ -20,8 +20,8 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Portalmmm extends AbstractMatcher 
 {
-    public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($this->userAgent) 
     {
-        return $this->risMatch($ua, 5);
+        return $this->risMatch($this->userAgent, 5);
     }
 }

@@ -20,21 +20,21 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class Vodafone extends UserAgentMatcher 
 {
-    public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($this->userAgent) 
     {
-        $clean_ua = $ua;
-        if($this->contains($ua,"/SN") && !$this->contains($ua,"XXXXXXXXXXXX")){
+        $clean_ua = $this->userAgent;
+        if($this->contains($this->userAgent,"/SN") && !$this->contains($this->userAgent,"XXXXXXXXXXXX")){
             //not using RegEx for the time being
-            $start_idx = strpos($ua,"/SN")+3;
-            $sub_str = substr($ua,$start_idx);
+            $start_idx = strpos($this->userAgent,"/SN")+3;
+            $sub_str = substr($this->userAgent,$start_idx);
             $end_idx = strpos($sub_str," ");
             if($end_idx !== false && $sub_str != "" && strlen($sub_str) > $end_idx){
                 $num_digits = strlen($sub_str) - $end_idx;
-                $new_ua = substr($ua,0,$start_idx);
+                $new_ua = substr($this->userAgent,0,$start_idx);
                 for($i=0;$i<$end_idx;$i++){
                     $new_ua .= "X";
                 }
-                $new_ua .= substr($ua,$end_idx);
+                $new_ua .= substr($this->userAgent,$end_idx);
                 $clean_ua = $new_ua;
             }
         }
@@ -44,7 +44,7 @@ class Vodafone extends UserAgentMatcher
         $match = $this->risMatch($clean_ua, $tolerance);
         if($match == TeraWurfl\Constants::GENERIC){
             //$this->wurfl->toLog("Applying ".get_class($this)." Conclusive Match: LD",LOG_INFO);
-            return $this->ldMatch($ua);
+            return $this->ldMatch($this->userAgent);
         }
         return $match;
     }

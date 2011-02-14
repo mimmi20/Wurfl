@@ -34,14 +34,14 @@ class DoCoMo extends AbstractMatcher
             $tolerance = $this->helper->firstOpenParen();
         }
         
-        $deviceId = $this->risMatch($ua, $tolerance);
+        $deviceId = $this->risMatch($this->userAgent, $tolerance);
         return $deviceId;
     }
     
     public function recoveryMatch()
     {
         $versionIndex = 7;
-        $version      = $ua[$versionIndex];
+        $version      = $this->userAgent[$versionIndex];
         return ($version == '2') ? "docomo_generic_jap_ver2" : "docomo_generic_jap_ver1";
     }
 }

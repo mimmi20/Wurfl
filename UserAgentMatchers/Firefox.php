@@ -26,7 +26,7 @@ class Firefox extends AbstractMatcher
     public function applyConclusiveMatch() 
     {
         $matches = array();
-        if (preg_match('/Firefox\/(\d)\.(\d)/', $ua, $matches)) {
+        if (preg_match('/Firefox\/(\d)\.(\d)/', $this->userAgent, $matches)) {
             switch ($matches[1]) {
                 // cases are intentionally out of sequnce for performance
                 case 3:
@@ -44,6 +44,6 @@ class Firefox extends AbstractMatcher
             }
         }
         
-        return $this->ldMatch($ua, 5);
+        return $this->ldMatch($this->userAgent, 5);
     }
 }

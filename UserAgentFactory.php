@@ -45,13 +45,8 @@ class UserAgentFactory
      */
     public function createUserAgentMatcher()
     {
-        // $isMobile means it IS MOBILE, $isDesktop means it IS DESKTOP
-        // $isMobile does NOT mean it IS DESKTOP and vica-versa
-        $isMobile  = UserAgentUtils::isMobileBrowser($this->_agent);
-        $isDesktop = UserAgentUtils::isDesktopBrowser($this->_agent);
-        
         // Process MOBILE user agents
-        if (!$isDesktop) {
+        if (UserAgentUtils::isMobileBrowser($this->_agent)) {
             // High workload UAMs go first
             // Nokia
             if ($this->_helper->contains('nokia')) {
@@ -200,7 +195,7 @@ class UserAgentFactory
             ) {
                 return new UserAgentMatchers\WindowsCe($this->_wurfl, $this->_agent);
             }
-        } // End if(!$isDesktop)
+        }
 
         // Process Robots (Web Crawlers and the like)
         if (UserAgentUtils::isRobot($this->_agent)) {
@@ -208,7 +203,7 @@ class UserAgentFactory
         }
         
         // Process NON-MOBILE user agents        
-        if (!$isMobile) {
+        if ($this->_helper->isDesktopBrowser()) {
             // MSIE
             if ($this->_helper->startsWith('mozilla') 
                 && $this->_helper->contains( 'msie')

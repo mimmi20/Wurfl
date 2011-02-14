@@ -20,14 +20,14 @@ namespace TeraWurfl\UserAgentMatchers;
  */
 class SanyoUserAgentMatcher extends AbstractMatcher 
 {
-    public function applyConclusiveMatch($ua) 
+    public function applyConclusiveMatch($this->userAgent) 
     {
-        if ($this->helper->contains($ua, "MobilePhone")) {
-            $tolerance = $this->helper->indexOfOrLength('/', strpos($ua, "MobilePhone"));
+        if ($this->helper->contains($this->userAgent, "MobilePhone")) {
+            $tolerance = $this->helper->indexOfOrLength('/', strpos($this->userAgent, "MobilePhone"));
         } else {
             $tolerance = $this->helper->firstSlash();
         }
         
-        return $this->risMatch($ua, $tolerance);
+        return $this->risMatch($this->userAgent, $tolerance);
     }
 }

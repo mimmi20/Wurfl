@@ -31,10 +31,10 @@ class Kddi extends AbstractMatcher
             $tolerance = $this->helper->firstSlash();
         }
         
-        return $this->risMatch($ua, $tolerance);
+        return $this->risMatch($this->userAgent, $tolerance);
     }
     
-    public function recoveryMatch($ua)
+    public function recoveryMatch($this->userAgent)
     {
         return "opwv_v62_generic";
     }

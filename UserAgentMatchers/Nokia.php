@@ -25,8 +25,8 @@ class Nokia extends AbstractMatcher
     
     public function applyConclusiveMatch() 
     {
-        $tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Nokia'));
-        return $this->risMatch($ua, $tolerance);
+        $tolerance = $this->helper->indexOfOrLength('/', strpos($this->userAgent, 'Nokia'));
+        return $this->risMatch($this->userAgent, $tolerance);
     }
     
     public function recoveryMatch()
@@ -39,6 +39,6 @@ class Nokia extends AbstractMatcher
             return "nokia_generic_series80";
         }
         
-        return TeraWurfl\Constants::GENERIC;
+        return \TeraWurfl\Constants::GENERIC;
     }
 }

@@ -152,42 +152,6 @@ class TeraWurfl
         
         $this->_config  = array_merge(Config::toArray(), $config);
         $this->_support = new Support();
-        
-        if (is_object($db) && $db instanceof \Doctrine\ORM\EntityManager) {
-            $this->_db = $db;
-        } else {
-            $dbOptions = array(
-                'driver'    => $this->_config['type'],
-                'user'      => $this->_config['username'],
-                'password'  => $this->_config['password'],
-                'dbname'    => $this->_config['dbname'],
-                'host'      => $this->_config['hostname'] . (isset($db['port']) ? ':' . $db['port'] : '')
-            );
-            
-            if (isset($this->_config['modelpath'])) {
-                $modelPath = $this->_config['modelpath'];
-            } else {
-                $modelPath = 'Model/Entities';
-            }
-            
-            if (isset($this->_config['proxypath'])) {
-                $proxyPath = $this->_config['proxypath'];
-            } else {
-                $proxyPath = 'Model/Proxies';
-            }
-            
-            $dbConfig = new \Doctrine\ORM\Configuration;
-            $cache    = new \Doctrine\Common\Cache\ArrayCache;
-            $dbConfig->setMetadataCacheImpl($cache);
-            $driverImpl = $dbConfig->newDefaultAnnotationDriver(realpath($this->_rootdir . $modelPath));
-            $dbConfig->setMetadataDriverImpl($driverImpl);
-            $dbConfig->setQueryCacheImpl($cache);
-            $dbConfig->setProxyDir(realpath($this->_rootdir . $proxyPath));
-            $dbConfig->setProxyNamespace('TeraWurfl\Model\Proxies');
-            $dbConfig->setAutoGenerateProxyClasses(true);
-            
-            $this->_db = \Doctrine\ORM\EntityManager::create($dbOptions, $dbConfig);
-        }
     }
     
     /**
@@ -218,7 +182,7 @@ class TeraWurfl
     public function getDeviceCapabilitiesFromAgent($userAgent = null, $httpAccept = null)
     {
         $this->_matchData = array(
-            "num_queries" => 0,
+            'num_queries' => 0,
             "actual_root_device" => '',
             "match_type" => '',
             "matcher" => '',
@@ -240,12 +204,7 @@ class TeraWurfl
             $httpAccept = $this->_support->getAcceptHeader();
         }
         $this->_httpAccept = $httpAccept;
-        
-        if (strlen($this->_userAgent) > 255) {
-            $this->_userAgent = substr($this->_userAgent, 0, 255);
-        }
-        
-        $this->_userAgent = $this->_cleanUserAgent($this->_userAgent);
+        $this->_userAgent  = $this->_cleanUserAgent($this->_userAgent);
         
         $this->_helper = new UserAgentMatchers\MatcherHelper($this->_userAgent);
         
@@ -254,16 +213,17 @@ class TeraWurfl
         $this->_userAgentMatcher = $factory->createUserAgentMatcher();
         
         // Find the best matching WURFL ID
-        $deviceID = $this->getDeviceIDFromUALoose($this->_userAgent);
+        $deviceID = $this->_getDeviceIDFromUALoose($this->_userAgent);
         
         // Get the capabilities of this device and all its ancestors
-        $this->getFullCapabilities($deviceID);
+        $this->_getFullCapabilities($deviceID);
+        
         // Now add in the Tera-WURFL results array
         $this->_lookup_end = microtime(true);
         //$this->_matchData['num_queries'] = $this->_db->numQueries;
         $this->_matchData['lookup_time'] = $this->_lookup_end - $this->_lookup_start;
         // Add the match data to the capabilities array so it gets cached
-        $this->addCapabilities(array($this->_matchDataKey => $this->_matchData));
+        $this->_addCapabilities(array($this->_matchDataKey => $this->_matchData));
         
         return $this->_capabilities[$this->_matchDataKey]['match'];
     }
@@ -272,7 +232,7 @@ class TeraWurfl
      * Returns the matching WURFL ID for a given User Agent
      * @return String WURFL ID
      */
-    private function getDeviceIDFromUALoose()
+    private function _getDeviceIDFromUALoose()
     {
         $this->matcherHistory = array();
         
@@ -282,102 +242,126 @@ class TeraWurfl
             $this->_matchData['match_type'] = "none";
             $this->_matchData['match']      = false;
             
-            $this->setMatcherHistory();
+            $this->_setMatcherHistory();
             
             return Constants::GENERIC;
         }
         
-        /*
+        $mergeModel = new Model\Merges();
+        
         // Check for exact match
-        $deviceID = $this->_db->getDeviceFromUA($this->_userAgent);
+        $deviceID = $mergeModel->getDeviceFromUA($this->_userAgent);
         
         $this->matcherHistory[] = $this->_userAgentMatcher->matcherName() . "(exact)";
-        if($deviceID !== false){
-            $this->_matchData['matcher'] = $this->_userAgentMatcher->matcherName();
+        if ($deviceID !== false) {
+            $this->_matchData['matcher']    = $this->_userAgentMatcher->matcherName();
             $this->_matchData['match_type'] = "exact";
-            $this->_matchData['match'] = true;
-            $this->setMatcherHistory();
+            $this->_matchData['match']      = true;
+            
+            $this->_setMatcherHistory();
+            
             return $deviceID;
         }
-        */
         
         // Check for a conclusive match
         $deviceID = $this->_userAgentMatcher->applyConclusiveMatch();
+        
         $this->matcherHistory[] = $this->_userAgentMatcher->matcherName() . "(conclusive)";
-        if($deviceID != Constants::GENERIC){
-            $this->_matchData['matcher'] = $this->_userAgentMatcher->matcherName();
+        if ($deviceID != Constants::GENERIC) {
+            $this->_matchData['matcher']    = $this->_userAgentMatcher->matcherName();
             $this->_matchData['match_type'] = "conclusive";
-            $this->_matchData['match'] = true;
-            $this->setMatcherHistory();
+            $this->_matchData['match']      = true;
+            
+            $this->_setMatcherHistory();
+            
             return $deviceID;
         }
+        
         // Check for Vodafone magic
-        if($this->_userAgentMatcher->matcherName()!="Vodafone" && $this->_helper->contains("Vodafone")){
-            //@require_once realpath(__DIR__.'/UserAgentMatchers/VodafoneUserAgentMatcher.php');
+        if ($this->_userAgentMatcher->matcherName() != 'Vodafone' && $this->_helper->contains("Vodafone")) {
             $vodafoneUserAgentMatcher = new UserAgentMatchers\Vodafone($this, $this->_userAgent);
             $this->matcherHistory[] = $vodafoneUserAgentMatcher->matcherName() . "(conclusive)";
+            
             $deviceID = $vodafoneUserAgentMatcher->applyConclusiveMatch();
-            if($deviceID != Constants::GENERIC){
-                $this->_matchData['matcher'] = $vodafoneUserAgentMatcher->matcherName();
+            
+            if ($deviceID != Constants::GENERIC) {
+                $this->_matchData['matcher']    = $vodafoneUserAgentMatcher->matcherName();
                 $this->_matchData['match_type'] = "conclusive";
-                $this->_matchData['match'] = true;
-                $this->setMatcherHistory();
+                $this->_matchData['match']      = true;
+                
+                $this->_setMatcherHistory();
+                
                 return $deviceID;
             }
         }
+        
         // Check for recovery match
         $deviceID = $this->_userAgentMatcher->applyRecoveryMatch();
+        
         $this->matcherHistory[] = $this->_userAgentMatcher->matcherName() . "(recovery)";
-        if($deviceID != Constants::GENERIC){
-            $this->_matchData['matcher'] = $this->_userAgentMatcher->matcherName();
+        if ($deviceID != Constants::GENERIC) {
+            $this->_matchData['matcher']    = $this->_userAgentMatcher->matcherName();
             $this->_matchData['match_type'] = "recovery";
-            $this->_matchData['match'] = false;
-            $this->setMatcherHistory();
+            $this->_matchData['match']      = false;
+            
+            $this->_setMatcherHistory();
+            
             return $deviceID;
         }
+        
         // Check CatchAll if it's not already in use
-        if($this->_userAgentMatcher->matcherName()!="CatchAll"){
+        if ($this->_userAgentMatcher->matcherName() != 'CatchAll') {
             $catchAllUserAgentMatcher = new UserAgentMatchers\CatchAll($this, $this->_userAgent);
             $this->matcherHistory[] = $catchAllUserAgentMatcher->matcherName() . "(recovery)";
+            
             $deviceID = $catchAllUserAgentMatcher->applyRecoveryMatch();
-            if($deviceID != Constants::GENERIC){
+            if ($deviceID != Constants::GENERIC) {
                 // The CatchAll matcher is intelligent enough to determine the match properties
-                $this->_matchData['matcher'] = $catchAllUserAgentMatcher->matcher;
+                $this->_matchData['matcher']    = $catchAllUserAgentMatcher->matcher;
                 $this->_matchData['match_type'] = $catchAllUserAgentMatcher->match_type;
-                $this->_matchData['match'] = $catchAllUserAgentMatcher->match;
-                $this->setMatcherHistory();
+                $this->_matchData['match']      = $catchAllUserAgentMatcher->match;
+                
+                $this->_setMatcherHistory();
+                
                 return $deviceID;
             }
         }
         
-        //$support   = new Support();
-        //$userAgent = $support->getUserAgent();
-        
-        
         // A matching device still hasn't been found - check HTTP ACCEPT headers
-        if(strlen($this->_httpAccept) > 0){
+        if (strlen($this->_httpAccept) > 0) {
             $this->matcherHistory[] = "http_accept";
             
-            $helper = new UserAgentMatchers\MatcherHelper($this->_httpAccept);
-            if($helper->contains(array(
-                Constants::$ACCEPT_HEADER_VND_WAP_XHTML_XML,
-                Constants::$ACCEPT_HEADER_XHTML_XML,
-                Constants::$ACCEPT_HEADER_TEXT_HTML
-              ))){
-                $this->_matchData['matcher'] = "http_accept";
+            $helper   = new UserAgentMatchers\MatcherHelper($this->_httpAccept);
+            $contains = $helper->contains(
+                array(
+                    Constants::$ACCEPT_HEADER_VND_WAP_XHTML_XML,
+                    Constants::$ACCEPT_HEADER_XHTML_XML,
+                    Constants::$ACCEPT_HEADER_TEXT_HTML
+                )
+            );
+            
+            if ($contains) {
+                $this->_matchData['matcher']    = "http_accept";
                 $this->_matchData['match_type'] = "recovery";
                 // This isn't really a match, it's a suggestion
-                $this->_matchData['match'] = false;
-                $this->setMatcherHistory();
+                $this->_matchData['match']      = false;
+                
+                $this->_setMatcherHistory();
+                
                 return Constants::GENERIC_XHTML;
             }
         }
-        $this->_matchData['matcher'] = "none";
-        $this->_matchData['match_type'] = "none";
-        $this->_matchData['match'] = false;
-        $this->setMatcherHistory();
         
-        if(UserAgentUtils::isMobileBrowser($this->_userAgent)) return Constants::GENERIC_XHTML;
+        $this->_matchData['matcher']    = "none";
+        $this->_matchData['match_type'] = "none";
+        $this->_matchData['match']      = false;
+        
+        $this->_setMatcherHistory();
+        
+        if (UserAgentUtils::isMobileBrowser($this->_userAgent)) {
+            return Constants::GENERIC_XHTML;
+        }
+        
         return Constants::GENERIC_WEB_BROWSER;
     }
     
@@ -386,32 +370,46 @@ class TeraWurfl
      * @param String WURFL ID
      * @return void
      */
-    public function getFullCapabilities($deviceID)
+    private function _getFullCapabilities($deviceID = null)
     {
-        if(is_null($deviceID)){
-            throw new Exception("Invalid Device ID: ".var_export($deviceID,true)."\nMatcher: {$this->_userAgentMatcher->matcherName()}\nUser Agent: ".$this->_userAgent);
-            exit(1);
+        if (is_null($deviceID)) {
+            throw new Exception('Invalid Device ID: null' . "\n" . 'Matcher: ' . $this->_userAgentMatcher->matcherName() . "\n" . 'User Agent: ' . $this->_userAgent);
         }
         // Now get all the devices in the fallback tree
         $fallbackIDs = array();
-        /*
-        if($deviceID != Constants::GENERIC && $this->_db->db_implements_fallback){
-            $fallbackTree = $this->_db->getDeviceFallBackTree($deviceID);
-            $this->addTopLevelSettings($fallbackTree[0]);
-            $fallbackTree = array_reverse($fallbackTree);
-            foreach($fallbackTree as $dev){
-                $fallbackIDs[] = $dev['id'];
-                if(isset($dev['actual_device_root']) && $dev['actual_device_root'])$this->_matchData['actual_root_device'] = $dev['id'];
-                $this->addCapabilities($dev);
+        
+        $mergeModel = new Model\Merges();
+        
+        if ($deviceID != Constants::GENERIC) {
+            $fallbackTree = $mergeModel->getDeviceFallBackTree($deviceID);
+            
+            $firstElement = (isset($fallbackTree[0]) ? $fallbackTree[0] : null);
+            if (!is_array($firstElement)) {
+                $firstElement = array($firstElement);
             }
-            $this->_matchData['fall_back_tree'] = implode(',',array_reverse($fallbackIDs));
-        }else{
-            $fallbackTree = array();
-            $childDevice = $this->_db->getDeviceFromID($deviceID);
+            
+            $this->_addTopLevelSettings($firstElement);
+            $fallbackTree = array_reverse($fallbackTree);
+            
+            foreach ($fallbackTree as $dev) {
+                $fallbackIDs[] = $dev['id'];
+                if (isset($dev['actual_device_root']) && $dev['actual_device_root']) {
+                    $this->_matchData['actual_root_device'] = $dev['id'];
+                }
+                
+                $this->_addCapabilities($dev);
+            }
+            
+            $this->_matchData['fall_back_tree'] = implode(',', array_reverse($fallbackIDs));
+        } else {
+            $fallbackTree   = array();
+            $childDevice    = $mergeModel->getDeviceFromID($deviceID);
             $fallbackTree[] = $childDevice;
-            $fallbackIDs[] = $childDevice['id'];
-            $currentDevice = $childDevice;
-            $i=0;
+            $fallbackIDs[]  = $childDevice['id'];
+            $currentDevice  = $childDevice;
+            
+            $i = 0;
+            
             /**
              * This loop starts with the best-matched device, and follows its fall_back until it reaches the GENERIC device
              * Lets use "tmobile_shadow_ver1" for an example:
@@ -423,29 +421,33 @@ class TeraWurfl
              * 
              * This fallback_tree in this example contains 4 elements in the order shown above.
              * 
-             *
-            while($currentDevice['fall_back'] != "root"){
-                $currentDevice = $this->_db->getDeviceFromID($currentDevice['fall_back']);
-                if(in_array($currentDevice['id'],$fallbackIDs)){
+             */
+            while ($currentDevice['fall_back'] != 'root') {
+                $currentDevice = $mergeModel->getDeviceFromID($currentDevice['fall_back']);
+                
+                if (in_array($currentDevice['id'], $fallbackIDs)) {
                     // The device we just looked up is already in the list, which means that
                     // we are going to enter an infinate loop if we don't break from it.
-                    $this->toLog("The device we just looked up is already in the list, which means that we are going to enter an infinate loop if we don't break from it. DeviceID: $deviceID, FallbackIDs: [".implode(',',$fallbackIDs)."]",LOG_ERR);
+                    //$this->toLog("The device we just looked up is already in the list, which means that we are going to enter an infinate loop if we don't break from it. DeviceID: $deviceID, FallbackIDs: [".implode(',',$fallbackIDs)."]",LOG_ERR);
                     throw new Exception("Killed script to prevent infinate loop.  See log for details.");
-                    break;
+                    //break;
                 }
-                if(!isset($currentDevice['fall_back']) || $currentDevice['fall_back'] == ''){
-                    $this->toLog("Empty fall_back detected. DeviceID: $deviceID, FallbackIDs: [".implode(',',$fallbackIDs)."]",LOG_ERR);
-                    throw new Exception("Empty fall_back detected.  See log for details.");
+                if (!isset($currentDevice['fall_back']) || $currentDevice['fall_back'] == '') {
+                    //$this->toLog("Empty fall_back detected. DeviceID: $deviceID, FallbackIDs: [".implode(',',$fallbackIDs)."]",LOG_ERR);
+                    throw new Exception('Empty fall_back detected.  See log for details.');
                 }
                 $fallbackTree[] = $currentDevice;
-                $fallbackIDs[] = $currentDevice['id'];
+                $fallbackIDs[]  = $currentDevice['id'];
+                
                 $i++;
-                if($i > $this->maxDeviceDepth){
-                    $this->toLog("Exceeded maxDeviceDepth while trying to build capabilities for device. DeviceID: $deviceID, FallbackIDs: [".implode(',',$fallbackIDs)."]",LOG_ERR);
+                
+                if ($i > $this->maxDeviceDepth) {
+                    //$this->toLog("Exceeded maxDeviceDepth while trying to build capabilities for device. DeviceID: $deviceID, FallbackIDs: [".implode(',',$fallbackIDs)."]",LOG_ERR);
                     throw new Exception("Killed script to prevent infinate loop.  See log for details.");
-                    break;
+                    //break;
                 }
             }
+            
             $this->_matchData['fall_back_tree'] = implode(',',$fallbackIDs);
             if($fallbackTree[count($fallbackTree)-1]['id'] != Constants::GENERIC){
                 // The device we are looking up cannot be traced back to the GENERIC device
@@ -456,17 +458,18 @@ class TeraWurfl
              * Merge the device capabilities from the parent (GENERIC) to the child (DeviceID)
              * We merge in this order because the GENERIC device contains all the properties that can be set
              * Then the next child modifies them, then the next child, and the next child, etc... 
-             *
+             */
             while(count($fallbackTree)>0){
                 $dev = array_pop($fallbackTree);
                 // actual_root_device is the most accurate device in the fallback tree that is a "real" device, not a sub version or generic
                 if(isset($dev['actual_device_root']) && $dev['actual_device_root'])$this->_matchData['actual_root_device'] = $dev['id'];
-                $this->addCapabilities($dev);
+                $this->_addCapabilities($dev);
             }
-            $this->addTopLevelSettings($childDevice);
+            $this->_addTopLevelSettings($childDevice);
         }
-        */
+        /**/
     }
+    
     /**
      * Returns the value of the requested capability for the detected device
      * @param String Capability name (e.g. "is_wireless_device")
@@ -474,130 +477,88 @@ class TeraWurfl
      */
     public function getDeviceCapability($capability)
     {
-        // TODO: Optimize function, one method is to flatten the capabilities array, or create a group=>cap index
-        $this->toLog('Searching for '.$capability.' as a capability', LOG_INFO);
-        foreach ( $this->_capabilities as $group ) {
-            if ( !is_array($group) ) {
+        foreach ($this->_capabilities as $group) {
+            if (!is_array($group)) {
                 continue;
             }
-            while ( list($key, $value)=each($group) ) {
-                if ($key==$capability) {
-                    $this->toLog('I found it, value is '.$value, LOG_INFO);
+            
+            while (list($key, $value) = each($group)) {
+                if ($key == $capability) {
                     return $value;
                 }
             }
         }
-        $this->toLog('I could not find the requested capability ('.$capability.'), returning NULL', LOG_WARNING);
-        // since 1.5.2, I can't return "false" because that is a valid value.  Now I return NULL, use is_null() to check
+        
         return null;
     }
-    /**
-     * Returns the value of the given setting name
-     * @param String Setting value
-     */
-    public function getSetting($key)
-    {
-        return $this->_db->getSetting($key);
-    }
-    public function fullTableName()
-    {
-        return TeraWurflConfig::$TABLE_PREFIX.'_'.$this->_userAgentMatcher->tableSuffix();
-    }
-    /**
-     * Log an error in the Tera-WURFL log file
-     * @see TeraWurflConfig
-     * @param String The error message text
-     * @param Int The log level / severity of the error
-     * @param String The function or code that was being run when the error occured
-     * @return void
-     */
-    public function toLog($text, $requestedLogLevel=LOG_NOTICE, $func="Tera-WURFL")
-    {
-        if($requestedLogLevel == LOG_ERR) $this->errors[] = $text;
-        if (TeraWurflConfig::$LOG_LEVEL == 0 || ($requestedLogLevel-1) >= TeraWurflConfig::$LOG_LEVEL ) {
-            return;
-        }
-        if ( $requestedLogLevel == LOG_ERR ) {
-            $warn_banner = 'ERROR: ';
-        } else if ( $requestedLogLevel == LOG_WARNING ) {
-            $warn_banner = 'WARNING: ';
-        } else {
-            $warn_banner = '';
-        }
-        $_textToLog = date('r')." [".php_uname('n')." ".getmypid()."]"."[$func] ".$warn_banner . $text;
-        $logfile = $this->rootdir.TeraWurflConfig::$DATADIR.TeraWurflConfig::$LOG_FILE;
-        if(!is_writeable($logfile)){
-            throw new Exception("Tera-WURFL Error: cannot write to log file ($logfile)");
-        }
-        $_logFP = fopen($logfile, "a+");
-        fputs($_logFP, $_textToLog."\n");
-        fclose($_logFP);
-    }
+    
     /**
      * Adds the top level properties to the capabilities array, like id and user_agent
      * @param Array New properties to be added
      * @return void
      */
-    public function addTopLevelSettings(Array $newCapabilities)
+    private function _addTopLevelSettings(array $newCapabilities)
     {
-        foreach($newCapabilities as $key => $val){
-            if(is_array($val))continue;
+        foreach ($newCapabilities as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
+            
             $this->_capabilities[$key] = $val;
         }
     }
+    
     /**
      * Add new capabilities to the capabilities array
      * @param Array Capabilities that are to be added
      * @return void
      */
-    public function addCapabilities(Array $newCapabilities)
+    private function _addCapabilities(array $newCapabilities)
     {
-        self::mergeCapabilities($this->_capabilities,$newCapabilities);
+        self::_mergeCapabilities($this->_capabilities, $newCapabilities);
     }
+    
     /**
      * Combines the MatcherHistory array into a string and stores it in the matchData
      * @return void
      */
-    protected function setMatcherHistory()
+    private function _setMatcherHistory()
     {
-        $this->_matchData['matcher_history'] = implode(',',$this->matcherHistory);
+        $this->_matchData['matcher_history'] = implode(',', $this->matcherHistory);
     }
+    
     /**
      * Merges given $addedDevice array onto $baseDevice array
      * @param Array Main capabilities array
      * @param Array New capabilities array
      * @return void
      */
-    public static function mergeCapabilities(Array &$baseDevice, Array $addedDevice)
+    private static function _mergeCapabilities(array &$baseDevice, array $addedDevice)
     {
-        if(count($baseDevice) == 0){
+        if (count($baseDevice) == 0) {
             // Base device is empty
             $baseDevice = $addedDevice;
             return;
         }
-        foreach($addedDevice as $levOneKey => $levOneVal){
+        
+        foreach ($addedDevice as $levOneKey => $levOneVal) {
             // Check if the base device has defined this value yet
-            if(!is_array($levOneVal)){
+            if (!is_array($levOneVal)) {
                 // This is top level setting, not a capability
                 continue;
-            }else{
-                if(!array_key_exists($levOneKey,$baseDevice))$baseDevice[$levOneKey]=array();
+            } else {
+                if (!array_key_exists($levOneKey, $baseDevice)) {
+                    $baseDevice[$levOneKey] = array();
+                }
+                
                 // This is an array value, merge the contents
-                foreach($levOneVal as $levTwoKey => $levTwoVal){
+                foreach ($levOneVal as $levTwoKey => $levTwoVal) {
                     // This is just a scalar value, apply it
                     $baseDevice[$levOneKey][$levTwoKey] = $levTwoVal;
                     continue;
                 }
             }
         }
-    }
-    /**
-     * Get the absolute path to the data directory on the filesystem
-     * @return String Absolute path to data directory
-     */
-    public static function absoluteDataDir()
-    {
-        return realpath($this->_config['datadir']);
     }
     
     /**

@@ -24,7 +24,7 @@ class Pantech extends AbstractMatcher
     {
         if ($this->helper->startsWith('pantech')) {
             $tolerance = 5;
-            return $this->ldMatch($ua, $tolerance);
+            return $this->ldMatch($this->userAgent, $tolerance);
         }
         
         return parent::applyConclusiveMatch();

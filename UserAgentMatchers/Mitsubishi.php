@@ -23,6 +23,6 @@ class Mitsubishi extends AbstractMatcher
     public function applyConclusiveMatch() 
     {
         $tolerance = $this->helper->firstSpace();
-        return $this->risMatch($ua, $tolerance);
+        return $this->risMatch($this->userAgent, $tolerance);
     }
 }

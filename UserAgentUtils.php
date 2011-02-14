@@ -34,7 +34,7 @@ class UserAgentUtils
     public static function risMatch($ua, $tolerance, UserAgentMatchers\AbstractMatcher $matcher)
     {
         // PHP RIS Function
-        $devices = $matcher->deviceList;
+        $devices = $matcher->getDeviceList();
         
         // Exact match
         $key = array_search($ua, $devices);
@@ -76,7 +76,7 @@ class UserAgentUtils
         if(is_null($tolerance)){
             $tolerance = self::$WORST_MATCH;
         }
-        $devices = $matcher->deviceList;
+        $devices = $matcher->getDeviceList();
         $key     = array_search($ua, $devices);
         if($key !== false){
             return $key;

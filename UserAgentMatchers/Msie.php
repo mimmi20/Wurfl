@@ -26,14 +26,17 @@ class Msie extends AbstractMatcher
     {
         $matches = array();
         
-        if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE (\d)\.(\d);/', $ua, $matches)) {
+        if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE (\d)\.(\d);/', $this->userAgent, $matches)) {
             switch($matches[1]){
                 // cases are intentionally out of sequnce for performance
-                case 7:
-                    return 'msie_7';
-                    break;
                 case 8:
                     return 'msie_8';
+                    break;
+                //case 9:
+                //    return 'msie_9';
+                //    break;
+                case 7:
+                    return 'msie_7';
                     break;
                 case 6:
                     return 'msie_6';
@@ -50,16 +53,16 @@ class Msie extends AbstractMatcher
             }
         }
         
-        $ua = preg_replace('/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/','',$ua);
+        $this->userAgent = preg_replace('/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/','',$this->userAgent);
         
-        return parent::applyConclusiveMatch($ua);
+        return parent::applyConclusiveMatch();
     }
     
     public function recoveryMatch()
     {
         if (
             $this->helper->contains(
-                $ua, 
+                $this->userAgent, 
                 array(
                     'SLCC1',
                     'Media Center PC',
@@ -68,9 +71,9 @@ class Msie extends AbstractMatcher
                 ) 
             )
         ) {
-            return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+            return \TeraWurfl\Constants::GENERIC_WEB_BROWSER;
         }
         
-        return TeraWurfl\Constants::GENERIC;
+        return \TeraWurfl\Constants::GENERIC;
     }
 }

@@ -25,8 +25,8 @@ class Chrome extends AbstractMatcher
     
     public function applyConclusiveMatch() 
     {
-        $tolerance = $this->helper->indexOfOrLength('/', strpos($ua, 'Chrome'));
-        return $this->risMatch($ua, $tolerance);
+        $tolerance = $this->helper->indexOfOrLength('/', strpos($this->userAgent, 'Chrome'));
+        return $this->risMatch($this->userAgent, $tolerance);
     }
     
     public function recoveryMatch()

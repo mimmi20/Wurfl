@@ -22,7 +22,7 @@ class SimpleDesktop extends AbstractMatcher
 {
     public function applyConclusiveMatch() 
     {
-        return TeraWurfl\Constants::GENERIC_WEB_BROWSER;
+        return \TeraWurfl\Constants::GENERIC_WEB_BROWSER;
     }
     
     /**

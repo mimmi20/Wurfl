@@ -27,6 +27,6 @@ class Nec extends AbstractMatcher
         }
         
         $tolerance = 2;
-        return $this->ldMatch($ua, $tolerance);
+        return $this->ldMatch($this->userAgent, $tolerance);
     }
 }
