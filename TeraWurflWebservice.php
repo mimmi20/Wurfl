@@ -280,10 +280,10 @@ class TeraWurflWebservice {
             str_replace('&','&amp;',$this->wurflObj->capabilities['user_agent']),
             $this->wurflObj->capabilities['id']
         );
-        foreach( $this->search_results as $cap_name => $value){
+        foreach( $this->search_results as $caname => $value){
             $value = $this->exportValue($value);
             $value = str_replace('&','&amp;',$value);
-            $this->xml .= "\t\t<capability name=\"$cap_name\" value=\"$value\"/>\n";
+            $this->xml .= "\t\t<capability name=\"$caname\" value=\"$value\"/>\n";
         }
         $this->xml .= "\t</device>\n";
         $this->xml .= $this->generateXMLErrors();
