@@ -475,8 +475,16 @@ class TeraWurfl
      * @param String Capability name (e.g. "is_wireless_device")
      * @return Mixed Capability value
      */
-    public function getDeviceCapability($capability)
+    public function getDeviceCapability($capability = null)
     {
+        if (null === $capability) {
+            return $this->_capabilities;
+        }
+        
+        if (isset($this->_capabilities[$capability])) {
+            return $this->_capabilities[$capability];
+        }
+        
         foreach ($this->_capabilities as $group) {
             if (!is_array($group)) {
                 continue;
