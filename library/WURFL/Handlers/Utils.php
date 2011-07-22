@@ -61,7 +61,6 @@ class WURFL_Handlers_Utils {
         "fennec",
         "blazer",
         "160x160",
-        "tablet",
         "webos",
         "sony",
         "nitro",

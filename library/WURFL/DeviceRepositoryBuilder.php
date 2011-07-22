@@ -40,6 +40,11 @@ class WURFL_DeviceRepositoryBuilder {
 	 * @var string
 	 */
 	private $lockFile;
+	/**
+	 * Determines the fopen() mode that is used on the lockfile 
+	 * @var string
+	 */
+	private $lockStyle = 'r';
 	
 	/**
 	 * @param WURFL_Xml_PersistenceProvider $persistenceProvider
@@ -50,7 +55,16 @@ class WURFL_DeviceRepositoryBuilder {
 		$this->persistenceProvider = $persistenceProvider;
 		$this->userAgentHandlerChain = $userAgentHandlerChain;
 		$this->devicePatcher = $devicePatcher;
-		$this->lockFile = dirname(__FILE__) . "/" . "DeviceRepositoryBuilder.php";
+		if (strpos(PHP_OS, 'SunOS') === false) {
+			$this->lockFile = dirname(__FILE__)."/DeviceRepositoryBuilder.php";
+		} else {
+			// Solaris can't handle exclusive file locks on files unless they are opened for RW
+			$this->lockStyle = 'w+';
+			if (function_exists('sys_get_temp_dir')) {
+				$this->lockFile = realpath(sys_get_temp_dir());
+			}
+			$this->lockFile = $this->lockFile? $this->lockFile.'/wurfl.lock': '/tmp/wurfl.lock';
+		}
 	}
 	
 	/**
@@ -63,8 +77,8 @@ class WURFL_DeviceRepositoryBuilder {
 	public function build($wurflFile, $wurflPatches = array(), $capabilitiesToUse = array()) {
 		if (!$this->isRepositoryBuilt()) {
 			set_time_limit(300);
-			$fp = fopen($this->lockFile, "r");
-			if (flock($fp, LOCK_EX) && !$this->isRepositoryBuilt()) {
+			$fp = fopen($this->lockFile, $this->lockStyle);
+			if (flock($fp, LOCK_EX | LOCK_NB) && !$this->isRepositoryBuilt()) {
 				$infoIterator = new WURFL_Xml_VersionIterator($wurflFile);
 				$deviceIterator = new WURFL_Xml_DeviceIterator($wurflFile, $capabilitiesToUse);
 				$patchIterators = $this->toPatchIterators($wurflPatches , $capabilitiesToUse);
