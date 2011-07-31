@@ -32,7 +32,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request
 	 * @return string|int Version number
 	 */
 	private function chromeWithMajorVersion($userAgent) {
-		return substr ( $userAgent, strpos ( $userAgent, "Chrome" ), 8);
+		return substr ( $userAgent, strpos ( $userAgent, "Chrome" ), 9);
 	}
 
 }

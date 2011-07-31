@@ -26,9 +26,9 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
+class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler {
 	
-	protected $prefix = "CHROME";
+	protected $prefix = "ROCKMELT";
 	
 	function __construct($wurflContext, $userAgentNormalizer = null) {
 		parent::__construct ( $wurflContext, $userAgentNormalizer );
@@ -44,9 +44,10 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
 		if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
 			return false;
 		}
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Chrome" );
+		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'RockMelt' )
+            && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Chrome" );
 	}
-	
+	/*
 	private $chromes = array (
         "" => "google_chrome",
         "1" => "google_chrome_1",
@@ -90,7 +91,7 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
 		
 	}
 	
-	const CHROME_VERSION_PATTERN = "/.*Chrome\/(\d+).*/";
+	const CHROME_VERSION_PATTERN = "/.*Chrome\/(\d+).* /";
 	private function chromeVersion($userAgent) {
         if (preg_match ( self::CHROME_VERSION_PATTERN, $userAgent, $match )) {
 			return $match [1];

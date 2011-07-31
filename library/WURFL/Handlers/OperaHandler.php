@@ -49,10 +49,30 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
 	
 	private $operas = array (
         "" => "opera",
-        "7" => "opera_7",
-        "8" => "opera_8",
-        "9" => "opera_9",
-        "10" => "opera_10"
+        "2.0" => "opera_02_00",
+        "2.1" => "opera_02_10",
+        "3.0" => "opera_03_00",
+        "3.5" => "opera_03_50",
+        "3.6" => "opera_03_60",
+        "4.0" => "opera_04_00",
+        "5.0" => "opera_05_00",
+        "6.0" => "opera_06_00",
+        "7.0" => "opera_07_00",
+        "8.0" => "opera_08_00",
+        "8.5" => "opera_08_50",
+        "9.0" => "opera_09_00",
+        "9.2" => "opera_09_20",
+        "9.5" => "opera_09_50",
+        "9.6" => "opera_09_60",
+        "10.0" => "opera_10_00",
+        "10.1" => "opera_10_10",
+        "10.5" => "opera_10_50",
+        "10.6" => "opera_10_60",
+        "10.7" => "opera_10_70",
+        "11.0" => "opera_11_00",
+        "11.1" => "opera_11_10",
+        "11.5" => "opera_11_50",
+        "12.0" => "opera_12_00"
     );
 	
 	const OPERA_TOLERANCE = 3;
@@ -78,8 +98,12 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
 	
 
 	
-	const OPERA_VERSION_PATTERN = "/.*Opera[\s\/](\d+).*/";
+	const OPERA_VERSION_PATTERN = "/.*Opera[\s\/](\d+\.\d).*/";
+    const OPERA_VERSION_PATTERN_EXT = "/.*Version\/(\d+\.\d).*/";
 	private function operaVersion($userAgent) {
+        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80') && preg_match ( self::OPERA_VERSION_PATTERN_EXT, $userAgent, $match )) {
+			return $match [1];
+        }
 		if (preg_match ( self::OPERA_VERSION_PATTERN, $userAgent, $match )) {
 			return $match [1];
 		}

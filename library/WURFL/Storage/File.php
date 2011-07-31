@@ -80,7 +80,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
 
 
     private function keyPath($key) {
-        return WURFL_FileUtils::join(array($this->root, $this->spread(md5($key))));
+        return WURFL_FileUtils::join(array($this->root, strtolower($key)/*$this->spread(md5($key))*/));
     }
 
     function spread($md5, $n = 2) {

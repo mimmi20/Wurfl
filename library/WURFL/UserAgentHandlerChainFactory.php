@@ -108,11 +108,16 @@ class WURFL_UserAgentHandlerChainFactory {
 
 
         // Web Browsers handlers
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_IronHandler($context, $chromeNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromiumHandler($context, $chromeNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_RockmeltHandler($context, $chromeNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromeHandler($context, $chromeNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AOLHandler($context, $genericNormalizers));
+        //self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AOLHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KonquerorHandler($context, $konquerorNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SafariHandler($context, $safariNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ThunderbirdHandler($context, $firefoxNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SeamonkeyHandler($context, $firefoxNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FirefoxHandler($context, $firefoxNormalizer));
 
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MSIEHandler($context, $msieNormalizer));

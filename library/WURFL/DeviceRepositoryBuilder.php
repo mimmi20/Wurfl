@@ -76,7 +76,7 @@ class WURFL_DeviceRepositoryBuilder {
 	 */
 	public function build($wurflFile, $wurflPatches = array(), $capabilitiesToUse = array()) {
 		if (!$this->isRepositoryBuilt()) {
-			set_time_limit(300);
+			//set_time_limit(300);
 			$fp = fopen($this->lockFile, $this->lockStyle);
 			if (flock($fp, LOCK_EX | LOCK_NB) && !$this->isRepositoryBuilt()) {
 				$infoIterator = new WURFL_Xml_VersionIterator($wurflFile);

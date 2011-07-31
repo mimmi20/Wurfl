@@ -26,16 +26,16 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
+class WURFL_Handlers_IronHandler extends WURFL_Handlers_Handler {
 	
-	protected $prefix = "CHROME";
+	protected $prefix = "IRON";
 	
 	function __construct($wurflContext, $userAgentNormalizer = null) {
 		parent::__construct ( $wurflContext, $userAgentNormalizer );
 	}
 	
 	/**
-	 * Intercept all UAs Containing Chrome and are not mobile browsers
+	 * Intercept all UAs Containing Iron and are not mobile browsers
 	 *
 	 * @param string $userAgent
 	 * @return boolean
@@ -44,30 +44,31 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
 		if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
 			return false;
 		}
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Chrome" );
+		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Iron" )
+            && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Chrome" );
 	}
 	
 	private $chromes = array (
-        "" => "google_chrome",
-        "1" => "google_chrome_1",
-        "2" => "google_chrome_2",
-        "3" => "google_chrome_3",
-        "4" => "google_chrome_4",
-        "5" => "google_chrome_5",
-        "6" => "google_chrome_6",
-        "7" => "google_chrome_7",
-        "8" => "google_chrome_8",
-        "9" => "google_chrome_9",
-        "10" => "google_chrome_10",
-        "11" => "google_chrome_11",
-        "12" => "google_chrome_12",
-        "13" => "google_chrome_13",
-        "14" => "google_chrome_14",
-        "15" => "google_chrome_15",
-        "16" => "google_chrome_16",
-        "17" => "google_chrome_17",
-        "18" => "google_chrome_18",
-        "19" => "google_chrome_19"
+        "" => "iron",
+        "1" => "iron_1",
+        "2" => "iron_2",
+        "3" => "iron_3",
+        "4" => "iron_4",
+        "5" => "iron_5",
+        "6" => "iron_6",
+        "7" => "iron_7",
+        "8" => "iron_8",
+        "9" => "iron_9",
+        "10" => "iron_10",
+        "11" => "iron_11",
+        "12" => "iron_12",
+        "13" => "iron_13",
+        "14" => "iron_14",
+        "15" => "iron_15",
+        "16" => "iron_16",
+        "17" => "iron_17",
+        "18" => "iron_18",
+        "19" => "iron_19"
     );
     
     function lookForMatchingUserAgent($userAgent) {
@@ -76,7 +77,7 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
 	
 	function applyRecoveryMatch($userAgent) {
 		$chromeVersion = $this->chromeVersion ( $userAgent );
-		$chromeId = "google_chrome";
+		$chromeId = "iron";
 		if (isset ( $this->chromes [$chromeVersion] )) {
 			$chromeId = $this->chromes [$chromeVersion];
 		}
@@ -90,7 +91,7 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
 		
 	}
 	
-	const CHROME_VERSION_PATTERN = "/.*Chrome\/(\d+).*/";
+	const CHROME_VERSION_PATTERN = "/.*Iron\/(\d+).*/";
 	private function chromeVersion($userAgent) {
         if (preg_match ( self::CHROME_VERSION_PATTERN, $userAgent, $match )) {
 			return $match [1];
