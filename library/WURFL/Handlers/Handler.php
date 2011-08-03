@@ -261,7 +261,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
 	 */
 	function applyConclusiveMatch($userAgent) {
 		$match = $this->lookForMatchingUserAgent($userAgent);
-		if (!empty($match)) {
+		if (!empty($match) && isset($this->userAgentsWithDeviceID[$match])) {
 			return $this->userAgentsWithDeviceID[$match];
 		}
 		return null;

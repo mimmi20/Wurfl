@@ -48,14 +48,14 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler {
 		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Mozilla" ) 
             && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Safari" );
 	}
-    /*
+    
     function lookForMatchingUserAgent($userAgent) {//var_dump($userAgent);exit;
 		return $this->applyRecoveryMatch($userAgent);
 	}
 	private $safaris = array (
         "" => "safari",
         "4.0" => "safari_4",
-        "5.0" => "safari_5",
+        "5.0" => "safari_5_0",
         "5.1" => "safari_5_1"
     );
 	
@@ -63,28 +63,27 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler {
 		$safariVersion = $this->safariVersion ( $userAgent );//var_dump($userAgent, $safariVersion);exit;
 		$safariId = "safari";
 		if (isset ( $this->safaris [$safariVersion] )) {
-			$safariId = $this->safaris [$safariVersion];
+			return $this->safaris [$safariVersion];
 		}
-		var_dump($userAgent, $safariVersion, $safariId, $this->getPrefix(), $this->userAgentsWithDeviceID);//exit;
-		if($this->isDeviceExist ( $safariId )) {var_dump('xxxx');
+        /*
+		//var_dump($userAgent, $safariVersion, $safariId);exit;
+		if($this->isDeviceExist ( $safariId )) {
 			return $safariId;
-		}var_dump('-------');
-        exit;
-		
+		}
+		/**/
 		return "generic_web_browser";
 		
 	}
 	
-	const SAFARI_VERSION_PATTERN = "/Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/(\d+\.\d)([\d.])* Safari\/.* /";
+	const SAFARI_VERSION_PATTERN = "/.*Version\/(\d+\.\d).*/";
 	private function safariVersion($userAgent) {
         if (WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Mozilla" ) 
             && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Safari" ) 
             && preg_match ( self::SAFARI_VERSION_PATTERN, $userAgent, $match )
-        ) {//var_dump($match);
+        ) {
 			return $match [1];
         }
 		return NULL;
 	}
-	/**/
 
 }

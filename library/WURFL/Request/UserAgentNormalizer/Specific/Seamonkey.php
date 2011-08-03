@@ -17,20 +17,22 @@
  * @version    $id$
  */
 /**
- * User Agent Normalizer
- * Return the safari user agent stripping out 
- * 	- all the chararcters between U; and Safari/xxx
- *	
- *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.1 Safari/525.18
- * 		becomes
- * 		Mozilla/5.0 (Macintosh Safari/525
+ * User Agent Normalizer - Return the firefox string with the major and minor version only
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface {
+class WURFL_Request_UserAgentNormalizer_Specific_Seamonkey implements WURFL_Request_UserAgentNormalizer_Interface {
 	
-	const PATTERN = "/(Mozilla\/5\.0.*U;)(?:.*)(Version\/\d+\.\d)(?:.*)(Safari\/\d{0,3})(?:.*)/";
-
 	public function normalize($userAgent) {
-		return preg_replace ( self::PATTERN, "$1 $2 $3", $userAgent );
+		return $this->firefoxWithMajorAndMinorVersion ( $userAgent );		
 	}
+	/**
+	 * Returns FireFox major and minor version numbers
+	 * @param string $userAgent
+	 * @return string Major and minor version
+	 */
+	private function firefoxWithMajorAndMinorVersion($userAgent) {
+		return substr ( $userAgent, strpos ( $userAgent, "Seamonkey" ), 13 );
+	}
+
 }
+

@@ -36,7 +36,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_Konqueror implements WURFL_Requ
 	 * @return string|int Major version number
 	 */
 	private function konquerorWithMajorVersion($userAgent) {
-		return substr($userAgent, strpos($userAgent, self::KONQUEROR), 10);
+		return substr($userAgent, strpos($userAgent, self::KONQUEROR), 13);
 	}
 
 }

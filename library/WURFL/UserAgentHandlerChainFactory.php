@@ -49,10 +49,15 @@ class WURFL_UserAgentHandlerChainFactory {
 
 
         $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chrome ());
+        $chromiumNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chromium ());
+        $rockmeltNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Rockmelt ());
+        $ironNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Iron ());
         $konquerorNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Konqueror ());
         $safariNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Safari ());
         $firefoxNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Firefox ());
+        $seamonkeyNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Seamonkey ());
         $msieNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_MSIE ());
+        $thunderbirdNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Thunderbird ());
 
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaHandler($context, $genericNormalizers));
         $lguplusNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_LGUPLUSNormalizer());
@@ -108,16 +113,16 @@ class WURFL_UserAgentHandlerChainFactory {
 
 
         // Web Browsers handlers
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_IronHandler($context, $chromeNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromiumHandler($context, $chromeNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_RockmeltHandler($context, $chromeNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_IronHandler($context, $ironNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromiumHandler($context, $chromiumNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_RockmeltHandler($context, $rockmeltNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromeHandler($context, $chromeNormalizer));
         //self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AOLHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KonquerorHandler($context, $konquerorNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SafariHandler($context, $safariNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ThunderbirdHandler($context, $firefoxNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SeamonkeyHandler($context, $firefoxNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ThunderbirdHandler($context, $thunderbirdNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SeamonkeyHandler($context, $seamonkeyNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FirefoxHandler($context, $firefoxNormalizer));
 
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MSIEHandler($context, $msieNormalizer));

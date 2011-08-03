@@ -47,28 +47,11 @@ class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler {
 		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'RockMelt' )
             && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Chrome" );
 	}
-	/*
+	
 	private $chromes = array (
-        "" => "google_chrome",
-        "1" => "google_chrome_1",
-        "2" => "google_chrome_2",
-        "3" => "google_chrome_3",
-        "4" => "google_chrome_4",
-        "5" => "google_chrome_5",
-        "6" => "google_chrome_6",
-        "7" => "google_chrome_7",
-        "8" => "google_chrome_8",
-        "9" => "google_chrome_9",
-        "10" => "google_chrome_10",
-        "11" => "google_chrome_11",
-        "12" => "google_chrome_12",
-        "13" => "google_chrome_13",
-        "14" => "google_chrome_14",
-        "15" => "google_chrome_15",
-        "16" => "google_chrome_16",
-        "17" => "google_chrome_17",
-        "18" => "google_chrome_18",
-        "19" => "google_chrome_19"
+        "" => "rockmelt",
+        "0.9" => "rockmelt_0_9",
+        "1.0" => "rockmelt_1"
     );
     
     function lookForMatchingUserAgent($userAgent) {
@@ -77,26 +60,26 @@ class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler {
 	
 	function applyRecoveryMatch($userAgent) {
 		$chromeVersion = $this->chromeVersion ( $userAgent );
-		$chromeId = "google_chrome";
+		$chromeId = "rockmelt";
+		//var_dump($userAgent, $chromeVersion);exit;
 		if (isset ( $this->chromes [$chromeVersion] )) {
-			$chromeId = $this->chromes [$chromeVersion];
+			return $this->chromes [$chromeVersion];
 		}
 		
-		//var_dump($userAgent, $chromeVersion, $this->getPrefix(), $this->userAgentsWithDeviceID);exit;
+        /*
 		if($this->isDeviceExist ( $chromeId )) {
 			return $chromeId;
 		}
-
+        /**/
 		return "generic_web_browser";
 		
 	}
 	
-	const CHROME_VERSION_PATTERN = "/.*Chrome\/(\d+).* /";
+	const CHROME_VERSION_PATTERN = "/.*RockMelt\/(\d+\.\d).*/";
 	private function chromeVersion($userAgent) {
         if (preg_match ( self::CHROME_VERSION_PATTERN, $userAgent, $match )) {
 			return $match [1];
         }
 		return NULL;
 	}
-    /**/
 }

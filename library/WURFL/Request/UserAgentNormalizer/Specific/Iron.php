@@ -17,20 +17,23 @@
  * @version    $id$
  */
 /**
- * User Agent Normalizer
- * Return the safari user agent stripping out 
- * 	- all the chararcters between U; and Safari/xxx
- *	
- *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.1 Safari/525.18
- * 		becomes
- * 		Mozilla/5.0 (Macintosh Safari/525
+ * User Agent Normalizer - Return the Chrome string with the major version
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface {
+class WURFL_Request_UserAgentNormalizer_Specific_Iron implements WURFL_Request_UserAgentNormalizer_Interface {
 	
-	const PATTERN = "/(Mozilla\/5\.0.*U;)(?:.*)(Version\/\d+\.\d)(?:.*)(Safari\/\d{0,3})(?:.*)/";
-
 	public function normalize($userAgent) {
-		return preg_replace ( self::PATTERN, "$1 $2 $3", $userAgent );
+		return $this->chromeWithMajorVersion ( $userAgent );		
 	}
+	
+	/**
+	 * Returns Google Chrome's Major version number
+	 * @param string $userAgent
+	 * @return string|int Version number
+	 */
+	private function chromeWithMajorVersion($userAgent) {
+		return substr ( $userAgent, strpos ( $userAgent, "Iron" ), 7);
+	}
+
 }
+

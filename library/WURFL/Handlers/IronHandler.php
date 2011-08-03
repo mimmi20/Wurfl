@@ -79,14 +79,9 @@ class WURFL_Handlers_IronHandler extends WURFL_Handlers_Handler {
 		$chromeVersion = $this->chromeVersion ( $userAgent );
 		$chromeId = "iron";
 		if (isset ( $this->chromes [$chromeVersion] )) {
-			$chromeId = $this->chromes [$chromeVersion];
+			return $this->chromes [$chromeVersion];
 		}
 		
-		//var_dump($userAgent, $chromeVersion, $this->getPrefix(), $this->userAgentsWithDeviceID);exit;
-		if($this->isDeviceExist ( $chromeId )) {
-			return $chromeId;
-		}
-
 		return "generic_web_browser";
 		
 	}

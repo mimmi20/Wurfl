@@ -46,5 +46,42 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler {
 		}
 		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Thunderbird" );
 	}
+    
+    function lookForMatchingUserAgent($userAgent) {//var_dump($userAgent);exit;
+		return $this->applyRecoveryMatch($userAgent);
+	}
+	private $safaris = array (
+        "" => "thunderbird",
+        '1.0' => 'thunderbird_1',
+        '2.0' => 'thunderbird_2',
+        '3.0' => 'thunderbird_3',
+        '3.1' => 'thunderbird_3_1',
+        "5.0" => "thunderbird_5"
+    );
+	
+	function applyRecoveryMatch($userAgent) {
+		$safariVersion = $this->safariVersion ( $userAgent );//var_dump($userAgent, $safariVersion);exit;
+		$safariId = "thunderbird";
+		if (isset ( $this->safaris [$safariVersion] )) {
+			return $this->safaris [$safariVersion];
+		}
+        /*
+		//var_dump($userAgent, $safariVersion, $safariId);exit;
+		if($this->isDeviceExist ( $safariId )) {
+			return $safariId;
+		}
+		/**/
+		return "generic_web_browser";
+		
+	}
+	
+	const SAFARI_VERSION_PATTERN = "/.*Thunderbird\/(\d+\.\d).*/";
+	private function safariVersion($userAgent) {
+        if (preg_match ( self::SAFARI_VERSION_PATTERN, $userAgent, $match )
+        ) {
+			return $match [1];
+        }
+		return NULL;
+	}
 
 }

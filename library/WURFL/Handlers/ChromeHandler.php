@@ -78,14 +78,9 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
 		$chromeVersion = $this->chromeVersion ( $userAgent );
 		$chromeId = "google_chrome";
 		if (isset ( $this->chromes [$chromeVersion] )) {
-			$chromeId = $this->chromes [$chromeVersion];
+			return $this->chromes [$chromeVersion];
 		}
 		
-		//var_dump($userAgent, $chromeVersion, $this->getPrefix(), $this->userAgentsWithDeviceID);exit;
-		if($this->isDeviceExist ( $chromeId )) {
-			return $chromeId;
-		}
-
 		return "generic_web_browser";
 		
 	}
@@ -95,7 +90,7 @@ class WURFL_Handlers_ChromeHandler extends WURFL_Handlers_Handler {
         if (preg_match ( self::CHROME_VERSION_PATTERN, $userAgent, $match )) {
 			return $match [1];
         }
-		return NULL;
+		return '';
 	}
     /**/
 }
