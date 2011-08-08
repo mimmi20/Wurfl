@@ -58,6 +58,7 @@ class WURFL_UserAgentHandlerChainFactory {
         $seamonkeyNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Seamonkey ());
         $msieNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_MSIE ());
         $thunderbirdNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Thunderbird ());
+        $flockNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Flock ());
 
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaHandler($context, $genericNormalizers));
         $lguplusNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_LGUPLUSNormalizer());
@@ -116,6 +117,7 @@ class WURFL_UserAgentHandlerChainFactory {
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_IronHandler($context, $ironNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromiumHandler($context, $chromiumNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_RockmeltHandler($context, $rockmeltNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FlockHandler($context, $flockNormalizer));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromeHandler($context, $chromeNormalizer));
         //self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AOLHandler($context, $genericNormalizers));
         self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaHandler($context, $genericNormalizers));

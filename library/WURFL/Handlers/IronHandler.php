@@ -44,8 +44,7 @@ class WURFL_Handlers_IronHandler extends WURFL_Handlers_Handler {
 		if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
 			return false;
 		}
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Iron" )
-            && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Chrome" );
+		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Iron" );
 	}
 	
 	private $chromes = array (
