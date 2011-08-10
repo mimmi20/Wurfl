@@ -70,7 +70,7 @@ abstract class ModelAbstract extends \Zend\Db\Table\AbstractTable
         
         $this->_db = \Zend\Registry::get('wurfldb');
 
-        $this->_config = \Zend\Registry::get('_config');
+        $this->_config = new \Zend\Config\Config($this->getActionController()->getInvokeArg('bootstrap')->getOptions());
         $this->_logger = \Zend\Registry::get('log');
     }
 
@@ -92,7 +92,7 @@ abstract class ModelAbstract extends \Zend\Db\Table\AbstractTable
     public function getCacheOptions()
     {
         if (empty($this->_cacheOptions)) {
-            $config      = \Zend\Registry::get('_config');
+            $this->_config = new \Zend\Config\Config($this->getActionController()->getInvokeArg('bootstrap')->getOptions());
             $modelConfig = $config->modelcache;
 
             $this->_cacheOptions = array(
@@ -114,7 +114,7 @@ abstract class ModelAbstract extends \Zend\Db\Table\AbstractTable
      */
     public function getCached($tagged = null)
     {
-        $config = \Zend\Registry::get('_config');
+        $this->_config = new \Zend\Config\Config($this->getActionController()->getInvokeArg('bootstrap')->getOptions());
 
         if ($config->modelcache->enable) {
             if (null === $this->_cache) {
@@ -173,7 +173,7 @@ abstract class ModelAbstract extends \Zend\Db\Table\AbstractTable
      */
     public function clean($mode = 'all', $tags = array())
     {
-        $config = \Zend\Registry::get('_config');
+        $this->_config = new \Zend\Config\Config($this->getActionController()->getInvokeArg('bootstrap')->getOptions());
 
         if ($config->modelcache->enable) {
             return $this->_cache->getCache()->clean($mode, $tags);
