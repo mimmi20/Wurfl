@@ -55,6 +55,7 @@ class WURFL_Handlers_SeamonkeyHandler extends WURFL_Handlers_Handler {
         "2.1" => "seamonkey_2_1",
         "2.2" => "seamonkey_2_2",
         "2.3" => "seamonkey_2_3",
+        "2.5" => "seamonkey_2_5",
     );
     
     function lookForMatchingUserAgent($userAgent) {

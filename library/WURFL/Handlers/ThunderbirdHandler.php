@@ -53,6 +53,7 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler {
 	private $safaris = array (
         "" => "thunderbird",
         '1.0' => 'thunderbird_1',
+        '1.5' => 'thunderbird_1_5',
         '2.0' => 'thunderbird_2',
         '3.0' => 'thunderbird_3',
         '3.1' => 'thunderbird_3_1',

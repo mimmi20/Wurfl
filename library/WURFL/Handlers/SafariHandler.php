@@ -55,10 +55,12 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler {
         "" => "safari",
         "3.0" => "safari_3_0",
         "3.1" => "safari_3_1",
+        "3.2" => "safari_3_2",
         "4.0" => "safari_4_0",
         "4.1" => "safari_4_1",
         "5.0" => "safari_5_0",
         "5.1" => "safari_5_1",
+        "55"  => "safari_5_0",
         "65"  => "safari_5_0",
         "75"  => "safari_5_1"
     );
