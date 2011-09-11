@@ -57,7 +57,11 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler {
         '2.0' => 'thunderbird_2',
         '3.0' => 'thunderbird_3',
         '3.1' => 'thunderbird_3_1',
-        "5.0" => "thunderbird_5"
+        "5.0" => "thunderbird_5",
+        "6.0" => "thunderbird_6",
+        "7.0" => "thunderbird_7",
+        "8.0" => "thunderbird_8",
+        "9.0" => "thunderbird_9"
     );
 	
 	function applyRecoveryMatch($userAgent) {
