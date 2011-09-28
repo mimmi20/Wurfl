@@ -1,5 +1,5 @@
 <?php
-declare(ENCODING = 'iso-8859-1');
+declare(ENCODING = 'utf-8');
 namespace TeraWurfl\Model;
 
 /**
@@ -7,9 +7,9 @@ namespace TeraWurfl\Model;
  *
  * PHP version 5
  *
- * @category  Kreditrechner
+ * @category  CreditCalc
  * @package   Models
- * @author    Thomas Mueller <thomas.mueller@unister-gmbh.de>
+ * @author    Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
  * @copyright 2007-2010 Unister GmbH
  * @version   SVN: $Id: Campaigns.php 24 2011-02-01 20:55:24Z tmu $
  */
@@ -17,9 +17,9 @@ namespace TeraWurfl\Model;
 /**
  * Model
  *
- * @category  Kreditrechner
+ * @category  CreditCalc
  * @package   Models
- * @author    Thomas Mueller <thomas.mueller@unister-gmbh.de>
+ * @author    Thomas Mueller <t_mueller_stolzenhain@yahoo.de>
  * @copyright 2007-2010 Unister GmbH
  */
 class Merges extends ModelAbstract
