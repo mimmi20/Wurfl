@@ -28,9 +28,10 @@
  */
 class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
 
-    protected $prefix = "OPERA_MINI";
+    protected $prefix = 'OPERA_MINI';
 
-    function __construct($wurflContext, $userAgentNormalizer = null) {
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
 
@@ -40,19 +41,21 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
      * @param string $userAgent
      * @return boolean
      */
-    public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, "Opera Mini");
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mini');
     }
 
     private $operaMinis = array(
-        "Opera Mini/1" => "browser_opera_mini_release1",
-        "Opera Mini/2" => "browser_opera_mini_release2",
-        "Opera Mini/3" => "browser_opera_mini_release3",
-        "Opera Mini/4" => "browser_opera_mini_release4",
-        "Opera Mini/5" => "browser_opera_mini_release5"
+        'Opera Mini/1' => 'browser_opera_mini_release1',
+        'Opera Mini/2' => 'browser_opera_mini_release2',
+        'Opera Mini/3' => 'browser_opera_mini_release3',
+        'Opera Mini/4' => 'browser_opera_mini_release4',
+        'Opera Mini/5' => 'browser_opera_mini_release5'
     );
 
-    function applyRecoveryMatch($userAgent) {
+    function applyRecoveryMatch($userAgent)
+    {
         foreach ($this->operaMinis as $key => $deviceId) {
             if (WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
                 return $deviceId;

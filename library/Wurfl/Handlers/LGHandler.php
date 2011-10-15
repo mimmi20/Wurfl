@@ -27,34 +27,37 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "LG";
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "LG" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "lg" );
-	}
-	
-	/**
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	function lookForMatchingUserAgent($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, "/", strpos ( $userAgent, "LG" ) );
+class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'LG';
+    
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'LG' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'lg' );
+    }
+    
+    /**
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    function lookForMatchingUserAgent($userAgent)
+    {
+        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos ( $userAgent, 'LG' ) );
         $userAgents = array_keys ( $this->userAgentsWithDeviceID );
         return parent::applyRisWithTollerance ( $userAgents, $userAgent, $tolerance );
 
-	}
-		
+    }
+        
 
 }

@@ -27,15 +27,17 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SendoHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	public function canHandle($userAgent) {
-		return (strpos ( $userAgent, "Sendo" ) === 0);
-	}
-	
-	protected $prefix = "SENDO";
+class WURFL_Handlers_SendoHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    public function canHandle($userAgent)
+    {
+        return (strpos ( $userAgent, 'Sendo' ) === 0);
+    }
+    
+    protected $prefix = 'SENDO';
 }

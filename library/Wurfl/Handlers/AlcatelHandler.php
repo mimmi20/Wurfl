@@ -27,21 +27,23 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct($wurflContext, $userAgentNormalizer);
-	}
-	
-	/**
-	 * Intercept all UAs starting with "Alcatel" or "ALCATEL"
-	 *
-	 * @param string $userAgent
-	 * @return boolean 
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Alcatel" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "ALCATEL" );
-	}
-	
-	protected $prefix = "ALCATEL";
+class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null) 
+    {
+        parent::__construct($wurflContext, $userAgentNormalizer);
+    }
+    
+    /**
+     * Intercept all UAs starting with 'Alcatel' or 'ALCATEL'
+     *
+     * @param string $userAgent
+     * @return boolean 
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Alcatel' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'ALCATEL' );
+    }
+    
+    protected $prefix = 'ALCATEL';
 }

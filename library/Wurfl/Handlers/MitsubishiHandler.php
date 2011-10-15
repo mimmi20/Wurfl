@@ -27,21 +27,23 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs starting with "Mitsu"
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Mitsu" );
-	}
-		
-	protected $prefix = "MITSUBISHI";
+class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs starting with 'Mitsu'
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Mitsu' );
+    }
+        
+    protected $prefix = 'MITSUBISHI';
 }

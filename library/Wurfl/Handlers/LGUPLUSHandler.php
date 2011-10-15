@@ -26,11 +26,12 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler {
+class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'LGUPLUS';
 
-    protected $prefix = "LGUPLUS";
-
-    function __construct($wurflContext, $userAgentNormalizer = null) {
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
 
@@ -39,8 +40,9 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler {
      * @param string $userAgent
      * @return string
      */
-    public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('LGUPLUS', 'lgtelecom'));
     }
 
     
@@ -49,25 +51,27 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler {
      * @param string $userAgent
      * @return string
      */
-    function applyConclusiveMatch($userAgent) {
+    function applyConclusiveMatch($userAgent)
+    {
         return WURFL_Constants::GENERIC;
     }
 
 
     private $lgupluses = array(
-        "generic_lguplus_rexos_facebook_browser" => array("Windows NT 5", "POLARIS"),
-        "generic_lguplus_rexos_webviewer_browser" => array("Windows NT 5"),
-        "generic_lguplus_winmo_facebook_browser" => array("Windows CE", "POLARIS"),
-        "generic_lguplus_android_webkit_browser" => array("Android", "AppleWebKit")
+        'generic_lguplus_rexos_facebook_browser' => array('Windows NT 5', 'POLARIS'),
+        'generic_lguplus_rexos_webviewer_browser' => array('Windows NT 5'),
+        'generic_lguplus_winmo_facebook_browser' => array('Windows CE', 'POLARIS'),
+        'generic_lguplus_android_webkit_browser' => array('Android', 'AppleWebKit')
     );
 
-    function applyRecoveryMatch($userAgent) {
+    function applyRecoveryMatch($userAgent)
+    {
         foreach($this->lgupluses as $deviceId => $values) {
-            if(WURFL_Handlers_Utils::checkIfContainsAll($userAgent, $values)) {
+            if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, $values)) {
                 return $deviceId;
             }
         }
-        return "generic_lguplus";
+        return 'generic_lguplus';
     }
 
 }

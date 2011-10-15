@@ -27,43 +27,47 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "WINDOWS_CE";
-	const TOLLERANCE = 3;
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs containing "Mozilla/" and "Windows CE"
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Mozilla/" ) && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Windows CE" );
-	}
-	
-	/**
-	 * Apply LD with a threshold of 3
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	function lookForMatchingUserAgent($userAgent) {
-		return WURFL_Handlers_Utils::ldMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, self::TOLLERANCE );
-	}
-	
-	/**
-	 * Apply Recovery Match
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	function applyRecoveryMatch($userAgent) {
-		return "generic_ms_mobile";
-	}
+class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'WINDOWS_CE';
+    const TOLLERANCE = 3;
+    
+    function __construct($wurflContext, $userAgentNormalizer = null) 
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs containing 'Mozilla/' and 'Windows CE'
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent) 
+    {
+        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Mozilla/' ) && WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Windows CE' );
+    }
+    
+    /**
+     * Apply LD with a threshold of 3
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    function lookForMatchingUserAgent($userAgent) 
+    {
+        return WURFL_Handlers_Utils::ldMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, self::TOLLERANCE );
+    }
+    
+    /**
+     * Apply Recovery Match
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    function applyRecoveryMatch($userAgent) 
+    {
+        return 'generic_ms_mobile';
+    }
 
 }

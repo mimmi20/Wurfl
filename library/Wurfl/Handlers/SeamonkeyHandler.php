@@ -26,62 +26,67 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SeamonkeyHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SEAMONKEY";
-	
-	public function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs Containing Seamonkey and are not mobile browsers
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
-			return false;
-		}
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "SeaMonkey" );
-	}
-	
-	private $chromes = array (
-        "" => "seamonkey",
-        "1.0" => "seamonkey_1",
-        "1.1" => "seamonkey_1_1",
-        "2.0" => "seamonkey_2",
-        "2.1" => "seamonkey_2_1",
-        "2.2" => "seamonkey_2_2",
-        "2.3" => "seamonkey_2_3",
-        "2.4" => "seamonkey_2_4",
-        "2.5" => "seamonkey_2_5",
-        "2.6" => "seamonkey_2_6",
+class WURFL_Handlers_SeamonkeyHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'SEAMONKEY';
+    
+    public function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs Containing Seamonkey and are not mobile browsers
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'SeaMonkey' );
+    }
+    
+    private $chromes = array(
+        '' => 'seamonkey',
+        '1.0' => 'seamonkey_1',
+        '1.1' => 'seamonkey_1_1',
+        '2.0' => 'seamonkey_2',
+        '2.1' => 'seamonkey_2_1',
+        '2.2' => 'seamonkey_2_2',
+        '2.3' => 'seamonkey_2_3',
+        '2.4' => 'seamonkey_2_4',
+        '2.5' => 'seamonkey_2_5',
+        '2.6' => 'seamonkey_2_6',
     );
     
-    function lookForMatchingUserAgent($userAgent) {
-		return $this->applyRecoveryMatch($userAgent);
-	}
-	
-	function applyRecoveryMatch($userAgent) {
-		$chromeVersion = $this->chromeVersion ( $userAgent );
-		$chromeId = "seamonkey";
-		if (isset ( $this->chromes [$chromeVersion] )) {
-			return $this->chromes [$chromeVersion];
-		}
-		
-		return "generic_web_browser";
-		
-	}
-	
-	const CHROME_VERSION_PATTERN = "/.*SeaMonkey\/(\d+\.\d).*/";
-	private function chromeVersion($userAgent) {
-        if (preg_match ( self::CHROME_VERSION_PATTERN, $userAgent, $match )) {
-			return $match [1];
+    function lookForMatchingUserAgent($userAgent)
+    {
+        return $this->applyRecoveryMatch($userAgent);
+    }
+    
+    function applyRecoveryMatch($userAgent)
+    {
+        $chromeVersion = $this->chromeVersion ( $userAgent );
+        $chromeId = 'seamonkey';
+        if (isset ( $this->chromes [$chromeVersion] )) {
+            return $this->chromes [$chromeVersion];
         }
-		return '';
-	}
+        
+        return 'generic_web_browser';
+        
+    }
+    
+    const CHROME_VERSION_PATTERN = '/.*SeaMonkey\/(\d+\.\d).*/';
+    private function chromeVersion($userAgent)
+    {
+        if (preg_match ( self::CHROME_VERSION_PATTERN, $userAgent, $match )) {
+            return $match [1];
+        }
+        return '';
+    }
     /**/
 
 }

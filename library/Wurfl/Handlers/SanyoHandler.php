@@ -27,20 +27,22 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs starting with "Sanyo" or "SANYO"
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Sanyo" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "SANYO" );
-	}
-	protected $prefix = "SANYO";
+class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs starting with 'Sanyo' or 'SANYO'
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Sanyo' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'SANYO' );
+    }
+    protected $prefix = 'SANYO';
 }

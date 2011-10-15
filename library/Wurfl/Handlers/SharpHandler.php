@@ -27,21 +27,23 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SharpHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs starting with "Sharp" or "SHARP"
-	 *
-	 * @param string $userAgent
-	 * @return boolean 
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Sharp" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "SHARP" );
-	}
-	
-	protected $prefix = "SHARP";
+class WURFL_Handlers_SharpHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs starting with 'Sharp' or 'SHARP'
+     *
+     * @param string $userAgent
+     * @return boolean 
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Sharp' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'SHARP' );
+    }
+    
+    protected $prefix = 'SHARP';
 }

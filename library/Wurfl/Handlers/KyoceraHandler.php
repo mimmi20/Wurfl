@@ -27,22 +27,24 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_KyoceraHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs starting with either 
-	 * "kyocera", "QC-" or "KWC-"
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "kyocera" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "QC-" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "KWC-" );
-	}
-	
-	protected $prefix = "KYOCERA";
+class WURFL_Handlers_KyoceraHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs starting with either 
+     * 'kyocera', 'QC-' or 'KWC-'
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'kyocera' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'QC-' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'KWC-' );
+    }
+    
+    protected $prefix = 'KYOCERA';
 }

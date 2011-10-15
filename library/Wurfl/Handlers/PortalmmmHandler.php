@@ -27,31 +27,34 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_PortalmmmHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs starting with "portalmmm"
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "portalmmm" );
-	}
-	
-	/**
-	 * Exact Match or return "generic"
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	public function lookForMatchingUserAgent($userAgent) {
-		return NULL;
-	}
-	
-	protected $prefix = "PORTALMMM";
+class WURFL_Handlers_PortalmmmHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs starting with 'portalmmm'
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'portalmmm' );
+    }
+    
+    /**
+     * Exact Match or return 'generic'
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    public function lookForMatchingUserAgent($userAgent)
+    {
+        return NULL;
+    }
+    
+    protected $prefix = 'PORTALMMM';
 }

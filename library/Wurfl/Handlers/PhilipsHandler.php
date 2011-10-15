@@ -27,21 +27,23 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs starting with either "Philips" or "PHILIPS"
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Philips" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "PHILIPS" );
-	}
-	
-	protected $prefix = "PHILIPS";
+class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs starting with either 'Philips' or 'PHILIPS'
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Philips' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'PHILIPS' );
+    }
+    
+    protected $prefix = 'PHILIPS';
 }

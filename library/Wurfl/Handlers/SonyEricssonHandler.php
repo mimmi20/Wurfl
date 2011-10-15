@@ -27,40 +27,43 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SONY_ERICSSON";
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs containing "SonyEricsson"
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "SonyEricsson" );
-	}
-	
-	/**
-	 * If UA starts with "SonyEricsson", apply RIS with FS as a threshold.
-	 * If UA contains "SonyEricsson" somewhere in the middle,
-	 * apply RIS with threshold second slash
-	 *
-	 * @param string $userAgent
-	 * @return string
-	 */
-	function lookForMatchingUserAgent($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "SonyEricsson" )) {
-			$tollerance = WURFL_Handlers_Utils::firstSlash ( $userAgent );
-			return WURFL_Handlers_Utils::risMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, $tollerance );
-		}
-		$tollerance = WURFL_Handlers_Utils::secondSlash ( $userAgent );
-		return WURFL_Handlers_Utils::risMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, $tollerance );
-	
-	}
+class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'SONY_ERICSSON';
+    
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs containing 'SonyEricsson'
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'SonyEricsson' );
+    }
+    
+    /**
+     * If UA starts with 'SonyEricsson', apply RIS with FS as a threshold.
+     * If UA contains 'SonyEricsson' somewhere in the middle,
+     * apply RIS with threshold second slash
+     *
+     * @param string $userAgent
+     * @return string
+     */
+    function lookForMatchingUserAgent($userAgent)
+    {
+        if (WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'SonyEricsson' )) {
+            $tollerance = WURFL_Handlers_Utils::firstSlash ( $userAgent );
+            return WURFL_Handlers_Utils::risMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, $tollerance );
+        }
+        $tollerance = WURFL_Handlers_Utils::secondSlash ( $userAgent );
+        return WURFL_Handlers_Utils::risMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, $tollerance );
+    
+    }
 
 }

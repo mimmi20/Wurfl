@@ -26,30 +26,32 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "MSIE";
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-/*	
-	function applyRecoveryMatch($userAgent){
-		return ($userAgent == 'MSIE 9.0')? 'generic_web_browser': null;
-	}
-*/	
-	/**
-	 * Intercept all UAs Starting with Mozilla and Containing MSIE and are not mobile browsers
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
-			return false;
-		}
-		
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Mozilla" ) && WURFL_Handlers_Utils::checkIfContains ( $userAgent, "MSIE" );
-	}
+class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'MSIE';
+    
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+/*    
+    function applyRecoveryMatch($userAgent){
+        return ($userAgent == 'MSIE 9.0')? 'generic_web_browser': null;
+    }
+*/    
+    /**
+     * Intercept all UAs Starting with Mozilla and Containing MSIE and are not mobile browsers
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
+            return false;
+        }
+        
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Mozilla' ) && WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'MSIE' );
+    }
 
 }

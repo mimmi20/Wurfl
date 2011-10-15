@@ -26,58 +26,63 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "FLOCK";
-	
-	public function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs Containing Flock and are not mobile browsers
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
-			return false;
-		}
-		return WURFL_Handlers_Utils::checkIfContains ( $userAgent, "Flock" );
-	}
+class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
+{
+    protected $prefix = 'FLOCK';
     
-    function lookForMatchingUserAgent($userAgent) {//var_dump($userAgent);exit;
-		return $this->applyRecoveryMatch($userAgent);
-	}
-	private $safaris = array (
-        "" => "flock",
+    public function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs Containing Flock and are not mobile browsers
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
+            return false;
+        }
+        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Flock' );
+    }
+    
+    function lookForMatchingUserAgent($userAgent)
+    {//var_dump($userAgent);exit;
+        return $this->applyRecoveryMatch($userAgent);
+    }
+    private $safaris = array(
+        '' => 'flock',
         '1.0' => 'flock_1',
         '1.2' => 'flock_1',
         '2.0' => 'flock_2',
         '2.5' => 'flock_2',
         '3.0' => 'flock_3',
         '3.1' => 'flock_3_1',
-        "5.0" => "flock_5"
+        '5.0' => 'flock_5'
     );
-	
-	function applyRecoveryMatch($userAgent) {
-		$safariVersion = $this->safariVersion ( $userAgent );//var_dump($userAgent, $safariVersion);exit;
-		$safariId = "flock";
-		if (isset ( $this->safaris [$safariVersion] )) {
-			return $this->safaris [$safariVersion];
-		}
-		return "generic_web_browser";
-		
-	}
-	
-	const SAFARI_VERSION_PATTERN = "/.*Flock\/(\d+\.\d).*/";
-	private function safariVersion($userAgent) {
+    
+    function applyRecoveryMatch($userAgent)
+    {
+        $safariVersion = $this->safariVersion ( $userAgent );//var_dump($userAgent, $safariVersion);exit;
+        $safariId = 'flock';
+        if (isset ( $this->safaris [$safariVersion] )) {
+            return $this->safaris [$safariVersion];
+        }
+        return 'generic_web_browser';
+        
+    }
+    
+    const SAFARI_VERSION_PATTERN = '/.*Flock\/(\d+\.\d).*/';
+    private function safariVersion($userAgent)
+    {
         if (preg_match ( self::SAFARI_VERSION_PATTERN, $userAgent, $match )
         ) {
-			return $match [1];
+            return $match [1];
         }
-		return NULL;
-	}
+        return NULL;
+    }
 
 }

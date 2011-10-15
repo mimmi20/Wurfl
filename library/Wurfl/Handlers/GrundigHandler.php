@@ -27,21 +27,23 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_GrundigHandler extends WURFL_Handlers_Handler {
-	
-	function __construct($wurflContext, $userAgentNormalizer = null) {
-		parent::__construct ( $wurflContext, $userAgentNormalizer );
-	}
-	
-	/**
-	 * Intercept all UAs starting with "Grundig" or "GRUNDIG" 
-	 *
-	 * @param string $userAgent
-	 * @return boolean
-	 */
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "Grundig" ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, "GRUNDIG" );
-	}
-	
-	protected $prefix = "GRUNDIG";
+class WURFL_Handlers_GrundigHandler extends WURFL_Handlers_Handler
+{
+    function __construct($wurflContext, $userAgentNormalizer = null)
+    {
+        parent::__construct ( $wurflContext, $userAgentNormalizer );
+    }
+    
+    /**
+     * Intercept all UAs starting with 'Grundig' or 'GRUNDIG' 
+     *
+     * @param string $userAgent
+     * @return boolean
+     */
+    public function canHandle($userAgent)
+    {
+        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Grundig' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'GRUNDIG' );
+    }
+    
+    protected $prefix = 'GRUNDIG';
 }
