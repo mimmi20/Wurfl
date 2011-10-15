@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -83,7 +83,7 @@ class WURFL_Handlers_Utils
      */
     public static function risMatch($collection, $needle, $tolerance) 
     {
-        return WURFL_Handlers_Matcher_RISMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+        return WURFL_Handlers_Matcher_RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
     
     /**
@@ -96,7 +96,7 @@ class WURFL_Handlers_Utils
      */
     public static function ldMatch($collection, $needle, $tolerance = 7) 
     {
-        return WURFL_Handlers_Matcher_LDMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+        return WURFL_Handlers_Matcher_LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
     
     /**
@@ -109,8 +109,8 @@ class WURFL_Handlers_Utils
      */
     public static function indexOfOrLength($string, $target, $startingIndex = 0) 
     {
-        $length = strlen ( $string );
-        $pos    = strpos ( $string, $target, $startingIndex );
+        $length = strlen($string);
+        $pos    = strpos($string, $target, $startingIndex);
         return $pos === false ? $length : $pos;
     }
     
@@ -118,21 +118,21 @@ class WURFL_Handlers_Utils
      * Lowest char index of the first instance of any of the $needles found in $userAgent, starting at $startIndex;
      * if no match is found, the length of the string is returned
      * @param string $userAgent haystack
-     * @param array $needles Array of (string)needles to search for in $userAgent
+     * @param array $needles Array of(string)needles to search for in $userAgent
      * @param int $startIndex Char index for start of search
      * @return int Char index of left-most match or length of string
      */
     public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex) 
     {
         $positions = array();
-        foreach ( $needles as $needle ) {
-            $pos = strpos ( $userAgent, $needle, $startIndex );
-            if ($pos !== false) {
+        foreach($needles as $needle) {
+            $pos = strpos($userAgent, $needle, $startIndex);
+            if($pos !== false) {
                 $positions [] = $pos;
             }
         }
-        sort ( $positions );        
-        return count ( $positions ) > 0 ? $positions [0] : strlen ( $userAgent );
+        sort($positions);        
+        return count($positions) > 0 ? $positions [0] : strlen($userAgent);
     }
     
     /**
@@ -143,8 +143,8 @@ class WURFL_Handlers_Utils
     public static function isMobileBrowser($userAgent) 
     {
         $mobileBrowser = false;
-        foreach ( self::$_mobileBrowsers as $key ) {
-            if (stripos ( $userAgent, $key ) !== FALSE) {
+        foreach(self::$_mobileBrowsers as $key) {
+            if(stripos($userAgent, $key) !== FALSE) {
                 $mobileBrowser = true;
                 break;
             }
@@ -172,9 +172,9 @@ class WURFL_Handlers_Utils
      */
     public static function thirdSemiColumn($haystack) 
     {
-        $thirdSemiColumnIndex = self::ordinalIndexOf ( $haystack, ';', 3 );
-        if ($thirdSemiColumnIndex < 0) {
-            return strlen ( $haystack );
+        $thirdSemiColumnIndex = self::ordinalIndexOf($haystack, ';', 3);
+        if($thirdSemiColumnIndex < 0) {
+            return strlen($haystack);
         }
         return $thirdSemiColumnIndex;
     }
@@ -189,24 +189,24 @@ class WURFL_Handlers_Utils
      */
     public static function ordinalIndexOf($haystack, $needle, $ordinal) 
     {
-        if (is_null ( $haystack ) || empty ( $haystack )) {
+        if(is_null($haystack) || empty($haystack)) {
             throw new InvalidArgumentException('haystack must not be null or empty');
         }
         
-        if (! is_integer ( $ordinal )) {
+        if(! is_integer($ordinal)) {
             throw new InvalidArgumentException('ordinal must be a positive ineger');
         }
         
         $found = 0;
         $index = - 1;
         do {
-            $index = strpos ( $haystack, $needle, $index + 1 );
-            $index = is_int ( $index ) ? $index : - 1;
-            if ($index < 0) {
+            $index = strpos($haystack, $needle, $index + 1);
+            $index = is_int($index) ? $index : - 1;
+            if($index < 0) {
                 return $index;
             }
             $found ++;
-        } while ( $found < $ordinal );
+        } while($found < $ordinal);
         
         return $index;
     
@@ -219,8 +219,8 @@ class WURFL_Handlers_Utils
      */
     public static function firstSlash($string)
     {
-        $firstSlash = strpos ( $string, '/' );
-        return $firstSlash != 0 ? $firstSlash : strlen ( $string );
+        $firstSlash = strpos($string, '/');
+        return $firstSlash != 0 ? $firstSlash : strlen($string);
     }
     
     /**
@@ -230,11 +230,11 @@ class WURFL_Handlers_Utils
      */
     public static function secondSlash($string)
     {
-        $firstSlash = strpos ( $string, '/' );
-        if ($firstSlash === false) {
-            return strlen ( $string );
+        $firstSlash = strpos($string, '/');
+        if($firstSlash === false) {
+            return strlen($string);
         }
-        return strpos ( substr ( $string, $firstSlash + 1 ), '/' ) + $firstSlash;
+        return strpos(substr($string, $firstSlash + 1), '/') + $firstSlash;
     }
     
     /**
@@ -244,8 +244,8 @@ class WURFL_Handlers_Utils
      */
     public static function firstSpace($string)
     {
-        $firstSpace = strpos ( $string, ' ' );
-        return ($firstSpace == 0) ? strlen ( $string ) : $firstSpace;
+        $firstSpace = strpos($string, ' ');
+        return($firstSpace == 0) ? strlen($string) : $firstSpace;
     }
     
     /**
@@ -255,7 +255,7 @@ class WURFL_Handlers_Utils
      */
     public static function firstSemiColonOrLength($string)
     {
-        return self::firstMatchOrLength ( $string, ';' );
+        return self::firstMatchOrLength($string, ';');
     }
     
     /**
@@ -266,8 +266,8 @@ class WURFL_Handlers_Utils
      */
     public static function firstMatchOrLength($string, $toMatch)
     {
-        $firstMatch = strpos ( $string, $toMatch );
-        return ($firstMatch == 0) ? strlen ( $string ) : $firstMatch;
+        $firstMatch = strpos($string, $toMatch);
+        return($firstMatch == 0) ? strlen($string) : $firstMatch;
     }
     
     /**
@@ -278,19 +278,19 @@ class WURFL_Handlers_Utils
      */
     public static function checkIfContains($haystack, $needle)
     {
-        return strpos ( $haystack, $needle ) !== false;
+        return strpos($haystack, $needle) !== false;
     }
     
     /**
-     * Returns true if $haystack contains any of the (string)needles in $needles
+     * Returns true if $haystack contains any of the(string)needles in $needles
      * @param string $haystack Haystack
-     * @param array $needles Array of (string)needles
+     * @param array $needles Array of(string)needles
      * @return bool
      */
     public static function checkIfContainsAnyOf($haystack, $needles)
     {
-        foreach ($needles as $needle) {
-            if (self::checkIfContains($haystack, $needle)) {
+        foreach($needles as $needle) {
+            if(self::checkIfContains($haystack, $needle)) {
                 return true;
             }
         }
@@ -299,15 +299,15 @@ class WURFL_Handlers_Utils
     }
     
     /**
-     * Returns true if $haystack contains all of the (string)needles in $needles
+     * Returns true if $haystack contains all of the(string)needles in $needles
      * @param string $haystack Haystack
-     * @param array $needles Array of (string)needles
+     * @param array $needles Array of(string)needles
      * @return bool
      */
     public static function checkIfContainsAll($haystack, $needles=array())
     {
-        foreach ($needles as $needle) {
-            if (!self::checkIfContains($haystack, $needle)) {
+        foreach($needles as $needle) {
+            if(!self::checkIfContains($haystack, $needle)) {
                 return false;
             }
         }
@@ -324,7 +324,7 @@ class WURFL_Handlers_Utils
      */
     public static function checkIfContainsCaseInsensitive($haystack, $needle) 
     {
-        return stripos ( $haystack, $needle ) !== FALSE;
+        return stripos($haystack, $needle) !== FALSE;
     }
     
     /**
@@ -335,20 +335,20 @@ class WURFL_Handlers_Utils
      */
     public static function checkIfStartsWith($haystack, $needle) 
     {
-        return strpos ( $haystack, $needle ) === 0;
+        return strpos($haystack, $needle) === 0;
     }
     
     /**
      * Returns true if $haystack starts with any of the $needles
      * @param string $haystack Haystack
-     * @param array $needles Array of (string)needles
+     * @param array $needles Array of(string)needles
      * @return bool
      */
     public static function checkIfStartsWithAnyOf($haystack, $needles) 
     {
-        if (is_array( $needles )) {
-            foreach ( $needles as $needle ) {
-                if (strpos ( $haystack, $needle ) === 0) {
+        if(is_array($needles)) {
+            foreach($needles as $needle) {
+                if(strpos($haystack, $needle) === 0) {
                     return true;
                 }
             }
@@ -363,6 +363,6 @@ class WURFL_Handlers_Utils
      */
     public static function removeLocale($userAgent) 
     {
-        return preg_replace ( self::LANGUAGE_PATTERN, '', $userAgent, 1 );
+        return preg_replace(self::LANGUAGE_PATTERN, '', $userAgent, 1);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -41,11 +41,11 @@ class WURFL_Context {
 	}
 	
 	public function cacheProvider($cacheProvider) {
-		return new WURFL_Context ( $this->persistenceProvider, $cacheProvider, $this->logger );
+		return new WURFL_Context($this->persistenceProvider, $cacheProvider, $this->logger);
 	}
 	
 	public function logger($logger) {
-		return new WURFL_Context ( $this->persistenceProvider, $this->cacheProvider, $logger );
+		return new WURFL_Context($this->persistenceProvider, $this->cacheProvider, $logger);
 	}
 	
 	public function __get($name) {

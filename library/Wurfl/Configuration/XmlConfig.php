@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -50,8 +50,8 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
      */
     private function wurflPatches($patchElements) {
         $patches = array();
-        if ($patchElements) {
-            foreach ($patchElements as $patchElement) {
+        if($patchElements) {
+            foreach($patchElements as $patchElement) {
                 $patches[] = parent::getFullPath((string) $patchElement);
             }
         }
@@ -63,8 +63,8 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
      * @param array $allowReloadElement array of SimpleXMLElement objects
      */
     private function allowReload($allowReloadElement) {
-        if (!empty($allowReloadElement)) {
-            return (bool) $allowReloadElement[0];
+        if(!empty($allowReloadElement)) {
+            return(bool) $allowReloadElement[0];
         }
         return false;
     }
@@ -75,7 +75,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
      * @return string Log directory
      */
 	private function logDir($logDirElement) {
-        if (!empty($logDirElement)) {
+        if(!empty($logDirElement)) {
             return parent::getFullPath((string) $logDirElement[0]);
         }
         return null;
@@ -88,8 +88,8 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
      */
     private function persistence($persistenceElement) {
         $persistence = array();
-        if ($persistenceElement) {
-            $persistence["provider"] = (string)$persistenceElement[0]->provider;
+        if($persistenceElement) {
+            $persistence["provider"] =(string)$persistenceElement[0]->provider;
             $persistence["params"] = $this->_toArray((string)$persistenceElement[0]->params);
         }
         return $persistence;
@@ -103,10 +103,10 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
     private function _toArray($params) {
         $paramsArray = array();
 
-        foreach (explode(",", $params) as $param) {
+        foreach(explode(",", $params) as $param) {
             $paramNameValue = explode("=", $param);
             if(count($paramNameValue) > 1) {
-                if (strcmp(WURFL_Configuration_Config::DIR, $paramNameValue[0]) == 0) {
+                if(strcmp(WURFL_Configuration_Config::DIR, $paramNameValue[0]) == 0) {
                     $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
                 }
                 $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);                                

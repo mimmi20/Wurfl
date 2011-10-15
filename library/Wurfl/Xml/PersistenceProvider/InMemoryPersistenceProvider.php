@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -32,12 +32,12 @@ class WURFL_Xml_PersistenceProvider_InMemoryPersistenceProvider extends WURFL_Xm
 	}
 	
 	public function save($objectId, $object) {
-		$this->map[$this->encode ( $objectId )] = $object;
+		$this->map[$this->encode($objectId)] = $object;
 	}
 	
 	public function load($objectId) {
-		$key = $this->encode ( $objectId);
-		if (isset($this->map [$key])) {
+		$key = $this->encode($objectId);
+		if(isset($this->map [$key])) {
 			return $this->map [$key];
 		}
 		
@@ -46,9 +46,9 @@ class WURFL_Xml_PersistenceProvider_InMemoryPersistenceProvider extends WURFL_Xm
 	}
 	
 	public function remove($objectId) {
-		$key = $this->encode ( $objectId );
+		$key = $this->encode($objectId);
 		if($this->map [$key]) {
-			unset ( $this->map [$key] );
+			unset($this->map [$key]);
 		}
 	
 	}

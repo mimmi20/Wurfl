@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -32,7 +32,7 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
     
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -43,10 +43,10 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
+        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Flock' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Flock');
     }
     
     function lookForMatchingUserAgent($userAgent)
@@ -62,13 +62,13 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
         '3.0' => 'flock_3',
         '3.1' => 'flock_3_1',
         '5.0' => 'flock_5'
-    );
+);
     
     function applyRecoveryMatch($userAgent)
     {
-        $safariVersion = $this->safariVersion ( $userAgent );//var_dump($userAgent, $safariVersion);exit;
+        $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'flock';
-        if (isset ( $this->safaris [$safariVersion] )) {
+        if(isset($this->safaris [$safariVersion])) {
             return $this->safaris [$safariVersion];
         }
         return 'generic_web_browser';
@@ -78,8 +78,8 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
     const SAFARI_VERSION_PATTERN = '/.*Flock\/(\d+\.\d).*/';
     private function safariVersion($userAgent)
     {
-        if (preg_match ( self::SAFARI_VERSION_PATTERN, $userAgent, $match )
-        ) {
+        if(preg_match(self::SAFARI_VERSION_PATTERN, $userAgent, $match)
+) {
             return $match [1];
         }
         return NULL;

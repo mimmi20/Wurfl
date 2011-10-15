@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -66,7 +66,7 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
 	 */
 	public function normalize($userAgent) {
 		$normalizedUserAgent = $userAgent;
-		foreach ($this->_userAgentNormalizers as $normalizer) {
+		foreach($this->_userAgentNormalizers as $normalizer) {
 			$normalizedUserAgent = $normalizer->normalize($normalizedUserAgent);
 		}
 		return $normalizedUserAgent;

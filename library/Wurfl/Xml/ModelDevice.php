@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -67,8 +67,8 @@ class WURFL_Xml_ModelDevice {
 		$this->fallBack = $fallBack; 
 		$this->actualDeviceRoot = $actualDeviceRoot == true ? true : false;
 		$this->specific = $specific == true ? true : false;
-		if (is_array($groupIdCapabilitiesMap)) {
-			foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
+		if(is_array($groupIdCapabilitiesMap)) {
+			foreach($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
 				$this->groupIdCapabilitiesNameMap[$groupId] = array_keys($capabilitiesNameValue); 
 				$this->capabilities = array_merge($this->capabilities, $capabilitiesNameValue);
 			}
@@ -127,8 +127,8 @@ class WURFL_Xml_ModelDevice {
 	 */
 	function getGroupIdCapabilitiesMap() {
 		$groupIdCapabilitiesMap = array();
-		foreach ($this->groupIdCapabilitiesNameMap as $groupId => $capabilitiesName) {
-			foreach ($capabilitiesName as $capabilityName) {
+		foreach($this->groupIdCapabilitiesNameMap as $groupId => $capabilitiesName) {
+			foreach($capabilitiesName as $capabilityName) {
 				$groupIdCapabilitiesMap[$groupId][$capabilityName] = $this->capabilities[$capabilityName];
 			}
 		}		

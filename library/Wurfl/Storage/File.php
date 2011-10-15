@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -25,7 +25,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
     private $defaultParams = array(
         "dir" => "/var/tmp",
         "expiration" => 0,
-    );
+);
 
     private $expire;
     private $root;
@@ -43,8 +43,8 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
         $this->expire = $params["expiration"];
     }
     private function createCacheDirIfNotExist() {
-        if (!is_dir($this->root)) {
-            @mkdir ($this->root, 0777, TRUE);
+        if(!is_dir($this->root)) {
+            @mkdir($this->root, 0777, TRUE);
             if(!is_dir($this->root)){
             	throw new WURFL_Storage_Exception("The file cache directory does not exist and could not be created. Please make sure the cache directory is writeable: ".$this->root);
             }
@@ -61,7 +61,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
     }
 
     private function unwrap($value, $path) {
-        if ($value->isExpired()) {
+        if($value->isExpired()) {
             unlink($path);
             return NULL;
         }
@@ -85,7 +85,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
 
     function spread($md5, $n = 2) {
         $path = "";
-        for ($i = 0; $i < $n; $i++) {
+        for($i = 0; $i < $n; $i++) {
             $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
         }
         $path .= substr($md5, $n);
@@ -105,7 +105,7 @@ class StorageObject {
 
     public function __construct($value, $expire) {
         $this->value = $value;
-        $this->expiringOn = ($expire === 0) ? $expire : time() + $expire;
+        $this->expiringOn =($expire === 0) ? $expire : time() + $expire;
     }
 
     public function value() {
@@ -113,7 +113,7 @@ class StorageObject {
     }
 
     public function isExpired() {
-        if ($this->expiringOn === 0) {
+        if($this->expiringOn === 0) {
             return false;
         }
         return $this->expiringOn < time();

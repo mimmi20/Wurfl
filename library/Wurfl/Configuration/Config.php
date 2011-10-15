@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -48,7 +48,7 @@ abstract class  WURFL_Configuration_Config {
 	 */
 	protected $allowReload = false;
 	/**
-	 * @var string wurfl file (normally wurfl.xml)
+	 * @var string wurfl file(normally wurfl.xml)
 	 */
 	protected $wurflFile;
 	/**
@@ -128,7 +128,7 @@ abstract class  WURFL_Configuration_Config {
 	 */
 	protected function getFullPath($fileName) {
 		$fileName = trim($fileName);
-        if(realpath($fileName) && !(basename($fileName) === $fileName )) {
+        if(realpath($fileName) && !(basename($fileName) === $fileName)) {
 			return realpath($fileName);
 		}
 		$fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));

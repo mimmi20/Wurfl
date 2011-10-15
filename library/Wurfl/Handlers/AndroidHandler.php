@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -33,7 +33,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
     
     public function __construct($wurflContext, $userAgentNormalizer = null) 
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -44,7 +44,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Android' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
     }
     
     /**
@@ -54,9 +54,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
      */
     function lookForMatchingUserAgent($userAgent)
     {
-        $tollerance = WURFL_Handlers_Utils::indexOfOrLength ( $userAgent, ' ', strpos ( $userAgent, 'Android' ) );
-        $userAgents = array_keys ( $this->userAgentsWithDeviceID );
-        return parent::applyRisWithTollerance ( $userAgents, $userAgent, $tollerance );
+        $tollerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' ', strpos($userAgent, 'Android'));
+        $userAgents = array_keys($this->userAgentsWithDeviceID);
+        return parent::applyRisWithTollerance($userAgents, $userAgent, $tollerance);
     }
     
     
@@ -69,7 +69,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
         '2_2' => 'generic_android_ver2_2',
         '2_3' => 'generic_android_ver2_3',
         '3_0' => 'generic_android_ver3_0',
-    );
+);
     
     /**
      * If the User Agent contains 'Android' 
@@ -82,9 +82,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
     {
         $deviceId = 'generic_android';
         $platformVersion = $this->platformVersion($userAgent);
-        if (isset($this->androidDeviceIdByVersion[$platformVersion])) {
+        if(isset($this->androidDeviceIdByVersion[$platformVersion])) {
             $deviceId = $this->androidDeviceIdByVersion[$platformVersion];
-        } else if ($this->isFroyo($userAgent)) {
+        } else if($this->isFroyo($userAgent)) {
             return 'generic_android_ver2_2';
         }
         return $deviceId;
@@ -101,7 +101,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
     private function platformVersion($userAgent)
     {
         $matches = array();
-        if (preg_match(self::ANDROID_PLATFORM_VERSION, $userAgent, $matches) != 0) {
+        if(preg_match(self::ANDROID_PLATFORM_VERSION, $userAgent, $matches) != 0) {
             return $matches[1] . '_' . $matches[2];
         }
         return '';

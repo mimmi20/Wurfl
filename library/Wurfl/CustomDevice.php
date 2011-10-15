@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -54,8 +54,8 @@ class WURFL_CustomDevice {
 	 * @throws InvalidArgumentException if the $modelDevice is not an array of at least one WURFL_Xml_ModelDevice
 	 */
 	public function __construct($modelDevices) {
-		if (! is_array ( $modelDevices ) || count ( $modelDevices ) < 1) {
-			throw new InvalidArgumentException ( "modelDevices must be an array of at least one ModelDevice." );
+		if(! is_array($modelDevices) || count($modelDevices) < 1) {
+			throw new InvalidArgumentException("modelDevices must be an array of at least one ModelDevice.");
 		}
 		$this->modelDevices = $modelDevices;
 	
@@ -68,8 +68,8 @@ class WURFL_CustomDevice {
 	 * @return string
 	 */
 	public function __get($name) {
-		if (isset($name)) {
-			switch ($name) {
+		if(isset($name)) {
+			switch($name) {
 				case "id" :
 				case "userAgent" :
 				case "fallBack" :
@@ -89,8 +89,8 @@ class WURFL_CustomDevice {
 	 * @return bool
 	 */
 	public function isSpecific() {
-		foreach ($this->modelDevices as $modelDevice) {
-			if ($modelDevice->specific === true || $modelDevice->actualDeviceRoot === true) {
+		foreach($this->modelDevices as $modelDevice) {
+			if($modelDevice->specific === true || $modelDevice->actualDeviceRoot === true) {
 				return true;
 			}
 		}
@@ -107,15 +107,15 @@ class WURFL_CustomDevice {
 	 * @see WURFL_Xml_ModelDevice::getCapability()
 	 */
 	public function getCapability($capabilityName) {
-		if (empty($capabilityName)) {
+		if(empty($capabilityName)) {
 			throw new InvalidArgumentException("capability name must not be empty");
 		}
 		if(!$this->isCapabilityDefined($capabilityName)) {
 			throw new InvalidArgumentException("no capability named [$capabilityName] is present in wurfl.");	
 		}
-		foreach ($this->modelDevices as $modelDevice) {
+		foreach($this->modelDevices as $modelDevice) {
 			$capabilityValue = $modelDevice->getCapability($capabilityName);
-			if ($capabilityValue != null) {
+			if($capabilityValue != null) {
 				return $capabilityValue;
 			}
 		}
@@ -137,8 +137,8 @@ class WURFL_CustomDevice {
 	 * @see WURFL_Xml_ModelDevice::getCapabilities()
 	 */
 	public function getAllCapabilities() {
-		$capabilities = array ();
-		foreach (array_reverse($this->modelDevices) as $modelDevice) {
+		$capabilities = array();
+		foreach(array_reverse($this->modelDevices) as $modelDevice) {
 			$capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
 		}
 		return $capabilities;

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -70,7 +70,7 @@ class WURFL_WURFLService {
 	 * @return WURFL_Xml_ModelDevice
 	 */
 	public function getDevice($deviceID) {
-		return $this->getWrappedDevice ( $deviceID );
+		return $this->getWrappedDevice($deviceID);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ class WURFL_WURFLService {
 	 * @return array of strings
 	 */
 	public function getAllDevicesID() {
-		return $this->_deviceRepository->getAllDevicesID ();
+		return $this->_deviceRepository->getAllDevicesID();
 	}
 	
 	/**
@@ -90,16 +90,16 @@ class WURFL_WURFLService {
 	 * @return array
 	 */
 	public function getDeviceHierarchy($deviceID) {
-		return $this->_deviceRepository->getDeviceHierarchy ( $deviceID );
+		return $this->_deviceRepository->getDeviceHierarchy($deviceID);
 	}
 	
 	public function getListOfGroups() {
-		return $this->_deviceRepository->getListOfGroups ();
+		return $this->_deviceRepository->getListOfGroups();
 	}
 	
 	
 	public function getCapabilitiesNameForGroup($groupId) {
-		return $this->_deviceRepository->getCapabilitiesNameForGroup ($groupId);
+		return $this->_deviceRepository->getCapabilitiesNameForGroup($groupId);
 	}
 	
 	// ******************** private functions *****************************
@@ -112,7 +112,7 @@ class WURFL_WURFLService {
 	 */
 	private function deviceIdForRequest($request) {
 		$deviceId = $this->_cacheProvider->load($request->id);
-		if (empty($deviceId)) {
+		if(empty($deviceId)) {
 			$deviceId = $this->_userAgentHandlerChain->match($request);
 			// save it in cache
 			$this->_cacheProvider->save($request->id, $deviceId);
@@ -129,7 +129,7 @@ class WURFL_WURFLService {
 	private function getWrappedDevice($deviceID) {
 		$modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
 		return new WURFL_CustomDevice($modelDevices);
-		//return new WURFL_Device ( $modelDevice, new WURFL_CapabilitiesHolder ( $modelDevice, $this->_deviceRepository, $this->_cacheProvider ) );
+		//return new WURFL_Device($modelDevice, new WURFL_CapabilitiesHolder($modelDevice, $this->_deviceRepository, $this->_cacheProvider));
 	}
 }
 

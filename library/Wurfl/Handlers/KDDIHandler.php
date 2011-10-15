@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -33,7 +33,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
     
     function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -44,15 +44,15 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'KDDI' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'KDDI');
     }
     
     /**
      */
     function lookForMatchingUserAgent($userAgent)
     {
-        $tolerance = $this->tolerance ( $userAgent );
-        return WURFL_Handlers_Utils::risMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, $tolerance );
+        $tolerance = $this->tolerance($userAgent);
+        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
     
     /**
@@ -62,7 +62,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
      */
     function applyRecoveryMatch($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Opera' )) {
+        if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera')) {
             return 'opera';
         }
         return 'opwv_v62_generic';
@@ -70,15 +70,15 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
     
     private function tolerance($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'KDDI/' )) {
-            return WURFL_Handlers_Utils::secondSlash ( $userAgent );
+        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
+            return WURFL_Handlers_Utils::secondSlash($userAgent);
         }
         
-        if (WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'KDDI' )) {
-            return WURFL_Handlers_Utils::firstSlash ( $userAgent );
+        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI')) {
+            return WURFL_Handlers_Utils::firstSlash($userAgent);
         }
         
-        return WURFL_Handlers_Utils::indexOfOrLength ( $userAgent, ')' );
+        return WURFL_Handlers_Utils::indexOfOrLength($userAgent, ')');
     
     }
 

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -31,7 +31,7 @@ class WURFL_Handlers_KyoceraHandler extends WURFL_Handlers_Handler
 {
     function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -43,7 +43,7 @@ class WURFL_Handlers_KyoceraHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'kyocera' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'QC-' ) || WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'KWC-' );
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'kyocera') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'QC-') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KWC-');
     }
     
     protected $prefix = 'KYOCERA';

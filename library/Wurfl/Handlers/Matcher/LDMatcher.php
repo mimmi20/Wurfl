@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -39,7 +39,7 @@ class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interfa
 	 * @return WURFL_Handlers_LDMatcher
 	 */
 	public static function INSTANCE() {
-		if (self::$instance === null) {
+		if(self::$instance === null) {
 			self::$instance = new self();
 		}
 		return self::$instance;
@@ -48,10 +48,10 @@ class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interfa
 	public function match(&$collection, $needle, $tolerance) {
 		$best = $tolerance;
 		$match = '';
-		foreach ( $collection as $userAgent ) {
-			if (abs ( strlen ( $needle ) - strlen ( $userAgent ) ) <= $tolerance) {
+		foreach($collection as $userAgent) {
+			if(abs(strlen($needle) - strlen($userAgent)) <= $tolerance) {
 				$current = levenshtein($needle, $userAgent);
-				if ($current <= $best) {
+				if($current <= $best) {
 					$best = $current - 1;
 					$match = $userAgent;
 				}

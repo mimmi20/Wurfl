@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -42,7 +42,7 @@ class WURFL_Cache_CacheProviderFactory  {
 		$cacheConfig = is_null($cacheConfig) ? WURFL_Configuration_ConfigHolder::getWURFLConfig()->cache : $cacheConfig;
 		$provider = isset($cacheConfig["provider"]) ? $cacheConfig["provider"] : NULL;
 		$cache = isset($cacheConfig["params"]) ? $cacheConfig["params"] : NULL;
-		switch ($provider) {
+		switch($provider) {
 			case WURFL_Constants::FILE:
 				self::$_cacheProvider = new WURFL_Cache_FileCacheProvider($cache);
 				break;

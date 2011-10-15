@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -70,8 +70,8 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     function __construct($wurflContext, $userAgentNormalizer = null)
     {
         
-        if (is_null ( $userAgentNormalizer )) {
-            $this->userAgentNormalizer = new WURFL_Request_UserAgentNormalizer_Null ();
+        if(is_null($userAgentNormalizer)) {
+            $this->userAgentNormalizer = new WURFL_Request_UserAgentNormalizer_Null();
         } else {
             $this->userAgentNormalizer = $userAgentNormalizer;
         }
@@ -120,11 +120,11 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     function filter($userAgent, $deviceID)
     {
-        if ($this->canHandle($userAgent)) {
+        if($this->canHandle($userAgent)) {
             $this->updateUserAgentsWithDeviceIDMap($this->normalizeUserAgent($userAgent), $deviceID);
             return;
         }
-        if (isset($this->nextHandler)) {
+        if(isset($this->nextHandler)) {
             return $this->nextHandler->filter($userAgent, $deviceID);
         }
     }
@@ -142,7 +142,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $deviceID
      */
     final function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID) {
-        $this->userAgentsWithDeviceID [$this->normalizeUserAgent ( $userAgent )] = $deviceID;
+        $this->userAgentsWithDeviceID [$this->normalizeUserAgent($userAgent)] = $deviceID;
     }
     
     /**
@@ -152,7 +152,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     public function normalizeUserAgent($userAgent)
     {
-        return $this->userAgentNormalizer->normalize ( $userAgent );
+        return $this->userAgentNormalizer->normalize($userAgent);
     }
     
     //********************************************************
@@ -165,8 +165,8 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     public function persistData()
     {
         // we sort the array first, useful for doing ris match
-        if (!empty($this->userAgentsWithDeviceID)) {
-            ksort ($this->userAgentsWithDeviceID);
+        if(!empty($this->userAgentsWithDeviceID)) {
+            ksort($this->userAgentsWithDeviceID);
             $this->persistenceProvider->save($this->getPrefix(), $this->userAgentsWithDeviceID);
         }
     }
@@ -177,7 +177,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     public function getUserAgentsWithDeviceId()
     {
-        if (!isset($this->userAgentsWithDeviceID)) {
+        if(!isset($this->userAgentsWithDeviceID)) {
             $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
         }
         return $this->userAgentsWithDeviceID;
@@ -197,11 +197,11 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     public function match(WURFL_Request_GenericRequest $request)
     {
         $userAgent = $request->userAgent;
-        if ($this->canHandle($userAgent)) {
+        if($this->canHandle($userAgent)) {
             return $this->applyMatch($request);
         }
         
-        if (isset($this->nextHandler)) {
+        if(isset($this->nextHandler)) {
             return $this->nextHandler->match($request);
         }
         
@@ -221,12 +221,12 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         
         // Get The data associated with this current handler
         $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
-        if (!is_array($this->userAgentsWithDeviceID)) {
+        if(!is_array($this->userAgentsWithDeviceID)) {
             $this->userAgentsWithDeviceID = array();
         }
         $deviceID = NULL;
         // we start with direct match
-        if (array_key_exists($userAgent, $this->userAgentsWithDeviceID)) {
+        if(array_key_exists($userAgent, $this->userAgentsWithDeviceID)) {
             return $this->userAgentsWithDeviceID[$userAgent];
         }
         
@@ -234,23 +234,23 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         $this->logger->debug('$this->prefix :Applying Conclusive Match for ua: $userAgent');
         $deviceID = $this->applyConclusiveMatch($userAgent);
         
-        if ($this->isBlankOrGeneric($deviceID)) {
+        if($this->isBlankOrGeneric($deviceID)) {
             // Log the ua and the ua profile
-            //$this->logger->debug ( $request );
-            $this->logger->debug ( '$this->prefix :Applying Recovery Match for ua: $userAgent' );
-            $deviceID = $this->applyRecoveryMatch ( $userAgent );
+            //$this->logger->debug($request);
+            $this->logger->debug('$this->prefix :Applying Recovery Match for ua: $userAgent');
+            $deviceID = $this->applyRecoveryMatch($userAgent);
         }
         // Try with catch all recovery Match
-        if ($this->isBlankOrGeneric ( $deviceID )) {
-            $this->logger->debug ( '$this->prefix :Applying Catch All Recovery Match for ua: $userAgent' );
-            $deviceID = $this->applyRecoveryCatchAllMatch ( $userAgent );
+        if($this->isBlankOrGeneric($deviceID)) {
+            $this->logger->debug('$this->prefix :Applying Catch All Recovery Match for ua: $userAgent');
+            $deviceID = $this->applyRecoveryCatchAllMatch($userAgent);
         }
         
-        if ($this->isBlankOrGeneric ( $deviceID )) {
+        if($this->isBlankOrGeneric($deviceID)) {
             $deviceID = WURFL_Constants::GENERIC;
         }
         
-        $this->logger->debug ( 'END: Matching For  ' . $userAgent );
+        $this->logger->debug('END: Matching For  ' . $userAgent);
         
         return $deviceID;
     }
@@ -261,7 +261,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     private function isBlankOrGeneric($deviceID)
     {
-        return $deviceID == NULL || strcmp ( $deviceID, 'generic' ) === 0 || strlen ( trim ( $deviceID ) ) == 0;
+        return $deviceID == NULL || strcmp($deviceID, 'generic') === 0 || strlen(trim($deviceID)) == 0;
     }
     
     /**
@@ -272,7 +272,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     function applyConclusiveMatch($userAgent)
     {
         $match = $this->lookForMatchingUserAgent($userAgent);
-        if (!empty($match) && isset($this->userAgentsWithDeviceID[$match])) {
+        if(!empty($match) && isset($this->userAgentsWithDeviceID[$match])) {
             return $this->userAgentsWithDeviceID[$match];
         }
         return null;
@@ -286,8 +286,8 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     function lookForMatchingUserAgent($userAgent)
     {
-        $tollerance = WURFL_Handlers_Utils::firstSlash ( $userAgent );
-        return WURFL_Handlers_Utils::risMatch ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, $tollerance );
+        $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
     }
     
     /**
@@ -300,7 +300,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     protected function applyRisWithTollerance($userAgetsList, $target, $tollerance)
     {
-        return WURFL_Handlers_Utils::risMatch ( $userAgetsList, $target, $tollerance );
+        return WURFL_Handlers_Utils::risMatch($userAgetsList, $target, $tollerance);
     }
     
     /**
@@ -320,8 +320,8 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     function applyRecoveryCatchAllMatch($userAgent)
     {
-        foreach ($this->catchAllIds as $key => $deviceId) {
-            if (WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
+        foreach($this->catchAllIds as $key => $deviceId) {
+            if(WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
                 return $deviceId;
             }
         }
@@ -341,8 +341,8 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     protected function isDeviceExist($deviceId)
     {
-        $ids = array_values ( $this->userAgentsWithDeviceID );
-        if (in_array( $deviceId, $ids )) {
+        $ids = array_values($this->userAgentsWithDeviceID);
+        if(in_array($deviceId, $ids)) {
             return true;
         }
         return false;
@@ -350,7 +350,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     
     /**
      * Keyword => deviceID pair collection used for Catch-All matching
-     * @var array Array of (string)keyword => (string)deviceID
+     * @var array Array of(string)keyword =>(string)deviceID
      */
     private $catchAllIds = array(
          // Openwave
@@ -412,6 +412,6 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
             // DoCoMo
             'DoCoMo' => 'docomo_generic_jap_ver1',
             'KDDI' => 'docomo_generic_jap_ver1',
-    );
+);
 }
 

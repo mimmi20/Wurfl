@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -48,8 +48,8 @@ class WURFL_Device {
 	 * @return string value
 	 */
 	public function __get($name) {
-		if (isset($name)) {
-			switch ($name) {
+		if(isset($name)) {
+			switch($name) {
 				case "id":
 				case "userAgent":
 				case "fallBack":
@@ -75,7 +75,7 @@ class WURFL_Device {
 	 * @return string
 	 */
 	public function getCapability($capabilityName) {
-		if (!isset($capabilityName)) {
+		if(!isset($capabilityName)) {
 			throw new InvalidArgumentException("capability name must not be null");
 		}
 		return $this->_capabilitiesHolder->getCapability($capabilityName);

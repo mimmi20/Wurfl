@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -32,7 +32,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
 {
     function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -43,7 +43,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'BlackBerry' ) || WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Blackberry' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'BlackBerry') || WURFL_Handlers_Utils::checkIfContains($userAgent, 'Blackberry');
     }
     
     private $blackberryIds = array(
@@ -63,7 +63,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
         '5.' => 'blackberry_generic_ver5',
         '6.' => 'blackberry_generic_ver6'
     
-    );
+);
     /**
      * Apply Recovery Match
      *
@@ -73,11 +73,11 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
     function applyRecoveryMatch($userAgent)
     {
         $version = $this->blackberryVersion($userAgent);
-        if (is_null($version)) {
+        if(is_null($version)) {
             return WURFL_Constants::GENERIC;
         }
-        foreach ($this->blackberryIds as $v => $deviceId) {
-            if (WURFL_Handlers_Utils::checkIfStartsWith($version, $v)) {
+        foreach($this->blackberryIds as $v => $deviceId) {
+            if(WURFL_Handlers_Utils::checkIfStartsWith($version, $v)) {
                 return $deviceId;
             }
         }
@@ -89,7 +89,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
     const BLACKBERRY_VERSION_PATTERN = '/Black[Bb]erry[^\/\s]+\/(\d.\d)/';
     private function blackberryVersion($userAgent)
     {
-        if (preg_match(self::BLACKBERRY_VERSION_PATTERN, $userAgent, $matches)) {
+        if(preg_match(self::BLACKBERRY_VERSION_PATTERN, $userAgent, $matches)) {
             return $matches[1];
         }
         return NULL;

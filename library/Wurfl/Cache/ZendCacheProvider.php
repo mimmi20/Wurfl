@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -34,32 +34,32 @@ class WURFL_Cache_ZendCacheProvider implements WURFL_Cache_CacheProvider
     
     public function __construct($params) 
     {
-        if ($params instanceof Zend_Config) {
+        if($params instanceof Zend_Config) {
             $params = $params->toArray();
         }
         
-        if ($params instanceof Zend_Cache_Manager) {
+        if($params instanceof Zend_Cache_Manager) {
             $allowedNames = array('wurfl', 'wurfldata');
             $cacheFound   = false;
             
-            foreach ($allowedNames as $name) {
-                if ($params->hasCache($name)) {
+            foreach($allowedNames as $name) {
+                if($params->hasCache($name)) {
                     $params     = $params->getCache($name);
                     $cacheFound = true;
                     break;
                 }
             }
             
-            if (!$found) {
+            if(!$found) {
                 throw new WURFL_WURFLException('the allowed key names wasn\'t found in the given Zend_Cache_Manager object, only the key names \'wurfl\' or \'wurfldata\' are supported');
             }
         }
         
-        if (!is_array($params) && !($params instanceof Zend_Cache)) {
+        if(!is_array($params) && !($params instanceof Zend_Cache)) {
             throw new WURFL_WURFLException('the parameter must be an array, an Zend_Config object or an Zend_Cache object');
         }
         
-        if (is_array($params)) {
+        if(is_array($params)) {
             $this->_cache = Zend_Cache::factory(
                 $params['frontend'],
                 $params['backend'],
@@ -75,7 +75,7 @@ class WURFL_Cache_ZendCacheProvider implements WURFL_Cache_CacheProvider
     
     public function get($key) 
     {
-        if (!$this->_cache->test($key)) {
+        if(!$this->_cache->test($key)) {
             return null;
         }
         

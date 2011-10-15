@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -62,10 +62,10 @@ class WURFL_WURFLManagerFactory {
 	 * @return WURFL_WURFLManager WURFL Manager object
 	 */
 	public function create() {		
-		if (!isset($this->wurflManager)) {
+		if(!isset($this->wurflManager)) {
 			$this->init();		
 		}		
-		if ($this->hasToBeReloaded()) {
+		if($this->hasToBeReloaded()) {
 			$this->reload();
 		}
 		
@@ -87,7 +87,7 @@ class WURFL_WURFLManagerFactory {
 	 * @return bool
 	 */
 	public function hasToBeReloaded() {
-		if (!$this->wurflConfig->allowReload) {
+		if(!$this->wurflConfig->allowReload) {
 			return false;
 		}
 		$lastModificationTime = $this->persistenceStorage->load(self::WURFL_LAST_MODIFICATION_TIME);
@@ -96,7 +96,7 @@ class WURFL_WURFLManagerFactory {
 	}
 	
 	/**
-	 * Invalidates (clears) cache in the cache provider
+	 * Invalidates(clears) cache in the cache provider
 	 * @see WURFL_Cache_CacheProvider::clear()
 	 */
 	private function invalidateCache() {

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -60,7 +60,7 @@ class WURFL_CapabilitiesHolder {
  				
  		$key = $this->_device->id . "_" . $capabilityName;
  		$capabilityValue = $this->_cacheProvider->get($key);
- 		if (empty($capabilityValue)) {
+ 		if(empty($capabilityValue)) {
 
 			$capabilityValue = $this->_deviceRepository->getCapabilityForDevice($this->_device->fallBack, $capabilityName);
  			// save it in cache

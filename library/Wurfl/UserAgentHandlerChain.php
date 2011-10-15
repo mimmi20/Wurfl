@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -36,7 +36,7 @@ class WURFL_UserAgentHandlerChain {
 	 */
 	public function addUserAgentHandler(WURFL_Handlers_Handler $handler) {
 		$size = sizeof($this->_userAgentHandlers); 
-		if ($size > 0) {
+		if($size > 0) {
 			$this->_userAgentHandlers[$size-1]->setNextHandler($handler);
 		}
 		$this->_userAgentHandlers[] = $handler;
@@ -77,7 +77,7 @@ class WURFL_UserAgentHandlerChain {
 	 * @see WURFL_Handlers_Handler::persistData()
 	 */
 	public function persistData() {
-		foreach ($this->_userAgentHandlers as $userAgentHandler) {
+		foreach($this->_userAgentHandlers as $userAgentHandler) {
 			$userAgentHandler->persistData();
 		}
 		
@@ -89,7 +89,7 @@ class WURFL_UserAgentHandlerChain {
 	 */
 	public function collectData() {
 		$userAgentsWithDeviceId = array();		
-		foreach ($this->_userAgentHandlers as $userAgentHandler) {
+		foreach($this->_userAgentHandlers as $userAgentHandler) {
 			/**
 			 * @see WURFL_Handlers_Handler::getUserAgentsWithDeviceId()
 			 */

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -32,7 +32,7 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler
     
     public function __construct($wurflContext, $userAgentNormalizer = null) 
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -43,10 +43,10 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent) 
     {
-        if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
+        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Thunderbird' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Thunderbird');
     }
     
     function lookForMatchingUserAgent($userAgent)
@@ -66,18 +66,18 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler
         '7.0' => 'thunderbird_7',
         '8.0' => 'thunderbird_8',
         '9.0' => 'thunderbird_9'
-    );
+);
     
     function applyRecoveryMatch($userAgent) 
     {
-        $safariVersion = $this->safariVersion ( $userAgent );//var_dump($userAgent, $safariVersion);exit;
+        $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'thunderbird';
-        if (isset ( $this->safaris [$safariVersion] )) {
+        if(isset($this->safaris [$safariVersion])) {
             return $this->safaris [$safariVersion];
         }
         /*
         //var_dump($userAgent, $safariVersion, $safariId);exit;
-        if ($this->isDeviceExist ( $safariId )) {
+        if($this->isDeviceExist($safariId)) {
             return $safariId;
         }
         /**/
@@ -88,8 +88,8 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler
     const SAFARI_VERSION_PATTERN = '/.*Thunderbird\/(\d+\.\d).*/';
     private function safariVersion($userAgent) 
     {
-        if (preg_match ( self::SAFARI_VERSION_PATTERN, $userAgent, $match )
-        ) {
+        if(preg_match(self::SAFARI_VERSION_PATTERN, $userAgent, $match)
+) {
             return $match [1];
         }
         return NULL;

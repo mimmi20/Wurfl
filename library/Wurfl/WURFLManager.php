@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -28,7 +28,7 @@
  * $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
  * 
  * // Example 3: Get Visiting Device from User Agent
- * $userAgent = 'Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10';
+ * $userAgent = 'Mozilla/5.0(iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10(KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10';
  * $device = $wurflManager->getDeviceForUserAgent($userAgent);
  * </code>
  * 
@@ -66,7 +66,7 @@ class WURFL_WURFLManager {
 	 * 	$info->version,
 	 * 	$info->lastUpdated,
 	 * 	$info->officialURL
-	 * );
+	 *);
 	 * </code>
 	 * @return WURFL_Xml_Info WURFL Version info
 	 * @see WURFL_WURFLService::getWURFLInfo(), WURFL_DeviceRepository::getWURFLInfo()
@@ -83,7 +83,7 @@ class WURFL_WURFLManager {
 	 * @throws Exception if the $request parameter is not set
 	 */
 	public function getDeviceForRequest(WURFL_Request_GenericRequest $request) {
-		if (!isset($request)){
+		if(!isset($request)){
 			throw new Exception("The request parameter must be set.");
 		}
 		return $this->_wurflService->getDeviceForRequest($request);
@@ -92,12 +92,12 @@ class WURFL_WURFLManager {
 	/**
 	 * Return a device for the given http request(user-agent..)
 	 *
-	 * @param array $httpRequest HTTP Request array (normally $_SERVER)
+	 * @param array $httpRequest HTTP Request array(normally $_SERVER)
 	 * @return WURFL_CustomDevice device
 	 * @throws Exception if $httpRequest is not set
 	 */
 	public function getDeviceForHttpRequest($httpRequest) {
-		if (!isset($httpRequest)) {
+		if(!isset($httpRequest)) {
 			throw new Exception("The $httpRequest parameter must be set.");
 		}
 		$request = $this->_requestFactory->createRequest($httpRequest);
@@ -112,7 +112,7 @@ class WURFL_WURFLManager {
 	 * @throws Exception if $userAgent is not set
 	 */
 	public function getDeviceForUserAgent($userAgent) {
-		if (!isset($userAgent)) {
+		if(!isset($userAgent)) {
 			$userAgent = '';
 		}
 		

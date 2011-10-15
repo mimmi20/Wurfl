@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -33,7 +33,7 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
     
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -44,12 +44,12 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
      */
     function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Nokia' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia');
     }
     
     /**
      *
-     * Apply RIS with FS (First Slash) after Nokia String as a threshold.
+     * Apply RIS with FS(First Slash) after Nokia String as a threshold.
      * 
      * 
      * @param string $userAgent
@@ -58,9 +58,9 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
     function lookForMatchingUserAgent($userAgent)
     {
         //$tolerance = WU
-        $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength( $userAgent, array('/', ' '), strpos ( $userAgent, 'Nokia' ) );
-        $userAgents = array_keys ( $this->userAgentsWithDeviceID );
-        return parent::applyRisWithTollerance ( $userAgents, $userAgent, $tolerance );
+        $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+        $userAgents = array_keys($this->userAgentsWithDeviceID);
+        return parent::applyRisWithTollerance($userAgents, $userAgent, $tolerance);
     
     }
 
@@ -74,11 +74,11 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
      */
     function applyRecoveryMatch($userAgent)
     {
-        if (! (strpos ( $userAgent, 'Nokia' ) === false)) {
-            if (strpos ( $userAgent, 'Series60' ) != 0) {
+        if(!(strpos($userAgent, 'Nokia') === false)) {
+            if(strpos($userAgent, 'Series60') != 0) {
                 return 'nokia_generic_series60';
             }
-            if (strpos ( $userAgent, 'Series80' ) != 0) {
+            if(strpos($userAgent, 'Series80') != 0) {
                 return 'nokia_generic_series80';
             }
         }

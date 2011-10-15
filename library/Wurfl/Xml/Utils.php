@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -32,7 +32,7 @@ class WURFL_Xml_Utils {
 	 * @return string XML Resource file
 	 */
 	public static function getXMLFile($xmlResource) {
-		if (self::isZipFile($xmlResource)) {
+		if(self::isZipFile($xmlResource)) {
 			return self::getZippedFile($xmlResource);
 		}
 		return $xmlResource;
@@ -51,7 +51,7 @@ class WURFL_Xml_Utils {
 		$tmpDir = sys_get_temp_dir();
 		$zip = new ZipArchive();
 
-		if ($zip->open($filename) !== true) {
+		if($zip->open($filename) !== true) {
 			throw new WURFL_WURFLException("The Zip file <$filename> could not be opened");
 		}
 

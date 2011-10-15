@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -32,7 +32,7 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
     
     function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -43,11 +43,11 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if (WURFL_Handlers_Utils::isMobileBrowser ( $userAgent )) {
+        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
             return false;
         }
         
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Safari' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari');
     }
     
     function lookForMatchingUserAgent($userAgent)
@@ -66,18 +66,18 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
         '55'  => 'safari_5_0',
         '65'  => 'safari_5_0',
         '75'  => 'safari_5_1'
-    );
+);
     
     function applyRecoveryMatch($userAgent)
     {
-        $safariVersion = $this->safariVersion ( $userAgent );//var_dump($userAgent, $safariVersion);exit;
+        $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'safari';
-        if (isset ( $this->safaris [$safariVersion] )) {
+        if(isset($this->safaris [$safariVersion])) {
             return $this->safaris [$safariVersion];
         }
         /*
         //var_dump($userAgent, $safariVersion, $safariId);exit;
-        if ($this->isDeviceExist ( $safariId )) {
+        if($this->isDeviceExist($safariId)) {
             return $safariId;
         }
         /**/
@@ -89,15 +89,15 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
     const SAFARI_VERSION_PATTERN_EXT = '/.*Safari\/(\d{2})\d{2}\..*/';
     private function safariVersion($userAgent)
     {
-        if (WURFL_Handlers_Utils::checkIfStartsWith ( $userAgent, 'Mozilla' ) 
-            && WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Safari' ) 
-            && preg_match ( self::SAFARI_VERSION_PATTERN, $userAgent, $match )
-        ) {
+        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') 
+            && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari') 
+            && preg_match(self::SAFARI_VERSION_PATTERN, $userAgent, $match)
+) {
             return $match [1];
         }
-        if (WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'Safari' ) 
-            && preg_match ( self::SAFARI_VERSION_PATTERN_EXT, $userAgent, $match )
-        ) {
+        if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari') 
+            && preg_match(self::SAFARI_VERSION_PATTERN_EXT, $userAgent, $match)
+) {
             return $match [1];
         }
         return NULL;

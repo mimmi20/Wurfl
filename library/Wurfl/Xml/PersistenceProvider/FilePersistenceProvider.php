@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -28,7 +28,7 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
 	const DIR = "dir";
 	
 	public function __construct($params) {
-		$this->initialize ( $params );
+		$this->initialize($params);
 	}
 	
 	/**
@@ -37,19 +37,19 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
 	 * @param array of parameters for configuring the Persistence Provider
 	 */
 	function initialize($params) {
-		if (is_array ( $params )) {
-			if (! array_key_exists ( self::DIR, $params )) {
-				throw new WURFL_WURFLException ( "Specify a valid Persistence dir in the configuration file" );
+		if(is_array($params)) {
+			if(! array_key_exists(self::DIR, $params)) {
+				throw new WURFL_WURFLException("Specify a valid Persistence dir in the configuration file");
 			}
 			
 			// Check if the directory exist and it is also write access
-			if (! is_writable ( $params [self::DIR] )) {
-				throw new WURFL_WURFLException ( "The diricetory specified <" . $params [self::DIR] . "> for the persistence provider does not exist or it is not writable\n" );
+			if(! is_writable($params [self::DIR])) {
+				throw new WURFL_WURFLException("The diricetory specified <" . $params [self::DIR] . "> for the persistence provider does not exist or it is not writable\n");
 			}
 			
 			$this->_persistenceDir = $params [self::DIR] . DIRECTORY_SEPARATOR . $this->persistenceIdentifier;
 			
-			WURFL_FileUtils::mkdir( $this->_persistenceDir );
+			WURFL_FileUtils::mkdir($this->_persistenceDir);
 		}
 	}
 	
@@ -61,12 +61,12 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
 	 * @param mixed $object
 	 */
 	public function save($objectId, $object) {
-		$path = $this->keyPath ( $objectId  );
-		WURFL_FileUtils::write ( $path, $object );
+		$path = $this->keyPath($objectId);
+		WURFL_FileUtils::write($path, $object);
 	}
 	
 	private function keyPath($key) {
-		return WURFL_FileUtils::join ( array ($this->_persistenceDir, $this->spread ( md5 ( $key ) ) ) );
+		return WURFL_FileUtils::join(array($this->_persistenceDir, $this->spread(md5($key))));
 	}
 	
 	/**
@@ -80,17 +80,17 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
 		for($i = 0; $i < $n; $i ++) {
 			$path .= $md5 [$i] . DIRECTORY_SEPARATOR;
 		}
-		$path .= substr ( $md5, $n );
+		$path .= substr($md5, $n);
 		return $path;
 	}
 	
 	public function load($objectId) {
-		$path = $this->keyPath ( $objectId );
-		return WURFL_FileUtils::read ( $path );
+		$path = $this->keyPath($objectId);
+		return WURFL_FileUtils::read($path);
 	}
 	
 	public function remove($objectId) {
-		$path = $this->keyPath ( $objectId );
+		$path = $this->keyPath($objectId);
 		@unlink($path);
 	}
 	

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -36,7 +36,7 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
 	 * @return WURFL_Handlers_RISMatcher
 	 */
 	public static function INSTANCE() {
-		if (self::$instance === null) {
+		if(self::$instance === null) {
 			self::$instance = new self();
 		}
 		return self::$instance;
@@ -46,22 +46,22 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
 		$match = NULL;
 		$bestDistance = 0;
 		$low = 0;
-		$high = sizeof ( $collection ) - 1;
+		$high = sizeof($collection) - 1;
 		$bestIndex = 0;
-		while ( $low <= $high ) {
-			$mid = round ( ($low + $high) / 2 );
+		while($low <= $high) {
+			$mid = round(($low + $high) / 2);
 			$find = $collection [$mid];
-			$distance = $this->longestCommonPrefixLength ( $needle, $find );
-			if ($distance > $bestDistance) {
+			$distance = $this->longestCommonPrefixLength($needle, $find);
+			if($distance > $bestDistance) {
 				$bestIndex = $mid;
 				$match = $find;
 				$bestDistance = $distance;
 			}
 			
-			$cmp = strcmp ( $find, $needle );
-			if ($cmp < 0) {
+			$cmp = strcmp($find, $needle);
+			if($cmp < 0) {
 				$low = $mid + 1;
-			} else if ($cmp > 0) {
+			} else if($cmp > 0) {
 				$high = $mid - 1;
 			
 			} else {
@@ -69,29 +69,29 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
 			}
 		}
 		
-		if ($bestDistance < $tolerance) {
+		if($bestDistance < $tolerance) {
 			return NULL;
 		}
 		if($bestIndex == 0) {
 			return $match;
 		}
-		return $this->firstOfTheBests ( $collection, $needle, $bestIndex, $bestDistance );
+		return $this->firstOfTheBests($collection, $needle, $bestIndex, $bestDistance);
 	}
 	
 	private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance) {
 		
-		while($bestIndex > 0 && $this->longestCommonPrefixLength ( $collection [$bestIndex-1], $needle ) == $bestDistance) {
+		while($bestIndex > 0 && $this->longestCommonPrefixLength($collection [$bestIndex-1], $needle) == $bestDistance) {
 			$bestIndex = $bestIndex - 1;
 		}
 		return $collection [$bestIndex];
 	}
 	
 	private function longestCommonPrefixLength($s, $t) {
-		$length = min ( strlen ( $s ), strlen ( $t ) );
+		$length = min(strlen($s), strlen($t));
 		
 		$i = 0;
-		while ( $i < $length ) {
-			if ($s [$i] !== $t [$i]) {
+		while($i < $length) {
+			if($s [$i] !== $t [$i]) {
 				break;
 			}
 			$i ++;

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -35,7 +35,7 @@ class WURFL_Logger_LoggerFactory {
 	}
 	
 	/**
-	 * Creates Logger for general logging (not undetected devices)
+	 * Creates Logger for general logging(not undetected devices)
 	 * @param WURFL_Configuration_Config $wurflConfig
 	 * @return WURFL_Logger_Interface Logger object
 	 */
@@ -66,7 +66,7 @@ class WURFL_Logger_LoggerFactory {
 		if(is_null($wurflConfig)) {
 			return false;
 		}
-		return !is_null ( $wurflConfig->logDir ) && is_writable ( $wurflConfig->logDir );
+		return !is_null($wurflConfig->logDir) && is_writable($wurflConfig->logDir);
 	}
 	
 	/**

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -44,7 +44,7 @@ class WURFL_Xml_DevicePatcher {
 	 * @return bool
 	 */
 	private function haveSameId($device, $patchingDevice) {
-		return (strcmp($patchingDevice->id, $device->id) === 0);
+		return(strcmp($patchingDevice->id, $device->id) === 0);
 	}
 	
 	/**
@@ -57,9 +57,9 @@ class WURFL_Xml_DevicePatcher {
 	 */
 	private function checkIfCanPatch($device, $patchingDevice) {
 		
-		if (strcmp ( $patchingDevice->userAgent, $device->userAgent ) !== 0) {
+		if(strcmp($patchingDevice->userAgent, $device->userAgent) !== 0) {
 			$message = "Patch Device : " . $patchingDevice->id . " can't override user agent " . $device->userAgent . " with " . $patchingDevice->userAgent;
-			throw new WURFL_WURFLException ( $message );
+			throw new WURFL_WURFLException($message);
 		}
 	}
 }

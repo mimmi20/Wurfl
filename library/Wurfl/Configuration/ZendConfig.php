@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -31,7 +31,7 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     {
         $config = $configFilePath;
         
-        if ($config instanceof Zend_Config) {
+        if($config instanceof Zend_Config) {
             //throw new InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
             
             $config = $config->toArray();
@@ -53,19 +53,19 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     private function init($configuration) 
     {
         
-        if (array_key_exists(WURFL_Configuration_Config::WURFL, $configuration)) {
+        if(array_key_exists(WURFL_Configuration_Config::WURFL, $configuration)) {
             $this->setWurflConfiguration($configuration[WURFL_Configuration_Config::WURFL]);
         }
         
-        if (array_key_exists(WURFL_Configuration_Config::PERSISTENCE, $configuration)) {
+        if(array_key_exists(WURFL_Configuration_Config::PERSISTENCE, $configuration)) {
             $this->setPersistenceConfiguration($configuration[WURFL_Configuration_Config::PERSISTENCE]);
         }
         
-        if (array_key_exists(WURFL_Configuration_Config::CACHE, $configuration)) {
+        if(array_key_exists(WURFL_Configuration_Config::CACHE, $configuration)) {
             $this->setCacheConfiguration($configuration [WURFL_Configuration_Config::CACHE]);
         }
         
-        if (array_key_exists(WURFL_Configuration_Config::LOG_DIR, $configuration)) {
+        if(array_key_exists(WURFL_Configuration_Config::LOG_DIR, $configuration)) {
             $this->setLogDirConfiguration($configuration[WURFL_Configuration_Config::LOG_DIR]);
         }
 
@@ -76,12 +76,12 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     private function setWurflConfiguration(array $wurflConfig) 
     {
         
-        if (array_key_exists(WURFL_Configuration_Config::MAIN_FILE, $wurflConfig)) {
+        if(array_key_exists(WURFL_Configuration_Config::MAIN_FILE, $wurflConfig)) {
             $this->wurflFile = parent::getFullPath($wurflConfig[WURFL_Configuration_Config::MAIN_FILE]);
         }
         
         if(array_key_exists(WURFL_Configuration_Config::PATCHES, $wurflConfig)) {
-            foreach ($wurflConfig[WURFL_Configuration_Config::PATCHES] as $wurflPatch) {
+            foreach($wurflConfig[WURFL_Configuration_Config::PATCHES] as $wurflPatch) {
                 $this->wurflPatches[] = parent::getFullPath($wurflPatch);
             }
         }        

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -38,8 +38,8 @@ class WURFL_Configuration_ConfigHolder {
 	 * @return WURFL_Configuration_Config
 	 */
 	public static function getWURFLConfig() {
-		if (null === self::$_wurflConfig) {
-			throw new WURFL_WURFLException ( "The Configuration Holder is not initialized with a valid WURFLConfig object" );
+		if(null === self::$_wurflConfig) {
+			throw new WURFL_WURFLException("The Configuration Holder is not initialized with a valid WURFLConfig object");
 		}
 		
 		return self::$_wurflConfig;

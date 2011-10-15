@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -55,7 +55,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct($persistenceProvider, $deviceClassificationNames) {
-		if (is_null($persistenceProvider)) {
+		if(is_null($persistenceProvider)) {
 			throw new InvalidArgumentException("$persistenceProvider cannot be null");
 		}
 		$this->persistenceProvider = $persistenceProvider;
@@ -68,7 +68,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 */
 	private function init() {
 		$genericDevice = $this->getDevice(WURFL_Constants::GENERIC);
-		if (!is_null($genericDevice)) {
+		if(!is_null($genericDevice)) {
 			$this->_capabilitiesName = array_keys($genericDevice->getCapabilities());
 			$this->_groupIDCapabilitiesMap = $genericDevice->getGroupIdCapabilitiesNameMap();
 		}
@@ -76,7 +76,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 
 	public function getWURFLInfo() {
 		$wurflInfo = $this->persistenceProvider->load(WURFL_Xml_Info::PERSISTENCE_KEY);
-		if ($wurflInfo != null) {
+		if($wurflInfo != null) {
 			return $wurflInfo;
 		}
 		return WURFL_Xml_Info::noInfo();
@@ -99,10 +99,10 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * devices repository
 	 */
 	public function getDevice($deviceId) {
-		if (! isset ( $this->_deviceCache [$deviceId] )) {
-			$device = $this->persistenceProvider->load ( $deviceId );
-			if (is_null ( $device )) {
-				throw new Exception ( "There is no device with id [$deviceId] in wurfl" );
+		if(! isset($this->_deviceCache [$deviceId])) {
+			$device = $this->persistenceProvider->load($deviceId);
+			if(is_null($device)) {
+				throw new Exception("There is no device with id [$deviceId] in wurfl");
 			}
 			$this->_deviceCache [$deviceId] = $device;
 		}
@@ -114,10 +114,10 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return array
 	 */
 	public function getAllDevices() {
-		$devices = array ();
-		$devicesId = $this->getAllDevicesID ();
-		foreach ( $devicesId as $deviceId ) {
-			$devices [] = $this->getDevice ( $deviceId );
+		$devices = array();
+		$devicesId = $this->getAllDevicesID();
+		foreach($devicesId as $deviceId) {
+			$devices [] = $this->getDevice($deviceId);
 		}
 		
 		return $devices;
@@ -128,13 +128,13 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return array
 	 */
 	public function getAllDevicesID() {
-		$devicesId = array ();
-		foreach ( $this->deviceClassificationNames as $className ) {
-			$currentMap = $this->persistenceProvider->load ( $className );
-			if (! is_array ( $currentMap )) {
-				$currentMap = array ();
+		$devicesId = array();
+		foreach($this->deviceClassificationNames as $className) {
+			$currentMap = $this->persistenceProvider->load($className);
+			if(! is_array($currentMap)) {
+				$currentMap = array();
 			}
-			$devicesId = array_merge ( $devicesId, array_values ( $currentMap ) );
+			$devicesId = array_merge($devicesId, array_values($currentMap));
 		}
 		return $devicesId;
 	}
@@ -148,16 +148,16 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return string value
 	 */
 	public function getCapabilityForDevice($deviceId, $capabilityName) {
-		if (! $this->isCapabilityDefined($capabilityName)) {
+		if(! $this->isCapabilityDefined($capabilityName)) {
 			throw new WURFL_WURFLException("capability name: " . $capabilityName . " not found");
 		}
 		// TODO: Prevent infinite recursion
-		while (strcmp($deviceId, "root")) {
-			$device = $this->persistenceProvider->load ( $deviceId );
-			if (!$device) {
+		while(strcmp($deviceId, "root")) {
+			$device = $this->persistenceProvider->load($deviceId);
+			if(!$device) {
 				throw new WURFL_WURFLException("the device with $deviceId is not found.");
 			}
-			if (isset ( $device->capabilities[$capabilityName] )) {
+			if(isset($device->capabilities[$capabilityName])) {
 				$capabilityValue = $device->capabilities[$capabilityName];
 				break;
 			}
@@ -173,7 +173,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return bool
 	 */
 	private function isCapabilityDefined($capability) {
-		return in_array ( $capability, $this->_capabilitiesName );
+		return in_array($capability, $this->_capabilitiesName);
 	}
 	
 	/**
@@ -183,12 +183,12 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return array associative array of capabilityName, capabilityValue
 	 */
 	function getAllCapabilitiesForDevice($deviceID) {
-		$devices = array_reverse ( $this->getDeviceHierarchy ( $deviceID ) );
-		$capabilities = array ();
+		$devices = array_reverse($this->getDeviceHierarchy($deviceID));
+		$capabilities = array();
 		
-		foreach ( $devices as $device ) {
-			if (is_array ( $device->capabilities )) {
-				$capabilities = array_merge ( $capabilities, $device->capabilities );
+		foreach($devices as $device) {
+			if(is_array($device->capabilities)) {
+				$capabilities = array_merge($capabilities, $device->capabilities);
 			}
 		}
 		return $capabilities;
@@ -202,8 +202,8 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return array All WURFL_Device objects in the fallback tree
 	 */
 	public function getDeviceHierarchy($deviceId) {
-		$devices = array ();
-		while (strcmp($deviceId, "root")) {
+		$devices = array();
+		while(strcmp($deviceId, "root")) {
 			$device = $this->getDevice($deviceId);
 			$devices[] = $device;
 			$deviceId = $device->fallBack;
@@ -229,7 +229,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return array of capability names
 	 */
 	public function getCapabilitiesNameForGroup($groupID) {
-		if (!array_key_exists($groupID, $this->_groupIDCapabilitiesMap)) {
+		if(!array_key_exists($groupID, $this->_groupIDCapabilitiesMap)) {
 			throw new WURFL_WURFLException("The Group ID " . $groupID . " supplied does not exist");
 		}
 		return $this->_groupIDCapabilitiesMap [$groupID];
@@ -243,7 +243,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository {
 	 * @return string
 	 */
 	public function getGroupIDForCapability($capability) {
-		if (!isset($capability) || !array_key_exists($capability, $this->_groupIDCapabilitiesMap)) {
+		if(!isset($capability) || !array_key_exists($capability, $this->_groupIDCapabilitiesMap)) {
 			throw new InvalidArgumentException("an invalid capability was specified.");
 		}
 		return $this->_groupIDCapabilitiesMap[$capability];

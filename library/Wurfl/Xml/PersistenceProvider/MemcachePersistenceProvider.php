@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -33,7 +33,7 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
     private $_port;
 
     public function __construct($params = array()) {
-        if (is_array($params)) {
+        if(is_array($params)) {
             $this->_host = isset($params["host"]) ? $params["host"] : self::DEFAULT_HOST;
             $this->_port = isset($params["port"]) ? $params["port"] : self::DEFAULT_PORT;
             $this->_applicationKey = isset($params["application_key"]) ? $params["application_key"] : self::DEFUALT_APPLICATION_KEY;
@@ -56,15 +56,15 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
         // different ports for each hosts the same way
         $ports = explode(";", $this->_port);
 
-        if (count($hosts) > 1) {
-            if (count($ports) < 1) {
+        if(count($hosts) > 1) {
+            if(count($ports) < 1) {
                 $ports = array_pad(count($hosts), self::DEFAULT_PORT);
-            } elseif (count($ports) == 1) {
+            } elseif(count($ports) == 1) {
                 // if we have just one port, use it for all hosts
                 $_p = $ports[0];
                 $ports = array_fill(0, count($hosts), $_p);
             }
-            foreach ($hosts as $i => $host) {
+            foreach($hosts as $i => $host) {
                 $this->_memcache->addServer($host, $ports[$i]);
             }
         } else {
@@ -93,7 +93,7 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
      *
      */
     private function _ensureModuleExistance() {
-        if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
+        if(!extension_loaded(self::EXTENSION_MODULE_NAME)) {
             throw new WURFL_Xml_PersistenceProvider_Exception("The PHP extension memcache must be installed and loaded in order to use the Memcached persistence provider.");
         }
     }

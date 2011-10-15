@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -51,7 +51,7 @@ class WURFL_CapabilityService {
 	function getCapabilityForDevice($deviceID, $capabilityName) {
 		$key = $deviceID . $capabilityName;
 		$capabilityValue = $this->_cacheProvider->get($key);
-		if (empty($capabilityValue)) {
+		if(empty($capabilityValue)) {
 			$capabilityValue = $this->_deviceRepository->getCapabilityForDevice($deviceID, $capabilityName);
 			// save it in cache
 			$this->_cacheProvider->put($key, $capabilityValue);
@@ -109,7 +109,7 @@ class WURFL_CapabilityService {
 	public function getFallBackListForDevice($deviceID) {
 		$devices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
 		$fallBacks = array();
-		foreach ($devices as $device) {
+		foreach($devices as $device) {
 			$fallBacks[] = $device->id;
 		}
 		return $fallBacks;

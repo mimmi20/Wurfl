@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -33,7 +33,7 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
     
     function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /** 
@@ -42,8 +42,8 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
      * @return boolean 
      */
     public function canHandle($userAgent) {
-        foreach ( $this->botCrawlerTranscoder as $key ) {
-            if (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive ( $userAgent, $key )) {
+        foreach($this->botCrawlerTranscoder as $key) {
+            if(WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
                 return true;
             }
         }
@@ -94,7 +94,7 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
         'httpunit',
         'hatena',
         'ichiro'
-    );
+);
         
 
 }

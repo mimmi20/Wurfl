@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -32,7 +32,7 @@ class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler
     
     function __construct($wurflContext, $userAgentNormalizer = null)
     {
-        parent::__construct ( $wurflContext, $userAgentNormalizer );
+        parent::__construct($wurflContext, $userAgentNormalizer);
     }
     
     /**
@@ -43,13 +43,13 @@ class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains ( $userAgent, 'SPV' );
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'SPV');
     }
     
     function lookForMatchingUserAgent($userAgent)
     {
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength ( $userAgent, ';', strpos ( $userAgent, 'SPV' ) );
-        return parent::applyRisWithTollerance ( array_keys ( $this->userAgentsWithDeviceID ), $userAgent, $tolerance );
+        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
+        return parent::applyRisWithTollerance(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
     
 }

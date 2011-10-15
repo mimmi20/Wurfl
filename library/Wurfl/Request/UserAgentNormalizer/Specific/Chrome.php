@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -23,7 +23,7 @@
 class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request_UserAgentNormalizer_Interface {
 	
 	public function normalize($userAgent) {
-		return $this->chromeWithMajorVersion ( $userAgent );		
+		return $this->chromeWithMajorVersion($userAgent);		
 	}
 	
 	/**
@@ -32,7 +32,7 @@ class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request
 	 * @return string|int Version number
 	 */
 	private function chromeWithMajorVersion($userAgent) {
-		return substr ( $userAgent, strpos ( $userAgent, "Chrome" ), 9);
+		return substr($userAgent, strpos($userAgent, "Chrome"), 9);
 	}
 
 }

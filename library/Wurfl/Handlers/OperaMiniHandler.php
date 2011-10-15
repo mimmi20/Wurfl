@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2011 ScientiaMobile, Inc.
+ * Copyright(c) 2011 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * License, or(at your option) any later version.
  *
  * Refer to the COPYING file distributed with this package.
  *
@@ -52,12 +52,12 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
         'Opera Mini/3' => 'browser_opera_mini_release3',
         'Opera Mini/4' => 'browser_opera_mini_release4',
         'Opera Mini/5' => 'browser_opera_mini_release5'
-    );
+);
 
     function applyRecoveryMatch($userAgent)
     {
-        foreach ($this->operaMinis as $key => $deviceId) {
-            if (WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
+        foreach($this->operaMinis as $key => $deviceId) {
+            if(WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
                 return $deviceId;
             }
         }
