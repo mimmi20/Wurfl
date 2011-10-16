@@ -52,7 +52,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
      *
      * @param string $userAgent
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         $tollerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' ', strpos($userAgent, 'Android'));
         $userAgents = array_keys($this->userAgentsWithDeviceID);
@@ -78,7 +78,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         $deviceId = 'generic_android';
         $platformVersion = $this->platformVersion($userAgent);

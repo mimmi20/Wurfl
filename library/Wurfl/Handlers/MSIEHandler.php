@@ -30,12 +30,12 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'MSIE';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
 /*    
-    function applyRecoveryMatch($userAgent){
+    public function applyRecoveryMatch($userAgent){
         return($userAgent == 'MSIE 9.0')? 'generic_web_browser': null;
     }
 */    

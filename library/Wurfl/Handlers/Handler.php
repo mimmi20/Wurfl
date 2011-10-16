@@ -67,7 +67,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param WURFL_Context $wurflContext
      * @param WURFL_Request_UserAgentNormalizer_Interface $userAgentNormalizer
      */
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         
         if(is_null($userAgentNormalizer)) {
@@ -106,7 +106,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @return bool
      */
-    abstract function canHandle($userAgent);
+    abstract public function canHandle($userAgent);
     
     //********************************************************
     //
@@ -118,7 +118,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @param string $deviceID
      */
-    function filter($userAgent, $deviceID)
+    public function filter($userAgent, $deviceID)
     {
         if($this->canHandle($userAgent)) {
             $this->updateUserAgentsWithDeviceIDMap($this->normalizeUserAgent($userAgent), $deviceID);
@@ -141,7 +141,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @param string $deviceID
      */
-    final function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID) {
+    final public function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID) {
         $this->userAgentsWithDeviceID [$this->normalizeUserAgent($userAgent)] = $deviceID;
     }
     
@@ -214,7 +214,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @return string
      */
-    function applyMatch(WURFL_Request_GenericRequest $request)
+    public function applyMatch(WURFL_Request_GenericRequest $request)
     {
         $userAgent = $this->normalizeUserAgent($request->userAgent);
         $this->logger->debug('START: Matching For  ' . $userAgent);
@@ -269,7 +269,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @return string Matching WURFL deviceID
      */
-    function applyConclusiveMatch($userAgent)
+    public function applyConclusiveMatch($userAgent)
     {
         $match = $this->lookForMatchingUserAgent($userAgent);
         if(!empty($match) && isset($this->userAgentsWithDeviceID[$match])) {
@@ -284,7 +284,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @return string
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
         return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
@@ -298,7 +298,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @see WURFL_Handlers_Utils::risMatch()
      * @see WURFL_Handlers_Matcher_RISMatcher::match()
      */
-    protected function applyRisWithTollerance($userAgetsList, $target, $tollerance)
+    private function applyRisWithTollerance($userAgetsList, $target, $tollerance)
     {
         return WURFL_Handlers_Utils::risMatch($userAgetsList, $target, $tollerance);
     }
@@ -308,7 +308,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @return string $deviceID
      */
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         // nothing to do here
     }
@@ -318,7 +318,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $userAgent
      * @return string WURFL deviceID
      */
-    function applyRecoveryCatchAllMatch($userAgent)
+    public function applyRecoveryCatchAllMatch($userAgent)
     {
         foreach($this->catchAllIds as $key => $deviceId) {
             if(WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
@@ -339,7 +339,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $deviceId
      * @return bool
      */
-    protected function isDeviceExist($deviceId)
+    private function isDeviceExist($deviceId)
     {
         $ids = array_values($this->userAgentsWithDeviceID);
         if(in_array($deviceId, $ids)) {

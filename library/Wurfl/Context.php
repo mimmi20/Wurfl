@@ -20,36 +20,36 @@
  * @package    WURFL
  */
 class WURFL_Context {
-	
-	/**
-	 * @var WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
-	 */
-	private $persistenceProvider;
-	/**
-	 * @var WURFL_Cache_CacheProvider
-	 */
-	private $cacheProvider;
-	/**
-	 * @var WURFL_Logger_Interface
-	 */
-	private $logger;
-	
-	public function __construct($persistenceProvider, $caheProvider = null, $logger = null) {
-		$this->persistenceProvider = $persistenceProvider;
-		$this->cacheProvider = is_null($caheProvider) ? new WURFL_Cache_NullCacheProvider() : $caheProvider;
-		$this->logger = is_null($logger) ? new WURFL_Logger_NullLogger() : $logger;
-	}
-	
-	public function cacheProvider($cacheProvider) {
-		return new WURFL_Context($this->persistenceProvider, $cacheProvider, $this->logger);
-	}
-	
-	public function logger($logger) {
-		return new WURFL_Context($this->persistenceProvider, $this->cacheProvider, $logger);
-	}
-	
-	public function __get($name) {
-		return $this->$name;
-	}
+    
+    /**
+     * @var WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
+     */
+    private $persistenceProvider;
+    /**
+     * @var WURFL_Cache_CacheProvider
+     */
+    private $cacheProvider;
+    /**
+     * @var WURFL_Logger_Interface
+     */
+    private $logger;
+    
+    public function __construct($persistenceProvider, $caheProvider = null, $logger = null) {
+        $this->persistenceProvider = $persistenceProvider;
+        $this->cacheProvider = is_null($caheProvider) ? new WURFL_Cache_NullCacheProvider() : $caheProvider;
+        $this->logger = is_null($logger) ? new WURFL_Logger_NullLogger() : $logger;
+    }
+    
+    public function cacheProvider($cacheProvider) {
+        return new WURFL_Context($this->persistenceProvider, $cacheProvider, $this->logger);
+    }
+    
+    public function logger($logger) {
+        return new WURFL_Context($this->persistenceProvider, $this->cacheProvider, $logger);
+    }
+    
+    public function __get($name) {
+        return $this->$name;
+    }
 
 }

@@ -30,7 +30,7 @@ class WURFL_Handlers_KonquerorHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'KONQUEROR';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }

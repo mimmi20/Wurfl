@@ -20,36 +20,38 @@
  * WURFL Storage factory
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Factory {
-	
-	/**
-	 * @var array Default configuration
-	 */
-    private static $defaultConfiguration = array(
-        "provider" => "memory",
-        "params" => array()
-);
+class WURFL_Storage_Factory
+{
+    /**
+     * @var array Default configuration
+     */
+    private static $_defaultConfiguration = array(
+        'provider' => 'memory',
+        'params'   => array()
+    );
     
     /**
      * Create a configuration based on the default configuration with the differences from $configuration
      * @param array $configuration
      * @return WURFL_Storage_Base Storage object, initialized with the given $configuration
      */
-    public static function create($configuration) {
+    static public function create($configuration)
+    {
         $currentConfiguration = is_array($configuration) ?
-                array_merge(self::$defaultConfiguration, $configuration)
-                : self::$defaultConfiguration;
-        $class = self::className($currentConfiguration);
-        return new $class($currentConfiguration["params"]);
+                array_merge(self::$_defaultConfiguration, $configuration)
+                : self::$_defaultConfiguration;
+        $class = self::_className($currentConfiguration);
+        return new $class($currentConfiguration['params']);
     }
-	
+    
     /**
      * Return the Storage Provider Class name from the given $configuration by using its 'provider' element
      * @param array $configuration
      * @return string WURFL Storage Provider class name
      */
-    private static function className($configuration) {
-        $provider = $configuration["provider"];
-        return "WURFL_Storage_" . ucfirst($provider);
+    private static function _className($configuration)
+    {
+        $provider = $configuration['provider'];
+        return 'WURFL_Storage_' . ucfirst($provider);
     }
 }

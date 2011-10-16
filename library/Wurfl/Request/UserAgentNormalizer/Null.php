@@ -20,9 +20,10 @@
  * Null User Agent Normalizer - does not normalize anything
  * @package    WURFL_Request_UserAgentNormalizer
  */
-class WURFL_Request_UserAgentNormalizer_Null implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {		
-		return $userAgent;
-	}
+class WURFL_Request_UserAgentNormalizer_Null implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        return $userAgent;
+    }
 }

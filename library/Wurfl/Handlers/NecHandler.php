@@ -29,7 +29,7 @@
  */
 class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler
 {
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -52,7 +52,7 @@ class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return boolean
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'NEC-')) {
             $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);

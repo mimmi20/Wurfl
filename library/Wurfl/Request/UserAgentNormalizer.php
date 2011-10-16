@@ -20,56 +20,60 @@
  * User Agent Normalizer
  * @package    WURFL_Request
  */
-class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormalizer_Interface {
-
-	/**
-	 * UserAgentNormalizer chain - array of WURFL_Request_UserAgentNormalizer objects
-	 * @var array
-	 */
-	protected $_userAgentNormalizers = array();
-	
-	/**
-	 * Set the User Agent Normalizers
-	 * @param array $normalizers Array of WURFL_Request_UserAgentNormalizer objects
-	 */
-	function __construct($normalizers = array()) {
-		if(is_array($normalizers)) {
-			$this->_userAgentNormalizers = $normalizers;
-		}
-	}
-	
-	/**
-	 * Adds a new UserAgent Normalizer to the chain
-	 * @param WURFL_UserAgentNormalizer_Interface $Normalizer
-	 * @return WURFL_Request_UserAgentNormalizer
-	 */
-	public function addUserAgentNormalizer(WURFL_Request_UserAgentNormalizer_Interface $normalizer) {
-		$userAgentNormalizers = $this->_userAgentNormalizers; 
-		$userAgentNormalizers[] = $normalizer;
-		return new WURFL_Request_UserAgentNormalizer($userAgentNormalizers);
-	}
-	
-	/**
-	 * Return the number of normalizers currently registered
-	 * @return int count
-	 */
-	public function count() {
-		return count($this->_userAgentNormalizers);
-	}
-	
-	/**
-	 * Normalize the given $userAgent by passing down the chain 
-	 * of normalizers
-	 *
-	 * @param string $userAgent
-	 * @return string Normalized user agent
-	 */
-	public function normalize($userAgent) {
-		$normalizedUserAgent = $userAgent;
-		foreach($this->_userAgentNormalizers as $normalizer) {
-			$normalizedUserAgent = $normalizer->normalize($normalizedUserAgent);
-		}
-		return $normalizedUserAgent;
-	}
+class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    /**
+     * UserAgentNormalizer chain - array of WURFL_Request_UserAgentNormalizer objects
+     * @var array
+     */
+    protected $_userAgentNormalizers = array();
+    
+    /**
+     * Set the User Agent Normalizers
+     * @param array $normalizers Array of WURFL_Request_UserAgentNormalizer objects
+     */
+    public function __construct($normalizers = array())
+    {
+        if (is_array($normalizers)) {
+            $this->_userAgentNormalizers = $normalizers;
+        }
+    }
+    
+    /**
+     * Adds a new UserAgent Normalizer to the chain
+     * @param WURFL_UserAgentNormalizer_Interface $Normalizer
+     * @return WURFL_Request_UserAgentNormalizer
+     */
+    public function addUserAgentNormalizer(WURFL_Request_UserAgentNormalizer_Interface $normalizer)
+    {
+        $userAgentNormalizers = $this->_userAgentNormalizers; 
+        $userAgentNormalizers[] = $normalizer;
+        return new WURFL_Request_UserAgentNormalizer($userAgentNormalizers);
+    }
+    
+    /**
+     * Return the number of normalizers currently registered
+     * @return int count
+     */
+    public function count()
+    {
+        return count($this->_userAgentNormalizers);
+    }
+    
+    /**
+     * Normalize the given $userAgent by passing down the chain 
+     * of normalizers
+     *
+     * @param string $userAgent
+     * @return string Normalized user agent
+     */
+    public function normalize($userAgent)
+    {
+        $normalizedUserAgent = $userAgent;
+        foreach ($this->_userAgentNormalizers as $normalizer) {
+            $normalizedUserAgent = $normalizer->normalize($normalizedUserAgent);
+        }
+        return $normalizedUserAgent;
+    }
 }
 

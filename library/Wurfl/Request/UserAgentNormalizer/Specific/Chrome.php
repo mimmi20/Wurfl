@@ -20,20 +20,22 @@
  * User Agent Normalizer - Return the Chrome string with the major version
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request_UserAgentNormalizer_Interface {
-	
-	public function normalize($userAgent) {
-		return $this->chromeWithMajorVersion($userAgent);		
-	}
-	
-	/**
-	 * Returns Google Chrome's Major version number
-	 * @param string $userAgent
-	 * @return string|int Version number
-	 */
-	private function chromeWithMajorVersion($userAgent) {
-		return substr($userAgent, strpos($userAgent, "Chrome"), 9);
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        return $this->chromeWithMajorVersion($userAgent);  
+    }
+    
+    /**
+     * Returns Google Chrome's Major version number
+     * @param string $userAgent
+     * @return string|int Version number
+     */
+    private function chromeWithMajorVersion($userAgent)
+    {
+        return substr($userAgent, strpos($userAgent, 'Chrome'), 9);
+    }
 
 }
 

@@ -29,7 +29,7 @@
  */
 class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler
 {
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -39,7 +39,7 @@ class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return boolean
      */
-    function canHandle($userAgent) {
+    public function canHandle($userAgent) {
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Samsung/SGH')
                 || WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-','Samsung','SAMSUNG', 'SPH', 'SGH', 'SCH'));
     }
@@ -53,7 +53,7 @@ class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = $this->tolerance($userAgent);
         $this->logger->log('$this->prefix :Applying Conclusive Match for ua: $userAgent with tolerance $tolerance');

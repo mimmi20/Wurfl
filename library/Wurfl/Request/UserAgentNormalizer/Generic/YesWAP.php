@@ -20,11 +20,12 @@
  * User Agent Normalizer - removes YesWAP garbage from user agent
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_YesWAP implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	const YES_WAP_REGEX = "/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)/";
-	
-	public function normalize($userAgent) {
-		return preg_replace(self::YES_WAP_REGEX, "", $userAgent);
-	}
+class WURFL_Request_UserAgentNormalizer_Generic_YesWAP implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    const YES_WAP_REGEX = '/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)';
+    
+    public function normalize($userAgent)
+    {
+        return preg_replace(self::YES_WAP_REGEX, '', $userAgent);
+    }
 }

@@ -20,31 +20,34 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Memcache extends WURFL_Storage_Base {
+class WURFL_Storage_Memcache extends WURFL_Storage_Base
+{
+    const EXTENSION_MODULE_NAME = '_memcache';
 
-    const EXTENSION_MODULE_NAME = "memcache";
+    private $_memcache;
+    private $_host;
+    private $_port;
+    private $_expiration;
+    private $_namespace;
 
-    private $memcache;
-    private $host;
-    private $port;
-    private $expiration;
-    private $namespace;
-
-    private $defaultParams = array(
-        "host" => "127.0.0.1",
-        "port" => "11211",
-        "namespace" => "wurfl",
-        "expiration" => 0
+    private $_defaultParams = array(
+        '_host' => '127.0.0.1',
+        '_port' => '11211',
+        '_namespace' => 'wurfl',
+        '_expiration' => 0
 );
 
-    public function __construct($params=array()) {
-        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
-        $this->toFields($currentParams);
+    public function __construct($params = array())
+    {
+        $currentParams = is_array($params) ? array_merge($this->_defaultParams, $params) : $this->_defaultParams;
+        $this->_toFields($currentParams);
         $this->initialize();
     }
 
-    private function toFields($params) {
-        foreach($params as $key => $value) {
+    private function _toFields($params)
+    {
+        foreach ($params as $key => $value) {
+            $key        = '_' . $key;
             $this->$key = $value;
         }
     }
@@ -53,53 +56,58 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base {
      * Initializes the Memcache Module
      *
      */
-    public final function initialize() {
+    final public function initialize()
+    {
         $this->_ensureModuleExistence();
-        $this->memcache = new Memcache();
-        // support multiple hosts using semicolon to separate hosts
-        $hosts = explode(";", $this->host);
-        // different ports for each hosts the same way
-        $ports = explode(";", $this->port);
+        $this->_memcache = new Memcache();
+        // sup_port multiple _hosts using semicolon to separate _hosts
+        $_hosts = explode(';', $this->_host);
+        // different _ports for each _hosts the same way
+        $_ports = explode(';', $this->_port);
 
-        if(count($hosts) > 1) {
-            if(count($ports) < 1) {
-                $ports = array_pad(count($hosts), self::DEFAULT_PORT);
-            } elseif(count($ports) == 1) {
-                // if we have just one port, use it for all hosts
-                $_p = $ports[0];
-                $ports = array_fill(0, count($hosts), $_p);
+        if (count($_hosts) > 1) {
+            if (count($_ports) < 1) {
+                $_ports = array_pad(count($_hosts), self::DEFAULT_PORT);
+            } elseif(count($_ports) == 1) {
+                // if we have just one _port, use it for all _hosts
+                $_p = $_ports[0];
+                $_ports = array_fill(0, count($_hosts), $_p);
             }
-            foreach($hosts as $i => $host) {
-                $this->memcache->addServer($host, $ports[$i]);
+            foreach ($_hosts as $i => $_host) {
+                $this->_memcache->addServer($_host, $_ports[$i]);
             }
         } else {
-            // just connect to the single host
-            $this->memcache->connect($hosts[0], $ports[0]);
+            // just connect to the single _host
+            $this->_memcache->connect($_hosts[0], $_ports[0]);
         }
     }
 
-    public function save($objectId, $object) {
-        return $this->memcache->set($this->encode($this->namespace, $objectId), $object, FALSE, $this->expiration);
+    public function save($objectId, $object)
+    {
+        return $this->_memcache->set($this->encode($this->_namespace, $objectId), $object, FALSE, $this->_expiration);
     }
 
-    public function load($objectId) {
-        $value = $this->memcache->get($this->encode($this->namespace, $objectId));
+    public function load($objectId)
+    {
+        $value = $this->_memcache->get($this->encode($this->_namespace, $objectId));
         return $value ? $value : null;
     }
 
 
-    public function clear() {
-        $this->memcache->flush();
+    public function clear()
+    {
+        $this->_memcache->flush();
     }
 
 
     /**
-     * Ensures the existence of the the PHP Extension memcache
+     * Ensures the existence of the the PHP Extension _memcache
      * @throws WURFL_Xml_PersistenceProvider_Exception required extension is unavailable
      */
-    private function _ensureModuleExistence() {
-        if(!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception("The PHP extension memcache must be installed and loaded in order to use the Memcached.");
+    private function _ensureModuleExistence()
+    {
+        if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
+            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension _memcache must be installed and loaded in order to use the Memcached.');
         }
     }
 

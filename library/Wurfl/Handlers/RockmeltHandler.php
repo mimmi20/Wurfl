@@ -30,7 +30,7 @@ class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'ROCKMELT';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -56,12 +56,12 @@ class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler
         '1.0' => 'rockmelt_1'
 );
     
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         return $this->applyRecoveryMatch($userAgent);
     }
     
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         $chromeVersion = $this->chromeVersion($userAgent);
         $chromeId = 'rockmelt';

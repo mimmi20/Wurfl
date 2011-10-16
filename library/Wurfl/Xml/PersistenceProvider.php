@@ -19,15 +19,15 @@
  * Persistence provider interface
  * @package    WURFL_Xml
  */
-interface WURFL_Xml_PersistenceProvider {
-	/**
-	 * Saves the object 
-	 *
-	 * @param string $objectId
-	 * @param mixed $object
-	 */
+interface WURFL_Xml_PersistenceProvider
+{
+    /**
+     * Saves the object 
+     *
+     * @param string $objectId
+     * @param mixed $object
+     */
     public function save($objectId, $object);
-
     
     /**
      * Loads the object identified by the objectId from the persistence
@@ -37,7 +37,6 @@ interface WURFL_Xml_PersistenceProvider {
      * @return mixed value
      */
     public function load($objectId);
-	
     
     /**
      * Removes the element form the Persistence identified by the object Id
@@ -58,8 +57,7 @@ interface WURFL_Xml_PersistenceProvider {
     public function isWURFLLoaded();
 
     /**
-	 * Sets the WURFL Loaded flag on the persistence provider
-	 */
+     * Sets the WURFL Loaded flag on the persistence provider
+     */
     public function setWURFLLoaded();
-
 }

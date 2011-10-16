@@ -31,7 +31,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'KDDI';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -49,7 +49,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
     
     /**
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = $this->tolerance($userAgent);
         return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
@@ -60,7 +60,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera')) {
             return 'opera';

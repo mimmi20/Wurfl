@@ -30,7 +30,7 @@ class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'VODAFONE';
     
-    function __construct($wurflContext, $userAgentNormalizer = null) 
+    public function __construct($wurflContext, $userAgentNormalizer = null) 
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -41,7 +41,7 @@ class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler
      * @param $string $userAgent
      * @return boolean
      */
-    function canHandle($userAgent)
+    public function canHandle($userAgent)
     {
         return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Vodafone');
     }
@@ -50,7 +50,7 @@ class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler
      * 
      * @param string $userAgent
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {    
         $tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, '/', 3);        
         return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);

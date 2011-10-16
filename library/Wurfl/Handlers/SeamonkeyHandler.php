@@ -62,12 +62,12 @@ class WURFL_Handlers_SeamonkeyHandler extends WURFL_Handlers_Handler
         '2.6' => 'seamonkey_2_6',
 );
     
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         return $this->applyRecoveryMatch($userAgent);
     }
     
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         $chromeVersion = $this->chromeVersion($userAgent);
         $chromeId = 'seamonkey';

@@ -23,42 +23,46 @@
  * @property-read string $lastUpdated Loaded WURFL Last Updated Date
  * @property-read string $officialURL Loaded WURFL Official URL 
  */
-class WURFL_Xml_Info {
-
-	/**
-	 * Key used in persistence provider to store version-related information
-	 * @var string
-	 */
-	const PERSISTENCE_KEY = "WURFL_XML_INFO";	
-	private $version;
-	private $lastUpdated;
-	private $officialURL;
-	
-	/**
-	 * @param string $version WURFL Version
-	 * @param string $lastUpdated WURFL Last Updated data
-	 * @param string $officialURL WURFL URL
-	 */
-	public function __construct($version, $lastUpdated, $officialURL) {
-		$this->version = $version;
-		$this->lastUpdated = $lastUpdated;
-		$this->officialURL = $officialURL;		
-	}
-	
-	/**
-	 * Returns the value for the given key(version, lastUpdated, officialURL)
-	 * @param string $name
-	 * @return string value
-	 */
-	public function __get($name) {
-		return $this->$name;
-	} 
-	
-	/**
-	 * @return WURFL_Xml_Info Empty WURFL_Xml_Info object
-	 */
-	public static function noInfo() {
-		return new WURFL_Xml_Info("", "", "");
-	}
-	
+class WURFL_Xml_Info
+{
+    /**
+     * Key used in persistence provider to store version-related information
+     * @var string
+     */
+    const PERSISTENCE_KEY = 'WURFL_XML_INFO';    
+    private $_version;
+    private $_lastUpdated;
+    private $_officialURL;
+    
+    /**
+     * @param string $version WURFL Version
+     * @param string $lastUpdated WURFL Last Updated data
+     * @param string $officialURL WURFL URL
+     */
+    public function __construct($version, $lastUpdated, $officialURL)
+    {
+        $this->_version = $version;
+        $this->_lastUpdated = $lastUpdated;
+        $this->_officialURL = $officialURL;        
+    }
+    
+    /**
+     * Returns the value for the given key(version, lastUpdated, officialURL)
+     * @param string $name
+     * @return string value
+     */
+    public function __get($name)
+    {
+        $name = '_' . $name;
+        return $this->$name;
+    } 
+    
+    /**
+     * @return WURFL_Xml_Info Empty WURFL_Xml_Info object
+     */
+    public static function noInfo()
+    {
+        return new WURFL_Xml_Info('', '', '');
+    }
+    
 }

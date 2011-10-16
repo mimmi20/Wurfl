@@ -31,7 +31,7 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'BOT_CRAWLER_TRANSCODER';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }

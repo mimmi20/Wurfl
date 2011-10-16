@@ -30,7 +30,7 @@
 
 class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
 {
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -70,7 +70,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         $version = $this->blackberryVersion($userAgent);
         if(is_null($version)) {

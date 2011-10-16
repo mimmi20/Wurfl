@@ -20,13 +20,14 @@
  * User Agent Normalizer - returns the substring starting from "BlackBerry"
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {
-		$index = strrpos($userAgent, "BlackBerry");
-		if($index > 0 && strpos($userAgent, "AppleWebKit") === FALSE) {
-			return substr($userAgent, $index);
-		}
-		return $userAgent;
-	}
+class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        $index = strrpos($userAgent, 'BlackBerry');
+        if ($index > 0 && strpos($userAgent, 'AppleWebKit') === FALSE) {
+            return substr($userAgent, $index);
+        }
+        return $userAgent;
+    }
 }

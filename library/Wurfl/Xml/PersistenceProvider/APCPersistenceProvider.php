@@ -20,44 +20,44 @@
  * @package    WURFL_Xml_PersistenceProvider
  */
 class WURFL_Xml_PersistenceProvider_APCPersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider {
-	
-	const EXTENSION_MODULE_NAME = "apc";
-	
-	protected $persistenceIdentifier = "APC_PERSISTENCE_PROVIDER";
-	
-	public function initialize() {
-		$this->_ensureModuleExistance();
-	}
-	
-	public function save($objectId, $object) {
-		apc_store($this->encode($objectId), $object);
-	}
-	
-	public function load($objectId) {
-		$value = apc_fetch($this->encode($objectId));
-		return $value !== false ? $value : NULL;
-	}
-	
-	public function remove($objectId) {
-		apc_delete($this->encode($objectId));
-	}
-	
-	/**
-	 * Removes all entry from the Persistence Provider
-	 *
-	 */
-	public function clear() {
-		apc_clear_cache("user");
-	}
-	
-	/**
-	 * Ensures the existance of the the PHP Extension apc
-	 *
-	 */
-	private function _ensureModuleExistance() {
-		if(!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
-			throw new WURFL_Xml_PersistenceProvider_Exception("The PHP extension apc must be installed, loaded and enabled.");
-		}
-	}
+    
+    const EXTENSION_MODULE_NAME = "apc";
+    
+    protected $persistenceIdentifier = "APC_PERSISTENCE_PROVIDER";
+    
+    public function initialize() {
+        $this->_ensureModuleExistance();
+    }
+    
+    public function save($objectId, $object) {
+        apc_store($this->encode($objectId), $object);
+    }
+    
+    public function load($objectId) {
+        $value = apc_fetch($this->encode($objectId));
+        return $value !== false ? $value : NULL;
+    }
+    
+    public function remove($objectId) {
+        apc_delete($this->encode($objectId));
+    }
+    
+    /**
+     * Removes all entry from the Persistence Provider
+     *
+     */
+    public function clear() {
+        apc_clear_cache("user");
+    }
+    
+    /**
+     * Ensures the existance of the the PHP Extension apc
+     *
+     */
+    private function _ensureModuleExistance() {
+        if(!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
+            throw new WURFL_Xml_PersistenceProvider_Exception("The PHP extension apc must be installed, loaded and enabled.");
+        }
+    }
 
 }

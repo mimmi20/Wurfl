@@ -26,25 +26,30 @@
  * @category   WURFL
  * @package    WURFL_Cache
  */
-class WURFL_Cache_EAcceleratorCacheProvider implements WURFL_Cache_CacheProvider {
-	
-	private $expire;
-	
-	function __construct($params) {
-		if(is_array($params)) {
-			$this->expire = isset($params [WURFL_Cache_CacheProvider::EXPIRATION]) ? $params [WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
-		}
-	}
-	
-	function get($key) {
-		return eaccelerator_get($key);
-	}
-	
-	function put($key, $value) {
-		eaccelerator_put($key, $value, $this->expire);
-	}
-	
-	function clear() {
-	}
+class WURFL_Cache_EAcceleratorCacheProvider implements WURFL_Cache_CacheProvider
+{
+    private $_expire;
+    
+    public function __construct($params)
+    {
+        if (is_array($params)) {
+            $this->_expire = isset($params [WURFL_Cache_CacheProvider::EXPIRATION]) ? $params [WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
+        }
+    }
+    
+    public function get($key)
+    {
+        return eaccelerator_get($key);
+    }
+    
+    public function put($key, $value)
+    {
+        eaccelerator_put($key, $value, $this->_expire);
+    }
+    
+    public function clear()
+    {
+        //
+    }
 }
 

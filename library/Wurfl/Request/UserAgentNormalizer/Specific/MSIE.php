@@ -20,17 +20,19 @@
  * User Agent Normalizer - MSIE String with the Major and Minor Version Only.
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_MSIE implements WURFL_Request_UserAgentNormalizer_Interface  {
-	
-	public function normalize($userAgent) {
-		return $this->msieWithVersion($userAgent);				
-	}
-	/**
-	 * Returns version info
-	 * @param string $userAgent
-	 * @return string Version info
-	 */
-	private function msieWithVersion($userAgent) {
-		return substr($userAgent, strpos($userAgent, "MSIE"), 8);
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_MSIE implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        return $this->msieWithVersion($userAgent);                
+    }
+    /**
+     * Returns version info
+     * @param string $userAgent
+     * @return string Version info
+     */
+    private function msieWithVersion($userAgent)
+    {
+        return substr($userAgent, strpos($userAgent, 'MSIE'), 8);
+    }
 }

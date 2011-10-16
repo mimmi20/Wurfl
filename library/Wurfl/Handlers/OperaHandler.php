@@ -30,7 +30,7 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'OPERA';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -78,12 +78,12 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
 );
     
     const OPERA_TOLERANCE = 3;
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::OPERA_TOLERANCE);
     }
     
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         $operaVersion = $this->operaVersion($userAgent);
         $operaId = 'opera';

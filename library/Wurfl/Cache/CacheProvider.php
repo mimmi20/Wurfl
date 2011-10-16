@@ -25,38 +25,38 @@
  * @category   WURFL
  * @package    WURFL_Cache
  */
-interface WURFL_Cache_CacheProvider {
-	
-	/**
-	 * @var string Key for storing the expiration
-	 */
-	const EXPIRATION = "expiration";
-	
-	const ONE_HOUR = 3600;
-	const ONE_DAY = 86400;
-	const ONE_WEEK = 604800;
-	const ONE_MONTH = 2592000;
-	const ONE_YEAR = 31556926;
-	const NEVER = 0;
-	
-	
-	/**
-	 * Put the the computed data into the cache so that it can be
-	 * retrieved later.
-	 * @param string $key Key for accessing the data
-	 * @param mixed $value The actual data been stored
-	 */
-	function put($key, $value);
+interface WURFL_Cache_CacheProvider
+{
+    /**
+     * @var string Key for storing the expiration
+     */
+    const EXPIRATION = 'expiration';
+    
+    const ONE_HOUR = 3600;
+    const ONE_DAY = 86400;
+    const ONE_WEEK = 604800;
+    const ONE_MONTH = 2592000;
+    const ONE_YEAR = 31556926;
+    const NEVER = 0;
+    
+    
+    /**
+     * Put the the computed data into the cache so that it can be
+     * retrieved later.
+     * @param string $key Key for accessing the data
+     * @param mixed $value The actual data been stored
+     */
+    public function put($key, $value);
 
-	/**
-	 * Get the previously saved data.
-	 * @param string $key Key for accessing the data
-	 * @return mixed the actual data been retrieved
-	 */
-	function get($key);
-	
-	/**
-	 * Invalidates the Cache, removing all cached devices
-	 */
-	function clear();
+    /**
+     * Get the previously saved data.
+     * @param string $key Key for accessing the data
+     * @return mixed the actual data been retrieved
+     */
+    public function get($key);
+    
+    /**
+     * Invalidates the Cache, removing all cached devices
+     */
+    public function clear();
 }

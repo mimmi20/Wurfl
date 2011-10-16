@@ -31,7 +31,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'APPLE';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -54,7 +54,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = 0;
         if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Apple')) {
@@ -70,7 +70,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
             return 'apple_ipad_ver1';

@@ -50,7 +50,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return boolean always true
      */
-    function canHandle($userAgent)
+    public function canHandle($userAgent)
     {
         return true;
     }
@@ -62,7 +62,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyConclusiveMatch($userAgent)
+    public function applyConclusiveMatch($userAgent)
     {
         $deviceId = WURFL_Constants::GENERIC;
         if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
@@ -123,7 +123,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         return NULL;
     }
     
-    function filter($userAgent, $deviceID)
+    public function filter($userAgent, $deviceID)
     {
         if($this->isMozilla4($userAgent)) {
             $this->mozilla4UserAgentsWithDeviceID [$this->normalizeUserAgent($userAgent)] = $deviceID;
@@ -134,7 +134,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         parent::filter($userAgent, $deviceID);
     }
     
-    function persistData()
+    public function persistData()
     {
         ksort($this->mozilla4UserAgentsWithDeviceID);
         ksort($this->mozilla5UserAgentsWithDeviceID);

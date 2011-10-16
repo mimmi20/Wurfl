@@ -49,7 +49,7 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Thunderbird');
     }
     
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {//var_dump($userAgent);exit;
         return $this->applyRecoveryMatch($userAgent);
     }
@@ -68,7 +68,7 @@ class WURFL_Handlers_ThunderbirdHandler extends WURFL_Handlers_Handler
         '9.0' => 'thunderbird_9'
 );
     
-    function applyRecoveryMatch($userAgent) 
+    public function applyRecoveryMatch($userAgent) 
     {
         $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'thunderbird';

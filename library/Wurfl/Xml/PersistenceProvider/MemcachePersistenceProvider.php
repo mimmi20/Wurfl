@@ -48,7 +48,7 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
      * Initializes the Memcache Module
      *
      */
-    public final function initialize() {
+    public final public function initialize() {
         $this->_ensureModuleExistance();
         $this->_memcache = new Memcache();
         // support multiple hosts using semicolon to separate hosts

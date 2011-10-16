@@ -20,14 +20,15 @@
  * User Agent Normalizer
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Maemo implements WURFL_Request_UserAgentNormalizer_Interface  {
-	
-	public function normalize($userAgent) {
-		$maemoIndex = strpos($userAgent, "Maemo");
-		if($maemoIndex !== 0) {
-			return substr($userAgent, $maemoIndex);
-		}	
-		return $userAgent;	
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_Maemo implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        $maemoIndex = strpos($userAgent, 'Maemo');
+        if ($maemoIndex !== 0) {
+            return substr($userAgent, $maemoIndex);
+        }    
+        return $userAgent;    
+    }
 }
 

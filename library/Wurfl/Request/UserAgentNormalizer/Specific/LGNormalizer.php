@@ -20,9 +20,10 @@
  * User Agent Normalizer
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_LGNormalizer implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-    public function normalize($userAgent) {
-        return substr($userAgent, strpos($userAgent, "LG"));
+class WURFL_Request_UserAgentNormalizer_Specific_LGNormalizer implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        return substr($userAgent, strpos($userAgent, 'LG'));
     }
 }

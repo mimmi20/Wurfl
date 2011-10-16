@@ -20,27 +20,30 @@
  * Generic WURFL Request object containing User Agent, UAProf and xhtml device data
  * @package    WURFL_Request
  */
-class WURFL_Request_GenericRequest {
-	
-	private $userAgent;
-	private $userAgentProfile;
-	private $xhtmlDevice;
-	private $id;
-	
-	/**
-	 * @param string $userAgent
-	 * @param string $userAgentProfile
-	 * @param string $xhtmlDevice
-	 */
-	function __construct($userAgent, $userAgentProfile=null, $xhtmlDevice=null){
-		$this->userAgent = $userAgent;
-		$this->userAgentProfile = $userAgentProfile;
-		$this->xhtmlDevice = $xhtmlDevice;
-		$this->id = md5($this->userAgent);
-	}
-	
-	function __get($name){
-		return $this->$name;
-	}
+class WURFL_Request_GenericRequest
+{
+    private $_userAgent;
+    private $_userAgentProfile;
+    private $_xhtmlDevice;
+    private $_id;
+    
+    /**
+     * @param string $userAgent
+     * @param string $userAgentProfile
+     * @param string $xhtmlDevice
+     */
+    public function __construct($userAgent, $userAgentProfile = null, $xhtmlDevice = null)
+    {
+        $this->_userAgent = $userAgent;
+        $this->_userAgentProfile = $userAgentProfile;
+        $this->_xhtmlDevice = $xhtmlDevice;
+        $this->_id = md5($this->userAgent);
+    }
+    
+    public function __get($name)
+    {
+        $name = '_' . $name;
+        return $this->$name;
+    }
 }
 

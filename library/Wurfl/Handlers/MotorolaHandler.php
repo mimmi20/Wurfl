@@ -31,7 +31,7 @@ class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'MOTOROLA';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -57,7 +57,7 @@ class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'MIB/2.2') || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MIB/BER2.2')) {
             return 'mot_mib22_generic';

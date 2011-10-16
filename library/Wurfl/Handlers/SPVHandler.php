@@ -30,7 +30,7 @@ class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'SPV';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -46,7 +46,7 @@ class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'SPV');
     }
     
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
         return parent::applyRisWithTollerance(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);

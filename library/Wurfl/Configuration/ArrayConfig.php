@@ -27,18 +27,18 @@
  * // config.php
  * $configuration = array(
  *   'wurfl' => array(
- *   'main-file' => "wurfl.xml",
- *     'patches' => array("web_browsers_patch.xml"),
+ *   'main-file' => 'wurfl.xml',
+ *     'patches' => array('web_browsers_patch.xml'),
  *),
  *   'allow-reload' => true,
  *   'persistence' => array(
- *     'provider' => "file",
+ *     'provider' => 'file',
  *     'params' => array(
- *       'dir' => "storage/persistence",
+ *       'dir' => 'storage/persistence',
  *),
  *),
  *   'cache' => array(
- *     'provider' => "null",
+ *     'provider' => 'null',
  *),
  *);
  * ?>
@@ -50,7 +50,7 @@
  * $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
  * $wurflManager = $wurflManagerFactory->create();
  * $info = $wurflManager->getWURFLInfo();
- * printf("Version: %s\nUpdated: %s\nOfficialURL: %s\n\n",
+ * printf('Version: %s\nUpdated: %s\nOfficialURL: %s\n\n',
  *   $info->version,
  *   $info->lastUpdated,
  *   $info->officialURL
@@ -59,72 +59,78 @@
  * </code>
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config {
-	
-	/**
-	 * Initialize class - gets called from the parent constructor
-	 * @throws WURFL_WURFLException configuration not present
-	 */
-	protected function initialize() {
-		include parent::getConfigFilePath();
-		if(!isset($configuration) || !is_array($configuration)) {
-			throw new WURFL_WURFLException("Configuration array must be defined in the configuraiton file");
-		}
-		
-		$this->init($configuration);
-	}
-	
-	
-	private function init($configuration) {
-		
-		if(array_key_exists(WURFL_Configuration_Config::WURFL, $configuration)) {
-			$this->setWurflConfiguration($configuration[WURFL_Configuration_Config::WURFL]);
-		}
-		
-		if(array_key_exists(WURFL_Configuration_Config::PERSISTENCE, $configuration)) {
-			$this->setPersistenceConfiguration($configuration[WURFL_Configuration_Config::PERSISTENCE]);
-		}
-		
-		if(array_key_exists(WURFL_Configuration_Config::CACHE, $configuration)) {
-			$this->setCacheConfiguration($configuration [WURFL_Configuration_Config::CACHE]);
-		}
-		
-		if(array_key_exists(WURFL_Configuration_Config::LOG_DIR, $configuration)) {
-			$this->setLogDirConfiguration($configuration[WURFL_Configuration_Config::LOG_DIR]);
-		}
+class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config
+{
+    /**
+     * Initialize class - gets called from the parent constructor
+     * @throws WURFL_WURFLException configuration not present
+     */
+    private function _initialize()
+    {
+        include parent::getConfigFilePath();
+        if (!isset($configuration) || !is_array($configuration)) {
+            throw new WURFL_WURFLException('Configuration array must be defined in the configuraiton file');
+        }
+        
+        $this->init($configuration);
+    }
+    
+    
+    private function init($configuration)
+    {
+        
+        if (array_key_exists(WURFL_Configuration_Config::WURFL, $configuration)) {
+            $this->_setWurflConfiguration($configuration[WURFL_Configuration_Config::WURFL]);
+        }
+        
+        if (array_key_exists(WURFL_Configuration_Config::PERSISTENCE, $configuration)) {
+            $this->_setPersistenceConfiguration($configuration[WURFL_Configuration_Config::PERSISTENCE]);
+        }
+        
+        if (array_key_exists(WURFL_Configuration_Config::CACHE, $configuration)) {
+            $this->_setCacheConfiguration($configuration [WURFL_Configuration_Config::CACHE]);
+        }
+        
+        if (array_key_exists(WURFL_Configuration_Config::LOG_DIR, $configuration)) {
+            $this->_setLogDirConfiguration($configuration[WURFL_Configuration_Config::LOG_DIR]);
+        }
 
         $this->allowReload = array_key_exists(WURFL_Configuration_Config::ALLOW_RELOAD, $configuration)
                 ? $configuration[WURFL_Configuration_Config::ALLOW_RELOAD] : false; 
-	}
-	
-	private function setWurflConfiguration(array $wurflConfig) {
-		
-		if(array_key_exists(WURFL_Configuration_Config::MAIN_FILE, $wurflConfig)) {
-			$this->wurflFile = parent::getFullPath($wurflConfig[WURFL_Configuration_Config::MAIN_FILE]);
-		}
-		
-		if(array_key_exists(WURFL_Configuration_Config::PATCHES, $wurflConfig)) {
-			foreach($wurflConfig[WURFL_Configuration_Config::PATCHES] as $wurflPatch) {
-				$this->wurflPatches[] = parent::getFullPath($wurflPatch);
-			}
-		}		
-	}
-	
-	private function setPersistenceConfiguration(array $persistenceConfig) {
-		$this->persistence = $persistenceConfig;
-		if(array_key_exists('params', $this->persistence) && array_key_exists(WURFL_Configuration_Config::DIR, $this->persistence['params'])) {
-			$this->persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath($this->persistence['params'][WURFL_Configuration_Config::DIR]);
-		}
-	}
+    }
+    
+    private function _setWurflConfiguration(array $wurflConfig)
+    {
+        
+        if (array_key_exists(WURFL_Configuration_Config::MAIN_FILE, $wurflConfig)) {
+            $this->wurflFile = parent::getFullPath($wurflConfig[WURFL_Configuration_Config::MAIN_FILE]);
+        }
+        
+        if (array_key_exists(WURFL_Configuration_Config::PATCHES, $wurflConfig)) {
+            foreach($wurflConfig[WURFL_Configuration_Config::PATCHES] as $wurflPatch) {
+                $this->wurflPatches[] = parent::getFullPath($wurflPatch);
+            }
+        }        
+    }
+    
+    private function _setPersistenceConfiguration(array $persistenceConfig)
+    {
+        $this->persistence = $persistenceConfig;
+        if (array_key_exists('params', $this->persistence) && array_key_exists(WURFL_Configuration_Config::DIR, $this->persistence['params'])) {
+            $this->persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath($this->persistence['params'][WURFL_Configuration_Config::DIR]);
+        }
+    }
 
-	private function setCacheConfiguration(array $cacheConfig) {
-		$this->cache = $cacheConfig;
-	}
-	
-	private function setLogDirConfiguration($logDir) {
-		if(!is_writable($logDir)) {
-			throw new InvalidArgumentException("log dir $logDir  must exist and be writable");
-		}
-		$this->logDir = $logDir;
-	}
+    private function _setCacheConfiguration(array $cacheConfig)
+    {
+        $this->cache = $cacheConfig;
+    }
+    
+    private function _setLogDirConfiguration($logDir)
+    {
+        if (!is_writable($logDir)) {
+            throw new InvalidArgumentException('log dir ' . $logDir . '  must exist and be writable');
+        }
+        $this->logDir = $logDir;
+    }
 }

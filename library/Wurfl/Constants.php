@@ -22,28 +22,28 @@
  */
 class WURFL_Constants {
 
-	private function __construct(){}
-	
-	/**
-	 * @var string WURFL 'generic' device id
-	 */
-	const GENERIC = "generic";
-	/**
-	 * @var string WURFL 'generic_xhtml' device id
-	 */
-	const GENERIC_XHTML = "generic_xhtml";
+    private function __construct(){}
+    
+    /**
+     * @var string WURFL 'generic' device id
+     */
+    const GENERIC = "generic";
+    /**
+     * @var string WURFL 'generic_xhtml' device id
+     */
+    const GENERIC_XHTML = "generic_xhtml";
 
-	const ACCEPT_HEADER_VND_WAP_XHTML_XML = "application/vnd.wap.xhtml+xml";
-	const ACCEPT_HEADER_XHTML_XML = "application/xhtml+xml";
-	const ACCEPT_HEADER_TEXT_HTML = "application/text+html";
+    const ACCEPT_HEADER_VND_WAP_XHTML_XML = "application/vnd.wap.xhtml+xml";
+    const ACCEPT_HEADER_XHTML_XML = "application/xhtml+xml";
+    const ACCEPT_HEADER_TEXT_HTML = "application/text+html";
 
-	const UA = "UA";
-	
-	const MEMCACHE = "memcache";
-	const APC = "apc";
-	const FILE = "file";
-	const NULL_CACHE = "null";
-	const EACCELERATOR = "eaccelerator";
-	const SQLITE = "sqlite";
-	const MYSQL = "mysql";
+    const UA = "UA";
+    
+    const MEMCACHE = "memcache";
+    const APC = "apc";
+    const FILE = "file";
+    const NULL_CACHE = "null";
+    const EACCELERATOR = "eaccelerator";
+    const SQLITE = "sqlite";
+    const MYSQL = "mysql";
 }

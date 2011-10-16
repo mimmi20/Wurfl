@@ -30,7 +30,7 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'SAFARI';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -50,7 +50,7 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari');
     }
     
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         return $this->applyRecoveryMatch($userAgent);
     }
@@ -68,7 +68,7 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
         '75'  => 'safari_5_1'
 );
     
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'safari';

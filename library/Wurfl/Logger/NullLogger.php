@@ -19,16 +19,21 @@
  * Class that is used to supress logging
  * @package    WURFL_Logger
  */
-class WURFL_Logger_NullLogger implements WURFL_Logger_Interface  {
-	
-	function log($message, $type="") {
-		//echo $message . "\n";
-	}
-	
-	function debug($message) {
-		//echo $message . "\n";		
-	}
-	
-	function info($message){}
+class WURFL_Logger_NullLogger implements WURFL_Logger_Interface
+{
+    public function log($message, $type = '')
+    {
+        //echo $message . "\n";
+    }
+    
+    public function debug($message)
+    {
+        //echo $message . "\n";
+    }
+    
+    public function info($message)
+    {
+        //
+    }
 }
 

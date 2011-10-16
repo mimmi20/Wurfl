@@ -42,7 +42,7 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return boolean
      */
-    function canHandle($userAgent)
+    public function canHandle($userAgent)
     {
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia');
     }
@@ -55,7 +55,7 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         //$tolerance = WU
         $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
@@ -72,7 +72,7 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         if(!(strpos($userAgent, 'Nokia') === false)) {
             if(strpos($userAgent, 'Series60') != 0) {

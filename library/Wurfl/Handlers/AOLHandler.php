@@ -33,7 +33,7 @@ class WURFL_Handlers_AOLHandler extends WURFL_Handlers_Handler
     // LD Match Tollerance
     const AOL_LD_TOLLERANCE = 5;
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -57,7 +57,7 @@ class WURFL_Handlers_AOLHandler extends WURFL_Handlers_Handler
      * Apply LD Match with tollerance 5
      *
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::AOL_LD_TOLLERANCE);
     }

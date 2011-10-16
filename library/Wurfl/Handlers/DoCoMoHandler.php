@@ -31,7 +31,7 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'DOCOMO';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -58,7 +58,7 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
         return NULL;
     }
     
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'DoCoMo/2')) {
             return 'docomo_generic_jap_ver2';

@@ -49,7 +49,7 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Flock');
     }
     
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {//var_dump($userAgent);exit;
         return $this->applyRecoveryMatch($userAgent);
     }
@@ -64,7 +64,7 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
         '5.0' => 'flock_5'
 );
     
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'flock';

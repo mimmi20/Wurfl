@@ -20,19 +20,21 @@
  * User Agent Normalizer - Return the firefox string with the major and minor version only
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Seamonkey implements WURFL_Request_UserAgentNormalizer_Interface {
-	
-	public function normalize($userAgent) {
-		return $this->firefoxWithMajorAndMinorVersion($userAgent);		
-	}
-	/**
-	 * Returns FireFox major and minor version numbers
-	 * @param string $userAgent
-	 * @return string Major and minor version
-	 */
-	private function firefoxWithMajorAndMinorVersion($userAgent) {
-		return substr($userAgent, strpos($userAgent, "SeaMonkey"), 13);
-	}
+class WURFL_Request_UserAgentNormalizer_Specific_Seamonkey implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    public function normalize($userAgent)
+    {
+        return $this->_firefoxWithMajorAndMinorVersion($userAgent);        
+    }
+    /**
+     * Returns FireFox major and minor version numbers
+     * @param string $userAgent
+     * @return string Major and minor version
+     */
+    private function _firefoxWithMajorAndMinorVersion($userAgent)
+    {
+        return substr($userAgent, strpos($userAgent, 'SeaMonkey'), 13);
+    }
 
 }
 

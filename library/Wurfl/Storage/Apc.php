@@ -20,64 +20,72 @@
  * APC Storage class
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Apc extends WURFL_Storage_Base {
-
-    const EXTENSION_MODULE_NAME = "apc";
-    private $currentParams = array(
-        "namespace" => "wurfl",
-        "expiration" => 0
-);
-
+class WURFL_Storage_Apc extends WURFL_Storage_Base
+{
+    const EXTENSION_MODULE_NAME = 'apc';
     
-    public function __construct($params = array()) {
-        if(is_array($params))  {
-            array_merge($this->currentParams, $params);
+    private $_currentParams = array(
+        'namespace' => 'wurfl',
+        'expiration' => 0
+    );
+    
+    public function __construct($params = array())
+    {
+        if (is_array($params))  {
+            array_merge($this->_currentParams, $params);
         }
         //$this->initialize();
     }
 
-
-    public function initialize() {
-        $this->ensureModuleExistence();
+    public function initialize()
+    {
+        $this->_ensureModuleExistence();
     }
 
-    public function save($objectId, $object) {
-        apc_store($this->encode($this->apcNameSpace(), $objectId), $object, $this->expire());
+    public function save($objectId, $object)
+    {
+        apc_store($this->encode($this->_apcNameSpace(), $objectId), $object, $this->_expire());
     }
 
-    public function load($objectId) {
-        $value = apc_fetch($this->encode($this->apcNameSpace(), $objectId));
+    public function load($objectId)
+    {
+        $value = apc_fetch($this->encode($this->_apcNameSpace(), $objectId));
         return $value !== false ? $value : null;
     }
 
-    public function remove($objectId) {
-        apc_delete($this->encode($this->apcNameSpace(), $objectId));
+    public function remove($objectId)
+    {
+        apc_delete($this->encode($this->_apcNameSpace(), $objectId));
     }
 
     /**
      * Removes all entry from the Persistence Provider
      *
      */
-    public function clear() {
-        apc_clear_cache("user");
+    public function clear()
+    {
+        apc_clear_cache('user');
     }
 
 
-    private function apcNameSpace() {
-        return $this->currentParams["namespace"];
+    private function _apcNameSpace()
+    {
+        return $this->_currentParams['namespace'];
     }
 
-    private function expire() {
-        return $this->currentParams["expiration"];   
+    private function _expire()
+    {
+        return $this->_currentParams['expiration'];   
     }
 
     /**
      * Ensures the existence of the the PHP Extension apc
      * @throws WURFL_Xml_PersistenceProvider_Exception required extension is unavailable
      */
-    private function ensureModuleExistence() {
-        if(!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception("The PHP extension apc must be installed, loaded and enabled.");
+    private function _ensureModuleExistence()
+    {
+        if (!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
+            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension apc must be installed, loaded and enabled.');
         }
     }
 

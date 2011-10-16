@@ -29,7 +29,7 @@
  */
 class WURFL_Handlers_SiemensHandler extends WURFL_Handlers_Handler
 {
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }

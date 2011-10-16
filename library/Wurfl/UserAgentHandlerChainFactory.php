@@ -22,9 +22,9 @@
  */
 class WURFL_UserAgentHandlerChainFactory {
 
-	/**
-	 * @var WURFL_UserAgentHandlerChain
-	 */
+    /**
+     * @var WURFL_UserAgentHandlerChain
+     */
     private static $_userAgentHandlerChain = null;
 
     /**
@@ -32,7 +32,7 @@ class WURFL_UserAgentHandlerChainFactory {
      * @param WURFL_Context $context
      * @return WURFL_UserAgentHandlerChain
      */
-    public static function createFrom(WURFL_Context $context) {
+    public static public function createFrom(WURFL_Context $context) {
         self::init($context);
         return self::$_userAgentHandlerChain;
     }
@@ -133,11 +133,11 @@ class WURFL_UserAgentHandlerChainFactory {
 
     }
 
-	/**
-	 * Returns an array of all possible User Agent Normalizers
-	 * @return array Array of WURFL_Request_UserAgentNormalizer objects
-	 */
-    private static function createGenericNormalizers() {
+    /**
+     * Returns an array of all possible User Agent Normalizers
+     * @return array Array of WURFL_Request_UserAgentNormalizer objects
+     */
+    private static public function createGenericNormalizers() {
         return new WURFL_Request_UserAgentNormalizer(
             array(
                 new WURFL_Request_UserAgentNormalizer_Generic_UPLink(),

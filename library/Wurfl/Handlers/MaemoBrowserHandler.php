@@ -30,7 +30,7 @@ class WURFL_Handlers_MaemoBrowserHandler extends WURFL_Handlers_Handler {
 
     protected $prefix = 'MaemoBrowser';
 
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -45,7 +45,7 @@ class WURFL_Handlers_MaemoBrowserHandler extends WURFL_Handlers_Handler {
         return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Maemo');
     }
 
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
          $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
         return parent::applyRisWithTollerance(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);

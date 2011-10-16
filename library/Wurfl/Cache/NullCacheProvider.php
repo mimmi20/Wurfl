@@ -20,14 +20,20 @@
  * Cache provider to prevent caching
  * @package    WURFL_Cache
  */
-class WURFL_Cache_NullCacheProvider implements WURFL_Cache_CacheProvider  {
-	
-	public function get($key) {
-		return null;
-	}
-	
-	public function put($key, $value, $expire=0) {}
-	
-	public function clear() {}
-	
+class WURFL_Cache_NullCacheProvider implements WURFL_Cache_CacheProvider
+{
+    public function get($key)
+    {
+        return null;
+    }
+    
+    public function put($key, $value, $expire=0)
+    {
+        // do nothing
+    }
+    
+    public function clear()
+    {
+        // do nothing
+    }
 }

@@ -20,52 +20,57 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Memory extends WURFL_Storage_Base {
+class WURFL_Storage_Memory extends WURFL_Storage_Base
+{
+    const IN_MEMORY = 'memory';
 
-	const IN_MEMORY = "memory";
+    protected $_persistenceIdentifier = 'MEMORY_PERSISTENCE_PROVIDER';
 
-	protected $persistenceIdentifier = "MEMORY_PERSISTENCE_PROVIDER";
+    private $_defaultParams = array(
+        '_namespace' => 'wurfl'
+    );
 
-    private $defaultParams = array(
-        "namespace" => "wurfl"
-);
+    private $_namespace;
+    private $_map;
 
-    private $namespace;
-	private $map;
+    public function __construct($params=array())
+    {
+        $currentParams = is_array($params) ? array_merge($this->_defaultParams, $params) : $this->_defaultParams;
+        $this->_namespace = $currentParams['_namespace'];
+        $this->_map = array();
+    }
 
-	public function __construct($params=array()) {
-        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
-        $this->namespace = $currentParams["namespace"];
-		$this->map = array();
-	}
+    public function save($objectId, $object)
+    {
+        $this->_map[$this->encode($this->_namespace, $objectId)] = $object;
+    }
 
-	public function save($objectId, $object) {
-		$this->map[$this->encode($this->namespace, $objectId)] = $object;
-	}
+    public function load($objectId)
+    {
+        $key = $this->encode($this->_namespace, $objectId);
+        if (isset($this->_map [$key])) {
+            return $this->_map [$key];
+        }
 
-	public function load($objectId) {
-		$key = $this->encode($this->namespace, $objectId);
-		if(isset($this->map [$key])) {
-			return $this->map [$key];
-		}
+        return NULL;
 
-		return NULL;
+    }
 
-	}
+    public function remove($objectId)
+    {
+        $key = $this->encode($this->_namespace, $objectId);
+        if ($this->_map [$key]) {
+            unset($this->_map [$key]);
+        }
 
-	public function remove($objectId) {
-		$key = $this->encode($this->namespace, $objectId);
-		if($this->map [$key]) {
-			unset($this->map [$key]);
-		}
+    }
 
-	}
-
-	/**
-	 * Removes all entry from the Persistence Provier
-	 *
-	 */
-	public function clear() {
-		unset($this->map);
-	}
+    /**
+     * Removes all entry from the Persistence Provier
+     *
+     */
+    public function clear()
+    {
+        unset($this->_map);
+    }
 }

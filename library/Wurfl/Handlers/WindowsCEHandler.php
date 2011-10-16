@@ -32,7 +32,7 @@ class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler
     protected $prefix = 'WINDOWS_CE';
     const TOLLERANCE = 3;
     
-    function __construct($wurflContext, $userAgentNormalizer = null) 
+    public function __construct($wurflContext, $userAgentNormalizer = null) 
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -54,7 +54,7 @@ class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function lookForMatchingUserAgent($userAgent) 
+    public function lookForMatchingUserAgent($userAgent) 
     {
         return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::TOLLERANCE);
     }
@@ -65,7 +65,7 @@ class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyRecoveryMatch($userAgent) 
+    public function applyRecoveryMatch($userAgent) 
     {
         return 'generic_ms_mobile';
     }

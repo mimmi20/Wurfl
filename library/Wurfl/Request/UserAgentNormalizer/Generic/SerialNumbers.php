@@ -20,13 +20,14 @@
  * User Agent Normalizer - removes serial numbers from user agent
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_SerialNumbers implements WURFL_Request_UserAgentNormalizer_Interface {
-	
-	const SERIAL_NUMBERS_PATTERN = "/(\[(TF|NT|ST)[\d|X]+\])|(\/SN[\d|X]+)/";
+class WURFL_Request_UserAgentNormalizer_Generic_SerialNumbers implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    const SERIAL_NUMBERS_PATTERN = '/(\[(TF|NT|ST)[\d|X]+\])|(\/SN[\d|X]+)/';
 
-	public function normalize($userAgent) {
-		return preg_replace(self::SERIAL_NUMBERS_PATTERN, "", $userAgent);
-	}
+    public function normalize($userAgent)
+    {
+        return preg_replace(self::SERIAL_NUMBERS_PATTERN, '', $userAgent);
+    }
 
 }
 

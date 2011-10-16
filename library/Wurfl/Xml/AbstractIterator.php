@@ -20,80 +20,86 @@
  * Iterates over a WURFL/Patch XML file
  * @package    WURFL_Xml
  */
-abstract class WURFL_Xml_AbstractIterator implements Iterator {
-	
-	/**
-	 * @var string filename with path to wurfl.xml or patch file
-	 */
-	private $inputFile;
-	
-	/**
-	 * @var XMLReader
-	 */
-	protected $xmlReader;
-	
-	protected $currentElement;
-	
-	protected $currentElementId;
-	
-	/**
-	 * Loads given XML $inputFile
-	 * @param string $inputFile
-	 */
-	function __construct($inputFile) {
-		if(!file_exists($inputFile)) {
-			throw new InvalidArgumentException("cannot locate [$inputFile] file!");
-		}
-		$this->inputFile = WURFL_Xml_Utils::getXMLFile($inputFile);
-	}
-	
-	/**
-	 * Returns the current XML element
-	 * @return XMLReader Current XML element
-	 */
-	public function current() {
-		return $this->currentElement;
-	}
-	
-	/**
-	 * Prepare for next XML element
-	 */
-	public function next() {
-		$this->currentElement = null;
-	}
-	
-	/**
-	 * Returns the current element id
-	 * @return string Current element id
-	 */
-	public function key() {
-		return $this->currentElementId;
-	}
-	
-	/**
-	 * Returns true if the current XML element is valid for processing
-	 * @return bool
-	 */
-	public function valid() {
-		if($this->currentElement === null) {
-			$this->readNextElement();
-		}
-		return $this->currentElement != null;
-	}
-	
-	/**
-	 * Open the input file and position cursor at the beginning
-	 * @see $inputFile
-	 */
-	public function rewind() {
-		$this->xmlReader = new XMLReader();
-		$this->xmlReader->open($this->inputFile);
-		$this->currentElement = null;
-		$this->currentElementId = null;
-	}
-	
-	/**
-	 * Move the XMLReader pointer to the next element and read data
-	 */
-	abstract public function readNextElement();
+abstract class WURFL_Xml_AbstractIterator implements Iterator
+{
+    /**
+     * @var string filename with path to wurfl.xml or patch file
+     */
+    private $_inputFile;
+    
+    /**
+     * @var XMLReader
+     */
+    protected $_xmlReader;
+    
+    protected $_currentElement;
+    
+    protected $_currentElementId;
+    
+    /**
+     * Loads given XML $_inputFile
+     * @param string $_inputFile
+     */
+    public function __construct($inputFile)
+    {
+        if (!file_exists($inputFile)) {
+            throw new InvalidArgumentException('cannot locate [' . $inputFile . '] file!');
+        }
+        $this->_inputFile = WURFL_Xml_Utils::getXMLFile($_inputFile);
+    }
+    
+    /**
+     * Returns the current XML element
+     * @return XMLReader Current XML element
+     */
+    public function current()
+    {
+        return $this->_currentElement;
+    }
+    
+    /**
+     * Prepare for next XML element
+     */
+    public function next()
+    {
+        $this->_currentElement = null;
+    }
+    
+    /**
+     * Returns the current element id
+     * @return string Current element id
+     */
+    public function key()
+    {
+        return $this->_currentElementId;
+    }
+    
+    /**
+     * Returns true if the current XML element is valid for processing
+     * @return bool
+     */
+    public function valid()
+    {
+        if ($this->_currentElement === null) {
+            $this->readNextElement();
+        }
+        return $this->_currentElement != null;
+    }
+    
+    /**
+     * Open the input file and position cursor at the beginning
+     * @see $_inputFile
+     */
+    public function rewind()
+    {
+        $this->_xmlReader = new XMLReader();
+        $this->_xmlReader->open($this->_inputFile);
+        $this->_currentElement = null;
+        $this->_currentElementId = null;
+    }
+    
+    /**
+     * Move the XMLReader pointer to the next element and read data
+     */
+    abstract public function readNextElement();
 }

@@ -20,14 +20,14 @@
  * @package    WURFL_Handlers_Matcher
  */
 interface WURFL_Handlers_Matcher_Interface {
-	
-	/**
-	 * Attempts to find a matching $needle in given $collection within the specified $tolerance
-	 * @param array $collection Collection of user agents
-	 * @param string $needle User agent to search for
-	 * @param int $tolerance Minimum accuracy to be considered a match
-	 * @return string matched user agent
-	 */
-	public function match(&$collection, $needle, $tolerance);
+    
+    /**
+     * Attempts to find a matching $needle in given $collection within the specified $tolerance
+     * @param array $collection Collection of user agents
+     * @param string $needle User agent to search for
+     * @param int $tolerance Minimum accuracy to be considered a match
+     * @return string matched user agent
+     */
+    public function match(&$collection, $needle, $tolerance);
 }
 

@@ -20,72 +20,84 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_File extends WURFL_Storage_Base {
-
-    private $defaultParams = array(
-        "dir" => "/var/tmp",
-        "expiration" => 0,
+class WURFL_Storage_File extends WURFL_Storage_Base
+{
+    private $_defaultParams = array(
+        'dir' => '/var/tmp',
+        'expiration' => 0,
 );
 
-    private $expire;
-    private $root;
+    private $_expire;
+    private $_root;
 
-    const DIR = "dir";
+    const DIR = 'dir';
 
-    public function __construct($params) {
-        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
+    public function __construct($params)
+    {
+        $currentParams = is_array($params) ? array_merge($this->_defaultParams, $params) : $this->_defaultParams;
         $this->initialize($currentParams);
     }
 
-    function initialize($params) {
-        $this->root = $params[self::DIR];
-        $this->createCacheDirIfNotExist();
-        $this->expire = $params["expiration"];
+    public function initialize($params)
+    {
+        $this->_root = $params[self::DIR];
+        $this->_createCacheDirIfNotExist();
+        $this->_expire = $params['expiration'];
     }
-    private function createCacheDirIfNotExist() {
-        if(!is_dir($this->root)) {
-            @mkdir($this->root, 0777, TRUE);
-            if(!is_dir($this->root)){
-            	throw new WURFL_Storage_Exception("The file cache directory does not exist and could not be created. Please make sure the cache directory is writeable: ".$this->root);
+    
+    private function _createCacheDirIfNotExist()
+    {
+        if (!is_dir($this->_root)) {
+            @mkdir($this->_root, 0777, TRUE);
+            if(!is_dir($this->_root)){
+                throw new WURFL_Storage_Exception('The file cache directory does not exist and could not be created. Please make sure the cache directory is writeable: ' . $this->_root);
             }
         }
-        if(!is_writeable(dirname($this->root))){
-        	throw new WURFL_Storage_Exception("The file cache directory is not writeable: ".$this->root);
+        
+        if (!is_writeable(dirname($this->_root))) {
+            throw new WURFL_Storage_Exception('The file cache directory is not writeable: ' . $this->_root);
         }
     }
 
-    public function load($key) {
-        $path = $this->keyPath($key);
-        $value = WURFL_FileUtils::read($path);
-        return isset($value) ? $this->unwrap($value, $path) : NULL;
+    public function load($key)
+    {
+        $path  = $this->_keyPath($key);
+        $_value = WURFL_FileUtils::read($path);
+        return isset($_value) ? $this->_unwrap($_value, $path) : NULL;
     }
 
-    private function unwrap($value, $path) {
-        if($value->isExpired()) {
+    private function _unwrap($_value, $path)
+    {
+        if ($_value->isExpired()) {
             unlink($path);
             return NULL;
         }
-        return $value->value();
+        
+        return $_value->value();
     }
 
-    public function save($key, $value) {
-        $value = new StorageObject($value, $this->expire);
-        $path = $this->keyPath($key);
-        WURFL_FileUtils::write($path, $value);
+    public function save($key, $_value)
+    {
+        $_value = new StorageObject($_value, $this->_expire);
+        $path = $this->_keyPath($key);
+        WURFL_FileUtils::write($path, $_value);
     }
 
-    public function clear() {
-        WURFL_FileUtils::rmdirContents($this->root);
+    public function clear()
+    {
+        WURFL_FileUtils::rmdirContents($this->_root);
     }
 
 
-    private function keyPath($key) {
-        return WURFL_FileUtils::join(array($this->root, strtolower($key)/*$this->spread(md5($key))*/));
+    private function _keyPath($key)
+    {
+        return WURFL_FileUtils::join(array($this->_root, strtolower($key)/*$this->spread(md5($key))*/));
     }
 
-    function spread($md5, $n = 2) {
-        $path = "";
-        for($i = 0; $i < $n; $i++) {
+    public function spread($md5, $n = 2)
+    {
+        $path = '';
+        for ($i = 0; $i < $n; $i++) {
             $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
         }
         $path .= substr($md5, $n);
@@ -99,28 +111,33 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
  * Object for storing data
  * @package WURFL_Storage
  */
-class StorageObject {
-    private $value;
-    private $expiringOn;
+class StorageObject
+{
+    private $_value;
+    private $_expiringOn;
 
-    public function __construct($value, $expire) {
-        $this->value = $value;
-        $this->expiringOn =($expire === 0) ? $expire : time() + $expire;
+    public function __construct($_value, $_expire)
+    {
+        $this->_value = $_value;
+        $this->_expiringOn =($_expire === 0) ? $_expire : time() + $_expire;
     }
 
-    public function value() {
-        return $this->value;
+    public function value()
+    {
+        return $this->_value;
     }
 
-    public function isExpired() {
-        if($this->expiringOn === 0) {
+    public function isExpired()
+    {
+        if ($this->_expiringOn === 0) {
             return false;
         }
-        return $this->expiringOn < time();
+        return $this->_expiringOn < time();
     }
 
-    public function expiringOn() {
-        return $this->expiringOn;
+    public function expiringOn()
+    {
+        return $this->_expiringOn;
     }
 
 }

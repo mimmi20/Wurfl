@@ -30,7 +30,7 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'LGUPLUS';
 
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -51,7 +51,7 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function applyConclusiveMatch($userAgent)
+    public function applyConclusiveMatch($userAgent)
     {
         return WURFL_Constants::GENERIC;
     }
@@ -64,7 +64,7 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
         'generic_lguplus_android_webkit_browser' => array('Android', 'AppleWebKit')
 );
 
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         foreach($this->lgupluses as $deviceId => $values) {
             if(WURFL_Handlers_Utils::checkIfContainsAll($userAgent, $values)) {

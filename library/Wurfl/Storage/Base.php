@@ -28,50 +28,66 @@
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-abstract class WURFL_Storage_Base implements WURFL_Storage {
+abstract class WURFL_Storage_Base implements WURFL_Storage
+{
+    const APPLICATION_PREFIX = 'WURFL_';
+    const WURFL_LOADED = 'WURFL_WURFL_LOADED';
 
-    const APPLICATION_PREFIX = "WURFL_";
-    const WURFL_LOADED = "WURFL_WURFL_LOADED";
-
-	/**
-	 * Creates a new WURFL_Storage_Base
-	 * @param array $params
-	 */
-    public function __construct($params = array()) {}
+    /**
+     * Creates a new WURFL_Storage_Base
+     * @param array $params
+     */
+    public function __construct($params = array())
+    {
+        //
+    }
 
     /**
      * Saves the object
      * @param string $objectId
      * @param mixed $object
      */
-    public function save($objectId, $object) {}
+    public function save($objectId, $object)
+    {
+        //
+    }
 
     /**
      * Returns the object identified by $objectId
      * @param string $objectId
      * @return mixed value
      */
-    public function load($objectId) {}
+    public function load($objectId)
+    {
+        //
+    }
 
 
     /**
      * Removes the object identified by $objectId from the persistence provider
      * @param string $objectId
      */
-    public function remove($objectId) {}
+    public function remove($objectId)
+    {
+        //
+    }
 
 
     /**
      * Removes all entries from the Persistence Provider
      */
-    public function clear() {}
+    public function clear()
+    {
+        //
+    }
 
 
     /**
      * Checks if WURFL is Loaded
      * @return bool
      */
-    public function isWURFLLoaded() {
+    public function isWURFLLoaded()
+    {
         return $this->load(self::WURFL_LOADED);
     }
 
@@ -79,19 +95,21 @@ abstract class WURFL_Storage_Base implements WURFL_Storage {
      * Sets the WURFL Loaded flag
      * @param bool $loaded
      */
-    public function setWURFLLoaded($loaded = true) {
+    public function setWURFLLoaded($loaded = true)
+    {
         $this->save(self::WURFL_LOADED, $loaded);
     }
 
 
     /**
-	 * Encode the Object Id using the Persistence Identifier
-	 * @param string $namespace
-	 * @param string $input
-	 * @return string $input with the given $namespace as a prefix
-	 */
-    protected function encode($namespace, $input) {
-        return join(":", array(self::APPLICATION_PREFIX, $namespace, $input));
+     * Encode the Object Id using the Persistence Identifier
+     * @param string $namespace
+     * @param string $input
+     * @return string $input with the given $namespace as a prefix
+     */
+    protected function encode($namespace, $input)
+    {
+        return join(':', array(self::APPLICATION_PREFIX, $namespace, $input));
     }
 
     /**
@@ -99,10 +117,9 @@ abstract class WURFL_Storage_Base implements WURFL_Storage {
      * @param string $input
      * @return string value
      */
-    protected function decode($namespace, $input) {
-        $inputs = explode(":", $input);
+    protected function decode($namespace, $input)
+    {
+        $inputs = explode(':', $input);
         return $input[2];
     }
-
-
 }

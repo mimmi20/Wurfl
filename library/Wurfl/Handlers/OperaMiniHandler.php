@@ -30,7 +30,7 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
 
     protected $prefix = 'OPERA_MINI';
 
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -54,7 +54,7 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
         'Opera Mini/5' => 'browser_opera_mini_release5'
 );
 
-    function applyRecoveryMatch($userAgent)
+    public function applyRecoveryMatch($userAgent)
     {
         foreach($this->operaMinis as $key => $deviceId) {
             if(WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {

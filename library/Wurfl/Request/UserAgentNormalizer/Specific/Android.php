@@ -20,13 +20,14 @@
  * User Agent Normalizer - Trims the version number to two digits(e.g. 2.1.1 -> 2.1)
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Request_UserAgentNormalizer_Interface {
-
-    const ANDROID_OS_VERSION = "/(Android[\s\/]\d.\d)(.*?;)/";
+class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Request_UserAgentNormalizer_Interface
+{
+    const ANDROID_OS_VERSION = '/(Android[\s\/]\d.\d)(.*?;)/';
     
-	public function normalize($userAgent) {
-		return preg_replace(self::ANDROID_OS_VERSION, "$1;", $userAgent);
-	}
+    public function normalize($userAgent)
+    {
+        return preg_replace(self::ANDROID_OS_VERSION, '$1;', $userAgent);
+    }
 
 
 }

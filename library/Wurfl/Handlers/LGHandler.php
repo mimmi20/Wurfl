@@ -31,7 +31,7 @@ class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler
 {
     protected $prefix = 'LG';
     
-    function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         parent::__construct($wurflContext, $userAgentNormalizer);
     }
@@ -51,7 +51,7 @@ class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler
      * @param string $userAgent
      * @return string
      */
-    function lookForMatchingUserAgent($userAgent)
+    public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'LG'));
         $userAgents = array_keys($this->userAgentsWithDeviceID);
