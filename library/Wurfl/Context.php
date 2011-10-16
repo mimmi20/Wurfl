@@ -16,39 +16,46 @@
  * @version    $id$
  */
 /**
- * WURFL Context stores the persistence provider, cache provider and logger objects
+ * WURFL Context stores the persistence provider, cache provider and _logger objects
  * @package    WURFL
  */
-class WURFL_Context {
-    
+class WURFL_Context
+{
     /**
      * @var WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
      */
-    private $persistenceProvider;
+    private $_persistenceProvider;
+    
     /**
      * @var WURFL_Cache_CacheProvider
      */
-    private $cacheProvider;
+    private $_cacheProvider;
+    
     /**
      * @var WURFL_Logger_Interface
      */
-    private $logger;
+    private $_logger;
     
-    public function __construct($persistenceProvider, $caheProvider = null, $logger = null) {
-        $this->persistenceProvider = $persistenceProvider;
-        $this->cacheProvider = is_null($caheProvider) ? new WURFL_Cache_NullCacheProvider() : $caheProvider;
-        $this->logger = is_null($logger) ? new WURFL_Logger_NullLogger() : $logger;
+    public function __construct($persistenceProvider, $cacheProvider = null, $logger = null)
+    {
+        $this->_persistenceProvider = $persistenceProvider;
+        $this->_cacheProvider = is_null($cacheProvider) ? new WURFL_Cache_NullCacheProvider() : $cacheProvider;
+        $this->_logger = is_null($logger) ? new WURFL_Logger_NullLogger() : $logger;
     }
     
-    public function cacheProvider($cacheProvider) {
-        return new WURFL_Context($this->persistenceProvider, $cacheProvider, $this->logger);
+    public function cacheProvider($cacheProvider)
+    {
+        return new WURFL_Context($this->_persistenceProvider, $cacheProvider, $this->_logger);
     }
     
-    public function logger($logger) {
-        return new WURFL_Context($this->persistenceProvider, $this->cacheProvider, $logger);
+    public function logger($_logger)
+    {
+        return new WURFL_Context($this->_persistenceProvider, $this->_cacheProvider, $logger);
     }
     
-    public function __get($name) {
+    public function __get($name)
+    {
+        $name = '_' . $name;
         return $this->$name;
     }
 

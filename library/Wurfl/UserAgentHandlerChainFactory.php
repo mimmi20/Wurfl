@@ -20,7 +20,8 @@
  * @package    WURFL
  * @see WURFL_UserAgentHandlerChain
  */
-class WURFL_UserAgentHandlerChainFactory {
+class WURFL_UserAgentHandlerChainFactory
+{
 
     /**
      * @var WURFL_UserAgentHandlerChain
@@ -32,7 +33,8 @@ class WURFL_UserAgentHandlerChainFactory {
      * @param WURFL_Context $context
      * @return WURFL_UserAgentHandlerChain
      */
-    public static public function createFrom(WURFL_Context $context) {
+    public static function createFrom(WURFL_Context $context)
+    {
         self::init($context);
         return self::$_userAgentHandlerChain;
     }
@@ -41,12 +43,11 @@ class WURFL_UserAgentHandlerChainFactory {
      * Initializes the factory with an instance of all possible WURFL_Handlers_Handler objects from the given $context
      * @param WURFL_Context $context
      */
-    static private function init(WURFL_Context $context) {
-
+    static private function init(WURFL_Context $context)
+    {
         self::$_userAgentHandlerChain = new WURFL_UserAgentHandlerChain();
 
-        $genericNormalizers = self::createGenericNormalizers();
-
+        $genericNormalizers = self::_createGenericNormalizers();
 
         $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chrome());
         $chromiumNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chromium());
@@ -137,7 +138,8 @@ class WURFL_UserAgentHandlerChainFactory {
      * Returns an array of all possible User Agent Normalizers
      * @return array Array of WURFL_Request_UserAgentNormalizer objects
      */
-    private static public function createGenericNormalizers() {
+    private static function _createGenericNormalizers()
+    {
         return new WURFL_Request_UserAgentNormalizer(
             array(
                 new WURFL_Request_UserAgentNormalizer_Generic_UPLink(),
@@ -147,10 +149,7 @@ class WURFL_UserAgentHandlerChainFactory {
                 new WURFL_Request_UserAgentNormalizer_Generic_SerialNumbers(),
                 new WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator(),
                 new WURFL_Request_UserAgentNormalizer_Generic_LocaleRemover()
-)
-);
+            )
+        );
     }
-
-
 }
-

@@ -27,12 +27,12 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-interface WURFL_Storage {
-
+interface WURFL_Storage
+{
     /**
      * @var string Key for storing data expiration times
      */
-    const EXPIRATION = "expiration";
+    const EXPIRATION = 'expiration';
     const ONE_HOUR = 3600;
     const ONE_DAY = 86400;
     const ONE_WEEK = 604800;
@@ -61,5 +61,4 @@ interface WURFL_Storage {
      *
      */
     public function clear();
-    
 }

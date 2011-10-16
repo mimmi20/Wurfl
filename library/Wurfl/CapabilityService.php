@@ -19,12 +19,13 @@
  * WURFL Capability Service
  * @package    WURFL
  */
-class WURFL_CapabilityService {
-
+class WURFL_CapabilityService
+{
     /**
      * @var WURFL_DeviceRepository
      */
     private $_deviceRepository;
+    
     /**
      * @var WURFL_Cache_CacheProvider
      */
@@ -36,9 +37,10 @@ class WURFL_CapabilityService {
      * @param WURFL_DeviceRepository $deviceRepository
      * @param WURFL_Cache_CacheProvider $cacheProvider
      */
-    public function __construct($deviceRepository, $cacheProvider) {
+    public function __construct($deviceRepository, $cacheProvider)
+    {
         $this->_deviceRepository = $deviceRepository;
-        $this->_cacheProvider = $cacheProvider;
+        $this->_cacheProvider    = $cacheProvider;
     }
 
     /**
@@ -48,14 +50,17 @@ class WURFL_CapabilityService {
      * @param string $capabilityName
      * @return string
      */
-    public function getCapabilityForDevice($deviceID, $capabilityName) {
+    public function getCapabilityForDevice($deviceID, $capabilityName)
+    {
         $key = $deviceID . $capabilityName;
         $capabilityValue = $this->_cacheProvider->get($key);
-        if(empty($capabilityValue)) {
+        
+        if (empty($capabilityValue)) {
             $capabilityValue = $this->_deviceRepository->getCapabilityForDevice($deviceID, $capabilityName);
             // save it in cache
             $this->_cacheProvider->put($key, $capabilityValue);
         }
+        
         return $capabilityValue;
     }
 
@@ -65,7 +70,8 @@ class WURFL_CapabilityService {
      * @param string $deviceID
      * @return array
      */
-    public function getAllCapabilitiesForDevice($deviceID) {
+    public function getAllCapabilitiesForDevice($deviceID)
+    {
         return $this->_deviceRepository->getAllCapabilitiesForDevice($deviceID);
     }
 
@@ -74,7 +80,8 @@ class WURFL_CapabilityService {
      *
      * @return array
      */
-    public function getListOfGroups() {
+    public function getListOfGroups()
+    {
         return $this->_deviceRepository->getListOfGroups();
     }
 
@@ -85,7 +92,8 @@ class WURFL_CapabilityService {
      * @param string $groupID
      * @return array
      */
-    public function getCapabilitiesNameForGroup($groupID) {
+    public function getCapabilitiesNameForGroup($groupID)
+    {
         return $this->_deviceRepository->getCapabilitiesNameForGroup($groupID);
     }
     
@@ -96,7 +104,8 @@ class WURFL_CapabilityService {
      * @param string $deviceID
      * @return array of devices
      */
-    public function getDeviceHierarchy($deviceID) {
+    public function getDeviceHierarchy($deviceID)
+    {
         return $this->_deviceRepository->getDeviceHierarchy($deviceID);
     }
 
@@ -106,12 +115,15 @@ class WURFL_CapabilityService {
      * @param string $deviceID
      * @return array
      */
-    public function getFallBackListForDevice($deviceID) {
-        $devices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
+    public function getFallBackListForDevice($deviceID)
+    {
+        $devices   = $this->_deviceRepository->getDeviceHierarchy($deviceID);
         $fallBacks = array();
-        foreach($devices as $device) {
+        
+        foreach ($devices as $device) {
             $fallBacks[] = $device->id;
         }
+        
         return $fallBacks;
     }
 }

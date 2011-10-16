@@ -19,8 +19,8 @@
  * A WURFL Device including methods to access its capabilities
  * @package    WURFL
  */
-class WURFL_Device {
-    
+class WURFL_Device
+{
     /**
      * @var WURFL_Xml_ModelDevice
      */
@@ -35,8 +35,9 @@ class WURFL_Device {
      * @param WURFL_Xml_ModelDevice $modelDevice
      * @param WURFL_CapabilitiesHolder $capabilitiesHolder
      */
-    public function __construct($modelDevice, $capabilitiesHolder) {
-        $this->_modelDevice = $modelDevice;
+    public function __construct($modelDevice, $capabilitiesHolder)
+    {
+        $this->_modelDevice        = $modelDevice;
         $this->_capabilitiesHolder = $capabilitiesHolder;    
     }
     
@@ -47,23 +48,24 @@ class WURFL_Device {
      * @throws WURFL_WURFLException The field $name is invalid
      * @return string value
      */
-    public function __get($name) {
-        if(isset($name)) {
+    public function __get($name)
+    {
+        if (isset($name)) {
             switch($name) {
-                case "id":
-                case "userAgent":
-                case "fallBack":
-                case "actualDeviceRoot":
+                case 'id':
+                case 'userAgent':
+                case 'fallBack':
+                case 'actualDeviceRoot':
                     return $this->_modelDevice->$name;
                 break;
                 default:
-                    throw new WURFL_WURFLException("the field " . $name . " is not defined");
+                    throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
                 break;
             }
             
         }
 
-        throw new WURFL_WURFLException("the field " . $name . " is not defined");
+        throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
     }
     
     /**
@@ -74,10 +76,12 @@ class WURFL_Device {
      * @throws InvalidArgumentException $capabilityName is null
      * @return string
      */
-    public function getCapability($capabilityName) {
-        if(!isset($capabilityName)) {
-            throw new InvalidArgumentException("capability name must not be null");
+    public function getCapability($capabilityName)
+    {
+        if (!isset($capabilityName)) {
+            throw new InvalidArgumentException('capability name must not be null');
         }
+        
         return $this->_capabilitiesHolder->getCapability($capabilityName);
     }
     
@@ -85,7 +89,8 @@ class WURFL_Device {
      * Returns all the value of the capabilities of the current device
      * @return array All device capabilities
      */
-    public function getAllCapabilities() {
+    public function getAllCapabilities()
+    {
         return $this->_capabilitiesHolder->getAllCapabilities();
     }
 }

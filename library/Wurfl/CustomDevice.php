@@ -29,7 +29,7 @@
  * // Example 1: Get display resolution from device
  * $width = $device->getCapability('resolution_width');
  * $height = $device->getCapability('resolution_height');
- * echo "Resolution: $width x $height <br/>";
+ * echo 'Resolution: $width x $height <br/>';
  * 
  * // Example 2: Get the WURFL ID of the device
  * $wurflID = $device->id;
@@ -41,12 +41,12 @@
  * @property-read bool $actualDeviceRoot true if device is an actual root device
  * @package WURFL
  */
-class WURFL_CustomDevice {
-    
+class WURFL_CustomDevice
+{
     /**
      * @var array Array of WURFL_Xml_ModelDevice objects
      */
-    private $modelDevices;
+    private $_modelDevices;
     
     /**
      * 
@@ -54,10 +54,10 @@ class WURFL_CustomDevice {
      * @throws InvalidArgumentException if the $modelDevice is not an array of at least one WURFL_Xml_ModelDevice
      */
     public function __construct($modelDevices) {
-        if(! is_array($modelDevices) || count($modelDevices) < 1) {
-            throw new InvalidArgumentException("modelDevices must be an array of at least one ModelDevice.");
+        if (!is_array($modelDevices) || count($modelDevices) < 1) {
+            throw new InvalidArgumentException('modelDevices must be an array of at least one ModelDevice.');
         }
-        $this->modelDevices = $modelDevices;
+        $this->_modelDevices = $modelDevices;
     
     }
     
@@ -67,30 +67,32 @@ class WURFL_CustomDevice {
      * @param string $name
      * @return string
      */
-    public function __get($name) {
-        if(isset($name)) {
-            switch($name) {
-                case "id" :
-                case "userAgent" :
-                case "fallBack" :
-                case "actualDeviceRoot" :
-                    return $this->modelDevices[0]->$name;
+    public function __get($name)
+    {
+        if (isset($name)) {
+            switch ($name) {
+                case 'id' :
+                case 'userAgent' :
+                case 'fallBack' :
+                case 'actualDeviceRoot' :
+                    return $this->_modelDevices[0]->$name;
                     break;
                 default :
-                    throw new WURFL_WURFLException("the field " . $name . " is not defined");
+                    throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
                     break;
             }
         }
-        throw new WURFL_WURFLException("the field " . $name . " is not defined");
+        throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
     }
     
     /**
      * Device is a specific or actual WURFL device as defined by its capabilities
      * @return bool
      */
-    public function isSpecific() {
-        foreach($this->modelDevices as $modelDevice) {
-            if($modelDevice->specific === true || $modelDevice->actualDeviceRoot === true) {
+    public function isSpecific()
+    {
+        foreach ($this->_modelDevices as $modelDevice) {
+            if ($modelDevice->specific === true || $modelDevice->actualDeviceRoot === true) {
                 return true;
             }
         }
@@ -106,20 +108,21 @@ class WURFL_CustomDevice {
      * @throws InvalidArgumentException The $capabilityName is is not defined in the loaded WURFL.
      * @see WURFL_Xml_ModelDevice::getCapability()
      */
-    public function getCapability($capabilityName) {
-        if(empty($capabilityName)) {
-            throw new InvalidArgumentException("capability name must not be empty");
+    public function getCapability($capabilityName)
+    {
+        if (empty($capabilityName)) {
+            throw new InvalidArgumentException('capability name must not be empty');
         }
-        if(!$this->isCapabilityDefined($capabilityName)) {
-            throw new InvalidArgumentException("no capability named [$capabilityName] is present in wurfl.");    
+        if (!$this->_isCapabilityDefined($capabilityName)) {
+            throw new InvalidArgumentException('no capability named [$capabilityName] is present in wurfl.');    
         }
-        foreach($this->modelDevices as $modelDevice) {
+        foreach ($this->_modelDevices as $modelDevice) {
             $capabilityValue = $modelDevice->getCapability($capabilityName);
-            if($capabilityValue != null) {
+            if ($capabilityValue != null) {
                 return $capabilityValue;
             }
         }
-        return "";
+        return '';
     }
     
     /**
@@ -127,8 +130,9 @@ class WURFL_CustomDevice {
      * @return bool true if capability is defined
      * @see WURFL_Xml_ModelDevice::isCapabilityDefined()
      */
-    private function isCapabilityDefined($capabilityName) {
-        return $this->modelDevices[count($this->modelDevices)-1]->isCapabilityDefined($capabilityName);
+    private function _isCapabilityDefined($capabilityName)
+    {
+        return $this->_modelDevices[count($this->_modelDevices)-1]->isCapabilityDefined($capabilityName);
     }
     
     /**
@@ -136,9 +140,10 @@ class WURFL_CustomDevice {
      * @return array Device capabilities array
      * @see WURFL_Xml_ModelDevice::getCapabilities()
      */
-    public function getAllCapabilities() {
+    public function getAllCapabilities()
+    {
         $capabilities = array();
-        foreach(array_reverse($this->modelDevices) as $modelDevice) {
+        foreach (array_reverse($this->_modelDevices) as $modelDevice) {
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
         return $capabilities;

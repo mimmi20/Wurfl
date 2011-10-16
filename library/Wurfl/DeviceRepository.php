@@ -19,8 +19,8 @@
  * Provides methods for accessing a repository of WURFL Devices
  * @package    WURFL
  */
-interface WURFL_DeviceRepository {
-    
+interface WURFL_DeviceRepository
+{
     /**
      * Return a WURFL_Xml_Info object containing: 
      *  - version
@@ -118,6 +118,4 @@ interface WURFL_DeviceRepository {
      * @return string Group ID
      */
     public function getGroupIDForCapability($capability);
-
 }
-

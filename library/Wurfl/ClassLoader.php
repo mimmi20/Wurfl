@@ -19,27 +19,30 @@
  * Helper to load PHP classes on demand
  * @package    WURFL
  */
-class WURFL_ClassLoader {
+class WURFL_ClassLoader
+{
+    const CLASS_PREFIX = 'WURFL_';
     
-    const CLASS_PREFIX = "WURFL_";
     /**
      * Loads a Class given the class name
      *
      * @param string $className
      */
-    public static public function loadClass($className) {        
-        if($className === NULL) {
-            throw new WURFL_WURFLException("Unable To Load Class : " . $className);
+    public static function loadClass($className)
+    {        
+        if ($className === NULL) {
+            throw new WURFL_WURFLException('Unable To Load Class : ' . $className);
         }
                 
-        if(substr($className, 0, 6) !== WURFL_ClassLoader::CLASS_PREFIX) {
+        if (substr($className, 0, 6) !== WURFL_ClassLoader::CLASS_PREFIX) {
             return FALSE;
         }
-        if(!class_exists($className, false)) {
+        
+        if (!class_exists($className, false)) {
             $ROOT = dirname(__FILE__) . DIRECTORY_SEPARATOR;
 
             $classFilePath = str_replace('_', DIRECTORY_SEPARATOR, substr($className, 6)) . '.php';
-            require_once($ROOT . $classFilePath);
+            require_once $ROOT . $classFilePath;
         }
         
         return FALSE;
