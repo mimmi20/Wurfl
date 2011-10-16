@@ -96,7 +96,7 @@ class WURFL_Xml_DeviceIterator extends WURFL_Xml_AbstractIterator
                             if ($this->neededToReadCapability($groupId, $capabilityName)) {
                                 $capabilityValue = $this->xmlReader->getAttribute(WURFL_Xml_Interface::CAPABILITY_VALUE);
                                 $currentCapabilityNameValue[$capabilityName] = $capabilityValue;
-                                $groupIDCapabilitiesMap[$groupId] [$capabilityName] = $capabilityValue;
+                                $groupIDCapabilitiesMap[$groupId][$capabilityName] = $capabilityValue;
                             }
                             
                             break;

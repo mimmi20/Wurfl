@@ -56,7 +56,7 @@ class WURFL_Logger_FileLogger implements WURFL_Logger_Interface
     public function log($message, $type = '')
     {
         $time = date('F jS Y, h:iA');
-        $fullMessage = '[$time] [$type] $message';
+        $fullMessage = '[$time][$type] $message';
         fwrite($this->fp, $fullMessage . "\n");
     }
     

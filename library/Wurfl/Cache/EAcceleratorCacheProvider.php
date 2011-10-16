@@ -33,7 +33,7 @@ class WURFL_Cache_EAcceleratorCacheProvider implements WURFL_Cache_CacheProvider
     public function __construct($params)
     {
         if (is_array($params)) {
-            $this->_expire = isset($params [WURFL_Cache_CacheProvider::EXPIRATION]) ? $params [WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
+            $this->_expire = isset($params[WURFL_Cache_CacheProvider::EXPIRATION]) ? $params[WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
         }
     }
     

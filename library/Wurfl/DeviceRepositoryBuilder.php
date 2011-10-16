@@ -130,7 +130,7 @@ class WURFL_DeviceRepositoryBuilder
         
         if (is_array($wurflPatches)) {
             foreach ($wurflPatches as $wurflPatch) {
-                $patchIterators [] = new WURFL_Xml_DeviceIterator($wurflPatch, $capabilitiesToUse);
+                $patchIterators[] = new WURFL_Xml_DeviceIterator($wurflPatch, $capabilitiesToUse);
             }
         }
         
@@ -202,7 +202,7 @@ class WURFL_DeviceRepositoryBuilder
             $toPatch = isset($patchingDevices[$device->id]);
             
             if ($toPatch) {
-                $device = $this->_patchDevice($device, $patchingDevices [$device->id]);
+                $device = $this->_patchDevice($device, $patchingDevices[$device->id]);
                 $usedPatchingDeviceIds[$device->id] = $device->id;
             }
             

@@ -142,7 +142,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      * @param string $deviceID
      */
     final public function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID) {
-        $this->userAgentsWithDeviceID [$this->normalizeUserAgent($userAgent)] = $deviceID;
+        $this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
     }
     
     /**

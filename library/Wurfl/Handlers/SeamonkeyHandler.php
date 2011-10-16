@@ -71,8 +71,8 @@ class WURFL_Handlers_SeamonkeyHandler extends WURFL_Handlers_Handler
     {
         $chromeVersion = $this->chromeVersion($userAgent);
         $chromeId = 'seamonkey';
-        if(isset($this->chromes [$chromeVersion])) {
-            return $this->chromes [$chromeVersion];
+        if(isset($this->chromes[$chromeVersion])) {
+            return $this->chromes[$chromeVersion];
         }
         
         return 'generic_web_browser';
@@ -83,7 +83,7 @@ class WURFL_Handlers_SeamonkeyHandler extends WURFL_Handlers_Handler
     private function chromeVersion($userAgent)
     {
         if(preg_match(self::CHROME_VERSION_PATTERN, $userAgent, $match)) {
-            return $match [1];
+            return $match[1];
         }
         return '';
     }

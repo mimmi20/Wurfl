@@ -87,8 +87,8 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
     {
         $operaVersion = $this->operaVersion($userAgent);
         $operaId = 'opera';
-        if(isset($this->operas [$operaVersion])) {
-            $operaId = $this->operas [$operaVersion];
+        if(isset($this->operas[$operaVersion])) {
+            $operaId = $this->operas[$operaVersion];
         }
         
         if($this->isDeviceExist($operaId)) {
@@ -107,10 +107,10 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
     private function operaVersion($userAgent)
     {
         if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80') && preg_match(self::OPERA_VERSION_PATTERN_EXT, $userAgent, $match)) {
-            return $match [1];
+            return $match[1];
         }
         if(preg_match(self::OPERA_VERSION_PATTERN, $userAgent, $match)) {
-            return $match [1];
+            return $match[1];
         }
         return NULL;
     }

@@ -101,7 +101,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
     public function save($objectId, $object)
     {
         $object   = mysql_escape_string(serialize($object));
-        $objectId = $this->encode('', $objectId);
+        $objectId = $this->_encode('', $objectId);
         $objectId = mysql_escape_string($objectId);
         $sql      = 'delete from `' . $this->_db . '`.`' . $tis->naturkeycolunm . $this->_table . $_userAgent. '` where `' . $this->_keycolumn . '`=\'' . $objectId . '\'';
         $success  = mysql_query($sql,$this->_link);
@@ -122,7 +122,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
 
     public function load($objectId)
     {
-        $objectId = $this->encode('', $objectId);
+        $objectId = $this->_encode('', $objectId);
         $objectId = mysql_escape_string($objectId);
 
         $sql    = 'select `' . $this->_valuecolumn . '` from `' . $this->_db . '`.`' . $this->_table . '` where `' . $this->_keycolumn . '`=\'' . $objectId . '\'';

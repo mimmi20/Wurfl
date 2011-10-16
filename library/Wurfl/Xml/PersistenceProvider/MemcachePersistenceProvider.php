@@ -19,24 +19,25 @@
  * Memcache persistence provider
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider {
-
-    const EXTENSION_MODULE_NAME = "memcache";
-    const DEFAULT_HOST = "127.0.0.1";
+class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
+{
+    const EXTENSION_MODULE_NAME = 'memcache';
+    const DEFAULT_HOST = '127.0.0.1';
     const DEFAULT_PORT = 11211;
-    const DEFUALT_APPLICATION_KEY = "";
+    const DEFUALT_APPLICATION_KEY = '';
 
-    protected $persistenceIdentifier = "MEMCACHE_PERSISTENCE_PROVIDER";
+    protected $_persistenceIdentifier = 'MEMCACHE_PERSISTENCE_PROVIDER';
 
     private $_memcache;
     private $_host;
     private $_port;
 
-    public function __construct($params = array()) {
-        if(is_array($params)) {
-            $this->_host = isset($params["host"]) ? $params["host"] : self::DEFAULT_HOST;
-            $this->_port = isset($params["port"]) ? $params["port"] : self::DEFAULT_PORT;
-            $this->_applicationKey = isset($params["application_key"]) ? $params["application_key"] : self::DEFUALT_APPLICATION_KEY;
+    public function __construct($params = array())
+    {
+        if (is_array($params)) {
+            $this->_host = isset($params['host']) ? $params['host'] : self::DEFAULT_HOST;
+            $this->_port = isset($params['port']) ? $params['port'] : self::DEFAULT_PORT;
+            $this->_applicationKey = isset($params['application_key']) ? $params['application_key'] : self::DEFUALT_APPLICATION_KEY;
         } else {
             $this->_host = self::DEFAULT_HOST;
             $this->_port = self::DEFAULT_PORT;
@@ -48,23 +49,25 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
      * Initializes the Memcache Module
      *
      */
-    public final public function initialize() {
+    public final function initialize()
+    {
         $this->_ensureModuleExistance();
         $this->_memcache = new Memcache();
         // support multiple hosts using semicolon to separate hosts
-        $hosts = explode(";", $this->_host);
+        $hosts = explode(';', $this->_host);
         // different ports for each hosts the same way
-        $ports = explode(";", $this->_port);
+        $ports = explode(';', $this->_port);
 
-        if(count($hosts) > 1) {
-            if(count($ports) < 1) {
+        if (count($hosts) > 1) {
+            if (count($ports) < 1) {
                 $ports = array_pad(count($hosts), self::DEFAULT_PORT);
-            } elseif(count($ports) == 1) {
+            } elseif (count($ports) == 1) {
                 // if we have just one port, use it for all hosts
                 $_p = $ports[0];
                 $ports = array_fill(0, count($hosts), $_p);
             }
-            foreach($hosts as $i => $host) {
+            
+            foreach ($hosts as $i => $host) {
                 $this->_memcache->addServer($host, $ports[$i]);
             }
         } else {
@@ -73,17 +76,20 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
         }
     }
     
-    public function save($objectId, $object) {
-        return $this->_memcache->set($this->encode($objectId), $object);
+    public function save($objectId, $object)
+    {
+        return $this->_memcache->set($this->_encode($objectId), $object);
     }
 
-    public function load($objectId) {
-        $value = $this->_memcache->get($this->encode($objectId));
+    public function load($objectId)
+    {
+        $value = $this->_memcache->get($this->_encode($objectId));
         return $value ? $value : null;
     }
 
 
-    public function clear() {
+    public function clear()
+    {
         $this->_memcache->flush();
     }
 
@@ -92,9 +98,10 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
      * Ensures the existance of the the PHP Extension memcache
      *
      */
-    private function _ensureModuleExistance() {
-        if(!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception("The PHP extension memcache must be installed and loaded in order to use the Memcached persistence provider.");
+    private function _ensureModuleExistance()
+    {
+        if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
+            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension memcache must be installed and loaded in order to use the Memcached persistence provider.');
         }
     }
 

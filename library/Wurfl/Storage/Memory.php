@@ -48,8 +48,8 @@ class WURFL_Storage_Memory extends WURFL_Storage_Base
     public function load($objectId)
     {
         $key = $this->encode($this->_namespace, $objectId);
-        if (isset($this->_map [$key])) {
-            return $this->_map [$key];
+        if (isset($this->_map[$key])) {
+            return $this->_map[$key];
         }
 
         return NULL;
@@ -59,8 +59,8 @@ class WURFL_Storage_Memory extends WURFL_Storage_Base
     public function remove($objectId)
     {
         $key = $this->encode($this->_namespace, $objectId);
-        if ($this->_map [$key]) {
-            unset($this->_map [$key]);
+        if ($this->_map[$key]) {
+            unset($this->_map[$key]);
         }
 
     }

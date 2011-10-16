@@ -19,15 +19,16 @@
  * File-based persistence provider
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider {
-    
+class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
+{
     private $_persistenceDir;
     
-    protected $persistenceIdentifier = "FILE_PERSISTENCE_PROVIDER";
+    protected $_persistenceIdentifier = 'FILE_PERSISTENCE_PROVIDER';
     
-    const DIR = "dir";
+    const DIR = 'dir';
     
-    public function __construct($params) {
+    public function __construct($params)
+    {
         $this->initialize($params);
     }
     
@@ -36,18 +37,19 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
      *
      * @param array of parameters for configuring the Persistence Provider
      */
-    public function initialize($params) {
-        if(is_array($params)) {
-            if(! array_key_exists(self::DIR, $params)) {
-                throw new WURFL_WURFLException("Specify a valid Persistence dir in the configuration file");
+    public function initialize($params)
+    {
+        if (is_array($params)) {
+            if (!array_key_exists(self::DIR, $params)) {
+                throw new WURFL_WURFLException('Specify a valid Persistence dir in the configuration file');
             }
             
             // Check if the directory exist and it is also write access
-            if(! is_writable($params [self::DIR])) {
-                throw new WURFL_WURFLException("The diricetory specified <" . $params [self::DIR] . "> for the persistence provider does not exist or it is not writable\n");
+            if (!is_writable($params[self::DIR])) {
+                throw new WURFL_WURFLException('The diricetory specified <' . $params[self::DIR] . '> for the persistence provider does not exist or it is not writable\n');
             }
             
-            $this->_persistenceDir = $params [self::DIR] . DIRECTORY_SEPARATOR . $this->persistenceIdentifier;
+            $this->_persistenceDir = $params[self::DIR] . DIRECTORY_SEPARATOR . $this->_persistenceIdentifier;
             
             WURFL_FileUtils::mkdir($this->_persistenceDir);
         }
@@ -60,12 +62,14 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
      * @param string $objectId
      * @param mixed $object
      */
-    public function save($objectId, $object) {
+    public function save($objectId, $object)
+    {
         $path = $this->keyPath($objectId);
         WURFL_FileUtils::write($path, $object);
     }
     
-    private function keyPath($key) {
+    private function keyPath($key)
+    {
         return WURFL_FileUtils::join(array($this->_persistenceDir, $this->spread(md5($key))));
     }
     
@@ -75,21 +79,24 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
      * @param int $n level of spread
      * @return string Full filename and path to spread file
      */
-    public function spread($md5, $n = 2) {
-        $path = "";
+    public function spread($md5, $n = 2)
+    {
+        $path = '';
         for($i = 0; $i < $n; $i ++) {
-            $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
+            $path .= $md5[$i] . DIRECTORY_SEPARATOR;
         }
         $path .= substr($md5, $n);
         return $path;
     }
     
-    public function load($objectId) {
+    public function load($objectId)
+    {
         $path = $this->keyPath($objectId);
         return WURFL_FileUtils::read($path);
     }
     
-    public function remove($objectId) {
+    public function remove($objectId)
+    {
         $path = $this->keyPath($objectId);
         @unlink($path);
     }
@@ -98,7 +105,8 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
      * Clears the persistence provider by removing the directory 
      *
      */
-    public function clear() {
+    public function clear()
+    {
         WURFL_FileUtils::rmdir($this->_persistenceDir);
     }
 }

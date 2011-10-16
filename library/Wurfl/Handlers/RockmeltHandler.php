@@ -66,8 +66,8 @@ class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler
         $chromeVersion = $this->chromeVersion($userAgent);
         $chromeId = 'rockmelt';
         //var_dump($userAgent, $chromeVersion);exit;
-        if(isset($this->chromes [$chromeVersion])) {
-            return $this->chromes [$chromeVersion];
+        if(isset($this->chromes[$chromeVersion])) {
+            return $this->chromes[$chromeVersion];
         }
         
         /*
@@ -83,7 +83,7 @@ class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler
     private function chromeVersion($userAgent)
     {
         if(preg_match(self::CHROME_VERSION_PATTERN, $userAgent, $match)) {
-            return $match [1];
+            return $match[1];
         }
         return NULL;
     }

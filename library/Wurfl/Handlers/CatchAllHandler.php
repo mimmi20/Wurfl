@@ -70,7 +70,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         } else {
             $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
             $match = WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
-            $deviceId = $this->userAgentsWithDeviceID [$match];
+            $deviceId = $this->userAgentsWithDeviceID[$match];
         }
         
         return $deviceId;
@@ -88,7 +88,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         
         $this->logger->log('Applying Catch All Conclusive Match for ua: $userAgent');
         $match = WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
-        return $this->userAgentsWithDeviceID [$match];
+        return $this->userAgentsWithDeviceID[$match];
     
     }
     
@@ -97,12 +97,12 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         $this->logger->log('Applying Catch All Conclusive Match Mozilla 5(LD with treshold of)for ua: $userAgent');
         $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA5);
 
-        if(! array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
+        if(!array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
             $match = WURFL_Handlers_Utils::ldMatch(array_keys($this->mozilla5UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
         }
         
-        if(! empty($match)) {
-            return $this->mozilla5UserAgentsWithDeviceID [$match];
+        if(!empty($match)) {
+            return $this->mozilla5UserAgentsWithDeviceID[$match];
         }
         
         return NULL;
@@ -112,12 +112,12 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
     {
         $this->logger->log('Applying Catch All Conclusive Match Mozilla 4 for ua: $userAgent');
         $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA4);
-        if(! array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
+        if(!array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
             $match = WURFL_Handlers_Utils::ldMatch(array_keys($this->mozilla4UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
         }
         
-        if(! empty($match)) {
-            return $this->mozilla4UserAgentsWithDeviceID [$match];
+        if(!empty($match)) {
+            return $this->mozilla4UserAgentsWithDeviceID[$match];
         }
         
         return NULL;
@@ -126,10 +126,10 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
     public function filter($userAgent, $deviceID)
     {
         if($this->isMozilla4($userAgent)) {
-            $this->mozilla4UserAgentsWithDeviceID [$this->normalizeUserAgent($userAgent)] = $deviceID;
+            $this->mozilla4UserAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
         }
         if($this->isMozilla5($userAgent)) {
-            $this->mozilla5UserAgentsWithDeviceID [$this->normalizeUserAgent($userAgent)] = $deviceID;
+            $this->mozilla5UserAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
         }
         parent::filter($userAgent, $deviceID);
     }

@@ -53,7 +53,7 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
         
         while ($low <= $high) {
             $mid      = round(($low + $high) / 2);
-            $find     = $collection [$mid];
+            $find     = $collection[$mid];
             $distance = $this->_longestCommonPrefixLength($needle, $find);
             
             if ($distance > $bestDistance) {
@@ -90,7 +90,7 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
         while ($bestIndex > 0 && $this->_longestCommonPrefixLength($collection[$bestIndex-1], $needle) == $bestDistance) {
             $bestIndex = $bestIndex - 1;
         }
-        return $collection [$bestIndex];
+        return $collection[$bestIndex];
     }
     
     private function _longestCommonPrefixLength($s, $t)

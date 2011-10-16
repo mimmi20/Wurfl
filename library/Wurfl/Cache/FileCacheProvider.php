@@ -36,18 +36,18 @@ class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
     public function __construct($params)
     {
         if(is_array($params)) {
-            if (! array_key_exists(self::DIR, $params)) {
+            if (!array_key_exists(self::DIR, $params)) {
                 throw new WURFL_WURFLException('Specify a valid cache dir in the configuration file');
             }
             
             // Check if the directory exist and it is also write access
-            if (! is_writable($params [self::DIR])) {
+            if (!is_writable($params[self::DIR])) {
                 throw new WURFL_WURFLException('The diricetory specified <' . $params[self::DIR] . ' > for the cache provider does not exist or it is not writable');
             }
             
             $this->_cacheDir = $params[self::DIR] . DIRECTORY_SEPARATOR . $this->cacheIdentifier;
             $this->root = $params[self::DIR] . DIRECTORY_SEPARATOR . $this->cacheIdentifier;
-            $this->expire = isset($params[WURFL_Cache_CacheProvider::EXPIRATION]) ? $params [WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
+            $this->expire = isset($params[WURFL_Cache_CacheProvider::EXPIRATION]) ? $params[WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
             
             WURFL_FileUtils::mkdir($this->_cacheDir);
         }
@@ -58,7 +58,7 @@ class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
     {
         $path = $this->_keyPath($key);
         $data = WURFL_FileUtils::read($path);
-        if (! is_null($data) && $this->_expired($path)) {
+        if (!is_null($data) && $this->_expired($path)) {
             unlink($path);
             return NULL;
         }
@@ -99,7 +99,7 @@ class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
     {
         $path = '';
         for ($i = 0; $i < $n; $i ++) {
-            $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
+            $path .= $md5[$i] . DIRECTORY_SEPARATOR;
         }
         $path .= substr($md5, $n);
         return $path;

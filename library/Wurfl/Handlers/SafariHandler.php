@@ -72,8 +72,8 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
     {
         $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'safari';
-        if(isset($this->safaris [$safariVersion])) {
-            return $this->safaris [$safariVersion];
+        if(isset($this->safaris[$safariVersion])) {
+            return $this->safaris[$safariVersion];
         }
         /*
         //var_dump($userAgent, $safariVersion, $safariId);exit;
@@ -93,12 +93,12 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
             && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari') 
             && preg_match(self::SAFARI_VERSION_PATTERN, $userAgent, $match)
 ) {
-            return $match [1];
+            return $match[1];
         }
         if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari') 
             && preg_match(self::SAFARI_VERSION_PATTERN_EXT, $userAgent, $match)
 ) {
-            return $match [1];
+            return $match[1];
         }
         return NULL;
     }

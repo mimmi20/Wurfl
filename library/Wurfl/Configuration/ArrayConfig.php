@@ -89,7 +89,7 @@ class WURFL_Configuration_ArrayConfig extends WURFL_Configuration_Config
         }
         
         if (array_key_exists(WURFL_Configuration_Config::CACHE, $configuration)) {
-            $this->_setCacheConfiguration($configuration [WURFL_Configuration_Config::CACHE]);
+            $this->_setCacheConfiguration($configuration[WURFL_Configuration_Config::CACHE]);
         }
         
         if (array_key_exists(WURFL_Configuration_Config::LOG_DIR, $configuration)) {

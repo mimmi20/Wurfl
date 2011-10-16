@@ -114,7 +114,7 @@ class WURFL_CustomDevice
             throw new InvalidArgumentException('capability name must not be empty');
         }
         if (!$this->_isCapabilityDefined($capabilityName)) {
-            throw new InvalidArgumentException('no capability named [$capabilityName] is present in wurfl.');    
+            throw new InvalidArgumentException('no capability named[$capabilityName] is present in wurfl.');    
         }
         foreach ($this->_modelDevices as $modelDevice) {
             $capabilityValue = $modelDevice->getCapability($capabilityName);

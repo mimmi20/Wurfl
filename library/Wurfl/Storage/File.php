@@ -98,7 +98,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
     {
         $path = '';
         for ($i = 0; $i < $n; $i++) {
-            $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
+            $path .= $md5[$i] . DIRECTORY_SEPARATOR;
         }
         $path .= substr($md5, $n);
         return $path;

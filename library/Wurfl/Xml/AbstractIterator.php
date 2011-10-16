@@ -43,7 +43,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
     public function __construct($inputFile)
     {
         if (!file_exists($inputFile)) {
-            throw new InvalidArgumentException('cannot locate [' . $inputFile . '] file!');
+            throw new InvalidArgumentException('cannot locate[' . $inputFile . '] file!');
         }
         $this->_inputFile = WURFL_Xml_Utils::getXMLFile($_inputFile);
     }

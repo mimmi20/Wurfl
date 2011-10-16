@@ -106,16 +106,16 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
      */
     public function getDevice($deviceId)
     {
-        if (! isset($this->_deviceCache [$deviceId])) {
+        if (!isset($this->_deviceCache[$deviceId])) {
             $device = $this->_persistenceProvider->load($deviceId);
             
             if (is_null($device)) {
-                throw new Exception('There is no device with id [' . $deviceId . '] in wurfl');
+                throw new Exception('There is no device with id[' . $deviceId . '] in wurfl');
             }
             
-            $this->_deviceCache [$deviceId] = $device;
+            $this->_deviceCache[$deviceId] = $device;
         }
-        return $this->_deviceCache [$deviceId];
+        return $this->_deviceCache[$deviceId];
     }
     
     /**
@@ -128,7 +128,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         $devicesId = $this->getAllDevicesID();
         
         foreach ($devicesId as $deviceId) {
-            $devices [] = $this->getDevice($deviceId);
+            $devices[] = $this->getDevice($deviceId);
         }
         
         return $devices;
@@ -173,7 +173,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
             $device = $this->_persistenceProvider->load($deviceId);
             
             if (!$device) {
-                throw new WURFL_WURFLException('There is no device with id [' . $deviceId . '] in wurfl');
+                throw new WURFL_WURFLException('There is no device with id[' . $deviceId . '] in wurfl');
             }
             
             if (isset($device->capabilities[$capabilityName])) {
@@ -261,7 +261,7 @@ class WURFL_CustomDeviceRepository implements WURFL_DeviceRepository
         if (!array_key_exists($groupID, $this->_groupIDCapabilitiesMap)) {
             throw new WURFL_WURFLException('The Group ID ' . $groupID . ' supplied does not exist');
         }
-        return $this->_groupIDCapabilitiesMap [$groupID];
+        return $this->_groupIDCapabilitiesMap[$groupID];
     }
     
     /**

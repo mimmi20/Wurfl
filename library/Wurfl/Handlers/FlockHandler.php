@@ -68,8 +68,8 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
     {
         $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
         $safariId = 'flock';
-        if(isset($this->safaris [$safariVersion])) {
-            return $this->safaris [$safariVersion];
+        if(isset($this->safaris[$safariVersion])) {
+            return $this->safaris[$safariVersion];
         }
         return 'generic_web_browser';
         
@@ -80,7 +80,7 @@ class WURFL_Handlers_FlockHandler extends WURFL_Handlers_Handler
     {
         if(preg_match(self::SAFARI_VERSION_PATTERN, $userAgent, $match)
 ) {
-            return $match [1];
+            return $match[1];
         }
         return NULL;
     }

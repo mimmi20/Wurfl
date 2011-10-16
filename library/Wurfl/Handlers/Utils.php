@@ -31,7 +31,7 @@ class WURFL_Handlers_Utils
     /**
      * @var string Locale / Language matching RegEx
      */
-    const LANGUAGE_PATTERN = '/; [a-z]{2}(-[a-zA-Z]{0,2})?(?!=[;)])/';
+    const LANGUAGE_PATTERN = '/;[a-z]{2}(-[a-zA-Z]{0,2})?(?!=[;)])/';
     
     /**
      * @var array Collection of mobile browser keywords
@@ -130,13 +130,13 @@ class WURFL_Handlers_Utils
             $pos = strpos($userAgent, $needle, $startIndex);
             
             if ($pos !== false) {
-                $positions [] = $pos;
+                $positions[] = $pos;
             }
         }
         
         sort($positions);
         
-        return count($positions) > 0 ? $positions [0] : strlen($userAgent);
+        return count($positions) > 0 ? $positions[0] : strlen($userAgent);
     }
     
     /**
@@ -201,7 +201,7 @@ class WURFL_Handlers_Utils
             throw new InvalidArgumentException('haystack must not be null or empty');
         }
         
-        if (! is_integer($ordinal)) {
+        if (!is_integer($ordinal)) {
             throw new InvalidArgumentException('ordinal must be a positive ineger');
         }
         

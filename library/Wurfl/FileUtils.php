@@ -86,7 +86,7 @@ class WURFL_FileUtils
      */
     public static function write($path, $data, $mtime = 0)
     {
-        if (! file_exists(dirname($path))) {
+        if (!file_exists(dirname($path))) {
             self::mkdir(dirname($path), 0755, TRUE);
         }
         

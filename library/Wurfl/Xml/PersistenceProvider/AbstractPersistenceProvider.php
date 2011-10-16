@@ -27,11 +27,12 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider implements WURFL_Xml_PersistenceProvider {
+abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider implements WURFL_Xml_PersistenceProvider
+{
+    const APPLICATION_PREFIX = 'WURFL_'; 
+    const WURFL_LOADED = 'WURFL_WURFL_LOADED';
     
-    const APPLICATION_PREFIX = "WURFL_"; 
-    const WURFL_LOADED = "WURFL_WURFL_LOADED";
-    protected $persistenceIdentifier;
+    protected $_persistenceIdentifier;
     
     /**
      * Saves the object.
@@ -40,7 +41,10 @@ abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider impleme
      * @param mixed $object
      * @return bool $success
      */
-    public function save($objectId, $object) {}
+    public function save($objectId, $object)
+    {
+        //
+    }
     
     /**
      * Returns the object identified by $objectId
@@ -48,7 +52,10 @@ abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider impleme
      * @param string $objectId
      * @return mixed Value
      */
-    public function load($objectId){}
+    public function load($objectId)
+    {
+        //
+    }
 
     
     /**
@@ -57,27 +64,35 @@ abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider impleme
      *
      * @param string $objectId
      */
-    public function remove($objectId){}
+    public function remove($objectId)
+    {
+        //
+    }
 
 
     /**
      * Removes all entry from the Persistence Provider
      */
-    public function clear(){}
+    public function clear()
+    {
+        //
+    }
     
     
     /**
      * Checks if WURFL is Loaded
      * @return bool true if WURFL is loaded
      */
-     public function isWURFLLoaded() {
+    public function isWURFLLoaded()
+    {
         return $this->load(self::WURFL_LOADED);
     }
     
     /**
      * Sets the WURFL Loaded flag on the persistence provider 
      */
-    public function setWURFLLoaded($loaded=true) {
+    public function setWURFLLoaded($loaded=true)
+    {
         $this->save(self::WURFL_LOADED, $loaded);
     }
     
@@ -86,8 +101,9 @@ abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider impleme
      *
      * @param string $input
      */
-    protected function encode($input) {
-        return self::APPLICATION_PREFIX . $this->persistenceIdentifier . "_" . $input;      
+    protected function _encode($input)
+    {
+        return self::APPLICATION_PREFIX . $this->_persistenceIdentifier . '_' . $input;      
     }
     
     /**
@@ -95,11 +111,8 @@ abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider impleme
      *
      * @param string $input
      */
-    protected function decode($input) {
-        return substr($input, sizeof(self::APPLICATION_PREFIX . $this->persistenceIdentifier));
+    protected function _decode($input)
+    {
+        return substr($input, sizeof(self::APPLICATION_PREFIX . $this->_persistenceIdentifier));
     }
-    
-    
-    
-    
 }

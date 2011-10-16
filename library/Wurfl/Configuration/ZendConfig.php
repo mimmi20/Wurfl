@@ -32,7 +32,7 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
         $config = $configFilePath;
         
         if ($config instanceof Zend_Config) {
-            //throw new InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
+            //throw new InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
             
             $config = $config->toArray();
         }
@@ -62,7 +62,7 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
         }
         
         if (array_key_exists(WURFL_Configuration_Config::CACHE, $configuration)) {
-            $this->_setCacheConfiguration($configuration [WURFL_Configuration_Config::CACHE]);
+            $this->_setCacheConfiguration($configuration[WURFL_Configuration_Config::CACHE]);
         }
         
         if (array_key_exists(WURFL_Configuration_Config::LOG_DIR, $configuration)) {
