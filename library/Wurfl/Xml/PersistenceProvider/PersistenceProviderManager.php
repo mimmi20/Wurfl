@@ -32,7 +32,7 @@ class WURFL_Xml_PersistenceProvider_PersistenceProviderManager {
      * @param WURFL_Configuration_Config $wurflConfig
      * @return WURFL_Xml_PersistenceProvider Persistence Provider
      */
-    public static public function getPersistenceProvider($persistenceConfig = null) {
+    public static function getPersistenceProvider($persistenceConfig = null) {
         if(! isset(self::$_persistenceProvider)) {
             self::_initialize($persistenceConfig);
         }

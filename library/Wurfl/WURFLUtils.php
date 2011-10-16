@@ -104,7 +104,7 @@ class WURFL_WURFLUtils
      * @param string $deviceID
      * @return bool
      */
-    public static public function isGeneric($deviceID)
+    public static function isGeneric($deviceID)
     {
         if (strcmp($deviceID, WURFL_Constants::GENERIC) === 0) {
             return true;
@@ -118,7 +118,7 @@ class WURFL_WURFLUtils
      * @param array $array2
      * @return array
      */
-    public static public function array_merge_recursive_unique($array1, $array2)
+    public static function array_merge_recursive_unique($array1, $array2)
     {
         // LOOP THROUGH $array2
         foreach ($array2 AS $k => $v) {
