@@ -27,7 +27,7 @@ class WURFL_Configuration_ConfigFactory
      * @throws InvalidArgumentException
      * @return WURFL_Configuration_Config
      */
-    public static public function create($configFilePath)
+    public static function create($configFilePath)
     {
         if (!isset($configFilePath)) {
             throw new InvalidArgumentException('The configuration file path $configFilePath is not set');

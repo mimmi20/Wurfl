@@ -39,30 +39,37 @@ abstract class  WURFL_Configuration_Config
      * @var string Path to the configuration file
      */
     protected $_configFilePath;
+    
     /**
      * @var string Directory that the configuration file is in
      */
     protected $_configurationFileDir;
+    
     /**
      * @var bool true if a WURFL reload is allowed
      */
     protected $_allowReload = false;
+    
     /**
      * @var string wurfl file(normally wurfl.xml)
      */
     protected $_wurflFile;
+    
     /**
      * @var array Array of WURFL patches
      */
     protected $_wurflPatches;
+    
     /**
      * @var array
      */
     protected $_persistence = array();
+    
     /**
      * @var array
      */
     protected $_cache = array();
+    
     /**
      * @var string
      */

@@ -41,7 +41,7 @@ class WURFL_Configuration_ConfigHolder
      * Returns a Configuration object
      * @return WURFL_Configuration_Config
      */
-    public static public function getWURFLConfig()
+    public static function getWURFLConfig()
     {
         if (null === self::$_wurflConfig) {
             throw new WURFL_WURFLException('The Configuration Holder is not initialized with a valid WURFLConfig object');
@@ -54,7 +54,7 @@ class WURFL_Configuration_ConfigHolder
      * Sets the Configuration object
      * @param WURFL_Configuration_Config $wurflConfig
      */
-    public static public function setWURFLConfig(WURFL_Configuration_Config $wurflConfig)
+    public static function setWURFLConfig(WURFL_Configuration_Config $wurflConfig)
     {
         self::$_wurflConfig = $wurflConfig;
     }

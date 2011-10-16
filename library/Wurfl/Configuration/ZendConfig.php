@@ -39,7 +39,7 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
         
         $this->_config = $config;
         
-        $this->initialize();
+        $this->_initialize();
     }
 
     /**
@@ -76,12 +76,12 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     private function _setWurflConfiguration(array $wurflConfig) 
     {
         if (array_key_exists(WURFL_Configuration_Config::MAIN_FILE, $wurflConfig)) {
-            $this->wurflFile = parent::getFullPath($wurflConfig[WURFL_Configuration_Config::MAIN_FILE]);
+            $this->_wurflFile = parent::getFullPath($wurflConfig[WURFL_Configuration_Config::MAIN_FILE]);
         }
         
         if (array_key_exists(WURFL_Configuration_Config::PATCHES, $wurflConfig)) {
             foreach($wurflConfig[WURFL_Configuration_Config::PATCHES] as $wurflPatch) {
-                $this->wurflPatches[] = parent::getFullPath($wurflPatch);
+                $this->_wurflPatches[] = parent::getFullPath($wurflPatch);
             }
         }        
     }
@@ -90,13 +90,13 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     {
         $this->persistence = $persistenceConfig;
         if (array_key_exists('params', $this->persistence) && array_key_exists(WURFL_Configuration_Config::DIR, $this->persistence['params'])) {
-            $this->persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath($this->persistence['params'][WURFL_Configuration_Config::DIR]);
+            $this->_persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath($this->persistence['params'][WURFL_Configuration_Config::DIR]);
         }
     }
 
     private function _setCacheConfiguration(array $cacheConfig) 
     {
-        $this->cache = $cacheConfig;
+        $this->_cache = $cacheConfig;
     }
     
     private function _setLogDirConfiguration($logDir) 
@@ -104,6 +104,6 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
         if (!is_writable($logDir)) {
             throw new InvalidArgumentException('log dir ' . $logDir . ' must exist and be writable');
         }
-        $this->logDir = $logDir;
+        $this->_logDir = $logDir;
     }
 }

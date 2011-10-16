@@ -36,7 +36,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config
      */
     public function wurflFile($wurflFile)
     {
-        $this->wurflFile = $wurflFile;
+        $this->_wurflFile = $wurflFile;
         return $this;
     }
     
@@ -46,7 +46,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config
      */
     public function wurflPatch($wurflPatch)
     {
-        $this->wurflPatches[] = $wurflPatch;
+        $this->_wurflPatches[] = $wurflPatch;
         return $this;
     }
     /**
@@ -57,7 +57,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config
      */
     public function persistence($provider, $params = array())
     {
-        $this->persistence = array_merge(array('provider'=> $provider), array('params' => $params));
+        $this->_persistence = array_merge(array('provider'=> $provider), array('params' => $params));
         return $this;                
     }
     /**
@@ -68,7 +68,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config
      */
     public function cache($provider, $params = array())
     {
-        $this->cache = array_merge(array('provider'=> $provider), array('params' => $params));
+        $this->_cache = array_merge(array('provider'=> $provider), array('params' => $params));
         return $this;
     }
     /**
@@ -78,7 +78,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config
      */
     public function logDir($dir)
     {
-        $this->logDir = $dir;
+        $this->_logDir = $dir;
         return $this;
     }
     /**
@@ -88,7 +88,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config
      */
     public function allowReload($reload=true)
     {
-        $this->allowReload = $reload;
+        $this->_allowReload = $reload;
         return $this;
     }
     

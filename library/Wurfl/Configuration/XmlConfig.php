@@ -30,9 +30,9 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
         $this->_wurflFile = $this->_wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
         $this->_wurflPatches = $this->_wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
         $this->_allowReload = $this->_allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
-        $this->persistence = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
-        $this->cache = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
-        $this->logDir = $this->logDir($xmlConfig->xpath('/wurfl-config/logDir'));
+        $this->_persistence = $this->_persistence($xmlConfig->xpath('/wurfl-config/persistence'));
+        $this->_cache = $this->_persistence($xmlConfig->xpath('/wurfl-config/cache'));
+        $this->_logDir = $this->_logDir($xmlConfig->xpath('/wurfl-config/logDir'));
     }
 
     /**
@@ -78,7 +78,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
      * @param array $logDirElement array of SimpleXMLElement objects
      * @return string Log directory
      */
-    private function logDir($logDirElement)
+    private function _logDir($logDirElement)
     {
         if (!empty($logDirElement)) {
             return parent::getFullPath((string) $logDirElement[0]);
@@ -91,7 +91,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
      * @param array $persistenceElement array of SimpleXMLElement objects
      * @return array Persistence info
      */
-    private function persistence($persistenceElement)
+    private function _persistence($persistenceElement)
     {
         $persistence = array();
         if ($persistenceElement) {
