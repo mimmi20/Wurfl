@@ -38,35 +38,35 @@ abstract class  WURFL_Configuration_Config
     /**
      * @var string Path to the configuration file
      */
-    protected $configFilePath;
+    protected $_configFilePath;
     /**
      * @var string Directory that the configuration file is in
      */
-    protected $configurationFileDir;
+    protected $_configurationFileDir;
     /**
      * @var bool true if a WURFL reload is allowed
      */
-    protected $allowReload = false;
+    protected $_allowReload = false;
     /**
      * @var string wurfl file(normally wurfl.xml)
      */
-    protected $wurflFile;
+    protected $_wurflFile;
     /**
      * @var array Array of WURFL patches
      */
-    protected $wurflPatches;
+    protected $_wurflPatches;
     /**
      * @var array
      */
-    protected $persistence = array();
+    protected $_persistence = array();
     /**
      * @var array
      */
-    protected $cache = array();
+    protected $_cache = array();
     /**
      * @var string
      */
-    protected $logDir;
+    protected $_logDir;
     
     /**
      * Creates a new WURFL Configuration object from $configFilePath
@@ -77,15 +77,15 @@ abstract class  WURFL_Configuration_Config
         if (!file_exists($configFilePath)) {
             throw new InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
         }
-        $this->configFilePath = $configFilePath;
-        $this->configurationFileDir = dirname($this->configFilePath);
+        $this->_configFilePath = $configFilePath;
+        $this->_configurationFileDir = dirname($this->_configFilePath);
         $this->initialize();
     }
 
     /**
      * Initialize the Configuration object
      */
-    protected abstract public function initialize();
+    protected abstract function initialize();
     
     /**
      * Magic Method 
@@ -101,26 +101,26 @@ abstract class  WURFL_Configuration_Config
     /**
      * @return string Config file including full path and filename
      */
-    private function getConfigFilePath()
+    private function _getConfigFilePath()
     {
-        return $this->configFilePath;
+        return $this->_configFilePath;
     }
     
     /**
      * @return string Config file directory
      */
-    private function getConfigurationFileDir()
+    private function _getConfigurationFileDir()
     {
-        return $this->configurationFileDir;
+        return $this->_configurationFileDir;
     }
     
     /**
      * @param string $confLocation
      * @return bool file exists
      */
-    private function fileExist($confLocation)
+    private function _fileExist($confLocation)
     {
-        $fullFileLocation = $this->getFullPath($confLocation);
+        $fullFileLocation = $this->_getFullPath($confLocation);
         return file_exists($fullFileLocation);
     }
         
@@ -131,13 +131,13 @@ abstract class  WURFL_Configuration_Config
      * @throws WURFL_WURFLException The configuration file does not exist
      * @return string File name including full path
      */
-    private function getFullPath($fileName)
+    private function _getFullPath($fileName)
     {
         $fileName = trim($fileName);
         if (realpath($fileName) && !(basename($fileName) === $fileName)) {
             return realpath($fileName);
         }
-        $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
+        $fullName = join(DIRECTORY_SEPARATOR, array($this->_configurationFileDir, $fileName));
         
         if (file_exists($fullName)) {
             return $fullName;
