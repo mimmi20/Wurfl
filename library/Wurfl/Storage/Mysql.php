@@ -31,7 +31,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         '_table' => 'wurfl_object_cache',
         '_keycolumn' => 'key',
         '_valuecolumn' => 'value'
-);
+    );
 
     private $_link;
     private $_host;
@@ -46,13 +46,14 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
     public function __construct($params)
     {
         $currentParams = is_array($params) ? array_merge($this->_defaultParams, $params) : $this->_defaultParams;
+        
         foreach ($currentParams as $key => $value) {
             $this->$key = $value;
         }
-        $this->initialize();
+        $this->_initialize();
     }
 
-    private function initialize()
+    private function _initialize()
     {
         $this->_ensureModuleExistance();
 
@@ -79,8 +80,8 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         // create _table if it's not there.
         if (mysql_num_rows($test) == 0) {
             $sql = 'CREATE TABLE `' . $this->_db . '`.`' . $this->_table . '`(
-                      `' . $this->_keycolumn` . ' varchar(255) collate latin1_general_ci NOT NULL,
-                      `' . $this->_valuecolumn` . ' mediumblob NOT NULL,
+                      `' . $this->_keycolumn . '` varchar(255) collate latin1_general_ci NOT NULL,
+                      `' . $this->_valuecolumn . '` mediumblob NOT NULL,
                       `ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
                       PRIMARY KEY(`' . $this->_keycolumn . '`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci';
@@ -115,6 +116,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         if (!$success) {
             throw new WURFL_Storage_Exception('MySql error ' . mysql_error($this->_link) . 'setting ' . $objectId . ' in ' . $this->_db);
         }
+        
         return $success;
     }
 
@@ -156,8 +158,6 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         return $success;
     }
 
-
-
     /**
      * Ensures the existance of the the PHP Extension mysql
      * @throws WURFL_Xml_PersistenceProvider_Exception required extension is unavailable
@@ -168,5 +168,4 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
             throw new WURFL_Storage_Exception('The PHP extension mysql must be installed and loaded in order to use the mysql.');
         }
     }
-
 }
