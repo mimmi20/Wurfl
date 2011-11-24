@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Storage;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * WURFL Storage factory
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Factory
+class Factory
 {
     /**
      * @var array Default configuration
@@ -52,6 +55,6 @@ class WURFL_Storage_Factory
     private static function _className($configuration)
     {
         $provider = $configuration['provider'];
-        return 'WURFL_Storage_' . ucfirst($provider);
+        return '\\Wurfl\\Storage\\' . ucfirst($provider);
     }
 }

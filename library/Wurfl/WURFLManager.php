@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -35,7 +38,7 @@
  * @package WURFL
  * @see getWURFLInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), WURFL_WURFLManagerFactory::create()
  */
-class WURFL_WURFLManager
+class WURFLManager
 {
     /**
      * @var WURFL_WURFLService
@@ -51,7 +54,7 @@ class WURFL_WURFLManager
      * @param WURFL_WURFLService $wurflService
      * @param WURFL_Request_GenericRequestFactory $requestFactory
      */
-    public function __construct(WURFL_WURFLService $wurflService, WURFL_Request_GenericRequestFactory $requestFactory)
+    public function __construct(WURFLService $wurflService, Request\GenericRequestFactory $requestFactory)
     {
         $this->_wurflService   = $wurflService;
         $this->_requestFactory = $requestFactory;
@@ -84,10 +87,10 @@ class WURFL_WURFLManager
      * @return WURFL_CustomDevice device
      * @throws Exception if the $request parameter is not set
      */
-    public function getDeviceForRequest(WURFL_Request_GenericRequest $request)
+    public function getDeviceForRequest(Request\GenericRequest $request)
     {
         if (!isset($request)) {
-            throw new Exception('The request parameter must be set.');
+            throw new \Exception('The request parameter must be set.');
         }
         
         return $this->_wurflService->getDeviceForRequest($request);
@@ -103,7 +106,7 @@ class WURFL_WURFLManager
     public function getDeviceForHttpRequest($httpRequest)
     {
         if (!isset($httpRequest)) {
-            throw new Exception('The $httpRequest parameter must be set.');
+            throw new \Exception('The $httpRequest parameter must be set.');
         }
         $request = $this->_requestFactory->createRequest($httpRequest);
         return $this->getDeviceForRequest($request);

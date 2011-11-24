@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -41,7 +44,7 @@
  * @property-read bool $actualDeviceRoot true if device is an actual root device
  * @package WURFL
  */
-class WURFL_CustomDevice
+class CustomDevice
 {
     /**
      * @var array Array of WURFL_Xml_ModelDevice objects
@@ -55,7 +58,7 @@ class WURFL_CustomDevice
      */
     public function __construct($modelDevices) {
         if (!is_array($modelDevices) || count($modelDevices) < 1) {
-            throw new InvalidArgumentException('modelDevices must be an array of at least one ModelDevice.');
+            throw new \InvalidArgumentException('modelDevices must be an array of at least one ModelDevice.');
         }
         $this->_modelDevices = $modelDevices;
     
@@ -78,11 +81,11 @@ class WURFL_CustomDevice
                     return $this->_modelDevices[0]->$name;
                     break;
                 default :
-                    throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
+                    throw new WURFLException('the field ' . $name . ' is not defined');
                     break;
             }
         }
-        throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
+        throw new WURFLException('the field ' . $name . ' is not defined');
     }
     
     /**
@@ -111,10 +114,10 @@ class WURFL_CustomDevice
     public function getCapability($capabilityName)
     {
         if (empty($capabilityName)) {
-            throw new InvalidArgumentException('capability name must not be empty');
+            throw new \InvalidArgumentException('capability name must not be empty');
         }
         if (!$this->_isCapabilityDefined($capabilityName)) {
-            throw new InvalidArgumentException('no capability named[$capabilityName] is present in wurfl.');    
+            throw new \InvalidArgumentException('no capability named[$capabilityName] is present in wurfl.');    
         }
         foreach ($this->_modelDevices as $modelDevice) {
             $capabilityValue = $modelDevice->getCapability($capabilityName);

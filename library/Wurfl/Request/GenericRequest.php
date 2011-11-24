@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Generic WURFL Request object containing User Agent, UAProf and xhtml device data
  * @package    WURFL_Request
  */
-class WURFL_Request_GenericRequest
+class GenericRequest
 {
     private $_userAgent;
     private $_userAgentProfile;

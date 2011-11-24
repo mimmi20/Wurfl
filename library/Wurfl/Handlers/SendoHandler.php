@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SendoHandler extends WURFL_Handlers_Handler
+class SendoHandler extends Handler
 {
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {

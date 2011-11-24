@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-interface WURFL_Storage
+interface Storage
 {
     /**
      * @var string Key for storing data expiration times

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -22,7 +25,7 @@
  * @category   WURFL
  * @package    WURFL_Cache
  */
-class WURFL_Cache_MemcacheCacheProvider implements WURFL_Cache_CacheProvider
+class MemcacheCacheProvider implements CacheProvider
 {
     const EXTENSION_MODULE_NAME = 'memcache';
     const DEFAULT_HOST = '127.0.0.1';
@@ -40,7 +43,7 @@ class WURFL_Cache_MemcacheCacheProvider implements WURFL_Cache_CacheProvider
         if(is_array($params)) {
             $this->_host = isset($params['host']) ? $params['host'] : self::DEFAULT_HOST;
             $this->_port = isset($params['port']) ? $params['port'] : self::DEFAULT_PORT;
-            $this->expire = isset($params[WURFL_Cache_CacheProvider::EXPIRATION]) ? $params[WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
+            $this->expire = isset($params[CacheProvider::EXPIRATION]) ? $params[CacheProvider::EXPIRATION] : CacheProvider::NEVER;
         }
         $this->initialize();
     }
@@ -52,7 +55,7 @@ class WURFL_Cache_MemcacheCacheProvider implements WURFL_Cache_CacheProvider
     final public function initialize()
     {
         $this->_ensureModuleExistence();
-        $this->_memcache = new Memcache();
+        $this->_memcache = new \Memcache();
         // support multiple hosts using semicolon to separate hosts
         $hosts = explode(';', $this->_host);
         // different ports for each hosts the same way
@@ -100,12 +103,12 @@ class WURFL_Cache_MemcacheCacheProvider implements WURFL_Cache_CacheProvider
 
     /**
      * Ensures the existance of the the PHP Extension memcache
-     * @throws WURFL_Xml_PersistenceProvider_Exception Extension is not loaded
+     * @throws \Wurfl\Xml\PersistenceProvider\Exception Extension is not loaded
      */
     private function _ensureModuleExistence()
     {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension memcache must be installed and loaded in order to use the Memcached.');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('The PHP extension memcache must be installed and loaded in order to use the Memcached.');
         }
     }
 }

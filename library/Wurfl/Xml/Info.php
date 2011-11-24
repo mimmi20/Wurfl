@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -23,7 +26,7 @@
  * @property-read string $lastUpdated Loaded WURFL Last Updated Date
  * @property-read string $officialURL Loaded WURFL Official URL 
  */
-class WURFL_Xml_Info
+class Info
 {
     /**
      * Key used in persistence provider to store version-related information
@@ -62,7 +65,7 @@ class WURFL_Xml_Info
      */
     public static function noInfo()
     {
-        return new WURFL_Xml_Info('', '', '');
+        return new Info('', '', '');
     }
     
 }

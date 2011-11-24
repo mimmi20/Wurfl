@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * Persistence provider interface
  * @package    WURFL_Xml
  */
-interface WURFL_Xml_PersistenceProvider
+interface PersistenceProvider
 {
     /**
      * Saves the object 

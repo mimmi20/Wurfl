@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,13 +22,13 @@
  * Cache Provider factory
  * @package    WURFL_Cache
  */
-class WURFL_Cache_CacheProviderFactory
+class CacheProviderFactory
 {
     const FILE_CACHE_PROVIDER_DIR = 'devices';
     const DEFAULT_CACHE_PROVIDER_NAME = 'file';
     
     /**
-     * @var WURFL_Cache_CacheProvider
+     * @var CacheProvider
      */
     private static $_cacheProvider;
     
@@ -43,31 +46,31 @@ class WURFL_Cache_CacheProviderFactory
     /**
      * Returns a CacheProvider based on the given $cacheConfig
      * @param WURFL_Configuration_Config $cacheConfig 
-     * @return WURFL_Cache_CacheProvider
+     * @return CacheProvider
      */
     static public function getCacheProvider($cacheConfig=null)
     {
-        $cacheConfig = is_null($cacheConfig) ? WURFL_Configuration_ConfigHolder::getWURFLConfig()->cache : $cacheConfig;
+        $cacheConfig = is_null($cacheConfig) ? \Wurfl\Configuration\ConfigHolder::getWURFLConfig()->cache : $cacheConfig;
         $provider = isset($cacheConfig['provider']) ? $cacheConfig['provider'] : NULL;
         $cache = isset($cacheConfig['params']) ? $cacheConfig['params'] : NULL;
         switch ($provider) {
-            case WURFL_Constants::FILE:
-                self::$_cacheProvider = new WURFL_Cache_FileCacheProvider($cache);
+            case Constants::FILE:
+                self::$_cacheProvider = new \Wurfl\Cache\FileCacheProvider($cache);
                 break;
-            case WURFL_Constants::MEMCACHE:
-                self::$_cacheProvider = new WURFL_Cache_MemcacheCacheProvider($cache);
+            case Constants::MEMCACHE:
+                self::$_cacheProvider = new \Wurfl\Cache\MemcacheCacheProvider($cache);
                 break;
-            case WURFL_Constants::APC:
-                self::$_cacheProvider = new WURFL_Cache_APCCacheProvider($cache);
+            case Constants::APC:
+                self::$_cacheProvider = new \Wurfl\Cache\APCCacheProvider($cache);
                 break;
-            case WURFL_Constants::EACCELERATOR:
-                self::$_cacheProvider = new WURFL_Cache_EAcceleratorCacheProvider($cache);
+            case Constants::EACCELERATOR:
+                self::$_cacheProvider = new \Wurfl\Cache\EAcceleratorCacheProvider($cache);
                 break;
-            case WURFL_Constants::MYSQL:
-                self::$_cacheProvider = new WURFL_Cache_MysqlCacheProvider($cache);
+            case Constants::MYSQL:
+                self::$_cacheProvider = new \Wurfl\Cache\MysqlCacheProvider($cache);
                 break;
             default:
-                self::$_cacheProvider = new WURFL_Cache_NullCacheProvider();
+                self::$_cacheProvider = new \Wurfl\Cache\NullCacheProvider();
                 break;
         }
         return self::$_cacheProvider;

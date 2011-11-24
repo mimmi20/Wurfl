@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
+class DoCoMoHandler extends Handler
 {
     protected $prefix = 'DOCOMO';
     
@@ -44,7 +47,7 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'DoCoMo');
+        return Utils::checkIfStartsWith($userAgent, 'DoCoMo');
     }
     
     /**
@@ -60,7 +63,7 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler
     
     public function applyRecoveryMatch($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'DoCoMo/2')) {
+        if(Utils::checkIfStartsWith($userAgent, 'DoCoMo/2')) {
             return 'docomo_generic_jap_ver2';
         }
         

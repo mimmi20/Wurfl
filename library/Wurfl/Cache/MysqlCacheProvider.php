@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * MySQL Cache Provider
  * @package    WURFL_Cache
  */
-class WURFL_Cache_MysqlCacheProvider implements WURFL_Cache_CacheProvider
+class MysqlCacheProvider implements CacheProvider
 {
     const EXTENSION_MODULE_NAME = 'mysql';
     const DEFAULT_HOST = 'localhost';
@@ -89,7 +92,7 @@ class WURFL_Cache_MysqlCacheProvider implements WURFL_Cache_CacheProvider
 
     /**
      * Initializes the MySQL Module
-     * @throws WURFL_Xml_PersistenceProvider_Exception Various database errors
+     * @throws \Wurfl\Xml\PersistenceProvider\Exception Various database errors
      */
     final public function initialize()
     {
@@ -97,18 +100,18 @@ class WURFL_Cache_MysqlCacheProvider implements WURFL_Cache_CacheProvider
         // Initializes link to MySQL
         $this->_link = mysql_connect($this->_host . ':' . $this->_port, $this->_user, $this->_pass);
         if (!$this->_link) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('Couldn\'t connect to $this->_host(' . mysql_error($this->_link) . ')');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('Couldn\'t connect to $this->_host(' . mysql_error($this->_link) . ')');
         }
         
         // Initializes link to database
         if (!mysql_select_db($this->_db, $this->_link)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('Couldn\'t change to database to $this->_db(' . mysql_error($this->_link) . ')');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('Couldn\'t change to database to $this->_db(' . mysql_error($this->_link) . ')');
         }
         
         // Check for database
         $test = mysql_query('SHOW TABLES FROM ' . $this->_db . ' LIKE \'' . $this->_table . '\'', $this->_link);
         if (!is_resource($test)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('Couldn\'t show tables from database ' . $this->_db . '(' . mysql_error($this->_link) . ')');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('Couldn\'t show tables from database ' . $this->_db . '(' . mysql_error($this->_link) . ')');
         }
         
         // create table if it's not there.
@@ -127,7 +130,7 @@ class WURFL_Cache_MysqlCacheProvider implements WURFL_Cache_CacheProvider
             );
             $success = mysql_query($query, $this->_link);
             if (!$success) {
-                throw new WURFL_Xml_PersistenceProvider_Exception('Table ' . $this->_table . ' missing in ' . $this->_db . '(' . mysql_error($this->_link) . ')');
+                throw new \Wurfl\Xml\PersistenceProvider\Exception('Table ' . $this->_table . ' missing in ' . $this->_db . '(' . mysql_error($this->_link) . ')');
             }
         } 
         
@@ -142,7 +145,7 @@ class WURFL_Cache_MysqlCacheProvider implements WURFL_Cache_CacheProvider
         $sql = 'select `value` from `' . $this->_db . '`.`' . $this->_table . '` where `key`=\'' . $key . '\'';
         $result = mysql_query($sql, $this->_link);
         if (!is_resource($result)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('MySql error ' . mysql_error($this->_link) . 'in ' . $this->_db);
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('MySql error ' . mysql_error($this->_link) . 'in ' . $this->_db);
         }
         $row = mysql_fetch_assoc($result);
         if (is_array($row)) {
@@ -163,13 +166,13 @@ class WURFL_Cache_MysqlCacheProvider implements WURFL_Cache_CacheProvider
         $sql   = sprintf('DELETE FROM `%s`.`%s` WHERE `key` = \'%s\'', $this->_db, $this->_table, $key);
         $success = mysql_query($sql, $this->_link);
         if (!$success) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('MySql error ' . mysql_error($this->_link) . ' while deleting ' . $key . ' in ' . $this->_db);
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('MySql error ' . mysql_error($this->_link) . ' while deleting ' . $key . ' in ' . $this->_db);
         }
 
         $sql = sprintf('INSERT INTO `%s`.`%s`(`key`,`value`) VALUES(\'%s\',\'%s\')', $this->_db, $this->_table, $key, $value);
         $success = mysql_query($sql,$this->_link);
         if (!$success) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('MySql error ' . mysql_error($this->_link) . ' while setting ' . $key . ' in ' . $this->_db);
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('MySql error ' . mysql_error($this->_link) . ' while setting ' . $key . ' in ' . $this->_db);
         }
         return $success;
     }
@@ -187,12 +190,12 @@ class WURFL_Cache_MysqlCacheProvider implements WURFL_Cache_CacheProvider
 
     /**
      * Ensures the existance of the the PHP Extension memcache
-     * @throws WURFL_Xml_PersistenceProvider_Exception mysql extension is not present
+     * @throws \Wurfl\Xml\PersistenceProvider\Exception mysql extension is not present
      */
     private function _ensureModuleExistance()
     {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension mysql must be installed and loaded in order to use the mysql cache provider.');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('The PHP extension mysql must be installed and loaded in order to use the mysql cache provider.');
         }
     }
 }

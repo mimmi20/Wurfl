@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler
+class LGHandler extends Handler
 {
     protected $prefix = 'LG';
     
@@ -43,7 +46,7 @@ class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'LG') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'lg');
+        return Utils::checkIfContains($userAgent, 'LG') || Utils::checkIfStartsWith($userAgent, 'lg');
     }
     
     /**
@@ -53,7 +56,7 @@ class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent)
     {
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'LG'));
+        $tolerance = Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'LG'));
         $userAgents = array_keys($this->userAgentsWithDeviceID);
         return parent::applyRisWithTollerance($userAgents, $userAgent, $tolerance);
 

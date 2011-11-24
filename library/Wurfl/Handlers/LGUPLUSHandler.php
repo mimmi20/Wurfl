@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
+class LGUPLUSHandler extends Handler
 {
     protected $prefix = 'LGUPLUS';
 
@@ -42,7 +45,7 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('LGUPLUS', 'lgtelecom'));
+        return Utils::checkIfContainsAnyOf($userAgent, array('LGUPLUS', 'lgtelecom'));
     }
 
     
@@ -53,7 +56,7 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        return WURFL_Constants::GENERIC;
+        return Constants::GENERIC;
     }
 
 
@@ -67,7 +70,7 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler
     public function applyRecoveryMatch($userAgent)
     {
         foreach($this->lgupluses as $deviceId => $values) {
-            if(WURFL_Handlers_Utils::checkIfContainsAll($userAgent, $values)) {
+            if(Utils::checkIfContainsAll($userAgent, $values)) {
                 return $deviceId;
             }
         }

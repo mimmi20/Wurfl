@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,9 +22,9 @@
  * Helper to load PHP classes on demand
  * @package    WURFL
  */
-class WURFL_ClassLoader
+class ClassLoader
 {
-    const CLASS_PREFIX = 'WURFL_';
+    const CLASS_PREFIX = 'Wurfl\\';
     
     /**
      * Loads a Class given the class name
@@ -31,10 +34,10 @@ class WURFL_ClassLoader
     public static function loadClass($className)
     {        
         if ($className === NULL) {
-            throw new WURFL_WURFLException('Unable To Load Class : ' . $className);
+            throw new \WURFL\WURFLException('Unable To Load Class : ' . $className);
         }
                 
-        if (substr($className, 0, 6) !== WURFL_ClassLoader::CLASS_PREFIX) {
+        if (substr($className, 0, 6) !== self::CLASS_PREFIX) {
             return FALSE;
         }
         

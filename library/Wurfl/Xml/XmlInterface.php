@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * WURFL XML Parsing interface
  * @package    WURFL_Xml
  */
-interface WURFL_Xml_Interface
+interface XmlInterface
 {
     /**
      * Parses the given file and returns a WURFL_Xml_ParsingResult 

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_LGNormalizer implements WURFL_Request_UserAgentNormalizer_Interface
+class LGNormalizer implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     public function normalize($userAgent)
     {

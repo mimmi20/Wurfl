@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * WURFL user agent hander utilities
  * @package    WURFL
  */
-class WURFL_Handlers_Utils
+class Utils
 {
     /**
      * The worst allowed match tolerance
@@ -74,29 +77,29 @@ class WURFL_Handlers_Utils
         'foma');
     
     /** 
-     * Alias of WURFL_Handlers_Matcher_RISMatcher::match()
+     * Alias of Matcher_RISMatcher::match()
      * @param array $collection
      * @param string $needle
      * @param int $tolerance
      * @return string Matched user agent
-     * @see WURFL_Handlers_Matcher_RISMatcher::match()
+     * @see Matcher_RISMatcher::match()
      */
     public static function risMatch($collection, $needle, $tolerance) 
     {
-        return WURFL_Handlers_Matcher_RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
+        return Matcher\RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
     
     /**
-     * Alias of WURFL_Handlers_Matcher_LDMatcher::match()
+     * Alias of Matcher_LDMatcher::match()
      * @param array $collection
      * @param string $needle
      * @param int $tolerance
      * @return string Matched user agent
-     * @see WURFL_Handlers_Matcher_LDMatcher::match()
+     * @see Matcher_LDMatcher::match()
      */
     public static function ldMatch($collection, $needle, $tolerance = 7) 
     {
-        return WURFL_Handlers_Matcher_LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
+        return Matcher\LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
     
     /**
@@ -198,11 +201,11 @@ class WURFL_Handlers_Utils
     public static function ordinalIndexOf($haystack, $needle, $ordinal) 
     {
         if (is_null($haystack) || empty($haystack)) {
-            throw new InvalidArgumentException('haystack must not be null or empty');
+            throw new \InvalidArgumentException('haystack must not be null or empty');
         }
         
         if (!is_integer($ordinal)) {
-            throw new InvalidArgumentException('ordinal must be a positive ineger');
+            throw new \InvalidArgumentException('ordinal must be a positive ineger');
         }
         
         $found = 0;

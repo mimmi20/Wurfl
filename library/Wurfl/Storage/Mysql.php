@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Storage;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Mysql extends WURFL_Storage_Base
+class Mysql extends Base
 {
     private $_defaultParams = array(
         '_host' => 'local_host',
@@ -60,21 +63,21 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         /* Initializes _link to MySql */
         $this->_link = mysql_connect($this->_host . ':' . $this->_port, $this->_user, $this->_pass);
         if (mysql_error($this->_link)) {
-            throw new WURFL_Storage_Exception('Couldn\'t _link to ' . $this->_host . '(' . mysql_error($this->_link) . ')');
+            throw new Exception('Couldn\'t _link to ' . $this->_host . '(' . mysql_error($this->_link) . ')');
         }
 
         /* Initializes _link to database */
         $success = mysql_select_db($this->_db, $this->_link);
         
         if (!$success) {
-            throw new WURFL_Storage_Exception('Couldn\'t change to database ' . $this->_db . '(' . mysql_error($this->_link) . ')');
+            throw new Exception('Couldn\'t change to database ' . $this->_db . '(' . mysql_error($this->_link) . ')');
         }
 
         /* Is Table there? */
         $test = mysql_query('SHOW TABLES FROM ' . $this->_db . ' LIKE \'' . $this->_table . '\'', $this->_link);
         
         if (!is_resource($test)) {
-            throw new WURFL_Storage_Exception('Couldn\'t show _tables from database ' . $this->_db . '(' . mysql_error($this->_link) . ')');
+            throw new Exception('Couldn\'t show _tables from database ' . $this->_db . '(' . mysql_error($this->_link) . ')');
         }
 
         // create _table if it's not there.
@@ -89,7 +92,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
             $success = mysql_query($sql, $this->_link);
             
             if (!$success) {
-                throw new WURFL_Storage_Exception('Table ' . $this->_table . ' missing in ' . $this->_db . '(' . mysql_error($this->_link) . ')');
+                throw new Exception('Table ' . $this->_table . ' missing in ' . $this->_db . '(' . mysql_error($this->_link) . ')');
             }
         }
 
@@ -107,14 +110,14 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         $success  = mysql_query($sql,$this->_link);
         
         if (!$success) {
-            throw new WURFL_Storage_Exception('MySql error ' . mysql_error($this->_link) . 'deleting ' . $objectId . ' in ' . $this->_db);
+            throw new Exception('MySql error ' . mysql_error($this->_link) . 'deleting ' . $objectId . ' in ' . $this->_db);
         }
 
         $sql     = 'insert into `' . $this->_db . '`.`' . $this->_table . '`(`' . $this->_keycolumn . '`,`' . $this->_valuecolumn . '`) VALUES(\'' . $objectId . '\',\'' . $object . '\')';
         $success = mysql_query($sql, $this->_link);
         
         if (!$success) {
-            throw new WURFL_Storage_Exception('MySql error ' . mysql_error($this->_link) . 'setting ' . $objectId . ' in ' . $this->_db);
+            throw new Exception('MySql error ' . mysql_error($this->_link) . 'setting ' . $objectId . ' in ' . $this->_db);
         }
         
         return $success;
@@ -129,7 +132,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         $result = mysql_query($sql, $this->_link);
         
         if (!is_resource($result)) {
-            throw new WURFL_Storage_Exception('MySql error ' . mysql_error($this->_link) . 'in ' . $this->_db);
+            throw new Exception('MySql error ' . mysql_error($this->_link) . 'in ' . $this->_db);
         }
 
         $row = mysql_fetch_assoc($result);
@@ -152,7 +155,7 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
         $success = mysql_query($sql, $this->_link);
         
         if (mysql_error($this->_link)) {
-            throw new WURFL_Storage_Exception('MySql error ' . mysql_error($this->_link) . ' clearing ' . $this->_db . '.' . $this->_table);
+            throw new Exception('MySql error ' . mysql_error($this->_link) . ' clearing ' . $this->_db . '.' . $this->_table);
         }
         
         return $success;
@@ -160,12 +163,12 @@ class WURFL_Storage_Mysql extends WURFL_Storage_Base
 
     /**
      * Ensures the existance of the the PHP Extension mysql
-     * @throws WURFL_Xml_PersistenceProvider_Exception required extension is unavailable
+     * @throws \Wurfl\Xml\PersistenceProvider\Exception required extension is unavailable
      */
     private function _ensureModuleExistance()
     {
         if (!extension_loaded('mysql')) {
-            throw new WURFL_Storage_Exception('The PHP extension mysql must be installed and loaded in order to use the mysql.');
+            throw new Exception('The PHP extension mysql must be installed and loaded in order to use the mysql.');
         }
     }
 }

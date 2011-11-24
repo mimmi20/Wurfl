@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
+class MotorolaHandler extends Handler
 {
     protected $prefix = 'MOTOROLA';
     
@@ -46,7 +49,7 @@ class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mot-') || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MOT-') || WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola');
+        return Utils::checkIfContains($userAgent, 'Mot-') || Utils::checkIfContains($userAgent, 'MOT-') || Utils::checkIfContains($userAgent, 'Motorola');
     
     }
     
@@ -59,11 +62,11 @@ class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'MIB/2.2') || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MIB/BER2.2')) {
+        if(Utils::checkIfContains($userAgent, 'MIB/2.2') || Utils::checkIfContains($userAgent, 'MIB/BER2.2')) {
             return 'mot_mib22_generic';
         }
         
-        return WURFL_Constants::GENERIC;
+        return Constants::GENERIC;
     }
 
 }

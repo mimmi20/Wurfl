@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -24,7 +27,7 @@
  * @package    WURFL_Cache
  */
 
-class WURFL_Cache_ZendCacheProvider implements WURFL_Cache_CacheProvider 
+class ZendCacheProvider implements CacheProvider 
 {
     private $_cache;
     
@@ -34,11 +37,11 @@ class WURFL_Cache_ZendCacheProvider implements WURFL_Cache_CacheProvider
     
     public function __construct($params) 
     {
-        if($params instanceof Zend_Config) {
+        if($params instanceof \Zend\Config\Config) {
             $params = $params->toArray();
         }
         
-        if($params instanceof Zend_Cache_Manager) {
+        if($params instanceof \Zend\Cache\Manager) {
             $allowedNames = array('wurfl', 'wurfldata');
             $cacheFound   = false;
             
@@ -51,16 +54,16 @@ class WURFL_Cache_ZendCacheProvider implements WURFL_Cache_CacheProvider
             }
             
             if(!$found) {
-                throw new WURFL_WURFLException('the allowed key names wasn\'t found in the given Zend_Cache_Manager object, only the key names \'wurfl\' or \'wurfldata\' are supported');
+                throw new \Wurfl\WURFLException('the allowed key names wasn\'t found in the given Zend_Cache_Manager object, only the key names \'wurfl\' or \'wurfldata\' are supported');
             }
         }
         
         if(!is_array($params) && !($params instanceof Zend_Cache)) {
-            throw new WURFL_WURFLException('the parameter must be an array, an Zend_Config object or an Zend_Cache object');
+            throw new \Wurfl\WURFLException('the parameter must be an array, an Zend_Config object or an Zend_Cache object');
         }
         
         if(is_array($params)) {
-            $this->_cache = Zend_Cache::factory(
+            $this->_cache = \Zend\Cache\Frontend::factory(
                 $params['frontend'],
                 $params['backend'],
                 $params['frontendoptions'],

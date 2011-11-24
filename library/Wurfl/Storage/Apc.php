@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Storage;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * APC Storage class
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Apc extends WURFL_Storage_Base
+class Apc extends Base
 {
     const EXTENSION_MODULE_NAME = 'apc';
     
@@ -80,12 +83,12 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base
 
     /**
      * Ensures the existence of the the PHP Extension apc
-     * @throws WURFL_Xml_PersistenceProvider_Exception required extension is unavailable
+     * @throws \Wurfl\Xml\PersistenceProvider\Exception required extension is unavailable
      */
     private function _ensureModuleExistence()
     {
         if (!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension apc must be installed, loaded and enabled.');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('The PHP extension apc must be installed, loaded and enabled.');
         }
     }
 

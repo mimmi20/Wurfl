@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer
  * @package    WURFL_Request
  */
-class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormalizer_Interface
+class UserAgentNormalizer implements UserAgentNormalizer\NormalizerInterface
 {
     /**
      * UserAgentNormalizer chain - array of WURFL_Request_UserAgentNormalizer objects
@@ -44,11 +47,11 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
      * @param WURFL_UserAgentNormalizer_Interface $Normalizer
      * @return WURFL_Request_UserAgentNormalizer
      */
-    public function addUserAgentNormalizer(WURFL_Request_UserAgentNormalizer_Interface $normalizer)
+    public function addUserAgentNormalizer(UserAgentNormalizer\NormalizerInterface $normalizer)
     {
         $userAgentNormalizers = $this->_userAgentNormalizers; 
         $userAgentNormalizers[] = $normalizer;
-        return new WURFL_Request_UserAgentNormalizer($userAgentNormalizers);
+        return new UserAgentNormalizer($userAgentNormalizers);
     }
     
     /**

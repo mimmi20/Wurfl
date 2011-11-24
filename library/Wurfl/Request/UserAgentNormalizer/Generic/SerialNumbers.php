@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer - removes serial numbers from user agent
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_SerialNumbers implements WURFL_Request_UserAgentNormalizer_Interface
+class SerialNumbers implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     const SERIAL_NUMBERS_PATTERN = '/(\[(TF|NT|ST)[\d|X]+\])|(\/SN[\d|X]+)/';
 

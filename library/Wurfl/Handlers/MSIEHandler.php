@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
+class MSIEHandler extends Handler
 {
     protected $prefix = 'MSIE';
     
@@ -47,11 +50,11 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+        if(Utils::isMobileBrowser($userAgent)) {
             return false;
         }
         
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE');
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla') && Utils::checkIfContains($userAgent, 'MSIE');
     }
 
 }

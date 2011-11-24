@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Extracts version information from XML file
  * @package    WURFL_Xml
  */
-class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator
+class VersionIterator extends AbstractIterator
 {
     public function readNextElement()
     {
@@ -28,31 +31,30 @@ class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator
         $lastUpdated = '';
         $officialURL = '';
         
-        while ($this->xmlReader->read()) {
-            $nodeName = $this->xmlReader->name;
+        while ($this->_xmlReader->read()) {
+            $nodeName = $this->_xmlReader->name;
             
-            switch ($this->xmlReader->nodeType) {
-                case XMLReader::TEXT:
-                    $currentText = $this->xmlReader->value;
+            switch ($this->_xmlReader->nodeType) {
+                case \XMLReader::TEXT:
+                    $currentText = $this->_xmlReader->value;
                     break;
-                case XMLReader::END_ELEMENT:
+                case \XMLReader::END_ELEMENT:
                     switch ($nodeName) {
                         case 'version':
-                            $this->currentElement = new WURFL_Xml_Info($version, $lastUpdated, $officialURL);
+                            $this->currentElement = new Info($version, $lastUpdated, $officialURL);
                             break 2;
-                        
                         case 'ver':
                             $version = $currentText;
-                        break;                        
-                        
+                            break;
                         case 'last_updated':
                             $lastUpdated = $currentText;
                             break;
-                        
                         case 'official_url':
                             $officialURL = $currentText;
                             break;
                     }
+                    
+                    break;
             }
         } // end of while
     }

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @version    $id$
  */
 
-class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
+class CatchAllHandler extends Handler
 {
     protected $prefix = 'CATCH_ALL';
     const MOZILLA_TOLLERACE = 4;
@@ -64,12 +67,12 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $deviceId = WURFL_Constants::GENERIC;
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
+        $deviceId = Constants::GENERIC;
+        if(Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
             $deviceId = $this->applyMozillaConclusiveMatch($userAgent);
         } else {
-            $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-            $match = WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
+            $tollerance = Utils::firstSlash($userAgent);
+            $match = Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
             $deviceId = $this->userAgentsWithDeviceID[$match];
         }
         
@@ -87,7 +90,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         }
         
         $this->logger->log('Applying Catch All Conclusive Match for ua: $userAgent');
-        $match = WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
+        $match = Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
         return $this->userAgentsWithDeviceID[$match];
     
     }
@@ -98,7 +101,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA5);
 
         if(!array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
-            $match = WURFL_Handlers_Utils::ldMatch(array_keys($this->mozilla5UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
+            $match = Utils::ldMatch(array_keys($this->mozilla5UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
         }
         
         if(!empty($match)) {
@@ -113,7 +116,7 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
         $this->logger->log('Applying Catch All Conclusive Match Mozilla 4 for ua: $userAgent');
         $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA4);
         if(!array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
-            $match = WURFL_Handlers_Utils::ldMatch(array_keys($this->mozilla4UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
+            $match = Utils::ldMatch(array_keys($this->mozilla4UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
         }
         
         if(!empty($match)) {
@@ -145,23 +148,23 @@ class WURFL_Handlers_CatchAllHandler extends WURFL_Handlers_Handler
     
     private function loadMozillaData()
     {
-        $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->find(WURFL_Handlers_CatchAllHandler::MOZILLA4);
-        $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->find(WURFL_Handlers_CatchAllHandler::MOZILLA5);
+        $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->find(CatchAllHandler::MOZILLA4);
+        $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->find(CatchAllHandler::MOZILLA5);
     }
     
     private function isMozilla5($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5');
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla/5');
     }
     
     private function isMozilla4($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/4');
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla/4');
     }
     
     private function isMozilla($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla');
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla');
     }
 
 }

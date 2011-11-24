@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler
+class VodafoneHandler extends Handler
 {
     protected $prefix = 'VODAFONE';
     
@@ -43,7 +46,7 @@ class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Vodafone');
+        return Utils::checkIfStartsWith($userAgent, 'Vodafone');
     }
     
     /** 
@@ -52,8 +55,8 @@ class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent)
     {    
-        $tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, '/', 3);        
-        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+        $tolerance = Utils::ordinalIndexOf($userAgent, '/', 3);        
+        return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
 
 }

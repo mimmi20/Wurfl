@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers\Matcher;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @see match()
  * @package    WURFL_Handlers_Matcher
  */
-class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface
+class LDMatcher implements MatcherInterface
 {
     /**
      * Instance of WURFL_Handlers_Matcher_LDMatcher

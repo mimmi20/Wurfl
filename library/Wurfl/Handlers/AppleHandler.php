@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
+class AppleHandler extends Handler
 {
     protected $prefix = 'APPLE';
     
@@ -44,9 +47,9 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone') 
-            || WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')
-            || WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad');
+        return Utils::checkIfContains($userAgent, 'iPhone') 
+            || Utils::checkIfContains($userAgent, 'iPod')
+            || Utils::checkIfContains($userAgent, 'iPad');
     }
     
     /** 
@@ -57,12 +60,12 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
     public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = 0;
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Apple')) {
-            $tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, ' ', 3);
+        if(Utils::checkIfStartsWith($userAgent, 'Apple')) {
+            $tolerance = Utils::ordinalIndexOf($userAgent, ' ', 3);
         } else {
-            $tolerance = WURFL_Handlers_Utils::firstSemiColonOrLength($userAgent);
+            $tolerance = Utils::firstSemiColonOrLength($userAgent);
         }
-        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+        return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
     
     /**
@@ -72,10 +75,10 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
+        if(Utils::checkIfContains($userAgent, 'iPad')) {
             return 'apple_ipad_ver1';
         }
-        if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')) {
+        if(Utils::checkIfContains($userAgent, 'iPod')) {
             return 'apple_ipod_touch_ver1';
         }
         

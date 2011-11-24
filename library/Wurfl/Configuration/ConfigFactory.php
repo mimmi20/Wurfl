@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Configuration;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,23 +23,23 @@
  * Factory class for WURFL Configuration objects
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_ConfigFactory
+class ConfigFactory
 {
     /**
      * @param string $configFilePath
      * @throws InvalidArgumentException
-     * @return WURFL_Configuration_Config
+     * @return Config
      */
     public static function create($configFilePath)
     {
         if (!isset($configFilePath)) {
-            throw new InvalidArgumentException('The configuration file path $configFilePath is not set');
+            throw new \InvalidArgumentException('The configuration file path $configFilePath is not set');
         }
         if (self::_isXmlConfiguration($configFilePath)) {
-            return new WURFL_Configuration_XmlConfig($configFilePath);
+            return new XmlConfig($configFilePath);
         }
         
-        return new WURFL_Configuration_ArrayConfig($configFilePath);
+        return new ArrayConfig($configFilePath);
     
     }
     

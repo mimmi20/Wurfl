@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers\Matcher;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * WURFL user agent matcher interface
  * @package    WURFL_Handlers_Matcher
  */
-interface WURFL_Handlers_Matcher_Interface
+interface MatcherInterface
 {
     /**
      * Attempts to find a matching $needle in given $collection within the specified $tolerance

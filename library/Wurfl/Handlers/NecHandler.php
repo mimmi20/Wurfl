@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler
+class NecHandler extends Handler
 {
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {
@@ -42,7 +45,7 @@ class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'NEC-') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KGT');
+        return Utils::checkIfStartsWith($userAgent, 'NEC-') || Utils::checkIfStartsWith($userAgent, 'KGT');
     }
     
     /**
@@ -54,11 +57,11 @@ class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'NEC-')) {
-            $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-            return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
+        if(Utils::checkIfStartsWith($userAgent, 'NEC-')) {
+            $tollerance = Utils::firstSlash($userAgent);
+            return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
         }
-        return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::NEC_KGT_TOLLERANCE);
+        return Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::NEC_KGT_TOLLERANCE);
     }
     
     const NEC_KGT_TOLLERANCE = 2;

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Device Patcher patches an existing device with a new device
  * @package    WURFL_Xml
  */
-class WURFL_Xml_DevicePatcher
+class DevicePatcher
 {
     /**
      * Patch an existing $device with a $patchingDevice
@@ -33,8 +36,8 @@ class WURFL_Xml_DevicePatcher
         if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
         }
-        $groupIdCapabilitiesMap = WURFL_WURFLUtils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());    
-        return new WURFL_Xml_ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
+        $groupIdCapabilitiesMap = \Wurfl\WURFLUtils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());    
+        return new ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
     }
     
     /**
@@ -60,7 +63,7 @@ class WURFL_Xml_DevicePatcher
     {
         if (strcmp($patchingDevice->userAgent, $device->userAgent) !== 0) {
             $message = 'Patch Device : ' . $patchingDevice->id . ' can\'t override user agent ' . $device->userAgent . ' with ' . $patchingDevice->userAgent;
-            throw new WURFL_WURFLException($message);
+            throw new \Wurfl\WURFLException($message);
         }
     }
 }

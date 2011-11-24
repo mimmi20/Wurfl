@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Cache provider that uses APC for in-memory caching
  * @package    WURFL_Cache
  */
-class WURFL_Cache_APCCacheProvider implements WURFL_Cache_CacheProvider
+class APCCacheProvider implements CacheProvider
 {
     const EXTENSION_MODULE_NAME = 'apc';
     
@@ -35,7 +38,7 @@ class WURFL_Cache_APCCacheProvider implements WURFL_Cache_CacheProvider
     public function __construct($params=null)
     {
         $this->_ensureModuleExistance();
-        $this->expire = array_key_exists(WURFL_Cache_CacheProvider::EXPIRATION, $params) ? $params[WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
+        $this->expire = array_key_exists(CacheProvider::EXPIRATION, $params) ? $params[CacheProvider::EXPIRATION] : CacheProvider::NEVER;
     }
     
     public function get($key)
@@ -59,12 +62,12 @@ class WURFL_Cache_APCCacheProvider implements WURFL_Cache_CacheProvider
     
      /**
       * Ensures the existence of the the PHP Extension apc
-     * @throws WURFL_Xml_PersistenceProvider_Exception APC extension does not exist
+     * @throws \Wurfl\Xml\PersistenceProvider\Exception APC extension does not exist
      */
     private function _ensureModuleExistance() 
     {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension \'apc\' must be installed and loaded in order to use this cache provider');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('The PHP extension \'apc\' must be installed and loaded in order to use this cache provider');
         }
     }
 }

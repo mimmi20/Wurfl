@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Storage;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Memcache extends WURFL_Storage_Base
+class Memcache extends Base
 {
     const EXTENSION_MODULE_NAME = '_memcache';
 
@@ -59,7 +62,7 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
     final public function initialize()
     {
         $this->_ensureModuleExistence();
-        $this->_memcache = new Memcache();
+        $this->_memcache = new \Memcache();
         // sup_port multiple _hosts using semicolon to separate _hosts
         $_hosts = explode(';', $this->_host);
         // different _ports for each _hosts the same way
@@ -102,12 +105,12 @@ class WURFL_Storage_Memcache extends WURFL_Storage_Base
 
     /**
      * Ensures the existence of the the PHP Extension _memcache
-     * @throws WURFL_Xml_PersistenceProvider_Exception required extension is unavailable
+     * @throws \Wurfl\Xml\PersistenceProvider\Exception required extension is unavailable
      */
     private function _ensureModuleExistence()
     {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension _memcache must be installed and loaded in order to use the Memcached.');
+            throw new \Wurfl\Xml\PersistenceProvider\Exception('The PHP extension _memcache must be installed and loaded in order to use the Memcached.');
         }
     }
 

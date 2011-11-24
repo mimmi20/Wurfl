@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -10,30 +13,20 @@
  * Refer to the COPYING file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL_Storage
+ * @package    WURFL_Request_UserAgentNormalizer
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
 /**
- * WURFL Storage
- * @package    WURFL_Storage
+ * Null User Agent Normalizer - does not normalize anything
+ * @package    WURFL_Request_UserAgentNormalizer
  */
-class WURFL_Storage_Null extends WURFL_Storage_Base
+class NullNormalizer implements NormalizerInterface
 {
-    public function load($key)
+    public function normalize($userAgent)
     {
-        return NULL;
-    }
-
-    public function save($key, $value, $expire = 0)
-    {
-        //
-    }
-
-    public function clear()
-    {
-        //
+        return $userAgent;
     }
 }

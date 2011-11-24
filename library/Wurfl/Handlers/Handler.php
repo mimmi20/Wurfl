@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -17,7 +20,7 @@
  */
 
 /**
- * WURFL_Handlers_Handler is the base class that combines the classification of
+ * Handler is the base class that combines the classification of
  * the user agents and the matching process.
  *
  * @category   WURFL
@@ -26,11 +29,11 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Handlers_Matcher {
+abstract class Handler implements Filter, Matcher {
     
     /**
      * The next User Agent Handler
-     * @var WURFL_Handlers_Handler
+     * @var Handler
      */
     private $nextHandler;
     
@@ -85,7 +88,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     /**
      * Sets the next Handler
      *
-     * @param WURFL_Handlers_UserAgentHandler $handler
+     * @param UserAgentHandler $handler
      */
     public function setNextHandler($handler)
     {
@@ -205,7 +208,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
             return $this->nextHandler->match($request);
         }
         
-        return WURFL_Constants::GENERIC;
+        return \Wurfl\Constants::GENERIC;
     }
     
     /**
@@ -247,7 +250,7 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
         }
         
         if($this->isBlankOrGeneric($deviceID)) {
-            $deviceID = WURFL_Constants::GENERIC;
+            $deviceID = \Wurfl\Constants::GENERIC;
         }
         
         $this->logger->debug('END: Matching For  ' . $userAgent);
@@ -286,21 +289,21 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
      */
     public function lookForMatchingUserAgent($userAgent)
     {
-        $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
+        $tollerance = Utils::firstSlash($userAgent);
+        return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
     }
     
     /**
-     * Alias for WURFL_Handlers_Utils::risMatch()
+     * Alias for Utils::risMatch()
      * @param srray $userAgetsList
      * @param string $target
      * @param int $tollerance
-     * @see WURFL_Handlers_Utils::risMatch()
-     * @see WURFL_Handlers_Matcher_RISMatcher::match()
+     * @see Utils::risMatch()
+     * @see Matcher_RISMatcher::match()
      */
     private function applyRisWithTollerance($userAgetsList, $target, $tollerance)
     {
-        return WURFL_Handlers_Utils::risMatch($userAgetsList, $target, $tollerance);
+        return Utils::risMatch($userAgetsList, $target, $tollerance);
     }
     
     /**
@@ -321,12 +324,12 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
     public function applyRecoveryCatchAllMatch($userAgent)
     {
         foreach($this->catchAllIds as $key => $deviceId) {
-            if(WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
+            if(Utils::checkIfContains($userAgent, $key)) {
                 return $deviceId;
             }
         }
         
-        return WURFL_Constants::GENERIC;
+        return \Wurfl\Constants::GENERIC;
     }
     
     public function getPrefix()
@@ -391,15 +394,15 @@ abstract class WURFL_Handlers_Handler implements WURFL_Handlers_Filter, WURFL_Ha
             'Mozilla/5.0' => 'generic_web_browser',
 
             // Generic XHTML
-            'Mozilla/' => WURFL_Constants::GENERIC_XHTML,
-            'ObigoInternetBrowser/Q03C'=> WURFL_Constants::GENERIC_XHTML,
-               'AU-MIC/2'=> WURFL_Constants::GENERIC_XHTML,
-            'AU-MIC-'=>  WURFL_Constants::GENERIC_XHTML,
-            'AU-OBIGO/'=>  WURFL_Constants::GENERIC_XHTML,
-            'Obigo/Q03'=>  WURFL_Constants::GENERIC_XHTML,
-            'Obigo/Q04' =>  WURFL_Constants::GENERIC_XHTML,
-            'ObigoInternetBrowser/2'=>  WURFL_Constants::GENERIC_XHTML,
-            'Teleca Q03B1'=>  WURFL_Constants::GENERIC_XHTML,
+            'Mozilla/' => \Wurfl\Constants::GENERIC_XHTML,
+            'ObigoInternetBrowser/Q03C'=> \Wurfl\Constants::GENERIC_XHTML,
+               'AU-MIC/2'=> \Wurfl\Constants::GENERIC_XHTML,
+            'AU-MIC-'=>  \Wurfl\Constants::GENERIC_XHTML,
+            'AU-OBIGO/'=>  \Wurfl\Constants::GENERIC_XHTML,
+            'Obigo/Q03'=>  \Wurfl\Constants::GENERIC_XHTML,
+            'Obigo/Q04' =>  \Wurfl\Constants::GENERIC_XHTML,
+            'ObigoInternetBrowser/2'=>  \Wurfl\Constants::GENERIC_XHTML,
+            'Teleca Q03B1'=>  \Wurfl\Constants::GENERIC_XHTML,
 
 
             // Opera Mini

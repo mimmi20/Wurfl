@@ -53,13 +53,13 @@ class WURFL_Xml_PersistenceProvider_PersistenceProviderManager
         $persistenceParams = isset($persistenceConfig['params']) ? $persistenceConfig['params'] : array();
         
         switch ($provider) {
-            case WURFL_Constants::MEMCACHE:
+            case Constants::MEMCACHE:
                 self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider($persistenceParams);
                 break;
-            case WURFL_Constants::APC:
+            case Constants::APC:
                 self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_APCPersistenceProvider($persistenceParams);
                 break;
-            case WURFL_Constants::MYSQL:
+            case Constants::MYSQL:
                 self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_MysqlPersistenceProvider($persistenceParams);
                 break;
             case WURFL_Xml_PersistenceProvider_InMemoryPersistenceProvider::IN_MEMORY:

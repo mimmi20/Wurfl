@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer - returns the substring starting from "BlackBerry"
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry implements WURFL_Request_UserAgentNormalizer_Interface
+class BlackBerry implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     public function normalize($userAgent)
     {

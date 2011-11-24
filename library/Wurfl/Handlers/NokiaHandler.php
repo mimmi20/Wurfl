@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
+class NokiaHandler extends Handler
 {
     protected $prefix = 'NOKIA';
     
@@ -44,7 +47,7 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia');
+        return Utils::checkIfContains($userAgent, 'Nokia');
     }
     
     /**
@@ -58,7 +61,7 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
     public function lookForMatchingUserAgent($userAgent)
     {
         //$tolerance = WU
-        $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+        $tolerance = Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
         $userAgents = array_keys($this->userAgentsWithDeviceID);
         return parent::applyRisWithTollerance($userAgents, $userAgent, $tolerance);
     
@@ -83,7 +86,7 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler
             }
         }
         
-        return WURFL_Constants::GENERIC;
+        return Constants::GENERIC;
     }
 
 }

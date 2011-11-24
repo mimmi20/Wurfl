@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Cache provider to prevent caching
  * @package    WURFL_Cache
  */
-class WURFL_Cache_NullCacheProvider implements WURFL_Cache_CacheProvider
+class NullCacheProvider implements CacheProvider
 {
     public function get($key)
     {

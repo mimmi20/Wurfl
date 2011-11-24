@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -21,7 +24,7 @@
  * @package    WURFL
  * @see WURFL_Handlers_Handler
  */
-class WURFL_UserAgentHandlerChain
+class UserAgentHandlerChain
 {
     /**
      * @var array of WURFL_Handlers_Handler objects
@@ -34,7 +37,7 @@ class WURFL_UserAgentHandlerChain
      * @param WURFL_UserAgentHandler_Interface $handler
      * @return WURFL_UserAgentHandlerChain $this
      */
-    public function addUserAgentHandler(WURFL_Handlers_Handler $handler)
+    public function addUserAgentHandler(\Wurfl\Handlers\Handler $handler)
     {
         $size = sizeof($this->_userAgentHandlers); 
         if ($size > 0) {
@@ -72,7 +75,7 @@ class WURFL_UserAgentHandlerChain
      * @param WURFL_Request_GenericRequest $request
      * @return String deviceID
      */
-    public function match(WURFL_Request_GenericRequest $request)
+    public function match(\Wurfl\Request\GenericRequest $request)
     {
         return $this->_userAgentHandlers[0]->match($request);
     }

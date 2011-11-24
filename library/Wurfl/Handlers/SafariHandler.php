@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
+class SafariHandler extends Handler
 {
     protected $prefix = 'SAFARI';
     
@@ -43,11 +46,11 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+        if(Utils::isMobileBrowser($userAgent)) {
             return false;
         }
         
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari');
+        return Utils::checkIfContains($userAgent, 'Safari');
     }
     
     public function lookForMatchingUserAgent($userAgent)
@@ -89,13 +92,13 @@ class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler
     const SAFARI_VERSION_PATTERN_EXT = '/.*Safari\/(\d{2})\d{2}\..*/';
     private function safariVersion($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') 
-            && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari') 
+        if(Utils::checkIfStartsWith($userAgent, 'Mozilla') 
+            && Utils::checkIfContains($userAgent, 'Safari') 
             && preg_match(self::SAFARI_VERSION_PATTERN, $userAgent, $match)
 ) {
             return $match[1];
         }
-        if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari') 
+        if(Utils::checkIfContains($userAgent, 'Safari') 
             && preg_match(self::SAFARI_VERSION_PATTERN_EXT, $userAgent, $match)
 ) {
             return $match[1];

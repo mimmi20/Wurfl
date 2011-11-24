@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_PantechHandler extends WURFL_Handlers_Handler
+class PantechHandler extends Handler
 {
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {
@@ -42,7 +45,7 @@ class WURFL_Handlers_PantechHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Pantech') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'PANTECH') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'PT-') || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'PG-');
+        return Utils::checkIfStartsWith($userAgent, 'Pantech') || Utils::checkIfStartsWith($userAgent, 'PANTECH') || Utils::checkIfStartsWith($userAgent, 'PT-') || Utils::checkIfStartsWith($userAgent, 'PG-');
     }
     
     /**
@@ -54,11 +57,11 @@ class WURFL_Handlers_PantechHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Pantech')) {
-            return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::PANTECH_TOLLERANCE);
+        if(Utils::checkIfStartsWith($userAgent, 'Pantech')) {
+            return Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::PANTECH_TOLLERANCE);
         }
-        $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
+        $tollerance = Utils::firstSlash($userAgent);
+        return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
     
     }
     

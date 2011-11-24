@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_IronHandler extends WURFL_Handlers_Handler
+class IronHandler extends Handler
 {
     protected $prefix = 'IRON';
     
@@ -43,10 +46,10 @@ class WURFL_Handlers_IronHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+        if(Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Iron');
+        return Utils::checkIfContains($userAgent, 'Iron');
     }
     
     private $chromes = array(

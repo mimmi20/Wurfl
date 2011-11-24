@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
+class BotCrawlerTranscoderHandler extends Handler
 {
     protected $prefix = 'BOT_CRAWLER_TRANSCODER';
     
@@ -43,7 +46,7 @@ class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent) {
         foreach($this->botCrawlerTranscoder as $key) {
-            if(WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
+            if(Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
                 return true;
             }
         }

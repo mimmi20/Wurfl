@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler
+class RockmeltHandler extends Handler
 {
     protected $prefix = 'ROCKMELT';
     
@@ -43,11 +46,11 @@ class WURFL_Handlers_RockmeltHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+        if(Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'RockMelt')
-            && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Chrome');
+        return Utils::checkIfContains($userAgent, 'RockMelt')
+            && Utils::checkIfContains($userAgent, 'Chrome');
     }
     
     private $chromes = array(

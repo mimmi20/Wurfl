@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler
+class WindowsCEHandler extends Handler
 {
     protected $prefix = 'WINDOWS_CE';
     const TOLLERANCE = 3;
@@ -45,7 +48,7 @@ class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent) 
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mozilla/') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows CE');
+        return Utils::checkIfContains($userAgent, 'Mozilla/') && Utils::checkIfContains($userAgent, 'Windows CE');
     }
     
     /**
@@ -56,7 +59,7 @@ class WURFL_Handlers_WindowsCEHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent) 
     {
-        return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::TOLLERANCE);
+        return Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::TOLLERANCE);
     }
     
     /**

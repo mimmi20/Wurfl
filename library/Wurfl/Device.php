@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * A WURFL Device including methods to access its capabilities
  * @package    WURFL
  */
-class WURFL_Device
+class Device
 {
     /**
      * @var WURFL_Xml_ModelDevice
@@ -59,13 +62,13 @@ class WURFL_Device
                     return $this->_modelDevice->$name;
                 break;
                 default:
-                    throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
+                    throw new WURFLException('the field ' . $name . ' is not defined');
                 break;
             }
             
         }
 
-        throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
+        throw new WURFLException('the field ' . $name . ' is not defined');
     }
     
     /**
@@ -79,7 +82,7 @@ class WURFL_Device
     public function getCapability($capabilityName)
     {
         if (!isset($capabilityName)) {
-            throw new InvalidArgumentException('capability name must not be null');
+            throw new \InvalidArgumentException('capability name must not be null');
         }
         
         return $this->_capabilitiesHolder->getCapability($capabilityName);

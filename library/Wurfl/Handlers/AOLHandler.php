@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_AOLHandler extends WURFL_Handlers_Handler
+class AOLHandler extends Handler
 {
     protected $prefix = 'AOL';
     
@@ -45,12 +48,12 @@ class WURFL_Handlers_AOLHandler extends WURFL_Handlers_Handler
      * @return boolean
      */
     public function canHandle($userAgent) {
-        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent))
+        if(Utils::isMobileBrowser($userAgent))
         {
             return false;
         }
         
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'AOL');
+        return Utils::checkIfContains($userAgent, 'AOL');
     }
     
     /**
@@ -59,7 +62,7 @@ class WURFL_Handlers_AOLHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent)
     {
-        return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::AOL_LD_TOLLERANCE);
+        return Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::AOL_LD_TOLLERANCE);
     }
 
 }

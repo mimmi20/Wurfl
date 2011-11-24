@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Represents a device in the wurfl xml file
  * @package    WURFL_Xml
  */
-class WURFL_Xml_ModelDevice
+class ModelDevice
 {
 
     /**
@@ -72,8 +75,8 @@ class WURFL_Xml_ModelDevice
         
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
-                $this->groupIdCapabilitiesNameMap[$groupId] = array_keys($capabilitiesNameValue); 
-                $this->capabilities = array_merge($this->capabilities, $capabilitiesNameValue);
+                $this->_groupIdCapabilitiesNameMap[$groupId] = array_keys($capabilitiesNameValue); 
+                $this->_capabilities = array_merge($this->_capabilities, $capabilitiesNameValue);
             }
             
         }

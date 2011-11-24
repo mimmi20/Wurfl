@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Configuration;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,10 +23,10 @@
  * WURFL Configuration holder
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_ConfigHolder
+class ConfigHolder
 {
     /**
-     * @var WURFL_Configuration_Config
+     * @var Config
      */
     private static $_wurflConfig = null;
     
@@ -39,12 +42,12 @@ class WURFL_Configuration_ConfigHolder
     
     /**
      * Returns a Configuration object
-     * @return WURFL_Configuration_Config
+     * @return Config
      */
     public static function getWURFLConfig()
     {
         if (null === self::$_wurflConfig) {
-            throw new WURFL_WURFLException('The Configuration Holder is not initialized with a valid WURFLConfig object');
+            throw new \WURFL\WURFLException('The Configuration Holder is not initialized with a valid WURFLConfig object');
         }
         
         return self::$_wurflConfig;
@@ -52,9 +55,9 @@ class WURFL_Configuration_ConfigHolder
     
     /**
      * Sets the Configuration object
-     * @param WURFL_Configuration_Config $wurflConfig
+     * @param Config $wurflConfig
      */
-    public static function setWURFLConfig(WURFL_Configuration_Config $wurflConfig)
+    public static function setWURFLConfig(Config $wurflConfig)
     {
         self::$_wurflConfig = $wurflConfig;
     }

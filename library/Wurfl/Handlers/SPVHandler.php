@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler
+class SPVHandler extends Handler
 {
     protected $prefix = 'SPV';
     
@@ -43,12 +46,12 @@ class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'SPV');
+        return Utils::checkIfContains($userAgent, 'SPV');
     }
     
     public function lookForMatchingUserAgent($userAgent)
     {
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
+        $tolerance = Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
         return parent::applyRisWithTollerance(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
     

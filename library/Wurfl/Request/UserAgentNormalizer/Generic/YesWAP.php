@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer - removes YesWAP garbage from user agent
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_YesWAP implements WURFL_Request_UserAgentNormalizer_Interface
+class YesWAP implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     const YES_WAP_REGEX = '/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)';
     

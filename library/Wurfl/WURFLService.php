@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -21,7 +24,7 @@
  * WURFL Service
  * @package    WURFL
  */
-class WURFL_WURFLService
+class WURFLService
 {
     /**
      * @var WURFL_DeviceRepository
@@ -36,7 +39,7 @@ class WURFL_WURFLService
      */
     private $_cacheProvider;
     
-    public function __construct(WURFL_DeviceRepository $deviceRepository, WURFL_UserAgentHandlerChain $userAgentHandlerChain, WURFL_Storage $cacheProvider)
+    public function __construct(DeviceRepository $deviceRepository, UserAgentHandlerChain $userAgentHandlerChain, Storage $cacheProvider)
     {
         $this->_deviceRepository = $deviceRepository;
         $this->_userAgentHandlerChain = $userAgentHandlerChain;
@@ -59,7 +62,7 @@ class WURFL_WURFLService
      * @param WURFL_Request_GenericRequest $request
      * @return WURFL_CustomDevice
      */
-    public function getDeviceForRequest(WURFL_Request_GenericRequest $request)
+    public function getDeviceForRequest(Request\GenericRequest $request)
     {
         $deviceId = $this->_deviceIdForRequest($request);
         return $this->_getWrappedDevice($deviceId);
@@ -137,7 +140,7 @@ class WURFL_WURFLService
     private function _getWrappedDevice($deviceID)
     {
         $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
-        return new WURFL_CustomDevice($modelDevices);
+        return new CustomDevice($modelDevices);
         //return new WURFL_Device($modelDevice, new WURFL_CapabilitiesHolder($modelDevice, $this->_deviceRepository, $this->_cacheProvider));
     }
 }

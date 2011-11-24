@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,14 +29,14 @@
  * @category   WURFL
  * @package    WURFL_Cache
  */
-class WURFL_Cache_EAcceleratorCacheProvider implements WURFL_Cache_CacheProvider
+class EAcceleratorCacheProvider implements CacheProvider
 {
     private $_expire;
     
     public function __construct($params)
     {
         if (is_array($params)) {
-            $this->_expire = isset($params[WURFL_Cache_CacheProvider::EXPIRATION]) ? $params[WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
+            $this->_expire = isset($params[CacheProvider::EXPIRATION]) ? $params[CacheProvider::EXPIRATION] : CacheProvider::NEVER;
         }
     }
     

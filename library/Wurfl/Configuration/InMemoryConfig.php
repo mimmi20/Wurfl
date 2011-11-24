@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Configuration;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * In-memory WURFL Configuration
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config
+class InMemoryConfig extends Config
 {
     /**
      * Instantiate an In-Memory Configuration

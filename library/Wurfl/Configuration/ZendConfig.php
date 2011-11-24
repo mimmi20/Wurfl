@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Configuration;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * XML Configuration
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig 
+class ZendConfig extends ArrayConfig 
 {
     private $_config = null;
     
@@ -31,7 +34,7 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     {
         $config = $configFilePath;
         
-        if ($config instanceof Zend_Config) {
+        if ($config instanceof \Zend\Config) {
             //throw new InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
             
             $config = $config->toArray();
@@ -39,13 +42,13 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
         
         $this->_config = $config;
         
-        $this->_initialize();
+        $this->initialize();
     }
 
     /**
      * Initialize XML Configuration
      */
-    private function _initialize() 
+    protected function initialize() 
     {
         $this->_init($this->_config);
     }
@@ -53,34 +56,34 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     private function _init($configuration) 
     {
         
-        if (array_key_exists(WURFL_Configuration_Config::WURFL, $configuration)) {
-            $this->_setWurflConfiguration($configuration[WURFL_Configuration_Config::WURFL]);
+        if (array_key_exists(Config::WURFL, $configuration)) {
+            $this->_setWurflConfiguration($configuration[Config::WURFL]);
         }
         
-        if (array_key_exists(WURFL_Configuration_Config::PERSISTENCE, $configuration)) {
-            $this->_setPersistenceConfiguration($configuration[WURFL_Configuration_Config::PERSISTENCE]);
+        if (array_key_exists(Config::PERSISTENCE, $configuration)) {
+            $this->_setPersistenceConfiguration($configuration[Config::PERSISTENCE]);
         }
         
-        if (array_key_exists(WURFL_Configuration_Config::CACHE, $configuration)) {
-            $this->_setCacheConfiguration($configuration[WURFL_Configuration_Config::CACHE]);
+        if (array_key_exists(Config::CACHE, $configuration)) {
+            $this->_setCacheConfiguration($configuration[Config::CACHE]);
         }
         
-        if (array_key_exists(WURFL_Configuration_Config::LOG_DIR, $configuration)) {
-            $this->_setLogDirConfiguration($configuration[WURFL_Configuration_Config::LOG_DIR]);
+        if (array_key_exists(Config::LOG_DIR, $configuration)) {
+            $this->_setLogDirConfiguration($configuration[Config::LOG_DIR]);
         }
 
-        $this->allowReload = array_key_exists(WURFL_Configuration_Config::ALLOW_RELOAD, $configuration)
-                ? $configuration[WURFL_Configuration_Config::ALLOW_RELOAD] : false; 
+        $this->allowReload = array_key_exists(Config::ALLOW_RELOAD, $configuration)
+                ? $configuration[Config::ALLOW_RELOAD] : false; 
     }
     
     private function _setWurflConfiguration(array $wurflConfig) 
     {
-        if (array_key_exists(WURFL_Configuration_Config::MAIN_FILE, $wurflConfig)) {
-            $this->_wurflFile = parent::getFullPath($wurflConfig[WURFL_Configuration_Config::MAIN_FILE]);
+        if (array_key_exists(Config::MAIN_FILE, $wurflConfig)) {
+            $this->_wurflFile = parent::getFullPath($wurflConfig[Config::MAIN_FILE]);
         }
         
-        if (array_key_exists(WURFL_Configuration_Config::PATCHES, $wurflConfig)) {
-            foreach($wurflConfig[WURFL_Configuration_Config::PATCHES] as $wurflPatch) {
+        if (array_key_exists(Config::PATCHES, $wurflConfig)) {
+            foreach($wurflConfig[Config::PATCHES] as $wurflPatch) {
                 $this->_wurflPatches[] = parent::getFullPath($wurflPatch);
             }
         }        
@@ -89,8 +92,8 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     private function _setPersistenceConfiguration(array $persistenceConfig) 
     {
         $this->persistence = $persistenceConfig;
-        if (array_key_exists('params', $this->persistence) && array_key_exists(WURFL_Configuration_Config::DIR, $this->persistence['params'])) {
-            $this->_persistence['params'][WURFL_Configuration_Config::DIR] = parent::getFullPath($this->persistence['params'][WURFL_Configuration_Config::DIR]);
+        if (array_key_exists('params', $this->persistence) && array_key_exists(Config::DIR, $this->persistence['params'])) {
+            $this->_persistence['params'][Config::DIR] = parent::getFullPath($this->persistence['params'][Config::DIR]);
         }
     }
 
@@ -102,7 +105,7 @@ class WURFL_Configuration_ZendConfig extends WURFL_Configuration_ArrayConfig
     private function _setLogDirConfiguration($logDir) 
     {
         if (!is_writable($logDir)) {
-            throw new InvalidArgumentException('log dir ' . $logDir . ' must exist and be writable');
+            throw new \InvalidArgumentException('log dir ' . $logDir . ' must exist and be writable');
         }
         $this->_logDir = $logDir;
     }

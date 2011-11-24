@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -17,7 +20,7 @@
  * @version    $id$
  */
 /**
- * WURFL_Handlers_Filter is the base interface that concrete classes
+ * Filter is the base interface that concrete classes
  * must implement to classify the devices by user agent and then persist
  * the resulting datastructures.
  *
@@ -28,7 +31,7 @@
  * @version    $id$
  */
 
-interface WURFL_Handlers_Filter
+interface Filter
 {
 
     /**

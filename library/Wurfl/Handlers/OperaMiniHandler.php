@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
+class OperaMiniHandler extends Handler {
 
     protected $prefix = 'OPERA_MINI';
 
@@ -43,7 +46,7 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mini');
+        return Utils::checkIfContains($userAgent, 'Opera Mini');
     }
 
     private $operaMinis = array(
@@ -57,12 +60,12 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
     public function applyRecoveryMatch($userAgent)
     {
         foreach($this->operaMinis as $key => $deviceId) {
-            if(WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
+            if(Utils::checkIfContains($userAgent, $key)) {
                 return $deviceId;
             }
         }
 
-        return WURFL_Constants::GENERIC;
+        return Constants::GENERIC;
 
     }
 

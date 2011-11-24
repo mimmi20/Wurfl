@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * WURFL XML Utilities Static Class
  * @package    WURFL_Xml
  */
-class WURFL_Xml_Utils
+class Utils
 {
     // 
     private function __construct()
@@ -54,17 +57,17 @@ class WURFL_Xml_Utils
     private static function _getZippedFile($filename)
     {
         if (!self::_zipModuleLoaded()) {
-            throw new WURFL_WURFLException('The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file');
+            throw new \Wurfl\WURFLException('The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file');
         }
         $tmpDir = sys_get_temp_dir();
-        $zip = new ZipArchive();
+        $zip = new \ZipArchive();
 
         if ($zip->open($filename) !== true) {
-            throw new WURFL_WURFLException('The Zip file <' . $filename . '> could not be opened');
+            throw new \Wurfl\WURFLException('The Zip file <' . $filename . '> could not be opened');
         }
 
         $zippedFile = $zip->statIndex(0);
-        $wurflFile = $zippedFile['name'];
+        $wurflFile  = $zippedFile['name'];
         
         //$wurflFile = md5(uniqid(rand(), true)); 
         //$zip->extractTo($tmpDir, $wurflFile);
@@ -91,6 +94,6 @@ class WURFL_Xml_Utils
      */
     private static function _zipModuleLoaded()
     {
-        return class_exists('ZipArchive');
+        return class_exists('\\ZipArchive');
     }
 }

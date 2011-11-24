@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * WURFL related utilities
  * @package    WURFL
  */
-class WURFL_WURFLUtils
+class WURFLUtils
 {
     /**
      * returns the User Agent From $request or empty string if not found one
@@ -29,8 +32,8 @@ class WURFL_WURFLUtils
      */
     public static function getUserAgent($request)
     {
-        if (isset($request[WURFL_Constants::UA])) {
-            return $request[WURFL_Constants::UA];
+        if (isset($request[Constants::UA])) {
+            return $request[Constants::UA];
         }        
 
         if (isset($request['HTTP_X_DEVICE_USER_AGENT'])) {
@@ -87,9 +90,9 @@ class WURFL_WURFLUtils
         
         $accept = $request['accept'];
         if (isset($accept)) {
-            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
-                || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
-                || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
+            if ((strpos($accept, Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
+                || (strpos($accept, Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
+                || (strpos($accept, Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
             ) {
                 return true;;
             }
@@ -106,7 +109,7 @@ class WURFL_WURFLUtils
      */
     public static function isGeneric($deviceID)
     {
-        if (strcmp($deviceID, WURFL_Constants::GENERIC) === 0) {
+        if (strcmp($deviceID, Constants::GENERIC) === 0) {
             return true;
         }
         return false;

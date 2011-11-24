@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MaemoBrowserHandler extends WURFL_Handlers_Handler {
+class MaemoBrowserHandler extends Handler {
 
     protected $prefix = 'MaemoBrowser';
 
@@ -42,12 +45,12 @@ class WURFL_Handlers_MaemoBrowserHandler extends WURFL_Handlers_Handler {
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Maemo');
+        return Utils::checkIfContains($userAgent, 'Maemo');
     }
 
     public function lookForMatchingUserAgent($userAgent)
     {
-         $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
+         $tolerance = Utils::firstSpace($userAgent);
         return parent::applyRisWithTollerance(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
 

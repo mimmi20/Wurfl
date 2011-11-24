@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  *         Mozilla/5.0(Macintosh Safari/525
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface
+class Safari implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     const PATTERN = '/(Mozilla\/5\.0.*U;)(?:.*)(Version\/\d+\.\d+)(?:.*)(Safari\/\d{1,4}\.\d)(?:.*)/';
 

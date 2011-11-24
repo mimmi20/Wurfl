@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -18,14 +21,14 @@
  */
 
 /**
- * WURFL_Cache_CacheProvider is the base interface for any type of caching implementation.
+ * CacheProvider is the base interface for any type of caching implementation.
  * It provides an API that allows storing and retrieving resources.
  *
  *
  * @category   WURFL
  * @package    WURFL_Cache
  */
-interface WURFL_Cache_CacheProvider
+interface CacheProvider
 {
     /**
      * @var string Key for storing the expiration

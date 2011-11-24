@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Storage;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -28,7 +31,7 @@
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-abstract class WURFL_Storage_Base implements WURFL_Storage
+abstract class Base implements \Wurfl\Storage
 {
     const APPLICATION_PREFIX = 'WURFL_';
     const WURFL_LOADED = 'WURFL_WURFL_LOADED';

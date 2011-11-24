@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
+class KDDIHandler extends Handler
 {
     protected $prefix = 'KDDI';
     
@@ -44,7 +47,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'KDDI');
+        return Utils::checkIfContains($userAgent, 'KDDI');
     }
     
     /**
@@ -52,7 +55,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
     public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = $this->tolerance($userAgent);
-        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+        return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
     
     /**
@@ -62,7 +65,7 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera')) {
+        if(Utils::checkIfContains($userAgent, 'Opera')) {
             return 'opera';
         }
         return 'opwv_v62_generic';
@@ -70,15 +73,15 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler
     
     private function tolerance($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
-            return WURFL_Handlers_Utils::secondSlash($userAgent);
+        if(Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
+            return Utils::secondSlash($userAgent);
         }
         
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI')) {
-            return WURFL_Handlers_Utils::firstSlash($userAgent);
+        if(Utils::checkIfStartsWith($userAgent, 'KDDI')) {
+            return Utils::firstSlash($userAgent);
         }
         
-        return WURFL_Handlers_Utils::indexOfOrLength($userAgent, ')');
+        return Utils::indexOfOrLength($userAgent, ')');
     
     }
 

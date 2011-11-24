@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer - removes UP.Link garbage from user agent
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_UPLink implements WURFL_Request_UserAgentNormalizer_Interface
+class UPLink implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     /**
      * This method remove the "UP.Link" substring from user agent string.

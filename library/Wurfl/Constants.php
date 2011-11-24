@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * WURFL PHP API Constants
  * @package    WURFL
  */
-class WURFL_Constants
+class Constants
 {
     private function __construct()
     {

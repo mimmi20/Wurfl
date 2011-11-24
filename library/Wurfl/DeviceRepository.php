@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * Provides methods for accessing a repository of WURFL Devices
  * @package    WURFL
  */
-interface WURFL_DeviceRepository
+interface DeviceRepository
 {
     /**
      * Return a WURFL_Xml_Info object containing: 

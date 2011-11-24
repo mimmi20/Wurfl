@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer - removes Novarra garbage from user agent
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator implements WURFL_Request_UserAgentNormalizer_Interface
+class NovarraGoogleTranslator implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     const NOVARRA_GOOGLE_TRANSLATOR_PATTERN = '/(\sNovarra-Vision.*)|(,gzip\(gfe\)\s+\(via translate.google.com\))/';
     

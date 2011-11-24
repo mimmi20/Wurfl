@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Logger;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * 
  * @package    WURFL_Logger
  */
-class WURFL_Logger_LoggerFactory
+class LoggerFactory
 {
     /**
      * Create Logger for undetected devices with filename undetected_devices.log
@@ -32,7 +35,7 @@ class WURFL_Logger_LoggerFactory
         if (self::_isLoggingConfigured($wurflConfig)) {
             return self::createFileLogger($wurflConfig, 'undetected_devices.log');
         }
-        return new WURFL_Logger_NullLogger();
+        return new NullLogger();
     }
     
     /**
@@ -45,7 +48,7 @@ class WURFL_Logger_LoggerFactory
         if (self::_isLoggingConfigured($wurflConfig)) {
             return self::createFileLogger($wurflConfig, 'wurfl.log');
         }
-        return new WURFL_Logger_NullLogger();                
+        return new NullLogger();                
     }
     
     /**
@@ -57,7 +60,7 @@ class WURFL_Logger_LoggerFactory
     static public function createFileLogger($wurflConfig, $fileName)
     {
         $logFileName = self::_createLogFile($wurflConfig->logDir, $fileName);
-        return new WURFL_Logger_FileLogger($logFileName);
+        return new FileLogger($logFileName);
     }
     
     /**

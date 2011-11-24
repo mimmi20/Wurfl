@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
+class AndroidHandler extends Handler
 {
     protected $prefix = 'ANDROID';
     
@@ -44,7 +47,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
+        return Utils::checkIfContains($userAgent, 'Android');
     }
     
     /**
@@ -54,7 +57,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent)
     {
-        $tollerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' ', strpos($userAgent, 'Android'));
+        $tollerance = Utils::indexOfOrLength($userAgent, ' ', strpos($userAgent, 'Android'));
         $userAgents = array_keys($this->userAgentsWithDeviceID);
         return parent::applyRisWithTollerance($userAgents, $userAgent, $tollerance);
     }

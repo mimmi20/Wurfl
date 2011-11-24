@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * WURFL Context stores the persistence provider, cache provider and _logger objects
  * @package    WURFL
  */
-class WURFL_Context
+class Context
 {
     /**
      * @var WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
@@ -39,18 +42,18 @@ class WURFL_Context
     public function __construct($persistenceProvider, $cacheProvider = null, $logger = null)
     {
         $this->_persistenceProvider = $persistenceProvider;
-        $this->_cacheProvider = is_null($cacheProvider) ? new WURFL_Cache_NullCacheProvider() : $cacheProvider;
-        $this->_logger = is_null($logger) ? new WURFL_Logger_NullLogger() : $logger;
+        $this->_cacheProvider = is_null($cacheProvider) ? new \Wurfl\Cache\NullCacheProvider() : $cacheProvider;
+        $this->_logger = is_null($logger) ? new \Wurfl\Logger\NullLogger() : $logger;
     }
     
     public function cacheProvider($cacheProvider)
     {
-        return new WURFL_Context($this->_persistenceProvider, $cacheProvider, $this->_logger);
+        return new self($this->_persistenceProvider, $cacheProvider, $this->_logger);
     }
     
-    public function logger($_logger)
+    public function logger($logger)
     {
-        return new WURFL_Context($this->_persistenceProvider, $this->_cacheProvider, $logger);
+        return new self($this->_persistenceProvider, $this->_cacheProvider, $logger);
     }
     
     public function __get($name)

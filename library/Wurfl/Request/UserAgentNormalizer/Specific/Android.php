@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * User Agent Normalizer - Trims the version number to two digits(e.g. 2.1.1 -> 2.1)
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Request_UserAgentNormalizer_Interface
+class Android implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     const ANDROID_OS_VERSION = '/(Android[\s\/]\d.\d)(.*?;)/';
     

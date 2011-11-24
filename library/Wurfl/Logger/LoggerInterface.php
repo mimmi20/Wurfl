@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Logger;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * 
  * @package    WURFL_Logger
  */
-interface WURFL_Logger_Interface
+interface LoggerInterface
 {
     /**
      * Send specified $message to the log with INFO level

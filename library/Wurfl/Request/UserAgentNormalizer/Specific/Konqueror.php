@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -22,7 +25,7 @@
  *     Mozilla/5.0(compatible; Konqueror/4.1; Linux) KHTML/4.1.2(like Gecko) -> Konqueror/4
  * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Konqueror implements WURFL_Request_UserAgentNormalizer_Interface
+class Konqueror implements \Wurfl\Request\UserAgentNormalizer\NormalizerInterface
 {
     const KONQUEROR = 'Konqueror';
     

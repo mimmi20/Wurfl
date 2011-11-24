@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -28,7 +31,7 @@
  * @version    $id$
  */
 
-class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
+class BlackBerryHandler extends Handler
 {
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {
@@ -43,7 +46,7 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'BlackBerry') || WURFL_Handlers_Utils::checkIfContains($userAgent, 'Blackberry');
+        return Utils::checkIfContains($userAgent, 'BlackBerry') || Utils::checkIfContains($userAgent, 'Blackberry');
     }
     
     private $blackberryIds = array(
@@ -74,15 +77,15 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler
     {
         $version = $this->blackberryVersion($userAgent);
         if(is_null($version)) {
-            return WURFL_Constants::GENERIC;
+            return Constants::GENERIC;
         }
         foreach($this->blackberryIds as $v => $deviceId) {
-            if(WURFL_Handlers_Utils::checkIfStartsWith($version, $v)) {
+            if(Utils::checkIfStartsWith($version, $v)) {
                 return $deviceId;
             }
         }
         
-        return WURFL_Constants::GENERIC;
+        return Constants::GENERIC;
         
     }
     

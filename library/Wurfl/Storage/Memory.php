@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Storage;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Memory extends WURFL_Storage_Base
+class Memory extends Base
 {
     const IN_MEMORY = 'memory';
 

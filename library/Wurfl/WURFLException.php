@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Base class for WURFL Exceptions
  * @package    WURFL
  */
-class WURFL_WURFLException extends Exception
+class WURFLException extends \Exception
 {
     //
 }

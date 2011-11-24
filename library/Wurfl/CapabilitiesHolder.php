@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * Holds WURFL Device capabilities
  * @package    WURFL
  */
-class WURFL_CapabilitiesHolder
+class CapabilitiesHolder
 {
     /**
      * @var WURFL_Device

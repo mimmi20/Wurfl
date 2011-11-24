@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Reloader;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -22,9 +25,7 @@
  * @package    WURFL_Reloader
  * @deprecated
  */
-interface WURFL_Reloader_Interface
+interface ReloaderInterface
 {
     public function reload($wurflConfigurationPath);
 }
-
-

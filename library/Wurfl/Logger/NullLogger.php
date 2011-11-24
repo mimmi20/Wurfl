@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Logger;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * Class that is used to supress logging
  * @package    WURFL_Logger
  */
-class WURFL_Logger_NullLogger implements WURFL_Logger_Interface
+class NullLogger implements LoggerInterface
 {
     public function log($message, $type = '')
     {

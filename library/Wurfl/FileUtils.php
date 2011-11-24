@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * WURFL File Utilities
  * @package    WURFL
  */
-class WURFL_FileUtils
+class FileUtils
 {
     /**
      * Create a directory structure recursiveley

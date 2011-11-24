@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Logger;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * 
  * @package    WURFL_Logger
  */
-class WURFL_Logger_FileLogger implements WURFL_Logger_Interface
+class FileLogger implements LoggerInterface
 {
     /**
      * @var string DEBUG Log level
@@ -45,11 +48,11 @@ class WURFL_Logger_FileLogger implements WURFL_Logger_Interface
     public function __construct($fileName)
     {
         if (!is_writable($fileName)) {
-            throw new InvalidArgumentException('Log file specified is not writable');
+            throw new \InvalidArgumentException('Log file specified is not writable');
         }
         $this->fp = @fopen($fileName, 'a');
         if (!$this->fp) {
-            throw new WURFL_WURFLException('Unable to open log file: ');
+            throw new \Wurfl\WURFLException('Unable to open log file: ');
         }
     }
     

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
+class OperaHandler extends Handler
 {
     protected $prefix = 'OPERA';
     
@@ -42,11 +45,11 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+        if(Utils::isMobileBrowser($userAgent)) {
             return false;
         }
         
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera');
+        return Utils::checkIfContains($userAgent, 'Opera');
     }
     
     private $operas = array(
@@ -80,7 +83,7 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
     const OPERA_TOLERANCE = 3;
     public function lookForMatchingUserAgent($userAgent)
     {
-        return WURFL_Handlers_Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::OPERA_TOLERANCE);
+        return Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, self::OPERA_TOLERANCE);
     }
     
     public function applyRecoveryMatch($userAgent)
@@ -106,7 +109,7 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler
     const OPERA_VERSION_PATTERN_EXT = '/.*Version\/(\d+\.\d).*/';
     private function operaVersion($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80') && preg_match(self::OPERA_VERSION_PATTERN_EXT, $userAgent, $match)) {
+        if(Utils::checkIfStartsWith($userAgent, 'Opera/9.80') && preg_match(self::OPERA_VERSION_PATTERN_EXT, $userAgent, $match)) {
             return $match[1];
         }
         if(preg_match(self::OPERA_VERSION_PATTERN, $userAgent, $match)) {

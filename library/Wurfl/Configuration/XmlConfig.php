@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Configuration;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,14 +22,14 @@
  * XML Configuration
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
+class XmlConfig extends Config
 {
     /**
      * Initialize XML Configuration
      */
-    private function _initialize()
+    protected function initialize()
     {
-        $xmlConfig = simplexml_load_file($this->configFilePath);
+        $xmlConfig = simplexml_load_file($this->_configFilePath);
         $this->_wurflFile = $this->_wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
         $this->_wurflPatches = $this->_wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
         $this->_allowReload = $this->_allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
@@ -114,7 +117,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config
             $paramNameValue = explode('=', $param);
             
             if (count($paramNameValue) > 1) {
-                if (strcmp(WURFL_Configuration_Config::DIR, $paramNameValue[0]) == 0) {
+                if (strcmp(Config::DIR, $paramNameValue[0]) == 0) {
                     $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
                 }
                 

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * @package    WURFL
  * @see WURFL_UserAgentHandlerChain
  */
-class WURFL_UserAgentHandlerChainFactory
+class UserAgentHandlerChainFactory
 {
 
     /**
@@ -33,122 +36,122 @@ class WURFL_UserAgentHandlerChainFactory
      * @param WURFL_Context $context
      * @return WURFL_UserAgentHandlerChain
      */
-    public static function createFrom(WURFL_Context $context)
+    public static function createFrom(Context $context)
     {
         self::init($context);
         return self::$_userAgentHandlerChain;
     }
 
     /**
-     * Initializes the factory with an instance of all possible WURFL_Handlers_Handler objects from the given $context
+     * Initializes the factory with an instance of all possible Handlers\Handler objects from the given $context
      * @param WURFL_Context $context
      */
-    static private function init(WURFL_Context $context)
+    static private function init(Context $context)
     {
-        self::$_userAgentHandlerChain = new WURFL_UserAgentHandlerChain();
+        self::$_userAgentHandlerChain = new UserAgentHandlerChain();
 
         $genericNormalizers = self::_createGenericNormalizers();
 
-        $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chrome());
-        $chromiumNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Chromium());
-        $rockmeltNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Rockmelt());
-        $ironNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Iron());
-        $konquerorNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Konqueror());
-        $safariNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Safari());
-        $firefoxNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Firefox());
-        $seamonkeyNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Seamonkey());
-        $msieNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_MSIE());
-        $thunderbirdNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Thunderbird());
-        $flockNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Flock());
+        $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Chrome());
+        $chromiumNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Chromium());
+        $rockmeltNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Rockmelt());
+        $ironNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Iron());
+        $konquerorNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Konqueror());
+        $safariNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Safari());
+        $firefoxNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Firefox());
+        $seamonkeyNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Seamonkey());
+        $msieNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\MSIE());
+        $thunderbirdNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Thunderbird());
+        $flockNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Flock());
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NokiaHandler($context, $genericNormalizers));
-        $lguplusNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_LGUPLUSNormalizer());
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_LGUPLUSHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\NokiaHandler($context, $genericNormalizers));
+        $lguplusNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\LGUPLUSNormalizer());
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\LGUPLUSHandler($context, $genericNormalizers));
 
-        $androidNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Android());
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AndroidHandler($context, $androidNormalizer));
+        $androidNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Android());
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\AndroidHandler($context, $androidNormalizer));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SonyEricssonHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MotorolaHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_BlackBerryHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SonyEricssonHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\MotorolaHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\BlackBerryHandler($context, $genericNormalizers));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SiemensHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SagemHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SamsungHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_PanasonicHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SiemensHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SagemHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SamsungHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\PanasonicHandler($context, $genericNormalizers));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_NecHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_QtekHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\NecHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\QtekHandler($context, $genericNormalizers));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MitsubishiHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_PhilipsHandler($context, $genericNormalizers));
-        $lgNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_LGNormalizer());
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_LGHandler($context, $lgNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AppleHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KyoceraHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AlcatelHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SharpHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\MitsubishiHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\PhilipsHandler($context, $genericNormalizers));
+        $lgNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\LGNormalizer());
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\LGHandler($context, $lgNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\KyoceraHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\AlcatelHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SharpHandler($context, $genericNormalizers));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SanyoHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_BenQHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_PantechHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ToshibaHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_GrundigHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_HTCHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SanyoHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\BenQHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\PantechHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\ToshibaHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\GrundigHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCHandler($context, $genericNormalizers));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_VodafoneHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\VodafoneHandler($context, $genericNormalizers));
 
 
         // BOT
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_BotCrawlerTranscoderHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\BotCrawlerTranscoderHandler($context, $genericNormalizers));
 
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SPVHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_WindowsCEHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_PortalmmmHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_DoCoMoHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KDDIHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SPVHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\WindowsCEHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\PortalmmmHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\DoCoMoHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\KDDIHandler($context, $genericNormalizers));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaMiniHandler($context, $genericNormalizers));
-        $maemoNormalizer = $genericNormalizers->addUserAgentNormalizer(new WURFL_Request_UserAgentNormalizer_Specific_Maemo());
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MaemoBrowserHandler($context, $maemoNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaMiniHandler($context, $genericNormalizers));
+        $maemoNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\UserAgentNormalizer\Specific\Maemo());
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\MaemoBrowserHandler($context, $maemoNormalizer));
 
 
         // Web Browsers handlers
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_IronHandler($context, $ironNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromiumHandler($context, $chromiumNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_RockmeltHandler($context, $rockmeltNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FlockHandler($context, $flockNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ChromeHandler($context, $chromeNormalizer));
-        //self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_AOLHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_OperaHandler($context, $genericNormalizers));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_KonquerorHandler($context, $konquerorNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SafariHandler($context, $safariNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_ThunderbirdHandler($context, $thunderbirdNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_SeamonkeyHandler($context, $seamonkeyNormalizer));
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_FirefoxHandler($context, $firefoxNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\IronHandler($context, $ironNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromiumHandler($context, $chromiumNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\RockmeltHandler($context, $rockmeltNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\FlockHandler($context, $flockNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($context, $chromeNormalizer));
+        //self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\AOLHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\KonquerorHandler($context, $konquerorNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SafariHandler($context, $safariNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\ThunderbirdHandler($context, $thunderbirdNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\SeamonkeyHandler($context, $seamonkeyNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\FirefoxHandler($context, $firefoxNormalizer));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_MSIEHandler($context, $msieNormalizer));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\MSIEHandler($context, $msieNormalizer));
 
-        self::$_userAgentHandlerChain->addUserAgentHandler(new WURFL_Handlers_CatchAllHandler($context, $genericNormalizers));
+        self::$_userAgentHandlerChain->addUserAgentHandler(new Handlers\CatchAllHandler($context, $genericNormalizers));
 
     }
 
     /**
      * Returns an array of all possible User Agent Normalizers
-     * @return array Array of WURFL_Request_UserAgentNormalizer objects
+     * @return array Array of Request\UserAgentNormalizer objects
      */
     private static function _createGenericNormalizers()
     {
-        return new WURFL_Request_UserAgentNormalizer(
+        return new Request\UserAgentNormalizer(
             array(
-                new WURFL_Request_UserAgentNormalizer_Generic_UPLink(),
-                new WURFL_Request_UserAgentNormalizer_Generic_BlackBerry(),
-                new WURFL_Request_UserAgentNormalizer_Generic_YesWAP(),
-                new WURFL_Request_UserAgentNormalizer_Generic_BabelFish(),
-                new WURFL_Request_UserAgentNormalizer_Generic_SerialNumbers(),
-                new WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator(),
-                new WURFL_Request_UserAgentNormalizer_Generic_LocaleRemover()
+                new Request\UserAgentNormalizer\Generic\UPLink(),
+                new Request\UserAgentNormalizer\Generic\BlackBerry(),
+                new Request\UserAgentNormalizer\Generic\YesWAP(),
+                new Request\UserAgentNormalizer\Generic\BabelFish(),
+                new Request\UserAgentNormalizer\Generic\SerialNumbers(),
+                new Request\UserAgentNormalizer\Generic\NovarraGoogleTranslator(),
+                new Request\UserAgentNormalizer\Generic\LocaleRemover()
             )
         );
     }

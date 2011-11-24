@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -18,7 +21,7 @@
  */
 
 /**
- * WURFL_Handlers_Matcher is the base interface that concrete classes 
+ * Matcher is the base interface that concrete classes 
  * must implement to retrieve a device with the given request    
  *
  * @category   WURFL
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-interface WURFL_Handlers_Matcher
+interface Matcher
 {
     
     /**

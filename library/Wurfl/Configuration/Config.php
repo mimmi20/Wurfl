@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Configuration;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Abstract base class for WURFL Configuration
  * @package    WURFL_Configuration
  */
-abstract class  WURFL_Configuration_Config
+abstract class Config
 {
     const WURFL = 'wurfl';
     const MAIN_FILE = 'main-file';
@@ -82,7 +85,7 @@ abstract class  WURFL_Configuration_Config
     public function __construct($configFilePath)
     {
         if (!file_exists($configFilePath)) {
-            throw new InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
+            throw new \InvalidArgumentException('The configuration file \'' . $configFilePath . '\' does not exist.');
         }
         $this->_configFilePath = $configFilePath;
         $this->_configurationFileDir = dirname($this->_configFilePath);
@@ -102,7 +105,9 @@ abstract class  WURFL_Configuration_Config
      */
     public function __get($name)
     {
-        return $this->$name;
+        $property = '_' . $name;
+        
+        return $this->$property;
     }    
     
     /**
@@ -127,7 +132,7 @@ abstract class  WURFL_Configuration_Config
      */
     private function _fileExist($confLocation)
     {
-        $fullFileLocation = $this->_getFullPath($confLocation);
+        $fullFileLocation = $this->getFullPath($confLocation);
         return file_exists($fullFileLocation);
     }
         
@@ -135,10 +140,10 @@ abstract class  WURFL_Configuration_Config
      * Return the full path
      *
      * @param string $fileName
-     * @throws WURFL_WURFLException The configuration file does not exist
+     * @throws \Wurfl\WURFLException The configuration file does not exist
      * @return string File name including full path
      */
-    private function _getFullPath($fileName)
+    protected function getFullPath($fileName)
     {
         $fileName = trim($fileName);
         if (realpath($fileName) && !(basename($fileName) === $fileName)) {
@@ -149,6 +154,6 @@ abstract class  WURFL_Configuration_Config
         if (file_exists($fullName)) {
             return $fullName;
         }
-        throw new WURFL_WURFLException('The specified path \'' . $fullName . '\' does not exist');
+        throw new \Wurfl\WURFLException('The specified path \'' . $fullName . '\' does not exist');
     }
 }

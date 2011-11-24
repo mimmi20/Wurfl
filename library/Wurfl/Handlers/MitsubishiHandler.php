@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler
+class MitsubishiHandler extends Handler
 {
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {
@@ -42,7 +45,7 @@ class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mitsu');
+        return Utils::checkIfStartsWith($userAgent, 'Mitsu');
     }
         
     protected $prefix = 'MITSUBISHI';

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -26,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_KonquerorHandler extends WURFL_Handlers_Handler
+class KonquerorHandler extends Handler
 {
     protected $prefix = 'KONQUEROR';
     
@@ -43,9 +46,9 @@ class WURFL_Handlers_KonquerorHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        if(WURFL_Handlers_Utils::isMobileBrowser($userAgent)) {
+        if(Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Konqueror');
+        return Utils::checkIfContains($userAgent, 'Konqueror');
     }
 }

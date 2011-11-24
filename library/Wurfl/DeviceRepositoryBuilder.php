@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Builds a WURFL_DeviceRepository
  * @package    WURFL
  */
-class WURFL_DeviceRepositoryBuilder
+class DeviceRepositoryBuilder
 {
     /**
      * @var WURFL_Xml_PersistenceProvider
@@ -79,23 +82,24 @@ class WURFL_DeviceRepositoryBuilder
      */
     public function build($wurflFile, $wurflPatches = array(), $capabilitiesToUse = array())
     {
-        if (!$this->_isRepositoryBuilt()) {
+        //if (!$this->_isRepositoryBuilt()) {
             //set_time_limit(300);
-            $fp = fopen($this->_lockFile, $this->_lockStyle);
+            //var_dump($wurflFile, $wurflPatches, $this->_lockFile, $this->_lockStyle);
+            //$fp = fopen($this->_lockFile, $this->_lockStyle);
             
-            if (flock($fp, LOCK_EX | LOCK_NB) && !$this->_isRepositoryBuilt()) {
-                $infoIterator   = new WURFL_Xml_VersionIterator($wurflFile);
-                $deviceIterator = new WURFL_Xml_DeviceIterator($wurflFile, $capabilitiesToUse);
+            //if (flock($fp, LOCK_EX | LOCK_NB)) {
+                $infoIterator   = new Xml\VersionIterator($wurflFile);
+                $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilitiesToUse);
                 $patchIterators = $this->_toPatchIterators($wurflPatches , $capabilitiesToUse);
             
                 $this->_buildRepository($infoIterator, $deviceIterator, $patchIterators);
-                $this->_setRepositoryBuilt();    
-                flock($fp, LOCK_UN);
-            }
-        }
+                //$this->_setRepositoryBuilt();    
+                //flock($fp, LOCK_UN);
+            //}
+        //}
         
         $deviceClassificationNames = $this->_deviceClassificationNames();
-        return new WURFL_CustomDeviceRepository($this->_persistenceProvider, $deviceClassificationNames);
+        return new CustomDeviceRepository($this->_persistenceProvider, $deviceClassificationNames);
     }
     
     /**
@@ -107,14 +111,14 @@ class WURFL_DeviceRepositoryBuilder
      */
     private function _buildRepository($wurflInfoIterator, $deviceIterator, $patchDeviceIterators = null)
     {
-        $this->_persistWurflInfo($wurflInfoIterator);
+        //$this->_persistWurflInfo($wurflInfoIterator);
         $patchingDevices = array();
         $patchingDevices = $this->toListOfPatchingDevices($patchDeviceIterators);        
         try {
             $this->_process($deviceIterator, $patchingDevices);
-        } catch(Exception $exception) {
+        } catch(\Exception $exception) {
             $this->_clean();
-            throw new Exception('Problem Building WURFL Repository ' . $exception);
+            throw new \Exception('Problem Building WURFL Repository ' . $exception->getMessage(), $exception->getCode(), $exception);
         }
     }
     
@@ -130,7 +134,7 @@ class WURFL_DeviceRepositoryBuilder
         
         if (is_array($wurflPatches)) {
             foreach ($wurflPatches as $wurflPatch) {
-                $patchIterators[] = new WURFL_Xml_DeviceIterator($wurflPatch, $capabilitiesToUse);
+                $patchIterators[] = new Xml\DeviceIterator($wurflPatch, $capabilitiesToUse);
             }
         }
         
@@ -184,8 +188,8 @@ class WURFL_DeviceRepositoryBuilder
      */
     private function _persistWurflInfo($wurflInfoIterator)
     {
-        foreach ($wurflInfoIterator as $info) {
-            $this->_persistenceProvider->save(WURFL_Xml_Info::PERSISTENCE_KEY, $info);
+        foreach ($wurflInfoIterator as $info) {var_dump(Xml\Info::PERSISTENCE_KEY, $info);
+            $this->_persistenceProvider->save(Xml\Info::PERSISTENCE_KEY, $info);
         }
     }
     
@@ -198,7 +202,7 @@ class WURFL_DeviceRepositoryBuilder
     {
         $usedPatchingDeviceIds = array();
         
-        foreach ($deviceIterator as $device) {
+        foreach ($deviceIterator as $device) {var_dump('Device', $device);
             $toPatch = isset($patchingDevices[$device->id]);
             
             if ($toPatch) {

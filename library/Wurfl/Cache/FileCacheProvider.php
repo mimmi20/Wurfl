@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Cache;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -24,7 +27,7 @@
  * @package    WURFL_Cache
  */
 
-class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
+class FileCacheProvider implements CacheProvider
 {
     private $_cacheDir;
     const DIR = 'dir';
@@ -37,19 +40,19 @@ class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
     {
         if(is_array($params)) {
             if (!array_key_exists(self::DIR, $params)) {
-                throw new WURFL_WURFLException('Specify a valid cache dir in the configuration file');
+                throw new \Wurfl\WURFLException('Specify a valid cache dir in the configuration file');
             }
             
             // Check if the directory exist and it is also write access
             if (!is_writable($params[self::DIR])) {
-                throw new WURFL_WURFLException('The diricetory specified <' . $params[self::DIR] . ' > for the cache provider does not exist or it is not writable');
+                throw new \Wurfl\WURFLException('The diricetory specified <' . $params[self::DIR] . ' > for the cache provider does not exist or it is not writable');
             }
             
             $this->_cacheDir = $params[self::DIR] . DIRECTORY_SEPARATOR . $this->cacheIdentifier;
             $this->root = $params[self::DIR] . DIRECTORY_SEPARATOR . $this->cacheIdentifier;
-            $this->expire = isset($params[WURFL_Cache_CacheProvider::EXPIRATION]) ? $params[WURFL_Cache_CacheProvider::EXPIRATION] : WURFL_Cache_CacheProvider::NEVER;
+            $this->expire = isset($params[CacheProvider::EXPIRATION]) ? $params[CacheProvider::EXPIRATION] : CacheProvider::NEVER;
             
-            WURFL_FileUtils::mkdir($this->_cacheDir);
+            \Wurfl\FileUtils::mkdir($this->_cacheDir);
         }
     
     }
@@ -57,7 +60,7 @@ class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
     public function get($key)
     {
         $path = $this->_keyPath($key);
-        $data = WURFL_FileUtils::read($path);
+        $data = \Wurfl\FileUtils::read($path);
         if (!is_null($data) && $this->_expired($path)) {
             unlink($path);
             return NULL;
@@ -69,12 +72,12 @@ class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
     {
         $mtime = time() + $this->expire;
         $path = $this->_keyPath($key);
-        WURFL_FileUtils::write($path, $value, $mtime);
+        \Wurfl\FileUtils::write($path, $value, $mtime);
     }
     
     public function clear()
     {
-        WURFL_FileUtils::rmdirContents($this->root);
+        \Wurfl\FileUtils::rmdirContents($this->root);
     }
     
     private function _expired($path)
@@ -92,7 +95,7 @@ class WURFL_Cache_FileCacheProvider implements WURFL_Cache_CacheProvider
     
     private function _keyPath($key)
     {
-        return WURFL_FileUtils::join(array($this->root, $this->spread(md5($key))));
+        return \Wurfl\FileUtils::join(array($this->root, $this->spread(md5($key))));
     }
     
     public function spread($md5, $n = 2)

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,12 +23,12 @@
  * Iterates over a WURFL/Patch XML file
  * @package    WURFL_Xml
  */
-abstract class WURFL_Xml_AbstractIterator implements Iterator
+abstract class AbstractIterator implements \Iterator
 {
     /**
      * @var string filename with path to wurfl.xml or patch file
      */
-    private $_inputFile;
+    protected $_inputFile;
     
     /**
      * @var XMLReader
@@ -43,9 +46,11 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
     public function __construct($inputFile)
     {
         if (!file_exists($inputFile)) {
-            throw new InvalidArgumentException('cannot locate[' . $inputFile . '] file!');
+            throw new \InvalidArgumentException('cannot locate[' . $inputFile . '] file!');
         }
-        $this->_inputFile = WURFL_Xml_Utils::getXMLFile($_inputFile);
+        $this->_inputFile = realpath(Utils::getXMLFile($inputFile));
+        
+        $this->rewind();
     }
     
     /**
@@ -92,7 +97,7 @@ abstract class WURFL_Xml_AbstractIterator implements Iterator
      */
     public function rewind()
     {
-        $this->_xmlReader = new XMLReader();
+        $this->_xmlReader = new \XMLReader();
         $this->_xmlReader->open($this->_inputFile);
         $this->_currentElement = null;
         $this->_currentElementId = null;

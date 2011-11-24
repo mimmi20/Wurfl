@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Handlers;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -27,7 +30,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler
+class SonyEricssonHandler extends Handler
 {
     protected $prefix = 'SONY_ERICSSON';
     
@@ -44,7 +47,7 @@ class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler
      */
     public function canHandle($userAgent)
     {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'SonyEricsson');
+        return Utils::checkIfContains($userAgent, 'SonyEricsson');
     }
     
     /**
@@ -57,12 +60,12 @@ class WURFL_Handlers_SonyEricssonHandler extends WURFL_Handlers_Handler
      */
     public function lookForMatchingUserAgent($userAgent)
     {
-        if(WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
-            $tollerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-            return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
+        if(Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
+            $tollerance = Utils::firstSlash($userAgent);
+            return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
         }
-        $tollerance = WURFL_Handlers_Utils::secondSlash($userAgent);
-        return WURFL_Handlers_Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
+        $tollerance = Utils::secondSlash($userAgent);
+        return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
     
     }
 
