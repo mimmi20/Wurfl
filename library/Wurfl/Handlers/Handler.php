@@ -19,6 +19,8 @@ namespace Wurfl\Handlers;
  * @version    $id$
  */
 
+use \Wurfl\Request\GenericRequest;
+
 /**
  * Handler is the base class that combines the classification of
  * the user agents and the matching process.
@@ -29,8 +31,8 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-abstract class Handler implements Filter, Matcher {
-    
+abstract class Handler implements Filter, Matcher
+{
     /**
      * The next User Agent Handler
      * @var Handler
@@ -194,10 +196,10 @@ abstract class Handler implements Filter, Matcher {
      * Finds the device id for the given request - if it is not found it 
      * delegates to the next available handler
      * 
-     * @param WURFL_Request_GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      * @return string WURFL Device ID for matching device
      */
-    public function match(WURFL_Request_GenericRequest $request)
+    public function match(GenericRequest $request)
     {
         $userAgent = $request->userAgent;
         if($this->canHandle($userAgent)) {
@@ -217,7 +219,7 @@ abstract class Handler implements Filter, Matcher {
      * @param string $userAgent
      * @return string
      */
-    public function applyMatch(WURFL_Request_GenericRequest $request)
+    public function applyMatch(GenericRequest $request)
     {
         $userAgent = $this->normalizeUserAgent($request->userAgent);
         $this->logger->debug('START: Matching For  ' . $userAgent);

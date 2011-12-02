@@ -60,6 +60,7 @@ class CustomDevice
         if (!is_array($modelDevices) || count($modelDevices) < 1) {
             throw new \InvalidArgumentException('modelDevices must be an array of at least one ModelDevice.');
         }
+        
         $this->_modelDevices = $modelDevices;
     
     }

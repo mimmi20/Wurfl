@@ -37,7 +37,7 @@ class DeviceIterator extends AbstractIterator
         parent::__construct($inputFile);
         
         foreach ($capabilities as $groupId => $capabilityNames) {
-            $trimmedCapNames     = $this->removeSpaces($capabilityNames);
+            $trimmedCapNames     = $this->_removeSpaces($capabilityNames);
             $capabilitiesAsArray = array();
             
             if (strlen($trimmedCapNames) != 0) {
@@ -50,12 +50,29 @@ class DeviceIterator extends AbstractIterator
     }
     
     /**
+     * Open the input file and position cursor at the beginning
+     * @see $_inputFile
+     */
+    public function rewind()
+    {
+        //$this->_xmlReader = new \XMLReader();
+        //$this->_xmlReader->open($this->_inputFile);
+        
+        $this->_xmlReader = \simplexml_load_string(\file_get_contents($this->_inputFile));
+        
+        $devices = $this->_xmlReader->xpath('/wurfl/devices');
+        
+        $this->_currentElement = null;
+        $this->_currentElementId = null;
+    }
+    
+    /**
      * Removes spaces from the given $subject
      * @param string $subject
      */
-    private function removeSpaces($subject)
+    private function _removeSpaces($subject)
     {
-        return str_replace(' ', '', $subject);
+        return preg_replace('/\s*/', '', $subject);
     }
     
     public function readNextElement()
@@ -63,7 +80,7 @@ class DeviceIterator extends AbstractIterator
         $deviceId = null;
         $groupId = null;
         
-        while ($this->_xmlReader->read()) {
+        while ($this->_xmlReader->valid()) {
             $nodeName = $this->_xmlReader->name;
             
             switch ($this->_xmlReader->nodeType) {

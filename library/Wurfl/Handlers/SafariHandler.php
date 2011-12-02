@@ -73,13 +73,12 @@ class SafariHandler extends Handler
     
     public function applyRecoveryMatch($userAgent)
     {
-        $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
+        $safariVersion = $this->safariVersion($userAgent);
         $safariId = 'safari';
         if(isset($this->safaris[$safariVersion])) {
             return $this->safaris[$safariVersion];
         }
         /*
-        //var_dump($userAgent, $safariVersion, $safariId);exit;
         if($this->isDeviceExist($safariId)) {
             return $safariId;
         }

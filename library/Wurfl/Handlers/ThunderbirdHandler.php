@@ -53,7 +53,7 @@ class ThunderbirdHandler extends Handler
     }
     
     public function lookForMatchingUserAgent($userAgent)
-    {//var_dump($userAgent);exit;
+    {
         return $this->applyRecoveryMatch($userAgent);
     }
     
@@ -73,13 +73,12 @@ class ThunderbirdHandler extends Handler
     
     public function applyRecoveryMatch($userAgent) 
     {
-        $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
+        $safariVersion = $this->safariVersion($userAgent);
         $safariId = 'thunderbird';
         if(isset($this->safaris[$safariVersion])) {
             return $this->safaris[$safariVersion];
         }
         /*
-        //var_dump($userAgent, $safariVersion, $safariId);exit;
         if($this->isDeviceExist($safariId)) {
             return $safariId;
         }

@@ -57,14 +57,15 @@ class WURFLService
     }
     
     /**
-     * Returns the Device for the given WURFL_Request_GenericRequest
+     * Returns the Device for the given \Wurfl\Request\GenericRequest
      *
-     * @param WURFL_Request_GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      * @return WURFL_CustomDevice
      */
     public function getDeviceForRequest(Request\GenericRequest $request)
     {
         $deviceId = $this->_deviceIdForRequest($request);
+        
         return $this->_getWrappedDevice($deviceId);
     
     }
@@ -117,17 +118,20 @@ class WURFLService
 
     /**
      * Returns the device id for the device that matches the $request
-     * @param WURFL_Request_GenericRequest $request WURFL Request object
+     * @param \Wurfl\Request\GenericRequest $request WURFL Request object
      * @return string WURFL device id
      */
     private function _deviceIdForRequest($request)
     {
         $deviceId = $this->_cacheProvider->load($request->id);
+        var_dump($deviceId);exit;
         if (empty($deviceId)) {
             $deviceId = $this->_userAgentHandlerChain->match($request);
+            
             // save it in cache
             $this->_cacheProvider->save($request->id, $deviceId);
         }
+        
         return $deviceId;
     }
     
@@ -141,7 +145,6 @@ class WURFLService
     {
         $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
         return new CustomDevice($modelDevices);
-        //return new WURFL_Device($modelDevice, new WURFL_CapabilitiesHolder($modelDevice, $this->_deviceRepository, $this->_cacheProvider));
     }
 }
 

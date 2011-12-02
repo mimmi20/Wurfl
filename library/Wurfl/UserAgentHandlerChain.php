@@ -72,7 +72,7 @@ class UserAgentHandlerChain
     /**
      * Return the the device id for the request 
      *
-     * @param WURFL_Request_GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      * @return String deviceID
      */
     public function match(\Wurfl\Request\GenericRequest $request)

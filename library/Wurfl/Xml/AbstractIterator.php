@@ -97,8 +97,11 @@ abstract class AbstractIterator implements \Iterator
      */
     public function rewind()
     {
-        $this->_xmlReader = new \XMLReader();
-        $this->_xmlReader->open($this->_inputFile);
+        //$this->_xmlReader = new \XMLReader();
+        //$this->_xmlReader->open($this->_inputFile);
+        
+        $this->_xmlReader = \simplexml_load_string(\file_get_contents($this->_inputFile));
+        
         $this->_currentElement = null;
         $this->_currentElementId = null;
     }

@@ -45,14 +45,14 @@ class WURFLManager
      */
     private $_wurflService;
     /**
-     * @var WURFL_Request_GenericRequestFactory
+     * @var \Wurfl\Request\GenericRequestFactory
      */
     private $_requestFactory;
     
     /**
      * Creates a new WURFL Manager object
      * @param WURFL_WURFLService $wurflService
-     * @param WURFL_Request_GenericRequestFactory $requestFactory
+     * @param \Wurfl\Request\GenericRequestFactory $requestFactory
      */
     public function __construct(WURFLService $wurflService, Request\GenericRequestFactory $requestFactory)
     {
@@ -81,9 +81,9 @@ class WURFLManager
     }
     
     /**
-     * Return a device the given WURFL_Request_GenericRequest request(user-agent..)
+     * Return a device the given \Wurfl\Request\GenericRequest request(user-agent..)
      *
-     * @param WURFL_Request_GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      * @return WURFL_CustomDevice device
      * @throws Exception if the $request parameter is not set
      */
@@ -121,7 +121,7 @@ class WURFLManager
      */
     public function getDeviceForUserAgent($userAgent)
     {
-        if (!isset($userAgent)) {
+        if (empty($userAgent)) {
             $userAgent = '';
         }
         

@@ -37,10 +37,10 @@ interface Matcher
      * Returns a matching device id for the given request, 
      * if no matching device is found will return 'generic'
      * 
-     * @param WURFL_Request_GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      * @return string Matching device id
      */
-    public function match(WURFL_Request_GenericRequest $request);
+    public function match(\Wurfl\Request\GenericRequest $request);
     
 }
 

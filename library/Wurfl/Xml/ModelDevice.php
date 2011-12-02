@@ -30,26 +30,32 @@ class ModelDevice
      * @var string WURFL device ID
      */
     private $_id;
+    
     /**
      * @var string Fallback WURFL device ID
      */
     private $_fallBack;
+    
     /**
      * @var string User agent
      */
     private $_userAgent;
+    
     /**
      * @var bool This device is an actual root device
      */
     private $_actualDeviceRoot;
+    
     /**
      * @var bool This device is a specific device
      */
     private $_specific;
+    
     /**
      * @var array Array of capabilities
      */
     private $_capabilities = array();
+    
     /**
      * @var array Mapping of group IDs to capability names
      */
@@ -66,12 +72,11 @@ class ModelDevice
      */
     public function __construct($id, $userAgent, $fallBack, $actualDeviceRoot=false, $specific=false, $groupIdCapabilitiesMap = null)
     {
-        
-        $this->_id = $id;
-        $this->_userAgent = $userAgent;
-        $this->_fallBack = $fallBack; 
-        $this->_actualDeviceRoot = $actualDeviceRoot == true ? true : false;
-        $this->_specific = $specific == true ? true : false;
+        $this->_id               = $id;
+        $this->_userAgent        = $userAgent;
+        $this->_fallBack         = $fallBack; 
+        $this->_actualDeviceRoot = $actualDeviceRoot ? true : false;
+        $this->_specific         = $specific ? true : false;
         
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
@@ -89,7 +94,7 @@ class ModelDevice
     public function __get($name)
     {
         $name = '_' . $name;
-        return $this->$name;
+        return (isset($this->$name) ? $this->$name : null);
     }
     
     /**
@@ -141,12 +146,13 @@ class ModelDevice
     {
         $groupIdCapabilitiesMap = array();
         
-        foreach($this->_groupIdCapabilitiesNameMap as $groupId => $capabilitiesName) {
+        foreach ($this->_groupIdCapabilitiesNameMap as $groupId => $capabilitiesName) {
             foreach ($capabilitiesName as $capabilityName) {
-                $groupIdCapabilitiesMap[$groupId][$capabilityName] = $this->_capabilities[$capabilityName];
+                $groupIdCapabilitiesMap[$groupId][$capabilityName] = $this->_formatCapabilityValue($this->_capabilities[$capabilityName]);
             }
-        }        
-        return $groupIdCapabilitiesMap;        
+        }
+        
+        return $groupIdCapabilitiesMap;
     }
     
     /**
@@ -157,5 +163,26 @@ class ModelDevice
     public function isGroupDefined($groupId)
     {
         return array_key_exists($groupId, $this->_groupIdCapabilitiesNameMap);
-    }    
+    }
+    
+    private function _formatCapabilityValue($value)
+    {
+        if (is_array($value)) {
+            return array_map(array($this, __FUNCTION__), $value);
+        }
+        
+        if ('false' === $value) {
+            return false;
+        }
+        
+        if ('true' === $value) {
+            return true;
+        }
+        
+        if ('0' === $value) {
+            return 0;
+        }
+        
+        return $value;
+    }
 }

@@ -53,7 +53,7 @@ class FlockHandler extends Handler
     }
     
     public function lookForMatchingUserAgent($userAgent)
-    {//var_dump($userAgent);exit;
+    {
         return $this->applyRecoveryMatch($userAgent);
     }
     private $safaris = array(
@@ -69,7 +69,7 @@ class FlockHandler extends Handler
     
     public function applyRecoveryMatch($userAgent)
     {
-        $safariVersion = $this->safariVersion($userAgent);//var_dump($userAgent, $safariVersion);exit;
+        $safariVersion = $this->safariVersion($userAgent);
         $safariId = 'flock';
         if(isset($this->safaris[$safariVersion])) {
             return $this->safaris[$safariVersion];

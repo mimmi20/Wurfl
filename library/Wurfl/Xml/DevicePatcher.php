@@ -31,13 +31,31 @@ class DevicePatcher
      * @param WURFL_Xml_ModelDevice $patchingDevice
      * @return WURFL_Xml_ModelDevice Patched device
      */
-    public function patch($device, $patchingDevice)
+    public function patch(ModelDevice $device, ModelDevice $patchingDevice)
     {
-        if (!$this->haveSameId($device, $patchingDevice)) {
+        if (!$this->_haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
         }
         $groupIdCapabilitiesMap = \Wurfl\WURFLUtils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());    
         return new ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
+    }
+    
+    /**
+     * Patch an existing $device with a $patchingDevice
+     * @param WURFL_Xml_ModelDevice $device
+     * @param WURFL_Xml_ModelDevice $patchingDevice
+     * @return WURFL_Xml_ModelDevice Patched device
+     */
+    public function merge(ModelDevice $device, ModelDevice $parentDevice)
+    {
+        if ($device->fallBack != $parentDevice->id) {
+            // not related devices
+            return $device;
+        }
+        
+        $groupIdCapabilitiesMap = \Wurfl\WURFLUtils::array_merge_recursive_unique($parentDevice->getGroupIdCapabilitiesMap(), $device->getGroupIdCapabilitiesMap());    
+        
+        return new ModelDevice($device->id, $device->userAgent, $parentDevice->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
     }
     
     /**
@@ -46,9 +64,9 @@ class DevicePatcher
      * @param WURFL_Xml_ModelDevice $patchingDevice
      * @return bool
      */
-    private function haveSameId($device, $patchingDevice)
+    private function _haveSameId($device, $patchingDevice)
     {
-        return(strcmp($patchingDevice->id, $device->id) === 0);
+        return (strcmp($patchingDevice->id, $device->id) === 0);
     }
     
     /**
@@ -59,7 +77,7 @@ class DevicePatcher
      * @return bool
      * @deprecated
      */
-    private function checkIfCanPatch($device, $patchingDevice)
+    private function _checkIfCanPatch($device, $patchingDevice)
     {
         if (strcmp($patchingDevice->userAgent, $device->userAgent) !== 0) {
             $message = 'Patch Device : ' . $patchingDevice->id . ' can\'t override user agent ' . $device->userAgent . ' with ' . $patchingDevice->userAgent;

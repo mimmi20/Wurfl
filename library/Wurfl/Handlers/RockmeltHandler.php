@@ -68,7 +68,7 @@ class RockmeltHandler extends Handler
     {
         $chromeVersion = $this->chromeVersion($userAgent);
         $chromeId = 'rockmelt';
-        //var_dump($userAgent, $chromeVersion);exit;
+        
         if(isset($this->chromes[$chromeVersion])) {
             return $this->chromes[$chromeVersion];
         }

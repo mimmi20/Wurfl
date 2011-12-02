@@ -53,11 +53,11 @@ class CustomDeviceRepository implements DeviceRepository
     
     /**
      * Creates a new Device Repository from the given $persistenceProvider and $deviceClassificationNames
-     * @param array $persistenceProvider
-     * @param array $deviceClassificationNames
+     * @param Storage\Base $persistenceProvider
+     * @param array        $deviceClassificationNames
      * @throws InvalidArgumentException
      */
-    public function __construct($persistenceProvider, $deviceClassificationNames)
+    public function __construct(Storage\Base $persistenceProvider, array $deviceClassificationNames = array())
     {
         if (is_null($persistenceProvider)) {
             throw new \InvalidArgumentException('$persistenceProvider cannot be null');
@@ -111,13 +111,14 @@ class CustomDeviceRepository implements DeviceRepository
     {
         if (!isset($this->_deviceCache[$deviceId])) {
             $device = $this->_persistenceProvider->load($deviceId);
-            var_dump($deviceId, $this->_persistenceProvider);exit;
+            
             if (is_null($device)) {
                 throw new \Exception('There is no device with id[\'' . $deviceId . '\'] in wurfl');
             }
             
             $this->_deviceCache[$deviceId] = $device;
         }
+        
         return $this->_deviceCache[$deviceId];
     }
     

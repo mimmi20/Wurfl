@@ -28,7 +28,7 @@ class GenericRequestFactory
     /**
      * Creates Generic Request from the given HTTP Request(normally $_SERVER)
      * @param array $request HTTP Request
-     * @return WURFL_Request_GenericRequest
+     * @return \Wurfl\Request\GenericRequest
      */
     public function createRequest($request)
     {
@@ -42,7 +42,7 @@ class GenericRequestFactory
     /**
      * Create a Generic Request from the given $userAgent
      * @param string $userAgent
-     * @return WURFL_Request_GenericRequest
+     * @return \Wurfl\Request\GenericRequest
      */
     public function createRequestForUserAgent($userAgent)
     {

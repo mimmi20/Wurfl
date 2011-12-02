@@ -66,14 +66,14 @@ class File extends Base
     {
         $path  = $this->_keyPath($key);
         $value = \Wurfl\FileUtils::read($path);
-        return isset($_value) ? $this->_unwrap($value, $path) : NULL;
+        return ($value ? $this->_unwrap($value, $path) : null);
     }
 
     private function _unwrap(StorageObject $value, $path)
     {
         if ($value->isExpired()) {
             unlink($path);
-            return NULL;
+            return null;
         }
         
         return $value->value();
