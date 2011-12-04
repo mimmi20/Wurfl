@@ -124,7 +124,7 @@ class WURFLService
     private function _deviceIdForRequest($request)
     {
         $deviceId = $this->_cacheProvider->load($request->id);
-        var_dump($deviceId);exit;
+        
         if (empty($deviceId)) {
             $deviceId = $this->_userAgentHandlerChain->match($request);
             
