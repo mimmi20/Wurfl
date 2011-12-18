@@ -303,7 +303,7 @@ abstract class Handler implements Filter, Matcher
      * @see Utils::risMatch()
      * @see Matcher_RISMatcher::match()
      */
-    private function applyRisWithTollerance($userAgetsList, $target, $tollerance)
+    protected function applyRisWithTollerance($userAgetsList, $target, $tollerance)
     {
         return Utils::risMatch($userAgetsList, $target, $tollerance);
     }

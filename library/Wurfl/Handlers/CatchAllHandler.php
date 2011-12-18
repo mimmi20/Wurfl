@@ -67,7 +67,7 @@ class CatchAllHandler extends Handler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $deviceId = Constants::GENERIC;
+        $deviceId = \Wurfl\Constants::GENERIC;
         if(Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
             $deviceId = $this->applyMozillaConclusiveMatch($userAgent);
         } else {

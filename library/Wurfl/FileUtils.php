@@ -74,6 +74,8 @@ class FileUtils
      */
     public static function read($file)
     {
+        ini_set('unserialize_callback_func', __CLASS__ . '::loadClass');
+        
         if (file_exists($file)) {
             return unserialize(file_get_contents($file));
         }
@@ -108,5 +110,11 @@ class FileUtils
     public static function join($strings = array())
     {
         return implode(DIRECTORY_SEPARATOR, $strings);
+    }
+    
+    public static function loadClass($classname)
+    {
+        $classname = '\\' . __NAMESPACE__ . '\\Storage\\' . $classname;
+        $class = new $classname(null, 0);
     }
 }

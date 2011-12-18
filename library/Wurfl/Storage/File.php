@@ -66,22 +66,32 @@ class File extends Base
     {
         $path  = $this->_keyPath($key);
         $value = \Wurfl\FileUtils::read($path);
+        
+        //var_dump($path, $value);exit;
         return ($value ? $this->_unwrap($value, $path) : null);
     }
 
-    private function _unwrap(StorageObject $value, $path)
+    private function _unwrap(array $value, $path)
     {
-        if ($value->isExpired()) {
+        if ($this->_isExpired($value)) {
             unlink($path);
             return null;
         }
         
-        return $value->value();
+        return $value['value'];
+    }
+
+    private function _isExpired(array $value)
+    {
+        if ($value['expire'] === 0) {
+            return false;
+        }
+        return $value['expire'] < time();
     }
 
     public function save($key, $value)
     {
-        $value = new StorageObject($value, $this->_expire);
+        $value = array('value' => $value, 'expire' => $this->_expire);
         $path = $this->_keyPath($key);
         \Wurfl\FileUtils::write($path, $value);
     }
@@ -96,39 +106,4 @@ class File extends Base
     {
         return \Wurfl\FileUtils::join(array($this->_root, strtolower($key)));
     }
-}
-
-/**
- * Object for storing data
- * @package WURFL_Storage
- */
-class StorageObject
-{
-    private $_value;
-    private $_expiringOn;
-
-    public function __construct($_value, $_expire)
-    {
-        $this->_value = $_value;
-        $this->_expiringOn =($_expire === 0) ? $_expire : time() + $_expire;
-    }
-
-    public function value()
-    {
-        return $this->_value;
-    }
-
-    public function isExpired()
-    {
-        if ($this->_expiringOn === 0) {
-            return false;
-        }
-        return $this->_expiringOn < time();
-    }
-
-    public function expiringOn()
-    {
-        return $this->_expiringOn;
-    }
-
 }
