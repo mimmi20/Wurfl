@@ -17,7 +17,7 @@ namespace Wurfl\Xml;
  * @package    WURFL_Xml
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * WURFL XML Parsing interface

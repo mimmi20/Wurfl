@@ -14,7 +14,7 @@
  * @package    WURFL_Xml_PersistenceProvider
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * Persistence Provider Manager

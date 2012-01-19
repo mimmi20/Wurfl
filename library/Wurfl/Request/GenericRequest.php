@@ -17,7 +17,7 @@ namespace Wurfl\Request;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * Generic WURFL Request object containing User Agent, UAProf and xhtml device data

@@ -17,7 +17,7 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * User Agent Normalizer - Return the Chrome string with the major version

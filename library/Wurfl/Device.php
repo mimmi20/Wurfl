@@ -16,7 +16,7 @@ namespace Wurfl;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * A WURFL Device including methods to access its capabilities

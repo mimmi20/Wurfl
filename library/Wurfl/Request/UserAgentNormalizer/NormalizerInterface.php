@@ -16,7 +16,7 @@ namespace Wurfl\Request\UserAgentNormalizer;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * WURFL User Agent Normalizer Interface

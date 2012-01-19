@@ -17,7 +17,7 @@ namespace Wurfl\Reloader;
  * @package    WURFL_Reloader
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  * @deprecated
  */
 /**

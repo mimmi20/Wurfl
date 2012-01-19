@@ -17,7 +17,7 @@ namespace Wurfl\Configuration;
  * @package    WURFL_Configuration
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * Array-style WURFL configuration.  To use this method you must create a php file that contains 

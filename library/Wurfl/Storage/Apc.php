@@ -17,7 +17,7 @@ namespace Wurfl\Storage;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * APC Storage class

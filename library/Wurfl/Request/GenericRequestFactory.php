@@ -17,7 +17,7 @@ namespace Wurfl\Request;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * Creates a Generic WURFL Request from the raw HTTP Request

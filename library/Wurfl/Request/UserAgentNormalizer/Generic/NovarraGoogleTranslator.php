@@ -17,7 +17,7 @@ namespace Wurfl\Request\UserAgentNormalizer\Generic;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * User Agent Normalizer - removes Novarra garbage from user agent

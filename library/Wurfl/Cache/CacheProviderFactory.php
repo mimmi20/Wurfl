@@ -16,7 +16,7 @@ namespace Wurfl\Cache;
  * @package    WURFL_Cache
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * Cache Provider factory

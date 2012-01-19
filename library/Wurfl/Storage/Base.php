@@ -16,7 +16,7 @@ namespace Wurfl\Storage;
  * @package    WURFL_Xml_PersistenceProvider
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 
 /**
@@ -29,7 +29,7 @@ namespace Wurfl\Storage;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
- * @version    $id$
+ * @version   SVN: $Id$
  */
 abstract class Base implements \Wurfl\Storage
 {

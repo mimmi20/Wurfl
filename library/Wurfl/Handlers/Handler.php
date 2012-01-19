@@ -16,7 +16,7 @@ namespace Wurfl\Handlers;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 
 use \Wurfl\Request\GenericRequest;
@@ -29,7 +29,7 @@ use \Wurfl\Request\GenericRequest;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 abstract class Handler implements Filter, Matcher
 {

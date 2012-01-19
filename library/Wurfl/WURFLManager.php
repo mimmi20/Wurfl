@@ -16,7 +16,7 @@ namespace Wurfl;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query

@@ -17,7 +17,7 @@ namespace Wurfl;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
+ * @version   SVN: $Id$
  */
 /**
  * Handles the chain of WURFL_Handlers_Handler objects
