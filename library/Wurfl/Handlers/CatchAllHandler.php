@@ -73,7 +73,10 @@ class CatchAllHandler extends Handler
         } else {
             $tollerance = Utils::firstSlash($userAgent);
             $match = Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tollerance);
-            $deviceId = $this->userAgentsWithDeviceID[$match];
+            
+            if (!empty($this->userAgentsWithDeviceID[$match])) {
+                $deviceId = $this->userAgentsWithDeviceID[$match];
+            }
         }
         
         return $deviceId;
