@@ -344,7 +344,7 @@ abstract class Handler implements Filter, Matcher
      * @param string $deviceId
      * @return bool
      */
-    private function isDeviceExist($deviceId)
+    protected function isDeviceExist($deviceId)
     {
         $ids = array_values($this->userAgentsWithDeviceID);
         if(in_array($deviceId, $ids)) {

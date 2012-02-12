@@ -65,7 +65,7 @@ class OperaMiniHandler extends Handler {
             }
         }
 
-        return Constants::GENERIC;
+        return \Wurfl\Constants::GENERIC;
 
     }
 

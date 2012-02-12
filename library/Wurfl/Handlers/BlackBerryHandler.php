@@ -77,7 +77,7 @@ class BlackBerryHandler extends Handler
     {
         $version = $this->blackberryVersion($userAgent);
         if(is_null($version)) {
-            return Constants::GENERIC;
+            return \Wurfl\Constants::GENERIC;
         }
         foreach($this->blackberryIds as $v => $deviceId) {
             if(Utils::checkIfStartsWith($version, $v)) {

@@ -107,7 +107,7 @@ class OperaHandler extends Handler
     
     const OPERA_VERSION_PATTERN = '/.*Opera[\s\/](\d+\.\d).*/';
     const OPERA_VERSION_PATTERN_EXT = '/.*Version\/(\d+\.\d).*/';
-    private function operaVersion($userAgent)
+    protected function operaVersion($userAgent)
     {
         if(Utils::checkIfStartsWith($userAgent, 'Opera/9.80') && preg_match(self::OPERA_VERSION_PATTERN_EXT, $userAgent, $match)) {
             return $match[1];
