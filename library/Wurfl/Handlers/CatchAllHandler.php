@@ -68,7 +68,7 @@ class CatchAllHandler extends Handler
     public function applyConclusiveMatch($userAgent)
     {
         $deviceId = \Wurfl\Constants::GENERIC;
-        if(Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
+        if (Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
             $deviceId = $this->applyMozillaConclusiveMatch($userAgent);
         } else {
             $tollerance = Utils::firstSlash($userAgent);
@@ -84,11 +84,11 @@ class CatchAllHandler extends Handler
     
     private function applyMozillaConclusiveMatch($userAgent)
     {
-        if($this->isMozilla5($userAgent)) {
+        if ($this->isMozilla5($userAgent)) {
             return $this->applyMozilla5ConclusiveMatch($userAgent);
         }
         
-        if($this->isMozilla4($userAgent)) {
+        if ($this->isMozilla4($userAgent)) {
             return $this->applyMozilla4ConclusiveMatch($userAgent);
         }
         
@@ -103,11 +103,11 @@ class CatchAllHandler extends Handler
         $this->logger->log('Applying Catch All Conclusive Match Mozilla 5(LD with treshold of)for ua: $userAgent');
         $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA5);
 
-        if(!array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
+        if (is_array($this->mozilla5UserAgentsWithDeviceID) && !array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
             $match = Utils::ldMatch(array_keys($this->mozilla5UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
         }
         
-        if(!empty($match)) {
+        if (!empty($match)) {
             return $this->mozilla5UserAgentsWithDeviceID[$match];
         }
         
@@ -122,7 +122,7 @@ class CatchAllHandler extends Handler
             $match = Utils::ldMatch(array_keys($this->mozilla4UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
         }
         
-        if(!empty($match)) {
+        if (!empty($match)) {
             return $this->mozilla4UserAgentsWithDeviceID[$match];
         }
         
@@ -131,10 +131,10 @@ class CatchAllHandler extends Handler
     
     public function filter($userAgent, $deviceID)
     {
-        if($this->isMozilla4($userAgent)) {
+        if ($this->isMozilla4($userAgent)) {
             $this->mozilla4UserAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
         }
-        if($this->isMozilla5($userAgent)) {
+        if ($this->isMozilla5($userAgent)) {
             $this->mozilla5UserAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
         }
         parent::filter($userAgent, $deviceID);
@@ -169,7 +169,4 @@ class CatchAllHandler extends Handler
     {
         return Utils::checkIfStartsWith($userAgent, 'Mozilla');
     }
-
 }
-
-

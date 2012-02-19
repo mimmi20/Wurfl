@@ -21,6 +21,8 @@ namespace Wurfl\Handlers;
 
 use \Wurfl\Request\GenericRequest;
 
+use \Wurfl\Request\UserAgentNormalizer\NullNormalizer;
+
 /**
  * Handler is the base class that combines the classification of
  * the user agents and the matching process.
@@ -75,8 +77,8 @@ abstract class Handler implements Filter, Matcher
     public function __construct($wurflContext, $userAgentNormalizer = null)
     {
         
-        if(is_null($userAgentNormalizer)) {
-            $this->userAgentNormalizer = new WURFL_Request_UserAgentNormalizer_Null();
+        if (is_null($userAgentNormalizer)) {
+            $this->userAgentNormalizer = new NullNormalizer();
         } else {
             $this->userAgentNormalizer = $userAgentNormalizer;
         }
