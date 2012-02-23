@@ -118,8 +118,15 @@ class CatchAllHandler extends Handler
     {
         $this->logger->log('Applying Catch All Conclusive Match Mozilla 4 for ua: $userAgent');
         $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA4);
-        if(!array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
-            $match = Utils::ldMatch(array_keys($this->mozilla4UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLLERACE);
+        
+        if (is_array($this->mozilla4UserAgentsWithDeviceID) 
+            && !array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)
+        ) {
+            $match = Utils::ldMatch(
+                array_keys($this->mozilla4UserAgentsWithDeviceID), 
+                $userAgent, 
+                self::MOZILLA_TOLLERACE
+            );
         }
         
         if (!empty($match)) {

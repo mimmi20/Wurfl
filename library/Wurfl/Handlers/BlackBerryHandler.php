@@ -85,7 +85,7 @@ class BlackBerryHandler extends Handler
             }
         }
         
-        return Constants::GENERIC;
+        return \Wurfl\Constants::GENERIC;
         
     }
     

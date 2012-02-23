@@ -56,7 +56,7 @@ class LGUPLUSHandler extends Handler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        return Constants::GENERIC;
+        return \Wurfl\Constants::GENERIC;
     }
 
 

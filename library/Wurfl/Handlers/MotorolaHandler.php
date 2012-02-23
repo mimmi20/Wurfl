@@ -66,7 +66,7 @@ class MotorolaHandler extends Handler
             return 'mot_mib22_generic';
         }
         
-        return Constants::GENERIC;
+        return \Wurfl\Constants::GENERIC;
     }
 
 }
