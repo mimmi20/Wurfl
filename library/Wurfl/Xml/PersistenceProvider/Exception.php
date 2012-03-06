@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml\PersistenceProvider;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * Persistence Provider Exception
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_Exception extends WURFL_WURFLException
+class Exception extends WURFL_WURFLException
 {
     //
 }

@@ -22,7 +22,7 @@ namespace Wurfl\Xml;
  * Persistence provider interface
  * @package    WURFL_Xml
  */
-interface PersistenceProvider
+interface PersistenceProviderInterface
 {
     /**
      * Saves the object 

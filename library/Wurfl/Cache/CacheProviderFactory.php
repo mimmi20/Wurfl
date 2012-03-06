@@ -18,6 +18,9 @@ namespace Wurfl\Cache;
  * @license    GNU Affero General Public License
  * @version   SVN: $Id$
  */
+
+use \Wurfl\Configuration\ConfigHolder;
+
 /**
  * Cache Provider factory
  * @package    WURFL_Cache
@@ -48,9 +51,9 @@ class CacheProviderFactory
      * @param WURFL_Configuration_Config $cacheConfig 
      * @return CacheProvider
      */
-    static public function getCacheProvider($cacheConfig=null)
+    static public function getCacheProvider($cacheConfig = null)
     {
-        $cacheConfig = is_null($cacheConfig) ? \Wurfl\Configuration\ConfigHolder::getWURFLConfig()->cache : $cacheConfig;
+        $cacheConfig = is_null($cacheConfig) ? ConfigHolder::getWURFLConfig()->cache : $cacheConfig;
         $provider = isset($cacheConfig['provider']) ? $cacheConfig['provider'] : NULL;
         $cache = isset($cacheConfig['params']) ? $cacheConfig['params'] : NULL;
         switch ($provider) {

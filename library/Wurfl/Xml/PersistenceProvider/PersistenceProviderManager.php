@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml\PersistenceProvider;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -20,7 +23,7 @@
  * Persistence Provider Manager
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_PersistenceProviderManager
+class PersistenceProviderManager
 {
     /**
      * @var WURFL_Xml_PersistenceProvider
@@ -48,25 +51,25 @@ class WURFL_Xml_PersistenceProvider_PersistenceProviderManager
      */
     private static function _initialize($persistenceConfig) {
         
-        $persistenceConfig = is_null($persistenceConfig) ? WURFL_Configuration_ConfigHolder::getWURFLConfig()->persistence : $persistenceConfig;
+        $persistenceConfig = is_null($persistenceConfig) ? \Wurfl\Configuration\ConfigHolder::getWURFLConfig()->persistence : $persistenceConfig;
         $provider          = $persistenceConfig['provider'];
         $persistenceParams = isset($persistenceConfig['params']) ? $persistenceConfig['params'] : array();
         
         switch ($provider) {
             case \Wurfl\Constants::MEMCACHE:
-                self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider($persistenceParams);
+                self::$_persistenceProvider = new MemcachePersistenceProvider($persistenceParams);
                 break;
             case \Wurfl\Constants::APC:
-                self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_APCPersistenceProvider($persistenceParams);
+                self::$_persistenceProvider = new APCPersistenceProvider($persistenceParams);
                 break;
             case \Wurfl\Constants::MYSQL:
-                self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_MysqlPersistenceProvider($persistenceParams);
+                self::$_persistenceProvider = new MysqlPersistenceProvider($persistenceParams);
                 break;
-            case WURFL_Xml_PersistenceProvider_InMemoryPersistenceProvider::IN_MEMORY:
-                self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_InMemoryPersistenceProvider($persistenceParams);
+            case InMemoryPersistenceProvider::IN_MEMORY:
+                self::$_persistenceProvider = new InMemoryPersistenceProvider($persistenceParams);
                 break;
             default :
-                self::$_persistenceProvider = new WURFL_Xml_PersistenceProvider_FilePersistenceProvider($persistenceParams);
+                self::$_persistenceProvider = new FilePersistenceProvider($persistenceParams);
                 break;
         }
     }

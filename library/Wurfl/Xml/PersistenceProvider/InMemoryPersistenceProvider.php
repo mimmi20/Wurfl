@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml\PersistenceProvider;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * In-Memory persistence provider
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_InMemoryPersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
+class InMemoryPersistenceProvider extends AbstractPersistenceProvider
 {
     const IN_MEMORY = 'memory';
     

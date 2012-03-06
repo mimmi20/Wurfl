@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml\PersistenceProvider;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * Memcache persistence provider
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
+class MemcachePersistenceProvider extends AbstractPersistenceProvider
 {
     const EXTENSION_MODULE_NAME = 'memcache';
     const DEFAULT_HOST = '127.0.0.1';
@@ -101,7 +104,7 @@ class WURFL_Xml_PersistenceProvider_MemcachePersistenceProvider extends WURFL_Xm
     private function _ensureModuleExistance()
     {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension memcache must be installed and loaded in order to use the Memcached persistence provider.');
+            throw new Exception('The PHP extension memcache must be installed and loaded in order to use the Memcached persistence provider.');
         }
     }
 

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml\PersistenceProvider;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * Persistence provider for APC
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_APCPersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
+class APCPersistenceProvider extends AbstractPersistenceProvider
 {
     const EXTENSION_MODULE_NAME = 'apc';
     
@@ -62,7 +65,7 @@ class WURFL_Xml_PersistenceProvider_APCPersistenceProvider extends WURFL_Xml_Per
     private function _ensureModuleExistance()
     {
         if (!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
-            throw new WURFL_Xml_PersistenceProvider_Exception('The PHP extension apc must be installed, loaded and enabled.');
+            throw new Exception('The PHP extension apc must be installed, loaded and enabled.');
         }
     }
 

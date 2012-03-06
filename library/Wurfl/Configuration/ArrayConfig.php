@@ -73,7 +73,7 @@ class ArrayConfig extends Config
         include parent::getConfigFilePath();
         
         if (!isset($configuration) || !is_array($configuration)) {
-            throw new \WURFL\WURFLException('Configuration array must be defined in the configuraiton file');
+            throw new \Wurfl\WURFLException('Configuration array must be defined in the configuraiton file');
         }
         
         $this->_init($configuration);

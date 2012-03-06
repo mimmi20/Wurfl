@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml\PersistenceProvider;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -19,7 +22,7 @@
  * File-based persistence provider
  * @package    WURFL_Xml_PersistenceProvider
  */
-class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider
+class FilePersistenceProvider extends AbstractPersistenceProvider
 {
     private $_persistenceDir;
     
@@ -41,17 +44,17 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
     {
         if (is_array($params)) {
             if (!array_key_exists(self::DIR, $params)) {
-                throw new WURFL_WURFLException('Specify a valid Persistence dir in the configuration file');
+                throw new Exception('Specify a valid Persistence dir in the configuration file');
             }
             
             // Check if the directory exist and it is also write access
             if (!is_writable($params[self::DIR])) {
-                throw new WURFL_WURFLException('The diricetory specified <' . $params[self::DIR] . '> for the persistence provider does not exist or it is not writable\n');
+                throw new Exception('The diricetory specified <' . $params[self::DIR] . '> for the persistence provider does not exist or it is not writable\n');
             }
             
             $this->_persistenceDir = $params[self::DIR] . DIRECTORY_SEPARATOR . $this->_persistenceIdentifier;
             
-            WURFL_FileUtils::mkdir($this->_persistenceDir);
+            \Wurfl\FileUtils::mkdir($this->_persistenceDir);
         }
     }
     
@@ -70,7 +73,7 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
     
     private function keyPath($key)
     {
-        return WURFL_FileUtils::join(array($this->_persistenceDir, $this->spread(md5($key))));
+        return \Wurfl\FileUtils::join(array($this->_persistenceDir, $this->spread(md5($key))));
     }
     
     /**
@@ -107,6 +110,6 @@ class WURFL_Xml_PersistenceProvider_FilePersistenceProvider extends WURFL_Xml_Pe
      */
     public function clear()
     {
-        WURFL_FileUtils::rmdir($this->_persistenceDir);
+        \Wurfl\FileUtils::rmdir($this->_persistenceDir);
     }
 }

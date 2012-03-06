@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace Wurfl\Xml\PersistenceProvider;
+
 /**
  * Copyright(c) 2011 ScientiaMobile, Inc.
  *
@@ -16,6 +19,7 @@
  * @version   SVN: $Id$
  */
 
+use Wurfl\Xml\PersistenceProviderInterface
 /**
  * Abstract PersistenceProvider
  *
@@ -27,7 +31,7 @@
  * @license    GNU Affero General Public License
  * @version   SVN: $Id$
  */
-abstract class WURFL_Xml_PersistenceProvider_AbstractPersistenceProvider implements WURFL_Xml_PersistenceProvider
+abstract class AbstractPersistenceProvider implements PersistenceProviderInterface
 {
     const APPLICATION_PREFIX = 'WURFL_'; 
     const WURFL_LOADED = 'WURFL_WURFL_LOADED';
