@@ -19,7 +19,7 @@ namespace Wurfl\Xml\PersistenceProvider;
  * @version   SVN: $Id$
  */
 
-use Wurfl\Xml\PersistenceProviderInterface
+use Wurfl\Xml\PersistenceProviderInterface;
 /**
  * Abstract PersistenceProvider
  *
