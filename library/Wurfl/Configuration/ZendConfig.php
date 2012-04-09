@@ -79,12 +79,12 @@ class ZendConfig extends ArrayConfig
     private function _setWurflConfiguration(array $wurflConfig) 
     {
         if (array_key_exists(Config::MAIN_FILE, $wurflConfig)) {
-            $this->_wurflFile = parent::getFullPath($wurflConfig[Config::MAIN_FILE]);
+            $this->_wurflFile = $this->getFullPath($wurflConfig[Config::MAIN_FILE]);
         }
         
         if (array_key_exists(Config::PATCHES, $wurflConfig)) {
             foreach($wurflConfig[Config::PATCHES] as $wurflPatch) {
-                $this->_wurflPatches[] = parent::getFullPath($wurflPatch);
+                $this->_wurflPatches[] = $this->getFullPath($wurflPatch);
             }
         }        
     }
@@ -93,7 +93,7 @@ class ZendConfig extends ArrayConfig
     {
         $this->persistence = $persistenceConfig;
         if (array_key_exists('params', $this->persistence) && array_key_exists(Config::DIR, $this->persistence['params'])) {
-            $this->_persistence['params'][Config::DIR] = parent::getFullPath($this->persistence['params'][Config::DIR]);
+            $this->_persistence['params'][Config::DIR] = $this->getFullPath($this->persistence['params'][Config::DIR]);
         }
     }
 

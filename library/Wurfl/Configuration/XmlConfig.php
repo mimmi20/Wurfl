@@ -45,7 +45,7 @@ class XmlConfig extends Config
      */
     private function _wurflFile($mainFileElement)
     {
-        return parent::getFullPath((string) $mainFileElement[0]);
+        return $this->getFullPath((string) $mainFileElement[0]);
     }
     
     /**
@@ -56,9 +56,10 @@ class XmlConfig extends Config
     private function _wurflPatches($patchElements)
     {
         $patches = array();
+        
         if ($patchElements) {
             foreach ($patchElements as $patchElement) {
-                $patches[] = parent::getFullPath((string) $patchElement);
+                $patches[] = $this->getFullPath((string) $patchElement);
             }
         }
         return $patches;
@@ -84,7 +85,7 @@ class XmlConfig extends Config
     private function _logDir($logDirElement)
     {
         if (!empty($logDirElement)) {
-            return parent::getFullPath((string) $logDirElement[0]);
+            return $this->getFullPath((string) $logDirElement[0]);
         }
         return null;
     }
@@ -118,7 +119,7 @@ class XmlConfig extends Config
             
             if (count($paramNameValue) > 1) {
                 if (strcmp(Config::DIR, $paramNameValue[0]) == 0) {
-                    $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
+                    $paramNameValue[1] = $this->getFullPath($paramNameValue[1]);
                 }
                 
                 $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);
