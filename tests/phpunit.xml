@@ -1,0 +1,37 @@
+<phpunit bootstrap="./bootstrap.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         cacheTokens="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         forceCoversAnnotation="false"
+         mapTestClassNameToCoveredClassName="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         verbose="true">
+         <!--
+         processIsolation="false"
+         strict="true"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+         colors="false" -->
+    <testsuites>
+        <testsuite name="Creditcalc">
+            <directory>./Backend/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../application</directory>
+            <directory suffix=".php">../library/App</directory>
+            <exclude>
+                <file>../application/Bootstrap.php</file>
+                <file>../application/Controller/ErrorController.php</file>
+                <directory>../application/scripts</directory>
+                <directory suffix=".phtml">../application</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
