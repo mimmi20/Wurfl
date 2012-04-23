@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,10 +13,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,23 +24,23 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SPV";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'SPV');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
+class SPVHandler extends Handler {
+    
+    protected $prefix = "SPV";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContains($userAgent, 'SPV');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
 }

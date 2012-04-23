@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,10 +13,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Require ClassLoader to dynamically load classes

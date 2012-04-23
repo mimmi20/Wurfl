@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,10 +14,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,34 +25,34 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "KDDI";
-	
-	public static $constantIDs = array(
-		'opwv_v62_generic'
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'KDDI-');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
-			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
-		} else {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-		}
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		return "opwv_v62_generic";
-	}
+class KDDIHandler extends Handler {
+    
+    protected $prefix = "KDDI";
+    
+    public static $constantIDs = array(
+        'opwv_v62_generic'
+    );
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContains($userAgent, 'KDDI-');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        if (Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
+            $tolerance = Utils::secondSlash($userAgent);
+        } else {
+            $tolerance = Utils::firstSlash($userAgent);
+        }
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent) {
+        return "opwv_v62_generic";
+    }
 }

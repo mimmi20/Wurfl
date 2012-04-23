@@ -19,19 +19,27 @@ namespace WURFL\Logger;
  * @version    $id$
  */
 /**
- * Class that is used to supress logging
+ * WURFL Logging interface
+ * 
  * @package    WURFL_Logger
  */
-class NullLogger implements LoggerInterface  {
+interface LoggerInterface {
     
-    public function log($message, $type="") {
-        //echo $message . "\n";
-    }
-    
-    public function debug($message) {
-        //echo $message . "\n";        
-    }
-    
-    public function info($message){}
+    /**
+     * Send specified $message to the log with INFO level
+     * @param string $message
+     */
+    public function info($message);
+    /**
+     * Send specified $message to the log
+     * @param string $message
+     * @param string $type The type or level of the $message
+     */
+    public function log($message, $type="");
+    /**
+     * Send specified $message to the log with DEBUG level
+     * @param string $message
+     */
+    public function debug($message);
 }
 

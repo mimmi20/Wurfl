@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,24 +13,24 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_WebOS implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		$model = WURFL_Handlers_WebOSHandler::getWebOSModelVersion($userAgent);
-		$os_ver = WURFL_Handlers_WebOSHandler::getWebOSVersion($userAgent);
-		if ($model !== null && $os_ver !== null) {
-			$prefix = $model.' '.$os_ver.WURFL_Constants::RIS_DELIMITER;
-			return $prefix.$userAgent;
-		}
-		return $userAgent;
-	}
+class WebOS implements \WURFL\Request\UserAgentNormalizer\NormalizerInterface {
+    public function normalize($userAgent) {
+        $model = \WURFL\Handlers\WebOSHandler::getWebOSModelVersion($userAgent);
+        $os_ver = \WURFL\Handlers\WebOSHandler::getWebOSVersion($userAgent);
+        if ($model !== null && $os_ver !== null) {
+            $prefix = $model.' '.$os_ver.\WURFL\Constants::RIS_DELIMITER;
+            return $prefix.$userAgent;
+        }
+        return $userAgent;
+    }
 }

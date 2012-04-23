@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,10 +14,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,35 +25,35 @@
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "WINDOWSPHONE";
-	
-	public static $constantIDs = array(
-		'generic_ms_winmo6_5',
-		'generic_ms_phone_os7',
-		'generic_ms_phone_os7_5',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		// Exact and Recovery match only
-		return WURFL_Constants::NO_MATCH;
-	}
-	
-	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.0')) return 'generic_ms_phone_os7';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.5')) return 'generic_ms_phone_os7_5';
-		return WURFL_Constants::NO_MATCH;
-	}
+class WindowsPhoneHandler extends Handler {
+    
+    protected $prefix = "WINDOWSPHONE";
+    
+    public static $constantIDs = array(
+        'generic_ms_winmo6_5',
+        'generic_ms_phone_os7',
+        'generic_ms_phone_os7_5',
+    );
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContains($userAgent, 'Windows Phone');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        // Exact and Recovery match only
+        return \WURFL\Constants::NO_MATCH;
+    }
+    
+    public function applyRecoveryMatch($userAgent){
+        if (Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
+        if (Utils::checkIfContains($userAgent, 'Windows Phone OS 7.0')) return 'generic_ms_phone_os7';
+        if (Utils::checkIfContains($userAgent, 'Windows Phone OS 7.5')) return 'generic_ms_phone_os7_5';
+        return \WURFL\Constants::NO_MATCH;
+    }
 }

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,10 +13,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,17 +24,17 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SAFARI";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari');
-	}
+class SafariHandler extends Handler {
+    
+    protected $prefix = "SAFARI";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isMobileBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla') && Utils::checkIfContains($userAgent, 'Safari');
+    }
 }

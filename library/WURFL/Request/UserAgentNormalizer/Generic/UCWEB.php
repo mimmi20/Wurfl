@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,30 +13,30 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer - removes UCWEB garbage from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_UCWEB implements WURFL_Request_UserAgentNormalizer_Interface  {
+class UCWEB implements \WURFL\Request\UserAgentNormalizer\NormalizerInterface  {
 
-	/**
-	 * This method remove the "UP.Link" substring from user agent string.
-	 *
-	 * @param string $userAgent
-	 * @return string Normalized user agent
-	 */
-	public function normalize($userAgent) {
-		// Starts with 'JUC' or 'Mozilla/5.0(Linux;U;Android'
-		if (strpos($userAgent, 'JUC') === 0 || strpos($userAgent, 'Mozilla/5.0(Linux;U;Android') === 0) {
-			$userAgent = preg_replace('/^(JUC \(Linux; U;)(?= \d)/', '$1 Android', $userAgent);
-			$userAgent = preg_replace('/(Android|JUC|[;\)])(?=[\w|\(])/', '$1 ', $userAgent);
-		}
-		return $userAgent;
-	}
+    /**
+     * This method remove the "UP.Link" substring from user agent string.
+     *
+     * @param string $userAgent
+     * @return string Normalized user agent
+     */
+    public function normalize($userAgent) {
+        // Starts with 'JUC' or 'Mozilla/5.0(Linux;U;Android'
+        if (strpos($userAgent, 'JUC') === 0 || strpos($userAgent, 'Mozilla/5.0(Linux;U;Android') === 0) {
+            $userAgent = preg_replace('/^(JUC \(Linux; U;)(?= \d)/', '$1 Android', $userAgent);
+            $userAgent = preg_replace('/(Android|JUC|[;\)])(?=[\w|\(])/', '$1 ', $userAgent);
+        }
+        return $userAgent;
+    }
 }

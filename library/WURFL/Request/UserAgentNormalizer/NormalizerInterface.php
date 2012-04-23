@@ -1,6 +1,6 @@
 <?php
 declare(ENCODING = 'utf-8');
-namespace WURFL\Handlers;
+namespace WURFL\Request\UserAgentNormalizer;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -11,31 +11,24 @@ namespace WURFL\Handlers;
  * License, or (at your option) any later version.
  *
  * Refer to the COPYING.txt file distributed with this package.
- *
- *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL_Request_UserAgentNormalizer
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-
 /**
- * SiemensUserAgentHandler
- * 
- *
- * @category   WURFL
- * @package    WURFL_Handlers
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * WURFL User Agent Normalizer Interface
+ * @package    WURFL_Request_UserAgentNormalizer
  */
-class SiemensHandler extends Handler {
+interface NormalizerInterface {
     
-    protected $prefix = "SIEMENS";
-    
-    public function canHandle($userAgent) {
-        if (Utils::isDesktopBrowser($userAgent)) return false;
-        return Utils::checkIfStartsWith($userAgent, 'SIE-');
-    }
+    /**
+     * Return the normalized user agent
+     * @param string $userAgent
+     * @return string Normalized user agent
+     */
+    public function normalize($userAgent);
 }
+

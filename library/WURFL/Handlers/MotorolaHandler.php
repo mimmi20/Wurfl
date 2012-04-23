@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,10 +14,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,36 +25,36 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "MOTOROLA";
-	
-	public static $constantIDs = array(
-		'mot_mib22_generic',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
-			WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));	
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
-			return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::firstSlash($userAgent));
-		}
-		return $this->getDeviceIDFromLD($userAgent, 5);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
-			return "mot_mib22_generic";
-		}
-		return null;
-	}
+class MotorolaHandler extends Handler {
+    
+    protected $prefix = "MOTOROLA";
+    
+    public static $constantIDs = array(
+        'mot_mib22_generic',
+    );
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
+            Utils::checkIfContains($userAgent, 'Motorola'));    
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        if (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
+            return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
+        }
+        return $this->getDeviceIDFromLD($userAgent, 5);
+    }
+    
+    public function applyRecoveryMatch($userAgent) {
+        if (Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
+            return "mot_mib22_generic";
+        }
+        return null;
+    }
 }

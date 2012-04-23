@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,21 +13,21 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer - removes locale information from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_LocaleRemover implements WURFL_Request_UserAgentNormalizer_Interface  {
+class LocaleRemover implements \WURFL\Request\UserAgentNormalizer\NormalizerInterface  {
 
-	public function normalize($userAgent) {
-		return WURFL_Handlers_Utils::removeLocale($userAgent);
-	}
+    public function normalize($userAgent) {
+        return \WURFL\Handlers\Utils::removeLocale($userAgent);
+    }
 
 }
 

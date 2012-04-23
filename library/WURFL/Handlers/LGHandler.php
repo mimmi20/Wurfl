@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,10 +14,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,26 +25,26 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "LG";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('lg', 'LG'));
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', stripos($userAgent, 'LG'));
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		return $this->getDeviceIDFromRIS($userAgent, 7);
-	}
+class LGHandler extends Handler {
+    
+    protected $prefix = "LG";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWithAnyOf($userAgent, array('lg', 'LG'));
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = Utils::indexOfOrLength($userAgent, '/', stripos($userAgent, 'LG'));
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent) {
+        return $this->getDeviceIDFromRIS($userAgent, 7);
+    }
 }

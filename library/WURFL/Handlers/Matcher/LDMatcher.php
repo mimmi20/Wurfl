@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers\Matcher;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,10 +13,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers_Matcher
+ * @package    \WURFL\Handlers\Matcher
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * WURFL Levenshtein distance user agent matcher.
@@ -24,40 +27,40 @@
  * @link http://en.wikipedia.org/wiki/Levenshtein_distance
  * @link http://www.php.net/manual/en/function.levenshtein.php
  * @see match()
- * @package	WURFL_Handlers_Matcher
+ * @package    \WURFL\Handlers\Matcher
  */
-class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface {
-	
-	/**
-	 * Instance of WURFL_Handlers_Matcher_LDMatcher
-	 * @var WURFL_Handlers_Matcher_LDMatcher
-	 */
-	private static $instance;
-	
-	/**
-	 * Returns an instance of the LDMatcher singleton
-	 * @return WURFL_Handlers_LDMatcher
-	 */
-	public static function INSTANCE() {
-		if (self::$instance === null) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-	public function match(&$collection, $needle, $tolerance) {
-		$best = $tolerance;
-		$match = '';
-		foreach ( $collection as $userAgent ) {
-			if (abs ( strlen ( $needle ) - strlen ( $userAgent ) ) <= $tolerance) {
-				$current = levenshtein($needle, $userAgent);
-				if ($current <= $best) {
-					$best = $current - 1;
-					$match = $userAgent;
-				}
-			}
-		}
-		return $match;
-	}
+class LDMatcher implements MatcherInterface {
+    
+    /**
+     * Instance of \WURFL\Handlers\Matcher_LDMatcher
+     * @var \WURFL\Handlers\Matcher_LDMatcher
+     */
+    private static $instance;
+    
+    /**
+     * Returns an instance of the LDMatcher singleton
+     * @return \WURFL\Handlers\LDMatcher
+     */
+    public static function INSTANCE() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    public function match(&$collection, $needle, $tolerance) {
+        $best = $tolerance;
+        $match = '';
+        foreach ( $collection as $userAgent ) {
+            if (abs ( strlen ( $needle ) - strlen ( $userAgent ) ) <= $tolerance) {
+                $current = levenshtein($needle, $userAgent);
+                if ($current <= $best) {
+                    $best = $current - 1;
+                    $match = $userAgent;
+                }
+            }
+        }
+        return $match;
+    }
 }
 

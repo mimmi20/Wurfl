@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,10 +13,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,36 +24,36 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
+class OperaMiniHandler extends Handler {
 
-	protected $prefix = "OPERA_MINI";
+    protected $prefix = "OPERA_MINI";
 
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, "Opera Mini");
-	}
+    public function canHandle($userAgent) {
+        return Utils::checkIfContains($userAgent, "Opera Mini");
+    }
 
-	private $operaMinis = array(
-		'Opera Mini/1' => 'generic_opera_mini_version1',
-		'Opera Mini/2' => 'generic_opera_mini_version2',
-		'Opera Mini/3' => 'generic_opera_mini_version3',
-		'Opera Mini/4' => 'generic_opera_mini_version4',
-		'Opera Mini/5' => 'generic_opera_mini_version5',
-	);
+    private $operaMinis = array(
+        'Opera Mini/1' => 'generic_opera_mini_version1',
+        'Opera Mini/2' => 'generic_opera_mini_version2',
+        'Opera Mini/3' => 'generic_opera_mini_version3',
+        'Opera Mini/4' => 'generic_opera_mini_version4',
+        'Opera Mini/5' => 'generic_opera_mini_version5',
+    );
 
-	function applyRecoveryMatch($userAgent) {
-		foreach ($this->operaMinis as $key => $deviceId) {
-			if (WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
-				return $deviceId;
-			}
-		}
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
-			return 'generic_opera_mini_version4';
-		}
-		return 'generic_opera_mini_version1';
-	}
+    function applyRecoveryMatch($userAgent) {
+        foreach ($this->operaMinis as $key => $deviceId) {
+            if (Utils::checkIfContains($userAgent, $key)) {
+                return $deviceId;
+            }
+        }
+        if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
+            return 'generic_opera_mini_version4';
+        }
+        return 'generic_opera_mini_version1';
+    }
 }

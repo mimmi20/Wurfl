@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,96 +14,96 @@
  *
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
- * Handles the chain of WURFL_Handlers_Handler objects
- * @package	WURFL
- * @see WURFL_Handlers_Handler
+ * Handles the chain of \WURFL\Handlers\Handler objects
+ * @package    WURFL
+ * @see \WURFL\Handlers\Handler
  */
-class WURFL_UserAgentHandlerChain {
-	 
-	/**
-	 * @var array of WURFL_Handlers_Handler objects
-	 */
-	private $_userAgentHandlers = array();
-	
-	/**
-	 * Adds a WURFL_Handlers_Handler to the chain
-	 *
-	 * @param WURFL_Handlers_Handler $handler
-	 * @return WURFL_UserAgentHandlerChain $this
-	 */
-	public function addUserAgentHandler(WURFL_Handlers_Handler $handler) {
-		$size = count($this->_userAgentHandlers); 
-		if ($size > 0) {
-			$this->_userAgentHandlers[$size-1]->setNextHandler($handler);
-		}
-		$this->_userAgentHandlers[] = $handler;
-		return $this;
-	}
-	
-	/**
-	 * @return array An array of all the WURFL_Handlers_Handler objects
-	 */
-	public function getHandlers() {
-		return $this->_userAgentHandlers;
-	}
-	
-	/**
-	 * Adds the pair $userAgent, $deviceID to the clusters they belong to.
-	 *
-	 * @param String $userAgent
-	 * @param String $deviceID
-	 * @see WURFL_Handlers_Handler::filter()
-	 */
-	public function filter($userAgent, $deviceID) {
-		WURFL_Handlers_Utils::reset();
-		$this->_userAgentHandlers[0]->filter($userAgent, $deviceID);
-	}
-	
-	
-	
-	/**
-	 * Return the the device id for the request 
-	 *
-	 * @param WURFL_Request_GenericRequest $request
-	 * @return String deviceID
-	 */
-	public function match(WURFL_Request_GenericRequest $request) {
-		WURFL_Handlers_Utils::reset();
-		return $this->_userAgentHandlers[0]->match($request);
-	}
-	
-	/**
-	 * Save the data from each WURFL_Handlers_Handler
-	 * @see WURFL_Handlers_Handler::persistData()
-	 */
-	public function persistData() {
-		foreach ($this->_userAgentHandlers as $userAgentHandler) {
-			$userAgentHandler->persistData();
-		}
-		
-	}
-	
-	/**
-	 * Collect data
-	 * @return array data
-	 */
-	public function collectData() {
-		$userAgentsWithDeviceId = array();		
-		foreach ($this->_userAgentHandlers as $userAgentHandler) {
-			/**
-			 * @see WURFL_Handlers_Handler::getUserAgentsWithDeviceId()
-			 */
-			$current = $userAgentHandler->getUserAgentsWithDeviceId();
-			if(!empty($current)) {
-				$userAgentsWithDeviceId = array_merge($userAgentsWithDeviceId, $current);
-			} 
-		}
-		return $userAgentsWithDeviceId;
-	}	
+class UserAgentHandlerChain {
+     
+    /**
+     * @var array of \WURFL\Handlers\Handler objects
+     */
+    private $_userAgentHandlers = array();
+    
+    /**
+     * Adds a \WURFL\Handlers\Handler to the chain
+     *
+     * @param \WURFL\Handlers\Handler $handler
+     * @return WURFL_UserAgentHandlerChain $this
+     */
+    public function addUserAgentHandler(Handlers\Handler $handler) {
+        $size = count($this->_userAgentHandlers); 
+        if ($size > 0) {
+            $this->_userAgentHandlers[$size-1]->setNextHandler($handler);
+        }
+        $this->_userAgentHandlers[] = $handler;
+        return $this;
+    }
+    
+    /**
+     * @return array An array of all the \WURFL\Handlers\Handler objects
+     */
+    public function getHandlers() {
+        return $this->_userAgentHandlers;
+    }
+    
+    /**
+     * Adds the pair $userAgent, $deviceID to the clusters they belong to.
+     *
+     * @param String $userAgent
+     * @param String $deviceID
+     * @see \WURFL\Handlers\Handler::filter()
+     */
+    public function filter($userAgent, $deviceID) {
+        Handlers\Utils::reset();
+        $this->_userAgentHandlers[0]->filter($userAgent, $deviceID);
+    }
+    
+    
+    
+    /**
+     * Return the the device id for the request 
+     *
+     * @param WURFL_Request_GenericRequest $request
+     * @return String deviceID
+     */
+    public function match(Request\GenericRequest $request) {
+        Handlers\Utils::reset();
+        return $this->_userAgentHandlers[0]->match($request);
+    }
+    
+    /**
+     * Save the data from each \WURFL\Handlers\Handler
+     * @see \WURFL\Handlers\Handler::persistData()
+     */
+    public function persistData() {
+        foreach ($this->_userAgentHandlers as $userAgentHandler) {
+            $userAgentHandler->persistData();
+        }
+        
+    }
+    
+    /**
+     * Collect data
+     * @return array data
+     */
+    public function collectData() {
+        $userAgentsWithDeviceId = array();        
+        foreach ($this->_userAgentHandlers as $userAgentHandler) {
+            /**
+             * @see \WURFL\Handlers\Handler::getUserAgentsWithDeviceId()
+             */
+            $current = $userAgentHandler->getUserAgentsWithDeviceId();
+            if(!empty($current)) {
+                $userAgentsWithDeviceId = array_merge($userAgentsWithDeviceId, $current);
+            } 
+        }
+        return $userAgentsWithDeviceId;
+    }    
 }

@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,29 +13,29 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_LGUPLUS implements WURFL_Request_UserAgentNormalizer_Interface {
-	const LGPLUS_PATTERN = "/Mozilla.*(Windows (?:NT|CE)).*(POLARIS|WV).*lgtelecom;.*;(.*);.*/";
+class LGUPLUS implements \WURFL\Request\UserAgentNormalizer\NormalizerInterface {
+    const LGPLUS_PATTERN = "/Mozilla.*(Windows (?:NT|CE)).*(POLARIS|WV).*lgtelecom;.*;(.*);.*/";
 
-	public function normalize($userAgent) {
-		return preg_replace(self::LGPLUS_PATTERN, "$3 $1 $2", $userAgent);
-		/*
-		$matches = array();
-		if (preg_match(self::LGPLUS_PATTERN, $userAgent, $matches) != 0) {
-			return $matches[1];
-		}
-		return $userAgent;
-		*/
-	}
+    public function normalize($userAgent) {
+        return preg_replace(self::LGPLUS_PATTERN, "$3 $1 $2", $userAgent);
+        /*
+        $matches = array();
+        if (preg_match(self::LGPLUS_PATTERN, $userAgent, $matches) != 0) {
+            return $matches[1];
+        }
+        return $userAgent;
+        */
+    }
 
 }
 

@@ -1,6 +1,6 @@
 <?php
 declare(ENCODING = 'utf-8');
-namespace WURFL\Handlers;
+namespace WURFL\Storage;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -12,30 +12,19 @@ namespace WURFL\Handlers;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
- *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL_Storage
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-
 /**
- * SiemensUserAgentHandler
- * 
- *
- * @category   WURFL
- * @package    WURFL_Handlers
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
+ * WURFL Storage
+ * @package    WURFL_Storage
  */
-class SiemensHandler extends Handler {
-    
-    protected $prefix = "SIEMENS";
-    
-    public function canHandle($userAgent) {
-        if (Utils::isDesktopBrowser($userAgent)) return false;
-        return Utils::checkIfStartsWith($userAgent, 'SIE-');
-    }
+class NullStorage extends Base  {
+    public function load($key) { return null; }
+    public function save($key, $value, $expire=0) {}
+    public function clear() {}
 }

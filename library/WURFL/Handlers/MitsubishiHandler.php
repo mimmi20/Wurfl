@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,10 +14,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,22 +25,22 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "MITSUBISHI";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Mitsu");
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+class MitsubishiHandler extends Handler {
+    
+    protected $prefix = "MITSUBISHI";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWith($userAgent, "Mitsu");
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = Utils::firstSpace($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

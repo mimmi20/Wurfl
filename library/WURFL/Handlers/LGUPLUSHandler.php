@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,10 +13,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,45 +24,45 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
-class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler {
+class LGUPLUSHandler extends Handler {
 
-	protected $prefix = "LGUPLUS";
+    protected $prefix = "LGUPLUS";
 
-	public static $constantIDs = array(
-		'generic_lguplus_rexos_facebook_browser',
-		'generic_lguplus_rexos_webviewer_browser',
-		'generic_lguplus_winmo_facebook_browser',
-		'generic_lguplus_android_webkit_browser',
-	);
+    public static $constantIDs = array(
+        'generic_lguplus_rexos_facebook_browser',
+        'generic_lguplus_rexos_webviewer_browser',
+        'generic_lguplus_winmo_facebook_browser',
+        'generic_lguplus_android_webkit_browser',
+    );
 
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
-	}
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
+    }
 
-	public function applyConclusiveMatch($userAgent) {
-		return WURFL_Constants::NO_MATCH;
-	}
+    public function applyConclusiveMatch($userAgent) {
+        return \WURFL\Constants::NO_MATCH;
+    }
 
 
-	private $lgupluses = array(
-		"generic_lguplus_rexos_facebook_browser" => array("Windows NT 5", "POLARIS"),
-		"generic_lguplus_rexos_webviewer_browser" => array("Windows NT 5"),
-		"generic_lguplus_winmo_facebook_browser" => array("Windows CE", "POLARIS"),
-		"generic_lguplus_android_webkit_browser" => array("Android", "AppleWebKit")
-	);
+    private $lgupluses = array(
+        "generic_lguplus_rexos_facebook_browser" => array("Windows NT 5", "POLARIS"),
+        "generic_lguplus_rexos_webviewer_browser" => array("Windows NT 5"),
+        "generic_lguplus_winmo_facebook_browser" => array("Windows CE", "POLARIS"),
+        "generic_lguplus_android_webkit_browser" => array("Android", "AppleWebKit")
+    );
 
-	public function applyRecoveryMatch($userAgent) {
-		foreach($this->lgupluses as $deviceId => $values) {
-			if(WURFL_Handlers_Utils::checkIfContainsAll($userAgent, $values)) {
-				return $deviceId;
-			}
-		}
-		return null;
-	}
+    public function applyRecoveryMatch($userAgent) {
+        foreach($this->lgupluses as $deviceId => $values) {
+            if(Utils::checkIfContainsAll($userAgent, $values)) {
+                return $deviceId;
+            }
+        }
+        return null;
+    }
 }

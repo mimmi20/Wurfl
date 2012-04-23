@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,34 +13,34 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
- * User Agent Normalizer - Return the Konqueror user agent with the major version		
+ * User Agent Normalizer - Return the Konqueror user agent with the major version        
  * e.g 
- * 	Mozilla/5.0 (compatible; Konqueror/4.1; Linux) KHTML/4.1.2 (like Gecko) -> Konqueror/4
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ *     Mozilla/5.0 (compatible; Konqueror/4.1; Linux) KHTML/4.1.2 (like Gecko) -> Konqueror/4
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Konqueror implements WURFL_Request_UserAgentNormalizer_Interface  {
+class Konqueror implements \WURFL\Request\UserAgentNormalizer\NormalizerInterface  {
 
-	const KONQUEROR = "Konqueror";
-	
-	public function normalize($userAgent) {
-		return $this->konquerorWithMajorVersion($userAgent);
-	}
-	
-	/**
-	 * Return KDE Konquerer major version
-	 * @param string $userAgent
-	 * @return string|int Major version number
-	 */
-	private function konquerorWithMajorVersion($userAgent) {
-		return substr($userAgent, strpos($userAgent, self::KONQUEROR), 10);
-	}
+    const KONQUEROR = "Konqueror";
+    
+    public function normalize($userAgent) {
+        return $this->konquerorWithMajorVersion($userAgent);
+    }
+    
+    /**
+     * Return KDE Konquerer major version
+     * @param string $userAgent
+     * @return string|int Major version number
+     */
+    private function konquerorWithMajorVersion($userAgent) {
+        return substr($userAgent, strpos($userAgent, self::KONQUEROR), 10);
+    }
 
 }
 

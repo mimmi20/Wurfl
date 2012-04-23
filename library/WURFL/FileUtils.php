@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,93 +13,93 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * WURFL File Utilities
- * @package	WURFL
+ * @package    WURFL
  */
-class WURFL_FileUtils {
-	
-	/**
-	 * Create a directory structure recursiveley
-	 * @param string $path
-	 * @param int $mode
-	 */
-	public static function mkdir($path, $mode=0755) {
-		@mkdir($path, $mode, true);
-	}
-	
-	/**
-	 * Recursiely remove all files from the given directory NOT including the
-	 * specified directory itself
-	 * @param string $path Directory to be cleaned out
-	 */
-	public static function rmdirContents($path) {
-		$files = scandir($path);
-		array_shift($files); // remove '.' from array
-		array_shift($files); // remove '..' from array
-		
-		foreach ($files as $file) {
-			$file = $path . DIRECTORY_SEPARATOR . $file;
-			if (is_dir($file )) {
-				self::rmdir($file);
-				rmdir($file);
-			} else {
-				unlink($file);
-			}
-		}	
-	}
-	
-	/**
-	 * Alias to rmdirContents()
-	 * @param string $path Directory to be cleaned out
-	 * @see rmdirContents()
-	 */
-	public static function rmdir($path) {
-		self::rmdirContents($path);
-	}
-	
-	/**
-	 * Returns the unserialized contents of the given $file
-	 * @param string $file filename
-	 * @return mixed Unserialized data or null if file does not exist
-	 */
-	public static function read($file) {
-		$data = @file_get_contents($file);
-		if ($data === false) return null;
-		$value = @unserialize($data);
-		if ($value === false) return null;
-		return $value;
-	}
-	
-	/**
-	 * Serializes and saves $data in the file $path and sets the last modified time to $mtime  
-	 * @param string $path filename to save data in
-	 * @param mixed $data data to be serialized and saved
-	 * @param integer $mtime Last modified date in epoch time
-	 */
-	public static function write($path, $data, $mtime = 0) {
-		if (!file_exists(dirname($path))) {
-			self::mkdir(dirname($path), 0755, true);
-		}
-		if (file_put_contents($path, serialize($data), LOCK_EX )) {
-			$mtime = ($mtime > 0)? $mtime: time();
-			@chmod($path, 0777);
-			@touch($path, $mtime);
-		}
-	}
-	
-	/**
-	 * Combines given array of $strings into a proper filesystem path
-	 * @param array $strings Array of (string)path members
-	 * @return string Proper filesystem path 
-	 */
-	public static function join($strings = array()) {
-		return implode(DIRECTORY_SEPARATOR, $strings);
-	}
+class FileUtils {
+    
+    /**
+     * Create a directory structure recursiveley
+     * @param string $path
+     * @param int $mode
+     */
+    public static function mkdir($path, $mode=0755) {
+        @mkdir($path, $mode, true);
+    }
+    
+    /**
+     * Recursiely remove all files from the given directory NOT including the
+     * specified directory itself
+     * @param string $path Directory to be cleaned out
+     */
+    public static function rmdirContents($path) {
+        $files = scandir($path);
+        array_shift($files); // remove '.' from array
+        array_shift($files); // remove '..' from array
+        
+        foreach ($files as $file) {
+            $file = $path . DIRECTORY_SEPARATOR . $file;
+            if (is_dir($file )) {
+                self::rmdir($file);
+                rmdir($file);
+            } else {
+                unlink($file);
+            }
+        }    
+    }
+    
+    /**
+     * Alias to rmdirContents()
+     * @param string $path Directory to be cleaned out
+     * @see rmdirContents()
+     */
+    public static function rmdir($path) {
+        self::rmdirContents($path);
+    }
+    
+    /**
+     * Returns the unserialized contents of the given $file
+     * @param string $file filename
+     * @return mixed Unserialized data or null if file does not exist
+     */
+    public static function read($file) {
+        $data = @file_get_contents($file);
+        if ($data === false) return null;
+        $value = @unserialize($data);
+        if ($value === false) return null;
+        return $value;
+    }
+    
+    /**
+     * Serializes and saves $data in the file $path and sets the last modified time to $mtime  
+     * @param string $path filename to save data in
+     * @param mixed $data data to be serialized and saved
+     * @param integer $mtime Last modified date in epoch time
+     */
+    public static function write($path, $data, $mtime = 0) {
+        if (!file_exists(dirname($path))) {
+            self::mkdir(dirname($path), 0755, true);
+        }
+        if (file_put_contents($path, serialize($data), LOCK_EX )) {
+            $mtime = ($mtime > 0)? $mtime: time();
+            @chmod($path, 0777);
+            @touch($path, $mtime);
+        }
+    }
+    
+    /**
+     * Combines given array of $strings into a proper filesystem path
+     * @param array $strings Array of (string)path members
+     * @return string Proper filesystem path 
+     */
+    public static function join($strings = array()) {
+        return implode(DIRECTORY_SEPARATOR, $strings);
+    }
 
 }

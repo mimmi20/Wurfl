@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Request\UserAgentNormalizer\Generic;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,31 +13,31 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer - removes UP.Link garbage from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_UPLink implements WURFL_Request_UserAgentNormalizer_Interface  {
+class UPLink implements \WURFL\Request\UserAgentNormalizer\NormalizerInterface  {
 
-	/**
-	 * This method remove the "UP.Link" substring from user agent string.
-	 *
-	 * @param string $userAgent
-	 * @return string Normalized user agent
-	 */
-	public function normalize($userAgent) {
-		$index = strpos($userAgent, " UP.Link");
-		if ($index > 0) {
-			return substr($userAgent, 0, $index);
-		}
-		return $userAgent;
-	}
+    /**
+     * This method remove the "UP.Link" substring from user agent string.
+     *
+     * @param string $userAgent
+     * @return string Normalized user agent
+     */
+    public function normalize($userAgent) {
+        $index = strpos($userAgent, " UP.Link");
+        if ($index > 0) {
+            return substr($userAgent, 0, $index);
+        }
+        return $userAgent;
+    }
 
 }
 

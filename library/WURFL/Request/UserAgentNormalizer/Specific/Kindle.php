@@ -1,4 +1,7 @@
 <?php
+declare(ENCODING = 'utf-8');
+namespace WURFL\Request\UserAgentNormalizer\Specific;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,26 +13,26 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Kindle implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', 'Kindle Fire'))) {
-			$model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
-			$version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
-			if ($model !== null && $version !== null) {
-				$prefix = $version.' '.$model.WURFL_Constants::RIS_DELIMITER;
-				return $prefix.$userAgent;
-			}
-		}
-		return $userAgent;
-	}
+class Kindle implements \WURFL\Request\UserAgentNormalizer\NormalizerInterface {
+    public function normalize($userAgent) {
+        if (\WURFL\Handlers\Utils::checkIfContainsAll($userAgent, array('Android', 'Kindle Fire'))) {
+            $model = \WURFL\Handlers\AndroidHandler::getAndroidModel($userAgent, false);
+            $version = \WURFL\Handlers\AndroidHandler::getAndroidVersion($userAgent, false);
+            if ($model !== null && $version !== null) {
+                $prefix = $version.' '.$model.\WURFL\Constants::RIS_DELIMITER;
+                return $prefix.$userAgent;
+            }
+        }
+        return $userAgent;
+    }
 }
