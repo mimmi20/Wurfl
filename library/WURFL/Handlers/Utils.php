@@ -23,8 +23,8 @@ namespace WURFL\Handlers;
  * WURFL user agent hander utilities
  * @package    WURFL
  */
-class Utils {
-    
+class Utils
+{
     /**
      * The worst allowed match tolerance
      * @var unknown_type
@@ -34,7 +34,7 @@ class Utils {
     /**
      * @var array Collection of mobile browser keywords
      */
-    private static $mobileBrowsers = array (
+    private static $mobileBrowsers = array(
         'midp',
         'mobile',
         'android',
@@ -166,7 +166,8 @@ class Utils {
      * @return string Matched user agent
      * @see \WURFL\Handlers\Matcher_RISMatcher::match()
      */
-    public static function risMatch($collection, $needle, $tolerance) {
+    public static function risMatch($collection, $needle, $tolerance)
+    {
         return Matcher\RISMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
     }
     
@@ -178,7 +179,8 @@ class Utils {
      * @return string Matched user agent
      * @see \WURFL\Handlers\Matcher_LDMatcher::match()
      */
-    public static function ldMatch($collection, $needle, $tolerance = 7) {
+    public static function ldMatch($collection, $needle, $tolerance = 7)
+    {
         return Matcher\LDMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
     }
     
@@ -190,7 +192,8 @@ class Utils {
      * @param int $startingIndex Char index for start of search
      * @return int Char index of match or length of string
      */
-    public static function indexOfOrLength($string, $target, $startingIndex = 0) {
+    public static function indexOfOrLength($string, $target, $startingIndex = 0)
+    {
         $length = strlen ( $string );
         $pos = strpos ( $string, $target, $startingIndex );
         return $pos === false ? $length : $pos;
@@ -204,7 +207,8 @@ class Utils {
      * @param int $startIndex Char index for start of search
      * @return int Char index of left-most match or length of string
      */
-    public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex) {
+    public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex)
+    {
         $positions = array ();
         foreach ( $needles as $needle ) {
             $pos = strpos ( $userAgent, $needle, $startIndex );
@@ -216,7 +220,8 @@ class Utils {
         return count ( $positions ) > 0 ? $positions [0] : strlen ( $userAgent );
     }
     
-    public static function reset() {
+    public static function reset()
+    {
         self::$_is_desktop_browser = null;
         self::$_is_mobile_browser = null;
         self::$_is_smarttv = null;
@@ -227,7 +232,8 @@ class Utils {
      * @param string $userAgent
      * @return bool
      */
-    public static function isMobileBrowser($userAgent) {
+    public static function isMobileBrowser($userAgent)
+    {
         if (self::$_is_mobile_browser !== null) return self::$_is_mobile_browser;
         self::$_is_mobile_browser = false;
         $userAgent = strtolower($userAgent);
@@ -246,7 +252,8 @@ class Utils {
      * @param string $userAgent
      * @return bool
      */
-    public static function isDesktopBrowser($userAgent) {
+    public static function isDesktopBrowser($userAgent)
+    {
         if (self::$_is_desktop_browser !== null) return self::$_is_desktop_browser;
         self::$_is_desktop_browser = false;
         $userAgent = strtolower($userAgent);
@@ -265,13 +272,14 @@ class Utils {
      * @param string $userAgent
      * @return bool
      */
-    public static function getMobileCatchAllId($userAgent) {
+    public static function getMobileCatchAllId($userAgent)
+    {
         foreach (self::$mobileCatchAllIds as $key => $deviceId) {
             if (strpos($userAgent, $key) !== false) {
                 return $deviceId;
             }
         }
-        return WURFL_Constants::NO_MATCH;
+        return \WURFL\Constants::NO_MATCH;
     }
     
     /**
@@ -279,7 +287,8 @@ class Utils {
      * @param string $userAgent
      * @return bool
      */
-    public static function isDesktopBrowserHeavyDutyAnalysis($userAgent){
+    public static function isDesktopBrowserHeavyDutyAnalysis($userAgent)
+    {
         // Check Smart TV keywords
         if (Utils::isSmartTV($userAgent)) return false;
         // Chrome
@@ -308,7 +317,8 @@ class Utils {
      * @param string $userAgent
      * @return bool
      */
-    public static function isSmartTV($userAgent) {
+    public static function isSmartTV($userAgent)
+    {
         if (self::$_is_smarttv !== null) return self::$_is_smarttv;
         self::$_is_smarttv = false;
         $userAgent = strtolower($userAgent);
@@ -327,7 +337,8 @@ class Utils {
      * @param string $userAgent
      * @return bool
      */
-    public static function isSpamOrCrawler($userAgent) {
+    public static function isSpamOrCrawler($userAgent)
+    {
         //$spamOrCrawlers = array("FunWebProducts", "Spam");        
         return self::checkIfContains($userAgent, "Spam") || self::checkIfContains($userAgent, "FunWebProducts");
     }
@@ -339,7 +350,8 @@ class Utils {
      * @param string $haystack
      * @return int Char index of third semicolon or length
      */
-    public static function thirdSemiColumn($haystack) {
+    public static function thirdSemiColumn($haystack)
+    {
         $thirdSemiColumnIndex = self::ordinalIndexOf ( $haystack, ";", 3 );
         if ($thirdSemiColumnIndex < 0) {
             return strlen ( $haystack );
@@ -355,7 +367,8 @@ class Utils {
      * @throws InvalidArgumentException
      * @return int Char index of occurance
      */
-    public static function ordinalIndexOf($haystack, $needle, $ordinal) {
+    public static function ordinalIndexOf($haystack, $needle, $ordinal)
+    {
         if (is_null ( $haystack ) || empty ( $haystack )) {
             throw new InvalidArgumentException ( "haystack must not be null or empty" );
         }
@@ -384,7 +397,8 @@ class Utils {
      * @param string $string Haystack
      * @return int Char index
      */
-    public static function firstSlash($string) {
+    public static function firstSlash($string)
+    {
         $firstSlash = strpos($string, "/");
         return ($firstSlash !== false)? $firstSlash: strlen($string);
     }
@@ -394,7 +408,8 @@ class Utils {
      * @param string $string Haystack
      * @return int Char index
      */
-    public static function secondSlash($string) {
+    public static function secondSlash($string)
+    {
         $firstSlash = strpos($string, "/");
         if ($firstSlash === false)
             return strlen($string);
@@ -406,7 +421,8 @@ class Utils {
      * @param string $string Haystack
      * @return int Char index
      */
-    public static function firstSpace($string) {
+    public static function firstSpace($string)
+    {
         $firstSpace = strpos($string, " ");
         return ($firstSpace === false)? strlen($string) : $firstSpace;
     }
@@ -416,7 +432,8 @@ class Utils {
      * @param string $string Haystack
      * @return int Char index
      */
-    public static function firstSemiColonOrLength($string) {
+    public static function firstSemiColonOrLength($string)
+    {
         return self::firstMatchOrLength($string, ";");
     }
     
@@ -426,7 +443,8 @@ class Utils {
      * @param string $toMatch Needle
      * @return int Char index
      */
-    public static function firstMatchOrLength($string, $toMatch) {
+    public static function firstMatchOrLength($string, $toMatch)
+    {
         $firstMatch = strpos ( $string, $toMatch );
         return ($firstMatch === false) ? strlen($string): $firstMatch;
     }
@@ -437,7 +455,8 @@ class Utils {
      * @param string $needle Needle
      * @return bool
      */
-    public static function checkIfContains($haystack, $needle) {
+    public static function checkIfContains($haystack, $needle)
+    {
         return (strpos($haystack, $needle) !== false);
     }
     
@@ -447,7 +466,8 @@ class Utils {
      * @param array $needles Array of (string)needles
      * @return bool
      */
-    public static function checkIfContainsAnyOf($haystack, $needles) {
+    public static function checkIfContainsAnyOf($haystack, $needles)
+    {
         foreach ($needles as $needle) {
             if (self::checkIfContains($haystack, $needle)) return true;
         }
@@ -460,7 +480,8 @@ class Utils {
      * @param array $needles Array of (string)needles
      * @return bool
      */
-    public static function checkIfContainsAll($haystack, $needles=array()) {
+    public static function checkIfContainsAll($haystack, $needles=array())
+    {
         foreach ($needles as $needle) {
             if (!self::checkIfContains($haystack, $needle)) return false;
         }
@@ -474,7 +495,8 @@ class Utils {
      * @param string $needle Needle
      * @return bool
      */
-    public static function checkIfContainsCaseInsensitive($haystack, $needle) {
+    public static function checkIfContainsCaseInsensitive($haystack, $needle)
+    {
         return stripos($haystack, $needle) !== false;
     }
     
@@ -484,7 +506,8 @@ class Utils {
      * @param string $needle Needle
      * @return bool
      */
-    public static function checkIfStartsWith($haystack, $needle) {
+    public static function checkIfStartsWith($haystack, $needle)
+    {
         return strpos($haystack, $needle) === 0;
     }
     
@@ -494,7 +517,8 @@ class Utils {
      * @param array $needles Array of (string)needles
      * @return bool
      */
-    public static function checkIfStartsWithAnyOf($haystack, $needles) {
+    public static function checkIfStartsWithAnyOf($haystack, $needles)
+    {
         if (is_array($needles)) {
             foreach ($needles as $needle) {
                 if (strpos($haystack, $needle) === 0) {
@@ -511,7 +535,8 @@ class Utils {
      * @param string $userAgent
      * @return string User agent without language string
      */
-    public static function removeLocale($userAgent) {
+    public static function removeLocale($userAgent)
+    {
         return preg_replace('/; ?[a-z]{2}(?:-[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?/', '; xx-xx', $userAgent);
     }
 }

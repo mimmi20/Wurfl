@@ -94,16 +94,11 @@ class File extends Base {
 
 
     private function keyPath($key) {
-        return \WURFL\FileUtils::join(array($this->root, $this->spread(md5($key))));
+        return \WURFL\FileUtils::join(array($this->root, $this->spread($key)));
     }
 
     function spread($md5, $n = 2) {
-        $path = "";
-        for ($i = 0; $i < $n; $i++) {
-            $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
-        }
-        $path .= substr($md5, $n);
-        return $path;
+        return $md5;
     }
 
 

@@ -24,8 +24,8 @@ namespace WURFL;
  * WURFL Service
  * @package    WURFL
  */
-class WURFLService {
-    
+class WURFLService
+{
     /**
      * @var WURFL_DeviceRepository
      */
@@ -39,7 +39,8 @@ class WURFLService {
      */
     private $_cacheProvider;
     
-    public function __construct(WURFL_DeviceRepository $deviceRepository, WURFL_UserAgentHandlerChain $userAgentHandlerChain, WURFL_Storage $cacheProvider) {
+    public function __construct(DeviceRepository $deviceRepository, UserAgentHandlerChain $userAgentHandlerChain, Storage $cacheProvider)
+    {
         $this->_deviceRepository = $deviceRepository;
         $this->_userAgentHandlerChain = $userAgentHandlerChain;
         $this->_cacheProvider = $cacheProvider;
@@ -50,7 +51,8 @@ class WURFLService {
      * @return WURFL_Xml_Info WURFL Version info
      * @see WURFL_DeviceRepository::getWURFLInfo()
      */
-    public function getWURFLInfo() {
+    public function getWURFLInfo()
+    {
         return $this->_deviceRepository->getWURFLInfo();
     }
     
@@ -60,9 +62,10 @@ class WURFLService {
      * @param WURFL_Request_GenericRequest $request
      * @return WURFL_CustomDevice
      */
-    public function getDeviceForRequest(WURFL_Request_GenericRequest $request) {
-        $deviceId = $this->deviceIdForRequest($request);
-        return $this->getWrappedDevice($deviceId, $request->matchInfo);
+    public function getDeviceForRequest(Request\GenericRequest $request)
+    {
+        $deviceId = $this->_deviceIdForRequest($request);
+        return $this->_getWrappedDevice($deviceId, $request->matchInfo);
     
     }
     
@@ -72,8 +75,9 @@ class WURFLService {
      * @param string $deviceID
      * @return WURFL_Xml_ModelDevice
      */
-    public function getDevice($deviceID) {
-        return $this->getWrappedDevice($deviceID);
+    public function getDevice($deviceID)
+    {
+        return $this->_getWrappedDevice($deviceID);
     }
     
     /**
@@ -81,7 +85,8 @@ class WURFLService {
      *
      * @return array of strings
      */
-    public function getAllDevicesID() {
+    public function getAllDevicesID()
+    {
         return $this->_deviceRepository->getAllDevicesID();
     }
     
@@ -92,16 +97,19 @@ class WURFLService {
      * @param string $deviceID
      * @return array
      */
-    public function getDeviceHierarchy($deviceID) {
+    public function getDeviceHierarchy($deviceID)
+    {
         return $this->_deviceRepository->getDeviceHierarchy($deviceID);
     }
     
-    public function getListOfGroups() {
+    public function getListOfGroups()
+    {
         return $this->_deviceRepository->getListOfGroups();
     }
     
     
-    public function getCapabilitiesNameForGroup($groupId) {
+    public function getCapabilitiesNameForGroup($groupId)
+    {
         return $this->_deviceRepository->getCapabilitiesNameForGroup($groupId);
     }
     
@@ -113,7 +121,8 @@ class WURFLService {
      * @param WURFL_Request_GenericRequest $request WURFL Request object
      * @return string WURFL device id
      */
-    private function deviceIdForRequest($request) {
+    private function _deviceIdForRequest($request)
+    {
         $deviceId = $this->_cacheProvider->load($request->id);
         if (empty($deviceId)) {
             $deviceId = $this->_userAgentHandlerChain->match($request);
@@ -134,11 +143,12 @@ class WURFLService {
      * @param string $matchInfo
      * @return WURFL_CustomDevice
      */
-    private function getWrappedDevice($deviceID, $matchInfo = null) {
+    private function _getWrappedDevice($deviceID, $matchInfo = null)
+    {
         $device = $this->_cacheProvider->load('DEV_'.$deviceID);
         if (empty($device)) {
             $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
-            $device = new WURFL_CustomDevice($modelDevices, $matchInfo);
+            $device = new CustomDevice($modelDevices, $matchInfo);
             $this->_cacheProvider->save('DEV_'.$deviceID, $device);
         }
         return $device;

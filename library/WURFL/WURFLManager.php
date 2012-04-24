@@ -38,8 +38,8 @@ namespace WURFL;
  * @package WURFL
  * @see getWURFLInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), \WURFL\WURFLManagerFactory::create()
  */
-class WURFLManager {
-    
+class WURFLManager
+{
     /**
      * @var WURFL_WURFLService
      */
@@ -54,7 +54,8 @@ class WURFLManager {
      * @param WURFL_WURFLService $wurflService
      * @param WURFL_Request_GenericRequestFactory $requestFactory
      */
-    public function __construct(WURFL_WURFLService $wurflService, WURFL_Request_GenericRequestFactory $requestFactory) {
+    public function __construct(WURFLService $wurflService, Request\GenericRequestFactory $requestFactory)
+    {
         $this->_wurflService = $wurflService;
         $this->_requestFactory = $requestFactory;
     }
@@ -74,7 +75,8 @@ class WURFLManager {
      * @return WURFL_Xml_Info WURFL Version info
      * @see WURFL_WURFLService::getWURFLInfo(), WURFL_DeviceRepository::getWURFLInfo()
      */
-    public function getWURFLInfo() {
+    public function getWURFLInfo()
+    {
         return $this->_wurflService->getWURFLInfo();
     }
     
@@ -85,12 +87,13 @@ class WURFLManager {
      * @return WURFL_CustomDevice device
      * @throws Exception if the $request parameter is not set
      */
-    public function getDeviceForRequest(WURFL_Request_GenericRequest $request) {
+    public function getDeviceForRequest(Request\GenericRequest $request)
+    {
         if (!isset($request)) {
             throw new Exception("The request parameter must be set.");
         }
-        \WURFL\Handlers\Utils::reset();
-        if (\WURFL\Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && \WURFL\Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
+        Handlers\Utils::reset();
+        if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
             return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER);
         }
         return $this->_wurflService->getDeviceForRequest($request);
@@ -103,7 +106,8 @@ class WURFLManager {
      * @return WURFL_CustomDevice device
      * @throws Exception if $httpRequest is not set
      */
-    public function getDeviceForHttpRequest($httpRequest) {
+    public function getDeviceForHttpRequest($httpRequest)
+    {
         if (!isset($httpRequest)) {
             throw new Exception("The $httpRequest parameter must be set.");
         }
@@ -118,7 +122,8 @@ class WURFLManager {
      * @return WURFL_CustomDevice device
      * @throws Exception if $userAgent is not set
      */
-    public function getDeviceForUserAgent($userAgent) {
+    public function getDeviceForUserAgent($userAgent)
+    {
         if (!isset($userAgent)) {
             $userAgent = '';
         }
@@ -133,7 +138,8 @@ class WURFLManager {
      * @param string $deviceID
      * @return WURFL_CustomDevice
      */
-    public function getDevice($deviceID) {
+    public function getDevice($deviceID)
+    {
         return $this->_wurflService->getDevice($deviceID);
     }
     
@@ -142,7 +148,8 @@ class WURFLManager {
      *
      * @return array
      */
-    public function getListOfGroups() {
+    public function getListOfGroups()
+    {
         return $this->_wurflService->getListOfGroups();
     }
     
@@ -152,7 +159,8 @@ class WURFLManager {
      * @param string $groupID
      * @return array
      */
-    public function getCapabilitiesNameForGroup($groupID) {
+    public function getCapabilitiesNameForGroup($groupID)
+    {
         return $this->_wurflService->getCapabilitiesNameForGroup($groupID);
     }
     
@@ -162,7 +170,8 @@ class WURFLManager {
      * @param string $deviceID
      * @return array
      */
-    public function getFallBackDevices($deviceID) {
+    public function getFallBackDevices($deviceID)
+    {
         return $this->_wurflService->getDeviceHierarchy($deviceID);
     }
     
@@ -171,7 +180,8 @@ class WURFLManager {
      *
      * @return array
      */
-    public function getAllDevicesID() {
+    public function getAllDevicesID()
+    {
         return $this->_wurflService->getAllDevicesID();
     }
 }

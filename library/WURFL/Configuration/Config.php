@@ -93,19 +93,20 @@ abstract class Config {
      * Creates a new WURFL Configuration object from $configFilePath
      * @param string $configFilePath Complete filename of configuration file 
      */
-    public function __construct($configFilePath) {
+    public function __construct($configFilePath)
+    {
         if(!file_exists($configFilePath)) {
             throw new InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
         }
         $this->configFilePath = $configFilePath;
         $this->configurationFileDir = dirname($this->configFilePath);
-        $this->initialize();
+        $this->_initialize();
     }
 
     /**
-     * Initialize the Configuration object
+     * _initialize the Configuration object
      */
-    protected abstract function initialize();
+    protected abstract function _initialize();
     
     /**
      * Magic Method 
@@ -113,7 +114,8 @@ abstract class Config {
      * @param string $name
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         return $this->$name;
     }
     
@@ -121,11 +123,13 @@ abstract class Config {
      * True if the engine is in High Performance mode
      * @return boolean
      */
-    public function isHighPerformance() {
+    public function isHighPerformance()
+    {
         return ($this->matchMode == self::MATCH_MODE_PERFORMANCE);
     }
     
-    public static function validMatchMode($mode) {
+    public static function validMatchMode($mode)
+    {
         if ($mode == self::MATCH_MODE_PERFORMANCE || $mode == self::MATCH_MODE_ACCURACY) {
             return true;
         }
@@ -135,14 +139,16 @@ abstract class Config {
     /**
      * @return string Config file including full path and filename
      */
-    protected function getConfigFilePath() {
+    protected function _getConfigFilePath()
+    {
         return $this->configFilePath;
     }
     
     /**
      * @return string Config file directory
      */
-    protected function getConfigurationFileDir() {
+    protected function _getConfigurationFileDir()
+    {
         return $this->configurationFileDir;
     }
     
@@ -150,8 +156,9 @@ abstract class Config {
      * @param string $confLocation
      * @return bool file exists
      */
-    protected function fileExist($confLocation) {
-        $fullFileLocation = $this->getFullPath($confLocation);
+    protected function _fileExist($confLocation)
+    {
+        $fullFileLocation = $this->_getFullPath($confLocation);
         return file_exists($fullFileLocation);
     }
         
@@ -162,7 +169,8 @@ abstract class Config {
      * @throws WURFL_WURFLException The configuration file does not exist
      * @return string File name including full path
      */
-    protected function getFullPath($fileName) {;
+    protected function _getFullPath($fileName)
+    {
         $fileName = trim($fileName);
         if(realpath($fileName) && !(basename($fileName) === $fileName )) {
             return realpath($fileName);

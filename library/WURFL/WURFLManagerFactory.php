@@ -31,8 +31,8 @@ namespace WURFL;
  * @version    $id$
  */
 
-class WURFLManagerFactory {
-    
+class WURFLManagerFactory
+{
     const DEBUG = false;
     const WURFL_LAST_MODIFICATION_TIME = "WURFL_LAST_MODIFICATION_TIME";
     const WURFL_CURRENT_MODIFICATION_TIME = "WURFL_CURRENT_MODIFICATION_TIME";
@@ -61,11 +61,12 @@ class WURFLManagerFactory {
      * @param WURFL_Storage_Base $persistenceStorage
      * @param WURFL_Storage_Base $cacheStorage
      */
-    public function __construct(\WURFL\Configuration\Config $wurflConfig, $persistenceStorage=null, $cacheStorage=null) {
+    public function __construct(Configuration\Config $wurflConfig, $persistenceStorage=null, $cacheStorage=null)
+    {
         $this->wurflConfig = $wurflConfig;
-        \WURFL\Configuration\ConfigHolder::setWURFLConfig($this->wurflConfig);
-        $this->persistenceStorage = $persistenceStorage? $persistenceStorage: \WURFL\Storage\Factory::create($this->wurflConfig->persistence);
-        $this->cacheStorage = $cacheStorage? $cacheStorage: \WURFL\Storage\Factory::create($this->wurflConfig->cache);
+        Configuration\ConfigHolder::setWURFLConfig($this->wurflConfig);
+        $this->persistenceStorage = $persistenceStorage? $persistenceStorage: Storage\Factory::create($this->wurflConfig->persistence);
+        $this->cacheStorage = $cacheStorage? $cacheStorage: Storage\Factory::create($this->wurflConfig->cache);
         if ($this->persistenceStorage->validSecondaryCache($this->cacheStorage)) {
             $this->persistenceStorage->setCacheStorage($this->cacheStorage);
         }
@@ -75,12 +76,14 @@ class WURFLManagerFactory {
      * Creates a new WURFLManager Object
      * @return WURFL_WURFLManager WURFL Manager object
      */
-    public function create() {
+    public function create()
+    {
         if (!isset($this->wurflManager)) {
-            $this->init();
-        }        
+            $this->_init();
+        }
+        
         if ($this->hasToBeReloaded()) {
-            $this->reload();
+            $this->_reload();
         }
         
         return $this->wurflManager;
@@ -89,10 +92,11 @@ class WURFLManagerFactory {
     /**
      * Reload the WURFL Data into the persistence provider
      */
-    private function reload() {
+    private function _reload()
+    {
         $this->persistenceStorage->setWURFLLoaded(false);
-        $this->invalidateCache();
-        $this->init();
+        $this->_invalidateCache();
+        $this->_init();
         $mtime = filemtime($this->wurflConfig->wurflFile);
         $this->persistenceStorage->save(self::WURFL_LAST_MODIFICATION_TIME, $mtime);
     }
@@ -101,7 +105,8 @@ class WURFLManagerFactory {
      * Returns true if the WURFL is out of date or otherwise needs to be reloaded
      * @return bool
      */
-    public function hasToBeReloaded() {
+    public function hasToBeReloaded()
+    {
         if (!$this->wurflConfig->allowReload) {
             return false;
         }
@@ -114,7 +119,8 @@ class WURFLManagerFactory {
      * Invalidates (clears) cache in the cache provider
      * @see WURFL_Cache_CacheProvider::clear()
      */
-    private function invalidateCache() {
+    private function _invalidateCache()
+    {
         $this->cacheStorage->clear();
     }
     
@@ -122,7 +128,8 @@ class WURFLManagerFactory {
      * Clears the data in the persistence provider
      * @see WURFL_Storage_Base::clear()
      */
-    public function remove() {
+    public function remove()
+    {
         $this->persistenceStorage->clear();
         $this->wurflManager = null;
     }
@@ -130,13 +137,14 @@ class WURFLManagerFactory {
     /**
      * Initializes the WURFL Manager Factory by assigning cache and persistence providers
      */
-    private function init() {
+    private function _init()
+    {
         $logger = null; //$this->logger($wurflConfig->logger);
         $context = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
         $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
-        $deviceRepository = $this->deviceRepository($this->persistenceStorage, $userAgentHandlerChain);
+        $deviceRepository = $this->_deviceRepository($this->persistenceStorage, $userAgentHandlerChain);
         $wurflService = new WURFLService($deviceRepository, $userAgentHandlerChain, $this->cacheStorage);
-        $requestFactory = new \WURFL\Request\GenericRequestFactory();
+        $requestFactory = new Request\GenericRequestFactory();
         $this->wurflManager = new WURFLManager($wurflService, $requestFactory);
     }
     
@@ -147,9 +155,11 @@ class WURFLManagerFactory {
      * @return WURFL_CustomDeviceRepository Device repository
      * @see WURFL_DeviceRepositoryBuilder::build()
      */
-    private function deviceRepository($persistenceStorage, $userAgentHandlerChain) {
-        $devicePatcher = new \WURFL\Xml\DevicePatcher();
+    private function _deviceRepository($persistenceStorage, $userAgentHandlerChain)
+    {
+        $devicePatcher           = new Xml\DevicePatcher();
         $deviceRepositoryBuilder = new DeviceRepositoryBuilder($persistenceStorage, $userAgentHandlerChain, $devicePatcher);
+        
         return $deviceRepositoryBuilder->build($this->wurflConfig->wurflFile, $this->wurflConfig->wurflPatches);
     }
 }
