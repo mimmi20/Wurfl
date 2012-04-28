@@ -31,8 +31,8 @@ class WURFLUtils {
      * @return string
      */
     public static function getUserAgent($request) {            
-        if (isset($request[WURFL_Constants::UA])) {
-            return $request[WURFL_Constants::UA];
+        if (isset($request[\WURFL\Constants::UA])) {
+            return $request[\WURFL\Constants::UA];
         }        
 
         if(isset($request['HTTP_X_DEVICE_USER_AGENT'])) {
@@ -86,9 +86,9 @@ class WURFLUtils {
         
         $accept = $request["accept"];
         if (isset($accept)) {
-            if ((strpos($accept, WURFL_Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
-            || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
-            || (strpos($accept, WURFL_Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)) {
+            if ((strpos($accept, \WURFL\Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
+            || (strpos($accept, \WURFL\Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
+            || (strpos($accept, \WURFL\Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)) {
                 return true;
             }
         }
@@ -103,7 +103,7 @@ class WURFLUtils {
      * @return bool
      */
     public static function isGeneric($deviceID) {
-        if (strcmp($deviceID, WURFL_Constants::GENERIC) === 0) {
+        if (strcmp($deviceID, \WURFL\Constants::GENERIC) === 0) {
             return true;
         }
         return false;

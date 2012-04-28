@@ -30,8 +30,8 @@ namespace WURFL\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class KindleHandler extends Handler {
-    
+class KindleHandler extends Handler
+{
     protected $prefix = "KINDLE";
     
     public static $constantIDs = array(
@@ -43,11 +43,13 @@ class KindleHandler extends Handler {
         'generic_amazon_kindle',
     );
     
-    public function canHandle($userAgent) {
+    public function canHandle($userAgent)
+    {
         return Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
     }
     
-    public function applyConclusiveMatch($userAgent) {
+    public function applyConclusiveMatch($userAgent)
+    {
         $search = 'Kindle/';
         $idx = strpos($userAgent, $search);
         if ($idx !== false) {
@@ -60,16 +62,17 @@ class KindleHandler extends Handler {
                 return $this->getDeviceIDFromRIS($userAgent, $tolerance);
             }
         }
-        $delimiter_idx = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
-        if ($delimiter_idx !== false) {
-            $tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
+        $delimiterIdx = strpos($userAgent, \WURFL\Constants::RIS_DELIMITER);
+        if ($delimiterIdx !== false) {
+            $tolerance = $delimiterIdx + strlen(\WURFL\Constants::RIS_DELIMITER);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
         return \WURFL\Constants::NO_MATCH;
     }
     
-    public function applyRecoveryMatch($userAgent){
+    public function applyRecoveryMatch($userAgent)
+    {
         if (Utils::checkIfContains($userAgent, 'Kindle/1')) return 'amazon_kindle_ver1';
         if (Utils::checkIfContains($userAgent, 'Kindle/2')) return 'amazon_kindle2_ver1';
         if (Utils::checkIfContains($userAgent, 'Kindle/3')) return 'amazon_kindle3_ver1';

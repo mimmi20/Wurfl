@@ -94,7 +94,7 @@ class WURFLManager
         }
         Handlers\Utils::reset();
         if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
-            return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER);
+            return $this->_wurflService->getDevice(\WURFL\Constants::GENERIC_WEB_BROWSER);
         }
         return $this->_wurflService->getDeviceForRequest($request);
     }
