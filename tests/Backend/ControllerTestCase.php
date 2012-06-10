@@ -6,7 +6,7 @@
  * @package    Test
  * @subpackage
  * @author     Unister GmbH - Andreas Hoffmann - <andreas.hoffmann@unister-gmbh.de>
- * @version    $Id: ControllerTestCase.php 217 2011-12-15 23:37:07Z tmu $
+ * @version    $Id$
  * @copyright  2010 Unister GmbH
  * @since      08.06.2010
  */
