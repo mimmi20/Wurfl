@@ -22,9 +22,9 @@ namespace WURFL\Storage;
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class Memcache extends Base {
-
-    const EXTENSION_MODULE_NAME = "memcache";
+class Memcache extends Base
+{
+    const EXTENSION_MODULE_NAME = 'memcache';
     const DEFAULT_PORT = 11211;
 
     /**
@@ -36,23 +36,25 @@ class Memcache extends Base {
     private $expiration;
     private $namespace;
 
-    private $defaultParams = array(
-        "host" => "127.0.0.1",
-        "port" => "11211",
-        "namespace" => "wurfl",
-        "expiration" => 0
+    private $_defaultParams = array(
+        'host'       => '127.0.0.1',
+        'port'       => '11211',
+        'namespace'  => 'wurfl',
+        'expiration' => 0
     );
     
     protected $is_volatile = true;
     
-    public function __construct($params=array()) {
-        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
-        $this->toFields($currentParams);
+    public function __construct($params = array())
+    {
+        $currentParams = is_array($params) ? array_merge($this->_defaultParams, $params) : $this->_defaultParams;
+        $this->_toFields($currentParams);
         $this->initialize();
     }
 
-    private function toFields($params) {
-        foreach($params as $key => $value) {
+    private function _toFields($params)
+    {
+        foreach ($params as $key => $value) {
             $this->$key = $value;
         }
     }
@@ -61,7 +63,8 @@ class Memcache extends Base {
      * Initializes the Memcache Module
      *
      */
-    public final function initialize() {
+    public final function initialize()
+    {
         $this->_ensureModuleExistence();
         $this->memcache = new \Memcache();
         // support multiple hosts using semicolon to separate hosts
@@ -85,21 +88,24 @@ class Memcache extends Base {
         }
     }
 
-    public function save($objectId, $object, $expiration=null) {
+    public function save($objectId, $object, $expiration=null)
+    {
         return $this->memcache->set($this->encode($this->namespace, $objectId), $object, 0, (($expiration === null)? $this->expiration: $expiration));
     }
 
-    public function load($objectId) {
+    public function load($objectId)
+    {
         $value = $this->memcache->get($this->encode($this->namespace, $objectId));
         return ($value !== false)? $value: null;
     }
 
-
-    public function clear() {
+    public function clear()
+    {
         $this->memcache->flush();
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->memcache = null;
     }
 
@@ -107,7 +113,8 @@ class Memcache extends Base {
      * Ensures the existence of the the PHP Extension memcache
      * @throws WURFL_Storage_Exception required extension is unavailable
      */
-    private function _ensureModuleExistence() {
+    private function _ensureModuleExistence()
+    {
         if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
             throw new Exception("The PHP extension memcache must be installed and loaded in order to use the Memcached.");
         }

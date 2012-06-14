@@ -22,43 +22,50 @@ namespace WURFL\Storage;
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class File extends Base {
-
-    private $defaultParams = array(
-        "dir" => "/tmp",
-        "expiration" => 0,
+class File extends Base
+{
+    private $_defaultParams = array(
+        'dir'        => '/tmp',
+        'expiration' => 0,
     );
 
     private $expire;
     private $root;
     
-    const DIR = "dir";
+    const DIR = 'dir';
 
     protected $supports_secondary_caching = true;
     
-    public function __construct($params) {
-        $currentParams = is_array($params)? array_merge($this->defaultParams, $params): $this->defaultParams;
+    public function __construct($params)
+    {
+        $currentParams = is_array($params)? array_merge($this->_defaultParams, $params): $this->_defaultParams;
         $this->initialize($currentParams);
     }
 
-    public function initialize($params) {
+    public function initialize($params)
+    {
         $this->root = $params[self::DIR];
-        $this->createCacheDirIfNotExist();
-        $this->expire = $params["expiration"];
+        $this->_createCacheDirIfNotExist();
+        $this->expire = $params['expiration'];
     }
-    private function createCacheDirIfNotExist() {
+    
+    private function _createCacheDirIfNotExist()
+    {
         if (!is_dir($this->root)) {
             @mkdir ($this->root, 0777, true);
-            if(!is_dir($this->root)){
-                throw new Exception("The file cache directory does not exist and could not be created. Please make sure the cache directory is writeable: ".$this->root);
+            
+            if (!is_dir($this->root)) {
+                throw new Exception('The file cache directory does not exist and could not be created. Please make sure the cache directory is writeable: ' . $this->root);
             }
         }
-        if(!is_writeable($this->root)){
-            throw new Exception("The file cache directory is not writeable: ".$this->root);
+        
+        if (!is_writeable($this->root)) {
+            throw new Exception('The file cache directory is not writeable: ' . $this->root);
         }
     }
 
-    public function load($key) {
+    public function load($key)
+    {
         if (($data = $this->cacheLoad($key)) !== null) {
             return $data->value();
         } else {
@@ -68,11 +75,12 @@ class File extends Base {
                 return null;
             }
             $this->cacheSave($key, $value);
-            return $this->unwrap($value, $path);
+            return $this->_unwrap($value, $path);
         }
     }
 
-    private function unwrap($value, $path) {
+    private function _unwrap($value, $path)
+    {
         if ($value->isExpired()) {
             unlink($path);
             return null;
@@ -80,27 +88,29 @@ class File extends Base {
         return $value->value();
     }
 
-    public function save($key, $value, $expiration=null) {
+    public function save($key, $value, $expiration=null)
+    {
         $value = new StorageObject($value, (($expiration === null)? $this->expire: $expiration));
         $path = $this->keyPath($key);
         \WURFL\FileUtils::write($path, $value);
     }
 
-    public function clear() {
+    public function clear()
+    {
         $this->cacheClear();
         \WURFL\FileUtils::rmdirContents($this->root);
     }
 
 
-    private function keyPath($key) {
+    private function keyPath($key)
+    {
         return \WURFL\FileUtils::join(array($this->root, $this->spread($key)));
     }
 
-    function spread($md5, $n = 2) {
+    public function spread($md5, $n = 2)
+    {
         return $md5;
     }
-
-
 }
 
 /**

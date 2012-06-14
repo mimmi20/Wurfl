@@ -73,7 +73,7 @@ class ArrayConfig extends Config
         include $this->_getConfigFilePath();
         
         if(!isset($configuration) || !is_array($configuration)) {
-            throw new WURFL_WURFLException("Configuration array must be defined in the configuraiton file");
+            throw new WURFL_WURFLException('Configuration array must be defined in the configuraiton file');
         }
         
         $this->_init($configuration);
@@ -122,7 +122,10 @@ class ArrayConfig extends Config
     protected function _setPersistenceConfiguration(array $persistenceConfig)
     {
         $this->persistence = $persistenceConfig;
-        if(array_key_exists('params', $this->persistence) && array_key_exists(Config::DIR, $this->persistence['params'])) {
+        
+        if (array_key_exists('params', $this->persistence) 
+            && array_key_exists(Config::DIR, $this->persistence['params'])
+        ) {
             $this->persistence['params'][Config::DIR] = $this->_getFullPath($this->persistence['params'][Config::DIR]);
         }
     }

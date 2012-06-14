@@ -73,7 +73,7 @@ class ZendConfig extends ArrayConfig
         if ($configuration instanceof \Zend\Config\Config) {
             $configuration = $configuration->toArray();
         }
-        
+        //var_dump($configuration);
         $this->_init($configuration);
     }
 }

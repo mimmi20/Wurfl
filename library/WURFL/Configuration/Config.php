@@ -32,23 +32,23 @@ namespace WURFL\Configuration;
  * @property string $logDir
  * @property string $matchMode
  */
-abstract class Config {
-
-    const WURFL = "wurfl";
-    const MAIN_FILE = "main-file";
-    const PATCHES = "patches";
-    const PATCH = "patch";
-    const CACHE = "cache";
-    const PERSISTENCE = "persistence";
-    const PROVIDER = "provider";
-    const PARAMS = "params";
-    const LOG_DIR = "logDir";
-    const ALLOW_RELOAD = "allow-reload";
-    const DIR = "dir";
-    const EXPIRATION = "expiration";
-    const MATCH_MODE = "match-mode";
-    const MATCH_MODE_PERFORMANCE = "performance";
-    const MATCH_MODE_ACCURACY = "accuracy";
+abstract class Config
+{
+    const WURFL = 'wurfl';
+    const MAIN_FILE = 'main-file';
+    const PATCHES = 'patches';
+    const PATCH = 'patch';
+    const CACHE = 'cache';
+    const PERSISTENCE = 'persistence';
+    const PROVIDER = 'provider';
+    const PARAMS = 'params';
+    const LOG_DIR = 'logDir';
+    const ALLOW_RELOAD = 'allow-reload';
+    const DIR = 'dir';
+    const EXPIRATION = 'expiration';
+    const MATCH_MODE = 'match-mode';
+    const MATCH_MODE_PERFORMANCE = 'performance';
+    const MATCH_MODE_ACCURACY = 'accuracy';
     
     /**
      * @var string Path to the configuration file
@@ -94,10 +94,11 @@ abstract class Config {
      */
     public function __construct($configFilePath)
     {
-        if(!file_exists($configFilePath)) {
-            throw new InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
+        if (!file_exists($configFilePath)) {
+            throw new InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
         }
-        $this->configFilePath = $configFilePath;
+        
+        $this->configFilePath       = $configFilePath;
         $this->configurationFileDir = dirname($this->configFilePath);
         $this->_initialize();
     }
@@ -129,9 +130,12 @@ abstract class Config {
     
     public static function validMatchMode($mode)
     {
-        if ($mode == self::MATCH_MODE_PERFORMANCE || $mode == self::MATCH_MODE_ACCURACY) {
+        if ($mode == self::MATCH_MODE_PERFORMANCE 
+            || $mode == self::MATCH_MODE_ACCURACY
+        ) {
             return true;
         }
+        
         return false;
     }
     
@@ -158,6 +162,7 @@ abstract class Config {
     protected function _fileExist($confLocation)
     {
         $fullFileLocation = $this->_getFullPath($confLocation);
+        
         return file_exists($fullFileLocation);
     }
         
@@ -171,14 +176,17 @@ abstract class Config {
     protected function _getFullPath($fileName)
     {
         $fileName = trim($fileName);
-        if(realpath($fileName) && !(basename($fileName) === $fileName )) {
+        
+        if (realpath($fileName) && !(basename($fileName) === $fileName )) {
             return realpath($fileName);
         }
+        
         $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
         
-        if(file_exists($fullName)) {
+        if (file_exists($fullName)) {
             return $fullName;
         }
-        throw new WURFL_WURFLException("The specified path '" . $fullName . "' does not exist");
+        
+        throw new \WURFL\WURFLException('The specified path \'' . $fullName . '\' does not exist');
     }
 }

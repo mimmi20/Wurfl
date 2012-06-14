@@ -22,17 +22,18 @@ namespace WURFL\Storage;
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class Mysql extends Base {
+class Mysql extends Base
+{
 
-    private $defaultParams = array(
-        "host" => "localhost",
-        "port" => 3306,
-        "db" => "wurfl_persistence_db",    
-        "user" => "",
-        "pass" => "",
-        "table" => "wurfl_object_cache",
-        "keycolumn" => "key",
-        "valuecolumn" => "value"
+    private $_defaultParams = array(
+        'host' => 'localhost',
+        'port' => 3306,
+        'db' => 'wurfl_persistence_db',    
+        'user' => '',
+        'pass' => '',
+        'table' => 'wurfl_object_cache',
+        'keycolumn' => 'key',
+        'valuecolumn' => 'value'
     );
 
     private $link;
@@ -45,37 +46,39 @@ class Mysql extends Base {
     private $keycolumn;
     private $valuecolumn;
 
-    public function __construct($params) {
-        $currentParams = is_array($params) ? array_merge($this->defaultParams,$params) : $this->defaultParams;
+    public function __construct($params)
+    {
+        $currentParams = is_array($params) ? array_merge($this->_defaultParams,$params) : $this->_defaultParams;
         foreach($currentParams as $key => $value) {
             $this->$key = $value;
         }
         $this->initialize();
     }
 
-    private function initialize() {
+    private function initialize()
+    {
         $this->_ensureModuleExistance();
 
         /* Initializes link to MySql */
-        $this->link = mysql_connect("$this->host:$this->port",$this->user,$this->pass);
+        $this->link = mysql_connect($this->host . ':' . $this->port, $this->user, $this->pass);
         if (mysql_error($this->link)) {
-            throw new Exception("Couldn't link to $this->host (".mysql_error($this->link).")");
+            throw new Exception('Couldn\'t link to ' . $this->host . ' (' . mysql_error($this->link) . ')');
         }
 
         /* Initializes link to database */
         $success=mysql_selectdb($this->db,$this->link);
         if (!$success) {
-            throw new Exception("Couldn't change to database $this->db (".mysql_error($this->link).")");
+            throw new Exception('Couldn\'t change to database ' . $this->db . ' (' . mysql_error($this->link) . ')');
         }
 
         /* Is Table there? */
-        $test = mysql_query("SHOW TABLES FROM $this->db LIKE '$this->table'",$this->link);
+        $test = mysql_query('SHOW TABLES FROM $this->db LIKE \'' . $this->table . '\'', $this->link);
         if (!is_resource($test)) {
-            throw new Exception("Couldn't show tables from database $this->db (".mysql_error($this->link).")");
+            throw new Exception('Couldn\'t show tables from database ' . $this->db . ' (' . mysql_error($this->link) . ')');
         }
 
         // create table if it's not there.
-        if (mysql_num_rows($test)==0) {
+        if (mysql_num_rows($test) == 0) {
             $sql="CREATE TABLE `$this->db`.`$this->table` (
                       `$this->keycolumn` varchar(255) collate latin1_general_ci NOT NULL,
                       `$this->valuecolumn` mediumblob NOT NULL,

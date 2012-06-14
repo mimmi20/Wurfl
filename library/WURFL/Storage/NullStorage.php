@@ -22,8 +22,20 @@ namespace WURFL\Storage;
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class NullStorage extends Base  {
-    public function load($key) { return null; }
-    public function save($key, $value, $expire=0) {}
-    public function clear() {}
+class NullStorage extends Base 
+{
+    public function load($key)
+    {
+        return null;
+    }
+    
+    public function save($key, $value, $expire = 0)
+    {
+        // nothing to do here
+    }
+    
+    public function clear()
+    {
+        // nothing to do here
+    }
 }

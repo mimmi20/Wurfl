@@ -22,68 +22,79 @@ namespace WURFL\Storage;
  * APC Storage class
  * @package    WURFL_Storage
  */
-class Apc extends Base {
-
-    const EXTENSION_MODULE_NAME = "apc";
-    private $currentParams = array(
-        "namespace" => "wurfl",
-        "expiration" => 0
+class Apc extends Base
+{
+    const EXTENSION_MODULE_NAME = 'apc';
+    
+    private $_currentParams = array(
+        'namespace'  => 'wurfl',
+        'expiration' => 0
     );
 
     protected $is_volatile = true;
     
-    public function __construct($params = array()) {
-        if(is_array($params))  {
-            array_merge($this->currentParams, $params);
+    public function __construct($params = array())
+    {
+        if (is_array($params)) {
+            array_merge($this->_currentParams, $params);
         }
         //$this->initialize();
     }
 
 
-    public function initialize() {
-        $this->ensureModuleExistence();
+    public function initialize()
+    {
+        $this->_ensureModuleExistence();
     }
 
-    public function save($objectId, $object, $expiration=null) {
-        $value = apc_store($this->encode($this->apcNameSpace(), $objectId), $object, (($expiration === null)? $this->expire(): $expiration));
+    public function save($objectId, $object, $expiration = null)
+    {
+        $value = apc_store($this->encode($this->_apcNameSpace(), $objectId), $object, (($expiration === null)? $this->expire(): $expiration));
         if ($value === false) {
-            throw new WURFL_Storage_Exception("Error saving variable in APC cache. Cache may be full.");
+            throw new WURFL_Storage_Exception('Error saving variable in APC cache. Cache may be full.');
         }
     }
 
-    public function load($objectId) {
-        $value = apc_fetch($this->encode($this->apcNameSpace(), $objectId));
+    public function load($objectId)
+    {
+        $value = apc_fetch($this->encode($this->_apcNameSpace(), $objectId));
         return ($value !== false)? $value : null;
     }
 
-    public function remove($objectId) {
-        apc_delete($this->encode($this->apcNameSpace(), $objectId));
+    public function remove($objectId)
+    {
+        apc_delete($this->encode($this->_apcNameSpace(), $objectId));
     }
 
     /**
      * Removes all entry from the Persistence Provider
      *
      */
-    public function clear() {
-        apc_clear_cache("user");
+    public function clear()
+    {
+        apc_clear_cache('user');
     }
 
-
-    private function apcNameSpace() {
-        return $this->currentParams["namespace"];
+    private function _apcNameSpace()
+    {
+        return $this->_currentParams['namespace'];
     }
 
-    private function expire() {
-        return $this->currentParams["expiration"];   
+    private function expire()
+    {
+        return $this->_currentParams['expiration'];   
     }
 
     /**
      * Ensures the existence of the the PHP Extension apc
      * @throws WURFL_Storage_Exception required extension is unavailable
      */
-    private function ensureModuleExistence() {
-        if (!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
-            throw new WURFL_Storage_Exception ("The PHP extension apc must be installed, loaded and enabled.");
+    private function _ensureModuleExistence()
+    {
+        if (!(extension_loaded(self::EXTENSION_MODULE_NAME) 
+            && ini_get('apc.enabled') === true)
+        ) {
+            throw new WURFL_Storage_Exception ('The PHP extension apc must be installed, loaded and enabled.');
         }
     }
 

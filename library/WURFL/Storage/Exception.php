@@ -22,4 +22,7 @@ namespace WURFL\Storage;
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class Exception extends \Exception {}
+class Exception extends \Exception
+{
+    // nothing to do here
+}

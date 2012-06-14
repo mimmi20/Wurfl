@@ -42,9 +42,10 @@ abstract class AbstractIterator implements \Iterator {
      * Loads given XML $inputFile
      * @param string $inputFile
      */
-    public function __construct($inputFile) {
-        if(!file_exists($inputFile)) {
-            throw new InvalidArgumentException("cannot locate [$inputFile] file!");
+    public function __construct($inputFile)
+    {
+        if (!file_exists($inputFile)) {
+            throw new \InvalidArgumentException("cannot locate [$inputFile] file!");
         }
         $this->inputFile = Utils::getXMLFile($inputFile);
     }
@@ -53,14 +54,16 @@ abstract class AbstractIterator implements \Iterator {
      * Returns the current XML element
      * @return XMLReader Current XML element
      */
-    public function current() {
+    public function current()
+    {
         return $this->currentElement;
     }
     
     /**
      * Prepare for next XML element
      */
-    public function next() {
+    public function next()
+    {
         $this->currentElement = null;
     }
     
@@ -68,7 +71,8 @@ abstract class AbstractIterator implements \Iterator {
      * Returns the current element id
      * @return string Current element id
      */
-    public function key() {
+    public function key()
+    {
         return $this->currentElementId;
     }
     
@@ -76,7 +80,8 @@ abstract class AbstractIterator implements \Iterator {
      * Returns true if the current XML element is valid for processing
      * @return bool
      */
-    public function valid() {
+    public function valid()
+    {
         if($this->currentElement === null) {
             $this->readNextElement();
         }
@@ -87,7 +92,8 @@ abstract class AbstractIterator implements \Iterator {
      * Open the input file and position cursor at the beginning
      * @see $inputFile
      */
-    public function rewind() {
+    public function rewind()
+    {
         $this->xmlReader = new \XMLReader();
         $this->xmlReader->open($this->inputFile);
         $this->currentElement = null;
@@ -98,7 +104,8 @@ abstract class AbstractIterator implements \Iterator {
      * Gets the text value from the current node
      * @return string value
      */
-    public function getTextValue() {
+    public function getTextValue()
+    {
         $this->xmlReader->read();
         return (string)$this->xmlReader->value;
     }

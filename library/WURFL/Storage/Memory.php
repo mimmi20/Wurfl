@@ -22,40 +22,46 @@ namespace WURFL\Storage;
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class Memory extends Base {
+class Memory extends Base
+{
+    const IN_MEMORY = 'memory';
 
-    const IN_MEMORY = "memory";
+    protected $persistenceIdentifier = 'MEMORY_PERSISTENCE_PROVIDER';
 
-    protected $persistenceIdentifier = "MEMORY_PERSISTENCE_PROVIDER";
-
-    private $defaultParams = array(
-        "namespace" => "wurfl"
+    private $_defaultParams = array(
+        'namespace' => 'wurfl'
     );
 
     private $namespace;
     private $map;
 
-    public function __construct($params=array()) {
-        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
-        $this->namespace = $currentParams["namespace"];
+    public function __construct($params = array())
+    {
+        $currentParams = is_array($params) ? array_merge($this->_defaultParams, $params) : $this->_defaultParams;
+        $this->namespace = $currentParams['namespace'];
         $this->map = array();
     }
 
-    public function save($objectId, $object, $expiration=null) {
+    public function save($objectId, $object, $expiration=null)
+    {
         $this->map[$this->encode($this->namespace, $objectId)] = $object;
     }
 
-    public function load($objectId) {
+    public function load($objectId)
+    {
         $key = $this->encode($this->namespace, $objectId);
+        
         if (isset($this->map[$key])) {
             return $this->map[$key];
         }
+        
         return null;
     }
 
-    public function remove($objectId) {
+    public function remove($objectId)
+    {
         $key = $this->encode($this->namespace, $objectId);
-        if($this->map[$key]) {
+        if ($this->map[$key]) {
             unset($this->map[$key]);
         }
     }
@@ -63,7 +69,8 @@ class Memory extends Base {
     /**
      * Removes all entry from the Persistence Provier
      */
-    public function clear() {
+    public function clear()
+    {
         unset($this->map);
     }
 }
