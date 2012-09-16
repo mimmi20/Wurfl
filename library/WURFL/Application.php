@@ -20,4 +20,4 @@ namespace WURFL;
 /**
  * Require ClassLoader to dynamically load classes
  */
-require_once dirname(__FILE__) . '/ClassLoader.php';
+require_once __DIR__ . '/ClassLoader.php';

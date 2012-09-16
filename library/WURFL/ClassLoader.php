@@ -39,7 +39,7 @@ class ClassLoader {
             return false;
         }
         if (!class_exists($className, false)) {
-            if (self::$classPath === null) self::$classPath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
+            if (self::$classPath === null) self::$classPath = __DIR__ . DIRECTORY_SEPARATOR;
             $classFilePath = str_replace('_', DIRECTORY_SEPARATOR, substr($className, 6)) . '.php';
             include self::$classPath.$classFilePath;
         }

@@ -71,7 +71,7 @@ class DeviceRepositoryBuilder
         if (!$this->isRepositoryBuilt()) {
             // Determine Lockfile location
             if (strpos(PHP_OS, 'SunOS') === false) {
-                $this->lockFile = dirname(__FILE__)."/DeviceRepositoryBuilder.php";
+                $this->lockFile = __DIR__."/DeviceRepositoryBuilder.php";
             } else {
                 // Solaris can't handle exclusive file locks on files unless they are opened for RW
                 
