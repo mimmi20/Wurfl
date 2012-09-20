@@ -369,11 +369,11 @@ class Utils
     public static function ordinalIndexOf($haystack, $needle, $ordinal)
     {
         if (is_null ( $haystack ) || empty ( $haystack )) {
-            throw new InvalidArgumentException ( "haystack must not be null or empty" );
+            throw new \InvalidArgumentException ( "haystack must not be null or empty" );
         }
         
         if (! is_integer ( $ordinal )) {
-            throw new InvalidArgumentException ( "ordinal must be a positive ineger" );
+            throw new \InvalidArgumentException ( "ordinal must be a positive ineger" );
         }
         
         $found = 0;

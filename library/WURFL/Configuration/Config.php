@@ -95,7 +95,7 @@ abstract class Config
     public function __construct($configFilePath)
     {
         if (!file_exists($configFilePath)) {
-            throw new InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
+            throw new \InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
         }
         
         $this->configFilePath       = $configFilePath;

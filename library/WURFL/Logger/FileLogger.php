@@ -46,7 +46,7 @@ class FileLogger implements LoggerInterface  {
      */
     public function __construct($fileName) {
         if(!is_writable($fileName)) {
-            throw new InvalidArgumentException("Log file specified is not writable");
+            throw new \InvalidArgumentException("Log file specified is not writable");
         }
         $this->fp = @fopen($fileName, "a");
         if(!$this->fp){

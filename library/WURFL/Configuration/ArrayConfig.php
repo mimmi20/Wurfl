@@ -138,7 +138,7 @@ class ArrayConfig extends Config
     protected function _setLogDirConfiguration($logDir)
     {
         if (!is_writable($logDir)) {
-            throw new InvalidArgumentException("log dir $logDir  must exist and be writable");
+            throw new \InvalidArgumentException('log dir ' . $logDir . '  must exist and be writable');
         }
         
         $this->logDir = $logDir;
