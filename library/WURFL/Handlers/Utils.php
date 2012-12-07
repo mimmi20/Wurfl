@@ -194,7 +194,12 @@ class Utils
     public static function indexOfOrLength($string, $target, $startingIndex = 0)
     {
         $length = strlen ( $string );
-        $pos = strpos ( $string, $target, $startingIndex );
+        
+        if ($length > $startingIndex) {
+            $pos = strpos ( $string, $target, $startingIndex );
+        } else {
+            $pos = false;
+        }
         return $pos === false ? $length : $pos;
     }
     
