@@ -87,12 +87,12 @@ class CustomDevice
                     return $this->_modelDevices[0]->$name;
                     break;
                 default:
-                    throw new WURFL_WURFLException('the field ' . $name . ' is not defined');
+                    throw new \InvalidArgumentException('the field ' . $name . ' is not defined');
                     break;
             }
         }
         
-        throw new WURFLException('the field ' . $name . ' is not defined');
+        throw new \InvalidArgumentException('the field ' . $name . ' is not defined');
     }
     
     /**
