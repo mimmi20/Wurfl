@@ -200,12 +200,45 @@ class CustomDevice
      */
     public function getAllCapabilities()
     {
-        $capabilities = array ();
+        $capabilities = array();
         
-        foreach (array_reverse($this->_modelDevices) as $modelDevice) {
-            $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
+        foreach ($this->_modelDevices as $modelDevice) {
+            $capabilities = $this->_mergeArrays(
+                $capabilities, $modelDevice->getCapabilities()
+            );
         }
         
         return $capabilities;
+    }
+    
+    /**
+     * Returns capabilities and their values for the current device 
+     * @return array Device capabilities array
+     * @see WURFL_Xml_ModelDevice::getCapabilities()
+     */
+    public function getAllCapabilitiesMaps()
+    {
+        $capabilities = array();
+        
+        foreach ($this->_modelDevices as $modelDevice) {
+            $capabilities = $this->_mergeArrays(
+                $capabilities, $modelDevice->getGroupIdCapabilitiesMap()
+            );
+        }
+        
+        return $capabilities;
+    }
+    
+    private function _mergeArrays($array1, $array2)
+    {
+        foreach($array2 as $key => $value) {
+            if (array_key_exists($key, $array1) && is_array($value)) {
+                $array1[$key] = $this->_mergeArrays($array1[$key], $array2[$key]);
+            } else {
+                $array1[$key] = $value;
+            }
+        }
+
+        return $array1;
     }
 }
