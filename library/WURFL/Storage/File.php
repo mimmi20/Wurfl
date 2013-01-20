@@ -25,10 +25,12 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
 	private $defaultParams = array(
 		"dir" => "/tmp",
 		"expiration" => 0,
+		"readonly" => 'false',
 	);
 
 	private $expire;
 	private $root;
+	private $readonly;
 	
 	const DIR = "dir";
 
@@ -41,18 +43,20 @@ class WURFL_Storage_File extends WURFL_Storage_Base {
 
 	public function initialize($params) {
 		$this->root = $params[self::DIR];
-		$this->createCacheDirIfNotExist();
-		$this->expire = $params["expiration"];
+		$this->expire = $params['expiration'];
+		$this->readonly = ($params['readonly'] == 'true' || $params['readonly'] === true);
+		$this->createRootDirIfNotExist();
 	}
-	private function createCacheDirIfNotExist() {
+	
+	private function createRootDirIfNotExist() {
 		if (!is_dir($this->root)) {
 			@mkdir ($this->root, 0777, true);
 			if(!is_dir($this->root)){
-				throw new WURFL_Storage_Exception("The file cache directory does not exist and could not be created. Please make sure the cache directory is writeable: ".$this->root);
+				throw new WURFL_Storage_Exception("The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ".$this->root);
 			}
 		}
-		if(!is_writeable($this->root)){
-			throw new WURFL_Storage_Exception("The file cache directory is not writeable: ".$this->root);
+		if(!$this->readonly && !is_writeable($this->root)){
+			throw new WURFL_Storage_Exception("The file storage directory is not writeable: ".$this->root);
 		}
 	}
 

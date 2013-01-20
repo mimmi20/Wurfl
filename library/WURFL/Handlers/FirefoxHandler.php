@@ -32,18 +32,6 @@ class WURFL_Handlers_FirefoxHandler extends WURFL_Handlers_Handler {
 	
 	public static $constantIDs = array(
 		'firefox',
-		'firefox_1',
-		'firefox_2',
-		'firefox_3',
-		'firefox_4_0',
-		'firefox_5_0',
-		'firefox_6_0',
-		'firefox_7_0',
-		'firefox_8_0',
-		'firefox_9_0',
-		'firefox_10_0',
-		'firefox_11_0',
-		'firefox_12_0',
 	);
 	
 	public function canHandle($userAgent) {
@@ -57,16 +45,6 @@ class WURFL_Handlers_FirefoxHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyRecoveryMatch($userAgent) {
-		$matches = array();
-		if (preg_match('/Firefox\/(\d+)\.\d/', $userAgent, $matches)){
-			$firefox_version = $matches[1];
-			if ((int)$firefox_version <= 3) {
-				$id = 'firefox_'.$firefox_version;
-			} else {
-				$id = 'firefox_'.$firefox_version.'_0';
-			}
-			if (in_array($id, self::$constantIDs)) return $id;
-		}
 		return 'firefox';
 	}
 }

@@ -22,18 +22,33 @@
  */
 class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Request_UserAgentNormalizer_Interface {
 	
-	public function normalize($userAgent) {
-		$userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
-		$skip_normalization = array(
+	private $skip_normalization = array(
 			'Opera Mini',
-			'Opera Mobi',
-			'Opera Tablet',
 			'Fennec',
 			'Firefox',
 			'UCWEB7',
 			'NetFrontLifeBrowser/2.2',
 		);
-		if (!WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, $skip_normalization)) {
+	
+	public function normalize($userAgent) {
+		// Normalize Android version
+		$userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
+		
+		// Opera Mobi/Tablet
+		$is_opera_mobi = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi');
+		$is_opera_tablet = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet');
+		if ($is_opera_mobi || $is_opera_tablet) {
+			$opera_version = WURFL_Handlers_AndroidHandler::getOperaOnAndroidVersion($userAgent, false);
+			$android_version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
+			if ($opera_version !== null && $android_version !== null) {
+				$opera_model = $is_opera_tablet? 'Opera Tablet': 'Opera Mobi';
+				$prefix = $opera_model.' '.$opera_version.' Android '.$android_version.WURFL_Constants::RIS_DELIMITER;
+				return $prefix.$userAgent;
+			}
+		}
+		
+		// Stock Android
+		if (!WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, $this->skip_normalization)) {
 			$model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
 			$version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
 			if ($model !== null && $version !== null) {

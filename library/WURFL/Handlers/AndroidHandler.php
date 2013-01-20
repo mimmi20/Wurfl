@@ -45,25 +45,23 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver3_3',
 		'generic_android_ver4',
 		'generic_android_ver4_1',
+		'generic_android_ver4_2',
+		'generic_android_ver4_3',
+		'generic_android_ver5_0',
 		
 		'uabait_opera_mini_android_v50',
 		'uabait_opera_mini_android_v51',
 		'generic_opera_mini_android_version5',
 	
 		'generic_android_ver1_5_opera_mobi',
-		'generic_android_ver1_5_opera_mobi_11',
 		'generic_android_ver1_6_opera_mobi',
-		'generic_android_ver1_6_opera_mobi_11',
 		'generic_android_ver2_0_opera_mobi',
-		'generic_android_ver2_0_opera_mobi_11',
 		'generic_android_ver2_1_opera_mobi',
-		'generic_android_ver2_1_opera_mobi_11',
 		'generic_android_ver2_2_opera_mobi',
-		'generic_android_ver2_2_opera_mobi_11',
 		'generic_android_ver2_3_opera_mobi',
-		'generic_android_ver2_3_opera_mobi_11',
 		'generic_android_ver4_0_opera_mobi',
-		'generic_android_ver4_0_opera_mobi_11',
+		'generic_android_ver4_1_opera_mobi',
+		'generic_android_ver4_2_opera_mobi',
 	
 		'generic_android_ver2_1_opera_tablet',
 		'generic_android_ver2_2_opera_tablet',
@@ -71,6 +69,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver3_0_opera_tablet',
 		'generic_android_ver3_1_opera_tablet',
 		'generic_android_ver3_2_opera_tablet',
+		'generic_android_ver4_0_opera_tablet',
+		'generic_android_ver4_1_opera_tablet',
+		'generic_android_ver4_2_opera_tablet',
 		
 		'generic_android_ver2_0_fennec',
 		'generic_android_ver2_0_fennec_tablet',
@@ -119,18 +120,6 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 			}
 		}
 		
-		// Opera Mobi
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
-			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
-			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-		}
-		
-		// Opera Tablet
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet')) {
-			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
-			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-		}
-		
 		// Fennec
 		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox'))) {
 			$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ')');
@@ -169,41 +158,18 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 			return 'generic_opera_mini_android_version5';
 		}
 		
-		// Opera Mobi
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
+		// Opera Mobi/Tablet
+		$is_opera_mobi = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi');
+		$is_opera_tablet = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet');
+		if ($is_opera_mobi || $is_opera_tablet) {
 			$android_version = self::getAndroidVersion($userAgent);
-			$opera_version = self::getOperaOnAndroidVersion($userAgent);
-			// convert versions (2.1) to device ID versions (2_1)
 			$android_version_string = str_replace('.', '_', $android_version);
-			// Build initial device ID string
-			$deviceID = 'generic_android_ver'.$android_version_string.'_opera_mobi';
-			// Opera Mobi 10 does not have a version in its WURFL ID (ex: generic_android_ver1_5_opera_mobi)
-			if ($opera_version != '10') {
-				$deviceID .= '_'.$opera_version;
-			}
-			// Device ID should look something like this at this point: generic_android_ver2_3_opera_mobi_11
-			// Now we must make sure the deviceID is valid
+			$type = $is_opera_tablet? 'tablet': 'mobi';
+			$deviceID = 'generic_android_ver'.$android_version_string.'_opera_'.$type;
 			if (in_array($deviceID, self::$constantIDs)) {
 				return $deviceID;
 			} else {
-				return 'generic_android_ver2_0_opera_mobi';
-			}
-		}
-		
-		// Opera Tablet
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet')) {
-			$android_version = (float)self::getAndroidVersion($userAgent);
-			if ($android_version < 2.1) {
-				 $android_version = 2.1;
-			} else if ($android_version > 3.2) {
-				$android_version = 3.2;
-			}
-			$android_version_string = str_replace('.', '_', (string)$android_version);
-			$deviceID = 'generic_android_ver'.$android_version_string.'_opera_tablet';
-			if (in_array($deviceID, self::$constantIDs)) {
-				return $deviceID;
-			} else {
-				return 'generic_android_ver2_1_opera_tablet';
+				return $is_opera_tablet? 'generic_android_ver2_1_opera_tablet': 'generic_android_ver2_0_opera_mobi';
 			}
 		}
 		
@@ -258,8 +224,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	}
 	
 	/********* Android Utility Functions ***********/
-	public static $defaultAndroidVersion = '2.0';
-	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1');
+	const ANDROID_DEFAULT_VERSION = 2.0;
+	
+	public static $validAndroidVersions = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3', '5.0');
 	public static $androidReleaseMap = array(
 		'Cupcake' => '1.5',
 		'Donut' => '1.6',
@@ -267,7 +234,9 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'Froyo' => '2.2',
 		'Gingerbread' => '2.3',
 		'Honeycomb' => '3.0',
-		// 'Ice Cream Sandwich' => '4.0',
+		'Ice Cream Sandwich' => '4.0',
+		'Jelly Bean' => '4.1', // Note: 4.2 is also Jelly Bean
+		'Key Lime Pie' => '5.0',
 	);
 	/**
 	 * Get the Android version from the User Agent, or the default Android version is it cannot be determined
@@ -286,11 +255,12 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 				return $version;
 			}
 		}
-		return $use_default? self::$defaultAndroidVersion: null;
+		return $use_default? self::ANDROID_DEFAULT_VERSION: null;
 	}
 	
-	public static $defaultOperaVersion = '10';
-	public static $validOperaVersions = array('10', '11');
+	const OPERA_DEFAULT_VERSION = '10';
+	
+	public static $validOperaVersions = array('10', '11', '12');
 	/**
 	 * Get the Opera browser version from an Opera Android user agent
 	 * @param string $ua User Agent
@@ -305,7 +275,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 				return $version;
 			}
 		}
-		return $use_default? self::$defaultOperaVersion: null;
+		return $use_default? self::OPERA_DEFAULT_VERSION: null;
 	}
 	
 	public static function getAndroidModel($ua, $use_default=true) {

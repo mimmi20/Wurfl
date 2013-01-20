@@ -66,6 +66,8 @@ class WURFL_Handlers_Utils {
 		'adr-',
 		// Required for HPM Safari
 		'htc',
+		// Used to keep Xbox away from the desktop matchers
+		'; xbox',
 		'nintendo',
 		// These keywords keep IE-like mobile UAs out of the MSIE bucket
 		// ex: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; XBLWP7;  ZuneWP7) 
