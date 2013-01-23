@@ -59,19 +59,19 @@ class Mysql extends Base
 		/* Initializes link to MySql */
 		$this->link = mysql_connect("$this->host:$this->port",$this->user,$this->pass);
 		if (mysql_error($this->link)) {
-			throw new WURFL_Storage_Exception("Couldn't link to $this->host (".mysql_error($this->link).")");
+			throw new Exception("Couldn't link to $this->host (".mysql_error($this->link).")");
 		}
 
 		/* Initializes link to database */
 		$success=mysql_selectdb($this->db,$this->link);
 		if (!$success) {
-			throw new WURFL_Storage_Exception("Couldn't change to database $this->db (".mysql_error($this->link).")");
+			throw new Exception("Couldn't change to database $this->db (".mysql_error($this->link).")");
 		}
 
 		/* Is Table there? */
 		$test = mysql_query("SHOW TABLES FROM $this->db LIKE '$this->table'",$this->link);
 		if (!is_resource($test)) {
-			throw new WURFL_Storage_Exception("Couldn't show tables from database $this->db (".mysql_error($this->link).")");
+			throw new Exception("Couldn't show tables from database $this->db (".mysql_error($this->link).")");
 		}
 
 		// create table if it's not there.
@@ -84,7 +84,7 @@ class Mysql extends Base
 					) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 			$success=mysql_query($sql,$this->link);
 			if (!$success) {
-				throw new WURFL_Storage_Exception("Table $this->table missing in $this->db (".mysql_error($this->link).")");
+				throw new Exception("Table $this->table missing in $this->db (".mysql_error($this->link).")");
 			}
 		}
 
@@ -98,13 +98,13 @@ class Mysql extends Base
 		$sql = "delete from `$this->db`.`$this->table` where `$this->keycolumn`='$objectId'";
 		$success=mysql_query($sql,$this->link);
 		if (!$success) {
-			throw new WURFL_Storage_Exception("MySql error ".mysql_error($this->link)."deleting $objectId in $this->db");
+			throw new Exception("MySql error ".mysql_error($this->link)."deleting $objectId in $this->db");
 		}
 
 		$sql="insert into `$this->db`.`$this->table` (`$this->keycolumn`,`$this->valuecolumn`) VALUES ('$objectId','$object')";
 		$success=mysql_query($sql,$this->link);
 		if (!$success) {
-			throw new WURFL_Storage_Exception("MySQL error ".mysql_error($this->link)."setting $objectId in $this->db");
+			throw new Exception("MySQL error ".mysql_error($this->link)."setting $objectId in $this->db");
 		}
 		return $success;
 	}
@@ -116,7 +116,7 @@ class Mysql extends Base
 		$sql="select `$this->valuecolumn` from `$this->db`.`$this->table` where `$this->keycolumn`='$objectId'";
 		$result=mysql_query($sql,$this->link);
 		if (!is_resource($result)) {
-			throw new WURFL_Storage_Exception("MySql error ".mysql_error($this->link)."in $this->db");
+			throw new Exception("MySql error ".mysql_error($this->link)."in $this->db");
 		}
 
 		$row = mysql_fetch_assoc($result);
@@ -133,7 +133,7 @@ class Mysql extends Base
 		$sql = "truncate table `$this->db`.`$this->table`";
 		$success=mysql_query($sql,$this->link);
 		if (mysql_error($this->link)) {
-			throw new WURFL_Storage_Exception("MySql error ".mysql_error($this->link)." clearing $this->db.$this->table");
+			throw new Exception("MySql error ".mysql_error($this->link)." clearing $this->db.$this->table");
 		}
 		return $success;
 	}
@@ -144,10 +144,10 @@ class Mysql extends Base
 	 * Ensures the existance of the the PHP Extension mysql
 	 * @throws WURFL_Storage_Exception required extension is unavailable
 	 */
-	private function _ensureModuleExistance() {
-		if(!extension_loaded("mysql")) {
-			throw new WURFL_Storage_Exception("The PHP extension mysql must be installed and loaded in order to use the mysql.");
+	private function _ensureModuleExistance()
+    {
+		if (!extension_loaded("mysql")) {
+			throw new Exception("The PHP extension mysql must be installed and loaded in order to use the mysql.");
 		}
 	}
-
 }

@@ -25,8 +25,8 @@ namespace Wurfl\Handlers\Matcher;
  * @see match()
  * @package	WURFL_Handlers_Matcher
  */
-class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interface {
-	
+class RISMatcher implements MatcherInterface
+{
 	/**
 	 * Instance of WURFL_Handlers_Matcher_LDMatcher
 	 * @var WURFL_Handlers_Matcher_LDMatcher
@@ -37,7 +37,8 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
 	 * Returns an instance of the RISMatcher singleton
 	 * @return WURFL_Handlers_RISMatcher
 	 */
-	public static function INSTANCE() {
+	public static function INSTANCE()
+    {
 		if (self::$instance === null) {
 			self::$instance = new self();
 		}
@@ -51,7 +52,8 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
 	 * @param $tolerance integer Minimum required length of prefix match
 	 * @return string Device ID that matches user agent or null if not found
 	 */
-	public function match(&$collection, $needle, $tolerance) {
+	public function match(&$collection, $needle, $tolerance)
+    {
 		$match = null;
 		$bestDistance = 0;
 		$low = 0;
@@ -94,8 +96,8 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
 	 * @param $bestDistance integer
 	 * @return string Device ID
 	 */
-	private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance) {
-		
+	private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
+    {
 		while($bestIndex > 0 && $this->longestCommonPrefixLength($collection[$bestIndex-1], $needle) == $bestDistance) {
 			$bestIndex = $bestIndex - 1;
 		}
@@ -108,7 +110,8 @@ class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interf
 	 * @param $t string String 2
 	 * @return integer Longest prefix length
 	 */
-	private function longestCommonPrefixLength($s, $t) {
+	private function longestCommonPrefixLength($s, $t)
+    {
 		$length = min(strlen($s), strlen($t));
 		$i = 0;
 		while ($i < $length) {

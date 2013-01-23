@@ -19,6 +19,8 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
+use \Wurfl\Constants;
+
 /**
  * XboxUserAgentHandler
  * 
@@ -29,7 +31,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_XboxHandler extends WURFL_Handlers_Handler {
+class XboxHandler extends Handler {
 	
 	protected $prefix = "XBOX";
 	
@@ -39,16 +41,16 @@ class WURFL_Handlers_XboxHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox');
+		return Utils::checkIfContains($userAgent, 'Xbox');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
 		// Exact and recovery matching only
-		return WURFL_Constants::NO_MATCH;
+		return Constants::NO_MATCH;
 	}
 	
 	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE 10.0')) return 'microsoft_xbox360_ver1_subie10';
+		if (Utils::checkIfContains($userAgent, 'MSIE 10.0')) return 'microsoft_xbox360_ver1_subie10';
 		return 'microsoft_xbox360_ver1';
 	}
 }

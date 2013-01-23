@@ -109,7 +109,7 @@ class Memcache extends Base
 	 */
 	private function _ensureModuleExistence() {
 		if (!extension_loaded(self::EXTENSION_MODULE_NAME)) {
-			throw new WURFL_Storage_Exception("The PHP extension memcache must be installed and loaded in order to use the Memcached.");
+			throw new Exception("The PHP extension memcache must be installed and loaded in order to use the Memcached.");
 		}
 	}
 

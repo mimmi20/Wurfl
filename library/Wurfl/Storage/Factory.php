@@ -54,6 +54,6 @@ class Factory
 	private static function className($configuration)
     {
 		$provider = $configuration["provider"];
-		return "WURFL_Storage_" . ucfirst($provider);
+		return "\\Wurfl\\Storage\\" . ucfirst($provider);
 	}
 }

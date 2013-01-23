@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,16 +18,18 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Handlers\Utils;
+
 /**
  * User Agent Normalizer - removes locale information from user agent
  * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_LocaleRemover implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {
-		return WURFL_Handlers_Utils::removeLocale($userAgent);
+class LocaleRemover implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
+		return Utils::removeLocale($userAgent);
 	}
-
 }
-
-

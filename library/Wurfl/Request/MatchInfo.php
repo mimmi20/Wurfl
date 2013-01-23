@@ -22,8 +22,8 @@ namespace Wurfl\Request;
  * Information about the matching process
  * @package	WURFL_Request
  */
-class WURFL_Request_MatchInfo {
-	
+class MatchInfo
+{
 	/**
 	 * @var boolean Response was returned from cache
 	 */

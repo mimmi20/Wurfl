@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,12 +18,18 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Constants;
+use \Wurfl\Handlers\Utils;
+use \Wurfl\Handlers\AndroidHandler;
+
 /**
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Request_UserAgentNormalizer_Interface {
-	
+class Android implements NormalizerInterface
+{
 	private $skip_normalization = array(
 			'Opera Mini',
 			'Fennec',
@@ -32,29 +38,30 @@ class WURFL_Request_UserAgentNormalizer_Specific_Android implements WURFL_Reques
 			'NetFrontLifeBrowser/2.2',
 		);
 	
-	public function normalize($userAgent) {
+	public function normalize($userAgent)
+    {
 		// Normalize Android version
 		$userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
 		
 		// Opera Mobi/Tablet
-		$is_opera_mobi = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi');
-		$is_opera_tablet = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet');
+		$is_opera_mobi = Utils::checkIfContains($userAgent, 'Opera Mobi');
+		$is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
 		if ($is_opera_mobi || $is_opera_tablet) {
-			$opera_version = WURFL_Handlers_AndroidHandler::getOperaOnAndroidVersion($userAgent, false);
-			$android_version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
+			$opera_version   = AndroidHandler::getOperaOnAndroidVersion($userAgent, false);
+			$android_version = AndroidHandler::getAndroidVersion($userAgent, false);
 			if ($opera_version !== null && $android_version !== null) {
 				$opera_model = $is_opera_tablet? 'Opera Tablet': 'Opera Mobi';
-				$prefix = $opera_model.' '.$opera_version.' Android '.$android_version.WURFL_Constants::RIS_DELIMITER;
+				$prefix = $opera_model.' '.$opera_version.' Android '.$android_version.Constants::RIS_DELIMITER;
 				return $prefix.$userAgent;
 			}
 		}
 		
 		// Stock Android
-		if (!WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, $this->skip_normalization)) {
-			$model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
-			$version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
+		if (!Utils::checkIfContainsAnyOf($userAgent, $this->skip_normalization)) {
+			$model   = AndroidHandler::getAndroidModel($userAgent, false);
+			$version = AndroidHandler::getAndroidVersion($userAgent, false);
 			if ($model !== null && $version !== null) {
-				$prefix = $version.' '.$model.WURFL_Constants::RIS_DELIMITER;
+				$prefix = $version.' '.$model.Constants::RIS_DELIMITER;
 				return $prefix.$userAgent;
 			}
 		}

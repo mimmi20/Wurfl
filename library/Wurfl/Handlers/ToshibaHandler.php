@@ -29,12 +29,12 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_ToshibaHandler extends WURFL_Handlers_Handler {
+class ToshibaHandler extends Handler {
 	
 	protected $prefix = "TOSHIBA";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Toshiba');
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWith($userAgent, 'Toshiba');
 	}
 }

@@ -17,6 +17,9 @@ namespace Wurfl\Configuration;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
+
+use \Wurfl\Exception;
+
 /**
  * XML Configuration
  * @package	WURFL_Configuration
@@ -85,7 +88,7 @@ class XmlConfig extends Config
 				return $this->matchMode;
 			}
 			if (!self::validMatchMode($mode)) {
-				throw new WURFL_WURFLException('Invalid Match Mode: '.$mode);
+				throw new Exception('Invalid Match Mode: '.$mode);
 			}
 			$this->matchMode = $mode;
 		}
@@ -129,7 +132,7 @@ class XmlConfig extends Config
 		foreach (explode(',', $params) as $param) {
 			$paramNameValue = explode('=', $param);
 			if(count($paramNameValue) > 1) {
-				if (strcmp(WURFL_Configuration_Config::DIR, $paramNameValue[0]) == 0) {
+				if (strcmp(Config::DIR, $paramNameValue[0]) == 0) {
 					$paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
 				}
 				$paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);								

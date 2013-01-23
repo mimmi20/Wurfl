@@ -29,12 +29,12 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler {
+class PhilipsHandler extends Handler {
 	
 	protected $prefix = "PHILIPS";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Philips") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "PHILIPS"));
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return (Utils::checkIfStartsWith($userAgent, "Philips") || Utils::checkIfStartsWith($userAgent, "PHILIPS"));
 	}
 }

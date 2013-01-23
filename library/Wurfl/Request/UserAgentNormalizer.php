@@ -22,8 +22,8 @@ namespace Wurfl\Request;
  * User Agent Normalizer
  * @package	WURFL_Request
  */
-class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormalizer_Interface {
-
+class UserAgentNormalizer implements UserAgentNormalizer\NormalizerInterface
+{
 	/**
 	 * UserAgentNormalizer chain - array of WURFL_Request_UserAgentNormalizer objects
 	 * @var array
@@ -34,8 +34,9 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
 	 * Set the User Agent Normalizers
 	 * @param array $normalizers Array of WURFL_Request_UserAgentNormalizer objects
 	 */
-	public function __construct($normalizers = array()) {
-		if(is_array($normalizers)) {
+	public function __construct($normalizers = array())
+    {
+		if (is_array($normalizers)) {
 			$this->_userAgentNormalizers = $normalizers;
 		}
 	}
@@ -45,17 +46,19 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
 	 * @param WURFL_Request_UserAgentNormalizer_Interface $normalizer
 	 * @return WURFL_Request_UserAgentNormalizer
 	 */
-	public function addUserAgentNormalizer(WURFL_Request_UserAgentNormalizer_Interface $normalizer) {
+	public function addUserAgentNormalizer(UserAgentNormalizer\NormalizerInterface $normalizer)
+    {
 		$userAgentNormalizers = $this->_userAgentNormalizers; 
 		$userAgentNormalizers[] = $normalizer;
-		return new WURFL_Request_UserAgentNormalizer($userAgentNormalizers);
+		return new UserAgentNormalizer($userAgentNormalizers);
 	}
 	
 	/**
 	 * Return the number of normalizers currently registered
 	 * @return int count
 	 */
-	public function count() {
+	public function count()
+    {
 		return count($this->_userAgentNormalizers);
 	}
 	
@@ -66,13 +69,12 @@ class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormal
 	 * @param string $userAgent
 	 * @return string Normalized user agent
 	 */
-	public function normalize($userAgent) {
+	public function normalize($userAgent)
+    {
 		$normalizedUserAgent = $userAgent;
 		foreach ($this->_userAgentNormalizers as $normalizer) {
 			$normalizedUserAgent = $normalizer->normalize($normalizedUserAgent);
-//if ($userAgent == 'Mozilla/5.0 (SymbianOS/9.1; U; en-us) AppleWebKit/413 (KHTML, like Gecko) Safari/413') echo "Normalized via ".get_class($normalizer)." to ".$normalizedUserAgent."\n";
 		}
 		return $normalizedUserAgent;
 	}
 }
-

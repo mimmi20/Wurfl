@@ -28,12 +28,12 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
+class OperaMiniHandler extends Handler {
 
 	protected $prefix = "OPERA_MINI";
 
 	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, "Opera Mini");
+		return Utils::checkIfContains($userAgent, "Opera Mini");
 	}
 
 	private $operaMinis = array(
@@ -46,11 +46,11 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
 
 	function applyRecoveryMatch($userAgent) {
 		foreach ($this->operaMinis as $key => $deviceId) {
-			if (WURFL_Handlers_Utils::checkIfContains($userAgent, $key)) {
+			if (Utils::checkIfContains($userAgent, $key)) {
 				return $deviceId;
 			}
 		}
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
+		if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
 			return 'generic_opera_mini_version4';
 		}
 		return 'generic_opera_mini_version1';

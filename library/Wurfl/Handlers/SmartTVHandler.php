@@ -29,7 +29,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SmartTVHandler extends WURFL_Handlers_Handler {
+class SmartTVHandler extends Handler {
 	
 	protected $prefix = "SMARTTV";
 	
@@ -41,7 +41,7 @@ class WURFL_Handlers_SmartTVHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::isSmartTV($userAgent);
+		return Utils::isSmartTV($userAgent);
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
@@ -51,10 +51,10 @@ class WURFL_Handlers_SmartTVHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'SmartTV')) return 'generic_smarttv_browser';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'GoogleTV')) return 'generic_smarttv_googletv_browser';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'AppleTV')) return 'generic_smarttv_appletv_browser';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Boxee')) return 'generic_smarttv_boxeebox_browser';
+		if (Utils::checkIfContains($userAgent, 'SmartTV')) return 'generic_smarttv_browser';
+		if (Utils::checkIfContains($userAgent, 'GoogleTV')) return 'generic_smarttv_googletv_browser';
+		if (Utils::checkIfContains($userAgent, 'AppleTV')) return 'generic_smarttv_appletv_browser';
+		if (Utils::checkIfContains($userAgent, 'Boxee')) return 'generic_smarttv_boxeebox_browser';
 		return 'generic_smarttv_browser';
 	}	
 }

@@ -126,7 +126,7 @@ class DeviceRepositoryBuilder {
 		$patchIterators = array();
 		if (is_array($wurflPatches)) {
 			foreach ($wurflPatches as $wurflPatch) {
-				$patchIterators[] = new WURFL_Xml_DeviceIterator($wurflPatch, $capabilitiesToUse);
+				$patchIterators[] = new Xml\DeviceIterator($wurflPatch, $capabilitiesToUse);
 			}
 		}
 		return $patchIterators;

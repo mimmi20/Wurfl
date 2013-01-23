@@ -38,7 +38,8 @@ class Service
 	 */
 	private $_cacheProvider;
 	
-	public function __construct(DeviceRepository $deviceRepository, UserAgentHandlerChain $userAgentHandlerChain, Storage $cacheProvider) {
+	public function __construct(DeviceRepository $deviceRepository, UserAgentHandlerChain $userAgentHandlerChain, Storage\StorageInterface $cacheProvider)
+    {
 		$this->_deviceRepository = $deviceRepository;
 		$this->_userAgentHandlerChain = $userAgentHandlerChain;
 		$this->_cacheProvider = $cacheProvider;
@@ -150,7 +151,6 @@ class Service
 			$this->_cacheProvider->save('DEV_'.$deviceID, $device);
 		}
 		return $device;
-		//return new WURFL_Device ( $modelDevice, new WURFL_CapabilitiesHolder ( $modelDevice, $this->_deviceRepository, $this->_cacheProvider ) );
 	}
 }
 

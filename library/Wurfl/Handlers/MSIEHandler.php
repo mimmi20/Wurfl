@@ -18,6 +18,9 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
+use \Wurfl\Constants;
+use \Wurfl\Configuration\ConfigHolder;
+
 /**
  * MSIEAgentHandler
  *
@@ -28,7 +31,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
+class MSIEHandler extends Handler {
 	
 	protected $prefix = "MSIE";
 	
@@ -44,16 +47,16 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE');
+		if (Utils::isMobileBrowser($userAgent)) return false;
+		if (Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) return false;
+		return Utils::checkIfStartsWith($userAgent, 'Mozilla') && Utils::checkIfContains($userAgent, 'MSIE');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
 		$matches = array();
 		if(preg_match('/^Mozilla\/4\.0 \(compatible; MSIE (\d)\.(\d);/', $userAgent, $matches)){
-			if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance()) {
-				return WURFL_Constants::GENERIC_WEB_BROWSER;
+			if (ConfigHolder::getWURFLConfig()->isHighPerformance()) {
+				return Constants::GENERIC_WEB_BROWSER;
 			}
 			switch($matches[1]){
 				// cases are intentionally out of sequence for performance
@@ -80,7 +83,7 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
 					break;
 			}
 		}
-		$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+		$tolerance = Utils::firstSlash($userAgent);
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 }

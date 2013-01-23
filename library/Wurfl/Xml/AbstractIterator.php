@@ -18,12 +18,15 @@ namespace Wurfl\Xml;
  * @version	$id$
  *
  */
+
+use \Wurfl\FileUtils;
+
 /**
  * Iterates over a WURFL/Patch XML file
  * @package	WURFL_Xml
  */
-abstract class AbstractIterator implements \Iterator {
-	
+abstract class AbstractIterator implements \Iterator
+{
 	/**
 	 * @var string filename with path to wurfl.xml or patch file
 	 */
@@ -44,9 +47,9 @@ abstract class AbstractIterator implements \Iterator {
 	 */
 	public function __construct($inputFile)
     {
-		$inputFile = WURFL_FileUtils::cleanFilename($inputFile);
+		$inputFile = FileUtils::cleanFilename($inputFile);
 		if(!file_exists($inputFile)) {
-			throw new InvalidArgumentException("cannot locate [$inputFile] file!");
+			throw new \InvalidArgumentException("cannot locate [$inputFile] file!");
 		}
 		$this->inputFile = Utils::getXMLFile($inputFile);
 	}

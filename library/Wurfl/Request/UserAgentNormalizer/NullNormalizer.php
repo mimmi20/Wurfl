@@ -10,6 +10,7 @@ namespace Wurfl\Request\UserAgentNormalizer;
  * License, or (at your option) any later version.
  *
  * Refer to the COPYING.txt file distributed with this package.
+ *
  * @category   WURFL
  * @package	WURFL_Request_UserAgentNormalizer
  * @copyright  ScientiaMobile, Inc.
@@ -18,16 +19,13 @@ namespace Wurfl\Request\UserAgentNormalizer;
  * @version	$id$
  */
 /**
- * WURFL User Agent Normalizer Interface
+ * Null User Agent Normalizer - does not normalize anything
  * @package	WURFL_Request_UserAgentNormalizer
  */
-interface WURFL_Request_UserAgentNormalizer_Interface {
-	
-	/**
-	 * Return the normalized user agent
-	 * @param string $userAgent
-	 * @return string Normalized user agent
-	 */
-	public function normalize($userAgent);
+class NullNormalizer implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {		
+		return $userAgent;
+	}
 }
-

@@ -29,12 +29,12 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_KyoceraHandler extends WURFL_Handlers_Handler {
+class KyoceraHandler extends Handler {
 	
 	protected $prefix = "KYOCERA";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('kyocera', 'QC-', 'KWC-'));
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWithAnyOf($userAgent, array('kyocera', 'QC-', 'KWC-'));
 	}
 }

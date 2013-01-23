@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,6 +18,11 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Handlers\SafariHandler;
+use \Wurfl\Constants;
+
 /**
  * User Agent Normalizer
  * Return the safari user agent stripping out 
@@ -28,14 +33,15 @@ namespace Wurfl;
  * 		Mozilla/5.0 (Macintosh Safari/525
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Safari implements WURFL_Request_UserAgentNormalizer_Interface {
-
-	public function normalize($userAgent) {
-		$safari_version = WURFL_Handlers_SafariHandler::getSafariVersion($userAgent);
+class Safari implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
+		$safari_version = SafariHandler::getSafariVersion($userAgent);
 		if (!$safari_version) {
 			return $userAgent;
 		}
-		$prefix = 'Safari '.$safari_version.WURFL_Constants::RIS_DELIMITER;
-		return $prefix.$userAgent;
+		$prefix = 'Safari ' . $safari_version . Constants::RIS_DELIMITER;
+		return $prefix . $userAgent;
 	}
 }

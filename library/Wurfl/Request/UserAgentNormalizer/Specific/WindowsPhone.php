@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,16 +18,23 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Constants;
+use \Wurfl\Handlers\WindowsPhoneHandler;
+
 /**
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_WindowsPhone implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		$model = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
-		$version = WURFL_Handlers_WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+class WindowsPhone implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
+		$model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
+		$version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
 		if ($model !== null && $version !== null) {
-			$prefix = 'WP'.$version.' '.$model.WURFL_Constants::RIS_DELIMITER;
+			$prefix = 'WP'.$version.' '.$model.Constants::RIS_DELIMITER;
 			return $prefix.$userAgent;
 		}
 		return $userAgent;

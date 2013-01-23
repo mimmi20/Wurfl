@@ -17,6 +17,9 @@ namespace Wurfl\Logger;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
+
+use \Wurfl\Exception;
+
 /**
  * WURFL File Logger
  * 
@@ -51,7 +54,7 @@ class FileLogger implements LoggerInterface
 		}
 		$this->fp = @fopen($fileName, "a");
 		if(!$this->fp){
-			throw new WURFL_WURFLException("Unable to open log file: ");
+			throw new Exception("Unable to open log file: ");
 		}
 	}
 	

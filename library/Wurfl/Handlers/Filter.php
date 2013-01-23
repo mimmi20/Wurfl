@@ -30,8 +30,8 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
-interface WURFL_Handlers_Filter {
-
+interface Filter
+{
 	/**
 	 * The filter() method is used to classify devices based on patterns
 	 * in their user agents.
@@ -48,7 +48,4 @@ interface WURFL_Handlers_Filter {
 	 *
 	 */
 	public function persistData();
-
-
 }
-

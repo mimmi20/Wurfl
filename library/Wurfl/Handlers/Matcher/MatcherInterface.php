@@ -21,8 +21,8 @@ namespace Wurfl\Handlers\Matcher;
  * WURFL user agent matcher interface
  * @package	WURFL_Handlers_Matcher
  */
-interface WURFL_Handlers_Matcher_Interface {
-	
+interface MatcherInterface
+{
 	/**
 	 * Attempts to find a matching $needle in given $collection within the specified $tolerance
 	 * @param array $collection Collection of user agents
@@ -32,4 +32,3 @@ interface WURFL_Handlers_Matcher_Interface {
 	 */
 	public function match(&$collection, $needle, $tolerance);
 }
-

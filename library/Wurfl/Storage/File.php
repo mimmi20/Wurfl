@@ -18,6 +18,9 @@ namespace Wurfl\Storage;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\FileUtils;
+
 /**
  * WURFL Storage
  * @package	WURFL_Storage
@@ -54,11 +57,11 @@ class File extends Base
 		if (!is_dir($this->root)) {
 			@mkdir ($this->root, 0777, true);
 			if(!is_dir($this->root)){
-				throw new WURFL_Storage_Exception("The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ".$this->root);
+				throw new Exception("The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ".$this->root);
 			}
 		}
 		if(!$this->readonly && !is_writeable($this->root)){
-			throw new WURFL_Storage_Exception("The file storage directory is not writeable: ".$this->root);
+			throw new Exception("The file storage directory is not writeable: ".$this->root);
 		}
 	}
 
@@ -67,7 +70,7 @@ class File extends Base
 			return $data->value();
 		} else {
 			$path = $this->keyPath($key);
-			$value = WURFL_FileUtils::read($path);
+			$value = FileUtils::read($path);
 			if ($value === null) {
 				return null;
 			}
@@ -87,17 +90,17 @@ class File extends Base
 	public function save($key, $value, $expiration=null) {
 		$value = new StorageObject($value, (($expiration === null)? $this->expire: $expiration));
 		$path = $this->keyPath($key);
-		WURFL_FileUtils::write($path, $value);
+		FileUtils::write($path, $value);
 	}
 
 	public function clear() {
 		$this->cacheClear();
-		WURFL_FileUtils::rmdirContents($this->root);
+		FileUtils::rmdirContents($this->root);
 	}
 
 
 	private function keyPath($key) {
-		return WURFL_FileUtils::join(array($this->root, $this->spread(md5($key))));
+		return FileUtils::join(array($this->root, $this->spread(md5($key))));
 	}
 
 	function spread($md5, $n = 2) {

@@ -29,12 +29,12 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SiemensHandler extends WURFL_Handlers_Handler {
+class SiemensHandler extends Handler {
 	
 	protected $prefix = "SIEMENS";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SIE-');
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWith($userAgent, 'SIE-');
 	}
 }

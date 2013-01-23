@@ -29,19 +29,19 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler {
+class NecHandler extends Handler {
 	
 	const NEC_KGT_TOLERANCE = 2;
 	protected $prefix = "NEC";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('NEC-', 'KGT'));
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWithAnyOf($userAgent, array('NEC-', 'KGT'));
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "NEC-")) {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+		if (Utils::checkIfStartsWith($userAgent, "NEC-")) {
+			$tolerance = Utils::firstSlash($userAgent);
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 		return $this->getDeviceIDFromLD($userAgent, self::NEC_KGT_TOLERANCE);

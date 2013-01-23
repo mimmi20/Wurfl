@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,17 +18,25 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Constants;
+use \Wurfl\Handlers\Utils;
+use \Wurfl\Handlers\AndroidHandler;
+
 /**
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Kindle implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
-			$model = WURFL_Handlers_AndroidHandler::getAndroidModel($userAgent, false);
-			$version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
+class Kindle implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
+		if (Utils::checkIfContains($userAgent, 'Android')) {
+			$model   = AndroidHandler::getAndroidModel($userAgent, false);
+			$version = AndroidHandler::getAndroidVersion($userAgent, false);
 			if ($model !== null && $version !== null) {
-				$prefix = $version.' '.$model.WURFL_Constants::RIS_DELIMITER;
+				$prefix = $version.' '.$model.Constants::RIS_DELIMITER;
 				return $prefix.$userAgent;
 			}
 		}

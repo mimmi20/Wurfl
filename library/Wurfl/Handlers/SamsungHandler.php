@@ -29,33 +29,33 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler {
+class SamsungHandler extends Handler {
 
 	protected $prefix = "SAMSUNG";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG'))
-			|| WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG'))
+			|| Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("SEC-", "SAMSUNG-", "SCH"))) {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-		} else if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("Samsung", "SPH", "SGH"))) {
-			$tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
+		if (Utils::checkIfStartsWithAnyOf($userAgent, array("SEC-", "SAMSUNG-", "SCH"))) {
+			$tolerance = Utils::firstSlash($userAgent);
+		} else if (Utils::checkIfStartsWithAnyOf($userAgent, array("Samsung", "SPH", "SGH"))) {
+			$tolerance = Utils::firstSpace($userAgent);
 		} else {
-			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
+			$tolerance = Utils::secondSlash($userAgent);
 		}
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 	
 	public function applyRecoveryMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SAMSUNG')) {
+		if (Utils::checkIfStartsWith($userAgent, 'SAMSUNG')) {
 			$tolerance = 8;
 			return $this->getDeviceIDFromLD($userAgent, $tolerance);
 		} else {
-			$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
+			$tolerance = Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 	}

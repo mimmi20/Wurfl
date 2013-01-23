@@ -35,17 +35,20 @@ class Memory extends Base
 	private $namespace;
 	private $map;
 
-	public function __construct($params=array()) {
+	public function __construct($params=array())
+    {
 		$currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
 		$this->namespace = $currentParams["namespace"];
 		$this->map = array();
 	}
 
-	public function save($objectId, $object, $expiration=null) {
+	public function save($objectId, $object, $expiration=null)
+    {
 		$this->map[$this->encode($this->namespace, $objectId)] = $object;
 	}
 
-	public function load($objectId) {
+	public function load($objectId)
+    {
 		$key = $this->encode($this->namespace, $objectId);
 		if (isset($this->map[$key])) {
 			return $this->map[$key];
@@ -53,9 +56,10 @@ class Memory extends Base
 		return null;
 	}
 
-	public function remove($objectId) {
+	public function remove($objectId)
+    {
 		$key = $this->encode($this->namespace, $objectId);
-		if($this->map[$key]) {
+		if ($this->map[$key]) {
 			unset($this->map[$key]);
 		}
 	}
@@ -63,7 +67,8 @@ class Memory extends Base
 	/**
 	 * Removes all entry from the Persistence Provier
 	 */
-	public function clear() {
+	public function clear()
+    {
 		unset($this->map);
 	}
 }

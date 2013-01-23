@@ -61,13 +61,13 @@ class Device
 					return $this->_modelDevice->$name;
 				break;
 				default:
-					throw new WURFL_WURFLException("the field " . $name . " is not defined");
+					throw new Exception("the field " . $name . " is not defined");
 				break;
 			}
 			
 		}
 
-		throw new WURFL_WURFLException("the field " . $name . " is not defined");
+		throw new Exception("the field " . $name . " is not defined");
 	}
 	
 	/**

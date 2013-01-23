@@ -19,6 +19,8 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
+use \Wurfl\Constants;
+
 /**
  * WindowsPhoneDesktopUserAgentHandler
  * 
@@ -29,7 +31,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_WindowsPhoneDesktopHandler extends WURFL_Handlers_Handler {
+class WindowsPhoneDesktopHandler extends Handler {
 	
 	protected $prefix = "WINDOWSPHONEDESKTOP";
 	
@@ -39,16 +41,16 @@ class WURFL_Handlers_WindowsPhoneDesktopHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'ZuneWP7');
+		return Utils::checkIfContains($userAgent, 'ZuneWP7');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
 		// Exact and Recovery match only
-		return WURFL_Constants::NO_MATCH;
+		return Constants::NO_MATCH;
 	}
 	
 	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Trident/5.0')) return 'generic_ms_phone_os7_5_desktopmode';
+		if (Utils::checkIfContains($userAgent, 'Trident/5.0')) return 'generic_ms_phone_os7_5_desktopmode';
 		return 'generic_ms_phone_os7_desktopmode';
 	}
 }

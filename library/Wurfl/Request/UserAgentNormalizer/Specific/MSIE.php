@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,13 +18,17 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - MSIE String with the Major and Minor Version Only.
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_MSIE implements WURFL_Request_UserAgentNormalizer_Interface  {
-	
-	public function normalize($userAgent) {
+class MSIE implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
 		return $this->msieWithVersion($userAgent);				
 	}
 	/**
@@ -32,7 +36,8 @@ class WURFL_Request_UserAgentNormalizer_Specific_MSIE implements WURFL_Request_U
 	 * @param string $userAgent
 	 * @return string Version info
 	 */
-	private function msieWithVersion($userAgent) {
+	private function msieWithVersion($userAgent)
+    {
 		// return preg_replace('/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/', '', $userAgent)
 		return substr($userAgent, strpos($userAgent, "MSIE"), 8);
 	}

@@ -29,21 +29,21 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler {
+class SanyoHandler extends Handler {
 	
 	protected $prefix = "SANYO";
 
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || Utils::checkIfContains($userAgent, 'MobilePhone');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
 		$idx = strpos($userAgent, 'MobilePhone');
 		if ($idx !== false) {
-			$tolerance = WURFL_Handlers_Utils::indexOfOrLength('/', $userAgent, $idx);
+			$tolerance = Utils::indexOfOrLength('/', $userAgent, $idx);
 		} else {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+			$tolerance = Utils::firstSlash($userAgent);
 		}
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}

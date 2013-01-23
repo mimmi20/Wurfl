@@ -47,7 +47,7 @@ class Apc extends Base
 	public function save($objectId, $object, $expiration=null) {
 		$value = apc_store($this->encode($this->apcNameSpace(), $objectId), $object, (($expiration === null)? $this->expire(): $expiration));
 		if ($value === false) {
-			throw new WURFL_Storage_Exception("Error saving variable in APC cache. Cache may be full.");
+			throw new Exception("Error saving variable in APC cache. Cache may be full.");
 		}
 	}
 
@@ -83,7 +83,7 @@ class Apc extends Base
 	 */
 	private function ensureModuleExistence() {
 		if (!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
-			throw new WURFL_Storage_Exception ("The PHP extension apc must be installed, loaded and enabled.");
+			throw new Exception ("The PHP extension apc must be installed, loaded and enabled.");
 		}
 	}
 

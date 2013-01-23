@@ -19,6 +19,8 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
+use \Wurfl\Constants;
+
 /**
  * KindleUserAgentHandler
  * 
@@ -29,7 +31,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler {
+class KindleHandler extends Handler {
 	
 	protected $prefix = "KINDLE";
 	
@@ -43,14 +45,14 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
+		return Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
 		// Mobile-mode Kindle Fire
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
+		if (Utils::checkIfContains($userAgent, 'Android')) {
 			// UA was already restructured by the specific normalizer
-			$tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+			$tolerance = Utils::toleranceToRisDelimeter($userAgent);
 			if ($tolerance) {
 				return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 			} else {
@@ -90,7 +92,7 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler {
 			return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search) + 1);
 		}
 		
-		return WURFL_Constants::NO_MATCH;
+		return Constants::NO_MATCH;
 	}
 	
 	public function applyRecoveryMatch($userAgent){
@@ -102,7 +104,7 @@ class WURFL_Handlers_KindleHandler extends WURFL_Handlers_Handler {
 			'Silk' => 'amazon_kindle_fire_ver1',
 		);
 		foreach ($map as $keyword => $id) {
-			if (WURFL_Handlers_Utils::checkIfContains($userAgent, $keyword)) return $id;
+			if (Utils::checkIfContains($userAgent, $keyword)) return $id;
 		}
 		return 'generic_amazon_kindle';
 	}

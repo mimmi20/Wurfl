@@ -28,8 +28,8 @@ namespace Wurfl\Handlers\Matcher;
  * @see match()
  * @package	WURFL_Handlers_Matcher
  */
-class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface {
-	
+class LDMatcher implements MatcherInterface
+{
 	/**
 	 * Instance of WURFL_Handlers_Matcher_LDMatcher
 	 * @var WURFL_Handlers_Matcher_LDMatcher
@@ -40,14 +40,16 @@ class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interfa
 	 * Returns an instance of the LDMatcher singleton
 	 * @return WURFL_Handlers_LDMatcher
 	 */
-	public static function INSTANCE() {
+	public static function INSTANCE()
+    {
 		if (self::$instance === null) {
 			self::$instance = new self();
 		}
 		return self::$instance;
 	}
 	
-	public function match(&$collection, $needle, $tolerance) {
+	public function match(&$collection, $needle, $tolerance)
+    {
 		$best = $tolerance;
 		$match = '';
 		foreach ( $collection as $userAgent ) {
@@ -62,4 +64,3 @@ class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interfa
 		return $match;
 	}
 }
-

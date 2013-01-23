@@ -30,12 +30,12 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SagemHandler extends WURFL_Handlers_Handler {
+class SagemHandler extends Handler {
 	
 	protected $prefix = "SAGEM";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sagem', 'SAGEM'));
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWithAnyOf($userAgent, array('Sagem', 'SAGEM'));
 	}
 }

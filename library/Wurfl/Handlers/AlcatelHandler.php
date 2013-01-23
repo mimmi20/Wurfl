@@ -29,11 +29,13 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler {
+class AlcatelHandler extends Handler
+{
 	protected $prefix = "ALCATEL";
 	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Alcatel") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "ALCATEL");
+	public function canHandle($userAgent)
+    {
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWith($userAgent, "Alcatel") || Utils::checkIfStartsWith($userAgent, "ALCATEL");
 	}
 }

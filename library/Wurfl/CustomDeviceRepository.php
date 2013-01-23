@@ -22,7 +22,7 @@ namespace Wurfl;
  * WURFL Device Repository
  * @package	WURFL
  */
-class CustomDeviceRepository implements WURFL_DeviceRepository
+class CustomDeviceRepository implements DeviceRepository
 {
 	const WURFL_USER_AGENTS_CLASSIFIED = "WURFL_USER_AGENTS_CLASSIFIED";
 	
@@ -60,7 +60,7 @@ class CustomDeviceRepository implements WURFL_DeviceRepository
 	public function __construct($persistenceStorage, $deviceClassificationNames)
     {
 		if (is_null($persistenceStorage)) {
-			throw new InvalidArgumentException("Persistence Provider cannot be null");
+			throw new \InvalidArgumentException("Persistence Provider cannot be null");
 		}
 		$this->persistenceStorage = $persistenceStorage;
 		$this->deviceClassificationNames = $deviceClassificationNames;
@@ -160,14 +160,14 @@ class CustomDeviceRepository implements WURFL_DeviceRepository
 	public function getCapabilityForDevice($deviceId, $capabilityName)
     {
 		if (! $this->isCapabilityDefined($capabilityName)) {
-			throw new WURFL_WURFLException("capability name: " . $capabilityName . " not found");
+			throw new Exception("capability name: " . $capabilityName . " not found");
 		}
 		$capabilityValue = null;
 		// TODO: Prevent infinite recursion
 		while (strcmp($deviceId, "root")) {
 			$device = $this->persistenceStorage->load($deviceId);
 			if (!$device) {
-				throw new WURFL_WURFLException("the device with $deviceId is not found.");
+				throw new Exception("the device with $deviceId is not found.");
 			}
 			if (isset($device->capabilities[$capabilityName])) {
 				$capabilityValue = $device->capabilities[$capabilityName];
@@ -184,7 +184,8 @@ class CustomDeviceRepository implements WURFL_DeviceRepository
 	 * @param string $capability
 	 * @return bool
 	 */
-	private function isCapabilityDefined($capability) {
+	private function isCapabilityDefined($capability)
+    {
 		return in_array($capability, $this->_capabilitiesName);
 	}
 	
@@ -261,7 +262,7 @@ class CustomDeviceRepository implements WURFL_DeviceRepository
 	public function getGroupIDForCapability($capability)
     {
 		if (!isset($capability) || !array_key_exists($capability, $this->_groupIDCapabilitiesMap)) {
-			throw new InvalidArgumentException("an invalid capability was specified.");
+			throw new \InvalidArgumentException("an invalid capability was specified.");
 		}
 		return $this->_groupIDCapabilitiesMap[$capability];
 	}

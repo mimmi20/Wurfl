@@ -29,12 +29,13 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_HTCHandler extends WURFL_Handlers_Handler {
-	
+class HTCHandler extends Handler
+{
 	protected $prefix = "HTC";
 	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
+	public function canHandle($userAgent)
+    {
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
 	}
 }

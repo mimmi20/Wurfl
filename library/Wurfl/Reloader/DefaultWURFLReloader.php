@@ -19,6 +19,11 @@ namespace Wurfl\Reloader;
  * @version	$id$
  * @deprecated
  */
+
+use \Wurfl\ManagerFactory;
+use \Wurfl\Configuration\XmlConfig;
+use \Wurfl\Configuration\ArrayConfig;
+
 /**
  * WURFL Reloader
  * @package	WURFL_Reloader
@@ -30,7 +35,7 @@ class DefaultWurflReloader implements ReloaderInterface
     {
 		$wurflConfig = $this->fromFile ( $wurflConfigurationPath );
 		touch($wurflConfig->wurflFile);
-		$wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
+		$wurflManagerFactory = new ManagerFactory($wurflConfig);
 		$wurflManagerFactory->create();	
 		
 	}
@@ -38,9 +43,9 @@ class DefaultWurflReloader implements ReloaderInterface
 	private function fromFile($wurflConfigurationPath)
     {
 		if ($this->endsWith ( $wurflConfigurationPath, ".xml" )) {
-			return new WURFL_Configuration_XmlConfig ( $wurflConfigurationPath );
+			return new XmlConfig ( $wurflConfigurationPath );
 		}
-		return new WURFL_Configuration_ArrayConfig($wurflConfigurationPath);
+		return new ArrayConfig($wurflConfigurationPath);
 	}
 	
 	private function endsWith($haystack, $needle)

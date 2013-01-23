@@ -29,13 +29,14 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler {
-	
+class BotCrawlerTranscoderHandler extends Handler
+{
 	protected $prefix = 'BOT_CRAWLER_TRANSCODER';
 	
-	public function canHandle($userAgent) {
+	public function canHandle($userAgent)
+    {
 		foreach ($this->botCrawlerTranscoder as $key) {
-			if (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
+			if (Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
 				return true;
 			}
 		}

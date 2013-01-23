@@ -29,7 +29,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_MaemoHandler extends WURFL_Handlers_Handler {
+class MaemoHandler extends Handler {
 	
 	protected $prefix = "MAEMO";
 	
@@ -40,11 +40,11 @@ class WURFL_Handlers_MaemoHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Maemo');
+		return Utils::checkIfContains($userAgent, 'Maemo');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+		$tolerance = Utils::toleranceToRisDelimeter($userAgent);
 		if ($tolerance !== false) {
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
@@ -53,10 +53,10 @@ class WURFL_Handlers_MaemoHandler extends WURFL_Handlers_Handler {
 	}
 	
 	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
+		if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
 			return 'generic_opera_mobi_maemo';
 		}
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox')) {
+		if (Utils::checkIfContains($userAgent, 'Firefox')) {
 			return 'nokia_generic_maemo_with_firefox';
 		}
 		return 'nokia_generic_maemo';

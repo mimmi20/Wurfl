@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,6 +18,10 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Handlers\Utils;
+
 /**
  * User Agent Normalizer
  * Return the safari user agent stripping out 
@@ -28,13 +32,14 @@ namespace Wurfl;
  * 		Mozilla/5.0 (Macintosh Safari/525
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Opera implements WURFL_Request_UserAgentNormalizer_Interface {
-	
-	public function normalize($userAgent) {
+class Opera implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
 		// Repair Opera user agents using fake version 9.80
 		// Normalize: Opera/9.80 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
 		// Into:	  Opera/11.50 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
+		if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
 			if (preg_match('#Version/(\d+\.\d+)#', $userAgent, $matches)) {
 				$userAgent = str_replace('Opera/9.80', 'Opera/'.$matches[1], $userAgent);
 			}

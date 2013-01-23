@@ -29,8 +29,8 @@ namespace Wurfl\Request;
  * @property string $id Unique ID used for caching: MD5($userAgent)
  * @property WURFL_Request_MatchInfo $matchInfo Information about the match (available after matching)
  */
-class WURFL_Request_GenericRequest {
-	
+class GenericRequest
+{
 	private $_userAgent;
 	private $_userAgentProfile;
 	private $_xhtmlDevice;
@@ -42,15 +42,17 @@ class WURFL_Request_GenericRequest {
 	 * @param string $userAgentProfile
 	 * @param string $xhtmlDevice
 	 */
-	public function __construct($userAgent, $userAgentProfile=null, $xhtmlDevice=null){
+	public function __construct($userAgent, $userAgentProfile=null, $xhtmlDevice=null)
+    {
 		$this->_userAgent = $userAgent;
 		$this->_userAgentProfile = $userAgentProfile;
 		$this->_xhtmlDevice = $xhtmlDevice;
 		$this->_id = md5($this->userAgent);
-		$this->_matchInfo = new WURFL_Request_MatchInfo();
+		$this->_matchInfo = new MatchInfo();
 	}
 	
-	public function __get($name){
+	public function __get($name)
+    {
 		$name = '_'.$name;
 		return $this->$name;
 	}

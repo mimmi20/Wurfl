@@ -31,8 +31,8 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
-class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
-	
+class BlackBerryHandler extends Handler
+{
 	protected $prefix = "BLACKBERRY";
 	
 	public static $constantIDs = array(
@@ -53,23 +53,26 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
 		"6." => "blackberry_generic_ver6"
 	);
 	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, "BlackBerry");
+	public function canHandle($userAgent)
+    {
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfContainsCaseInsensitive($userAgent, "BlackBerry");
 	}
 		
-	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/4')) {
-			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
-		} else if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5')) {
-			$tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, ';', 3);
+	public function applyConclusiveMatch($userAgent)
+    {
+		if (Utils::checkIfStartsWith($userAgent, 'Mozilla/4')) {
+			$tolerance = Utils::secondSlash($userAgent);
+		} elseif (Utils::checkIfStartsWith($userAgent, 'Mozilla/5')) {
+			$tolerance = Utils::ordinalIndexOf($userAgent, ';', 3);
 		} else {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+			$tolerance = Utils::firstSlash($userAgent);
 		}
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 	
-	public function applyRecoveryMatch($userAgent) {
+	public function applyRecoveryMatch($userAgent)
+    {
 		// No need for case insensitivity here, BlackBerry was fixed in the normalizer 
 		if (preg_match('#BlackBerry[^/\s]+/(\d.\d)#', $userAgent, $matches)) {
 			$version = $matches[1];

@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,16 +18,23 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Constants;
+use \Wurfl\Handlers\WebOSHandler;
+
 /**
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_WebOS implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		$model = WURFL_Handlers_WebOSHandler::getWebOSModelVersion($userAgent);
-		$os_ver = WURFL_Handlers_WebOSHandler::getWebOSVersion($userAgent);
+class WebOS implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
+		$model  = WebOSHandler::getWebOSModelVersion($userAgent);
+		$os_ver = WebOSHandler::getWebOSVersion($userAgent);
 		if ($model !== null && $os_ver !== null) {
-			$prefix = $model.' '.$os_ver.WURFL_Constants::RIS_DELIMITER;
+			$prefix = $model.' '.$os_ver.Constants::RIS_DELIMITER;
 			return $prefix.$userAgent;
 		}
 		return $userAgent;

@@ -19,6 +19,8 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
+use \Wurfl\Constants;
+
 /**
  * AndroidUserAgentHandler
  * 
@@ -29,8 +31,8 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
-	
+class AndroidHandler extends Handler
+{
 	protected $prefix = "ANDROID";
 	
 	public static $constantIDs = array(
@@ -91,23 +93,25 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'generic_android_ver2_3_netfrontlifebrowser',
 	);
 	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
+	public function canHandle($userAgent)
+    {
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfContains($userAgent, 'Android');
 	}
 	
-	public function applyConclusiveMatch($userAgent) {
+	public function applyConclusiveMatch($userAgent)
+    {
 		// Look for RIS delimited UAs first
-		$delimiter_idx = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
+		$delimiter_idx = strpos($userAgent, Constants::RIS_DELIMITER);
 		if ($delimiter_idx !== false) {
-			$tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
+			$tolerance = $delimiter_idx + strlen(Constants::RIS_DELIMITER);
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 		
 		// Opera Mini
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mini')) {
-			if (WURFL_Handlers_Utils::checkIfContains($userAgent, ' Build/')) {
-				$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' Build/');
+		if (Utils::checkIfContains($userAgent, 'Opera Mini')) {
+			if (Utils::checkIfContains($userAgent, ' Build/')) {
+				$tolerance = Utils::indexOfOrLength($userAgent, ' Build/');
 				return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 			}
 			$prefixes = array(
@@ -116,20 +120,20 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 				'Opera/9.80 (Android; Opera Mini/5.1' => 'uabait_opera_mini_android_v51',
 			);
 			foreach ($prefixes as $prefix => $defaultID) {
-				if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, $prefix)) {
+				if (Utils::checkIfStartsWith($userAgent, $prefix)) {
 					return $this->getDeviceIDFromRIS($userAgent, strlen($prefix));
 				}
 			}
 		}
 		
 		// Fennec
-		if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox'))) {
-			$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ')');
+		if (Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox'))) {
+			$tolerance = Utils::indexOfOrLength($userAgent, ')');
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 		
 		// UCWEB7
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCWEB7')) {
+		if (Utils::checkIfContains($userAgent, 'UCWEB7')) {
 			// The tolerance is after UCWEB7, not before
 			$find = 'UCWEB7';
 			$tolerance = strpos($userAgent, $find) + strlen($find);
@@ -140,7 +144,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		}
 		
 		// NetFrontLifeBrowser
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser/2.2')) {
+		if (Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser/2.2')) {
 			$find = 'NetFrontLifeBrowser/2.2';
 			$tolerance = strpos($userAgent, $find) + strlen($find);
 			if ($tolerance > strlen($userAgent)) {
@@ -150,19 +154,20 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		}
 		
 		// Standard RIS Matching
-		$tolerance = min(WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' Build/'), WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' AppleWebKit'));
+		$tolerance = min(Utils::indexOfOrLength($userAgent, ' Build/'), Utils::indexOfOrLength($userAgent, ' AppleWebKit'));
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 
-	public function applyRecoveryMatch($userAgent) {
+	public function applyRecoveryMatch($userAgent)
+    {
 		// Opera Mini
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mini')) {
+		if (Utils::checkIfContains($userAgent, 'Opera Mini')) {
 			return 'generic_opera_mini_android_version5';
 		}
 		
 		// Opera Mobi/Tablet
-		$is_opera_mobi = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi');
-		$is_opera_tablet = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet');
+		$is_opera_mobi = Utils::checkIfContains($userAgent, 'Opera Mobi');
+		$is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
 		if ($is_opera_mobi || $is_opera_tablet) {
 			$android_version = self::getAndroidVersion($userAgent);
 			$android_version_string = str_replace('.', '_', $android_version);
@@ -176,7 +181,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		}
 		
 		// UCWEB7
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCWEB7')) {
+		if (Utils::checkIfContains($userAgent, 'UCWEB7')) {
 			$android_version_string = str_replace('.', '_', self::getAndroidVersion($userAgent));
 			$deviceID = 'generic_android_ver'.$android_version_string.'_ucweb';
 			if (in_array($deviceID, self::$constantIDs)) {
@@ -187,19 +192,19 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		}
 		
 		// Fennec
-		$is_fennec = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Fennec');
-		$is_firefox = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox');
+		$is_fennec = Utils::checkIfContains($userAgent, 'Fennec');
+		$is_firefox = Utils::checkIfContains($userAgent, 'Firefox');
 		if ($is_fennec || $is_firefox) {
-			if ($is_fennec || WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mobile')) return 'generic_android_ver2_0_fennec';
+			if ($is_fennec || Utils::checkIfContains($userAgent, 'Mobile')) return 'generic_android_ver2_0_fennec';
 			if ($is_firefox) {
-				if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tablet')) return 'generic_android_ver2_0_fennec_tablet';
-				if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Desktop')) return 'generic_android_ver2_0_fennec_desktop';
-				return WURFL_Constants::NO_MATCH;
+				if (Utils::checkIfContains($userAgent, 'Tablet')) return 'generic_android_ver2_0_fennec_tablet';
+				if (Utils::checkIfContains($userAgent, 'Desktop')) return 'generic_android_ver2_0_fennec_desktop';
+				return Constants::NO_MATCH;
 			}
 		}
 		
 		// NetFrontLifeBrowser
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser')) {
+		if (Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser')) {
 			// generic_android_ver2_0_netfrontlifebrowser
 			$android_version_string = str_replace('.', '_', self::getAndroidVersion($userAgent));
 			$deviceID = 'generic_android_ver'.$android_version_string.'_netfrontlifebrowser';
@@ -211,7 +216,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		}
 		
 		// Generic Android
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Froyo')){
+		if (Utils::checkIfContains($userAgent, 'Froyo')){
 			return 'generic_android_ver2_2';
 		}
 		$version_string = str_replace('.', '_', self::getAndroidVersion($userAgent));
@@ -240,6 +245,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		'Jelly Bean' => '4.1', // Note: 4.2 is also Jelly Bean
 		'Key Lime Pie' => '5.0',
 	);
+    
 	/**
 	 * Get the Android version from the User Agent, or the default Android version is it cannot be determined
 	 * @param string $ua User Agent
@@ -247,7 +253,8 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	 * @return string Android version
 	 * @see self::$defaultAndroidVersion
 	 */
-	public static function getAndroidVersion($ua, $use_default=true) {
+	public static function getAndroidVersion($ua, $use_default=true)
+    {
 		// Replace Android version names with their numbers
 		// ex: Froyo => 2.2
 		$ua = str_replace(array_keys(self::$androidReleaseMap), array_values(self::$androidReleaseMap), $ua);
@@ -263,6 +270,7 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	const OPERA_DEFAULT_VERSION = '10';
 	
 	public static $validOperaVersions = array('10', '11', '12');
+    
 	/**
 	 * Get the Opera browser version from an Opera Android user agent
 	 * @param string $ua User Agent
@@ -270,7 +278,8 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 	 * @return string Opera version
 	 * @see self::$defaultOperaVersion
 	 */
-	public static function getOperaOnAndroidVersion($ua, $use_default=true) {
+	public static function getOperaOnAndroidVersion($ua, $use_default=true)
+    {
 		if (preg_match('/Version\/(\d\d)/', $ua, $matches)) {
 			$version = $matches[1];
 			if (in_array($version, self::$validOperaVersions)) {
@@ -280,7 +289,8 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
 		return $use_default? self::OPERA_DEFAULT_VERSION: null;
 	}
 	
-	public static function getAndroidModel($ua, $use_default=true) {
+	public static function getAndroidModel($ua, $use_default=true)
+    {
 		if (!preg_match('#Android [^;]+;(?: xx-xx;)? (.+?) Build/#', $ua, $matches)) {
 			return null;
 		}

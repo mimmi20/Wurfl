@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Storage;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -29,7 +29,7 @@ namespace Wurfl;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-interface Storage
+interface StorageInterface
 {
 	/**
 	 * @var string Key for storing data expiration times

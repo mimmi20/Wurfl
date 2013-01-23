@@ -28,17 +28,17 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SPVHandler extends WURFL_Handlers_Handler {
+class SPVHandler extends Handler {
 	
 	protected $prefix = "SPV";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'SPV');
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfContains($userAgent, 'SPV');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
+		$tolerance = Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 	

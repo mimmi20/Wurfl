@@ -29,7 +29,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler {
+class KDDIHandler extends Handler {
 	
 	protected $prefix = "KDDI";
 	
@@ -38,15 +38,15 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'KDDI-');
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfContains($userAgent, 'KDDI-');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
-			$tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
+		if (Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
+			$tolerance = Utils::secondSlash($userAgent);
 		} else {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+			$tolerance = Utils::firstSlash($userAgent);
 		}
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}

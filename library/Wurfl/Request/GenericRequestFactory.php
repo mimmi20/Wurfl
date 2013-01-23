@@ -18,24 +18,27 @@ namespace Wurfl\Request;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Utils;
+
 /**
  * Creates a Generic WURFL Request from the raw HTTP Request
  * @package	WURFL_Request
  */
-class WURFL_Request_GenericRequestFactory {
-
-
+class GenericRequestFactory
+{
 	/**
 	 * Creates Generic Request from the given HTTP Request (normally $_SERVER)
 	 * @param array $request HTTP Request
 	 * @return WURFL_Request_GenericRequest
 	 */
-	public function createRequest($request) {
-		$userAgent = WURFL_WURFLUtils::getUserAgent($request);
-		$userAgentProfile = WURFL_WURFLUtils::getUserAgentProfile($request);
-		$isXhtmlDevice = WURFL_WURFLUtils::isXhtmlRequester($request);
+	public function createRequest($request)
+    {
+		$userAgent = Utils::getUserAgent($request);
+		$userAgentProfile = Utils::getUserAgentProfile($request);
+		$isXhtmlDevice = Utils::isXhtmlRequester($request);
 
-		return new WURFL_Request_GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
+		return new GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
 	}
 	
 	/**
@@ -43,11 +46,8 @@ class WURFL_Request_GenericRequestFactory {
 	 * @param string $userAgent
 	 * @return WURFL_Request_GenericRequest
 	 */
-	public function createRequestForUserAgent($userAgent) {
-		return new WURFL_Request_GenericRequest($userAgent, null, false);
+	public function createRequestForUserAgent($userAgent)
+    {
+		return new GenericRequest($userAgent, null, false);
 	}
-
-	
 }
-
-

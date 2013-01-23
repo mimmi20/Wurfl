@@ -29,12 +29,12 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_SharpHandler extends WURFL_Handlers_Handler {
+class SharpHandler extends Handler {
 	
 	protected $prefix = "SHARP";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sharp', 'SHARP'));
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWithAnyOf($userAgent, array('Sharp', 'SHARP'));
 	}
 }

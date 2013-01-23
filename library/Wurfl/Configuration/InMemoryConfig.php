@@ -18,6 +18,9 @@ namespace Wurfl\Configuration;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
+
+use \Wurfl\Exception;
+
 /**
  * In-memory WURFL Configuration
  * @package	WURFL_Configuration
@@ -92,7 +95,7 @@ class InMemoryConfig extends Config
 	 */
 	public function matchMode($mode) {
 		if (!self::validMatchMode($mode)) {
-			throw new WURFL_WURFLException('Invalid Match Mode: '.$mode);
+			throw new Exception('Invalid Match Mode: '.$mode);
 		}
 		$this->matchMode = $mode;
 		return $this;

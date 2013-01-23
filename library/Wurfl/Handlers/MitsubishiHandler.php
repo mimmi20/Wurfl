@@ -29,17 +29,17 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_MitsubishiHandler extends WURFL_Handlers_Handler {
+class MitsubishiHandler extends Handler {
 	
 	protected $prefix = "MITSUBISHI";
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Mitsu");
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWith($userAgent, "Mitsu");
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
+		$tolerance = Utils::firstSpace($userAgent);
 		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 	}
 }

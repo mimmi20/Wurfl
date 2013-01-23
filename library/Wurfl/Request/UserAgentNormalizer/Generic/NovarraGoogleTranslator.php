@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,17 +18,19 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes Novarra garbage from user agent
  * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_NovarraGoogleTranslator implements WURFL_Request_UserAgentNormalizer_Interface {
-	
+class NovarraGoogleTranslator implements NormalizerInterface
+{
 	const NOVARRA_GOOGLE_TRANSLATOR_PATTERN = "/(\sNovarra-Vision.*)|(,gzip\(gfe\)\s+\(via translate.google.com\))/";
 	
-	public function normalize($userAgent) {
+	public function normalize($userAgent)
+    {
 		return preg_replace(self::NOVARRA_GOOGLE_TRANSLATOR_PATTERN, "", $userAgent);
 	}
-
 }
-

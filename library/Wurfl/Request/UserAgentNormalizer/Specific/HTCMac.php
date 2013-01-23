@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,15 +18,22 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use \Wurfl\Constants;
+use \Wurfl\Handlers\HTCMacHandler;
+
 /**
  * User Agent Normalizer
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_HTCMac implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		$model = WURFL_Handlers_HTCMacHandler::getHTCMacModel($userAgent, false);
+class HTCMac implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
+		$model = HTCMacHandler::getHTCMacModel($userAgent, false);
 		if ($model !== null) {
-			$prefix = $model.WURFL_Constants::RIS_DELIMITER;
+			$prefix = $model.Constants::RIS_DELIMITER;
 			return $prefix.$userAgent;
 		}
 		return $userAgent;

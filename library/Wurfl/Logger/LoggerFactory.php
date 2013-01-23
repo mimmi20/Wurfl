@@ -29,11 +29,12 @@ class LoggerFactory
 	 * @param WURFL_Configuration_Config $wurflConfig
 	 * @return WURFL_Logger_Interface Logger object
 	 */
-	public static function createUndetectedDeviceLogger($wurflConfig=null) {	
-		if(self::isLoggingConfigured($wurflConfig)) {
+	public static function createUndetectedDeviceLogger($wurflConfig=null)
+    {	
+		if (self::isLoggingConfigured($wurflConfig)) {
 			return self::createFileLogger($wurflConfig, "undetected_devices.log");
 		}
-		return new WURFL_Logger_NullLogger();
+		return new NullLogger();
 	}
 	
 	/**
@@ -41,11 +42,12 @@ class LoggerFactory
 	 * @param WURFL_Configuration_Config $wurflConfig
 	 * @return WURFL_Logger_Interface Logger object
 	 */
-	public static function create($wurflConfig=NULL) {
-		if(self::isLoggingConfigured($wurflConfig)) {
+	public static function create($wurflConfig=NULL)
+    {
+		if (self::isLoggingConfigured($wurflConfig)) {
 			return self::createFileLogger($wurflConfig, "wurfl.log");
 		}
-		return new WURFL_Logger_NullLogger();				
+		return new NullLogger();				
 	}
 	
 	/**
@@ -54,9 +56,10 @@ class LoggerFactory
 	 * @param string $fileName
 	 * @return WURFL_Logger_FileLogger File logger
 	 */
-	private static function createFileLogger($wurflConfig, $fileName) {
+	private static function createFileLogger($wurflConfig, $fileName)
+    {
 		$logFileName = self::createLogFile($wurflConfig->logDir, $fileName);
-		return new WURFL_Logger_FileLogger($logFileName);
+		return new FileLogger($logFileName);
 	}
 	
 	/**
@@ -64,8 +67,9 @@ class LoggerFactory
 	 * @param WURFL_Configuration_Config $wurflConfig
 	 * @return bool
 	 */
-	private static function isLoggingConfigured($wurflConfig) {	
-		if(is_null($wurflConfig)) {
+	private static function isLoggingConfigured($wurflConfig)
+    {	
+		if (is_null($wurflConfig)) {
 			return false;
 		}
 		return !is_null ( $wurflConfig->logDir ) && is_writable ( $wurflConfig->logDir );
@@ -77,7 +81,8 @@ class LoggerFactory
 	 * @param string $fileName
 	 * @return string Complete filename to created logfile
 	 */	
-	private static function createLogFile($logDir, $fileName) {
+	private static function createLogFile($logDir, $fileName)
+    {
 		$file = realpath($logDir . DIRECTORY_SEPARATOR . $fileName);
 		touch($file);
 		return $file;

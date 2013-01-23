@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,13 +18,17 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - Return the Chrome string with the major version
  * @package	WURFL_Request_UserAgentNormalizer_Specific
  */
-class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request_UserAgentNormalizer_Interface {
-	
-	public function normalize($userAgent) {
+class Chrome implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
 		return $this->chromeWithMajorVersion($userAgent);		
 	}
 	
@@ -33,7 +37,8 @@ class WURFL_Request_UserAgentNormalizer_Specific_Chrome implements WURFL_Request
 	 * @param string $userAgent
 	 * @return string|int Version number
 	 */
-	private function chromeWithMajorVersion($userAgent) {
+	private function chromeWithMajorVersion($userAgent)
+    {
 		$start_idx = strpos($userAgent, 'Chrome');
 		$end_idx = strpos($userAgent, '.', $start_idx);
 		if ($end_idx === false) {

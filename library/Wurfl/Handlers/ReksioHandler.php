@@ -29,7 +29,7 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_ReksioHandler extends WURFL_Handlers_Handler {
+class ReksioHandler extends Handler {
 	
 	protected $prefix = "REKSIO";
 	
@@ -38,8 +38,8 @@ class WURFL_Handlers_ReksioHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Reksio');
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfStartsWith($userAgent, 'Reksio');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {

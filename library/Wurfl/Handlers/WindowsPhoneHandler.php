@@ -19,6 +19,8 @@ namespace Wurfl\Handlers;
  * @version	$id$
  */
 
+use \Wurfl\Constants;
+
 /**
  * WindowsPhoneUserAgentHandler
  * 
@@ -29,8 +31,8 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
-	
+class WindowsPhoneHandler extends Handler
+{
 	protected $prefix = "WINDOWSPHONE";
 	
 	public static $constantIDs = array(
@@ -41,25 +43,25 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
 	);
 	
 	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone');
+		if (Utils::isDesktopBrowser($userAgent)) return false;
+		return Utils::checkIfContains($userAgent, 'Windows Phone');
 	}
 	
 	public function applyConclusiveMatch($userAgent) {
-		$tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+		$tolerance = Utils::toleranceToRisDelimeter($userAgent);
 		if ($tolerance !== false) {
 			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
 		}
 		
-		return WURFL_Constants::NO_MATCH;
+		return Constants::NO_MATCH;
 	}
 	
 	public function applyRecoveryMatch($userAgent){
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone 8')) return 'generic_ms_phone_os8';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.5')) return 'generic_ms_phone_os7_5';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7.0')) return 'generic_ms_phone_os7';
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
-		return WURFL_Constants::NO_MATCH;
+		if (Utils::checkIfContains($userAgent, 'Windows Phone 8')) return 'generic_ms_phone_os8';
+		if (Utils::checkIfContains($userAgent, 'Windows Phone OS 7.5')) return 'generic_ms_phone_os7_5';
+		if (Utils::checkIfContains($userAgent, 'Windows Phone OS 7.0')) return 'generic_ms_phone_os7';
+		if (Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
+		return Constants::NO_MATCH;
 	}
 	
 	public static function getWindowsPhoneModel($ua) {

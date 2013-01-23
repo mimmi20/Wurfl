@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,13 +18,17 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - returns the substring starting from "BlackBerry"
  * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BlackBerry implements WURFL_Request_UserAgentNormalizer_Interface  {
-
-	public function normalize($userAgent) {
+class BlackBerry implements NormalizerInterface
+{
+	public function normalize($userAgent)
+    {
 		// Normalize mixed-case BlackBerry
 		$userAgent = str_ireplace('blackberry', 'BlackBerry', $userAgent);
 		$index = strrpos($userAgent, "BlackBerry");

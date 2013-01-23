@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Request\UserAgentNormalizer\Generic;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -18,15 +18,19 @@ namespace Wurfl;
  * @author	 Fantayeneh Asres Gizaw
  * @version	$id$
  */
+
+use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes BabelFish garbage from user agent
  * @package	WURFL_Request_UserAgentNormalizer_Generic
  */
-class WURFL_Request_UserAgentNormalizer_Generic_BabelFish implements WURFL_Request_UserAgentNormalizer_Interface  {
-
+class BabelFish implements NormalizerInterface
+{
 	const BABEL_FISH_REGEX = "/\\s*\\(via babelfish.yahoo.com\\)\\s*/";
 	
-	public function normalize($userAgent) {		
+	public function normalize($userAgent)
+    {		
 		return  preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);
 	}
 }

@@ -18,12 +18,15 @@ namespace Wurfl\Handlers;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
+
+use \Wurfl\Constants;
+
 /**
  * WURFL user agent hander utilities
  * @package	WURFL
  */
-class WURFL_Handlers_Utils {
-	
+class Utils
+{
 	/**
 	 * The worst allowed match tolerance
 	 * @var unknown_type
@@ -33,7 +36,7 @@ class WURFL_Handlers_Utils {
 	/**
 	 * @var array Collection of mobile browser keywords
 	 */
-	private static $mobileBrowsers = array (
+	private static $mobileBrowsers = array(
 		'midp',
 		'mobile',
 		'android',
@@ -150,11 +153,11 @@ class WURFL_Handlers_Utils {
 		'Windows CE' => 'generic_ms_mobile',
 
 		// Generic XHTML
-		'Obigo' => WURFL_Constants::GENERIC_XHTML,
-	   	'AU-MIC/2' => WURFL_Constants::GENERIC_XHTML,
-		'AU-MIC-' =>  WURFL_Constants::GENERIC_XHTML,
-		'AU-OBIGO/' =>  WURFL_Constants::GENERIC_XHTML,
-		'Teleca Q03B1' =>  WURFL_Constants::GENERIC_XHTML,
+		'Obigo' => Constants::GENERIC_XHTML,
+	   	'AU-MIC/2' => Constants::GENERIC_XHTML,
+		'AU-MIC-' =>  Constants::GENERIC_XHTML,
+		'AU-OBIGO/' =>  Constants::GENERIC_XHTML,
+		'Teleca Q03B1' =>  Constants::GENERIC_XHTML,
 
 		// Opera Mini
 		'Opera Mini/1' => 'generic_opera_mini_version1',
@@ -176,8 +179,9 @@ class WURFL_Handlers_Utils {
 	 * @return string Matched user agent
 	 * @see WURFL_Handlers_Matcher_RISMatcher::match()
 	 */
-	public static function risMatch($collection, $needle, $tolerance) {
-		return WURFL_Handlers_Matcher_RISMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+	public static function risMatch($collection, $needle, $tolerance)
+    {
+		return Matcher\RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
 	}
 	
 	/**
@@ -188,8 +192,9 @@ class WURFL_Handlers_Utils {
 	 * @return string Matched user agent
 	 * @see WURFL_Handlers_Matcher_LDMatcher::match()
 	 */
-	public static function ldMatch($collection, $needle, $tolerance = 7) {
-		return WURFL_Handlers_Matcher_LDMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+	public static function ldMatch($collection, $needle, $tolerance = 7)
+    {
+		return Matcher\LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
 	}
 	
 	/**
@@ -200,7 +205,8 @@ class WURFL_Handlers_Utils {
 	 * @param int $startingIndex Char index for start of search
 	 * @return int Char index of match or length of string
 	 */
-	public static function indexOfOrLength($string, $target, $startingIndex = 0) {
+	public static function indexOfOrLength($string, $target, $startingIndex = 0)
+    {
 		$length = strlen ( $string );
 		$pos = strpos ( $string, $target, $startingIndex );
 		return $pos === false ? $length : $pos;
@@ -214,7 +220,8 @@ class WURFL_Handlers_Utils {
 	 * @param int $startIndex Char index for start of search
 	 * @return int Char index of left-most match or length of string
 	 */
-	public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex) {
+	public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex)
+    {
 		$positions = array ();
 		foreach ( $needles as $needle ) {
 			$pos = strpos ( $userAgent, $needle, $startIndex );
@@ -229,7 +236,8 @@ class WURFL_Handlers_Utils {
 	/**
 	 * Resets cached detection variables for performance
 	 */
-	public static function reset() {
+	public static function reset()
+    {
 		self::$_is_desktop_browser = null;
 		self::$_is_mobile_browser = null;
 		self::$_is_smarttv = null;
@@ -240,7 +248,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $userAgent
 	 * @return bool
 	 */
-	public static function isMobileBrowser($userAgent) {
+	public static function isMobileBrowser($userAgent)
+    {
 		if (self::$_is_mobile_browser !== null) return self::$_is_mobile_browser;
 		self::$_is_mobile_browser = false;
 		$userAgent = strtolower($userAgent);
@@ -259,7 +268,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $userAgent
 	 * @return bool
 	 */
-	public static function isDesktopBrowser($userAgent) {
+	public static function isDesktopBrowser($userAgent)
+    {
 		if (self::$_is_desktop_browser !== null) return self::$_is_desktop_browser;
 		self::$_is_desktop_browser = false;
 		$userAgent = strtolower($userAgent);
@@ -278,13 +288,14 @@ class WURFL_Handlers_Utils {
 	 * @param string $userAgent
 	 * @return bool
 	 */
-	public static function getMobileCatchAllId($userAgent) {
+	public static function getMobileCatchAllId($userAgent)
+    {
 		foreach (self::$mobileCatchAllIds as $key => $deviceId) {
 			if (strpos($userAgent, $key) !== false) {
 				return $deviceId;
 			}
 		}
-		return WURFL_Constants::NO_MATCH;
+		return Constants::NO_MATCH;
 	}
 	
 	/**
@@ -292,23 +303,24 @@ class WURFL_Handlers_Utils {
 	 * @param string $userAgent
 	 * @return bool
 	 */
-	public static function isDesktopBrowserHeavyDutyAnalysis($userAgent){
+	public static function isDesktopBrowserHeavyDutyAnalysis($userAgent)
+    {
 		// Check Smart TV keywords
-		if (WURFL_Handlers_Utils::isSmartTV($userAgent)) return false;
+		if (Utils::isSmartTV($userAgent)) return false;
 		// Chrome
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Chrome') && !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))) return true;
+		if (Utils::checkIfContains($userAgent, 'Chrome') && !Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))) return true;
 		// Check mobile keywords
-		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
+		if (Utils::isMobileBrowser($userAgent)) return false;
 
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'PPC')) return false; // PowerPC; not always mobile, but we'll kick it out
+		if (Utils::checkIfContains($userAgent, 'PPC')) return false; // PowerPC; not always mobile, but we'll kick it out
 		// Firefox;  fennec is already handled in the WurflConstants::$MOBILE_BROWSERS keywords
-		if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox') && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tablet')) return true;
+		if (Utils::checkIfContains($userAgent, 'Firefox') && !Utils::checkIfContains($userAgent, 'Tablet')) return true;
 		// Safari
 		if (preg_match('#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ Safari/[\d\.]+$#', $userAgent)) return true;
 		// Opera Desktop
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) return true;
+		if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) return true;
 		// Check desktop keywords
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return true;
+		if (Utils::isDesktopBrowser($userAgent)) return true;
 		// Internet Explorer 9
 		if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) return true;
 		// Internet Explorer <9
@@ -321,7 +333,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $userAgent
 	 * @return bool
 	 */
-	public static function isSmartTV($userAgent) {
+	public static function isSmartTV($userAgent)
+    {
 		if (self::$_is_smarttv !== null) return self::$_is_smarttv;
 		self::$_is_smarttv = false;
 		$userAgent = strtolower($userAgent);
@@ -340,7 +353,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $userAgent
 	 * @return bool
 	 */
-	public static function isSpamOrCrawler($userAgent) {
+	public static function isSpamOrCrawler($userAgent)
+    {
 		//$spamOrCrawlers = array("FunWebProducts", "Spam");		
 		return self::checkIfContains($userAgent, "Spam") || self::checkIfContains($userAgent, "FunWebProducts");
 	}
@@ -352,7 +366,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $haystack
 	 * @return int Char index of third semicolon or length
 	 */
-	public static function thirdSemiColumn($haystack) {
+	public static function thirdSemiColumn($haystack)
+    {
 		$thirdSemiColumnIndex = self::ordinalIndexOf ( $haystack, ";", 3 );
 		if ($thirdSemiColumnIndex < 0) {
 			return strlen ( $haystack );
@@ -368,7 +383,8 @@ class WURFL_Handlers_Utils {
 	 * @throws InvalidArgumentException
 	 * @return int Char index of occurance
 	 */
-	public static function ordinalIndexOf($haystack, $needle, $ordinal) {
+	public static function ordinalIndexOf($haystack, $needle, $ordinal)
+    {
 		if (is_null ( $haystack ) || empty ( $haystack )) {
 			throw new InvalidArgumentException ( "haystack must not be null or empty" );
 		}
@@ -397,7 +413,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $string Haystack
 	 * @return int Char index
 	 */
-	public static function firstSlash($string) {
+	public static function firstSlash($string)
+    {
 		$firstSlash = strpos($string, "/");
 		return ($firstSlash !== false)? $firstSlash: strlen($string);
 	}
@@ -407,7 +424,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $string Haystack
 	 * @return int Char index
 	 */
-	public static function secondSlash($string) {
+	public static function secondSlash($string)
+    {
 		$firstSlash = strpos($string, "/");
 		if ($firstSlash === false)
 			return strlen($string);
@@ -419,7 +437,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $string Haystack
 	 * @return int Char index
 	 */
-	public static function firstSpace($string) {
+	public static function firstSpace($string)
+    {
 		$firstSpace = strpos($string, " ");
 		return ($firstSpace === false)? strlen($string) : $firstSpace;
 	}
@@ -429,7 +448,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $string Haystack
 	 * @return int Char index
 	 */
-	public static function firstSemiColonOrLength($string) {
+	public static function firstSemiColonOrLength($string)
+    {
 		return self::firstMatchOrLength($string, ";");
 	}
 	
@@ -439,7 +459,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $toMatch Needle
 	 * @return int Char index
 	 */
-	public static function firstMatchOrLength($string, $toMatch) {
+	public static function firstMatchOrLength($string, $toMatch)
+    {
 		$firstMatch = strpos ( $string, $toMatch );
 		return ($firstMatch === false) ? strlen($string): $firstMatch;
 	}
@@ -450,7 +471,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $needle Needle
 	 * @return bool
 	 */
-	public static function checkIfContains($haystack, $needle) {
+	public static function checkIfContains($haystack, $needle)
+    {
 		return (strpos($haystack, $needle) !== false);
 	}
 	
@@ -460,7 +482,8 @@ class WURFL_Handlers_Utils {
 	 * @param array $needles Array of (string)needles
 	 * @return bool
 	 */
-	public static function checkIfContainsAnyOf($haystack, $needles) {
+	public static function checkIfContainsAnyOf($haystack, $needles)
+    {
 		foreach ($needles as $needle) {
 			if (self::checkIfContains($haystack, $needle)) return true;
 		}
@@ -473,7 +496,8 @@ class WURFL_Handlers_Utils {
 	 * @param array $needles Array of (string)needles
 	 * @return bool
 	 */
-	public static function checkIfContainsAll($haystack, $needles=array()) {
+	public static function checkIfContainsAll($haystack, $needles=array())
+    {
 		foreach ($needles as $needle) {
 			if (!self::checkIfContains($haystack, $needle)) return false;
 		}
@@ -487,7 +511,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $needle Needle
 	 * @return bool
 	 */
-	public static function checkIfContainsCaseInsensitive($haystack, $needle) {
+	public static function checkIfContainsCaseInsensitive($haystack, $needle)
+    {
 		return stripos($haystack, $needle) !== false;
 	}
 	
@@ -497,7 +522,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $needle Needle
 	 * @return bool
 	 */
-	public static function checkIfStartsWith($haystack, $needle) {
+	public static function checkIfStartsWith($haystack, $needle)
+    {
 		return strpos($haystack, $needle) === 0;
 	}
 	
@@ -507,7 +533,8 @@ class WURFL_Handlers_Utils {
 	 * @param array $needles Array of (string)needles
 	 * @return bool
 	 */
-	public static function checkIfStartsWithAnyOf($haystack, $needles) {
+	public static function checkIfStartsWithAnyOf($haystack, $needles)
+    {
 		if (is_array($needles)) {
 			foreach ($needles as $needle) {
 				if (strpos($haystack, $needle) === 0) {
@@ -519,13 +546,14 @@ class WURFL_Handlers_Utils {
 		return false;
 	}
 	
-	public static function toleranceToRisDelimeter($userAgent) {
-		$tolerance = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
+	public static function toleranceToRisDelimeter($userAgent)
+    {
+		$tolerance = strpos($userAgent, Constants::RIS_DELIMITER);
 		if ($tolerance === false) {
 			return false;
 		}
 		// Push the tolerance to the *end* of the RIS Delimiter
-		return $tolerance + strlen(WURFL_Constants::RIS_DELIMITER);
+		return $tolerance + strlen(Constants::RIS_DELIMITER);
 	}
 	
 	/**
@@ -533,7 +561,8 @@ class WURFL_Handlers_Utils {
 	 * @param string $userAgent
 	 * @return string User agent without language string
 	 */
-	public static function removeLocale($userAgent) {
+	public static function removeLocale($userAgent)
+    {
 		return preg_replace('/; ?[a-z]{2}(?:-[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?/', '; xx-xx', $userAgent);
 	}
 }

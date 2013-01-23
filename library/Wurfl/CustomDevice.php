@@ -17,7 +17,8 @@ namespace Wurfl;
  * @license	GNU Affero General Public License
  * @version	$id$
  */
-/**
+
+ /**
  * WURFL Custom Device - this is the core class that is used by developers to access the
  * properties and capabilities of a mobile device
  * 
@@ -86,7 +87,7 @@ class CustomDevice
 					return $this->modelDevices[0]->$name;
 					break;
 				default :
-					throw new WURFL_WURFLException("the field " . $name . " is not defined");
+					throw new Exception("the field " . $name . " is not defined");
 					break;
 			}
 		}
