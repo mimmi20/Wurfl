@@ -1,0 +1,10 @@
+node_modules/
+.DS*
+TAGS
+dist
+cabal-dev
+*.pyc
+build/
+py/ua_parser.egg-info/
+py/ua_parser/regexes.yaml
+py/ua_parser/regexes.json
