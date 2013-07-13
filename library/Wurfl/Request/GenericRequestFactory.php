@@ -12,42 +12,42 @@ namespace Wurfl\Request;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request
+ * @package    \Wurfl\Request
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Utils;
 
 /**
  * Creates a Generic WURFL Request from the raw HTTP Request
- * @package	WURFL_Request
+ * @package    \Wurfl\Request
  */
 class GenericRequestFactory
 {
-	/**
-	 * Creates Generic Request from the given HTTP Request (normally $_SERVER)
-	 * @param array $request HTTP Request
-	 * @return WURFL_Request_GenericRequest
-	 */
-	public function createRequest($request)
+    /**
+     * Creates Generic Request from the given HTTP Request (normally $_SERVER)
+     * @param array $request HTTP Request
+     * @return \Wurfl\Request\GenericRequest
+     */
+    public function createRequest($request)
     {
-		$userAgent = Utils::getUserAgent($request);
-		$userAgentProfile = Utils::getUserAgentProfile($request);
-		$isXhtmlDevice = Utils::isXhtmlRequester($request);
+        $userAgent        = Utils::getUserAgent($request);
+        $userAgentProfile = Utils::getUserAgentProfile($request);
+        $isXhtmlDevice    = Utils::isXhtmlRequester($request);
 
-		return new GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
-	}
-	
-	/**
-	 * Create a Generic Request from the given $userAgent
-	 * @param string $userAgent
-	 * @return WURFL_Request_GenericRequest
-	 */
-	public function createRequestForUserAgent($userAgent)
+        return new GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
+    }
+    
+    /**
+     * Create a Generic Request from the given $userAgent
+     * @param string $userAgent
+     * @return \Wurfl\Request\GenericRequest
+     */
+    public function createRequestForUserAgent($userAgent)
     {
-		return new GenericRequest($userAgent, null, false);
-	}
+        return new GenericRequest($userAgent, null, false);
+    }
 }

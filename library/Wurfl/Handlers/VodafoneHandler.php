@@ -12,10 +12,10 @@ namespace Wurfl\Handlers;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -23,22 +23,22 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class VodafoneHandler extends Handler {
-	
-	protected $prefix = "VODAFONE";
-	
-	public function canHandle($userAgent) {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfStartsWith($userAgent, 'Vodafone');
-	}
+    
+    protected $prefix = "VODAFONE";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWith($userAgent, 'Vodafone');
+    }
 
-	public function applyConclusiveMatch($userAgent) {
-		$tolerance = Utils::firstSlash($userAgent);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

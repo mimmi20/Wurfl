@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,26 +24,26 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class SonyEricssonHandler extends Handler {
-	
-	protected $prefix = "SONY_ERICSSON";
-	
-	public function canHandle($userAgent) {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfContains($userAgent, 'Sony');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
-			$tolerance = Utils::firstSlash($userAgent) - 1;
-			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-		}
-		$tolerance = Utils::secondSlash($userAgent);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+    
+    protected $prefix = "SONY_ERICSSON";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContains($userAgent, 'Sony');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        if (Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
+            $tolerance = Utils::firstSlash($userAgent) - 1;
+            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+        }
+        $tolerance = Utils::secondSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

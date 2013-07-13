@@ -12,11 +12,11 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
@@ -25,17 +25,17 @@ use \Wurfl\Handlers\HTCMacHandler;
 
 /**
  * User Agent Normalizer
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  */
 class HTCMac implements NormalizerInterface
 {
-	public function normalize($userAgent)
+    public function normalize($userAgent)
     {
-		$model = HTCMacHandler::getHTCMacModel($userAgent, false);
-		if ($model !== null) {
-			$prefix = $model.Constants::RIS_DELIMITER;
-			return $prefix.$userAgent;
-		}
-		return $userAgent;
-	}
+        $model = HTCMacHandler::getHTCMacModel($userAgent, false);
+        if ($model !== null) {
+            $prefix = $model.Constants::RIS_DELIMITER;
+            return $prefix.$userAgent;
+        }
+        return $userAgent;
+    }
 }

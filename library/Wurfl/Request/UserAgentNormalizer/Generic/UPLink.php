@@ -12,33 +12,33 @@ namespace Wurfl\Request\UserAgentNormalizer\Generic;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    \Wurfl\Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer - removes UP.Link garbage from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    \Wurfl\Request_UserAgentNormalizer_Generic
  */
 class UPLink implements NormalizerInterface
 {
-	/**
-	 * This method remove the "UP.Link" substring from user agent string.
-	 *
-	 * @param string $userAgent
-	 * @return string Normalized user agent
-	 */
-	public function normalize($userAgent)
+    /**
+     * This method remove the "UP.Link" substring from user agent string.
+     *
+     * @param string $userAgent
+     * @return string Normalized user agent
+     */
+    public function normalize($userAgent)
     {
-		$index = strpos($userAgent, " UP.Link");
-		if ($index > 0) {
-			return substr($userAgent, 0, $index);
-		}
-		return $userAgent;
-	}
+        $index = strpos($userAgent, " UP.Link");
+        if ($index > 0) {
+            return substr($userAgent, 0, $index);
+        }
+        return $userAgent;
+    }
 }

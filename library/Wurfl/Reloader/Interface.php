@@ -13,20 +13,20 @@ namespace Wurfl\Reloader;
  *
  *
  * @category   WURFL
- * @package	WURFL_Reloader
+ * @package    \Wurfl\Reloader
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  * @deprecated
  */
 /**
  * WURFL Reloader Interface
- * @package	WURFL_Reloader
+ * @package    \Wurfl\Reloader
  * @deprecated
  */
 interface ReloaderInterface
 {
-	public function reload($wurflConfigurationPath);
+    public function reload($wurflConfigurationPath);
 }
 
 

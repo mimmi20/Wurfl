@@ -12,33 +12,33 @@ namespace Wurfl\Logger;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Logger
+ * @package    \Wurfl\Logger
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * WURFL Logging interface
  * 
- * @package	WURFL_Logger
+ * @package    \Wurfl\Logger
  */
 interface LoggerInterface
 {
-	/**
-	 * Send specified $message to the log with INFO level
-	 * @param string $message
-	 */
-	public function info($message);
-	/**
-	 * Send specified $message to the log
-	 * @param string $message
-	 * @param string $type The type or level of the $message
-	 */
-	public function log($message, $type="");
-	/**
-	 * Send specified $message to the log with DEBUG level
-	 * @param string $message
-	 */
-	public function debug($message);
+    /**
+     * Send specified $message to the log with INFO level
+     * @param string $message
+     */
+    public function info($message);
+    /**
+     * Send specified $message to the log
+     * @param string $message
+     * @param string $type The type or level of the $message
+     */
+    public function log($message, $type="");
+    /**
+     * Send specified $message to the log with DEBUG level
+     * @param string $message
+     */
+    public function debug($message);
 }
 

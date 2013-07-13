@@ -13,144 +13,147 @@ namespace Wurfl;
  *
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * WURFL Service
- * @package	WURFL
+ * @package    WURFL
  */
 class Service
 {
-	/**
-	 * @var WURFL_DeviceRepository
-	 */
-	private $_deviceRepository;
-	/**
-	 * @var WURFL_UserAgentHandlerChain
-	 */
-	private $_userAgentHandlerChain;
-	/**
-	 * @var WURFL_Storage
-	 */
-	private $_cacheProvider;
-	
-	public function __construct(DeviceRepository $deviceRepository, UserAgentHandlerChain $userAgentHandlerChain, Storage\StorageInterface $cacheProvider)
+    /**
+     * @var \Wurfl\DeviceRepository
+     */
+    private $_deviceRepository;
+    /**
+     * @var \Wurfl\UserAgentHandlerChain
+     */
+    private $_userAgentHandlerChain;
+    /**
+     * @var \Wurfl\Storage
+     */
+    private $_cacheProvider;
+    
+    public function __construct(
+        DeviceRepository $deviceRepository, 
+        UserAgentHandlerChain $userAgentHandlerChain, 
+        Storage\StorageInterface $cacheProvider)
     {
-		$this->_deviceRepository = $deviceRepository;
-		$this->_userAgentHandlerChain = $userAgentHandlerChain;
-		$this->_cacheProvider = $cacheProvider;
-	}
-	
-	/**
-	 * Returns the version info about the loaded WURFL
-	 * @return WURFL_Xml_Info WURFL Version info
-	 * @see WURFL_DeviceRepository::getWURFLInfo()
-	 */
-	public function getWURFLInfo()
+        $this->_deviceRepository      = $deviceRepository;
+        $this->_userAgentHandlerChain = $userAgentHandlerChain;
+        $this->_cacheProvider         = $cacheProvider;
+    }
+    
+    /**
+     * Returns the version info about the loaded WURFL
+     * @return \Wurfl\Xml\Info WURFL Version info
+     * @see \Wurfl\DeviceRepository::getWurflInfo()
+     */
+    public function getWurflInfo()
     {
-		return $this->_deviceRepository->getWURFLInfo();
-	}
-	
-	/**
-	 * Returns the Device for the given WURFL_Request_GenericRequest
-	 *
-	 * @param WURFL_Request_GenericRequest $request
-	 * @return WURFL_CustomDevice
-	 */
-	public function getDeviceForRequest(Request\GenericRequest $request)
+        return $this->_deviceRepository->getWurflInfo();
+    }
+    
+    /**
+     * Returns the Device for the given \Wurfl\Request_GenericRequest
+     *
+     * @param \Wurfl\Request\GenericRequest $request
+     * @return \Wurfl\CustomDevice
+     */
+    public function getDeviceForRequest(Request\GenericRequest $request)
     {
-		$deviceId = $this->deviceIdForRequest($request);
-		return $this->getWrappedDevice($deviceId, $request->matchInfo);
-	
-	}
-	
-	/**
-	 * Retun a WURFL_Xml_ModelDevice for the given device id
-	 *
-	 * @param string $deviceID
-	 * @return WURFL_Xml_ModelDevice
-	 */
-	public function getDevice($deviceID)
+        $deviceId = $this->deviceIdForRequest($request);
+        return $this->getWrappedDevice($deviceId, $request->matchInfo);
+    
+    }
+    
+    /**
+     * Retun a \Wurfl\Xml\ModelDevice for the given device id
+     *
+     * @param string $deviceID
+     * @return \Wurfl\Xml\ModelDevice
+     */
+    public function getDevice($deviceID)
     {
-		return $this->getWrappedDevice($deviceID);
-	}
-	
-	/**
-	 * Returns all devices ID present in WURFL
-	 *
-	 * @return array of strings
-	 */
-	public function getAllDevicesID()
+        return $this->getWrappedDevice($deviceID);
+    }
+    
+    /**
+     * Returns all devices ID present in WURFL
+     *
+     * @return array of strings
+     */
+    public function getAllDevicesID()
     {
-		return $this->_deviceRepository->getAllDevicesID();
-	}
-	
-	/**
-	 * Returns an array of all the fall back devices starting from
-	 * the given device
-	 *
-	 * @param string $deviceID
-	 * @return array
-	 */
-	public function getDeviceHierarchy($deviceID)
+        return $this->_deviceRepository->getAllDevicesID();
+    }
+    
+    /**
+     * Returns an array of all the fall back devices starting from
+     * the given device
+     *
+     * @param string $deviceID
+     * @return array
+     */
+    public function getDeviceHierarchy($deviceID)
     {
-		return $this->_deviceRepository->getDeviceHierarchy($deviceID);
-	}
-	
-	public function getListOfGroups()
+        return $this->_deviceRepository->getDeviceHierarchy($deviceID);
+    }
+    
+    public function getListOfGroups()
     {
-		return $this->_deviceRepository->getListOfGroups();
-	}
-	
-	
-	public function getCapabilitiesNameForGroup($groupId)
+        return $this->_deviceRepository->getListOfGroups();
+    }
+    
+    
+    public function getCapabilitiesNameForGroup($groupId)
     {
-		return $this->_deviceRepository->getCapabilitiesNameForGroup($groupId);
-	}
-	
-	// ******************** private functions *****************************
-	
+        return $this->_deviceRepository->getCapabilitiesNameForGroup($groupId);
+    }
+    
+    // ******************** private functions *****************************
+    
 
-	/**
-	 * Returns the device id for the device that matches the $request
-	 * @param WURFL_Request_GenericRequest $request WURFL Request object
-	 * @return string WURFL device id
-	 */
-	private function deviceIdForRequest($request)
+    /**
+     * Returns the device id for the device that matches the $request
+     * @param \Wurfl\Request_GenericRequest $request WURFL Request object
+     * @return string WURFL device id
+     */
+    private function deviceIdForRequest($request)
     {
-		$deviceId = $this->_cacheProvider->load($request->id);
-		if (empty($deviceId)) {
-			$deviceId = $this->_userAgentHandlerChain->match($request);
-			// save it in cache
-			$this->_cacheProvider->save($request->id, $deviceId);
-		} else {
-			$request->matchInfo->from_cache = true;
-			$request->matchInfo->lookup_time = 0.0;
-		}
-		return $deviceId;
-	}
-	
-	/**
-	 * Wraps the model device with WURFL_Xml_ModelDevice.  This function takes the
-	 * Device ID and returns the WURFL_CustomDevice with all capabilities.
-	 *
-	 * @param string $deviceID
-	 * @param string $matchInfo
-	 * @return WURFL_CustomDevice
-	 */
-	private function getWrappedDevice($deviceID, $matchInfo = null)
+        $deviceId = $this->_cacheProvider->load($request->id);
+        if (empty($deviceId)) {
+            $deviceId = $this->_userAgentHandlerChain->match($request);
+            // save it in cache
+            $this->_cacheProvider->save($request->id, $deviceId);
+        } else {
+            $request->matchInfo->from_cache = true;
+            $request->matchInfo->lookup_time = 0.0;
+        }
+        return $deviceId;
+    }
+    
+    /**
+     * Wraps the model device with \Wurfl\Xml_ModelDevice.  This function takes the
+     * Device ID and returns the \Wurfl\CustomDevice with all capabilities.
+     *
+     * @param string $deviceID
+     * @param string $matchInfo
+     * @return \Wurfl\CustomDevice
+     */
+    private function getWrappedDevice($deviceID, $matchInfo = null)
     {
-		$device = $this->_cacheProvider->load('DEV_'.$deviceID);
-		if (empty($device)) {
-			$modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
-			$device = new CustomDevice($modelDevices, $matchInfo);
-			$this->_cacheProvider->save('DEV_'.$deviceID, $device);
-		}
-		return $device;
-	}
+        $device = $this->_cacheProvider->load('DEV_'.$deviceID);
+        if (empty($device)) {
+            $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
+            $device = new CustomDevice($modelDevices, $matchInfo);
+            $this->_cacheProvider->save('DEV_'.$deviceID, $device);
+        }
+        return $device;
+    }
 }
 

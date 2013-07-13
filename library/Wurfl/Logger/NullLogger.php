@@ -12,27 +12,27 @@ namespace Wurfl\Logger;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Logger
+ * @package    \Wurfl\Logger
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Class that is used to supress logging
- * @package	WURFL_Logger
+ * @package    \Wurfl\Logger
  */
 class NullLogger implements LoggerInterface
 {
-	public function log($message, $type="")
+    public function log($message, $type="")
     {
-		//echo $message . "\n";
-	}
-	
-	public function debug($message)
+        //echo $message . "\n";
+    }
+    
+    public function debug($message)
     {
-		//echo $message . "\n";		
-	}
-	
-	public function info($message){}
+        //echo $message . "\n";        
+    }
+    
+    public function info($message){}
 }
 

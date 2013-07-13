@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,18 +24,18 @@ namespace Wurfl\Handlers;
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class HTCHandler extends Handler
 {
-	protected $prefix = "HTC";
-	
-	public function canHandle($userAgent)
+    protected $prefix = "HTC";
+    
+    public function canHandle($userAgent)
     {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
-	}
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
+    }
 }

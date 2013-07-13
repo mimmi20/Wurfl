@@ -12,10 +12,10 @@ namespace Wurfl\Handlers;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -23,33 +23,33 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class ChromeHandler extends Handler
 {
-	protected $prefix = "CHROME";
-	
-	public static $constantIDs = array(
-		'google_chrome'
-	);
-	
-	public function canHandle($userAgent)
+    protected $prefix = "CHROME";
+    
+    public static $constantIDs = array(
+        'google_chrome'
+    );
+    
+    public function canHandle($userAgent)
     {
-		if (Utils::isMobileBrowser($userAgent)) return false;
-		return Utils::checkIfContains($userAgent, 'Chrome');
-	}
-	
-	public function applyConclusiveMatch($userAgent)
+        if (Utils::isMobileBrowser($userAgent)) return false;
+        return Utils::checkIfContains($userAgent, 'Chrome');
+    }
+    
+    public function applyConclusiveMatch($userAgent)
     {
-		$tolerance = Utils::indexOfOrLength('/', $userAgent, strpos($userAgent, 'Chrome'));
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent)
+        $tolerance = Utils::indexOfOrLength('/', $userAgent, strpos($userAgent, 'Chrome'));
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent)
     {
-		return 'google_chrome';
-	}
+        return 'google_chrome';
+    }
 }

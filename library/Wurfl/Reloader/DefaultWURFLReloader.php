@@ -13,10 +13,10 @@ namespace Wurfl\Reloader;
  *
  *
  * @category   WURFL
- * @package	WURFL_Reloader
+ * @package    \Wurfl\Reloader
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  * @deprecated
  */
 
@@ -26,30 +26,30 @@ use \Wurfl\Configuration\ArrayConfig;
 
 /**
  * WURFL Reloader
- * @package	WURFL_Reloader
+ * @package    \Wurfl\Reloader
  * @deprecated
  */
 class DefaultWurflReloader implements ReloaderInterface
 {
-	public function reload($wurflConfigurationPath)
+    public function reload($wurflConfigurationPath)
     {
-		$wurflConfig = $this->fromFile ( $wurflConfigurationPath );
-		touch($wurflConfig->wurflFile);
-		$wurflManagerFactory = new ManagerFactory($wurflConfig);
-		$wurflManagerFactory->create();	
-		
-	}
-	
-	private function fromFile($wurflConfigurationPath)
+        $wurflConfig = $this->fromFile ( $wurflConfigurationPath );
+        touch($wurflConfig->wurflFile);
+        $wurflManagerFactory = new ManagerFactory($wurflConfig);
+        $wurflManagerFactory->create();    
+        
+    }
+    
+    private function fromFile($wurflConfigurationPath)
     {
-		if ($this->endsWith ( $wurflConfigurationPath, ".xml" )) {
-			return new XmlConfig ( $wurflConfigurationPath );
-		}
-		return new ArrayConfig($wurflConfigurationPath);
-	}
-	
-	private function endsWith($haystack, $needle)
+        if ($this->endsWith ( $wurflConfigurationPath, ".xml" )) {
+            return new XmlConfig ( $wurflConfigurationPath );
+        }
+        return new ArrayConfig($wurflConfigurationPath);
+    }
+    
+    private function endsWith($haystack, $needle)
     {
-		return strrpos($haystack, $needle) === strlen($haystack)-strlen($needle);
-	}
+        return strrpos($haystack, $needle) === strlen($haystack)-strlen($needle);
+    }
 }

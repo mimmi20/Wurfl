@@ -12,59 +12,59 @@ namespace Wurfl\Xml;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package WURFL_Xml
+ * @package \Wurfl\Xml
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  *
  */
 /**
  * Stores version and other info about the loaded WURFL
- * @package WURFL_Xml
+ * @package \Wurfl\Xml
  * @property-read string $version Loaded WURFL Version
  * @property-read string $lastUpdated Loaded WURFL Last Updated Date
  * @property-read string $officialURL Loaded WURFL Official URL 
  */
 class Info
 {
-	/**
-	 * Key used in persistence provider to store version-related information
-	 * @var string
-	 */
-	const PERSISTENCE_KEY = "WURFL_XML_INFO";	
-	private $_version;
-	private $_lastUpdated;
-	private $_officialURL;
-	
-	/**
-	 * @param string $version WURFL Version
-	 * @param string $lastUpdated WURFL Last Updated data
-	 * @param string $officialURL WURFL URL
-	 */
-	public function __construct($version, $lastUpdated, $officialURL)
+    /**
+     * Key used in persistence provider to store version-related information
+     * @var string
+     */
+    const PERSISTENCE_KEY = 'Wurfl_XML_INFO';    
+    private $_version;
+    private $_lastUpdated;
+    private $_officialURL;
+    
+    /**
+     * @param string $version WURFL Version
+     * @param string $lastUpdated WURFL Last Updated data
+     * @param string $officialURL WURFL URL
+     */
+    public function __construct($version, $lastUpdated, $officialURL)
     {
-		$this->_version = $version;
-		$this->_lastUpdated = $lastUpdated;
-		$this->_officialURL = $officialURL;
-	}
-	
-	/**
-	 * Returns the value for the given key (version, lastUpdated, officialURL)
-	 * @param string $name
-	 * @return string value
-	 */
-	public function __get($name)
+        $this->_version = $version;
+        $this->_lastUpdated = $lastUpdated;
+        $this->_officialURL = $officialURL;
+    }
+    
+    /**
+     * Returns the value for the given key (version, lastUpdated, officialURL)
+     * @param string $name
+     * @return string value
+     */
+    public function __get($name)
     {
-		$name = '_' . $name;
-		return $this->$name;
-	} 
-	
-	/**
-	 * @return WURFL_Xml_Info Empty WURFL_Xml_Info object
-	 */
-	public static function noInfo()
+        $name = '_' . $name;
+        return $this->$name;
+    } 
+    
+    /**
+     * @return \Wurfl\Xml_Info Empty \Wurfl\Xml_Info object
+     */
+    public static function noInfo()
     {
-		return new Info('', '', '');
-	}
-	
+        return new Info('', '', '');
+    }
+    
 }

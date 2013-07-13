@@ -12,10 +12,10 @@ namespace Wurfl;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
@@ -35,146 +35,134 @@ namespace Wurfl;
  * </code>
  * 
  * @package WURFL
- * @see getWURFLInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), WURFL_WURFLManagerFactory::create()
+ * @see getWurflInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), \Wurfl\WURFLManagerFactory::create()
  */
 class Manager
 {
-	/**
-	 * @var WURFL_WURFLService
-	 */
-	private $_wurflService;
-	/**
-	 * @var WURFL_Request_GenericRequestFactory
-	 */
-	private $_requestFactory;
-	
-	/**
-	 * Creates a new WURFL Manager object
-	 * @param WURFL_WURFLService $wurflService
-	 * @param WURFL_Request_GenericRequestFactory $requestFactory
-	 */
-	public function __construct(Service $wurflService, Request\GenericRequestFactory $requestFactory)
+    /**
+     * @var \Wurfl\WURFLService
+     */
+    private $_wurflService;
+    
+    /**
+     * Creates a new WURFL Manager object
+     * @param \Wurfl\Service $wurflService
+     * @param \Wurfl\Request\GenericRequestFactory $requestFactory
+     */
+    public function __construct(Service $wurflService)
     {
-		$this->_wurflService = $wurflService;
-		$this->_requestFactory = $requestFactory;
-	}
-	
-	/**
-	 * Return the version info of the loaded wurfl xml file
-	 * 
-	 * Example:
-	 * <code>
-	 * $info = $wurflManager->getWURFLInfo();
-	 * printf('Version: %s, Updated: %s, OfficialURL: %s',
-	 * 	$info->version,
-	 * 	$info->lastUpdated,
-	 * 	$info->officialURL
-	 * );
-	 * </code>
-	 * @return WURFL_Xml_Info WURFL Version info
-	 * @see WURFL_WURFLService::getWURFLInfo(), WURFL_DeviceRepository::getWURFLInfo()
-	 */
-	public function getWURFLInfo()
+        $this->_wurflService   = $wurflService;
+    }
+    
+    /**
+     * Return the version info of the loaded wurfl xml file
+     * 
+     * Example:
+     * <code>
+     * $info = $wurflManager->getWurflInfo();
+     * printf('Version: %s, Updated: %s, OfficialURL: %s',
+     *     $info->version,
+     *     $info->lastUpdated,
+     *     $info->officialURL
+     * );
+     * </code>
+     * @return \Wurfl\Xml\Info WURFL Version info
+     * @see \Wurfl\WURFLService::getWurflInfo(), \Wurfl\DeviceRepository::getWurflInfo()
+     */
+    public function getWurflInfo()
     {
-		return $this->_wurflService->getWURFLInfo();
-	}
-	
-	/**
-	 * Return a device the given WURFL_Request_GenericRequest request(user-agent..)
-	 *
-	 * @param WURFL_Request_GenericRequest $request
-	 * @return WURFL_CustomDevice device
-	 * @throws Exception if the $request parameter is not set
-	 */
-	public function getDeviceForRequest(Request\GenericRequest $request)
+        return $this->_wurflService->getWurflInfo();
+    }
+    
+    /**
+     * Return a device for the given http request(user-agent..)
+     *
+     * @param array $httpRequest HTTP Request array (normally $_SERVER)
+     * @return \Wurfl\CustomDevice device
+     * @throws Exception if $httpRequest is not set
+     */
+    public function getDeviceForHttpRequest($httpRequest)
     {
-		if (!isset($request)) {
-			throw new Exception("The request parameter must be set.");
-		}
-		Handlers\Utils::reset();
-		if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
-			// This device has been identified as a web browser programatically, so no call to WURFL is necessary
-			return $this->_wurflService->getDevice(Constants::GENERIC_WEB_BROWSER);
-		}
-		return $this->_wurflService->getDeviceForRequest($request);
-	}
-	
-	/**
-	 * Return a device for the given http request(user-agent..)
-	 *
-	 * @param array $httpRequest HTTP Request array (normally $_SERVER)
-	 * @return WURFL_CustomDevice device
-	 * @throws Exception if $httpRequest is not set
-	 */
-	public function getDeviceForHttpRequest($httpRequest) {
-		if (!isset($httpRequest)) {
-			throw new Exception("The $httpRequest parameter must be set.");
-		}
-		$request = $this->_requestFactory->createRequest($httpRequest);
-		return $this->getDeviceForRequest($request);
-	}
-	
-	/**
-	 * Returns a device for the given user-agent
-	 *
-	 * @param string $userAgent
-	 * @return WURFL_CustomDevice device
-	 * @throws Exception if $userAgent is not set
-	 */
-	public function getDeviceForUserAgent($userAgent) {
-		if (!isset($userAgent)) {
-			$userAgent = '';
-		}
-		
-		$request = $this->_requestFactory->createRequestForUserAgent($userAgent);
-		return $this->getDeviceForRequest($request);
-	}
-	
-	/**
-	 * Return a device for the given device id
-	 *
-	 * @param string $deviceID
-	 * @return WURFL_CustomDevice
-	 */
-	public function getDevice($deviceID) {
-		return $this->_wurflService->getDevice($deviceID);
-	}
-	
-	/**
-	 * Returns an array of all wurfl group ids
-	 *
-	 * @return array
-	 */
-	public function getListOfGroups() {
-		return $this->_wurflService->getListOfGroups();
-	}
-	
-	/**
-	 * Returns all capability names for the given $groupID
-	 *
-	 * @param string $groupID
-	 * @return array
-	 */
-	public function getCapabilitiesNameForGroup($groupID) {
-		return $this->_wurflService->getCapabilitiesNameForGroup($groupID);
-	}
-	
-	/**
-	 * Returns an array of all the fall back devices starting from the given device
-	 *
-	 * @param string $deviceID
-	 * @return array
-	 */
-	public function getFallBackDevices($deviceID) {
-		return $this->_wurflService->getDeviceHierarchy($deviceID);
-	}
-	
-	/**
-	 * Returns all the device ids in wurfl
-	 *
-	 * @return array
-	 */
-	public function getAllDevicesID() {
-		return $this->_wurflService->getAllDevicesID();
-	}
+        if (!isset($httpRequest)) {
+            throw new Exception('The $httpRequest parameter must be set.');
+        }
+        
+        $requestFactory = new Request\GenericRequestFactory();
+        
+        $request = $requestFactory->createRequest($httpRequest);
+        
+        return $this->_wurflService->getDeviceForRequest($request);
+    }
+    
+    /**
+     * Returns a device for the given user-agent
+     *
+     * @param string $userAgent
+     * @return \Wurfl\CustomDevice device
+     * @throws Exception if $userAgent is not set
+     */
+    public function getDeviceForUserAgent($userAgent)
+    {
+        if (!isset($userAgent)) {
+            $userAgent = '';
+        }
+        
+        $requestFactory = new Request\GenericRequestFactory();
+        
+        $request = $requestFactory->createRequestForUserAgent($userAgent);
+        return $this->getDeviceForRequest($request);
+    }
+    
+    /**
+     * Return a device for the given device id
+     *
+     * @param string $deviceID
+     * @return \Wurfl\CustomDevice
+     */
+    public function getDevice($deviceID)
+    {
+        return $this->_wurflService->getDevice($deviceID);
+    }
+    
+    /**
+     * Returns an array of all wurfl group ids
+     *
+     * @return array
+     */
+    public function getListOfGroups()
+    {
+        return $this->_wurflService->getListOfGroups();
+    }
+    
+    /**
+     * Returns all capability names for the given $groupID
+     *
+     * @param string $groupID
+     * @return array
+     */
+    public function getCapabilitiesNameForGroup($groupID)
+    {
+        return $this->_wurflService->getCapabilitiesNameForGroup($groupID);
+    }
+    
+    /**
+     * Returns an array of all the fall back devices starting from the given device
+     *
+     * @param string $deviceID
+     * @return array
+     */
+    public function getFallBackDevices($deviceID)
+    {
+        return $this->_wurflService->getDeviceHierarchy($deviceID);
+    }
+    
+    /**
+     * Returns all the device ids in wurfl
+     *
+     * @return array
+     */
+    public function getAllDevicesID()
+    {
+        return $this->_wurflService->getAllDevicesID();
+    }
 }

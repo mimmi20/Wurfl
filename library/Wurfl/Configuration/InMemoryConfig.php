@@ -13,93 +13,93 @@ namespace Wurfl\Configuration;
  *
  *
  * @category   WURFL
- * @package	WURFL_Configuration
+ * @package    \Wurfl\Configuration
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 use \Wurfl\Exception;
 
 /**
  * In-memory WURFL Configuration
- * @package	WURFL_Configuration
+ * @package    \Wurfl\Configuration
  */
 class InMemoryConfig extends Config
 {
-	/**
-	 * Instantiate an In-Memory Configuration
-	 */
-	public function __construct() {}
-	
-	/**
-	 * @param string $wurflFile
-	 * @return WURFL_Configuration_InMemoryConfig $this
-	 */
-	public function wurflFile($wurflFile) {
-		$this->wurflFile = $wurflFile;
-		return $this;
-	}
-	
-	/**
-	 * @param string $wurflPatch
-	 * @return WURFL_Configuration_InMemoryConfig $this
-	 */
-	public function wurflPatch($wurflPatch) {
-		$this->wurflPatches[] = $wurflPatch;
-		return $this;
-	}
-	/**
-	 * Set persistence provider
-	 * @param string $provider
-	 * @param array $params
-	 * @return WURFL_Configuration_InMemoryConfig $this
-	 */
-	public function persistence($provider, $params = array()) {
-		$this->persistence = array_merge(array("provider"=> $provider), array("params" => $params));
-		return $this;				
-	}
-	/**
-	 * Set Cache provider
-	 * @param string $provider
-	 * @param array $params
-	 * @return WURFL_Configuration_InMemoryConfig $this
-	 */
-	public function cache($provider, $params = array()) {
-		$this->cache = array_merge(array("provider"=> $provider), array("params" => $params));
-		return $this;
-	}
-	/**
-	 * Set logging directory
-	 * @param string $dir
-	 * @return WURFL_Configuration_InMemoryConfig $this
-	 */
-	public function logDir($dir) {
-		$this->logDir = $dir;
-		return $this;
-	}
-	/**
-	 * Specifies whether reloading is allowed
-	 * @param bool $reload
-	 * @return WURFL_Configuration_InMemoryConfig $this
-	 */
-	public function allowReload($reload=true) {
-		$this->allowReload = $reload;
-		return $this;
-	}
-	
-	/**
-	 * Sets the API match mode
-	 * @param string $mode
-	 * @return WURFL_Configuration_InMemoryConfig
-	 */
-	public function matchMode($mode) {
-		if (!self::validMatchMode($mode)) {
-			throw new Exception('Invalid Match Mode: '.$mode);
-		}
-		$this->matchMode = $mode;
-		return $this;
-	}
-	
-	protected function initialize() {}
+    /**
+     * Instantiate an In-Memory Configuration
+     */
+    public function __construct() {}
+    
+    /**
+     * @param string $wurflFile
+     * @return \Wurfl\Configuration_InMemoryConfig $this
+     */
+    public function wurflFile($wurflFile) {
+        $this->wurflFile = $wurflFile;
+        return $this;
+    }
+    
+    /**
+     * @param string $wurflPatch
+     * @return \Wurfl\Configuration_InMemoryConfig $this
+     */
+    public function wurflPatch($wurflPatch) {
+        $this->wurflPatches[] = $wurflPatch;
+        return $this;
+    }
+    /**
+     * Set persistence provider
+     * @param string $provider
+     * @param array $params
+     * @return \Wurfl\Configuration_InMemoryConfig $this
+     */
+    public function persistence($provider, $params = array()) {
+        $this->persistence = array_merge(array("provider"=> $provider), array("params" => $params));
+        return $this;                
+    }
+    /**
+     * Set Cache provider
+     * @param string $provider
+     * @param array $params
+     * @return \Wurfl\Configuration_InMemoryConfig $this
+     */
+    public function cache($provider, $params = array()) {
+        $this->cache = array_merge(array("provider"=> $provider), array("params" => $params));
+        return $this;
+    }
+    /**
+     * Set logging directory
+     * @param string $dir
+     * @return \Wurfl\Configuration_InMemoryConfig $this
+     */
+    public function logDir($dir) {
+        $this->logDir = $dir;
+        return $this;
+    }
+    /**
+     * Specifies whether reloading is allowed
+     * @param bool $reload
+     * @return \Wurfl\Configuration_InMemoryConfig $this
+     */
+    public function allowReload($reload=true) {
+        $this->allowReload = $reload;
+        return $this;
+    }
+    
+    /**
+     * Sets the API match mode
+     * @param string $mode
+     * @return \Wurfl\Configuration_InMemoryConfig
+     */
+    public function matchMode($mode) {
+        if (!self::validMatchMode($mode)) {
+            throw new Exception('Invalid Match Mode: '.$mode);
+        }
+        $this->matchMode = $mode;
+        return $this;
+    }
+    
+    protected function initialize() {}
 }

@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,26 +24,26 @@ namespace Wurfl\Handlers;
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class JavaMidletHandler extends Handler
 {
-	public static $constantIDs = array(
-		'generic_midp_midlet',
-	);
-	
-	public function canHandle($userAgent)
+    public static $constantIDs = array(
+        'generic_midp_midlet',
+    );
+    
+    public function canHandle($userAgent)
     {
-		return Utils::checkIfContains($userAgent, 'UNTRUSTED/1.0');
-	}
-	
-	public function applyConclusiveMatch($userAgent)
+        return Utils::checkIfContains($userAgent, 'UNTRUSTED/1.0');
+    }
+    
+    public function applyConclusiveMatch($userAgent)
     {
-		return 'generic_midp_midlet';
-	}
-	
-	protected $prefix = "JAVAMIDLET";
+        return 'generic_midp_midlet';
+    }
+    
+    protected $prefix = "JAVAMIDLET";
 }

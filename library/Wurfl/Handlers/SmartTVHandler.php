@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,37 +24,37 @@ namespace Wurfl\Handlers;
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class SmartTVHandler extends Handler {
-	
-	protected $prefix = "SMARTTV";
-	
-	public static $constantIDs = array(
-		'generic_smarttv_browser',
-		'generic_smarttv_googletv_browser',
-		'generic_smarttv_appletv_browser',
-		'generic_smarttv_boxeebox_browser',
-	);
-	
-	public function canHandle($userAgent) {
-		return Utils::isSmartTV($userAgent);
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		// TODO: Evaluate effectiveness of matching full-length in Conclusive matcher via RIS VS Exact match
-		$tolerance = strlen($userAgent);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent){
-		if (Utils::checkIfContains($userAgent, 'SmartTV')) return 'generic_smarttv_browser';
-		if (Utils::checkIfContains($userAgent, 'GoogleTV')) return 'generic_smarttv_googletv_browser';
-		if (Utils::checkIfContains($userAgent, 'AppleTV')) return 'generic_smarttv_appletv_browser';
-		if (Utils::checkIfContains($userAgent, 'Boxee')) return 'generic_smarttv_boxeebox_browser';
-		return 'generic_smarttv_browser';
-	}	
+    
+    protected $prefix = "SMARTTV";
+    
+    public static $constantIDs = array(
+        'generic_smarttv_browser',
+        'generic_smarttv_googletv_browser',
+        'generic_smarttv_appletv_browser',
+        'generic_smarttv_boxeebox_browser',
+    );
+    
+    public function canHandle($userAgent) {
+        return Utils::isSmartTV($userAgent);
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        // TODO: Evaluate effectiveness of matching full-length in Conclusive matcher via RIS VS Exact match
+        $tolerance = strlen($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent){
+        if (Utils::checkIfContains($userAgent, 'SmartTV')) return 'generic_smarttv_browser';
+        if (Utils::checkIfContains($userAgent, 'GoogleTV')) return 'generic_smarttv_googletv_browser';
+        if (Utils::checkIfContains($userAgent, 'AppleTV')) return 'generic_smarttv_appletv_browser';
+        if (Utils::checkIfContains($userAgent, 'Boxee')) return 'generic_smarttv_boxeebox_browser';
+        return 'generic_smarttv_browser';
+    }    
 }

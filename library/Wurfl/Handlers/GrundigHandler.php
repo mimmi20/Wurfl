@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,18 +24,18 @@ namespace Wurfl\Handlers;
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class GrundigHandler extends Handler
 {
-	protected $prefix = "GRUNDIG";
-	
-	public function canHandle($userAgent)
+    protected $prefix = "GRUNDIG";
+    
+    public function canHandle($userAgent)
     {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfStartsWithAnyOf($userAgent, array('Grundig', 'GRUNDIG'));
-	}
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWithAnyOf($userAgent, array('Grundig', 'GRUNDIG'));
+    }
 }

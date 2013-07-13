@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,25 +24,25 @@ namespace Wurfl\Handlers;
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class ReksioHandler extends Handler {
-	
-	protected $prefix = "REKSIO";
-	
-	public static $constantIDs = array(
-		'generic_reksio',
-	);
-	
-	public function canHandle($userAgent) {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfStartsWith($userAgent, 'Reksio');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		return 'generic_reksio';
-	}
+    
+    protected $prefix = "REKSIO";
+    
+    public static $constantIDs = array(
+        'generic_reksio',
+    );
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWith($userAgent, 'Reksio');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        return 'generic_reksio';
+    }
 }

@@ -12,34 +12,34 @@ namespace Wurfl\Request\UserAgentNormalizer\Generic;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    \Wurfl\Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer - removes UCWEB garbage from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    \Wurfl\Request_UserAgentNormalizer_Generic
  */
 class UCWEB implements NormalizerInterface
 {
-	/**
-	 * This method remove the "UP.Link" substring from user agent string.
-	 *
-	 * @param string $userAgent
-	 * @return string Normalized user agent
-	 */
-	public function normalize($userAgent)
+    /**
+     * This method remove the "UP.Link" substring from user agent string.
+     *
+     * @param string $userAgent
+     * @return string Normalized user agent
+     */
+    public function normalize($userAgent)
     {
-		// Starts with 'JUC' or 'Mozilla/5.0(Linux;U;Android'
-		if (strpos($userAgent, 'JUC') === 0 || strpos($userAgent, 'Mozilla/5.0(Linux;U;Android') === 0) {
-			$userAgent = preg_replace('/^(JUC \(Linux; U;)(?= \d)/', '$1 Android', $userAgent);
-			$userAgent = preg_replace('/(Android|JUC|[;\)])(?=[\w|\(])/', '$1 ', $userAgent);
-		}
-		return $userAgent;
-	}
+        // Starts with 'JUC' or 'Mozilla/5.0(Linux;U;Android'
+        if (strpos($userAgent, 'JUC') === 0 || strpos($userAgent, 'Mozilla/5.0(Linux;U;Android') === 0) {
+            $userAgent = preg_replace('/^(JUC \(Linux; U;)(?= \d)/', '$1 Android', $userAgent);
+            $userAgent = preg_replace('/(Android|JUC|[;\)])(?=[\w|\(])/', '$1 ', $userAgent);
+        }
+        return $userAgent;
+    }
 }

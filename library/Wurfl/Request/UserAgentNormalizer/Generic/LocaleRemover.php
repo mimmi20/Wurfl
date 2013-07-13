@@ -12,11 +12,11 @@ namespace Wurfl\Request\UserAgentNormalizer\Generic;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    \Wurfl\Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
@@ -24,12 +24,12 @@ use \Wurfl\Handlers\Utils;
 
 /**
  * User Agent Normalizer - removes locale information from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    \Wurfl\Request_UserAgentNormalizer_Generic
  */
 class LocaleRemover implements NormalizerInterface
 {
-	public function normalize($userAgent)
+    public function normalize($userAgent)
     {
-		return Utils::removeLocale($userAgent);
-	}
+        return Utils::removeLocale($userAgent);
+    }
 }

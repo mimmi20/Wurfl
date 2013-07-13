@@ -12,7 +12,7 @@ namespace Wurfl\Storage;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL_Storage
+ * @package    \Wurfl\Storage
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -20,7 +20,7 @@ namespace Wurfl\Storage;
  */
 /**
  * WURFL Storage
- * @package    WURFL_Storage
+ * @package    \Wurfl\Storage
  */
 class ZendCacheStorage extends Base 
 {
@@ -29,7 +29,7 @@ class ZendCacheStorage extends Base
     protected $supports_secondary_caching = true;
     
     /**
-     * Creates a new WURFL_Storage_Base
+     * Creates a new \Wurfl\Storage_Base
      * @param array $params
      */
     public function __construct($params = array())

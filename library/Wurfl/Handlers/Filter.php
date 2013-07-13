@@ -13,39 +13,39 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
- * WURFL_Handlers_Filter is the base interface that concrete classes
+ * \Wurfl\Handlers_Filter is the base interface that concrete classes
  * must implement to classify the devices by user agent and then persist
  * the resulting datastructures.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 interface Filter
 {
-	/**
-	 * The filter() method is used to classify devices based on patterns
-	 * in their user agents.
-	 *  
-	 * @param string $userAgent User Agent of the device
-	 * @param string $deviceID  id of the the device
-	 * 
-	 */
-	public function filter($userAgent, $deviceID);
+    /**
+     * The filter() method is used to classify devices based on patterns
+     * in their user agents.
+     *  
+     * @param string $userAgent User Agent of the device
+     * @param string $deviceID  id of the the device
+     * 
+     */
+    public function filter($userAgent, $deviceID);
 
-	/**
-	 * The persistData() method is resposible to 
-	 * saving the classification output(associative arrays that holds <userAgent, deviceID> pair))  
-	 *
-	 */
-	public function persistData();
+    /**
+     * The persistData() method is resposible to 
+     * saving the classification output(associative arrays that holds <userAgent, deviceID> pair))  
+     *
+     */
+    public function persistData();
 }

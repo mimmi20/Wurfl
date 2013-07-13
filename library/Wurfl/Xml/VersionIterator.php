@@ -12,62 +12,62 @@ namespace Wurfl\Xml;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Xml
+ * @package    \Wurfl\Xml
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  *
  */
 /**
  * Extracts version information from XML file
- * @package	WURFL_Xml
+ * @package    \Wurfl\Xml
  */
 class VersionIterator extends AbstractIterator
 {
-	private $found_version_info = false;
-	
-	public function readNextElement()
+    private $found_version_info = false;
+    
+    public function readNextElement()
     {
-		$version = "";
-		$lastUpdated = "";
-		$officialURL = "";
-		while ($this->xmlReader->read()) {
-			$nodeName = $this->xmlReader->name;
-			switch ($this->xmlReader->nodeType) {
-				case \XMLReader::ELEMENT:
-					switch ($nodeName) {
-						case 'ver':
-							$version = $this->getTextValue();
-							break;
-						case 'last_updated':
-							$lastUpdated = $this->getTextValue();
-							break;
-						case 'official_url':
-							$officialURL = $this->getTextValue();
-							break;
-					}
-					break;
-				case \XMLReader::END_ELEMENT:
-					switch ($nodeName) {
-						case 'version':
-							$this->found_version_info = true;
-							$this->currentElement = new Info($version, $lastUpdated, $officialURL);
-							return;
-					}
-					break;
-			}
-		} // end of while
-	}
-	
-	public function valid() 
+        $version = "";
+        $lastUpdated = "";
+        $officialURL = "";
+        while ($this->xmlReader->read()) {
+            $nodeName = $this->xmlReader->name;
+            switch ($this->xmlReader->nodeType) {
+                case \XMLReader::ELEMENT:
+                    switch ($nodeName) {
+                        case 'ver':
+                            $version = $this->getTextValue();
+                            break;
+                        case 'last_updated':
+                            $lastUpdated = $this->getTextValue();
+                            break;
+                        case 'official_url':
+                            $officialURL = $this->getTextValue();
+                            break;
+                    }
+                    break;
+                case \XMLReader::END_ELEMENT:
+                    switch ($nodeName) {
+                        case 'version':
+                            $this->found_version_info = true;
+                            $this->currentElement = new Info($version, $lastUpdated, $officialURL);
+                            return;
+                    }
+                    break;
+            }
+        } // end of while
+    }
+    
+    public function valid() 
     {
-		// We're finished with the version node, nothing else to do
-		if ($this->found_version_info === true) {
-			return false;
-		}
-		if ($this->currentElement === null) {
-			$this->readNextElement();
-		}
-		return $this->currentElement !== null;
-	}
+        // We're finished with the version node, nothing else to do
+        if ($this->found_version_info === true) {
+            return false;
+        }
+        if ($this->currentElement === null) {
+            $this->readNextElement();
+        }
+        return $this->currentElement !== null;
+    }
 }

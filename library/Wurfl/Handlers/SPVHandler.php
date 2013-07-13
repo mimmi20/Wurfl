@@ -12,10 +12,10 @@ namespace Wurfl\Handlers;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -23,23 +23,23 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class SPVHandler extends Handler {
-	
-	protected $prefix = "SPV";
-	
-	public function canHandle($userAgent) {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfContains($userAgent, 'SPV');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$tolerance = Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
+    
+    protected $prefix = "SPV";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContains($userAgent, 'SPV');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = Utils::indexOfOrLength($userAgent, ';', strpos($userAgent, 'SPV'));
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
 }

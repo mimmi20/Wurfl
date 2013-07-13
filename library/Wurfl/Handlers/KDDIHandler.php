@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,34 +24,34 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class KDDIHandler extends Handler {
-	
-	protected $prefix = "KDDI";
-	
-	public static $constantIDs = array(
-		'opwv_v62_generic'
-	);
-	
-	public function canHandle($userAgent) {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfContains($userAgent, 'KDDI-');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
-			$tolerance = Utils::secondSlash($userAgent);
-		} else {
-			$tolerance = Utils::firstSlash($userAgent);
-		}
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		return "opwv_v62_generic";
-	}
+    
+    protected $prefix = "KDDI";
+    
+    public static $constantIDs = array(
+        'opwv_v62_generic'
+    );
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfContains($userAgent, 'KDDI-');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        if (Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
+            $tolerance = Utils::secondSlash($userAgent);
+        } else {
+            $tolerance = Utils::firstSlash($userAgent);
+        }
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent) {
+        return "opwv_v62_generic";
+    }
 }

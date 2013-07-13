@@ -12,14 +12,14 @@ namespace Wurfl\Storage;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Storage
+ * @package    \Wurfl\Storage
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * WURFL Storage
- * @package	WURFL_Storage
+ * @package    \Wurfl\Storage
  */
 class Exception extends \Exception {}

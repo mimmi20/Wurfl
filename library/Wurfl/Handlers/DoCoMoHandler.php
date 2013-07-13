@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,40 +24,40 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class DoCoMoHandler extends Handler
 {
-	protected $prefix = "DOCOMO";
-	
-	public static $constantIDs = array(
-		'docomo_generic_jap_ver1',	
-		'docomo_generic_jap_ver2',
-	);
-	
-	public function canHandle($userAgent)
+    protected $prefix = "DOCOMO";
+    
+    public static $constantIDs = array(
+        'docomo_generic_jap_ver1',    
+        'docomo_generic_jap_ver2',
+    );
+    
+    public function canHandle($userAgent)
     {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfStartsWith($userAgent, "DoCoMo");
-	}
-	
-	public function applyConclusiveMatch($userAgent)
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWith($userAgent, "DoCoMo");
+    }
+    
+    public function applyConclusiveMatch($userAgent)
     {
-		$tolerance = Utils::ordinalIndexOf($userAgent, '/', 2);
-		if ($tolerance === -1) {
-			//  DoCoMo/2.0 F01A(c100;TB;W24H17)
-			$tolerance = Utils::indexOfOrLength('(', $userAgent);
-		}
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent)
+        $tolerance = Utils::ordinalIndexOf($userAgent, '/', 2);
+        if ($tolerance === -1) {
+            //  DoCoMo/2.0 F01A(c100;TB;W24H17)
+            $tolerance = Utils::indexOfOrLength('(', $userAgent);
+        }
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent)
     {
-		$versionIndex = 7;
-		$version = $userAgent[$versionIndex];
-		return ($version == '2')? 'docomo_generic_jap_ver2': 'docomo_generic_jap_ver1';
-	}
+        $versionIndex = 7;
+        $version = $userAgent[$versionIndex];
+        return ($version == '2')? 'docomo_generic_jap_ver2': 'docomo_generic_jap_ver1';
+    }
 }

@@ -13,10 +13,10 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -24,26 +24,26 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class NecHandler extends Handler {
-	
-	const NEC_KGT_TOLERANCE = 2;
-	protected $prefix = "NEC";
-	
-	public function canHandle($userAgent) {
-		if (Utils::isDesktopBrowser($userAgent)) return false;
-		return Utils::checkIfStartsWithAnyOf($userAgent, array('NEC-', 'KGT'));
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (Utils::checkIfStartsWith($userAgent, "NEC-")) {
-			$tolerance = Utils::firstSlash($userAgent);
-			return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-		}
-		return $this->getDeviceIDFromLD($userAgent, self::NEC_KGT_TOLERANCE);
-	}
+    
+    const NEC_KGT_TOLERANCE = 2;
+    protected $prefix = "NEC";
+    
+    public function canHandle($userAgent) {
+        if (Utils::isDesktopBrowser($userAgent)) return false;
+        return Utils::checkIfStartsWithAnyOf($userAgent, array('NEC-', 'KGT'));
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        if (Utils::checkIfStartsWith($userAgent, "NEC-")) {
+            $tolerance = Utils::firstSlash($userAgent);
+            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+        }
+        return $this->getDeviceIDFromLD($userAgent, self::NEC_KGT_TOLERANCE);
+    }
 }

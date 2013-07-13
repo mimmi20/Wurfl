@@ -12,11 +12,11 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
@@ -26,20 +26,20 @@ use \Wurfl\Handlers\AndroidHandler;
 
 /**
  * User Agent Normalizer
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  */
 class Kindle implements NormalizerInterface
 {
-	public function normalize($userAgent)
+    public function normalize($userAgent)
     {
-		if (Utils::checkIfContains($userAgent, 'Android')) {
-			$model   = AndroidHandler::getAndroidModel($userAgent, false);
-			$version = AndroidHandler::getAndroidVersion($userAgent, false);
-			if ($model !== null && $version !== null) {
-				$prefix = $version.' '.$model.Constants::RIS_DELIMITER;
-				return $prefix.$userAgent;
-			}
-		}
-		return $userAgent;
-	}
+        if (Utils::checkIfContains($userAgent, 'Android')) {
+            $model   = AndroidHandler::getAndroidModel($userAgent, false);
+            $version = AndroidHandler::getAndroidVersion($userAgent, false);
+            if ($model !== null && $version !== null) {
+                $prefix = $version.' '.$model.Constants::RIS_DELIMITER;
+                return $prefix.$userAgent;
+            }
+        }
+        return $userAgent;
+    }
 }

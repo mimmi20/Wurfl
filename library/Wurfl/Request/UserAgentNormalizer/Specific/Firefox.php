@@ -12,32 +12,32 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer - Return the firefox string with the major and minor version only
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  */
 class Firefox implements NormalizerInterface
 {
-	public function normalize($userAgent)
+    public function normalize($userAgent)
     {
-		return $this->firefoxWithMajorAndMinorVersion($userAgent);
-	}
-	/**
-	 * Returns FireFox major and minor version numbers
-	 * @param string $userAgent
-	 * @return string Major and minor version
-	 */
-	private function firefoxWithMajorAndMinorVersion($userAgent)
+        return $this->firefoxWithMajorAndMinorVersion($userAgent);
+    }
+    /**
+     * Returns FireFox major and minor version numbers
+     * @param string $userAgent
+     * @return string Major and minor version
+     */
+    private function firefoxWithMajorAndMinorVersion($userAgent)
     {
-		return substr($userAgent, strpos($userAgent, "Firefox"));
-	}
+        return substr($userAgent, strpos($userAgent, "Firefox"));
+    }
 }
