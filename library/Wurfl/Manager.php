@@ -110,7 +110,7 @@ class Manager
         $requestFactory = new Request\GenericRequestFactory();
         
         $request = $requestFactory->createRequestForUserAgent($userAgent);
-        return $this->getDeviceForRequest($request);
+        return $this->_wurflService->getDeviceForRequest($request);
     }
     
     /**

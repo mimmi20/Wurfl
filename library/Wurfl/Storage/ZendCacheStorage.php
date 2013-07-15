@@ -60,19 +60,17 @@ class ZendCacheStorage extends Base
     
     public function load($key)
     {
-        if (($data = $this->cacheLoad($key)) !== null) {
-            return $data;
+        if (($value = $this->cacheLoad($key)) !== null) {
+            return $value;
         }
         
-        if ($this->_zendCacheObject->test($key)) {
-            $value = $this->_zendCacheObject->load($key);
-            
+        if (($value = $this->_zendCacheObject->load($key)) !== null) {
             $this->cacheSave($key, $value);
             
             return $value;
-        } else {
-            return null;
         }
+        
+        return null;
     }
     
     public function save($key, $value, $expire = 0)

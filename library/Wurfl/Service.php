@@ -74,12 +74,12 @@ class Service
     /**
      * Retun a \Wurfl\Xml\ModelDevice for the given device id
      *
-     * @param string $deviceID
+     * @param string $deviceId
      * @return \Wurfl\Xml\ModelDevice
      */
-    public function getDevice($deviceID)
+    public function getDevice($deviceId)
     {
-        return $this->getWrappedDevice($deviceID);
+        return $this->getWrappedDevice($deviceId);
     }
     
     /**
@@ -96,12 +96,12 @@ class Service
      * Returns an array of all the fall back devices starting from
      * the given device
      *
-     * @param string $deviceID
+     * @param string $deviceId
      * @return array
      */
-    public function getDeviceHierarchy($deviceID)
+    public function getDeviceHierarchy($deviceId)
     {
-        return $this->_deviceRepository->getDeviceHierarchy($deviceID);
+        return $this->_deviceRepository->getDeviceHierarchy($deviceId);
     }
     
     public function getListOfGroups()
@@ -141,17 +141,17 @@ class Service
      * Wraps the model device with \Wurfl\Xml_ModelDevice.  This function takes the
      * Device ID and returns the \Wurfl\CustomDevice with all capabilities.
      *
-     * @param string $deviceID
+     * @param string $deviceId
      * @param string $matchInfo
      * @return \Wurfl\CustomDevice
      */
-    private function getWrappedDevice($deviceID, $matchInfo = null)
+    private function getWrappedDevice($deviceId, $matchInfo = null)
     {
-        $device = $this->_cacheProvider->load('DEV_'.$deviceID);
+        $device = $this->_cacheProvider->load('DEV_'.$deviceId);
         if (empty($device)) {
-            $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
+            $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceId);
             $device = new CustomDevice($modelDevices, $matchInfo);
-            $this->_cacheProvider->save('DEV_'.$deviceID, $device);
+            $this->_cacheProvider->save('DEV_'.$deviceId, $device);
         }
         return $device;
     }

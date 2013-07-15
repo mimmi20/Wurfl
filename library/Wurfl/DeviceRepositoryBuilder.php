@@ -49,7 +49,7 @@ class DeviceRepositoryBuilder
      * Determines the fopen() mode that is used on the lockfile 
      * @var string
      */
-    private $lockStyle = 'r';
+    private $lockStyle = 'w+';
     
     /**
      * @param Wurfl\Storage\Base $persistenceProvider
@@ -77,28 +77,16 @@ class DeviceRepositoryBuilder
     {
         // TODO: Create a better locking solution
         if (!$this->isRepositoryBuilt()) {
-            // Determine Lockfile location
-            $this->lockFile  = FileUtils::getTempDir() . '/wurfl.lock';
+            $infoIterator   = new Xml\VersionIterator($wurflFile);
+            $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilitiesToUse);
+            $patchIterators = $this->toPatchIterators($wurflPatches , $capabilitiesToUse);
             
-            if (strpos(PHP_OS, 'SunOS') !== false) {
-                // Solaris can't handle exclusive file locks on files unless they are opened for RW
-                $this->lockStyle = 'w+';
-            }
-            // Update Data
-            //set_time_limit(300);
-            $fp = fopen($this->lockFile, $this->lockStyle);
-            if (flock($fp, LOCK_EX | LOCK_NB)) {
-                $infoIterator   = new Xml\VersionIterator($wurflFile);
-                $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilitiesToUse);
-                $patchIterators = $this->toPatchIterators($wurflPatches , $capabilitiesToUse);
-            
-                $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
-                $this->setRepositoryBuilt();
-                flock($fp, LOCK_UN);
-            }
+            $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
         }
-        $deviceClassificationNames = $this->deviceClassificationNames();
-        return new CustomDeviceRepository($this->persistenceProvider, $deviceClassificationNames);
+        
+        return new CustomDeviceRepository(
+            $this->persistenceProvider, $this->deviceClassificationNames()
+        );
     }
     
     /**
@@ -114,15 +102,22 @@ class DeviceRepositoryBuilder
         array $patchDeviceIterators = array())
     {
         $this->persistWurflInfo($wurflInfoIterator);
-        $patchingDevices = array();
+        
         $patchingDevices = $this->toListOfPatchingDevices($patchDeviceIterators);
         
         try {
             $this->process($deviceIterator, $patchingDevices);
         } catch(Exception $exception) {
             $this->clean();
-            throw new Exception('Problem Building WURFL Repository: ' . $exception->getMessage(), null, $exception);
+            
+            throw new Exception(
+                'Problem Building WURFL Repository: ' . $exception->getMessage(),
+                $exception->getCode(),
+                $exception
+            );
         }
+        
+        $this->setRepositoryBuilt();
     }
     
     /**
@@ -148,16 +143,16 @@ class DeviceRepositoryBuilder
      */
     private function isRepositoryBuilt()
     {
-        return $this->persistenceProvider->isWURFLLoaded();
+        return $this->persistenceProvider->isWurflLoaded();
     }
     
     /**
      * Marks the WURFL as loaded in the persistence provider
-     * @see WURFL_Storage_Base::setWURFLLoaded()
+     * @see WURFL_Storage_Base::setWurflLoaded()
      */
     private function setRepositoryBuilt()
     {
-        $this->persistenceProvider->setWURFLLoaded();
+        $this->persistenceProvider->setWurflLoaded();
     }
     
     /**
@@ -184,9 +179,9 @@ class DeviceRepositoryBuilder
     
     /**
      * Save Loaded WURFL info in the persistence provider 
-     * @param WURFL_Xml_VersionIterator $wurflInfoIterator
+     * @param Wurfl\Xml\VersionIterator $wurflInfoIterator
      */
-    private function persistWurflInfo($wurflInfoIterator)
+    private function persistWurflInfo(Xml\VersionIterator $wurflInfoIterator)
     {
         foreach ($wurflInfoIterator as $info) {
             $this->persistenceProvider->save(Xml\Info::PERSISTENCE_KEY, $info);
@@ -202,13 +197,16 @@ class DeviceRepositoryBuilder
     private function process(Xml\DeviceIterator $deviceIterator, array $patchingDevices = array())
     {
         $usedPatchingDeviceIds = array();
+        
         foreach ($deviceIterator as $device) {
             /* @var $device WURFL_Xml_ModelDevice */
-            $toPatch = isset($patchingDevices [$device->id]);
+            $toPatch = isset($patchingDevices[$device->id]);
+            
             if ($toPatch) {
                 $device = $this->patchDevice($device, $patchingDevices [$device->id]);
                 $usedPatchingDeviceIds [$device->id] = $device->id;
             }
+            
             $this->classifyAndPersistDevice($device);
         }
         $this->classifyAndPersistNewDevices(array_diff_key($patchingDevices, $usedPatchingDeviceIds));
@@ -235,6 +233,7 @@ class DeviceRepositoryBuilder
     private function classifyAndPersistDevice(Xml\ModelDevice $device)
     {
         $this->userAgentHandlerChain->filter($device->userAgent, $device->id);
+        
         $this->persistenceProvider->save($device->id, $device);
     }
     
@@ -253,19 +252,22 @@ class DeviceRepositoryBuilder
     }
     
     /**
-     * @param array $patchingDeviceIterators Array of WURFL_Xml_DeviceIterators
+     * @param array $patchingDeviceIterators Array of Wurfl\Xml\DeviceIterators
      * @return array Merged array of current patch devices
      */
     private function toListOfPatchingDevices($patchingDeviceIterators)
     {
-        $currentPatchingDevices = array();
-        if (is_null($patchingDeviceIterators)) {
-            return $currentPatchingDevices;
+        if (!is_array($patchingDeviceIterators)) {
+            return array();
         }
+        
+        $currentPatchingDevices = array();
+        
         foreach ($patchingDeviceIterators as $deviceIterator) {
             $newPatchingDevices = $this->toArray($deviceIterator);
             $this->patchDevices($currentPatchingDevices, $newPatchingDevices);
         }
+        
         return $currentPatchingDevices;
     }
     

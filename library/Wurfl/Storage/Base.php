@@ -122,32 +122,47 @@ abstract class Base implements StorageInterface
     public function setCacheStorage(Base $cache)
     {
         if (!$this->supportsSecondaryCaching()) {
-            throw new Exception("The storage provider ".get_class($cache)." cannot be used as a cache for ".get_class($this));
+            throw new Exception(
+                'The storage provider ' . get_class($cache)
+                . ' cannot be used as a cache for ' . get_class($this)
+            );
         }
         $this->cache = $cache;
     }
     
     protected function cacheSave($objectId, $object)
     {
-        if ($this->cache === null) return;
-        $this->cache->save('FCACHE_'.$objectId, $object);
+        if ($this->cache === null) {
+            return;
+        }
+        
+        $this->cache->save('FCACHE_' . $objectId, $object);
     }
     
     protected function cacheLoad($objectId)
     {
-        if ($this->cache === null) return null;
-        return $this->cache->load('FCACHE_'.$objectId);
+        if ($this->cache === null) {
+            return null;
+        }
+        
+        return $this->cache->load('FCACHE_' . $objectId);
     }
     
     protected function cacheRemove($objectId)
     {
-        if ($this->cache === null) return;
-        $this->cache->remove('FCACHE_'.$objectId);
+        if ($this->cache === null) {
+            return;
+        }
+        
+        $this->cache->remove('FCACHE_' . $objectId);
     }
     
     protected function cacheClear()
     {
-        if ($this->cache === null) return;
+        if ($this->cache === null) {
+            return;
+        }
+        
         $this->cache->clear();
     }
     
@@ -155,7 +170,7 @@ abstract class Base implements StorageInterface
      * Checks if WURFL is Loaded
      * @return bool
      */
-    public function isWURFLLoaded()
+    public function isWurflLoaded()
     {
         return $this->load(self::WURFL_LOADED);
     }
@@ -164,7 +179,7 @@ abstract class Base implements StorageInterface
      * Sets the WURFL Loaded flag
      * @param bool $loaded
      */
-    public function setWURFLLoaded($loaded = true)
+    public function setWurflLoaded($loaded = true)
     {
         $this->save(self::WURFL_LOADED, $loaded);
     }
@@ -178,7 +193,7 @@ abstract class Base implements StorageInterface
      */
     protected function encode($namespace, $input)
     {
-        return join(":", array(self::APPLICATION_PREFIX, $namespace, $input));
+        return join(':', array(self::APPLICATION_PREFIX, $namespace, $input));
     }
 
     /**
@@ -189,7 +204,7 @@ abstract class Base implements StorageInterface
      */
     protected function decode($namespace, $input)
     {
-        $inputs = explode(":", $input);
+        $inputs = explode(':', $input);
         return $inputs[2];
     }
 }
