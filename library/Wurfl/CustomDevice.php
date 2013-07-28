@@ -64,7 +64,7 @@ class CustomDevice
     public function __construct($modelDevices, $matchInfo = null)
     {
         if (! is_array ( $modelDevices ) || count ( $modelDevices ) < 1) {
-            throw new InvalidArgumentException ( "modelDevices must be an array of at least one ModelDevice." );
+            throw new \InvalidArgumentException ('modelDevices must be an array of at least one ModelDevice.');
         }
         $this->modelDevices = $modelDevices;
         $this->matchInfo = $matchInfo;
@@ -120,10 +120,10 @@ class CustomDevice
     public function getCapability($capabilityName)
     {
         if (empty($capabilityName)) {
-            throw new InvalidArgumentException("capability name must not be empty");
+            throw new \InvalidArgumentException('capability name must not be empty');
         }
         if(!$this->isCapabilityDefined($capabilityName)) {
-            throw new InvalidArgumentException("no capability named [$capabilityName] is present in wurfl.");    
+            throw new \InvalidArgumentException('no capability named [' . $capabilityName . '] is present in wurfl.');    
         }
         foreach ($this->modelDevices as $modelDevice) {
             /* @var \Wurfl\Xml_ModelDevice $modelDevice */
