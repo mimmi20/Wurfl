@@ -1,0 +1,24 @@
+{
+    "name": "tmu/Wurfl",
+    "description": "the Wurfl PHP Library for PHP 5.3",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "Wurfl",
+        "zf2"
+    ],
+    "homepage": "",
+    "require": {
+        "php": ">=5.3.3",
+    },
+    "suggest": {
+        "monolog/monolog": "dev-master",
+        "zendframework/zend-log": "2.*",
+        "zendframework/zend-cache": "2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Wurfl\\": "library/"
+        }
+    }
+}
