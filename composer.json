@@ -1,15 +1,14 @@
 {
-    "name": "tmu/Wurfl",
+    "name": "mimmi20/Wurfl",
     "description": "the Wurfl PHP Library for PHP 5.3",
     "type": "library",
-    "license": "BSD-3-Clause",
+    "license": "LGPL2",
     "keywords": [
-        "Wurfl",
-        "zf2"
+        "Wurfl", "Browser", "user agent"
     ],
     "homepage": "",
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.3.3"
     },
     "suggest": {
         "monolog/monolog": "dev-master",

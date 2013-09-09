@@ -1,3 +1,0 @@
-include regexes.yaml
-include py/ua_parser/regexes.yaml
-include py/ua_parser/regexes.json
