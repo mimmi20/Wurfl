@@ -109,8 +109,7 @@ class ManagerFactory
         $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
         
         $deviceRepository   = $this->deviceRepository($this->persistenceStorage, $userAgentHandlerChain);
-        $wurflService       = new Service($deviceRepository, $userAgentHandlerChain, $this->cacheStorage);
-        $this->wurflManager = new Manager($wurflService);
+        $this->wurflManager = new Manager($deviceRepository, $userAgentHandlerChain, $this->cacheStorage);
     }
     
     /**
