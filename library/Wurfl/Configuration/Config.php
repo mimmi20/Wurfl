@@ -27,61 +27,69 @@ namespace Wurfl\Configuration;
  * @property boolean $allowReload
  * @property string $wurflFile
  * @property array $wurflPatches
- * @property array $persistence 
- * @property array $cache 
- * @property string $logDir
+ * @property array $persistence
+ * @property array $cache
+ * @property string $logger
  * @property string $matchMode
  */
 abstract class  Config
 {
-    const WURFL = "wurfl";
-    const MAIN_FILE = "main-file";
-    const PATCHES = "patches";
-    const PATCH = "patch";
-    const CACHE = "cache";
-    const PERSISTENCE = "persistence";
-    const PROVIDER = "provider";
-    const PARAMS = "params";
-    const LOG_DIR = "logDir";
-    const ALLOW_RELOAD = "allow-reload";
-    const DIR = "dir";
-    const EXPIRATION = "expiration";
-    const MATCH_MODE = "match-mode";
-    const MATCH_MODE_PERFORMANCE = "performance";
-    const MATCH_MODE_ACCURACY = "accuracy";
+    const WURFL = 'wurfl';
+    const MAIN_FILE = 'main-file';
+    const PATCHES = 'patches';
+    const PATCH = 'patch';
+    const CACHE = 'cache';
+    const PERSISTENCE = 'persistence';
+    const PROVIDER = 'provider';
+    const PARAMS = 'params';
+    const LOGGER = 'logger';
+    const ALLOW_RELOAD = 'allow-reload';
+    const DIR = 'dir';
+    const EXPIRATION = 'expiration';
+    const MATCH_MODE = 'match-mode';
+    const MATCH_MODE_PERFORMANCE = 'performance';
+    const MATCH_MODE_ACCURACY = 'accuracy';
     
     /**
      * @var string Path to the configuration file
      */
     protected $configFilePath;
+    
     /**
      * @var string Directory that the configuration file is in
      */
     protected $configurationFileDir;
+    
     /**
      * @var bool true if a WURFL reload is allowed
      */
     protected $allowReload = false;
+    
     /**
      * @var string wurfl file (normally wurfl.xml)
      */
     protected $wurflFile;
+    
     /**
      * @var array Array of WURFL patches
      */
     protected $wurflPatches;
+    
     /**
      * @var array
      */
     protected $persistence = array();
+    
     /**
      * @var array
      */
     protected $cache = array();
+    
     /**
-     * @var string
+     * @var array
      */
-    protected $logDir;
+    protected $logger = array();
+    
     /**
      * Mode of operation (performance or accuracy)
      * @var string
@@ -95,7 +103,7 @@ abstract class  Config
     public function __construct($configFilePath)
     {
         if(!file_exists($configFilePath)) {
-            throw new \InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
+            throw new \InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
         }
         $this->configFilePath = $configFilePath;
         $this->configurationFileDir = dirname($this->configFilePath);
@@ -179,6 +187,7 @@ abstract class  Config
         if(file_exists($fullName)) {
             return $fullName;
         }
-        throw new Exception("The specified path '" . $fullName . "' does not exist");
+        
+        throw new Exception('The specified path "' . $fullName . '" does not exist');
     }
 }

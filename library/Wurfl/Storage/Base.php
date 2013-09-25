@@ -37,7 +37,7 @@ abstract class Base implements StorageInterface
     const WURFL_LOADED = 'WURFL_LOADED';
 
     /**
-     * @var \Wurfl\Storage_Base
+     * @var \Wurfl\Storage\Base
      */
     private $cache;
     
@@ -45,7 +45,7 @@ abstract class Base implements StorageInterface
     protected $supports_secondary_caching = false;
 
     /**
-     * Creates a new \Wurfl\Storage_Base
+     * Creates a new \Wurfl\Storage\Base
      * @param array $params
      */
     public function __construct($params = array()) {}
@@ -100,7 +100,7 @@ abstract class Base implements StorageInterface
     
     /**
      * This storage provider can be used as a secondary cache
-     * @param \Wurfl\Storage_Base $cache
+     * @param \Wurfl\Storage\Base $cache
      * @return boolean
      */
     public function validSecondaryCache(Base $cache)
@@ -117,7 +117,7 @@ abstract class Base implements StorageInterface
      * cache data in a volatile storage system like APC in front of a slow 
      * persistence provider like the filesystem.
      * 
-     * @param \Wurfl\Storage_Base $cache
+     * @param \Wurfl\Storage\Base $cache
      */
     public function setCacheStorage(Base $cache)
     {

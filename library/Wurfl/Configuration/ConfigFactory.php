@@ -27,7 +27,7 @@ class ConfigFactory
     /**
      * @param string $configFilePath
      * @throws InvalidArgumentException
-     * @return \Wurfl\Configuration_Config
+     * @return \Wurfl\Configuration\Config
      */
     public static function create($configFilePath)
     {

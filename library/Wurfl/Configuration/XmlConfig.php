@@ -29,14 +29,16 @@ class XmlConfig extends Config
     /**
      * Initialize XML Configuration
      */
-    protected function initialize() {
+    protected function initialize()
+    {
         $xmlConfig = simplexml_load_file($this->configFilePath);
+        
         $this->wurflFile = $this->wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
         $this->wurflPatches = $this->wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
         $this->allowReload = $this->allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
         $this->persistence = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
         $this->cache = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
-        $this->logDir = $this->logDir($xmlConfig->xpath('/wurfl-config/logDir'));
+        $this->logger = $this->logger($xmlConfig->xpath('/wurfl-config/logger'));
         $this->matchMode = $this->matchMode($xmlConfig->xpath('/wurfl-config/match-mode'));
     }
 
@@ -45,7 +47,8 @@ class XmlConfig extends Config
      * @param array $mainFileElement array of SimpleXMLElement objects 
      * @return string full path
      */
-    private function wurflFile($mainFileElement) {
+    private function wurflFile($mainFileElement)
+    {
         return parent::getFullPath((string)$mainFileElement[0]);
     }
     
@@ -54,7 +57,8 @@ class XmlConfig extends Config
      * @param array $patchElements array of SimpleXMLElement objects
      * @return array WURFL Patches
      */
-    private function wurflPatches($patchElements) {
+    private function wurflPatches($patchElements)
+    {
         $patches = array();
         if ($patchElements) {
             foreach ($patchElements as $patchElement) {
@@ -69,7 +73,8 @@ class XmlConfig extends Config
      * @param array $allowReloadElement array of SimpleXMLElement objects
      * @return boolean
      */
-    private function allowReload($allowReloadElement) {
+    private function allowReload($allowReloadElement)
+    {
         if (!empty($allowReloadElement)) {
             return (bool)$allowReloadElement[0];
         }
@@ -81,14 +86,15 @@ class XmlConfig extends Config
      * @param array $modeElement array of SimpleXMLElement objects
      * @return boolean
      */
-    private function matchMode($modeElement) {
+    private function matchMode($modeElement)
+    {
         if (!empty($modeElement)) {
             $mode = $modeElement[0];
             if (!$mode) {
                 return $this->matchMode;
             }
             if (!self::validMatchMode($mode)) {
-                throw new Exception('Invalid Match Mode: '.$mode);
+                throw new Exception('Invalid Match Mode: ' . $mode);
             }
             $this->matchMode = $mode;
         }
@@ -100,11 +106,15 @@ class XmlConfig extends Config
      * @param array $logDirElement array of SimpleXMLElement objects
      * @return string Log directory
      */
-    private function logDir($logDirElement) {
+    private function logger($logDirElement)
+    {
+        $logger = array();
+        
         if (!empty($logDirElement)) {
-            return parent::getFullPath((string)$logDirElement[0]);
+            $logger['logDir'] = parent::getFullPath((string)$logDirElement[0]->logDir);
+            $logger['type']   = (string)$logDirElement[0]->type;
         }
-        return null;
+        return $logger;
     }
 
     /**
@@ -112,12 +122,15 @@ class XmlConfig extends Config
      * @param array $persistenceElement array of SimpleXMLElement objects
      * @return array Persistence info
      */
-    private function persistence($persistenceElement) {
+    private function persistence($persistenceElement)
+    {
         $persistence = array();
+        
         if ($persistenceElement) {
             $persistence['provider'] = (string)$persistenceElement[0]->provider;
             $persistence['params'] = $this->_toArray((string)$persistenceElement[0]->params);
         }
+        
         return $persistence;
     }
 
@@ -126,7 +139,8 @@ class XmlConfig extends Config
      * @param string $params Comma-seperated list of parameters
      * @return array Parameters
      */
-    private function _toArray($params) {
+    private function _toArray($params)
+    {
         $paramsArray = array();
 
         foreach (explode(',', $params) as $param) {
@@ -141,7 +155,6 @@ class XmlConfig extends Config
         return $paramsArray;
     }
 
- 
     /**
      * WURFL XML Schema
      * @var string

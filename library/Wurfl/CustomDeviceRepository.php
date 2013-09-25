@@ -28,7 +28,7 @@ class CustomDeviceRepository implements DeviceRepository
     
     /**
      * The persistence provider for this device repository
-     * @var \Wurfl\Storage_Base
+     * @var \Wurfl\Storage\Base
      */
     private $persistenceStorage;
     
@@ -53,7 +53,7 @@ class CustomDeviceRepository implements DeviceRepository
     
     /**
      * Creates a new Device Repository from the given $persistenceStorage and $deviceClassificationNames
-     * @param \Wurfl\Storage_Base $persistenceStorage
+     * @param \Wurfl\Storage\Base $persistenceStorage
      * @param array $deviceClassificationNames
      * @throws InvalidArgumentException
      */

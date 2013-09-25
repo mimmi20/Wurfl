@@ -71,8 +71,9 @@ class ArrayConfig extends Config
     protected function initialize()
     {
         include parent::getConfigFilePath();
-        if(!isset($configuration) || !is_array($configuration)) {
-            throw new Exception("Configuration array must be defined in the configuraiton file");
+        
+        if (!isset($configuration) || !is_array($configuration)) {
+            throw new Exception('Configuration array must be defined in the configuraiton file');
         }
         
         $this->init($configuration);
@@ -93,8 +94,8 @@ class ArrayConfig extends Config
             $this->setCacheConfiguration($configuration [Config::CACHE]);
         }
         
-        if (array_key_exists(Config::LOG_DIR, $configuration)) {
-            $this->setLogDirConfiguration($configuration[Config::LOG_DIR]);
+        if (array_key_exists(Config::LOGGER, $configuration)) {
+            $this->setLoggerConfiguration($configuration[Config::LOGGER]);
         }
         
         if (array_key_exists(Config::MATCH_MODE, $configuration)) {
@@ -120,6 +121,7 @@ class ArrayConfig extends Config
     private function setPersistenceConfiguration(array $persistenceConfig)
     {
         $this->persistence = $persistenceConfig;
+        
         if (array_key_exists('params', $this->persistence) && array_key_exists(Config::DIR, $this->persistence['params'])) {
             $this->persistence['params'][Config::DIR] = parent::getFullPath($this->persistence['params'][Config::DIR]);
         }
@@ -130,12 +132,14 @@ class ArrayConfig extends Config
         $this->cache = $cacheConfig;
     }
     
-    private function setLogDirConfiguration($logDir)
+    private function setLoggerConfiguration($logger)
     {
-        if (!is_writable($logDir)) {
-            throw new \InvalidArgumentException("log dir $logDir  must exist and be writable");
+        if (!empty($logger['logDir']) && !is_writable($logger['logDir'])) {
+            $this->logger['type'] = 'Null';
+            unset($logger['logDir']);
         }
-        $this->logDir = $logDir;
+        
+        $this->logger = $logger;
     }
     
     private function setMatchMode($mode)

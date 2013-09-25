@@ -17,51 +17,55 @@ namespace Wurfl;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+
+use \Psr\Log\LoggerInterface;
+
 /**
  * WURFL Context stores the persistence provider, cache provider and logger objects
  * @package    WURFL
  * 
- * @property-read \Wurfl\Storage_Base $persistenceProvider
- * @property-read \Wurfl\Storage_Base $cacheProvider
+ * @property-read \Wurfl\Storage\Base $persistenceProvider
+ * @property-read \Wurfl\Storage\Base $cacheProvider
  * @property-read \Wurfl\Logger_Interface $logger
  */
 class Context
 {
     /**
-     * @var \Wurfl\Storage_Base
+     * @var \Wurfl\Storage\Base
      */
-    private $_persistenceProvider;
-    /**
-     * @var \Wurfl\Storage_Base
-     */
-    private $_cacheProvider;
-    /**
-     * @var \Wurfl\Logger_Interface
-     */
-    private $_logger;
+    private $persistenceProvider;
     
-    public function __construct($persistenceProvider, $cacheProvider = null, $logger = null)
+    /**
+     * @var \Wurfl\Storage\Base
+     */
+    private $cacheProvider;
+    
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+    
+    public function __construct(Storage\Base $persistenceProvider, Storage\Base $cacheProvider = null, LoggerInterface $logger = null)
     {
-        $this->_persistenceProvider = $persistenceProvider;
-        $this->_cacheProvider = is_null($cacheProvider)? new Storage\NullStorage(): $cacheProvider;
-        $this->_logger = is_null($logger)? new Logger\NullLogger(): $logger;
+        $this->persistenceProvider = $persistenceProvider;
+        $this->cacheProvider = is_null($cacheProvider)? new Storage\NullStorage(): $cacheProvider;
+        $this->logger = is_null($logger)? new Logger\NullLogger(): $logger;
     }
     
-    public function cacheProvider($cacheProvider)
+    public function cacheProvider(Storage\Base $cacheProvider)
     {
-        $this->_cacheProvider = is_null($cacheProvider)? new Storage\NullStorage(): $cacheProvider;
+        $this->cacheProvider = is_null($cacheProvider)? new Storage\NullStorage(): $cacheProvider;
         return $this;
     }
     
-    public function logger($logger)
+    public function logger(LoggerInterface $logger)
     {
-        $this->_logger = is_null($logger)? new Logger\NullLogger(): $logger;
+        $this->logger = is_null($logger)? new Logger\NullLogger(): $logger;
         return $this;
     }
     
     public function __get($name)
     {
-        $name = '_'.$name;
         return $this->$name;
     }
 }

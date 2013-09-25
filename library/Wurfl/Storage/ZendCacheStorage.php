@@ -29,7 +29,7 @@ class ZendCacheStorage extends Base
     protected $supports_secondary_caching = true;
     
     /**
-     * Creates a new \Wurfl\Storage_Base
+     * Creates a new \Wurfl\Storage\Base
      * @param array $params
      */
     public function __construct($params = array())

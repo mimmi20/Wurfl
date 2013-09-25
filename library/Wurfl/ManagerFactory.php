@@ -18,6 +18,8 @@ namespace Wurfl;
  * @version    $id$
  */
 
+use \Psr\Log\LoggerInterface;
+
 /**
  * This class is responsible for creating a WURFLManager instance
  * by instantiating and wiring together all the neccessary objects
@@ -57,16 +59,22 @@ class ManagerFactory
      */
     private $cacheStorage = null;
     
+    /** @var \Psr\Log\LoggerInterface */
+    private $logger = null;
+    
     /**
-     * Create a new WURFL Manager Factory
+     * Create a new Wurfl Manager Factory
+     *
      * @param \Wurfl\Configuration\Config $wurflConfig
      * @param \Wurfl\Storage\Base $persistenceStorage
      * @param \Wurfl\Storage\Base $cacheStorage
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         Configuration\Config $wurflConfig, 
         Storage\Base $persistenceStorage = null, 
-        Storage\Base $cacheStorage = null)
+        Storage\Base $cacheStorage = null,
+        LoggerInterface $logger = null)
     {
         $this->wurflConfig = $wurflConfig;
         
@@ -83,6 +91,12 @@ class ManagerFactory
         if ($this->persistenceStorage->validSecondaryCache($this->cacheStorage)) {
             $this->persistenceStorage->setCacheStorage($this->cacheStorage);
         }
+        
+        if (!($logger instanceof LoggerInterface)) {
+            $logger = Logger\LoggerFactory::create($wurflConfig);
+        }
+        
+        $this->logger = $logger;
     }
     
     /**
@@ -103,8 +117,7 @@ class ManagerFactory
      */
     private function init()
     {
-        $logger  = null; //$this->logger($wurflConfig->logger);
-        $context = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
+        $context = new Context($this->persistenceStorage, $this->cacheStorage, $this->logger);
         
         $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
         

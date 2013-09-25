@@ -26,53 +26,101 @@ class LoggerFactory
 {
     /**
      * Create Logger for undetected devices with filename undetected_devices.log
-     * @param \Wurfl\Configuration_Config $wurflConfig
+     *
+     * @param \Wurfl\Configuration\Config $wurflConfig
+     *
      * @return \Wurfl\Logger_Interface Logger object
      */
-    public static function createUndetectedDeviceLogger($wurflConfig=null)
+    public static function createUndetectedDeviceLogger(\Wurfl\Configuration\Config $wurflConfig = null)
     {    
         if (self::isLoggingConfigured($wurflConfig)) {
-            return self::createFileLogger($wurflConfig, "undetected_devices.log");
+            return self::buildLogger($wurflConfig, 'undetected_devices.log');
         }
+        
         return new NullLogger();
     }
     
     /**
      * Creates Logger for general logging (not undetected devices)
-     * @param \Wurfl\Configuration_Config $wurflConfig
+     *
+     * @param \Wurfl\Configuration\Config $wurflConfig
+     *
      * @return \Wurfl\Logger_Interface Logger object
      */
-    public static function create($wurflConfig=NULL)
+    public static function create(\Wurfl\Configuration\Config $wurflConfig = null)
     {
         if (self::isLoggingConfigured($wurflConfig)) {
-            return self::createFileLogger($wurflConfig, "wurfl.log");
+            return self::buildLogger($wurflConfig, 'wurfl.log');
         }
+        
         return new NullLogger();                
     }
     
     /**
+     * Creates Logger for general logging (not undetected devices)
+     *
+     * @param \Wurfl\Configuration\Config $wurflConfig
+     * @param string                      $fileName
+     *
+     * @return \Wurfl\Logger_Interface Logger object
+     */
+    private static function buildLogger(\Wurfl\Configuration\Config $wurflConfig = null, $fileName = null)
+    {
+        switch (strtolower($wurflConfig->logger['type'])) {
+            case 'file':
+                $logger = self::createFileLogger($wurflConfig, $fileName);
+                break;
+            case 'null':
+            default:
+                $logger = new NullLogger();
+                break;
+        }
+        
+        return $logger;
+    }
+    
+    /**
      * Creates a new file logger
-     * @param \Wurfl\Configuration_Config $wurflConfig
+     * @param \Wurfl\Configuration\Config $wurflConfig
      * @param string $fileName
      * @return \Wurfl\Logger_FileLogger File logger
      */
-    private static function createFileLogger($wurflConfig, $fileName)
+    private static function createFileLogger(\Wurfl\Configuration\Config $wurflConfig, $fileName)
     {
-        $logFileName = self::createLogFile($wurflConfig->logDir, $fileName);
+        $logFileName = self::createLogFile($wurflConfig->logger['logDir'], $fileName);
         return new FileLogger($logFileName);
     }
     
     /**
      * Returns true if $wurflConfig specifies a Logger
-     * @param \Wurfl\Configuration_Config $wurflConfig
+     * @param \Wurfl\Configuration\Config $wurflConfig
      * @return bool
      */
-    private static function isLoggingConfigured($wurflConfig)
+    private static function isLoggingConfigured(\Wurfl\Configuration\Config $wurflConfig = null)
     {    
-        if (is_null($wurflConfig)) {
+        if (is_null($wurflConfig)
+            || is_null($wurflConfig->logger)
+            || empty($wurflConfig->logger['type'])
+        ) {
             return false;
         }
-        return !is_null ( $wurflConfig->logDir ) && is_writable ( $wurflConfig->logDir );
+        
+        if ('Null' === $wurflConfig->logger['type']) {
+            // null logger
+            return true;
+        }
+        
+        if ('File' === $wurflConfig->logger['type']
+            && !empty($wurflConfig->logger['logDir'])
+            && is_dir($wurflConfig->logger['logDir'])
+            && is_writable($wurflConfig->logger['logDir'])
+        ) {
+            // file logger and log dir is writable
+            return true;
+        }
+        
+        // every else
+        return false;
     }
     
     /**
@@ -83,7 +131,8 @@ class LoggerFactory
      */    
     private static function createLogFile($logDir, $fileName)
     {
-        $file = realpath($logDir . DIRECTORY_SEPARATOR . $fileName);
+        $file = $logDir . DIRECTORY_SEPARATOR . $fileName;
+        
         touch($file);
         return $file;
     }

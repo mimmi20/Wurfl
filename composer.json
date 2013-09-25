@@ -6,12 +6,13 @@
     "keywords": ["Wurfl","Browser","user agent","http","parser","user-agent"],
     "homepage": "https://github.com/mimmi20/Wurfl",
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "psr/log": "dev-master"
     },
     "suggest": {
-        "monolog/monolog": "dev-master",
-        "zendframework/zend-log": "2.*",
-        "zendframework/zend-cache": "2.*"
+        "monolog/monolog": "if you want to log to more than a file",
+        "zendframework/zend-cache": "to use other caches",
+        "zendframework/zend-config": "to use an other configuration"
     },
     "autoload": {
         "psr-0": {

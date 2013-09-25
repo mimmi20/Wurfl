@@ -28,7 +28,7 @@ class CapabilityService
      */
     private $_deviceRepository;
     /**
-     * @var \Wurfl\Storage_Base
+     * @var \Wurfl\Storage\Base
      */
     private $_cacheProvider;
     
@@ -36,7 +36,7 @@ class CapabilityService
      * Initialize the CapabilityService
      *
      * @param \Wurfl\DeviceRepository $deviceRepository
-     * @param \Wurfl\Storage_Base $cacheProvider
+     * @param \Wurfl\Storage\Base $cacheProvider
      */
     public function __construct($deviceRepository, $cacheProvider)
     {

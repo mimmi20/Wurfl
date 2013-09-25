@@ -73,7 +73,7 @@ class ZendConfig extends Config
         if ($configuration instanceof \Zend\Config\Config) {
             $configuration = $configuration->toArray();
         }
-        //var_dump($configuration);
+        
         $this->init($configuration);
     }
 
@@ -84,9 +84,6 @@ class ZendConfig extends Config
     {
         //
     }
-    
-    
-    
     
     private function init($configuration) {
         
@@ -102,8 +99,8 @@ class ZendConfig extends Config
             $this->setCacheConfiguration($configuration[Config::CACHE]);
         }
         
-        if (array_key_exists(Config::LOG_DIR, $configuration)) {
-            $this->setLogDirConfiguration($configuration[Config::LOG_DIR]);
+        if (array_key_exists(Config::LOGGER, $configuration)) {
+            $this->setLoggerConfiguration($configuration[Config::LOGGER]);
         }
         
         if (array_key_exists(Config::MATCH_MODE, $configuration)) {
@@ -139,12 +136,14 @@ class ZendConfig extends Config
         $this->cache = $cacheConfig;
     }
     
-    private function setLogDirConfiguration($logDir)
+    private function setLoggerConfiguration($logger)
     {
-        if (!is_writable($logDir)) {
-            throw new \InvalidArgumentException("log dir $logDir  must exist and be writable");
+        if (!empty($logger['logDir']) && !is_writable($logger['logDir'])) {
+            $this->logger['type'] = 'Null';
+            unset($logger['logDir']);
         }
-        $this->logDir = $logDir;
+        
+        $this->logger = $logger;
     }
     
     private function setMatchMode($mode)

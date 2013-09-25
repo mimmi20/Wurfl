@@ -35,7 +35,7 @@ class Factory
     /**
      * Create a configuration based on the default configuration with the differences from $configuration
      * @param array $configuration
-     * @return \Wurfl\Storage_Base Storage object, initialized with the given $configuration
+     * @return \Wurfl\Storage\Base Storage object, initialized with the given $configuration
      */
     public static function create($configuration)
     {

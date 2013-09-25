@@ -56,7 +56,7 @@ abstract class Handler implements Filter, Matcher
     protected $userAgentsWithDeviceID;
     
     /**
-     * @var \Wurfl\Storage_Base
+     * @var \Wurfl\Storage\Base
      */
     protected $persistenceProvider;
     
