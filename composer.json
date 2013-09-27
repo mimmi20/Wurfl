@@ -7,7 +7,7 @@
     "homepage": "https://github.com/mimmi20/Wurfl",
     "require": {
         "php": ">=5.3.3",
-        "psr/log": "dev-master"
+        "psr/log": "~1.0"
     },
     "suggest": {
         "monolog/monolog": "if you want to log to more than a file",
