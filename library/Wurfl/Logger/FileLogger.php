@@ -23,7 +23,7 @@ use \Psr\Log\LoggerInterface;
 
 /**
  * WURFL File Logger
- * 
+ *
  * @package    \Wurfl\Logger
  */
 class FileLogger implements LoggerInterface
@@ -32,47 +32,47 @@ class FileLogger implements LoggerInterface
      * @var string EMERGENCY Log level
      */
     const EMERGENCY = 'EMERGENCY';
-    
+
     /**
      * @var string ALERT Log level
      */
     const ALERT = 'ALERT';
-    
+
     /**
      * @var string CRITICAL Log level
      */
     const CRITICAL = 'CRITICAL';
-    
+
     /**
      * @var string ERROR Log level
      */
     const ERROR = 'ERROR';
-    
+
     /**
      * @var string WARNING Log level
      */
     const WARNING = 'WARNING';
-    
+
     /**
      * @var string NOTICE Log level
      */
     const NOTICE = 'NOTICE';
-    
+
     /**
      * @var string INFO Log level
      */
     const INFO = 'INFO';
-    
+
     /**
      * @var string DEBUG Log level
      */
     const DEBUG = 'DEBUG';
-    
+
     /**
      * @var int File pointer
      */
     private $fp;
-    
+
     /**
      * Creates a new FileLogger object
      * @param string $fileName
@@ -81,15 +81,17 @@ class FileLogger implements LoggerInterface
      */
     public function __construct($fileName)
     {
-        if(!is_writable($fileName)) {
+        if (!is_writable($fileName)) {
             throw new \InvalidArgumentException('Log file specified is not writable');
         }
-        $this->fp = @fopen($fileName, "a");
-        if(!$this->fp){
+
+        $this->fp = @fopen($fileName, 'a');
+
+        if (!$this->fp) {
             throw new Exception('Unable to open log file: ');
         }
     }
-    
+
     /**
      * Close open files
      */
@@ -97,7 +99,7 @@ class FileLogger implements LoggerInterface
     {
         fclose($this->fp);
     }
-    
+
     /**
      * System is unusable.
      *
@@ -217,7 +219,7 @@ class FileLogger implements LoggerInterface
     {
         $time        = date('F jS Y, h:iA');
         $fullMessage = '[' . $time . '] [' . $level . '] ' . $message;
-        
-        fwrite($this->fp, $fullMessage."\n");
+
+        fwrite($this->fp, $fullMessage . "\n");
     }
 }
