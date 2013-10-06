@@ -7,7 +7,7 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         colors="true"
+         colors="false"
          forceCoversAnnotation="false"
          strict="false"
          processIsolation="false">
