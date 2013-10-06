@@ -9,6 +9,10 @@
         "php": ">=5.3.3",
         "psr/log": "~1.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "ext-xdebug": "*"
+    },
     "suggest": {
         "monolog/monolog": "if you want to log to more than a file",
         "zendframework/zend-cache": "to use other caches",
