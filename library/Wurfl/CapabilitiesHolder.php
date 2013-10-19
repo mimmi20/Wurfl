@@ -24,7 +24,7 @@ namespace Wurfl;
 class CapabilitiesHolder
 {
     /**
-     * @var \Wurfl\Xml_ModelDevice
+     * @var \Wurfl\Xml\ModelDevice
      */
     private $_device;
     /**
@@ -32,14 +32,14 @@ class CapabilitiesHolder
      */
     private $_deviceRepository;
     /**
-     * @var \Wurfl\Cache_CacheProvider
+     * @var \Wurfl\Cache\CacheProvider
      */
     private $_cacheProvider;
     
     /**
-     * @param \Wurfl\Xml_ModelDevice $device
+     * @param \Wurfl\Xml\ModelDevice $device
      * @param \Wurfl\DeviceRepository $deviceRepository
-     * @param \Wurfl\Cache_CacheProvider $cacheProvider
+     * @param \Wurfl\Cache\CacheProvider $cacheProvider
      */
     public function __construct($device, $deviceRepository, $cacheProvider)
     {

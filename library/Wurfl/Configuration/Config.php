@@ -22,15 +22,16 @@ namespace Wurfl\Configuration;
  * Abstract base class for WURFL Configuration
  * @package    \Wurfl\Configuration
  * 
- * @property string $configFilePath
- * @property string $configurationFileDir
+ * @property string  $configFilePath
+ * @property string  $configurationFileDir
  * @property boolean $allowReload
- * @property string $wurflFile
- * @property array $wurflPatches
- * @property array $persistence
- * @property array $cache
- * @property string $logger
- * @property string $matchMode
+ * @property array   $capabilityFilter
+ * @property string  $wurflFile
+ * @property array   $wurflPatches
+ * @property array   $persistence
+ * @property array   $cache
+ * @property string  $logger
+ * @property string  $matchMode
  */
 abstract class  Config
 {
@@ -44,7 +45,8 @@ abstract class  Config
     const PARAMS = 'params';
     const LOGGER = 'logger';
     const ALLOW_RELOAD = 'allow-reload';
-    const DIR = 'dir';
+    const CAPABILITY_FILTER = 'capability-filter';
+	const DIR = 'dir';
     const EXPIRATION = 'expiration';
     const MATCH_MODE = 'match-mode';
     const MATCH_MODE_PERFORMANCE = 'performance';
@@ -75,6 +77,11 @@ abstract class  Config
      */
     protected $wurflPatches;
     
+	/**
+	 * @var array Array of capabilities to be loaded
+	 */
+	protected $capabilityFilter = array();
+    
     /**
      * @var array
      */
@@ -98,15 +105,21 @@ abstract class  Config
     
     /**
      * Creates a new WURFL Configuration object from $configFilePath
-     * @param string $configFilePath Complete filename of configuration file 
+     * @param string $configFilePath Complete filename of configuration file
+     *
+     * @throws \InvalidArgumentException
      */
-    public function __construct($configFilePath)
+    public function __construct($configFilePath = null)
     {
-        if(!file_exists($configFilePath)) {
+        if (!empty($configFilePath) && !file_exists($configFilePath)) {
             throw new \InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
         }
-        $this->configFilePath = $configFilePath;
-        $this->configurationFileDir = dirname($this->configFilePath);
+        
+        if (!empty($configFilePath)) {
+            $this->configFilePath       = realpath($configFilePath);
+            $this->configurationFileDir = dirname($configFilePath);
+        }
+        
         $this->initialize();
     }
 
@@ -173,21 +186,22 @@ abstract class  Config
      * Return the full path
      *
      * @param string $fileName
-     * @throws \Wurfl\WURFLException The configuration file does not exist
+     * @throws \Wurfl\Exception The configuration file does not exist
      * @return string File name including full path
      */
     protected function getFullPath($fileName)
     {
         $fileName = trim($fileName);
-        if(realpath($fileName) && !(basename($fileName) === $fileName )) {
+        if (realpath($fileName) && !(basename($fileName) === $fileName )) {
             return realpath($fileName);
         }
+        
         $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
         
-        if(file_exists($fullName)) {
+        if (file_exists($fullName)) {
             return $fullName;
         }
         
-        throw new Exception('The specified path "' . $fullName . '" does not exist');
+        throw new \Wurfl\Exception('The specified path "' . $fullName . '" does not exist');
     }
 }

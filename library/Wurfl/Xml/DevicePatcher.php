@@ -35,7 +35,7 @@ class DevicePatcher
         if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
         }
-        $groupIdCapabilitiesMap = WURFLUtils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());    
+        $groupIdCapabilitiesMap = \Wurfl\Utils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());    
         return new ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
     
     }

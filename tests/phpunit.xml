@@ -15,6 +15,9 @@
         <testsuite name="Wurfl Tests">
             <directory>./Wurfl/</directory>
         </testsuite>
+        <testsuite name="Wurfl Tests Original">
+            <directory>./wurfl-lib/</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist>

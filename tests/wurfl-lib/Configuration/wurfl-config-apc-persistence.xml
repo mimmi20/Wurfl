@@ -1,0 +1,17 @@
+<wurfl-config>
+    <wurfl>
+        <main-file>wurfl.xml</main-file>
+        <patches>
+            <patch>browsers.xml</patch>
+        </patches>
+    </wurfl>
+    <allow-reload>true</allow-reload>
+    <persistence>
+        <provider>apc</provider>
+        <params>namespace=wurflpersist</params>
+    </persistence>
+    <cache>
+        <provider>apc</provider>
+      <params>namespace=wurfl,expiration=86400</params>
+    </cache>
+</wurfl-config>

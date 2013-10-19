@@ -19,21 +19,21 @@ namespace Wurfl;
  * @version    $id$
  */
 /**
- * Handles the chain of \Wurfl\Handlers_Handler objects
+ * Handles the chain of \Wurfl\Handlers\Handler objects
  * @package    WURFL
- * @see \Wurfl\Handlers_Handler
+ * @see \Wurfl\Handlers\Handler
  */
 class UserAgentHandlerChain
 {
     /**
-     * @var array of \Wurfl\Handlers_Handler objects
+     * @var array of \Wurfl\Handlers\Handler objects
      */
     private $_userAgentHandlers = array();
     
     /**
-     * Adds a \Wurfl\Handlers_Handler to the chain
+     * Adds a \Wurfl\Handlers\Handler to the chain
      *
-     * @param \Wurfl\Handlers_Handler $handler
+     * @param \Wurfl\Handlers\Handler $handler
      * @return \Wurfl\UserAgentHandlerChain $this
      */
     public function addUserAgentHandler(Handlers\Handler $handler)
@@ -47,7 +47,7 @@ class UserAgentHandlerChain
     }
     
     /**
-     * @return array An array of all the \Wurfl\Handlers_Handler objects
+     * @return array An array of all the \Wurfl\Handlers\Handler objects
      */
     public function getHandlers()
     {
@@ -59,7 +59,7 @@ class UserAgentHandlerChain
      *
      * @param String $userAgent
      * @param String $deviceID
-     * @see \Wurfl\Handlers_Handler::filter()
+     * @see \Wurfl\Handlers\Handler::filter()
      */
     public function filter($userAgent, $deviceID)
     {
@@ -72,7 +72,7 @@ class UserAgentHandlerChain
     /**
      * Return the the device id for the request 
      *
-     * @param \Wurfl\Request_GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      * @return String deviceID
      */
     public function match(Request\GenericRequest $request)
@@ -82,8 +82,8 @@ class UserAgentHandlerChain
     }
     
     /**
-     * Save the data from each \Wurfl\Handlers_Handler
-     * @see \Wurfl\Handlers_Handler::persistData()
+     * Save the data from each \Wurfl\Handlers\Handler
+     * @see \Wurfl\Handlers\Handler::persistData()
      */
     public function persistData()
     {
@@ -102,7 +102,7 @@ class UserAgentHandlerChain
         $userAgentsWithDeviceId = array();        
         foreach ($this->_userAgentHandlers as $userAgentHandler) {
             /**
-             * @see \Wurfl\Handlers_Handler::getUserAgentsWithDeviceId()
+             * @see \Wurfl\Handlers\Handler::getUserAgentsWithDeviceId()
              */
             $current = $userAgentHandler->getUserAgentsWithDeviceId();
             if(!empty($current)) {

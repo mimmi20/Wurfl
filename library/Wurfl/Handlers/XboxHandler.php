@@ -31,8 +31,8 @@ use \Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class XboxHandler extends Handler {
-    
+class XboxHandler extends Handler
+{
     protected $prefix = "XBOX";
     
     public static $constantIDs = array(

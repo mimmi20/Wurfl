@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wurfl_patch>
+    <devices>
+        <!-- Web browsers -->
+        <device user_agent="Mozilla/4.0 FOO" fall_back="generic" id="generic_web_browser_new">
+            <group id="display">
+                <capability name="columns" value="7"/>
+                <capability name="new_capability_name" value="3"/>
+            </group>
+         </device>
+     </devices>
+</wurfl_patch>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wurfl_patch>
+	<devices>
+		<device id="nokia_7230_ver_patch"
+			user_agent="Nokia7230/5.0 (p) Profile/MIDP-2.1 Configuration/CLDC-1.1Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+"
+			fall_back="nokia_generic" actual_device_root="true">
+			<group id="product_info">
+				<capability name="brand_name" value="Nokia" />
+				<capability name="model_name" value="7230" />
+			</group>
+		</device>
+
+		<device id="nokia_c3-00_verpatch"
+			user_agent="NokiaC3-00/5.0 (p) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+"
+			fall_back="nokia_generic_series60_dp50" actual_device_root="true">
+			<group id="product_info">
+				<capability name="brand_name" value="Nokia" />
+				<capability name="model_name" value="C3-00" />
+			</group>
+		</device>
+	
+		<device id="nokia_c3-00_verpatch_1"
+			user_agent="NokiaC3-00/5.0 (p)(p) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+"
+			fall_back="nokia_generic_series60_dp50" actual_device_root="true">
+			<group id="product_info">
+				<capability name="brand_name" value="Nokia" />
+				<capability name="model_name" value="C3-00" />
+			</group>
+		</device>
+
+	</devices>
+</wurfl_patch>

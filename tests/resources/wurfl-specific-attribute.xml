@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wurfl>
+	<devices>
+		<device fall_back="root" id="foo" user_agent="" specific="true"/>
+		<device fall_back="root" id="bar" user_agent="" />
+	</devices>
+</wurfl>

@@ -1,0 +1,221 @@
+ScientiaMobile WURFL Database API (formerly Tera-WURFL) change log:
+
+[2013.01.11] ScientiaMobile Database API 1.4.4.0
+- Improved detection of Android 4.1+
+- Improved detection of Windows RT
+- Simplified detection of Firefox desktop
+- Improved detection of Xbox console
+- Improved detection of Opera Mobi and Opera Tablet
+
+[2012.11.07] ScientiaMobile Database API 1.4.3.0
+- Improved detection of Kindle Fire
+- Improved detection of Playstation Vita
+- Improved detection of Windows Phone
+- Improved detection of Windows RT
+- Improved detection of Safari desktop browser
+- Added Device-Stock-UA support
+- Improved detection of Maemo devices
+- Improved detection of SmartTVs
+- Improved detection of XBOX 360
+- Improved detection of Epiphany browser
+- Updated WURFL database
+
+[2012.09.04] ScientiaMobile Database API 1.4.2.0
+- Improved detection of Chrome Mobile
+- Improved detection of Smart TVs
+
+[2012.07.30] ScientiaMobile Database API 1.4.1.1
+- Bugfix: Some desktop UAs with "toolbar" are detected as robots in HA mode
+
+[2012.07.19] ScientiaMobile Database API 1.4.1
+- Improved installation page
+- Improved matching of MSIE
+- Bugfix: Chrome on Android matches desktop browser
+- Bugfix: API throws exception for specially-crafted UAs
+- Updated WURFL data
+
+[2012.03.31] ScientiaMobile Database API 1.4.0
+** As of this release, the WURFL web_browsers_patch is no longer used **
+- Complete overhaul of all matchers (Android, Apple, OperaMini, etc)
+- Added new matchers (Windows Phone, Nokia Ovi Browser, etc)
+- Added dedicated SmartTV detection logic
+- Improved all normalizers (serial number, locale, UCWEB, etc)
+- Added runtime user agent normalization
+- Improved SimpleDesktop/High-Performance mode logic
+- Rewrote matcher chain logic to use UserAgentMatcher::canHandle() methods
+- Improved HTTP Header modeling in the API
+- Added API Introspector for ScientiaMobile remote support
+- Now 100% compatible with HipHop for PHP when used with the PDO connector
+- Bugfix: API issues warning for user agents longer than 255 chars
+- Bugfix: API may throw exception if user agent is a hexidecimal number
+- Buxfix: Chrome Mobile Beta is detected as a web browser
+
+[2012.01.14] ScientiaMobile Database API 1.3.2 / Tera-WURFL 2.1.6
+** This is the first release to carry the new versioning, v1.3.2 **
+- Improved error and exception handling
+- Improved auto-download code in cmd_line_admin.php
+
+[2012.01.13] ScientiaMobile Database API 1.3.1 / Tera-WURFL 2.1.5
+- Added PDO MySQL database connector
+- Bugfix: Nintendo Wii is not matched properly
+- Bugfix: Webservice throws exception when User-Agent is not present
+- Bugfix: Fallback stored procedure race condition on inexistent fallback device
+
+[2011.06.06] ScientiaMobile Database API 1.3.0 / Tera-WURFL 2.1.5
+** Tera-WURFL is now the ScientiaMobile Database API v1.3.0***
+- Improved CLI Admin (admin/cmd_line_admin.php)
+- Improved Error Handling
+- Added cURL support to Remote Client
+- Improved installation script
+- Fixed XML Loader Segfault bug with xdebug
+- Fixed IE9/10 bug
+- Updated matchers: SimpleDesktop, Android, BlackBerry, Opera, Apple
+
+[2011.02.21] Stable 2.1.4
+- Switched to better XML Parser (old parser, SimpleXML will still be used if XMLReader is missing)
+- Improved matching for Apple, Android, Nokia, BlackBerry / RIM, DoCoMo, KDDI, LG and OperaMini
+- Allowed preloading a custom TeraWurflConfig so the default is ignored
+- Updated source documentation
+- Updated instructions
+- Greatly improved cmd_line_admin.php
+- Converted line endings to \n
+- Various bugfixes
+- Improved Remote Client
+- Added builtin regression testing (thanks digitalronin!). Tip: from the shell, go to the test/ dir and type "rake sanity" to make sure your patches are compatible with the loaded WURFL
+- Moved default config to "TeraWurflConfig.php.example" so your config isn't overwritten
+- Fixed MSSQL DB Connector bug
+
+[2010.09.18] Stable 2.1.3
+- Native support for MongoDB
+- Better support and performance for Microsoft SQL Server
+- Better webservice performance using JSON
+- Better Python client with JSON support
+- Improved performance in MySQL5
+- Device Images are available via the PHP webservice client
+- Loaded WURFL version is now tracked in the DB
+- MySQL connector allows for alternate port
+- Better overall detection
+
+[2010.05.14] Stable 2.1.2
+- Version 2.1.2 is the first 2.x version to support device images - check out the Device Image page for usage details.
+- Improved detection of iPhone, iPod, iPad, DoCoMo devices and other international devices
+- Webservice now includes an error log and access log
+- Webservice includes support for JSON and uses it by default with the TeraWurflRemoteClient
+- Fixed an issue with the PHP Remote Client that prevented the proper detection of some user agents
+- Fixed various minor bugs and inconsistencies
+
+[2010.03.03] Stable 2.1.1
+- Added support for Firefox Mobile
+- Increased speed and accuracy of Opera web browser detection
+- Added full Remote Webservice and remote clients for PHP, JavaScript, Python, Perl and ActionScript
+- Added User Agent problem submission form to Web Administration Page
+
+[2010.02.10] Stable 2.1.0
+- Performed deep analysis of the Tera-WURFL core and UserAgentMatchers and dramatically improved both performance and accuracy
+- Introduced SimpleDesktop Matching Engine which increases detection speed for desktop browsers by 10x from version 2.0.0, while reducing the cache size by caching all desktop user agents in one cache entry
+- Introduced Capability Filtering which allows you to increase performance and drastically cut the size of your database. Capability Filtering lets you decide which capabilities you want to use from the WURFL file and ignores the rest. For example, if you only want to use Tera-WURFL to redirect mobile visitors, you only need to use the is_wireless_device capability, so you can set CAPABILITY_FILTER = array("is_wireless_device"); and only that capability will be stored in the database, instead of the 500+ capabilities that normally exist
+- Fixed bug that was preventing Firefox from being detected properly in some situations
+- Fixed various other minor bugs and misspellings
+- Optimized all UserAgentMatchers
+- Optimized Tera-WURFL core and UserAgentFactory
+
+[2009.11.13] Stable 2.0.0
+- Cleaned up unecessary code
+- Created MySQL4 Database Connector
+- Improved MySQL5 Database Connector (40% faster initial detection)
+- NOTE: you need the CREATE PROCEDURE and EXECUTE permissions as of this release
+- Tested many different methods to increase speed of initial detection
+- Fixed numerous typos
+
+[2009.11.01] Pre-Release 2.0.0 RC5
+- Spent a week sifting through 30,000 unique user agents over and over again while making adjustments to the UserAgentMatchers. The device detection is now extremely accurate. Not only will it detect mobile devices accurately, it is also very good at differentiating between wireless and non wireless devices. Here are the major changes:
+- User Agent Matchers have been very finely tuned, re-ordered, removed and added to improve both performance and accuracy.
+- PCRE Regular Expression Matching has been introduced to allow for greater flexibility and accuracy in UserAgentMatchers and the UserAgentFactory.
+- Online WURFL Updating is back thanks to the ZipArchive package. This package is included with PHP >= 5.2.0. For previous versions of PHP it is available from PECL. As a last resort, Tera-WURFL will attempt to use gunzip to extract the WURFL file from the downloaded archive.
+- User Agent Matcher History information is now available via TeraWurfl->capabilities['tera_wurfl']['matcher_history'] - this allows you to see the logic flow that went behind deciding which device this is. Here's an example:
+- User Agent: Alcatel-OT-280/1.0 model-orange ObigoInternetBrowser/Q03C Matcher History: AlcatelUserAgentMatcher(exact), AlcatelUserAgentMatcher(conclusive), AlcatelUserAgentMatcher(recovery), CatchAllUserAgentMatcher(recovery) This shows that the User Agent was assigned the Alcatel Matcher, but after looking for an exact match, a conclusive match and a recovery match, no match could be found - therefore the CatchAll Matcher was used to make a last-resort desicion.
+- Performance VS. WURFL PHP API. I ran 23902 user agents through both Tera-WURFL and the new WURFL PHP API and here are the results (caching enabled on both, same wurfl.xml used):
+- Tera-WURFL Total Time: 12.081017971039 sec Devices Processed: 23902 Total Queries: 23912
+- WURFL PHP API Total Time: 217.57795381546 sec Devices Processed: 23902 Total Queries: N/A
+- As you can see, Tera-WURFL is still the best choice for accuracy and performance. Tera-WURFL may be even faster than these number indicate since the WURFL PHP API was benefiting greatly from my Samsung SSD.
+- Hardware used for testing: Dell Studio XPS Laptop, Core 2 Duo 2.8GHz, 4GB DDR2, 256GB Samsung SSD, Microsoft Windows 7 Ultimate x64, WampServer 2.0 (Apache 2.2.11, PHP 5.3.0, MySQL 5.1.36)
+
+[2009.10.26] Pre-Release 2.0.0 RC4
+- Rewrote some of the UserAgentMatchers and deleted others to bring Tera-WURFL on par with the Java WURFL API. With the introduction of desktop browser UserAgentMatchers, we no longer need to use the large web patch; instead, you can just use the 8KB one from wurfl.sourceforge.net (included). Also, I fixed some typos and bugs here and there. NOTE: if you are upgrading from version 2.0.0 RC1-RC3 you should delete all your database tables before you update. You can leave the terawurflcache table if you want to retain your cache. Although it will still technically work even if you don't delete the tables, you will be orphaning some unecessary tables in your database.
+
+[2009.10.20] Pre-Release 2.0.0 RC3
+- Complete code-rewrite from the ground up. The 2.x version of Tera-WURFL is loosely based on a pre-release of the Java WURFL Evolution Library, but the API is taken from Tera-WURFL 1.5.2. The following is a list of features found in Tera-WURFL 2.0:
+- User Agent Matchers have been created for each of the major manufacturers. These allow for specific matching methods to be applied to the user agent like string searching, RIS (Reduction in String) and LD (Levenshtein Distance).
+- Multiple patch files are now supported. Tera-WURFL ships with the current wurfl.xml, web_browsers_patch.xml and custom_web_patch.xml. Patch files can be added to TeraWurflConfig.php by separating them with semicolons in the TeraWurflConfig::PATCH_FILE directive. Patch files are loaded in order from left to right on top of the WURFL file, so if you want to override every other patch file, specify it last.
+- The custom_web_patch.xml file can be edited from the Web Administration page, and allows you to easily add non-mobile user agents to the patch file. The devices with these user agents will be detected as generic_web_browser (non-mobile).
+- Persistent Caching means that your cached devices stay cached. When you update the WURFL file or your patches, your device cache is also updated via the new database.
+- Cache Browser allows you to see what devices are hitting your site and what their capabilities were detected as.
+- Installation Script is better than 1.5.2. Once you download Tera-WURFL and extract it, edit TeraWurflConfig.php then go to /admin/install.php and follow the directions to finish installation.
+- PHP short_open_tags are no longer required to run Tera-WURFL. PHP has this feature disabled by default now.
+- Conclusive vs. Inconclusive Matching. If a device is matched with the UserAgentMatcher's primary matching method it is considered a conclusive match, if it is detected via a recovery matcher or by the CatchAllMatcher it is an inconclusive match. This information is available via the tera_wurfl capability group.
+- tera_wurfl Capability Group. The TeraWurfl->Capabilities array now contains a group called "tera_wurfl". This group contains the following Tera-WURFL related information:
+  - num_queries - the number of database queries required to lookup the device.
+  - actual_root_device - the WURFL ID of the actual device (not subrevision or generic), this can be null.
+  - match_type - either conclusive or inconclusive.
+  - matcher - the name of the UserAgentMatcher that detected the device.
+  - match - whether or not there was an actual match. If there was no match, Tera-WURFL guessed which generic device is most similar to the device.
+  - lookup_time - the time in seconds that it took to detect the device.
+  - fall_back_tree - the complete fallback tree that built the capabilities of the device. This is a list of all the WURFL IDs from the detected device down to the base generic device.
+
+[2007.07.27] Stable 1.5.2
+- Introduced a smart installation script to help you get Tera-WURFL up and running fast!
+- getDeviceCapabilitiesFromAgent() function now returns boolean true (match) or false (no match).
+- Introduced "MATCH_TO_UA_PREFIX" if true, matching will stop if the user agent prefix cannot be matched. The user agent prefix is everything from the beginning of the UA to the first '/', like "SonyEricssonK700i". If this is not matched in the WURFL, there searching will stop.
+- Introduced "RETURN_GENERIC" if true, the user agent and accept headers will be used to determine if this device iswireless or not and the capabilities array will be populated with appropriate generic data. This IS considered a match. Set this to false to stop getting generic matches.
+- Introduced webservice.php which can be used to query the Tera-WURFL database via an HTTP request. The results are returned in XML. This is a BETA feature, but it is very safe. There are details and example in the head of the file.
+- Re-wrote the README file - now it has very clear instructions on usage and installation.
+- Now Tera-WURFL includes the web browsers patch by default so you can tell Mobile and Non-Mobile devices apart.
+- Cleaned up some minor logging issues.
+- Completely re-wrote the UA matching system, scrapping a lot of unnecessary code that was wasting time!
+
+[2007.05.09] Stable 1.5.1
+- Fixed a bug that prevented the updating system from working correctly over the web. 
+- If you have version 1.5.0 you can delete line 266 from the file tera_wurfl_parser.php and it will function the same as 1.5.1.
+
+[2007.04.27] Stable 1.5.0
+- Introduced a MySQL caching system - many thanks to Andrea Trasatti for his help!
+- Fixed a PHP5 typecasting error while loading data in tera_wurfl_parser.php (thanks Mait Vilbiks and everyone else!)
+- Fixed a PHP5 syntax error in the log_error() function (thanks Michal Albrecht!)
+- Introduced a lite version that does not include the 800+ device images or the wurfl.xml file. This is only a 32k download and one it's installed you can update the wurfl.xml from the admin page.
+- After much testing and some decent market penetration I have deemed this class "Stable".
+
+[2006.12.26] Beta 1.4.4
+- Completely rewrote the error logging system and verified it's operation after a bug was discovered (thanks Neil!)
+- Added many features to the web administration console - seriously - check out the online demo!
+- Changed default DATADIR to the included 'data' directory
+- Completely rewrote the README file to include detailed installation instructions and other useful info
+- Optimized the clean installation process - now Tera-WURFL has a brain!
+- Included the current stable release of the wurfl.xml file so you don't need to download it
+- Included database statistics, log file monitoring and global configuration in web interface
+- Changed default log level to LOG_WARNING instead of LOG_ERR
+- Described in great detail the purpose of the different database tables
+
+[2006.12.26] Beta 1.4.3
+- Updated the web administration interface and added some helpful links.
+- Fixed a few relative path issues when including the class from a different directory.
+- Fixed a couple problems with my naming convention and browser_is_wap detection (thanks MOLABIB!)
+
+[2006.11.16] Beta 1.4.2
+- Changed the web update URL for the wurfl.xml file.
+- Made the file locations absolute instead of relative so you can run the class from a different directory
+- Fixed an issue with the searching algorithm - thanks Christian Aune Thomassen! (WapTheWeb)
+
+[2006.10.27] Beta 1.4.1
+- Fixed issues with incorrectly identified device root resulting in the wrong device image being used.
+
+[2006.10.27] Beta 1.4.0
+- Added support for the Device Thumbnails by Andr� van den Heever and Luca Passani.
+
+[2006.10.26] Beta 1.3.0
+- Added patching support to allow users to make changes to their WURFL database without editing the main WURFL.
+- Added the ability to enable/disable the patch without rebuilding the database.
+- Added a simple web administration utility to manage the WURFL and patch file.
+- Added the ability to update the WURFL database directly from wurfl.sourceforge.net
+
+[2006.10.26] Beta 1.2
+- Basic implementation of the library - very limited documentation included in comments.

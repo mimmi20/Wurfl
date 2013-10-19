@@ -34,6 +34,19 @@ namespace Wurfl\Configuration;
  *   ),
  *   'match-mode' => 'high-accuracy',
  *   'allow-reload' => true,
+ *   'capability-filter' => array(
+ *     'is_wireless_device',
+ *     'preferred_markup',
+ *     'xhtml_support_level',
+ *     'xhtmlmp_preferred_mime_type',
+ *     'device_os',
+ *     'device_os_version',
+ *     'is_tablet',
+ *     'mobile_browser_version',
+ *     'pointing_method',
+ *     'mobile_browser',
+ *     'resolution_width',
+ *   ),
  *   'persistence' => array(
  *     'provider' => "file",
  *     'params' => array(
@@ -70,10 +83,16 @@ class ArrayConfig extends Config
      */
     protected function initialize()
     {
-        include parent::getConfigFilePath();
+        $configFile = parent::getConfigFilePath();
+        
+        if (empty($configFile)) {
+            throw new \InvalidArgumentException('Config file must be defined');
+        }
+        
+        include $configFile;
         
         if (!isset($configuration) || !is_array($configuration)) {
-            throw new Exception('Configuration array must be defined in the configuraiton file');
+            throw new \Wurfl\Exception('Configuration array must be defined in the configuraiton file');
         }
         
         $this->init($configuration);
@@ -93,6 +112,10 @@ class ArrayConfig extends Config
         if (array_key_exists(Config::CACHE, $configuration)) {
             $this->setCacheConfiguration($configuration [Config::CACHE]);
         }
+		
+		if (array_key_exists(Config::CAPABILITY_FILTER, $configuration)) {
+			$this->capabilityFilter = $configuration[Config::CAPABILITY_FILTER];
+		}
         
         if (array_key_exists(Config::LOGGER, $configuration)) {
             $this->setLoggerConfiguration($configuration[Config::LOGGER]);

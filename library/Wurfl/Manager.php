@@ -118,8 +118,16 @@ class Manager
      */
     private function getDeviceForRequest(Request\GenericRequest $request)
     {
+        Handlers\Utils::reset();
+        /*
+		if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
+			// This device has been identified as a web browser programatically, so no call to WURFL is necessary
+			return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER, $request);
+		}
+        /**/
         $deviceId = $this->deviceIdForRequest($request);
-        return $this->getWrappedDevice($deviceId, $request->matchInfo);
+        
+        return $this->getWrappedDevice($deviceId, $request);
     
     }
     
@@ -146,11 +154,12 @@ class Manager
      * Return a device for the given device id
      *
      * @param string $deviceId
-     * @return \Wurfl\Xml\ModelDevice
+     * @param Request\GenericRequest $request
+	 * @return \Wurfl\Xml\ModelDevice
      */
-    public function getDevice($deviceId)
+    public function getDevice($deviceId, Request\GenericRequest $request = null)
     {
-        return $this->getWrappedDevice($deviceId);
+        return $this->getWrappedDevice($deviceId, $request);
     }
     
     /**
@@ -160,7 +169,7 @@ class Manager
      */
     public function getListOfGroups()
     {
-        return $this->_wurflService->getListOfGroups();
+        return $this->_deviceRepository->getListOfGroups();
     }
     
     /**
@@ -227,18 +236,20 @@ class Manager
      * Device ID and returns the \Wurfl\CustomDevice with all capabilities.
      *
      * @param string $deviceId
-     * @param string $matchInfo
-     *
+     * @param Request\GenericRequest $request
+	 *
      * @return \Wurfl\CustomDevice
      */
-    private function getWrappedDevice($deviceId, $matchInfo = null)
+    private function getWrappedDevice($deviceId, Request\GenericRequest $request = null)
     {
-        $device = $this->_cacheProvider->load('DEV_'.$deviceId);
+        $device = $this->_cacheProvider->load('DEV_' . $deviceId);
+        
         if (empty($device)) {
             $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceId);
-            $device = new CustomDevice($modelDevices, $matchInfo);
-            $this->_cacheProvider->save('DEV_'.$deviceId, $device);
+            $device       = new CustomDevice($modelDevices, $request);
+            $this->_cacheProvider->save('DEV_' . $deviceId, $device);
         }
+        
         return $device;
     }
 }

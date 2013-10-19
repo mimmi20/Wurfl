@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wurfl_patch>
+    <devices>
+        <!-- Web browsers -->
+        <device user_agent="Mozilla/4.0" fall_back="generic" id="generic_web_browser">
+            <group id="display">
+                <capability name="columns" value="77"/>
+                <capability name="new_capability_name" value="30"/>
+            </group>
+            <group id="new_group_id">
+                <capability name="wav" value="true"/>
+                <capability name="au" value="true"/>
+                <capability name="mp3" value="true"/>
+                <capability name="midi_monophonic" value="true"/>
+
+                <capability name="midi_polyphonic" value="true"/>
+            </group>
+            </device>
+     </devices>
+</wurfl_patch>

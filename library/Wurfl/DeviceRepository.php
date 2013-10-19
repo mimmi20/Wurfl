@@ -28,7 +28,7 @@ interface DeviceRepository
      *  - version
      *  - lastUpdated
      *  - officialURL
-     *  @return \Wurfl\Xml_Info WURFL Version info
+     *  @return \Wurfl\Xml\Info WURFL Version info
      */
     public function getWurflInfo();
     

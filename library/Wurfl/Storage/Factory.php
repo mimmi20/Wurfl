@@ -43,7 +43,7 @@ class Factory
                 array_merge(self::$defaultConfiguration, $configuration)
                 : self::$defaultConfiguration;
         $class = self::className($currentConfiguration);
-        return new $class($currentConfiguration["params"]);
+        return new $class($currentConfiguration['params']);
     }
     
     /**
@@ -53,7 +53,7 @@ class Factory
      */
     private static function className($configuration)
     {
-        $provider = $configuration["provider"];
-        return "\\Wurfl\\Storage\\" . ucfirst($provider);
+        $provider = $configuration['provider'];
+        return '\\Wurfl\\Storage\\' . ('null' === $provider ? 'NullStorage' : ucfirst($provider));
     }
 }

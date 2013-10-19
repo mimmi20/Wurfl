@@ -59,19 +59,19 @@ class Mysql extends Base
         /* Initializes link to MySql */
         $this->link = mysql_connect("$this->host:$this->port",$this->user,$this->pass);
         if (mysql_error($this->link)) {
-            throw new Exception("Couldn't link to $this->host (".mysql_error($this->link).")");
+            throw new Exception("Couldn't link to `$this->host` (".mysql_error($this->link).")");
         }
 
         /* Initializes link to database */
-        $success=mysql_selectdb($this->db,$this->link);
+        $success=mysql_select_db($this->db,$this->link);
         if (!$success) {
-            throw new Exception("Couldn't change to database $this->db (".mysql_error($this->link).")");
+            throw new Exception("Couldn't change to database `$this->db` (".mysql_error($this->link).")");
         }
 
         /* Is Table there? */
         $test = mysql_query("SHOW TABLES FROM $this->db LIKE '$this->table'",$this->link);
         if (!is_resource($test)) {
-            throw new Exception("Couldn't show tables from database $this->db (".mysql_error($this->link).")");
+            throw new Exception("Couldn't show tables from database `$this->db` (".mysql_error($this->link).")");
         }
 
         // create table if it's not there.
@@ -109,8 +109,10 @@ class Mysql extends Base
         return $success;
     }
 
-    public function load($objectId) {
-        $objectId = $this->encode("", $objectId);
+    public function load($objectId)
+    {
+        $return   = null;
+        $objectId = $this->encode('', $objectId);
         $objectId = mysql_real_escape_string($objectId);
 
         $sql="select `$this->valuecolumn` from `$this->db`.`$this->table` where `$this->keycolumn`='$objectId'";
@@ -120,16 +122,23 @@ class Mysql extends Base
         }
 
         $row = mysql_fetch_assoc($result);
+        
         if (is_array($row)) {
-            $return = unserialize($row['value']);
-        } else {
-            $return=false;
+			$return = @unserialize($row['value']);
+			if ($return === false) {
+				$return = null;
+			}
+		}
+        
+        if (is_resource($result)) {
+            mysql_free_result($result);
         }
-        if (is_resource($result)) mysql_free_result($result);
+        
         return $return;
     }
 
-    public function clear() {
+    public function clear()
+    {
         $sql = "truncate table `$this->db`.`$this->table`";
         $success=mysql_query($sql,$this->link);
         if (mysql_error($this->link)) {

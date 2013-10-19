@@ -47,6 +47,17 @@ class InMemoryConfig extends Config
         $this->wurflPatches[] = $wurflPatch;
         return $this;
     }
+	
+	/**
+	 * @param array $capabilityFilter
+	 * @return \Wurfl\Configuration\InMemoryConfig $this
+	 */
+	public function capabilityFilter(array $capabilityFilter)
+    {
+		$this->capabilityFilter = $capabilityFilter;
+		return $this;
+	}
+    
     /**
      * Set persistence provider
      * @param string $provider
@@ -58,6 +69,7 @@ class InMemoryConfig extends Config
         $this->persistence = array('provider' => $provider, 'params' => $params);
         return $this;                
     }
+    
     /**
      * Set Cache provider
      * @param string $provider
@@ -69,6 +81,7 @@ class InMemoryConfig extends Config
         $this->cache = array('provider' => $provider, 'params' => $params);
         return $this;
     }
+    
     /**
      * Set logging directory
      * @param string $logger
@@ -81,6 +94,7 @@ class InMemoryConfig extends Config
         $this->logger = array('type' => $logger, 'logDir' => $logDir);
         return $this;
     }
+    
     /**
      * Specifies whether reloading is allowed
      * @param bool $reload

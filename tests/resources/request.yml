@@ -1,0 +1,4 @@
+# This file represents an association of the web request headers
+#	
+# HTTP_USER_AGENT:HTTP_X_DEVICE_USER_AGENT:X-Skyfire-Version:X-BlueCoat-Via:EXPECTED_USER_AGENT
+:FOO:::FOO

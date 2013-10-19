@@ -31,12 +31,21 @@ class WindowsPhone implements NormalizerInterface
 {
     public function normalize($userAgent)
     {
-        $model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
-        $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
-        if ($model !== null && $version !== null) {
-            $prefix = 'WP'.$version.' '.$model.Constants::RIS_DELIMITER;
-            return $prefix.$userAgent;
+        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client')) {
+			$model   = WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
+			$version = WindowsPhoneHandler::getWindowsPhoneAdClientVersion($userAgent);
+		} else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NativeHost')) {
+			return $userAgent;
+		} else {
+            $model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
+            $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
         }
+        
+        if ($model !== null && $version !== null) {
+            $prefix = 'WP' . $version . ' ' . $model . Constants::RIS_DELIMITER;
+            return $prefix . $userAgent;
+        }
+        
         return $userAgent;
     }
 }

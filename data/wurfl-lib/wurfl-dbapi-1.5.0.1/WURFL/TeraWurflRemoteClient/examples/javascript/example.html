@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tera-WURFL Remote Client</title>
+<style type="text/css">
+.error {
+	color: #D00;
+	font-weight: bold;
+	padding-left: 10px;
+}
+</style>
+<script src="TeraWurflRemoteClient.js"></script>
+<script type="text/javascript"> 
+/**
+ * Tera-WURFL Remote Client for JavaScript Example
+ */
+
+// The URL to your Tera-WURFL installation's webservice.php
+var webserviceURL = 'http://localhost/Tera-Wurfl/webservice.php';
+
+function callTeraWurfl(){
+	document.getElementById('result').innerHTML = "Loading...";
+	document.getElementById('device_model').innerHTML = "&nbsp";
+
+	// The user agent you are looking for.  In Javascript this is 'navigator.userAgent' for the client
+	var userAgent = document.getElementById('user_agent').value;
+	// The capabilities you are looking for, in an array, example: search = ['product_info','tera_wurfl','playback'];
+	var search = document.getElementById('capabilities').value.split('|');
+	// Create new TeraWurfl Object
+	wurflObj = new TeraWurflRemoteClient(webserviceURL);
+	// Define callback option
+	wurflObj.onUpdate = handleResults;
+	// Call Tera-WURFL via the webservice
+	wurflObj.getCapabilitiesFromAgent(userAgent,search);
+	return false;
+}
+
+// This is the callback function that I've specified above; yours needs to receive 2 arrays like this one:
+function handleResults(capabilities,errors){
+	// Clear results
+	document.getElementById('result').innerHTML = "&nbsp;";
+	// Check for Errors
+	if(errors.length > 0){
+		errorstring = '<div class="error">The following errors were encountered:<br/>';
+		for (var i=0; i<errors.length;i++) {
+			// Display errors
+			errorstring += errors[i].name + ': ' +  errors[i].description + '<br/>';
+		}
+		errorstring += '</div>';
+		document.getElementById('result').innerHTML += errorstring;
+	}
+	// Display model name
+	document.getElementById('device_model').innerHTML += "<h3>"+capabilities['brand_name']+" "+capabilities['model_name']+" "+capabilities['marketing_name']+"</h3>";
+	// Display all capabilities.  Access individual capabilities like this: capabilities.is_wireless_device **OR** capabilities['is_wireless_device']
+	for (var name in capabilities) {
+		if (name != "length") {
+			document.getElementById('result').innerHTML += "<br/>"+name+": "+capabilities[name];
+		}
+	}
+}
+ 
+</script>
+ 
+</head>
+<body onload="callTeraWurfl();">
+<h2>Tera-WURFL Remote Client (Javascript)</h2>
+<p>Paste a user agent to see its capabilities: </p>
+<form>
+<p>
+  <label>User Agent:
+    <input name="user_agent" type="text" id="user_agent" value="Mozilla/5.0 (Linux; U; Android 1.5; en-us; T-Mobile G1 Build/CRC1) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1" size="150" />
+  </label>
+</p>
+<p>
+  <label>Capabilities:
+    <input name="capabilities" type="text" id="capabilities" size="150" value="product_info|tera_wurfl|playback" />
+  </label>
+</p>
+<p>
+<input type="submit" name="detect_button" id="detect_button" value="Detect User Agent" onclick="callTeraWurfl();"/>
+</p>
+<center><div id="device_model">&nbsp;</div></center>
+<div id="result" name="result" style="font-family:'Courier New', Courier, monospace">Loading...</div>
+</form>
+</body>
+</html>
+

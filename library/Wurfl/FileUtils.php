@@ -21,8 +21,8 @@ namespace Wurfl;
  * WURFL File Utilities
  * @package    WURFL
  */
-class FileUtils {
-    
+class FileUtils
+{
     /**
      * Create a directory structure recursiveley
      * @param string $path
@@ -72,10 +72,22 @@ class FileUtils {
      */
     public static function read($file)
     {
+        if (!is_readable($file)) {
+            return null;
+        }
+
         $data = @file_get_contents($file);
-        if ($data === false) return null;
+
+        if ($data === false) {
+            return null;
+        }
+
         $value = @unserialize($data);
-        if ($value === false) return null;
+
+        if ($value === false) {
+            return null;
+        }
+
         return $value;
     }
     
@@ -114,9 +126,11 @@ class FileUtils {
     public static function getTempDir()
     {
         $temp_dir = ini_get('upload_tmp_dir');
+
         if (!$temp_dir) {
             $temp_dir = function_exists('sys_get_temp_dir')? sys_get_temp_dir(): '/tmp';
         }
+
         return realpath($temp_dir);
     }
     

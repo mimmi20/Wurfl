@@ -36,7 +36,8 @@ class XmlConfig extends Config
         $this->wurflFile = $this->wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
         $this->wurflPatches = $this->wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
         $this->allowReload = $this->allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
-        $this->persistence = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
+        $this->capabilityFilter = $this->capabilityFilter($xmlConfig->xpath('/wurfl-config/capability-filter/capability'));
+		$this->persistence = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
         $this->cache = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
         $this->logger = $this->logger($xmlConfig->xpath('/wurfl-config/logger'));
         $this->matchMode = $this->matchMode($xmlConfig->xpath('/wurfl-config/match-mode'));
@@ -67,6 +68,24 @@ class XmlConfig extends Config
         }
         return $patches;
     }
+	
+	/**
+	 * Returns an array of WURFL Capabilities
+	 * @param array $capabilityFilter array of SimpleXMLElement objects
+	 * @return array WURFL Capabilities
+	 */
+	private function capabilityFilter($capabilityFilter)
+    {
+		$filter = array();
+        
+		if ($capabilityFilter) {
+			foreach ($capabilityFilter as $filterElement) {
+				$filter[] = (string)$filterElement;
+			}
+		}
+        
+		return $filter;
+	}
 
     /**
      * Returns true if reload is allowed, according to $allowReloadElement

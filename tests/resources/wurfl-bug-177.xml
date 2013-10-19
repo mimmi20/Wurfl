@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wurfl>
+	<version>
+		<ver>www.wurflpro.com - 2010-06-03 11:55:51</ver>
+		<last_updated>Thu Jun 03 12:01:14 -0500 2010</last_updated>
+		<official_url>http://wurfl.sourceforge.net/</official_url>
+		<maintainers>
+			<maintainer name="Luca Passani" email="luca.passani at gmail point com"
+				home_page="http://www.wurfl.com" />
+		</maintainers>
+		<authors>
+			<author name="Luca Passani" email="luca.passani at gmail point com"
+				home_page="http://www.wurfl.com" />
+		</authors>
+	</version>
+	<devices>
+		<device fall_back="root" id="generic" user_agent="" />
+	</devices>
+</wurfl>

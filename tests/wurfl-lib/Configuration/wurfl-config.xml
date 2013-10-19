@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wurfl-config>
+	<wurfl>
+		<main-file>wurfl.xml</main-file>
+		<patches>
+			<patch>browsers.xml</patch>
+		</patches>
+	</wurfl>
+	<!--
+		<persistence> <provider>memcache</provider> </persistence>
+	-->
+    <allow-reload>true</allow-reload>    
+	<persistence>
+		<provider>file</provider>
+		<params>dir=cache</params>
+	</persistence>
+
+	<cache>
+		<provider>file</provider>
+		<params>dir=cache, expiration=36000</params>
+	</cache>
+</wurfl-config>

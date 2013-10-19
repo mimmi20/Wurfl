@@ -27,10 +27,18 @@ use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
  */
 class SerialNumbers implements NormalizerInterface
 {
-    const SERIAL_NUMBERS_PATTERN = "/(\[(TF|NT|ST)[\d|X]+\])|(\/SN[\d|X]+)/";
-
     public function normalize($userAgent)
     {
-        return preg_replace(self::SERIAL_NUMBERS_PATTERN, "", $userAgent);
+        $userAgent = preg_replace(
+            '/\/SN[\dX]+/', '/SNXXXXXXXXXXXXXXX', $userAgent
+        );
+		
+        $userAgent = preg_replace(
+            '/\[(ST|TF|NT)[\dX]+\]/',
+            'TFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            $userAgent
+        );
+		
+        return $userAgent;
     }
 }

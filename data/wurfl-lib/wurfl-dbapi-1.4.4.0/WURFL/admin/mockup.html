@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>WURFL Database API Admin</title>
+<style type="text/css">
+<!--
+body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background: #F9F9F9;
+	margin: 0;
+	padding: 0;
+	color: #444;
+}
+ul, ol, dl { 
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+	text-shadow: 0px 0px 1px rgba(150, 150, 150, 1);	
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+a img {
+	border: none;
+}
+a:link {
+	color: #036;
+	text-decoration: underline;
+}
+a:visited {
+	color: #036;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus {
+	text-decoration: none;
+}
+.container {
+	width: 960px;
+	margin: 0 auto;
+	padding-top: 10px;
+}
+.content {
+	padding: 10px 0;
+	background: #FFF;
+	border: 1px solid #CCC;
+}
+.contentbox {
+	border: 1px solid #CCC;
+	width: 455px;
+	margin: 0px 10px 0px 10px;
+}
+.contentbox p {
+	margin: 0px;
+	padding: 10px;
+}
+.header {
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 0px;
+}
+.fltrt {
+	float: right;
+	margin-left: 8px;
+}
+.fltlft {
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat {
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+.round {
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.pageheader {
+	text-align: center;
+	margin-bottom: 10px;
+}
+.category-block {
+	border-top: solid 1px #CCC;
+	border-bottom: solid 1px #CCC;
+	background-image: linear-gradient(bottom, #F7F7F7 11%, #EBEBEB 97%);
+	background-image: -o-linear-gradient(bottom, #F7F7F7 11%, #EBEBEB 97%);
+	background-image: -moz-linear-gradient(bottom, #F7F7F7 11%, #EBEBEB 97%);
+	background-image: -webkit-linear-gradient(bottom, #F7F7F7 11%, #EBEBEB 97%);
+	background-image: -ms-linear-gradient(bottom, #F7F7F7 11%, #EBEBEB 97%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.11, #F7F7F7),
+		color-stop(0.97, #EBEBEB)
+	);
+}
+input.button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #050505;
+	padding: 7px 16px;
+	background: -moz-linear-gradient(top, #ffffff 0%, #c5c7c5);
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#c5c7c5));
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px solid #474747;
+}
+input.button:hover {
+	cursor: pointer;
+	background: -moz-linear-gradient(bottom, #ffffff 0%, #c5c7c5);
+	background: -webkit-gradient(linear, left bottom, left top, from(#ffffff), to(#c5c7c5));
+}
+.small-link {
+	font-size: 0.7em;
+}
+.small {
+	font-size: 0.7em;
+}
+code, .code {
+	font-family: "Courier New", Courier, monospace;
+}
+code {
+	display: block;
+	padding: 2px;
+	margin: 2px 0px 2px 0px;
+	background-color: #FF9;
+	border: 1px solid #FC3;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+-->
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="content round">
+  	<div class="pageheader"><a href="http://www.scientiamobile.com" target="_blank"><img src="http://www.scientiamobile.com/images/slices/top_logo.png" border="0" alt="ScientiaMobile"/></a><br />
+  	  ScientiaMobile WURFL Database API 1.4.0<br />
+  	  WURFL Data:   db.scientiamobile.com - 2012-02-09 17:14:09  </div>
+    <h3 class="category-block">Update WURFL Data</h3>
+    <div>
+   	  <div class="contentbox round fltlft">
+       	<h4 class="header">Update from local file</h4>
+        <p>Update the WURFL device data from the local file. You can download the latest public WURFL snapshot from wurfl.sourceforge.net and unzip it here:<br/>
+        <code class="small">C:\Users\skamerman\Eclipse_Workspace\Tera-WURFL/data/wurfl.xml</code>
+        For frequently updated data and additional capabilities, please consider a <a href="http://www.scientiamobile.com/license" target="_blank">commercial license</a>.<br />
+          <br/>
+          <input type="button" class="button" value="Update Now" />
+        </p>
+</div>
+      <div class="contentbox round fltrt">
+      <h4 class="header">Update from ScientiaMobile</h4>
+            <p>Download and install the latest WURFL device data. To use this option, you must have a license from ScientiaMobile, and set the remote download URL in TeraWurflConfig.php to the direct download URL in your ScientiaMobile account.        </p>
+        <p><input type="button" class="button" value="Update Now" />
+<a href="http://www.scientiamobile.com/license" class="small-link" target="_blank">Obtain  a commercial license</a>
+        </p>
+        
+   	  </div>
+    </div>
+    <br class="clearfloat"/><br/>
+    <h3 class="category-block">Test Device Detection</h3>
+    <p>Paste a user agent here to see its capabilities, or <a href="javascript:void(0);" onclick="javascript:document.getElementById('user_agent').value=navigator.userAgent;">use this browser's user agent:</a><br/><input type="text" id="user_agent" style="width: 100%"/><br/>
+    <input type="button" class="button" value="Detect Device" />
+    </p>
+    <h3 class="category-block">Configuration &amp; Statistics</h3>
+    <p><input type="button" class="button" value="Show Configuration" /></p>
+    <!-- end .content --></div>
+  <!-- end .container --></div>
+</body>
+</html>

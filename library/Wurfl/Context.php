@@ -26,7 +26,7 @@ use \Psr\Log\LoggerInterface;
  * 
  * @property-read \Wurfl\Storage\Base $persistenceProvider
  * @property-read \Wurfl\Storage\Base $cacheProvider
- * @property-read \Wurfl\Logger_Interface $logger
+ * @property-read \Wurfl\Logger\Interface $logger
  */
 class Context
 {
@@ -45,10 +45,10 @@ class Context
      */
     private $logger;
     
-    public function __construct(Storage\Base $persistenceProvider, Storage\Base $cacheProvider = null, LoggerInterface $logger = null)
+    public function __construct(Storage\Base $persistenceProvider = null, Storage\Base $cacheProvider = null, LoggerInterface $logger = null)
     {
-        $this->persistenceProvider = $persistenceProvider;
-        $this->cacheProvider = is_null($cacheProvider)? new Storage\NullStorage(): $cacheProvider;
+        $this->persistenceProvider = is_null($persistenceProvider) ? new Storage\NullStorage() : $persistenceProvider;
+        $this->cacheProvider = is_null($cacheProvider) ? new Storage\NullStorage() : $cacheProvider;
         $this->logger = is_null($logger)? new Logger\NullLogger(): $logger;
     }
     

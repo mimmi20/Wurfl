@@ -47,27 +47,42 @@ namespace Wurfl;
 class CustomDevice
 {
     /**
-     * @var array Array of \Wurfl\Xml_ModelDevice objects
+     * @var array Array of \Wurfl\Xml\ModelDevice objects
      */
     private $modelDevices;
     
     /**
-     * @var \Wurfl\Request_MatchInfo
+	 * @var Request\GenericRequest
+	 */
+	private $request;
+	
+	/**
+	 * @var \VirtualCapabilityProvider
+	 */
+	private $virtualCapabilityProvider;
+	
+	/**
+     * @param array                         $modelDevices Array of \Wurfl\Xml\ModelDevice $modelDevices
+     * @param \Wurfl\Request\GenericRequest $request
+     *
+     * @throws \InvalidArgumentException if $modelDevices is not an array of at least one \Wurfl\Xml_ModelDevice
      */
-    private $matchInfo;
-    
-    /**
-     * @param array $modelDevices Array of \Wurfl\Xml_ModelDevice objects
-     * @param \Wurfl\Request_MatchInfo $matchInfo
-     * @throws InvalidArgumentException if $modelDevices is not an array of at least one \Wurfl\Xml_ModelDevice
-     */
-    public function __construct($modelDevices, $matchInfo = null)
+    public function __construct(array $modelDevices, Request\GenericRequest $request = null)
     {
-        if (! is_array ( $modelDevices ) || count ( $modelDevices ) < 1) {
+        if (! is_array($modelDevices) || count ($modelDevices) < 1) {
             throw new \InvalidArgumentException ('modelDevices must be an array of at least one ModelDevice.');
         }
+
         $this->modelDevices = $modelDevices;
-        $this->matchInfo = $matchInfo;
+        
+		if ($request === null) {
+			// This might happen if a device is looked up by its ID directly, without providing a user agent
+			$requestFactory = new \Wurfl\Request\GenericRequestFactory();
+			$request        = $requestFactory->createRequestForUserAgent($this->userAgent);
+		}
+
+		$this->request                   = $request;
+		$this->virtualCapabilityProvider = new VirtualCapabilityProvider($this, $request);
     }
     
     /**
@@ -80,18 +95,19 @@ class CustomDevice
     {
         if (isset($name)) {
             switch ($name) {
-                case "id" :
-                case "userAgent" :
-                case "fallBack" :
-                case "actualDeviceRoot" :
+                case 'id':
+                case 'userAgent':
+                case 'fallBack':
+                case 'actualDeviceRoot':
                     return $this->modelDevices[0]->$name;
                     break;
                 default :
-                    throw new Exception("the field " . $name . " is not defined");
+                    return $this->getCapability($name);
                     break;
             }
         }
-        throw new Exception("the field " . $name . " is not defined");
+        
+        throw new Exception('the field ' . $name . ' is not defined');
     }
     
     /**
@@ -105,34 +121,39 @@ class CustomDevice
                 return true;
             }
         }
+
         return false;
     }
     
     /**
-     * Returns the value of a given capability name
-     * for the current device
+     * Returns the value of a given capability name for the current device
      * 
      * @param string $capabilityName must be a valid capability name
+     *
      * @return string Capability value
-     * @throws InvalidArgumentException The $capabilityName is is not defined in the loaded WURFL.
-     * @see \Wurfl\Xml_ModelDevice::getCapability()
+     * @throws \InvalidArgumentException The $capabilityName is is not defined in the loaded WURFL.
+     * @see \Wurfl\Xml\ModelDevice::getCapability()
      */
     public function getCapability($capabilityName)
     {
         if (empty($capabilityName)) {
             throw new \InvalidArgumentException('capability name must not be empty');
         }
-        if(!$this->isCapabilityDefined($capabilityName)) {
-            throw new \InvalidArgumentException('no capability named [' . $capabilityName . '] is present in wurfl.');    
+
+        if (!$this->getRootDevice()->isCapabilityDefined($capabilityName)) {
+            throw new \InvalidArgumentException('no capability named [' . $capabilityName . '] is present in wurfl.');
         }
+
         foreach ($this->modelDevices as $modelDevice) {
-            /* @var \Wurfl\Xml_ModelDevice $modelDevice */
+            /* @var Xml\ModelDevice $modelDevice */
             $capabilityValue = $modelDevice->getCapability($capabilityName);
+
             if ($capabilityValue != null) {
                 return $capabilityValue;
             }
         }
-        return "";
+
+        return '';
     }
     
     /**
@@ -140,27 +161,36 @@ class CustomDevice
      * it is returned.  Some devices have no device roots in their fall back tree, like generic_android, since
      * no devices above it (itself included) are real devices (actual device roots).
      * 
-     * @return \Wurfl\Xml_ModelDevice
+     * @return \Wurfl\Xml\ModelDevice
      */
     public function getActualDeviceRootAncestor()
     {
-        if ($this->actualDeviceRoot) return $this;
+        if ($this->actualDeviceRoot) {
+            return $this;
+        }
+        
         foreach ($this->modelDevices as $modelDevice) {
-            /* @var \Wurfl\Xml_ModelDevice $modelDevice */
+            /* @var \Wurfl\Xml\ModelDevice $modelDevice */
             if ($modelDevice->actualDeviceRoot) {
                 return $modelDevice;
             }
         }
+
         return null;
     }
     
     /**
      * Returns the match info for this device
-     * @return \Wurfl\Request_MatchInfo
+     *
+     * @return Request\MatchInfo
      */
     public function getMatchInfo()
     {
-        return $this->matchInfo;
+        if ($this->request instanceof Request\GenericRequest) {
+            return $this->request->matchInfo;
+        }
+        
+        return null;
     }
     
     /**
@@ -171,28 +201,37 @@ class CustomDevice
     {
         return $this->modelDevices;
     }
-    
-    /**
-     * @param string $capabilityName
-     * @return bool true if capability is defined
-     * @see \Wurfl\Xml_ModelDevice::isCapabilityDefined()
-     */
-    private function isCapabilityDefined($capabilityName)
+	
+	/**
+	 * Returns the top-most device.  This is the "generic" device.
+	 * @return Xml\ModelDevice
+	 */
+	public function getRootDevice()
     {
-        return $this->modelDevices[count($this->modelDevices)-1]->isCapabilityDefined($capabilityName);
-    }
+		return $this->modelDevices[count($this->modelDevices) - 1];
+	}
     
     /**
      * Returns capabilities and their values for the current device 
      * @return array Device capabilities array
-     * @see \Wurfl\Xml_ModelDevice::getCapabilities()
+     * @see Xml\ModelDevice::getCapabilities()
      */
     public function getAllCapabilities()
     {
         $capabilities = array ();
+
         foreach (array_reverse($this->modelDevices) as $modelDevice) {
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
+
         return $capabilities;
     }
+	
+	public function getVirtualCapability($name) {
+		return $this->virtualCapabilityProvider->get($name);
+	}
+	
+	public function getAllVirtualCapabilities() {
+		return $this->virtualCapabilityProvider->getAll();
+	}
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This file is released under the GNU General Public License.
+    Refer to the COPYING.txt file distributed with this package.
+
+    Copyright (c) 2011, Luca Passani
+
+-->
+
+<wurfl_patch>
+    <devices>
+        <device id="apple_ipad_ver1"
+                user_agent="Mozilla/5.0 (iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7D11"
+                fall_back="apple_generic" actual_device_root="true"/>
+
+        <device id="generic_netfront_ver4"
+                user_agent="DO_NOT_MATCH_NETFRONT_4"
+                fall_back="generic_xhtml"/>
+
+        <device id="generic_netfront_ver4_1"
+                user_agent="DO_NOT_MATCH_NETFRONT_4_1"
+                fall_back="generic_xhtml"/>
+
+        <device id="blackberry_generic_ver4"
+                user_agent="DO_NOT_MATCH_BLACKBERRY_4"
+                fall_back="generic_xhtml"/>
+
+        <device id="blackberry_generic_ver4_sub20"
+                user_agent="DO_NOT_MATCH_BLACKBERRY_4_2"
+                fall_back="blackberry_generic_ver4"/>
+
+        <!-- Andorid -->
+        <device user_agent="Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3" fall_back="generic"
+            id="generic_android"/>
+
+        <device user_agent="DO_NOT_MATCH_GENERIC_ANDROID_2_1" id="generic_android_ver2_1" fall_back="generic"/> 
+
+
+        <!-- LGUPLUS -->
+        <device id="generic_lguplus" user_agent="DO_NOT_MATCH_GENERIC_LGUPLUS" fall_back="generic_xhtml"/>
+
+        <device id="generic_lguplus_rexos_facebook_browser" user_agent="DO_NOT_MATCH_GENERIC_LGUPLUS_REXOS_FACEBOOK"
+                fall_back="generic_lguplus"/>
+        <device id="generic_lguplus_rexos_webviewer_browser" user_agent="DO_NOT_MATCH_GENERIC_LGUPLUS_REXOS_WEBVIEWER"
+                fall_back="generic_lguplus"/>
+        <device id="generic_lguplus_winmo_facebook_browser" user_agent="DO_NOT_MATCH_GENERIC_LGUPLUS_WINMO_FACEBOOK"
+                fall_back="generic_lguplus"/>
+        <device id="generic_lguplus_winmo_webviewer_browser" user_agent="DO_NOT_MATCH_GENERIC_LGUPLUS_WINMO_WEBVIEWER"
+                fall_back="generic_lguplus"/>
+        <device id="generic_lguplus_android_webkit_browser" user_agent="DO_NOT_MATCH_GENERIC_LGUPLUS_ANDROID_WEBKIT"
+                fall_back="generic_lguplus"/>
+    </devices>
+</wurfl_patch>

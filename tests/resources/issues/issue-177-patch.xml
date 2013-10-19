@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wurfl_patch>
+	<devices>
+		<!-- Web browsers -->
+		<device id="apple_generic" user_agent="Mozilla/5.0 (iPhone;"
+			fall_back="generic_xhtml">
+			<group id="image_format">
+				<capability name="transparent_png_alpha" value="true" />
+			</group>
+		</device>
+	</devices>
+</wurfl_patch>

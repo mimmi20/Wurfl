@@ -127,6 +127,7 @@ abstract class Base implements StorageInterface
                 . ' cannot be used as a cache for ' . get_class($this)
             );
         }
+        
         $this->cache = $cache;
     }
     
@@ -182,6 +183,7 @@ abstract class Base implements StorageInterface
     public function setWurflLoaded($loaded = true)
     {
         $this->save(self::WURFL_LOADED, $loaded);
+        $this->cacheSave(self::WURFL_LOADED, new StorageObject($loaded, 0));
     }
 
 

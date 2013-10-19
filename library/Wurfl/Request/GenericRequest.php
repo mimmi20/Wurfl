@@ -42,12 +42,12 @@ class GenericRequest
      * @param string $userAgentProfile
      * @param string $xhtmlDevice
      */
-    public function __construct($userAgent, $userAgentProfile=null, $xhtmlDevice=null)
+    public function __construct($userAgent, $userAgentProfile = null, $xhtmlDevice = null)
     {
         $this->_userAgent = $userAgent;
         $this->_userAgentProfile = $userAgentProfile;
         $this->_xhtmlDevice = $xhtmlDevice;
-        $this->_id = md5($this->userAgent);
+        $this->_id = md5($userAgent);
         $this->_matchInfo = new MatchInfo();
     }
     

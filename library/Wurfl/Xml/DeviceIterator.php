@@ -24,35 +24,19 @@ namespace Wurfl\Xml;
  */
 class DeviceIterator extends AbstractIterator
 {
-    private $capabilitiesToSelect = array ();
-    private $filterCapabilities;
+    private $capabilityFilter    = array();
+	private $useCapabilityFilter = false;
     
     /**
      * @param string $inputFile XML file to be processed
-     * @param array $capabilities Capabiities to process
+     * @param array $capabilityFilter Capabiities to process
      */
-    public function __construct($inputFile, $capabilities = array())
+    public function __construct($inputFile, array $capabilityFilter = array())
     {
         parent::__construct($inputFile);
-        foreach ($capabilities as $groupId => $capabilityNames){
-            $trimmedCapNames = $this->removeSpaces($capabilityNames);
-            $capabilitiesAsArray = array ();
-            if (strlen($trimmedCapNames)!= 0) {
-                $capabilitiesAsArray = explode(',', $trimmedCapNames);
-            }
-            $this->capabilitiesToSelect[$groupId] = $capabilitiesAsArray;
-        }
-        $this->filterCapabilities = empty($this->capabilitiesToSelect)? false : true;
-    }
-    
-    /**
-     * Removes spaces from the given $subject
-     * @param string $subject
-     * @return string $subject without spaces
-     */
-    private function removeSpaces($subject)
-    {
-        return str_replace(" ", "", $subject);
+        
+        $this->capabilityFilter    = $capabilityFilter;
+		$this->useCapabilityFilter = !empty($this->capabilityFilter);
     }
     
     public function readNextElement()
@@ -82,18 +66,14 @@ class DeviceIterator extends AbstractIterator
                         
                         case XmlInterface::GROUP:
                             $groupId = $this->xmlReader->getAttribute(XmlInterface::GROUP_ID);
-                            if ($this->needToReadGroup($groupId)) {
-                                $groupIDCapabilitiesMap[$groupId] = array ();
-                            } else {
-                                $this->moveToGroupEndElement();
-                                break 2;
-                            }
+                            
+                            $groupIDCapabilitiesMap[$groupId] = array();
                             break;
                         
                         case XmlInterface::CAPABILITY:
                             
                             $capabilityName = $this->xmlReader->getAttribute(XmlInterface::CAPABILITY_NAME);
-                            if ($this->neededToReadCapability($groupId, $capabilityName)) {
+                            if ($this->neededToReadCapability($capabilityName)) {
                                 $capabilityValue = $this->xmlReader->getAttribute(XmlInterface::CAPABILITY_VALUE);
                                 $currentCapabilityNameValue[$capabilityName] = $capabilityValue;
                                 $groupIDCapabilitiesMap[$groupId][$capabilityName] = $capabilityValue;
@@ -113,39 +93,19 @@ class DeviceIterator extends AbstractIterator
     }
     
     /**
-     * Returns true if the group element needs to be processed
-     * @param string $groupId
-     * @return bool
-     */
-    private function needToReadGroup($groupId)
-    {
-        if ($this->filterCapabilities) {
-            return array_key_exists($groupId, $this->capabilitiesToSelect);
-        }
-        return true;
-    }
-    
-    /**
-     * Returns true if the given $groupId's $capabilityName needs to be read
-     * @param string $groupId
+     * Returns true if the given $capabilityName needs to be read
+     *
      * @param string $capabilityName
+     *
      * @return bool
      */
-    private function neededToReadCapability($groupId, $capabilityName)
+    private function neededToReadCapability($capabilityName)
     {
-        if (array_key_exists($groupId, $this->capabilitiesToSelect)) {
-            $capabilities = $this->capabilitiesToSelect[$groupId];
-            if (empty($capabilities)) {
-                return true;
-            }
-            foreach ($capabilities as $capability) {
-                if (strcmp($capabilityName, $capability) === 0) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        return true;
+        if (!$this->useCapabilityFilter) {
+			return true;
+		}
+        
+		return in_array($capabilityName, $this->capabilityFilter);
     
     }
     

@@ -28,32 +28,35 @@ use \Wurfl\FileUtils;
 class File extends Base
 {
     private $defaultParams = array(
-        "dir" => "/tmp",
-        "expiration" => 0,
-        "readonly" => 'false',
+        'dir' => '/tmp',
+        'expiration' => 0,
+        'readonly' => 'false',
     );
 
     private $expire;
     private $root;
     private $readonly;
     
-    const DIR = "dir";
+    const DIR = 'dir';
 
     protected $supports_secondary_caching = true;
     
-    public function __construct($params) {
+    public function __construct($params)
+    {
         $currentParams = is_array($params)? array_merge($this->defaultParams, $params): $this->defaultParams;
         $this->initialize($currentParams);
     }
 
-    public function initialize($params) {
+    public function initialize($params)
+    {
         $this->root = $params[self::DIR];
         $this->expire = $params['expiration'];
         $this->readonly = ($params['readonly'] == 'true' || $params['readonly'] === true);
         $this->createRootDirIfNotExist();
     }
     
-    private function createRootDirIfNotExist() {
+    private function createRootDirIfNotExist()
+    {
         if (!is_dir($this->root)) {
             @mkdir ($this->root, 0777, true);
             if(!is_dir($this->root)){
@@ -65,7 +68,8 @@ class File extends Base
         }
     }
 
-    public function load($key) {
+    public function load($key)
+    {
         if (($data = $this->cacheLoad($key)) !== null) {
             return $data->value();
         } else {
@@ -79,7 +83,8 @@ class File extends Base
         }
     }
 
-    private function unwrap($value, $path) {
+    private function unwrap($value, $path)
+    {
         if ($value->isExpired()) {
             unlink($path);
             return null;
@@ -93,54 +98,27 @@ class File extends Base
         FileUtils::write($path, $value);
     }
 
-    public function clear() {
+    public function clear()
+    {
         $this->cacheClear();
         FileUtils::rmdirContents($this->root);
     }
 
-
-    private function keyPath($key) {
+    private function keyPath($key)
+    {
         return FileUtils::join(array($this->root, $this->spread(md5($key))));
     }
 
-    function spread($md5, $n = 2) {
-        $path = "";
+    private function spread($md5, $n = 2)
+    {
+        $path = '';
+        
         for ($i = 0; $i < $n; $i++) {
             $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
         }
+        
         $path .= substr($md5, $n);
+        
         return $path;
     }
-
-
-}
-
-/**
- * Object for storing data
- * @package \Wurfl\Storage
- */
-class StorageObject {
-    private $value;
-    private $expiringOn;
-
-    public function __construct($value, $expire) {
-        $this->value = $value;
-        $this->expiringOn = ($expire === 0) ? $expire : time() + $expire;
-    }
-
-    public function value() {
-        return $this->value;
-    }
-
-    public function isExpired() {
-        if ($this->expiringOn === 0) {
-            return false;
-        }
-        return $this->expiringOn < time();
-    }
-
-    public function expiringOn() {
-        return $this->expiringOn;
-    }
-
 }

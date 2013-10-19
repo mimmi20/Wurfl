@@ -24,11 +24,11 @@ namespace Wurfl;
  */
 class CustomDeviceRepository implements DeviceRepository
 {
-    const WURFL_USER_AGENTS_CLASSIFIED = "\Wurfl\USER_AGENTS_CLASSIFIED";
+    const WURFL_USER_AGENTS_CLASSIFIED = 'WURFL_USER_AGENTS_CLASSIFIED';
     
     /**
      * The persistence provider for this device repository
-     * @var \Wurfl\Storage\Base
+     * @var Storage\Base
      */
     private $persistenceStorage;
     
@@ -53,16 +53,17 @@ class CustomDeviceRepository implements DeviceRepository
     
     /**
      * Creates a new Device Repository from the given $persistenceStorage and $deviceClassificationNames
-     * @param \Wurfl\Storage\Base $persistenceStorage
+     * @param Storage\Base $persistenceStorage
      * @param array $deviceClassificationNames
      * @throws InvalidArgumentException
      */
-    public function __construct($persistenceStorage, $deviceClassificationNames)
+    public function __construct(Storage\Base $persistenceStorage, $deviceClassificationNames)
     {
         if (is_null($persistenceStorage)) {
-            throw new \InvalidArgumentException("Persistence Provider cannot be null");
+            throw new \InvalidArgumentException('Persistence Provider cannot be null');
         }
-        $this->persistenceStorage = $persistenceStorage;
+        
+        $this->persistenceStorage        = $persistenceStorage;
         $this->deviceClassificationNames = $deviceClassificationNames;
         $this->init();
     }
@@ -73,8 +74,9 @@ class CustomDeviceRepository implements DeviceRepository
     private function init()
     {
         $genericDevice = $this->getDevice(Constants::GENERIC);
+        
         if (!is_null($genericDevice)) {
-            $this->_capabilitiesName = array_keys($genericDevice->getCapabilities());
+            $this->_capabilitiesName       = array_keys($genericDevice->getCapabilities());
             $this->_groupIDCapabilitiesMap = $genericDevice->getGroupIdCapabilitiesNameMap();
         }
     }
@@ -82,9 +84,11 @@ class CustomDeviceRepository implements DeviceRepository
     public function getWurflInfo()
     {
         $wurflInfo = $this->persistenceStorage->load(Xml\Info::PERSISTENCE_KEY);
+
         if ($wurflInfo != null) {
             return $wurflInfo;
         }
+
         return Xml\Info::noInfo();
     }
     
@@ -102,6 +106,7 @@ class CustomDeviceRepository implements DeviceRepository
      * Returns a device for the given device ID
      *
      * @param string $deviceId
+     *
      * @return \Wurfl\CustomDevice
      * @throws \Wurfl\Exception if $deviceID is not defined in wurfl devices repository
      */
@@ -109,9 +114,11 @@ class CustomDeviceRepository implements DeviceRepository
     {
         if (!isset($this->_deviceCache[$deviceId])) {
             $device = $this->persistenceStorage->load($deviceId);
-            if (is_null($device)) {
-                throw new Exception("There is no device with ID [$deviceId] in the loaded WURFL Data");
+
+            if (!$device) {
+                throw new Exception('There is no device with ID [$deviceId] in the loaded WURFL Data');
             }
+
             $this->_deviceCache[$deviceId] = $device;
         }
         return $this->_deviceCache[$deviceId];
@@ -154,13 +161,13 @@ class CustomDeviceRepository implements DeviceRepository
      *
      * @param string $deviceId
      * @param string $capabilityName
-     * @throws \Wurfl\WURFLException device ID or capability was not found
+     * @throws \Wurfl\Exception device ID or capability was not found
      * @return string value
      */
     public function getCapabilityForDevice($deviceId, $capabilityName)
     {
         if (! $this->isCapabilityDefined($capabilityName)) {
-            throw new Exception("capability name: " . $capabilityName . " not found");
+            throw new Exception('capability name: "' . $capabilityName . '" not found');
         }
         $capabilityValue = null;
         // TODO: Prevent infinite recursion
@@ -205,6 +212,7 @@ class CustomDeviceRepository implements DeviceRepository
                 $capabilities = array_merge($capabilities, $device->capabilities);
             }
         }
+
         return $capabilities;
     }
     
@@ -241,13 +249,13 @@ class CustomDeviceRepository implements DeviceRepository
      * the given group ID
      *
      * @param string $groupID
-     * @throws \Wurfl\WURFLException The given $groupID does not exist
+     * @throws \Wurfl\Exception The given $groupID does not exist
      * @return array of capability names
      */
     public function getCapabilitiesNameForGroup($groupID)
     {
         if (!array_key_exists($groupID, $this->_groupIDCapabilitiesMap)) {
-            throw new Exception("The Group ID " . $groupID . " supplied does not exist");
+            throw new Exception('The Group ID "' . $groupID . '" supplied does not exist');
         }
         return $this->_groupIDCapabilitiesMap [$groupID];
     }

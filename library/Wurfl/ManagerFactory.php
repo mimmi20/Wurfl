@@ -35,8 +35,7 @@ use \Psr\Log\LoggerInterface;
 class ManagerFactory
 {
     const DEBUG = false;
-    const WURFL_LAST_MODIFICATION_TIME = 'Wurfl_LAST_MODIFICATION_TIME';
-    const WURFL_CURRENT_MODIFICATION_TIME = 'Wurfl_CURRENT_MODIFICATION_TIME';
+    const WURFL_API_STATE = 'WURFL_API_STATE';
     
     /**
      * WURFL Configuration
@@ -113,6 +112,16 @@ class ManagerFactory
     }
     
     /**
+     * Clears the data in the persistence provider
+     * @see \Wurfl\Storage\Base::clear()
+     */
+    public function remove()
+    {
+        $this->persistenceStorage->clear();
+        $this->wurflManager = null;
+    }
+    
+    /**
      * Initializes the WURFL Manager Factory by assigning cache and persistence providers
      */
     private function init()
@@ -123,16 +132,6 @@ class ManagerFactory
         
         $deviceRepository   = $this->deviceRepository($this->persistenceStorage, $userAgentHandlerChain);
         $this->wurflManager = new Manager($deviceRepository, $userAgentHandlerChain, $this->cacheStorage);
-    }
-    
-    /**
-     * Clears the data in the persistence provider
-     * @see \Wurfl\Storage\Base::clear()
-     */
-    public function remove()
-    {
-        $this->persistenceStorage->clear();
-        $this->wurflManager = null;
     }
     
     /**
@@ -157,6 +156,10 @@ class ManagerFactory
             $patches = array();
         }
         
-        return $deviceRepositoryBuilder->build($this->wurflConfig->wurflFile, $patches);
+        return $deviceRepositoryBuilder->build(
+            $this->wurflConfig->wurflFile,
+            $patches,
+            $this->wurflConfig->capabilityFilter
+        );
     }
 }

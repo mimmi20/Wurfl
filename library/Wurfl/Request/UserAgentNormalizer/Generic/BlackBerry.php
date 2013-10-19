@@ -29,12 +29,14 @@ class BlackBerry implements NormalizerInterface
 {
     public function normalize($userAgent)
     {
-        // Normalize mixed-case BlackBerry
         $userAgent = str_ireplace('blackberry', 'BlackBerry', $userAgent);
-        $index = strrpos($userAgent, "BlackBerry");
-        if ($index > 0 && strpos($userAgent, "AppleWebKit") === false) {
-            return substr($userAgent, $index);
-        }
-        return $userAgent;
+        
+		$pos = strpos($userAgent, 'BlackBerry');
+        
+		if ($pos !== false && $pos > 0) {
+			$userAgent = substr($userAgent, $pos);
+		}
+        
+		return $userAgent;
     }
 }

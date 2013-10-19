@@ -19,23 +19,23 @@ namespace Wurfl;
  * 
  */
 /**
- * Builds a WURFL_DeviceRepository
+ * Builds a \Wurfl\DeviceRepository
  * @package    WURFL
  */
 class DeviceRepositoryBuilder
 {
     /**
-     * @var WURFL_Storage_Base
+     * @var Storage\Base
      */
     private $persistenceProvider;
     
     /**
-     * @var WURFL_UserAgentHandlerChain
+     * @var UserAgentHandlerChain
      */
     private $userAgentHandlerChain;
     
     /**
-     * @var WURFL_Xml_DevicePatcher
+     * @var Xml\DevicePatcher
      */
     private $devicePatcher;
     
@@ -49,12 +49,12 @@ class DeviceRepositoryBuilder
      * Determines the fopen() mode that is used on the lockfile 
      * @var string
      */
-    private $lockStyle = 'w+';
+    private $lockStyle = 'r';
     
     /**
-     * @param Wurfl\Storage\Base $persistenceProvider
-     * @param Wurfl\UserAgentHandlerChain $userAgentHandlerChain
-     * @param Wurfl\Xml\DevicePatcher $devicePatcher
+     * @param Storage\Base $persistenceProvider
+     * @param UserAgentHandlerChain $userAgentHandlerChain
+     * @param Xml\DevicePatcher $devicePatcher
      */
     public function __construct(
         Storage\Base $persistenceProvider, 
@@ -67,26 +67,43 @@ class DeviceRepositoryBuilder
     }
     
     /**
-     * Builds DeviceRepository in PersistenceProvider from $wurflFile and $wurflPatches using $capabilitiesToUse 
+     * Builds DeviceRepository in PersistenceProvider from $wurflFile and $wurflPatches using $capabilityFilter
+     *
      * @param string $wurflFile Filename of wurfl.xml or other complete WURFL file
-     * @param array $wurflPatches Array of WURFL patch files
-     * @param array $capabilitiesToUse Array of capabilities to be included in the DeviceRepository
-     * @return WURFL_CustomDeviceRepository
+     * @param array  $wurflPatches Array of WURFL patch files
+     * @param array  $capabilityFilter Array of capabilities to be included in the DeviceRepository
+     *
+     * @return CustomDeviceRepository
      */
-    public function build($wurflFile, array $wurflPatches = array(), array $capabilitiesToUse = array())
+    public function build($wurflFile, array $wurflPatches = array(), array $capabilityFilter = array())
     {
         // TODO: Create a better locking solution
         if (!$this->isRepositoryBuilt()) {
-            $infoIterator   = new Xml\VersionIterator($wurflFile);
-            $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilitiesToUse);
-            $patchIterators = $this->toPatchIterators($wurflPatches , $capabilitiesToUse);
+			// Determine Lockfile location
+			if (strpos(PHP_OS, 'SunOS') === false) {
+				$this->lockFile = __DIR__ . '/DeviceRepositoryBuilder.php';
+			} else {
+				// Solaris can't handle exclusive file locks on files unless they are opened for RW
+				$this->lockStyle = 'w+';
+				$this->lockFile  = FileUtils::getTempDir().'/wurfl.lock';
+			}
+            
+			// Update Data
+			set_time_limit(300);
+			$fp = fopen($this->lockFile, $this->lockStyle);
+            
+			if (flock($fp, LOCK_EX | LOCK_NB)) {
+				$infoIterator   = new Xml\VersionIterator($wurflFile);
+				$deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilityFilter);
+				$patchIterators = $this->toPatchIterators($wurflPatches , $capabilityFilter);
             
             $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
+				$this->setRepositoryBuilt();
+				flock($fp, LOCK_UN);
         }
-        
-        return new CustomDeviceRepository(
-            $this->persistenceProvider, $this->deviceClassificationNames()
-        );
+		}
+		$deviceClassificationNames = $this->deviceClassificationNames();
+		return new CustomDeviceRepository($this->persistenceProvider, $deviceClassificationNames);
     }
     
     /**
@@ -121,22 +138,29 @@ class DeviceRepositoryBuilder
     }
     
     /**
-     * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilitiesToUse
+     * Returns an array of Xml\DeviceIterator for the given $wurflPatches and $capabilitiesToUse
+     *
      * @param array $wurflPatches Array of (string)filenames
-     * @param array $capabilitiesToUse Array of (string) WURFL capabilities
+     * @param array $capabilityFilter Array of (string) WURFL capabilities
+     *
      * @return array Array of WURFL_Xml_DeviceIterator objects
      */
-    private function toPatchIterators(array $wurflPatches = array(), array $capabilitiesToUse = array())
+    private function toPatchIterators(array $wurflPatches = array(), array $capabilityFilter = array())
     {
         $patchIterators = array();
         
         if (is_array($wurflPatches)) {
             foreach ($wurflPatches as $wurflPatch) {
-                $patchIterators[] = new Xml\DeviceIterator($wurflPatch, $capabilitiesToUse);
+                $patchIterators[] = new Xml\DeviceIterator($wurflPatch, $capabilityFilter);
             }
         }
         return $patchIterators;
-    }
+    }/**
+	 * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
+	 * @param array $wurflPatches Array of (string)filenames
+	 * @param array $capabilityFilter Array of (string) WURFL capabilities
+	 * @return array Array of WURFL_Xml_DeviceIterator objects
+	 */
     
     /**
      * @return bool true if device repository is already built (WURFL is loaded in persistence proivder)
@@ -199,16 +223,17 @@ class DeviceRepositoryBuilder
         $usedPatchingDeviceIds = array();
         
         foreach ($deviceIterator as $device) {
-            /* @var $device WURFL_Xml_ModelDevice */
+            /* @var $device Xml\ModelDevice */
             $toPatch = isset($patchingDevices[$device->id]);
             
             if ($toPatch) {
                 $device = $this->patchDevice($device, $patchingDevices [$device->id]);
-                $usedPatchingDeviceIds [$device->id] = $device->id;
+                $usedPatchingDeviceIds[$device->id] = $device->id;
             }
             
             $this->classifyAndPersistDevice($device);
         }
+        
         $this->classifyAndPersistNewDevices(array_diff_key($patchingDevices, $usedPatchingDeviceIds));
         $this->persistClassifiedDevicesUserAgentMap();
     }

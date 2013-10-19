@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wurfl_patch>
+	<devices>		
+		<device
+			user_agent="Mozilla/4.0 (compatible; MSIE 4.01; Windows CE; PPC; 240x320; SPV M3000; OpVer 12.27.10.101)"
+			fall_back="spv_m3000_ver1"
+			id="spv_m3000_ver1_subov122710101" />
+			
+		<device
+			user_agent="Mozilla/4.0 (compatible; MSIE 4.01; Windows CE; PPC; 240x320; SPV M3000; OpVer 12.0.0.0)"
+			fall_back="spv_m3000_ver1"
+			id="spv_m3000_ver1_subov12" />
+		
+	</devices>
+</wurfl_patch>
