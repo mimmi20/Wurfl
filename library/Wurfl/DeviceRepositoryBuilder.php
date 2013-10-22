@@ -79,31 +79,30 @@ class DeviceRepositoryBuilder
     {
         // TODO: Create a better locking solution
         if (!$this->isRepositoryBuilt()) {
-			// Determine Lockfile location
-			if (strpos(PHP_OS, 'SunOS') === false) {
-				$this->lockFile = __DIR__ . '/DeviceRepositoryBuilder.php';
-			} else {
-				// Solaris can't handle exclusive file locks on files unless they are opened for RW
-				$this->lockStyle = 'w+';
-				$this->lockFile  = FileUtils::getTempDir().'/wurfl.lock';
-			}
+            // Determine Lockfile location
+            if (strpos(PHP_OS, 'SunOS') === false) {
+                $this->lockFile = __DIR__ . '/DeviceRepositoryBuilder.php';
+            } else {
+                // Solaris can't handle exclusive file locks on files unless they are opened for RW
+                $this->lockStyle = 'w+';
+                $this->lockFile  = FileUtils::getTempDir().'/wurfl.lock';
+            }
             
-			// Update Data
-			set_time_limit(300);
-			$fp = fopen($this->lockFile, $this->lockStyle);
+            // Update Data
+            $fp = fopen($this->lockFile, $this->lockStyle);
             
-			if (flock($fp, LOCK_EX | LOCK_NB)) {
-				$infoIterator   = new Xml\VersionIterator($wurflFile);
-				$deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilityFilter);
-				$patchIterators = $this->toPatchIterators($wurflPatches , $capabilityFilter);
+            if (flock($fp, LOCK_EX | LOCK_NB)) {
+                $infoIterator   = new Xml\VersionIterator($wurflFile);
+                $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilityFilter);
+                $patchIterators = $this->toPatchIterators($wurflPatches , $capabilityFilter);
             
             $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
-				$this->setRepositoryBuilt();
-				flock($fp, LOCK_UN);
+                $this->setRepositoryBuilt();
+                flock($fp, LOCK_UN);
         }
-		}
-		$deviceClassificationNames = $this->deviceClassificationNames();
-		return new CustomDeviceRepository($this->persistenceProvider, $deviceClassificationNames);
+        }
+        $deviceClassificationNames = $this->deviceClassificationNames();
+        return new CustomDeviceRepository($this->persistenceProvider, $deviceClassificationNames);
     }
     
     /**
@@ -156,11 +155,11 @@ class DeviceRepositoryBuilder
         }
         return $patchIterators;
     }/**
-	 * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
-	 * @param array $wurflPatches Array of (string)filenames
-	 * @param array $capabilityFilter Array of (string) WURFL capabilities
-	 * @return array Array of WURFL_Xml_DeviceIterator objects
-	 */
+     * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
+     * @param array $wurflPatches Array of (string)filenames
+     * @param array $capabilityFilter Array of (string) WURFL capabilities
+     * @return array Array of WURFL_Xml_DeviceIterator objects
+     */
     
     /**
      * @return bool true if device repository is already built (WURFL is loaded in persistence proivder)

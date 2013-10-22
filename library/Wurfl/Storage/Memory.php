@@ -30,7 +30,7 @@ class Memory extends Base
 
     private $map;
 
-	private $tree_template = array(
+    private $tree_template = array(
         '0' => array(),
         '1' => array(),
         '2' => array(),
@@ -59,29 +59,29 @@ class Memory extends Base
         $key = hash('md5', $objectId);
         $idx = substr($key, 1);
         
-		$this->map[$key[0]][$idx] = $object;
+        $this->map[$key[0]][$idx] = $object;
     }
 
     public function load($objectId)
     {
         $key = hash('md5', $objectId);
-		$idx = substr($key, 1);
+        $idx = substr($key, 1);
         
-		if (array_key_exists($idx, $this->map[$key[0]])) {
-			return $this->map[$key[0]][$idx];
-		}
+        if (array_key_exists($idx, $this->map[$key[0]])) {
+            return $this->map[$key[0]][$idx];
+        }
         
-		return null;
+        return null;
     }
 
     public function remove($objectId)
     {
         $key = hash('md5', $objectId);
-		$idx = substr($key, 1);
+        $idx = substr($key, 1);
         
-		if (array_key_exists($idx, $this->map[$key[0]])) {
-			unset($this->map[$key[0]][$idx]);
-		}
+        if (array_key_exists($idx, $this->map[$key[0]])) {
+            unset($this->map[$key[0]][$idx]);
+        }
     }
 
     /**
@@ -90,6 +90,6 @@ class Memory extends Base
     public function clear()
     {
         // Setup empty btree to assist PHP in array index lookups
-		$this->map = $this->tree_template;
+        $this->map = $this->tree_template;
     }
 }

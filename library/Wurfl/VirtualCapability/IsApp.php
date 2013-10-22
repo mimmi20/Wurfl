@@ -13,88 +13,88 @@ namespace Wurfl\VirtualCapability;
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  */
  
 class IsApp extends \Wurfl\VirtualCapability
 {
-	protected $required_capabilities = array('device_os');
+    protected $required_capabilities = array('device_os');
 
-	/**
-	 * Simple strings or regex patterns that indicate a UA is from a native app
-	 * @var array
-	*/
-	protected $patterns = array(
-			'^Dalvik',
-			'Darwin/',
-			'CFNetwork',
-			'^Windows Phone Ad Client',
-			'^NativeHost',
-			'^AndroidDownloadManager',
-			'-HttpClient',
-			'^AppCake',
-			'AppEngine-Google',
-			'AppleCoreMedia',
-			'^AppTrailers',
-			'^ChoiceFM',
-			'^ClassicFM',
-			'^Clipfish',
-			'^FaceFighter',
-			'^Flixster',
-			'^Gold/',
-			'^GoogleAnalytics/',
-			'^Heart/',
-			'^iBrowser/',
-			'iTunes-',
-			'^Java/',
-			'^LBC/3.',
-			'Twitter',
-			'Pinterest',
-			'^Instagram',
-			'FBAN',
-			'#iP(hone|od|ad)[\d],[\d]#',
-			// namespace notation (com.google.youtube)
-			'#[a-z]{3,}(?:\.[a-z]+){2,}#',
-	);
+    /**
+     * Simple strings or regex patterns that indicate a UA is from a native app
+     * @var array
+    */
+    protected $patterns = array(
+            '^Dalvik',
+            'Darwin/',
+            'CFNetwork',
+            '^Windows Phone Ad Client',
+            '^NativeHost',
+            '^AndroidDownloadManager',
+            '-HttpClient',
+            '^AppCake',
+            'AppEngine-Google',
+            'AppleCoreMedia',
+            '^AppTrailers',
+            '^ChoiceFM',
+            '^ClassicFM',
+            '^Clipfish',
+            '^FaceFighter',
+            '^Flixster',
+            '^Gold/',
+            '^GoogleAnalytics/',
+            '^Heart/',
+            '^iBrowser/',
+            'iTunes-',
+            '^Java/',
+            '^LBC/3.',
+            'Twitter',
+            'Pinterest',
+            '^Instagram',
+            'FBAN',
+            '#iP(hone|od|ad)[\d],[\d]#',
+            // namespace notation (com.google.youtube)
+            '#[a-z]{3,}(?:\.[a-z]+){2,}#',
+    );
 
-	protected function compute() {
-		$ua = $this->request->userAgent;
+    protected function compute() {
+        $ua = $this->request->userAgent;
 
-		if ($this->device->device_os == "iOS" && !\Wurfl\Handlers\Utils::checkIfContains($ua, "Safari")) return true;
-		foreach ($this->patterns as $pattern) {
-			if ($pattern[0] === '#') {
-				// Regex
-				if (preg_match($pattern, $ua)) return true;
-				continue;
-			}
-				
-			// Substring matches are not abstracted for performance
-			$pattern_len = strlen($pattern);
-			$ua_len = strlen($ua);
+        if ($this->device->device_os == "iOS" && !\Wurfl\Handlers\Utils::checkIfContains($ua, "Safari")) return true;
+        foreach ($this->patterns as $pattern) {
+            if ($pattern[0] === '#') {
+                // Regex
+                if (preg_match($pattern, $ua)) return true;
+                continue;
+            }
+                
+            // Substring matches are not abstracted for performance
+            $pattern_len = strlen($pattern);
+            $ua_len = strlen($ua);
 
-			if ($pattern[0] === '^') {
-				// Starts with
-				if (strpos($ua, substr($pattern, 1)) === 0) return true;
+            if ($pattern[0] === '^') {
+                // Starts with
+                if (strpos($ua, substr($pattern, 1)) === 0) return true;
 
-			} else if ($pattern[$pattern_len - 1] === '$') {
-				// Ends with
-				$pattern_len--;
-				$pattern = substr($pattern, 0, $pattern_len);
-				if (strpos($ua, $pattern) === ($ua_len - $pattern_len)) return true;
+            } else if ($pattern[$pattern_len - 1] === '$') {
+                // Ends with
+                $pattern_len--;
+                $pattern = substr($pattern, 0, $pattern_len);
+                if (strpos($ua, $pattern) === ($ua_len - $pattern_len)) return true;
 
-			} else {
-				// Match anywhere
-				if (strpos($ua, $pattern) !== false) return true;
-			}
-		}
+            } else {
+                // Match anywhere
+                if (strpos($ua, $pattern) !== false) return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

@@ -12,23 +12,23 @@ namespace Wurfl\Request\UserAgentNormalizer\Generic;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
+ * @license    GNU Affero General Public License
  * @author Steve Kamerman
- * @version	$id$
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer - removes locale information from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
 class TransferEncoding implements NormalizerInterface
 {
-	public function normalize($userAgent) {
-		return str_replace(',gzip(gfe)', '', $userAgent);
-	}
+    public function normalize($userAgent) {
+        return str_replace(',gzip(gfe)', '', $userAgent);
+    }
 
 }

@@ -13,24 +13,24 @@ namespace Wurfl\VirtualCapability;
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  */
  
 class IsRobot extends \Wurfl\VirtualCapability {
 
-	protected $required_capabilities = array();
+    protected $required_capabilities = array();
 
-	protected function compute() {
-		// Control cap, "controlcap_is_robot" is checked before this function is called
+    protected function compute() {
+        // Control cap, "controlcap_is_robot" is checked before this function is called
 
-		// Check against standard bot list
-		return \Wurfl\Handlers\Utils::isRobot($this->request->userAgent);
-	}
+        // Check against standard bot list
+        return \Wurfl\Handlers\Utils::isRobot($this->request->userAgent);
+    }
 }

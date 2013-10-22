@@ -13,22 +13,22 @@ namespace Wurfl\VirtualCapability;
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  */
  
 class IsTouchscreen extends \Wurfl\VirtualCapability
 {
 
-	protected $required_capabilities = array('pointing_method');
+    protected $required_capabilities = array('pointing_method');
 
-	protected function compute() {
-		return ($this->device->pointing_method == 'touchscreen');
-	}
+    protected function compute() {
+        return ($this->device->pointing_method == 'touchscreen');
+    }
 }

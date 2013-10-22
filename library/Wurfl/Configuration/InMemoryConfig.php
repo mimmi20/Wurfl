@@ -47,16 +47,16 @@ class InMemoryConfig extends Config
         $this->wurflPatches[] = $wurflPatch;
         return $this;
     }
-	
-	/**
-	 * @param array $capabilityFilter
-	 * @return \Wurfl\Configuration\InMemoryConfig $this
-	 */
-	public function capabilityFilter(array $capabilityFilter)
+    
+    /**
+     * @param array $capabilityFilter
+     * @return \Wurfl\Configuration\InMemoryConfig $this
+     */
+    public function capabilityFilter(array $capabilityFilter)
     {
-		$this->capabilityFilter = $capabilityFilter;
-		return $this;
-	}
+        $this->capabilityFilter = $capabilityFilter;
+        return $this;
+    }
     
     /**
      * Set persistence provider

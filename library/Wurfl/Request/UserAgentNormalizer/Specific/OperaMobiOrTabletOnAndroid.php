@@ -12,11 +12,11 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 
 use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
@@ -28,24 +28,24 @@ use \Wurfl\Constants;
 
 /**
  * User Agent Normalizer
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
 class OperaMobiOrTabletOnAndroid implements NormalizerInterface
 {
-	public function normalize($userAgent) {
-		
-		$is_opera_mobi = Utils::checkIfContains($userAgent, 'Opera Mobi');
-		$is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
-		if ($is_opera_mobi || $is_opera_tablet) {
-			$opera_version = OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion($userAgent, false);
-			$android_version = AndroidHandler::getAndroidVersion($userAgent, false);
-			if ($opera_version !== null && $android_version !== null) {
-				$opera_model = $is_opera_tablet? 'Opera Tablet': 'Opera Mobi';
-				$prefix = $opera_model.' '.$opera_version.' Android '.$android_version.Constants::RIS_DELIMITER;
-				return $prefix.$userAgent;
-			}
-		}
-		
-		return $userAgent;
-	}
+    public function normalize($userAgent) {
+        
+        $is_opera_mobi = Utils::checkIfContains($userAgent, 'Opera Mobi');
+        $is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
+        if ($is_opera_mobi || $is_opera_tablet) {
+            $opera_version = OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion($userAgent, false);
+            $android_version = AndroidHandler::getAndroidVersion($userAgent, false);
+            if ($opera_version !== null && $android_version !== null) {
+                $opera_model = $is_opera_tablet? 'Opera Tablet': 'Opera Mobi';
+                $prefix = $opera_model.' '.$opera_version.' Android '.$android_version.Constants::RIS_DELIMITER;
+                return $prefix.$userAgent;
+            }
+        }
+        
+        return $userAgent;
+    }
 }

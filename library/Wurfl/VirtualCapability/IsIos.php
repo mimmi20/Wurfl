@@ -13,21 +13,21 @@ namespace Wurfl\VirtualCapability;
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  */
  
 class IsIos extends \Wurfl\VirtualCapability {
 
-	protected $required_capabilities = array('device_os');
+    protected $required_capabilities = array('device_os');
 
-	protected function compute() {
-		return ($this->device->device_os == 'iOS');
-	}
+    protected function compute() {
+        return ($this->device->device_os == 'iOS');
+    }
 }

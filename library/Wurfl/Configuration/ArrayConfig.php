@@ -112,10 +112,10 @@ class ArrayConfig extends Config
         if (array_key_exists(Config::CACHE, $configuration)) {
             $this->setCacheConfiguration($configuration [Config::CACHE]);
         }
-		
-		if (array_key_exists(Config::CAPABILITY_FILTER, $configuration)) {
-			$this->capabilityFilter = $configuration[Config::CAPABILITY_FILTER];
-		}
+        
+        if (array_key_exists(Config::CAPABILITY_FILTER, $configuration)) {
+            $this->capabilityFilter = $configuration[Config::CAPABILITY_FILTER];
+        }
         
         if (array_key_exists(Config::LOGGER, $configuration)) {
             $this->setLoggerConfiguration($configuration[Config::LOGGER]);

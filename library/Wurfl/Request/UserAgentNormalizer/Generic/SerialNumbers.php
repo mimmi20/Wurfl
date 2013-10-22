@@ -32,13 +32,13 @@ class SerialNumbers implements NormalizerInterface
         $userAgent = preg_replace(
             '/\/SN[\dX]+/', '/SNXXXXXXXXXXXXXXX', $userAgent
         );
-		
+        
         $userAgent = preg_replace(
             '/\[(ST|TF|NT)[\dX]+\]/',
             'TFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             $userAgent
         );
-		
+        
         return $userAgent;
     }
 }

@@ -25,7 +25,7 @@ namespace Wurfl\Xml;
 class DeviceIterator extends AbstractIterator
 {
     private $capabilityFilter    = array();
-	private $useCapabilityFilter = false;
+    private $useCapabilityFilter = false;
     
     /**
      * @param string $inputFile XML file to be processed
@@ -36,7 +36,7 @@ class DeviceIterator extends AbstractIterator
         parent::__construct($inputFile);
         
         $this->capabilityFilter    = $capabilityFilter;
-		$this->useCapabilityFilter = !empty($this->capabilityFilter);
+        $this->useCapabilityFilter = !empty($this->capabilityFilter);
     }
     
     public function readNextElement()
@@ -102,10 +102,10 @@ class DeviceIterator extends AbstractIterator
     private function neededToReadCapability($capabilityName)
     {
         if (!$this->useCapabilityFilter) {
-			return true;
-		}
+            return true;
+        }
         
-		return in_array($capabilityName, $this->capabilityFilter);
+        return in_array($capabilityName, $this->capabilityFilter);
     
     }
     

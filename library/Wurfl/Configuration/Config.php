@@ -46,7 +46,7 @@ abstract class  Config
     const LOGGER = 'logger';
     const ALLOW_RELOAD = 'allow-reload';
     const CAPABILITY_FILTER = 'capability-filter';
-	const DIR = 'dir';
+    const DIR = 'dir';
     const EXPIRATION = 'expiration';
     const MATCH_MODE = 'match-mode';
     const MATCH_MODE_PERFORMANCE = 'performance';
@@ -77,10 +77,10 @@ abstract class  Config
      */
     protected $wurflPatches;
     
-	/**
-	 * @var array Array of capabilities to be loaded
-	 */
-	protected $capabilityFilter = array();
+    /**
+     * @var array Array of capabilities to be loaded
+     */
+    protected $capabilityFilter = array();
     
     /**
      * @var array

@@ -124,11 +124,11 @@ class Mysql extends Base
         $row = mysql_fetch_assoc($result);
         
         if (is_array($row)) {
-			$return = @unserialize($row['value']);
-			if ($return === false) {
-				$return = null;
-			}
-		}
+            $return = @unserialize($row['value']);
+            if ($return === false) {
+                $return = null;
+            }
+        }
         
         if (is_resource($result)) {
             mysql_free_result($result);

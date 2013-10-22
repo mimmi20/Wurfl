@@ -120,10 +120,10 @@ class Manager
     {
         Handlers\Utils::reset();
         /*
-		if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
-			// This device has been identified as a web browser programatically, so no call to WURFL is necessary
-			return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER, $request);
-		}
+        if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
+            // This device has been identified as a web browser programatically, so no call to WURFL is necessary
+            return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER, $request);
+        }
         /**/
         $deviceId = $this->deviceIdForRequest($request);
         
@@ -155,7 +155,7 @@ class Manager
      *
      * @param string $deviceId
      * @param Request\GenericRequest $request
-	 * @return \Wurfl\Xml\ModelDevice
+     * @return \Wurfl\Xml\ModelDevice
      */
     public function getDevice($deviceId, Request\GenericRequest $request = null)
     {
@@ -237,7 +237,7 @@ class Manager
      *
      * @param string $deviceId
      * @param Request\GenericRequest $request
-	 *
+     *
      * @return \Wurfl\CustomDevice
      */
     private function getWrappedDevice($deviceId, Request\GenericRequest $request = null)

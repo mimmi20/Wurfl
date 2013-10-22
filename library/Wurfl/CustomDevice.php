@@ -52,16 +52,16 @@ class CustomDevice
     private $modelDevices;
     
     /**
-	 * @var Request\GenericRequest
-	 */
-	private $request;
-	
-	/**
-	 * @var \VirtualCapabilityProvider
-	 */
-	private $virtualCapabilityProvider;
-	
-	/**
+     * @var Request\GenericRequest
+     */
+    private $request;
+    
+    /**
+     * @var \VirtualCapabilityProvider
+     */
+    private $virtualCapabilityProvider;
+    
+    /**
      * @param array                         $modelDevices Array of \Wurfl\Xml\ModelDevice $modelDevices
      * @param \Wurfl\Request\GenericRequest $request
      *
@@ -75,14 +75,14 @@ class CustomDevice
 
         $this->modelDevices = $modelDevices;
         
-		if ($request === null) {
-			// This might happen if a device is looked up by its ID directly, without providing a user agent
-			$requestFactory = new \Wurfl\Request\GenericRequestFactory();
-			$request        = $requestFactory->createRequestForUserAgent($this->userAgent);
-		}
+        if ($request === null) {
+            // This might happen if a device is looked up by its ID directly, without providing a user agent
+            $requestFactory = new \Wurfl\Request\GenericRequestFactory();
+            $request        = $requestFactory->createRequestForUserAgent($this->userAgent);
+        }
 
-		$this->request                   = $request;
-		$this->virtualCapabilityProvider = new VirtualCapabilityProvider($this, $request);
+        $this->request                   = $request;
+        $this->virtualCapabilityProvider = new VirtualCapabilityProvider($this, $request);
     }
     
     /**
@@ -201,15 +201,15 @@ class CustomDevice
     {
         return $this->modelDevices;
     }
-	
-	/**
-	 * Returns the top-most device.  This is the "generic" device.
-	 * @return Xml\ModelDevice
-	 */
-	public function getRootDevice()
+    
+    /**
+     * Returns the top-most device.  This is the "generic" device.
+     * @return Xml\ModelDevice
+     */
+    public function getRootDevice()
     {
-		return $this->modelDevices[count($this->modelDevices) - 1];
-	}
+        return $this->modelDevices[count($this->modelDevices) - 1];
+    }
     
     /**
      * Returns capabilities and their values for the current device 
@@ -226,12 +226,12 @@ class CustomDevice
 
         return $capabilities;
     }
-	
-	public function getVirtualCapability($name) {
-		return $this->virtualCapabilityProvider->get($name);
-	}
-	
-	public function getAllVirtualCapabilities() {
-		return $this->virtualCapabilityProvider->getAll();
-	}
+    
+    public function getVirtualCapability($name) {
+        return $this->virtualCapabilityProvider->get($name);
+    }
+    
+    public function getAllVirtualCapabilities() {
+        return $this->virtualCapabilityProvider->getAll();
+    }
 }

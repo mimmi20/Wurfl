@@ -31,12 +31,12 @@ class BlackBerry implements NormalizerInterface
     {
         $userAgent = str_ireplace('blackberry', 'BlackBerry', $userAgent);
         
-		$pos = strpos($userAgent, 'BlackBerry');
+        $pos = strpos($userAgent, 'BlackBerry');
         
-		if ($pos !== false && $pos > 0) {
-			$userAgent = substr($userAgent, $pos);
-		}
+        if ($pos !== false && $pos > 0) {
+            $userAgent = substr($userAgent, $pos);
+        }
         
-		return $userAgent;
+        return $userAgent;
     }
 }

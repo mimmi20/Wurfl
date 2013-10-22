@@ -34,30 +34,30 @@ class StorageObject
 {
 
     private $value;
-	private $expiringOn;
+    private $expiringOn;
 
     public function __construct($value, $expire)
     {
-		$this->value = $value;
-		$this->expiringOn = ($expire === 0) ? $expire : time() + $expire;
-	}
+        $this->value = $value;
+        $this->expiringOn = ($expire === 0) ? $expire : time() + $expire;
+    }
 
-	public function value()
+    public function value()
     {
-		return $this->value;
-	}
+        return $this->value;
+    }
 
-	public function isExpired()
+    public function isExpired()
     {
-		if ($this->expiringOn === 0) {
-			return false;
-		}
+        if ($this->expiringOn === 0) {
+            return false;
+        }
         
-		return $this->expiringOn < time();
-	}
+        return $this->expiringOn < time();
+    }
 
-	public function expiringOn()
+    public function expiringOn()
     {
-		return $this->expiringOn;
-	}
+        return $this->expiringOn;
+    }
 }

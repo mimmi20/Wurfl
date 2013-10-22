@@ -119,10 +119,10 @@ class ModelDevice
         return null;
     }
 
-	public function getCapabilityNames()
+    public function getCapabilityNames()
     {
-		return array_keys($this->capabilities);
-	}
+        return array_keys($this->capabilities);
+    }
 
     /**
      * Returns true if the capability exists
@@ -149,10 +149,10 @@ class ModelDevice
         return $groupIdCapabilitiesMap;
     }
 
-	public function getGroupNames()
+    public function getGroupNames()
     {
-		return array_keys($this->groupIdCapabilitiesNameMap);
-	}
+        return array_keys($this->groupIdCapabilitiesNameMap);
+    }
 
     /**
      * Returns true if $groupId is defined
