@@ -29,7 +29,7 @@ use \Wurfl\Configuration\ArrayConfig;
  * @package    \Wurfl\Reloader
  * @deprecated
  */
-class DefaultReloader implements ReloaderInterface
+class DefaultWurflReloader implements ReloaderInterface
 {
     public function reload($wurflConfigurationPath)
     {
