@@ -84,7 +84,8 @@ class VirtualCapabilityProvider
      * Returns the names of all the available virtual capabilities
      * @return array
      */
-    public function getNames() {
+    public function getNames() 
+    {
         return array_keys(self::$virtual_capabilities);
     }
     
@@ -92,17 +93,18 @@ class VirtualCapabilityProvider
      * Returns an array of all the required capabilities for all virtual capabilities
      * @return array
      */
-    public static function getRequiredCapabilities() {
+    public static function getRequiredCapabilities() 
+    {
         $caps = array();
         
         foreach (self::$virtual_capabilities as $cap_name => $vc_name) {
             if (strpos($vc_name, '.') !== false) {
                 // Group of capabilities
                 list($group, $property) = explode('.', $vc_name);
-                $class = "WURFL_VirtualCapability_{$group}Group";
+                $class = 'VirtualCapability\\' . $group . 'Group';
             } else {
                 // Individual capability
-                $class = "WURFL_VirtualCapability_$vc_name";
+                $class = 'VirtualCapability\\' . $vc_name;
             }
             
             $model = new $class();
@@ -117,11 +119,14 @@ class VirtualCapabilityProvider
      * Gets an array of all the virtual capabilities
      * @return array Virtual capabilities in format "name => value"
      */
-    public function getAll() {
+    public function getAll() 
+    {
         $all = array();
-        foreach (self::$virtual_capabilities as $name => $class) {
-            $all[self::PREFIX_VIRTUAL.$name] = $this->get($name);
+        
+        foreach ($this->getNames() as $name) {
+            $all[self::PREFIX_VIRTUAL . $name] = $this->get($name);
         }
+        
         return $all;
     }
     
@@ -130,21 +135,44 @@ class VirtualCapabilityProvider
      * @param string $name
      * @return string|bool|int|float
      */
-    public function get($name) {
-        $control_value = $this->getControlValue($name);
-        
-        // The value is null if it is not in the loaded WURFL, it's default if it is loaded and not overridden
-        if ($control_value === null || $control_value == self::WURFL_CONTROL_DEFAULT) {
-            // The control capability was not used, use the WURFL_VirtualCapability provider
-            return $this->getObject($name)->getValue();
+    public function get($name)
+    {
+        if (!in_array($name, $this->getNames())) {
+            return null;
         }
         
-        // Forced capabilities
-        if ($control_value === 'force_true') return true;
-        if ($control_value === 'force_false') return false;
+        $controlValue = $this->getControlValue($name);
+        $returnValue  = null;
         
-        // Use the control value from WURFL
-        return $control_value;
+        switch ($controlValue) {
+            /*
+             * The value is null if it is not in the loaded WURFL, 
+             * it's default if it is loaded and not overridden
+             */
+            case null:
+                // break omitted
+            case self::WURFL_CONTROL_DEFAULT:
+                /*
+                 * The control capability was not used, 
+                 * -> use the \Wurfl\VirtualCapability provider
+                 */
+                $returnValue = $this->getObject($name)->getValue();
+                break;
+            case 'force_true':
+                // Forced capabilities
+                $returnValue = true;
+                break;
+            case 'force_false':
+                // Forced capabilities
+                $returnValue = false;
+                break;
+            default:
+                // Use the control value from WURFL
+                $returnValue = $controlValue;
+                break;
+        }
+        
+        return $returnValue;
     }
     
     /**
@@ -152,15 +180,17 @@ class VirtualCapabilityProvider
      * @param string $name
      * @return WURFL_VirtualCapability
      */
-    public function getObject($name) {
+    public function getObject($name) 
+    {
         $name = $this->cleanCapabilityName($name);
+        
         if (!array_key_exists($name, $this->cache)) {
             if (($pos = strpos(self::$virtual_capabilities[$name], '.')) !== false) {
                 // Group of capabilities
                 list($group, $property) = explode('.', self::$virtual_capabilities[$name]);
                 
                 if (!array_key_exists($group, $this->group_cache)) {
-                    $class = "WURFL_VirtualCapability_{$group}Group";
+                    $class = 'VirtualCapability\\' . $group . 'Group';
                     // Cache the group
                     $this->group_cache[$group] = new $class($this->device, $this->request);
                     $this->group_cache[$group]->compute();
@@ -170,10 +200,11 @@ class VirtualCapabilityProvider
                 $this->cache[$name] = $this->group_cache[$group]->get($property);
             } else {
                 // Individual capability
-                $class = 'WURFL_VirtualCapability_'.self::$virtual_capabilities[$name];
+                $class = 'VirtualCapability\\' . self::$virtual_capabilities[$name];
                 $this->cache[$name] = new $class($this->device, $this->request);
             }
         }
+        
         return $this->cache[$name];
     }
     
@@ -182,24 +213,30 @@ class VirtualCapabilityProvider
      * @param string $name
      * @return boolean
      */
-    public function exists($name) {
+    public function exists($name) 
+    {
         return array_key_exists($this->cleanCapabilityName($name), self::$virtual_capabilities);
     }
     
-    protected function getControlValue($name) {
+    protected function getControlValue($name) 
+    {
         // Check if loaded WURFL contains control caps
         if (!$this->device->getRootDevice()->isGroupDefined(self::WURFL_CONTROL_GROUP)) {
             return null;
         }
-        $control_cap = self::PREFIX_CONTROL.$this->cleanCapabilityName($name);
+        
+        $control_cap = self::PREFIX_CONTROL . $this->cleanCapabilityName($name);
+        
         // Check if loaded WURFL contains the requested control cap
         if (!$this->device->getRootDevice()->isCapabilityDefined($control_cap)) {
             return null;
         }
+        
         return $this->device->getCapability($control_cap);
     }
     
-    protected function cleanCapabilityName($name) {
+    protected function cleanCapabilityName($name) 
+    {
         return str_replace(self::PREFIX_VIRTUAL, '', $name);
     }
 }

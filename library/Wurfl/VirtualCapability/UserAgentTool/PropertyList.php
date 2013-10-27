@@ -18,19 +18,24 @@ namespace Wurfl\VirtualCapability\UserAgentTool;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+
 /**
  * @package WURFL_VirtualCapability_UserAgentTool
  */
 class PropertyList
 {
     /**
-     * @var WURFL_VirtualCapability_UserAgentTool_Device
+     * @var \Wurfl\VirtualCapability\UserAgentTool\Device
      */
     protected $device;
-    public function __construct($device) {
+    
+    public function __construct(Device $device) 
+    {
         $this->device = $device;
     }
-    public function set() {
+    
+    public function set() 
+    {
         return true;
     }
 }

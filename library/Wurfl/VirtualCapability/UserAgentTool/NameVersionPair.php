@@ -28,13 +28,15 @@ class NameVersionPair extends PropertyList
 
     protected $regex_matches = array();
 
-    public function set($name=null, $version=null) {
+    public function set($name = null, $version = null) 
+    {
         if ($name !== null) $this->name = trim($name);
         if ($version !== null) $this->version = trim($version);
         return true;
     }
 
-    public function setRegex($regex, $name=null, $version=null) {
+    public function setRegex($regex, $name = null, $version = null) 
+    {
         // No need to capture the matches if we're not going to use them
         if (!is_int($name) && !is_int($version)) {
             if (preg_match($regex, $this->device->ua)) {
@@ -59,7 +61,8 @@ class NameVersionPair extends PropertyList
         return false;
     }
 
-    public function setContains($needle, $name, $version=null) {
+    public function setContains($needle, $name, $version=null) 
+    {
         if (strpos($this->device->ua, $needle) !== false) {
             if ($name !== null) $this->name = trim($name);
             if ($version !== null) $this->version = trim($version);
@@ -68,11 +71,13 @@ class NameVersionPair extends PropertyList
         return false;
     }
 
-    public function getLastRegexMatches() {
+    public function getLastRegexMatches() 
+    {
         return $this->regex_matches;
     }
 
-    public function getLastRegexMatch($match_number) {
+    public function getLastRegexMatch($match_number) 
+    {
         return $this->regex_matches[$match_number];
     }
 }

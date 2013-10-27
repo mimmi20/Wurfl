@@ -44,25 +44,33 @@ abstract class VirtualCapability
      * @param CustomDevice $device
      * @param Request\GenericRequest $request
      */
-    public function __construct($device=null, $request=null) {
+    public function __construct($device = null, $request = null) 
+    {
         $this->device = $device;
         $this->request = $request;
     }
     
-    public function hasRequiredCapabilities() {
-        if (empty($this->required_capabilities)) return true;
+    public function hasRequiredCapabilities() 
+    {
+        if (empty($this->required_capabilities)) {
+            return true;
+        }
+        
         if (self::$loaded_capabilities === null) {
             self::$loaded_capabilities = $this->device->getRootDevice()->getCapabilityNames();
         }
+        
         $missing_caps = array_diff($this->required_capabilities, self::$loaded_capabilities);
         return empty($missing_caps);
     }
     
-    public function getRequiredCapabilities() {
+    public function getRequiredCapabilities() 
+    {
         return $this->required_capabilities;
     }
     
-    public function getValue() {
+    public function getValue() 
+    {
         $value = ($this->use_caching)? $this->computeCached(): $this->compute();
         if (is_bool($value)) {
             return $value? 'true': 'false';
@@ -72,7 +80,8 @@ abstract class VirtualCapability
     
     abstract protected function compute();
     
-    private function computeCached() {
+    private function computeCached() 
+    {
         if ($this->cached_value === null) {
             $this->cached_value = $this->compute();
         }

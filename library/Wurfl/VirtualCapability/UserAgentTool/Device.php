@@ -21,8 +21,8 @@ namespace Wurfl\VirtualCapability\UserAgentTool;
 /**
  * @package WURFL_VirtualCapability_UserAgentTool
  */
-class WURFL_VirtualCapability_UserAgentTool_Device {
-
+class Device
+{
     /**
      * @var WURFL_VirtualCapability_UserAgentTool_NameVersionPair
      */
@@ -35,11 +35,12 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
     public $ua;
     public $ua_lower;
 
-    public function __construct($user_agent) {
-        $this->ua = $user_agent;
+    public function __construct($user_agent)
+    {
+        $this->ua       = $user_agent;
         $this->ua_lower = strtolower($user_agent);
-        $this->browser = new NameVersionPair($this);
-        $this->os = new NameVersionPair($this);
+        $this->browser  = new NameVersionPair($this);
+        $this->os       = new NameVersionPair($this);
     }
 
     protected static $windows_map = array(
@@ -50,12 +51,15 @@ class WURFL_VirtualCapability_UserAgentTool_Device {
             '6.0' => 'Vista',
             '6.1' => '7',
             '6.2' => '8',
+            '6.3' => '8.1',
     );
 
-    public function normalize() {
+    public function normalize() 
+    {
         $this->normalizeOS();
     }
-    protected function normalizeOS() {
+    protected function normalizeOS() 
+    {
         if (strpos($this->ua, 'Windows') !== false) {
             if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->os->name, $matches)) {
                 $this->os->name = "Windows";
