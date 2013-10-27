@@ -75,7 +75,7 @@ class WURFL_DeviceRepositoryBuilder {
 				$this->lockFile = WURFL_FileUtils::getTempDir().'/wurfl.lock';
 			}
 			// Update Data
-			set_time_limit(300);
+			// set_time_limit(300);
 			$fp = fopen($this->lockFile, $this->lockStyle);
 			if (flock($fp, LOCK_EX | LOCK_NB)) {
 				$infoIterator = new WURFL_Xml_VersionIterator($wurflFile);
