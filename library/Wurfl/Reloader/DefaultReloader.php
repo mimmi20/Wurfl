@@ -29,11 +29,11 @@ use \Wurfl\Configuration\ArrayConfig;
  * @package    \Wurfl\Reloader
  * @deprecated
  */
-class DefaultWurflReloader implements ReloaderInterface
+class DefaultReloader implements ReloaderInterface
 {
     public function reload($wurflConfigurationPath)
     {
-        $wurflConfig = $this->fromFile ( $wurflConfigurationPath );
+        $wurflConfig = $this->fromFile($wurflConfigurationPath);
         touch($wurflConfig->wurflFile);
         $wurflManagerFactory = new ManagerFactory($wurflConfig);
         $wurflManagerFactory->create();    
@@ -42,9 +42,10 @@ class DefaultWurflReloader implements ReloaderInterface
     
     private function fromFile($wurflConfigurationPath)
     {
-        if ($this->endsWith ( $wurflConfigurationPath, ".xml" )) {
-            return new XmlConfig ( $wurflConfigurationPath );
+        if ($this->endsWith($wurflConfigurationPath, '.xml')) {
+            return new XmlConfig($wurflConfigurationPath);
         }
+        
         return new ArrayConfig($wurflConfigurationPath);
     }
     

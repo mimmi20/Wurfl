@@ -19,6 +19,7 @@ namespace Wurfl\Reloader;
  * @version    $id$
  * @deprecated
  */
+
 /**
  * WURFL Reloader Interface
  * @package    \Wurfl\Reloader
@@ -28,5 +29,3 @@ interface ReloaderInterface
 {
     public function reload($wurflConfigurationPath);
 }
-
-

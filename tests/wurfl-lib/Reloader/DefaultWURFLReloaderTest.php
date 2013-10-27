@@ -37,7 +37,5 @@ class WURFL_Reloader_DefaultWURFLReloaderTest extends PHPUnit_Framework_TestCase
 	protected function tearDown() {
 		parent::tearDown ();
 	}
-
-
 }
 
