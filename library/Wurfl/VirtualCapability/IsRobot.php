@@ -23,11 +23,12 @@ namespace Wurfl\VirtualCapability;
  * @package    WURFL_VirtualCapability
  */
  
-class IsRobot extends \Wurfl\VirtualCapability {
-
+class IsRobot extends \Wurfl\VirtualCapability
+{
     protected $required_capabilities = array();
 
-    protected function compute() {
+    protected function compute()
+    {
         // Control cap, "controlcap_is_robot" is checked before this function is called
 
         // Check against standard bot list

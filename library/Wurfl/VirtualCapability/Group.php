@@ -21,8 +21,8 @@ namespace Wurfl\VirtualCapability;
 /**
  * @package WURFL_VirtualCapability
  */
-abstract class roup {
-
+abstract class Group
+{
     protected $required_capabilities = array();
     protected $virtual_capabilities = array();
     protected $storage = array();
@@ -30,40 +30,50 @@ abstract class roup {
     private static $loaded_capabilities;
 
     /**
-     * @var WURFL_CustomDevice
+     * @var \Wurfl\CustomDevice
      */
     protected $device;
     
     /**
-     * @var WURFL_Request_GenericRequest
+     * @var \Wurfl\Request\GenericRequest
      */
     protected $request;
     
     /**
-     * @param WURFL_CustomDevice $device
-     * @param WURFL_Request_GenericRequest $request
+     * @param \Wurfl\CustomDevice $device
+     * @param \Wurfl\Request\GenericRequest $request
      */
-    public function __construct($device=null, $request=null) {
-        $this->device = $device;
+    public function __construct(\Wurfl\CustomDevice $device = null,
+        \Wurfl\Request\GenericRequest $request = null)
+    {
+        $this->device  = $device;
         $this->request = $request;
     }
 
-    public function hasRequiredCapabilities() {
-        if (empty($this->required_capabilities)) return true;
+    public function hasRequiredCapabilities()
+    {
+        if (empty($this->required_capabilities)) {
+            return true;
+        }
+        
         if (self::$loaded_capabilities === null) {
             self::$loaded_capabilities = $this->device->getRootDevice()->getCapabilityNames();
         }
+        
         $missing_caps = array_diff($this->required_capabilities, self::$loaded_capabilities);
+        
         return empty($missing_caps);
     }
 
-    public function getRequiredCapabilities() {
+    public function getRequiredCapabilities()
+    {
         return $this->required_capabilities;
     }
 
     abstract public function compute();
 
-    public function get($name) {
+    public function get($name)
+    {
         return $this->storage[$name];
     }
 }

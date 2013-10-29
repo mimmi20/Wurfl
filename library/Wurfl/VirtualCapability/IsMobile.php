@@ -27,7 +27,8 @@ class IsMobile extends \Wurfl\VirtualCapability
 {
     protected $required_capabilities = array('is_wireless_device');
 
-    protected function compute() {
+    protected function compute()
+    {
         return $this->device->is_wireless_device;
     }
 }

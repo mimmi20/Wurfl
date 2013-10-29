@@ -190,7 +190,7 @@ class VirtualCapabilityProvider
                 list($group, $property) = explode('.', self::$virtual_capabilities[$name]);
                 
                 if (!array_key_exists($group, $this->group_cache)) {
-                    $class = 'VirtualCapability\\' . $group . 'Group';
+                    $class = '\\Wurfl\\VirtualCapability\\' . $group . 'Group';
                     // Cache the group
                     $this->group_cache[$group] = new $class($this->device, $this->request);
                     $this->group_cache[$group]->compute();
@@ -200,7 +200,7 @@ class VirtualCapabilityProvider
                 $this->cache[$name] = $this->group_cache[$group]->get($property);
             } else {
                 // Individual capability
-                $class = 'VirtualCapability\\' . self::$virtual_capabilities[$name];
+                $class = '\\Wurfl\\VirtualCapability\\' . self::$virtual_capabilities[$name];
                 $this->cache[$name] = new $class($this->device, $this->request);
             }
         }

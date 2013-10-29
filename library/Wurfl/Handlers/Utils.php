@@ -32,7 +32,7 @@ class Utils
      * @var unknown_type
      */
     const WORST_MATCH = 7;
-    
+
     /**
      * @var array Collection of mobile browser keywords
      */
@@ -75,7 +75,7 @@ class Utils
         '; xbox',
         'nintendo',
         // These keywords keep IE-like mobile UAs out of the MSIE bucket
-        // ex: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; XBLWP7;  ZuneWP7) 
+        // ex: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; XBLWP7;  ZuneWP7)
         'zunewp7',
         'skyfire',
         'silk',
@@ -84,7 +84,7 @@ class Utils
         ' gt-',
         'ventana',
     );
-    
+
     private static $smartTVBrowsers = array(
         'googletv',
         'boxee',
@@ -99,8 +99,9 @@ class Utils
         'opera tv',
         'viera',
         'konfabulator',
+        'sony bravia',
     );
-    
+
     private static $desktopBrowsers = array(
         'wow64',
         '.net clr',
@@ -114,7 +115,20 @@ class Utils
         'iceweasel',
         'epiphany',
     );
-    
+
+    private static $robots = array(
+        '+http',
+        'bot',
+        'crawler',
+        'spider',
+        'novarra',
+        'transcoder',
+        'yahoo! searchmonkey',
+        'yahoo! slurp',
+        'feedfetcher-google',
+        'mowser'
+    );
+
     /**
      * Keyword => deviceID pair collection used for Catch-All matching
      * @var array Array of (string)keyword => (string)deviceID
@@ -145,16 +159,16 @@ class Utils
         'NetFront/3.5' => 'generic_netfront_ver3_5',
         'NetFront/4.0' => 'generic_netfront_ver4_0',
         'NetFront/4.1' => 'generic_netfront_ver4_1',
-        
+
         // CoreMedia
         'CoreMedia' => 'apple_iphone_coremedia_ver1',
-        
+
         // Windows CE
         'Windows CE' => 'generic_ms_mobile',
 
         // Generic XHTML
         'Obigo' => Constants::GENERIC_XHTML,
-           'AU-MIC/2' => Constants::GENERIC_XHTML,
+        'AU-MIC/2' => Constants::GENERIC_XHTML,
         'AU-MIC-' =>  Constants::GENERIC_XHTML,
         'AU-OBIGO/' =>  Constants::GENERIC_XHTML,
         'Teleca Q03B1' =>  Constants::GENERIC_XHTML,
@@ -170,8 +184,8 @@ class Utils
         'DoCoMo' => 'docomo_generic_jap_ver1',
         'KDDI' => 'docomo_generic_jap_ver1',
     );
-    
-    /** 
+
+    /**
      * Alias of \Wurfl\Handlers_Matcher_RISMatcher::match()
      * @param array $collection
      * @param string $needle
@@ -183,7 +197,7 @@ class Utils
     {
         return Matcher\RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
-    
+
     /**
      * Alias of \Wurfl\Handlers_Matcher_LDMatcher::match()
      * @param array $collection
@@ -196,7 +210,7 @@ class Utils
     {
         return Matcher\LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
     }
-    
+
     /**
      * Char index of the first instance of $string found in $target, starting at $startingIndex;
      * if no match is found, the length of the string is returned
@@ -211,7 +225,7 @@ class Utils
         $pos = strpos ( $string, $target, $startingIndex );
         return $pos === false ? $length : $pos;
     }
-    
+
     /**
      * Lowest char index of the first instance of any of the $needles found in $userAgent, starting at $startIndex;
      * if no match is found, the length of the string is returned
@@ -229,10 +243,10 @@ class Utils
                 $positions [] = $pos;
             }
         }
-        sort ( $positions );        
+        sort ( $positions );
         return count ( $positions ) > 0 ? $positions [0] : strlen ( $userAgent );
     }
-    
+
     /**
      * Resets cached detection variables for performance
      */
@@ -241,8 +255,9 @@ class Utils
         self::$_is_desktop_browser = null;
         self::$_is_mobile_browser = null;
         self::$_is_smarttv = null;
+        self::$_is_robot = null;
     }
-    
+
     /**
      * Returns true if the give $userAgent is from a mobile device
      * @param string $userAgent
@@ -262,7 +277,7 @@ class Utils
         return self::$_is_mobile_browser;
     }
     private static $_is_mobile_browser;
-    
+
     /**
      * Returns true if the give $userAgent is from a desktop device
      * @param string $userAgent
@@ -282,7 +297,26 @@ class Utils
         return self::$_is_desktop_browser;
     }
     private static $_is_desktop_browser;
-    
+
+    /**
+     * Returns true if the give $userAgent is from a robot
+     * @param string $userAgent
+     * @return bool
+     */
+    public static function isRobot($userAgent) {
+        if (self::$_is_robot !== null) return self::$_is_robot;
+        self::$_is_robot = false;
+        $userAgent = strtolower($userAgent);
+        foreach (self::$robots as $key) {
+            if (strpos($userAgent, $key) !== false) {
+                self::$_is_robot = true;
+                break;
+            }
+        }
+        return self::$_is_robot;
+    }
+    private static $_is_robot;
+
     /**
      * Returns true if the give $userAgent is from a mobile device
      * @param string $userAgent
@@ -297,7 +331,7 @@ class Utils
         }
         return Constants::NO_MATCH;
     }
-    
+
     /**
      * Is the given user agent very likely to be a desktop browser
      * @param string $userAgent
@@ -327,7 +361,7 @@ class Utils
         if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE \d\.\d; Windows NT \d\.\d/', $userAgent)) return true;
         return false;
     }
-    
+
     /**
      * Returns true if the give $userAgent is from a mobile device
      * @param string $userAgent
@@ -347,7 +381,7 @@ class Utils
         return self::$_is_smarttv;
     }
     private static $_is_smarttv;
-    
+
     /**
      * Returns true if the give $userAgent is from a spam bot or crawler
      * @param string $userAgent
@@ -355,14 +389,14 @@ class Utils
      */
     public static function isSpamOrCrawler($userAgent)
     {
-        //$spamOrCrawlers = array("FunWebProducts", "Spam");        
+        //$spamOrCrawlers = array("FunWebProducts", "Spam");
         return self::checkIfContains($userAgent, "Spam") || self::checkIfContains($userAgent, "FunWebProducts");
     }
-    
+
     /**
-     * 
-     * Returns the position of third occurrence of a ;(semi-column) if it exists 
-     * or the string length if no match is found 
+     *
+     * Returns the position of third occurrence of a ;(semi-column) if it exists
+     * or the string length if no match is found
      * @param string $haystack
      * @return int Char index of third semicolon or length
      */
@@ -374,7 +408,7 @@ class Utils
         }
         return $thirdSemiColumnIndex;
     }
-    
+
     /**
      * The nth($ordinal) occurance of $needle in $haystack or -1 if no match is found
      * @param string $haystack
@@ -388,11 +422,11 @@ class Utils
         if (is_null ( $haystack ) || empty ( $haystack )) {
             throw new \InvalidArgumentException ( "haystack must not be null or empty" );
         }
-        
+
         if (! is_integer ( $ordinal )) {
             throw new \InvalidArgumentException ( "ordinal must be a positive ineger" );
         }
-        
+
         $found = 0;
         $index = - 1;
         do {
@@ -403,11 +437,11 @@ class Utils
             }
             $found ++;
         } while ( $found < $ordinal );
-        
+
         return $index;
-    
+
     }
-    
+
     /**
      * First occurance of a / character
      * @param string $string Haystack
@@ -418,7 +452,7 @@ class Utils
         $firstSlash = strpos($string, "/");
         return ($firstSlash !== false)? $firstSlash: strlen($string);
     }
-    
+
     /**
      * Second occurance of a / character
      * @param string $string Haystack
@@ -431,7 +465,7 @@ class Utils
             return strlen($string);
         return strpos(substr($string, $firstSlash + 1), "/") + $firstSlash;
     }
-    
+
     /**
      * First occurance of a space character
      * @param string $string Haystack
@@ -442,7 +476,7 @@ class Utils
         $firstSpace = strpos($string, " ");
         return ($firstSpace === false)? strlen($string) : $firstSpace;
     }
-    
+
     /**
      * First occurance of a ; character or length
      * @param string $string Haystack
@@ -452,7 +486,7 @@ class Utils
     {
         return self::firstMatchOrLength($string, ";");
     }
-    
+
     /**
      * First occurance of $toMatch string or length
      * @param string $string Haystack
@@ -464,7 +498,7 @@ class Utils
         $firstMatch = strpos ( $string, $toMatch );
         return ($firstMatch === false) ? strlen($string): $firstMatch;
     }
-    
+
     /**
      * Returns true if $haystack contains $needle
      * @param string $haystack Haystack
@@ -475,7 +509,7 @@ class Utils
     {
         return (strpos($haystack, $needle) !== false);
     }
-    
+
     /**
      * Returns true if $haystack contains any of the (string)needles in $needles
      * @param string $haystack Haystack
@@ -489,7 +523,7 @@ class Utils
         }
         return false;
     }
-    
+
     /**
      * Returns true if $haystack contains all of the (string)needles in $needles
      * @param string $haystack Haystack
@@ -504,7 +538,7 @@ class Utils
         return true;
 
     }
-    
+
     /**
      * Returns true if $haystack contains $needle without regard for case
      * @param string $haystack Haystack
@@ -515,7 +549,7 @@ class Utils
     {
         return stripos($haystack, $needle) !== false;
     }
-    
+
     /**
      * Returns true if $haystack starts with $needle
      * @param string $haystack Haystack
@@ -526,7 +560,7 @@ class Utils
     {
         return strpos($haystack, $needle) === 0;
     }
-    
+
     /**
      * Returns true if $haystack starts with any of the $needles
      * @param string $haystack Haystack
@@ -542,10 +576,15 @@ class Utils
                 }
             }
         }
-        
+
         return false;
     }
-    
+
+    /**
+     * Returns the string position of the end of the RIS delimiter, or false if there is no RIS delimiter
+     * @param string $userAgent
+     * @return int|bool
+     */
     public static function toleranceToRisDelimeter($userAgent)
     {
         $tolerance = strpos($userAgent, Constants::RIS_DELIMITER);
@@ -555,7 +594,7 @@ class Utils
         // Push the tolerance to the *end* of the RIS Delimiter
         return $tolerance + strlen(Constants::RIS_DELIMITER);
     }
-    
+
     /**
      * Removes the locale portion from the userAgent
      * @param string $userAgent
