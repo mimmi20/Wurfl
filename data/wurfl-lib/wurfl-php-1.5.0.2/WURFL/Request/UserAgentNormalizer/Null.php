@@ -10,19 +10,19 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer
+ * @package    WURFL_Request_UserAgentNormalizer
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * Null User Agent Normalizer - does not normalize anything
- * @package	WURFL_Request_UserAgentNormalizer
+ * @package    WURFL_Request_UserAgentNormalizer
  */
 class WURFL_Request_UserAgentNormalizer_Null implements WURFL_Request_UserAgentNormalizer_Interface  {
 
-	public function normalize($userAgent) {		
-		return $userAgent;
-	}
+    public function normalize($userAgent) {        
+        return $userAgent;
+    }
 }

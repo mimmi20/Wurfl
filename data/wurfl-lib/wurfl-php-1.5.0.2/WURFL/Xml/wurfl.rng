@@ -4,23 +4,23 @@
       <group>
         <element name="version">
           <interleave>
-			<optional>
-            	<element name="ver">
+            <optional>
+                <element name="ver">
               <text/>
             </element>
-			</optional>
-			<optional>							
-            	<element name="last_updated">
+            </optional>
+            <optional>                            
+                <element name="last_updated">
               <text/>
             </element>
-			</optional>
-			<optional>
-            	<element name="official_url">
+            </optional>
+            <optional>
+                <element name="official_url">
               <text/>
             </element>
-			</optional>
-			<optional>
-            	<element name="maintainers">
+            </optional>
+            <optional>
+                <element name="maintainers">
               <oneOrMore>
                 <element name="maintainer">
                   <group>
@@ -37,9 +37,9 @@
                 </element>
               </oneOrMore>
             </element>
-			</optional>
-			<optional>
-            	<element name="authors">
+            </optional>
+            <optional>
+                <element name="authors">
               <oneOrMore>
                 <element name="author">
                   <interleave>
@@ -56,10 +56,10 @@
                 </element>
               </oneOrMore>
             </element>
-			</optional>
-			<optional>
-            	<element name="contributors">
-              		<oneOrMore>
+            </optional>
+            <optional>
+                <element name="contributors">
+                      <oneOrMore>
                 <element name="contributor">
                   <interleave>
                     <attribute name="email">
@@ -72,17 +72,17 @@
                 </element>
               </oneOrMore>
             </element>
-			</optional>
-			<optional>
-            	<element name="statement">
+            </optional>
+            <optional>
+                <element name="statement">
               <!-- occurrences: 1 -->
               <text/>
             </element>
-			</optional>
+            </optional>
           </interleave>
         </element>
       
-  		<element name="devices">
+          <element name="devices">
           <oneOrMore>
             <element name="device">
               <interleave>

@@ -102,26 +102,26 @@ ScientiaMobile WURFL PHP API change log:
 
 [2009.06.01]
 - Configuration:
-	- Changed the "persistance" to "persistence" (N.B a to e) in wurfl-config.xml
-	- Added Possibilty to specify configuration from an array.(array-wurfl-config.php)
+    - Changed the "persistance" to "persistence" (N.B a to e) in wurfl-config.xml
+    - Added Possibilty to specify configuration from an array.(array-wurfl-config.php)
 - Normalizers
-	- Added
-		- Android
-		- Chrome
-		- Opera
-		- Safari
-		- MSIE	
+    - Added
+        - Android
+        - Chrome
+        - Opera
+        - Safari
+        - MSIE    
 - Handlers
-	- Added 
-		- AndroidHandler
-		- ChromeHandler
-		- BotCrawlerTranscoderHandler		
+    - Added 
+        - AndroidHandler
+        - ChromeHandler
+        - BotCrawlerTranscoderHandler        
 - Logger
-	- Removed dependency from the PEAR Log
-	- Added Custom Logger
+    - Removed dependency from the PEAR Log
+    - Added Custom Logger
 - WURFLLoader
-	- Added A WURFLReloader 
-- Created a new web_browsers_patch			
+    - Added A WURFLReloader 
+- Created a new web_browsers_patch            
 
 [2010-06-16]
 Added Caching expiration capability

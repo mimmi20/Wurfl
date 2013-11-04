@@ -11,39 +11,39 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  */
  
 class WURFL_VirtualCapability_ManualGroupChild extends WURFL_VirtualCapability {
-	protected $use_caching = false;
-	protected $manual_value;
-	/**
-	 * @var WURFL_VirtualCapabilityGroup
-	 */
-	protected $group;
+    protected $use_caching = false;
+    protected $manual_value;
+    /**
+     * @var WURFL_VirtualCapabilityGroup
+     */
+    protected $group;
 
-	public function __construct(WURFL_CustomDevice $device, WURFL_Request_GenericRequest $request, WURFL_VirtualCapability_Group $group, $value=null) {
-		$this->group = $group;
-		parent::__construct($device, $request);
-		$this->manual_value = $value;
-	}
+    public function __construct(WURFL_CustomDevice $device, WURFL_Request_GenericRequest $request, WURFL_VirtualCapability_Group $group, $value=null) {
+        $this->group = $group;
+        parent::__construct($device, $request);
+        $this->manual_value = $value;
+    }
 
-	public function compute() {
-		return $this->manual_value;
-	}
+    public function compute() {
+        return $this->manual_value;
+    }
 
-	public function hasRequiredCapabilities() {
-		return $this->group->hasRequiredCapabilities();
-	}
+    public function hasRequiredCapabilities() {
+        return $this->group->hasRequiredCapabilities();
+    }
 
-	public function getRequiredCapabilities() {
-		return $this->group->getRequiredCapabilities();
-	}
+    public function getRequiredCapabilities() {
+        return $this->group->getRequiredCapabilities();
+    }
 }

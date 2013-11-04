@@ -10,24 +10,24 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers_Matcher
+ * @package    WURFL_Handlers_Matcher
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * WURFL user agent matcher interface
- * @package	WURFL_Handlers_Matcher
+ * @package    WURFL_Handlers_Matcher
  */
 interface WURFL_Handlers_Matcher_Interface {
-	
-	/**
-	 * Attempts to find a matching $needle in given $collection within the specified $tolerance
-	 * @param array $collection Collection of user agents
-	 * @param string $needle User agent to search for
-	 * @param int $tolerance Minimum accuracy to be considered a match
-	 * @return string matched user agent
-	 */
-	public function match(&$collection, $needle, $tolerance);
+    
+    /**
+     * Attempts to find a matching $needle in given $collection within the specified $tolerance
+     * @param array $collection Collection of user agents
+     * @param string $needle User agent to search for
+     * @param int $tolerance Minimum accuracy to be considered a match
+     * @return string matched user agent
+     */
+    public function match(&$collection, $needle, $tolerance);
 }
 

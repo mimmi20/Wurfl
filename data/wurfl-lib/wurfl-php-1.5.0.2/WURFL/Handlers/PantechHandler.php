@@ -11,10 +11,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,27 +22,27 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_PantechHandler extends WURFL_Handlers_Handler {
-	
-	const PANTECH_TOLERANCE = 5;
-	protected $prefix = "PANTECH";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Pantech', 'PT-', 'PANTECH', 'PG-'));
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Pantech")) {
-			$tolerance = self::PANTECH_TOLERANCE;
-		} else {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-		}
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+    
+    const PANTECH_TOLERANCE = 5;
+    protected $prefix = "PANTECH";
+    
+    public function canHandle($userAgent) {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Pantech', 'PT-', 'PANTECH', 'PG-'));
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Pantech")) {
+            $tolerance = self::PANTECH_TOLERANCE;
+        } else {
+            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        }
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

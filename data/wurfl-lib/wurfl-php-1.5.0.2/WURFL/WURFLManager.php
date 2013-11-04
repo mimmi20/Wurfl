@@ -10,10 +10,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
@@ -36,140 +36,140 @@
  * @see getWURFLInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), WURFL_WURFLManagerFactory::create()
  */
 class WURFL_WURFLManager {
-	
-	/**
-	 * @var WURFL_WURFLService
-	 */
-	private $_wurflService;
-	/**
-	 * @var WURFL_Request_GenericRequestFactory
-	 */
-	private $_requestFactory;
-	
-	/**
-	 * Creates a new WURFL Manager object
-	 * @param WURFL_WURFLService $wurflService
-	 * @param WURFL_Request_GenericRequestFactory $requestFactory
-	 */
-	public function __construct(WURFL_WURFLService $wurflService, WURFL_Request_GenericRequestFactory $requestFactory) {
-		$this->_wurflService = $wurflService;
-		$this->_requestFactory = $requestFactory;
-	}
-	
-	/**
-	 * Return the version info of the loaded wurfl xml file
-	 * 
-	 * Example:
-	 * <code>
-	 * $info = $wurflManager->getWURFLInfo();
-	 * printf('Version: %s, Updated: %s, OfficialURL: %s',
-	 * 	$info->version,
-	 * 	$info->lastUpdated,
-	 * 	$info->officialURL
-	 * );
-	 * </code>
-	 * @return WURFL_Xml_Info WURFL Version info
-	 * @see WURFL_WURFLService::getWURFLInfo(), WURFL_DeviceRepository::getWURFLInfo()
-	 */
-	public function getWURFLInfo() {
-		return $this->_wurflService->getWURFLInfo();
-	}
-	
-	/**
-	 * Return a device the given WURFL_Request_GenericRequest request(user-agent..)
-	 *
-	 * @param WURFL_Request_GenericRequest $request
-	 * @return WURFL_CustomDevice device
-	 * @throws Exception if the $request parameter is not set
-	 */
-	public function getDeviceForRequest(WURFL_Request_GenericRequest $request) {
-		if (!isset($request)) {
-			throw new Exception("The request parameter must be set.");
-		}
-		WURFL_Handlers_Utils::reset();
-		if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance() && WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
-			// This device has been identified as a web browser programatically, so no call to WURFL is necessary
-			return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER, $request);
-		}
-		return $this->_wurflService->getDeviceForRequest($request);
-	}
-	
-	/**
-	 * Return a device for the given http request(user-agent..)
-	 *
-	 * @param array $httpRequest HTTP Request array (normally $_SERVER)
-	 * @return WURFL_CustomDevice device
-	 * @throws Exception if $httpRequest is not set
-	 */
-	public function getDeviceForHttpRequest($httpRequest) {
-		if (!isset($httpRequest)) {
-			throw new Exception("The $httpRequest parameter must be set.");
-		}
-		$request = $this->_requestFactory->createRequest($httpRequest);
-		return $this->getDeviceForRequest($request);
-	}
-	
-	/**
-	 * Returns a device for the given user-agent
-	 *
-	 * @param string $userAgent
-	 * @return WURFL_CustomDevice device
-	 * @throws Exception if $userAgent is not set
-	 */
-	public function getDeviceForUserAgent($userAgent) {
-		if (!isset($userAgent)) {
-			$userAgent = '';
-		}
-		
-		$request = $this->_requestFactory->createRequestForUserAgent($userAgent);
-		return $this->getDeviceForRequest($request);
-	}
-	
-	/**
-	 * Return a device for the given device id
-	 *
-	 * @param string $deviceID
-	 * @return WURFL_CustomDevice
-	 */
-	public function getDevice($deviceID) {
-		return $this->_wurflService->getDevice($deviceID);
-	}
-	
-	/**
-	 * Returns an array of all wurfl group ids
-	 *
-	 * @return array
-	 */
-	public function getListOfGroups() {
-		return $this->_wurflService->getListOfGroups();
-	}
-	
-	/**
-	 * Returns all capability names for the given $groupID
-	 *
-	 * @param string $groupID
-	 * @return array
-	 */
-	public function getCapabilitiesNameForGroup($groupID) {
-		return $this->_wurflService->getCapabilitiesNameForGroup($groupID);
-	}
-	
-	/**
-	 * Returns an array of all the fall back devices starting from the given device
-	 *
-	 * @param string $deviceID
-	 * @return array
-	 */
-	public function getFallBackDevices($deviceID) {
-		return $this->_wurflService->getDeviceHierarchy($deviceID);
-	}
-	
-	/**
-	 * Returns all the device ids in wurfl
-	 *
-	 * @return array
-	 */
-	public function getAllDevicesID() {
-		return $this->_wurflService->getAllDevicesID();
-	}
+    
+    /**
+     * @var WURFL_WURFLService
+     */
+    private $_wurflService;
+    /**
+     * @var WURFL_Request_GenericRequestFactory
+     */
+    private $_requestFactory;
+    
+    /**
+     * Creates a new WURFL Manager object
+     * @param WURFL_WURFLService $wurflService
+     * @param WURFL_Request_GenericRequestFactory $requestFactory
+     */
+    public function __construct(WURFL_WURFLService $wurflService, WURFL_Request_GenericRequestFactory $requestFactory) {
+        $this->_wurflService = $wurflService;
+        $this->_requestFactory = $requestFactory;
+    }
+    
+    /**
+     * Return the version info of the loaded wurfl xml file
+     * 
+     * Example:
+     * <code>
+     * $info = $wurflManager->getWURFLInfo();
+     * printf('Version: %s, Updated: %s, OfficialURL: %s',
+     *     $info->version,
+     *     $info->lastUpdated,
+     *     $info->officialURL
+     * );
+     * </code>
+     * @return WURFL_Xml_Info WURFL Version info
+     * @see WURFL_WURFLService::getWURFLInfo(), WURFL_DeviceRepository::getWURFLInfo()
+     */
+    public function getWURFLInfo() {
+        return $this->_wurflService->getWURFLInfo();
+    }
+    
+    /**
+     * Return a device the given WURFL_Request_GenericRequest request(user-agent..)
+     *
+     * @param WURFL_Request_GenericRequest $request
+     * @return WURFL_CustomDevice device
+     * @throws Exception if the $request parameter is not set
+     */
+    public function getDeviceForRequest(WURFL_Request_GenericRequest $request) {
+        if (!isset($request)) {
+            throw new Exception("The request parameter must be set.");
+        }
+        WURFL_Handlers_Utils::reset();
+        if (WURFL_Configuration_ConfigHolder::getWURFLConfig()->isHighPerformance() && WURFL_Handlers_Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
+            // This device has been identified as a web browser programatically, so no call to WURFL is necessary
+            return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER, $request);
+        }
+        return $this->_wurflService->getDeviceForRequest($request);
+    }
+    
+    /**
+     * Return a device for the given http request(user-agent..)
+     *
+     * @param array $httpRequest HTTP Request array (normally $_SERVER)
+     * @return WURFL_CustomDevice device
+     * @throws Exception if $httpRequest is not set
+     */
+    public function getDeviceForHttpRequest($httpRequest) {
+        if (!isset($httpRequest)) {
+            throw new Exception("The $httpRequest parameter must be set.");
+        }
+        $request = $this->_requestFactory->createRequest($httpRequest);
+        return $this->getDeviceForRequest($request);
+    }
+    
+    /**
+     * Returns a device for the given user-agent
+     *
+     * @param string $userAgent
+     * @return WURFL_CustomDevice device
+     * @throws Exception if $userAgent is not set
+     */
+    public function getDeviceForUserAgent($userAgent) {
+        if (!isset($userAgent)) {
+            $userAgent = '';
+        }
+        
+        $request = $this->_requestFactory->createRequestForUserAgent($userAgent);
+        return $this->getDeviceForRequest($request);
+    }
+    
+    /**
+     * Return a device for the given device id
+     *
+     * @param string $deviceID
+     * @return WURFL_CustomDevice
+     */
+    public function getDevice($deviceID) {
+        return $this->_wurflService->getDevice($deviceID);
+    }
+    
+    /**
+     * Returns an array of all wurfl group ids
+     *
+     * @return array
+     */
+    public function getListOfGroups() {
+        return $this->_wurflService->getListOfGroups();
+    }
+    
+    /**
+     * Returns all capability names for the given $groupID
+     *
+     * @param string $groupID
+     * @return array
+     */
+    public function getCapabilitiesNameForGroup($groupID) {
+        return $this->_wurflService->getCapabilitiesNameForGroup($groupID);
+    }
+    
+    /**
+     * Returns an array of all the fall back devices starting from the given device
+     *
+     * @param string $deviceID
+     * @return array
+     */
+    public function getFallBackDevices($deviceID) {
+        return $this->_wurflService->getDeviceHierarchy($deviceID);
+    }
+    
+    /**
+     * Returns all the device ids in wurfl
+     *
+     * @return array
+     */
+    public function getAllDevicesID() {
+        return $this->_wurflService->getAllDevicesID();
+    }
 }

@@ -37,8 +37,20 @@ To start using the API you need to set some configuration options.
 > __IMPORTANT__: The WURFL API is closely tied to the WURFL.XML file.  New versions of the WURFL.XML are compatible with old versions of the API by nature, but the reverse is NOT true.  Old versions of the WURFL.XML are NOT guarenteed to be compatible with new versions of the API.  Let's restate that: This API is NOT compatible with old versions of the WURFL.XML.  The oldest copy of WURFL that can be used with this API is included in this distribution.
 
 ```php
-$wurflDir     = dirname(__FILE__) . '/../../../Wurfl';
-$resourcesDir = dirname(__FILE__) . '/../../resources';
+/**
+ * This makes our life easier when dealing with paths. Everything is relative
+ * to the application root now.
+ *
+ * change this to pass to your project settings
+ */
+chdir(dirname(__DIR__));
+require 'vendor/autoload.php';
+
+/*
+ * relative to the root dir
+ * -> $resourcesDir = <Project Root>/resources
+ */
+$resourcesDir   = 'resources';
 $persistenceDir = $resourcesDir . '/storage/persistence';
 $cacheDir       = $resourcesDir . '/storage/cache';
 
@@ -48,14 +60,31 @@ $wurflConfig = new \Wurfl\Configuration\InMemoryConfig();
 // Set location of the WURFL File
 $wurflConfig->wurflFile($resourcesDir . '/wurfl.zip');
 
-// Set the match mode for the API ('performance' or 'accuracy')
-$wurflConfig->matchMode('performance');
+/*
+ * Set the match mode for the API
+ *
+ * It is recommended to use the defined class constants instead of their
+ * string values:
+ *
+ * \Wurfl\Configuration\Config::MATCH_MODE_PERFORMANCE
+ * \Wurfl\Configuration\Config::MATCH_MODE_ACCURACY
+ */
+$wurflConfig->matchMode(\Wurfl\Configuration\Config::MATCH_MODE_PERFORMANCE);
 
 // Setup WURFL Persistence
-$wurflConfig->persistence('file', array('dir' => $persistenceDir));
+$wurflConfig->persistence(
+    'file',
+    array(\Wurfl\Configuration\Config::DIR => $persistenceDir)
+);
 
 // Setup Caching
-$wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
+$wurflConfig->cache(
+    'file',
+    array(
+        \Wurfl\Configuration\Config::DIR        => $cacheDir,
+        \Wurfl\Configuration\Config::EXPIRATION => 36000
+    )
+);
 
 // Create a WURFL Manager Factory from the WURFL Configuration
 $wurflManagerFactory = new \Wurfl\ManagerFactory($wurflConfig);
@@ -69,8 +98,8 @@ Now you can use some of the `\Wurfl\Manager` class methods;
 
 ```php
 $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
-$device->getCapability("is_wireless_device");
-$device->getVirtualCapability("is_smartphone");
+$device->getCapability('is_wireless_device');
+$device->getVirtualCapability('is_smartphone');
 ```
 
 ## Create a configuration object ##
@@ -79,24 +108,24 @@ $device->getVirtualCapability("is_smartphone");
     (you can use zip files if you have the zip extension enabled)
 
 2. Configure the Persistence provider by specifying the provider
-	and the extra parameters needed to initialize the provider.
-	The API supports the following mechanisms:
-	- Memcache (http://uk2.php.net/memcache)
-	- APC (Alternative PHP Cache http://www.php.net/apc)
-	- MySQL
-	- Memory
-	- File
+    and the extra parameters needed to initialize the provider.
+    The API supports the following mechanisms:
+    - Memcache (http://uk2.php.net/memcache)
+    - APC (Alternative PHP Cache http://www.php.net/apc)
+    - MySQL
+    - Memory
+    - File
     
     Additional to the official providers the following connectots are added:
     - Zend Cache
 
 3. Configure the Cache provider by specifying the provider 
-	and the extra parameters needed to initialize the provider.
-	The API supports the following caching mechanisms:
-	- Memcache (http://uk2.php.net/memcache)
-	- APC (Alternative PHP Cache http://www.php.net/apc)
-	- File
-	- Null (no caching)
+    and the extra parameters needed to initialize the provider.
+    The API supports the following caching mechanisms:
+    - Memcache (http://uk2.php.net/memcache)
+    - APC (Alternative PHP Cache http://www.php.net/apc)
+    - File
+    - Null (no caching)
     
     Additional to the official providers the following connectots are added:
     - Zend Cache
@@ -122,19 +151,19 @@ $wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
 You have four methods for retrieving a device:
 
 1. `getDeviceForRequest(\Wurfl\Request\GenericRequest $request)`
-	where a \Wurfl\Request\GenericRequest is an object which encapsulates
-	userAgent, ua-profile, support for xhtml of the device.
+    where a \Wurfl\Request\GenericRequest is an object which encapsulates
+    userAgent, ua-profile, support for xhtml of the device.
 
 2. `getDeviceForHttpRequest($_SERVER)`
-	Most of the time you will use this method, and the API will create the
-	the \Wurfl\Request\GenericRequest object for you
+    Most of the time you will use this method, and the API will create the
+    the \Wurfl\Request\GenericRequest object for you
 
 3. `getDeviceForUserAgent(string $userAgent)`
     Used to query the API for a given User Agent string
 
 4. `getDevice(string $deviceID)`
     Gets the device by its device ID (ex: `apple_iphone_ver1`)
-	
+    
 Usage example:
 ```php
 $device = $wurflManager->getDeviceForHttpRequest($_SERVER);

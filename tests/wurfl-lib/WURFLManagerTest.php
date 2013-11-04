@@ -22,7 +22,7 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase {
     }
 
     public static function tearDownAfterClass() {
-    	// FIXME: tear down is happening before tests are finished 
+        // FIXME: tear down is happening before tests are finished 
         //self::$persistenceStorage->clear();
     }
 

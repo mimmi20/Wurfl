@@ -10,10 +10,10 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -21,51 +21,51 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "OPERA";
-	
-	public static $constantIDs = array(
-		'opera',
-		'opera_7',
-		'opera_8',
-		'opera_9',
-		'opera_10',
-		'opera_11',
-		'opera_12',
-	);
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$opera_idx = strpos($userAgent, 'Opera');
-		$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $opera_idx);
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
-	
-	public function applyRecoveryMatch($userAgent) {
-		$opera_version = self::getOperaVersion($userAgent);
-		if ($opera_version === null) {
-			return 'opera';
-		}
-		$major_version = floor($opera_version);
-		$id = 'opera_' . $major_version;
-		if (in_array($id, self::$constantIDs)) return $id;
-		return 'opera';
-	}
-	
-	public static function getOperaVersion($userAgent) {
-		if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
-			return($matches[1]);
-		}
-		return null;
-	}
+    
+    protected $prefix = "OPERA";
+    
+    public static $constantIDs = array(
+        'opera',
+        'opera_7',
+        'opera_8',
+        'opera_9',
+        'opera_10',
+        'opera_11',
+        'opera_12',
+    );
+    
+    public function canHandle($userAgent) {
+        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
+        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        $opera_idx = strpos($userAgent, 'Opera');
+        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $opera_idx);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+    
+    public function applyRecoveryMatch($userAgent) {
+        $opera_version = self::getOperaVersion($userAgent);
+        if ($opera_version === null) {
+            return 'opera';
+        }
+        $major_version = floor($opera_version);
+        $id = 'opera_' . $major_version;
+        if (in_array($id, self::$constantIDs)) return $id;
+        return 'opera';
+    }
+    
+    public static function getOperaVersion($userAgent) {
+        if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
+            return($matches[1]);
+        }
+        return null;
+    }
 }

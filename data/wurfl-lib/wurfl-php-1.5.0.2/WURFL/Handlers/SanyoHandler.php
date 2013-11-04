@@ -11,10 +11,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,27 +22,27 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "SANYO";
+    
+    protected $prefix = "SANYO";
 
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$idx = strpos($userAgent, 'MobilePhone');
-		if ($idx !== false) {
-			$tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', $idx);
-		} else {
-			$tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-		}
-		return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-	}
+    public function canHandle($userAgent) {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
+        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        $idx = strpos($userAgent, 'MobilePhone');
+        if ($idx !== false) {
+            $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', $idx);
+        } else {
+            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        }
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

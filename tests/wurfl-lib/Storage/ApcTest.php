@@ -10,7 +10,7 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase {
 
 
     public function testNeverToExpireItems() {
-    	$this->checkDeps();
+        $this->checkDeps();
         $storage = new WURFL_Storage_Apc();
         $storage->save("foo", "foo");
         sleep(2);
@@ -34,7 +34,7 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase {
     */
 
     public function testShouldClearAllItems() {
-    	$this->checkDeps();
+        $this->checkDeps();
         $storage = new WURFL_Storage_Apc(array());
         $storage->save("key1", "item1");
         $storage->save("key2", "item2");
@@ -49,10 +49,10 @@ class WURFL_Storage_ApcTest extends PHPUnit_Framework_TestCase {
             $this->assertNull($storage->load($key));
         }
     }
-	
-	private function checkDeps() {
-		if (!extension_loaded('apc') || @apc_cache_info() === false) {
-			$this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
-		}
-	}
+    
+    private function checkDeps() {
+        if (!extension_loaded('apc') || @apc_cache_info() === false) {
+            $this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
+        }
+    }
 }

@@ -11,13 +11,13 @@
  *
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Base class for WURFL Exceptions
- * @package	WURFL
+ * @package    WURFL
  */
 class WURFL_WURFLException extends Exception { }

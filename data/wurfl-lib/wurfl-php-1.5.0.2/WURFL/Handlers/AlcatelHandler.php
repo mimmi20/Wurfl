@@ -11,10 +11,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,16 +22,16 @@
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_AlcatelHandler extends WURFL_Handlers_Handler {
-	protected $prefix = "ALCATEL";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Alcatel") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "ALCATEL");
-	}
+    protected $prefix = "ALCATEL";
+    
+    public function canHandle($userAgent) {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Alcatel") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "ALCATEL");
+    }
 }

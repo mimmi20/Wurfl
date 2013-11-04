@@ -32,7 +32,7 @@ namespace Wurfl\Configuration;
  *     'main-file' => "wurfl.xml",
  *     'patches' => array("web_browsers_patch.xml"),
  *   ),
- *   'match-mode' => 'high-accuracy',
+ *   'match-mode' => 'accuracy',
  *   'allow-reload' => true,
  *   'persistence' => array(
  *     'provider' => "file",

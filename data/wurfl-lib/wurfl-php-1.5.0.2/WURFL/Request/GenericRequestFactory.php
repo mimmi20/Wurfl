@@ -10,42 +10,42 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request
+ * @package    WURFL_Request
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * Creates a Generic WURFL Request from the raw HTTP Request
- * @package	WURFL_Request
+ * @package    WURFL_Request
  */
 class WURFL_Request_GenericRequestFactory {
 
 
-	/**
-	 * Creates Generic Request from the given HTTP Request (normally $_SERVER)
-	 * @param array $request HTTP Request
-	 * @return WURFL_Request_GenericRequest
-	 */
-	public function createRequest($request) {
-		$userAgent = WURFL_WURFLUtils::getUserAgent($request);
-		$userAgentProfile = WURFL_WURFLUtils::getUserAgentProfile($request);
-		$isXhtmlDevice = WURFL_WURFLUtils::isXhtmlRequester($request);
+    /**
+     * Creates Generic Request from the given HTTP Request (normally $_SERVER)
+     * @param array $request HTTP Request
+     * @return WURFL_Request_GenericRequest
+     */
+    public function createRequest($request) {
+        $userAgent = WURFL_WURFLUtils::getUserAgent($request);
+        $userAgentProfile = WURFL_WURFLUtils::getUserAgentProfile($request);
+        $isXhtmlDevice = WURFL_WURFLUtils::isXhtmlRequester($request);
 
-		return new WURFL_Request_GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
-	}
-	
-	/**
-	 * Create a Generic Request from the given $userAgent
-	 * @param string $userAgent
-	 * @return WURFL_Request_GenericRequest
-	 */
-	public function createRequestForUserAgent($userAgent) {
-		return new WURFL_Request_GenericRequest($userAgent, null, false);
-	}
+        return new WURFL_Request_GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
+    }
+    
+    /**
+     * Create a Generic Request from the given $userAgent
+     * @param string $userAgent
+     * @return WURFL_Request_GenericRequest
+     */
+    public function createRequestForUserAgent($userAgent) {
+        return new WURFL_Request_GenericRequest($userAgent, null, false);
+    }
 
-	
+    
 }
 
 

@@ -11,24 +11,24 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  */
  
 class WURFL_VirtualCapability_IsXhtmlmpPreferred extends WURFL_VirtualCapability {
 
-	protected $required_capabilities = array(
-		'xhtml_support_level',
-		'preferred_markup',
-	);
+    protected $required_capabilities = array(
+        'xhtml_support_level',
+        'preferred_markup',
+    );
 
-	protected function compute() {
-		return ($this->device->xhtml_support_level > 0 && strpos($this->device->preferred_markup, 'html_web') !== 0);
-	}
+    protected function compute() {
+        return ($this->device->xhtml_support_level > 0 && strpos($this->device->preferred_markup, 'html_web') !== 0);
+    }
 }

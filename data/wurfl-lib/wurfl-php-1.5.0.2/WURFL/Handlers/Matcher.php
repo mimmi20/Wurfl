@@ -11,32 +11,32 @@
  *
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
  * WURFL_Handlers_Matcher is the base interface that concrete classes 
- * must implement to retrieve a device with the given request	
+ * must implement to retrieve a device with the given request    
  *
  * @category   WURFL
- * @package	WURFL
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 interface WURFL_Handlers_Matcher {
-	
-	/**
-	 * Returns a matching device id for the given request, 
-	 * if no matching device is found will return "generic"
-	 * 
-	 * @param WURFL_Request_GenericRequest $request
-	 * @return string Matching device id
-	 */
-	public function match(WURFL_Request_GenericRequest $request);
-	
+    
+    /**
+     * Returns a matching device id for the given request, 
+     * if no matching device is found will return "generic"
+     * 
+     * @param WURFL_Request_GenericRequest $request
+     * @return string Matching device id
+     */
+    public function match(WURFL_Request_GenericRequest $request);
+    
 }
 

@@ -10,16 +10,16 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request
+ * @package    WURFL_Request
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * Generic WURFL Request object containing User Agent, UAProf and xhtml device data; its id
  * property is the MD5 hash of the user agent
- * @package	WURFL_Request
+ * @package    WURFL_Request
  * 
  * @property string $userAgent
  * @property string $userAgentProfile
@@ -28,29 +28,29 @@
  * @property WURFL_Request_MatchInfo $matchInfo Information about the match (available after matching)
  */
 class WURFL_Request_GenericRequest {
-	
-	private $_userAgent;
-	private $_userAgentProfile;
-	private $_xhtmlDevice;
-	private $_id;
-	private $_matchInfo;
-	
-	/**
-	 * @param string $userAgent
-	 * @param string $userAgentProfile
-	 * @param string $xhtmlDevice
-	 */
-	public function __construct($userAgent, $userAgentProfile=null, $xhtmlDevice=null){
-		$this->_userAgent = $userAgent;
-		$this->_userAgentProfile = $userAgentProfile;
-		$this->_xhtmlDevice = $xhtmlDevice;
-		$this->_id = md5($userAgent);
-		$this->_matchInfo = new WURFL_Request_MatchInfo();
-	}
-	
-	public function __get($name){
-		$name = '_'.$name;
-		return $this->$name;
-	}
+    
+    private $_userAgent;
+    private $_userAgentProfile;
+    private $_xhtmlDevice;
+    private $_id;
+    private $_matchInfo;
+    
+    /**
+     * @param string $userAgent
+     * @param string $userAgentProfile
+     * @param string $xhtmlDevice
+     */
+    public function __construct($userAgent, $userAgentProfile=null, $xhtmlDevice=null){
+        $this->_userAgent = $userAgent;
+        $this->_userAgentProfile = $userAgentProfile;
+        $this->_xhtmlDevice = $xhtmlDevice;
+        $this->_id = md5($userAgent);
+        $this->_matchInfo = new WURFL_Request_MatchInfo();
+    }
+    
+    public function __get($name){
+        $name = '_'.$name;
+        return $this->$name;
+    }
 }
 

@@ -10,21 +10,21 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer - removes BabelFish garbage from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
 class WURFL_Request_UserAgentNormalizer_Generic_BabelFish implements WURFL_Request_UserAgentNormalizer_Interface  {
 
-	const BABEL_FISH_REGEX = "/\\s*\\(via babelfish.yahoo.com\\)\\s*/";
-	
-	public function normalize($userAgent) {		
-		return  preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);
-	}
+    const BABEL_FISH_REGEX = "/\\s*\\(via babelfish.yahoo.com\\)\\s*/";
+    
+    public function normalize($userAgent) {        
+        return  preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);
+    }
 }

@@ -11,10 +11,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,17 +22,17 @@
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_PanasonicHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "PANASONIC";
-	
-	public function canHandle($userAgent) {
-		if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-		return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Panasonic");
-	}
+    
+    protected $prefix = "PANASONIC";
+    
+    public function canHandle($userAgent) {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
+        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Panasonic");
+    }
 }

@@ -10,21 +10,21 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer - removes YesWAP garbage from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
 class WURFL_Request_UserAgentNormalizer_Generic_YesWAP implements WURFL_Request_UserAgentNormalizer_Interface  {
 
-	const YES_WAP_REGEX = "/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)/";
-	
-	public function normalize($userAgent) {
-		return preg_replace(self::YES_WAP_REGEX, "", $userAgent);
-	}
+    const YES_WAP_REGEX = "/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)/";
+    
+    public function normalize($userAgent) {
+        return preg_replace(self::YES_WAP_REGEX, "", $userAgent);
+    }
 }

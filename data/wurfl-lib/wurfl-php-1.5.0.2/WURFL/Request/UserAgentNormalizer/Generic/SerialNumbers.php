@@ -10,23 +10,23 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer - removes serial numbers from user agent
- * @package	WURFL_Request_UserAgentNormalizer_Generic
+ * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
 class WURFL_Request_UserAgentNormalizer_Generic_SerialNumbers implements WURFL_Request_UserAgentNormalizer_Interface {
-	
-	public function normalize($userAgent) {
-		$userAgent = preg_replace('/\/SN[\dX]+/', '/SNXXXXXXXXXXXXXXX', $userAgent);
-		$userAgent = preg_replace('/\[(ST|TF|NT)[\dX]+\]/', 'TFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', $userAgent);
-		return $userAgent;
-	}
+    
+    public function normalize($userAgent) {
+        $userAgent = preg_replace('/\/SN[\dX]+/', '/SNXXXXXXXXXXXXXXX', $userAgent);
+        $userAgent = preg_replace('/\[(ST|TF|NT)[\dX]+\]/', 'TFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', $userAgent);
+        return $userAgent;
+    }
 
 }
 

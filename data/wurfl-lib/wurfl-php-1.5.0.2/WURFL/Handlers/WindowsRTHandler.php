@@ -11,10 +11,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,34 +22,34 @@
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_WindowsRTHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = "WINDOWSRT";
-	
-	public static $constantIDs = array(
-		'generic_windows_8_rt',
-	);
-	
-	public function canHandle($userAgent) {
-		return WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Windows NT 6.2', ' ARM;'));
-	}
-	
-	public function applyConclusiveMatch($userAgent) {
-		$search = ' ARM;';
-		$idx = strpos($userAgent, $search);
-		if ($idx !== false) {
-			// Match to the end of the search string
-			return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
-		}
-		return WURFL_Constants::NO_MATCH;
-	}
-	
-	public function applyRecoveryMatch($userAgent){
-		return 'generic_windows_8_rt';
-	}
+    
+    protected $prefix = "WINDOWSRT";
+    
+    public static $constantIDs = array(
+        'generic_windows_8_rt',
+    );
+    
+    public function canHandle($userAgent) {
+        return WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Windows NT 6.2', ' ARM;'));
+    }
+    
+    public function applyConclusiveMatch($userAgent) {
+        $search = ' ARM;';
+        $idx = strpos($userAgent, $search);
+        if ($idx !== false) {
+            // Match to the end of the search string
+            return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
+        }
+        return WURFL_Constants::NO_MATCH;
+    }
+    
+    public function applyRecoveryMatch($userAgent){
+        return 'generic_windows_8_rt';
+    }
 }

@@ -11,41 +11,41 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * @package WURFL_VirtualCapability
  */
 class WURFL_VirtualCapability_DeviceBrowserGroup extends WURFL_VirtualCapability_Group {
 
-	protected $required_capabilities = array();
+    protected $required_capabilities = array();
 
-	protected $storage = array(
-		'DeviceOs' => null,
-		'DeviceOsVersion' => null,
-		'Browser' => null,
-		'BrowserVersion' => null,
-	);
+    protected $storage = array(
+        'DeviceOs' => null,
+        'DeviceOsVersion' => null,
+        'Browser' => null,
+        'BrowserVersion' => null,
+    );
 
-	/**
-	 * @var WURFL_VirtualCapability_UserAgentTool
-	*/
-	protected static $ua_tool;
+    /**
+     * @var WURFL_VirtualCapability_UserAgentTool
+    */
+    protected static $ua_tool;
 
-	public function compute() {
-		if (self::$ua_tool === null) {
-			self::$ua_tool = new WURFL_VirtualCapability_UserAgentTool();
-		}
+    public function compute() {
+        if (self::$ua_tool === null) {
+            self::$ua_tool = new WURFL_VirtualCapability_UserAgentTool();
+        }
 
-		// Run the UserAgentTool to get the relevant details
-		$device = self::$ua_tool->getDevice($this->request->userAgent);
+        // Run the UserAgentTool to get the relevant details
+        $device = self::$ua_tool->getDevice($this->request->userAgent);
 
-		$this->storage['DeviceOs'] 			= new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->name);
-		$this->storage['DeviceOsVersion'] 	= new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->version);
-		$this->storage['Browser'] 			= new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->browser->name);
-		$this->storage['BrowserVersion'] 	= new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->browser->version);
-	}
+        $this->storage['DeviceOs']             = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->name);
+        $this->storage['DeviceOsVersion']     = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->os->version);
+        $this->storage['Browser']             = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->browser->name);
+        $this->storage['BrowserVersion']     = new WURFL_VirtualCapability_ManualGroupChild($this->device, $this->request, $this, $device->browser->version);
+    }
 }

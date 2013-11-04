@@ -10,23 +10,23 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @author	 Fantayeneh Asres Gizaw
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
  */
 /**
  * User Agent Normalizer
- * @package	WURFL_Request_UserAgentNormalizer_Specific
+ * @package    WURFL_Request_UserAgentNormalizer_Specific
  */
 class WURFL_Request_UserAgentNormalizer_Specific_HTCMac implements WURFL_Request_UserAgentNormalizer_Interface {
-	public function normalize($userAgent) {
-		$model = WURFL_Handlers_HTCMacHandler::getHTCMacModel($userAgent, false);
-		if ($model !== null) {
-			$prefix = $model.WURFL_Constants::RIS_DELIMITER;
-			return $prefix.$userAgent;
-		}
-		return $userAgent;
-	}
+    public function normalize($userAgent) {
+        $model = WURFL_Handlers_HTCMacHandler::getHTCMacModel($userAgent, false);
+        if ($model !== null) {
+            $prefix = $model.WURFL_Constants::RIS_DELIMITER;
+            return $prefix.$userAgent;
+        }
+        return $userAgent;
+    }
 }

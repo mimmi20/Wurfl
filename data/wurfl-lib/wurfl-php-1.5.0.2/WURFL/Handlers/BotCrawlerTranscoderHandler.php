@@ -11,10 +11,10 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
 /**
@@ -22,63 +22,63 @@
  * 
  *
  * @category   WURFL
- * @package	WURFL_Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 class WURFL_Handlers_BotCrawlerTranscoderHandler extends WURFL_Handlers_Handler {
-	
-	protected $prefix = 'BOT_CRAWLER_TRANSCODER';
-	
-	public function canHandle($userAgent) {
-		foreach ($this->botCrawlerTranscoder as $key) {
-			if (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    
+    protected $prefix = 'BOT_CRAWLER_TRANSCODER';
+    
+    public function canHandle($userAgent) {
+        foreach ($this->botCrawlerTranscoder as $key) {
+            if (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private $botCrawlerTranscoder = array(
-		'bot',
-		'crawler',
-		'spider',
-		'novarra',
-		'transcoder',
-		'yahoo! searchmonkey',
-		'yahoo! slurp',
-		'feedfetcher-google',
-		'mowser',
-		'mediapartners-google',
-		'azureus',
-		'inquisitor',
-		'baiduspider',
-		'baidumobaider',
-		'holmes/',
-		'libwww-perl',
-		'netSprint',
-		'yandex',
-		'cfnetwork',
-		'ineturl',
-		'jakarta',
-		'lorkyll',
-		'microsoft url control',
-		'indy library',
-		'slurp',
-		'crawl',
-		'wget',
-		'ucweblient',
-		'snoopy',
-		'untrursted',
-		'mozfdsilla',
-		'ask jeeves',
-		'jeeves/teoma',
-		'mechanize',
-		'http client',
-		'servicemonitor',
-		'httpunit',
-		'hatena',
-		'ichiro'
-	);
+    private $botCrawlerTranscoder = array(
+        'bot',
+        'crawler',
+        'spider',
+        'novarra',
+        'transcoder',
+        'yahoo! searchmonkey',
+        'yahoo! slurp',
+        'feedfetcher-google',
+        'mowser',
+        'mediapartners-google',
+        'azureus',
+        'inquisitor',
+        'baiduspider',
+        'baidumobaider',
+        'holmes/',
+        'libwww-perl',
+        'netSprint',
+        'yandex',
+        'cfnetwork',
+        'ineturl',
+        'jakarta',
+        'lorkyll',
+        'microsoft url control',
+        'indy library',
+        'slurp',
+        'crawl',
+        'wget',
+        'ucweblient',
+        'snoopy',
+        'untrursted',
+        'mozfdsilla',
+        'ask jeeves',
+        'jeeves/teoma',
+        'mechanize',
+        'http client',
+        'servicemonitor',
+        'httpunit',
+        'hatena',
+        'ichiro'
+    );
 }

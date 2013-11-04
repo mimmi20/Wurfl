@@ -11,21 +11,21 @@
  *
  *
  * @category   WURFL
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  * @copyright  ScientiaMobile, Inc.
- * @license	GNU Affero General Public License
- * @version	$id$
+ * @license    GNU Affero General Public License
+ * @version    $id$
  */
 /**
  * Virtual capability helper
- * @package	WURFL_VirtualCapability
+ * @package    WURFL_VirtualCapability
  */
  
 class WURFL_VirtualCapability_IsAndroid extends WURFL_VirtualCapability {
 
-	protected $required_capabilities = array('device_os');
+    protected $required_capabilities = array('device_os');
 
-	protected function compute() {
-		return ($this->device->device_os == 'Android');
-	}
+    protected function compute() {
+        return ($this->device->device_os == 'Android');
+    }
 }
