@@ -41,29 +41,29 @@
               
               
                
--->    
+-->
 
 <wurfl-config>
     <wurfl>
-         <main-file>wurfl-regression.xml</main-file>
+        <main-file>wurfl-regression.xml</main-file>
         <patches>
             <patch>web_browsers_patch.xml</patch>
             <patch>spv_patch.xml</patch>
-        </patches>            
+        </patches>
     </wurfl>
-    
+
     <persistence>
         <provider>memory</provider>
         <params>host=127.0.0.1,port=11211</params>
     </persistence>
-   
-      <!--   
-    <persistence>
-        <provider>file</provider>
-        <params>dir=./cache</params>
-    </persistence>
-     -->
-         
+
+    <!--
+  <persistence>
+      <provider>file</provider>
+      <params>dir=./cache</params>
+  </persistence>
+   -->
+
     <cache>
         <provider>null</provider>
         <params></params>

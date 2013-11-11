@@ -15,6 +15,6 @@
 
                 <capability name="midi_polyphonic" value="true"/>
             </group>
-            </device>
-     </devices>
+        </device>
+    </devices>
 </wurfl_patch>

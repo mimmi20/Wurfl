@@ -3,12 +3,10 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
@@ -19,13 +17,14 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
  * @version    $id$
  */
 
-use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
-use \Wurfl\Constants;
-use \Wurfl\Handlers\Utils;
-use \Wurfl\Handlers\AndroidHandler;
+use Wurfl\Constants;
+use Wurfl\Handlers\AndroidHandler;
+use Wurfl\Handlers\Utils;
+use Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer
+ *
  * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  */
 class Kindle implements NormalizerInterface
@@ -36,10 +35,12 @@ class Kindle implements NormalizerInterface
             $model   = AndroidHandler::getAndroidModel($userAgent, false);
             $version = AndroidHandler::getAndroidVersion($userAgent, false);
             if ($model !== null && $version !== null) {
-                $prefix = $version.' '.$model.Constants::RIS_DELIMITER;
-                return $prefix.$userAgent;
+                $prefix = $version . ' ' . $model . Constants::RIS_DELIMITER;
+
+                return $prefix . $userAgent;
             }
         }
+
         return $userAgent;
     }
 }

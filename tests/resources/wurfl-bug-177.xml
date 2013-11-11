@@ -6,14 +6,14 @@
         <official_url>http://wurfl.sourceforge.net/</official_url>
         <maintainers>
             <maintainer name="Luca Passani" email="luca.passani at gmail point com"
-                home_page="http://www.wurfl.com" />
+                        home_page="http://www.wurfl.com"/>
         </maintainers>
         <authors>
             <author name="Luca Passani" email="luca.passani at gmail point com"
-                home_page="http://www.wurfl.com" />
+                    home_page="http://www.wurfl.com"/>
         </authors>
     </version>
     <devices>
-        <device fall_back="root" id="generic" user_agent="" />
+        <device fall_back="root" id="generic" user_agent=""/>
     </devices>
 </wurfl>

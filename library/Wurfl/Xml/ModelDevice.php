@@ -1,25 +1,23 @@
 <?php
 namespace Wurfl\Xml;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Refer to the COPYING.txt file distributed with this package.
- *
- *
- * @category   WURFL
- * @package    \Wurfl\Xml
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    \Wurfl\Xml
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @version    $id$
+     */
 /**
  * Represents a device in the wurfl xml file
+ *
  * @package    \Wurfl\Xml
  */
 class ModelDevice
@@ -55,32 +53,35 @@ class ModelDevice
 
     /**
      * Creates a WURFL Device based on the provided parameters
+     *
      * @param string $id WURFL device ID
      * @param string $userAgent
      * @param string $fallBack
-     * @param bool $actualDeviceRoot
-     * @param bool $specific
-     * @param array $groupIdCapabilitiesMap
+     * @param bool   $actualDeviceRoot
+     * @param bool   $specific
+     * @param array  $groupIdCapabilitiesMap
      */
-    public function __construct($id, $userAgent, $fallBack, $actualDeviceRoot=false, $specific=false, $groupIdCapabilitiesMap = null)
+    public function __construct(
+        $id, $userAgent, $fallBack, $actualDeviceRoot = false, $specific = false, $groupIdCapabilitiesMap = null)
     {
-        $this->id = $id;
-        $this->userAgent = $userAgent;
-        $this->fallBack = $fallBack;
+        $this->id               = $id;
+        $this->userAgent        = $userAgent;
+        $this->fallBack         = $fallBack;
         $this->actualDeviceRoot = $actualDeviceRoot == true ? true : false;
-        $this->specific = $specific == true ? true : false;
+        $this->specific         = $specific == true ? true : false;
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
                 $this->groupIdCapabilitiesNameMap[$groupId] = array_keys($capabilitiesNameValue);
-                $this->capabilities = array_merge($this->capabilities, $capabilitiesNameValue);
+                $this->capabilities                         = array_merge($this->capabilities, $capabilitiesNameValue);
             }
-
         }
     }
 
     /**
      * Magic getter method
+     *
      * @param string $name Name of property to get
+     *
      * @return mixed Value of property
      */
     public function __get($name)
@@ -90,6 +91,7 @@ class ModelDevice
 
     /**
      * Returns an array of the device capabilities
+     *
      * @return array Capabilities
      */
     function getCapabilities()
@@ -99,6 +101,7 @@ class ModelDevice
 
     /**
      * Returns the group ID to capability name map
+     *
      * @return array Group ID to capability name map
      */
     function getGroupIdCapabilitiesNameMap()
@@ -108,7 +111,9 @@ class ModelDevice
 
     /**
      * Returns the value of the given $capabilityName
+     *
      * @param string $capabilityName
+     *
      * @return mixed Value
      */
     public function getCapability($capabilityName)
@@ -116,6 +121,7 @@ class ModelDevice
         if ($this->isCapabilityDefined($capabilityName)) {
             return $this->capabilities[$capabilityName];
         }
+
         return null;
     }
 
@@ -126,7 +132,9 @@ class ModelDevice
 
     /**
      * Returns true if the capability exists
+     *
      * @param string $capabilityName
+     *
      * @return bool Defined
      */
     public function isCapabilityDefined($capabilityName)
@@ -136,6 +144,7 @@ class ModelDevice
 
     /**
      * Returns the capabilities by group name
+     *
      * @return array capabilities
      */
     public function getGroupIdCapabilitiesMap()
@@ -146,6 +155,7 @@ class ModelDevice
                 $groupIdCapabilitiesMap[$groupId][$capabilityName] = $this->capabilities[$capabilityName];
             }
         }
+
         return $groupIdCapabilitiesMap;
     }
 
@@ -156,7 +166,9 @@ class ModelDevice
 
     /**
      * Returns true if $groupId is defined
+     *
      * @param string $groupId
+     *
      * @return boolean
      */
     public function isGroupDefined($groupId)

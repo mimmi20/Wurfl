@@ -1,15 +1,12 @@
 <?php
 namespace Wurfl\Handlers;
 
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
@@ -19,11 +16,10 @@ namespace Wurfl\Handlers;
  * @version    $id$
  */
 
-use \Wurfl\Constants;
+use Wurfl\Constants;
 
 /**
  * CatchAllUserAgentHandler
- *
  *
  * @category   WURFL
  * @package    \Wurfl\Handlers
@@ -48,6 +44,7 @@ class CatchAllHandler extends Handler
      * Everything that has not been trapped by a previous handler
      *
      * @param string $userAgent
+     *
      * @return boolean always true
      */
     public function canHandle($userAgent)
@@ -60,17 +57,16 @@ class CatchAllHandler extends Handler
      * If UA does not start with Mozilla, apply RIS on FS
      *
      * @param string $userAgent
+     *
      * @return string
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $deviceId = Constants::GENERIC;
-
         if (Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
             $deviceId = $this->applyMozillaConclusiveMatch($userAgent);
         } else {
             $tolerance = Utils::firstSlash($userAgent);
-            $deviceId = $this->getDeviceIDFromRIS($userAgent, $tolerance);
+            $deviceId  = $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
         return $deviceId;
@@ -126,8 +122,8 @@ class CatchAllHandler extends Handler
             $userAgent,
             self::MOZILLA_TOLERANCE
         );
-        return $this->userAgentsWithDeviceID[$match];
 
+        return $this->userAgentsWithDeviceID[$match];
     }
 
     private function applyMozilla5ConclusiveMatch($userAgent)
@@ -154,12 +150,15 @@ class CatchAllHandler extends Handler
     private function applyMozilla4ConclusiveMatch($userAgent)
     {
         $this->logger->debug("Applying Catch All Conclusive Match Mozilla 4 for ua: $userAgent");
-        if (! array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
-            $match = Utils::ldMatch(array_keys($this->mozilla4UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLERANCE);
+        if (!array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
+            $match = Utils::ldMatch(
+                array_keys($this->mozilla4UserAgentsWithDeviceID), $userAgent, self::MOZILLA_TOLERANCE
+            );
         }
         if (!empty($match)) {
             return $this->mozilla4UserAgentsWithDeviceID [$match];
         }
+
         return Constants::NO_MATCH;
     }
 
@@ -180,13 +179,7 @@ class CatchAllHandler extends Handler
         ksort($this->mozilla5UserAgentsWithDeviceID);
         $this->persistenceProvider->save(self::MOZILLA4, $this->mozilla4UserAgentsWithDeviceID);
         $this->persistenceProvider->save(self::MOZILLA5, $this->mozilla5UserAgentsWithDeviceID);
-        parent::persistData ();
-    }
-
-    private function loadMozillaData()
-    {
-        $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->find(CatchAllHandler::MOZILLA4);
-        $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->find(CatchAllHandler::MOZILLA5);
+        parent::persistData();
     }
 
     private function isMozilla5($userAgent)
@@ -197,10 +190,5 @@ class CatchAllHandler extends Handler
     private function isMozilla4($userAgent)
     {
         return Utils::checkIfStartsWith($userAgent, 'Mozilla/4');
-    }
-
-    private function isMozilla($userAgent)
-    {
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla');
     }
 }

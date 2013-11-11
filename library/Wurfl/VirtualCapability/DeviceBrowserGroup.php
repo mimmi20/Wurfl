@@ -3,14 +3,11 @@ namespace Wurfl\VirtualCapability;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
- *
  *
  * @category   WURFL
  * @package    WURFL_VirtualCapability
@@ -18,6 +15,8 @@ namespace Wurfl\VirtualCapability;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\UserAgentTool;
+
 /**
  * @package WURFL_VirtualCapability
  */
@@ -26,18 +25,19 @@ class DeviceBrowserGroup extends Group
     protected $required_capabilities = array();
 
     protected $storage = array(
-        'DeviceOs' => null,
+        'DeviceOs'        => null,
         'DeviceOsVersion' => null,
-        'Browser' => null,
-        'BrowserVersion' => null,
+        'Browser'         => null,
+        'BrowserVersion'  => null,
     );
 
     /**
-     * @var WURFL_VirtualCapability_UserAgentTool
-    */
+     * @var UserAgentTool
+     */
     protected static $ua_tool;
 
-    public function compute() {
+    public function compute()
+    {
         if (self::$ua_tool === null) {
             self::$ua_tool = new UserAgentTool();
         }

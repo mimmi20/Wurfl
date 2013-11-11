@@ -1,25 +1,24 @@
 <?php
 namespace Wurfl\Storage;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Refer to the COPYING.txt file distributed with this package.
- *
- * @category   WURFL
- * @package    \Wurfl\Storage
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    \Wurfl\Storage
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @author     Fantayeneh Asres Gizaw
+     * @version    $id$
+     */
 /**
  * WURFL Storage
+ *
  * @package    \Wurfl\Storage
  */
 class Memory extends Base
@@ -49,7 +48,7 @@ class Memory extends Base
         'f' => array()
     );
 
-    public function __construct($params=array())
+    public function __construct($params = array())
     {
         $this->clear();
     }
@@ -58,7 +57,7 @@ class Memory extends Base
     {
         $key = hash('md5', $objectId);
         $idx = substr($key, 1);
-        
+
         $this->map[$key[0]][$idx] = $object;
     }
 
@@ -66,11 +65,11 @@ class Memory extends Base
     {
         $key = hash('md5', $objectId);
         $idx = substr($key, 1);
-        
+
         if (array_key_exists($idx, $this->map[$key[0]])) {
             return $this->map[$key[0]][$idx];
         }
-        
+
         return null;
     }
 
@@ -78,7 +77,7 @@ class Memory extends Base
     {
         $key = hash('md5', $objectId);
         $idx = substr($key, 1);
-        
+
         if (array_key_exists($idx, $this->map[$key[0]])) {
             unset($this->map[$key[0]][$idx]);
         }

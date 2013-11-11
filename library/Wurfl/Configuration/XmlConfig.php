@@ -3,12 +3,10 @@ namespace Wurfl\Configuration;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
@@ -18,10 +16,11 @@ namespace Wurfl\Configuration;
  * @version    $id$
  */
 
-use \Wurfl\Exception;
+use Wurfl\Exception;
 
 /**
  * XML Configuration
+ *
  * @package    \Wurfl\Configuration
  */
 class XmlConfig extends Config
@@ -32,30 +31,36 @@ class XmlConfig extends Config
     protected function initialize()
     {
         $xmlConfig = simplexml_load_file($this->configFilePath);
-        
-        $this->wurflFile = $this->wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
-        $this->wurflPatches = $this->wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
-        $this->allowReload = $this->allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
-        $this->capabilityFilter = $this->capabilityFilter($xmlConfig->xpath('/wurfl-config/capability-filter/capability'));
-        $this->persistence = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
-        $this->cache = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
-        $this->logger = $this->logger($xmlConfig->xpath('/wurfl-config/logger'));
-        $this->matchMode = $this->matchMode($xmlConfig->xpath('/wurfl-config/match-mode'));
+
+        $this->wurflFile        = $this->wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
+        $this->wurflPatches     = $this->wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
+        $this->allowReload      = $this->allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
+        $this->capabilityFilter = $this->capabilityFilter(
+            $xmlConfig->xpath('/wurfl-config/capability-filter/capability')
+        );
+        $this->persistence      = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
+        $this->cache            = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
+        $this->logger           = $this->logger($xmlConfig->xpath('/wurfl-config/logger'));
+        $this->matchMode        = $this->matchMode($xmlConfig->xpath('/wurfl-config/match-mode'));
     }
 
     /**
      * Returns the full path to the WURFL file
-     * @param array $mainFileElement array of SimpleXMLElement objects 
+     *
+     * @param array $mainFileElement array of SimpleXMLElement objects
+     *
      * @return string full path
      */
     private function wurflFile($mainFileElement)
     {
-        return parent::getFullPath((string)$mainFileElement[0]);
+        return parent::getFullPath((string) $mainFileElement[0]);
     }
-    
+
     /**
      * Returns an array of full path WURFL patches
+     *
      * @param array $patchElements array of SimpleXMLElement objects
+     *
      * @return array WURFL Patches
      */
     private function wurflPatches($patchElements)
@@ -63,47 +68,56 @@ class XmlConfig extends Config
         $patches = array();
         if ($patchElements) {
             foreach ($patchElements as $patchElement) {
-                $patches[] = parent::getFullPath((string)$patchElement);
+                $patches[] = parent::getFullPath((string) $patchElement);
             }
         }
+
         return $patches;
     }
-    
+
     /**
      * Returns an array of WURFL Capabilities
+     *
      * @param array $capabilityFilter array of SimpleXMLElement objects
+     *
      * @return array WURFL Capabilities
      */
     private function capabilityFilter($capabilityFilter)
     {
         $filter = array();
-        
+
         if ($capabilityFilter) {
             foreach ($capabilityFilter as $filterElement) {
-                $filter[] = (string)$filterElement;
+                $filter[] = (string) $filterElement;
             }
         }
-        
+
         return $filter;
     }
 
     /**
      * Returns true if reload is allowed, according to $allowReloadElement
+     *
      * @param array $allowReloadElement array of SimpleXMLElement objects
+     *
      * @return boolean
      */
     private function allowReload($allowReloadElement)
     {
         if (!empty($allowReloadElement)) {
-            return (bool)$allowReloadElement[0];
+            return (bool) $allowReloadElement[0];
         }
+
         return false;
     }
-    
+
     /**
      * Returns the mode of operation if set, otherwise null
+     *
      * @param array $modeElement array of SimpleXMLElement objects
+     *
      * @return boolean
+     * @throws Exception
      */
     private function matchMode($modeElement)
     {
@@ -117,45 +131,53 @@ class XmlConfig extends Config
             }
             $this->matchMode = $mode;
         }
+
         return $this->matchMode;
     }
-    
+
     /**
      * Returns log directory from XML config
+     *
      * @param array $logDirElement array of SimpleXMLElement objects
+     *
      * @return string Log directory
      */
     private function logger($logDirElement)
     {
         $logger = array();
-        
+
         if (!empty($logDirElement)) {
-            $logger['logDir'] = parent::getFullPath((string)$logDirElement[0]->logDir);
-            $logger['type']   = (string)$logDirElement[0]->type;
+            $logger['logDir'] = parent::getFullPath((string) $logDirElement[0]->logDir);
+            $logger['type']   = (string) $logDirElement[0]->type;
         }
+
         return $logger;
     }
 
     /**
      * Returns persistence provider info from XML config
+     *
      * @param array $persistenceElement array of SimpleXMLElement objects
+     *
      * @return array Persistence info
      */
     private function persistence($persistenceElement)
     {
         $persistence = array();
-        
+
         if ($persistenceElement) {
-            $persistence['provider'] = (string)$persistenceElement[0]->provider;
-            $persistence['params'] = $this->_toArray((string)$persistenceElement[0]->params);
+            $persistence['provider'] = (string) $persistenceElement[0]->provider;
+            $persistence['params']   = $this->_toArray((string) $persistenceElement[0]->params);
         }
-        
+
         return $persistence;
     }
 
     /**
      * Converts given CSV $params to array of parameters
+     *
      * @param string $params Comma-seperated list of parameters
+     *
      * @return array Parameters
      */
     private function _toArray($params)
@@ -164,18 +186,20 @@ class XmlConfig extends Config
 
         foreach (explode(',', $params) as $param) {
             $paramNameValue = explode('=', $param);
-            if(count($paramNameValue) > 1) {
+            if (count($paramNameValue) > 1) {
                 if (strcmp(Config::DIR, $paramNameValue[0]) == 0) {
                     $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
                 }
-                $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);                                
+                $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);
             }
         }
+
         return $paramsArray;
     }
 
     /**
      * WURFL XML Schema
+     *
      * @var string
      */
     const WURFL_CONF_SCHEMA = '<?xml version="1.0" encoding="utf-8" ?>

@@ -9,7 +9,7 @@
     <!--
         <persistence> <provider>memcache</provider> </persistence>
     -->
-    <allow-reload>true</allow-reload>    
+    <allow-reload>true</allow-reload>
     <persistence>
         <provider>file</provider>
         <params>dir=cache</params>

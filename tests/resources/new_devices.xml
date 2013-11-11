@@ -31,10 +31,11 @@
                 fall_back="blackberry_generic_ver4"/>
 
         <!-- Andorid -->
-        <device user_agent="Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3" fall_back="generic"
-            id="generic_android"/>
+        <device user_agent="Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3"
+                fall_back="generic"
+                id="generic_android"/>
 
-        <device user_agent="DO_NOT_MATCH_GENERIC_ANDROID_2_1" id="generic_android_ver2_1" fall_back="generic"/> 
+        <device user_agent="DO_NOT_MATCH_GENERIC_ANDROID_2_1" id="generic_android_ver2_1" fall_back="generic"/>
 
 
         <!-- LGUPLUS -->

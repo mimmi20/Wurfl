@@ -3,9 +3,9 @@
     <devices>
         <!-- Web browsers -->
         <device id="apple_generic" user_agent="Mozilla/5.0 (iPhone;"
-            fall_back="generic_xhtml">
+                fall_back="generic_xhtml">
             <group id="image_format">
-                <capability name="transparent_png_alpha" value="true" />
+                <capability name="transparent_png_alpha" value="true"/>
             </group>
         </device>
     </devices>
