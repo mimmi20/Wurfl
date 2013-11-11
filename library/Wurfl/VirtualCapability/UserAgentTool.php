@@ -29,7 +29,8 @@ class UserAgentTool
      * @param string $ua
      * @return WURFL_VirtualCapability_UserAgentTool_Device
      */
-    public function getDevice($ua) {
+    public function getDevice($ua)
+    {
         $device = $this->assignProperties(new UserAgentTool\Device($ua));
         $device->normalize();
         return $device;
@@ -40,7 +41,8 @@ class UserAgentTool
      * @param WURFL_VirtualCapability_UserAgentTool_Device $device
      * @return WURFL_VirtualCapability_UserAgentTool_Device
      */
-    protected function assignProperties($device) {
+    protected function assignProperties($device)
+    {
         //Is UA Android?
         if (strpos($device->ua, 'Android') !== false) {
             $device->os->setRegex('/Android( [0-9]\.[0-9]|)?.*/', 'Android', 1);
@@ -94,7 +96,7 @@ class UserAgentTool
             $device->os->name = 'iOS';
             
             if ($device->os->setRegex('/^Mozilla\/[45]\.[0-9] \((iPhone|iPod|iPad);(?: U;)? CPU(?: iPhone|) OS ([0-9]_[0-9](?:_[0-9])?) like Mac OS X/', 'iOS', 2)) {
-                $device->os->version = str_replace("_", ".", $device->os->version);
+                $device->os->version = str_replace('_', '.', $device->os->version);
             }
             
             //Is UA Chrome Mobile on iOS?
@@ -106,8 +108,9 @@ class UserAgentTool
                 'UC Web Browser on iOS', 1)) return $device;
 
             //Is UA Mobile iOS Safari?
-            if ($device->browser->setRegex('/^Mozilla\/[45]\.0.+?like Mac OS X.+?AppleWebKit.+?Mobile\/[0-9A-Za-z]+.*FBAN/', 'FaceBook app on iPhone', 
-                $device->os->version)) return $device;
+            if ($device->browser->setRegex('/^Mozilla\/[45]\.0.+?like Mac OS X.+?AppleWebKit.+?Mobile\/[0-9A-Za-z]+.*FBAN/', 'FaceBook App on iPhone', $device->os->version)) {
+                return $device;
+            }
 
             //Is UA Mobile iOS Safari?
             if ($device->browser->setRegex('/^Mozilla\/[45]\.0.+?like Mac OS X.+?AppleWebKit.+?Mobile\/[0-9A-Za-z]+ Safari\/[0-9A-Za-z]+\./', 'Mobile Safari', 
@@ -245,14 +248,16 @@ class UserAgentTool
         
         //MSIE 
         if (strpos($device->ua, 'MSIE') !== false 
-            && $device->os->setRegex('/^Mozilla\/[0-9]\.0 \(compatible; MSIE ([0-9][0-9]?\.[0-9][0-9]?); ((?:Windows NT [0-9]\.[0-9])|(?:Windows [0-9]\.[0-9])|(?:Windows [0-9]+)|(?:Mac_PowerPC))/', 2)) {
+            && $device->os->setRegex('/^Mozilla\/[0-9]\.0 \(compatible; MSIE ([0-9][0-9]?\.[0-9][0-9]?); ((?:Windows NT [0-9]\.[0-9])|(?:Windows [0-9]\.[0-9])|(?:Windows [0-9]+)|(?:Mac_PowerPC))/', 2)
+        ) {
             $device->browser->set('IE', $device->os->getLastRegexMatch(1));
             return $device;
         }
         
         //Yandex Browser
         if (strpos($device->ua, 'YaBrowser') !== false 
-            && $device->os->setRegex('/^Mozilla\/[45]\.[0-9] \((?:Macintosh; )?([a-zA-Z0-9\._ ]+)\) AppleWebKit.+YaBrowser\/([0-9]?[0-9]\.[0-9])/', 1)) {
+            && $device->os->setRegex('/^Mozilla\/[45]\.[0-9] \((?:Macintosh; )?([a-zA-Z0-9\._ ]+)\) AppleWebKit.+YaBrowser\/([0-9]?[0-9]\.[0-9])/', 1)
+        ) {
             $device->browser->set('Yandex browser', $device->os->getLastRegexMatch(2));
             return $device;
         }
@@ -273,7 +278,8 @@ class UserAgentTool
         
         //Safari
         if (strpos($device->ua, 'Safari') !== false 
-            && $device->os->setRegex('/^Mozilla\/[0-9]\.0 \((?:(?:Windows|Macintosh); (?:U; |WOW64; )?)?([a-zA-Z_ \.0-9]+)(?:;)?.+? Version\/([0-9]+\.[]0-9]+)\.?/', 1)) {
+            && $device->os->setRegex('/^Mozilla\/[0-9]\.0 \((?:(?:Windows|Macintosh); (?:U; |WOW64; )?)?([a-zA-Z_ \.0-9]+)(?:;)?.+? Version\/([0-9]+\.[]0-9]+)\.?/', 1)
+        ) {
             $device->browser->set('Safari', $device->os->getLastRegexMatch(2));
             return $device;
         }
@@ -294,7 +300,8 @@ class UserAgentTool
         
         //Opera
         if (strpos($device->ua, 'Opera') !== false 
-            && $device->os->setRegex('/^Opera\/([0-9]?[0-9]\.[0-9][0-9]?) .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+) ?;/', 2)) {
+            && $device->os->setRegex('/^Opera\/([0-9]?[0-9]\.[0-9][0-9]?) .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+) ?;/', 2)
+        ) {
             $device->browser->set('Opera', $device->os->getLastRegexMatch(1));
             $device->browser->setRegex('/^Opera\/.+? Version\/([0-9]?[0-9]\.[0-9][0-9]?)/', null, 1);
             return $device;
@@ -302,5 +309,4 @@ class UserAgentTool
         
         return $device;
     }
-    
 }
