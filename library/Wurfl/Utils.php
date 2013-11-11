@@ -1,24 +1,23 @@
 <?php
 namespace Wurfl;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Refer to the COPYING.txt file distributed with this package.
- *
- * @category   WURFL
- * @package    WURFL
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    WURFL
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @version    $id$
+     */
 /**
  * WURFL related utilities
+ *
  * @package    WURFL
  */
 class Utils
@@ -28,31 +27,34 @@ class Utils
         'HTTP_X_OPERAMINI_PHONE_UA',
         'HTTP_USER_AGENT',
     );
-    
+
     /**
      * returns the User Agent From $request or empty string if not found
      *
      * @param array $request HTTP Request array (normally $_SERVER)
+     *
      * @return string
      */
     public static function getUserAgent($request)
     {
         if (isset($request[Constants::UA])) {
             return $request[Constants::UA];
-        }        
-        
+        }
+
         foreach (self::$userAgentSearchOrder as $header) {
-            if(isset($request[$header])) {
+            if (isset($request[$header])) {
                 return $request[$header];
             }
         }
-        
+
         return '';
     }
 
     /**
      * Returns the UA Profile from the $request
+     *
      * @param array $request HTTP Request array (normally $_SERVER)
+     *
      * @return string UAProf URL
      */
     public static function getUserAgentProfile($request)
@@ -64,9 +66,9 @@ class Utils
             return $request["HTTP_PROFILE"];
         }
         if (isset($request["Opt"])) {
-            $opt = $request["Opt"];
-            $regex = "/ns=\\d+/";
-            $matches = array();
+            $opt              = $request["Opt"];
+            $regex            = "/ns=\\d+/";
+            $matches          = array();
             $namespaceProfile = null;
             if (preg_match($regex, $opt, $matches)) {
                 $namespaceProfile = substr($matches[0], 2) . '-Profile';
@@ -83,6 +85,7 @@ class Utils
      * Checks if the requester device is xhtml enabled
      *
      * @param array $request HTTP Request array (normally $_SERVER)
+     *
      * @return bool
      */
     public static function isXhtmlRequester($request)
@@ -90,7 +93,7 @@ class Utils
         if (!isset($request['accept'])) {
             return false;
         }
-        
+
         $accept = $request['accept'];
         if (isset($accept)) {
             if ((strpos($accept, Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
@@ -106,7 +109,9 @@ class Utils
 
     /**
      * Returns true if given $deviceID is the 'generic' WURFL device
+     *
      * @param string $deviceID
+     *
      * @return bool
      */
     public static function isGeneric($deviceID)
@@ -114,13 +119,16 @@ class Utils
         if (strcmp($deviceID, Constants::GENERIC) === 0) {
             return true;
         }
+
         return false;
     }
-    
+
     /**
      * Recursively merges $array1 with $array2, returning the result
+     *
      * @param array $array1
      * @param array $array2
+     *
      * @return array
      */
     public static function array_merge_recursive_unique($array1, $array2)
@@ -140,10 +148,10 @@ class Utils
                 }
             } else {
                 // IF VALUE DOESN'T EXIST IN $array1 USE $array2 VALUE
-                $array1[$k]=$v;
+                $array1[$k] = $v;
             }
         }
-        
+
         unset($k, $v);
 
         return $array1;

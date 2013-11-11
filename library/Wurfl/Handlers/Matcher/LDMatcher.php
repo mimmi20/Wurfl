@@ -1,66 +1,69 @@
 <?php
 namespace Wurfl\Handlers\Matcher;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Refer to the COPYING.txt file distributed with this package.
- *
- * @category   WURFL
- * @package    \Wurfl\Handlers_Matcher
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    \Wurfl\Handlers_Matcher
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @version    $id$
+     */
 /**
  * WURFL Levenshtein distance user agent matcher.
  * This User Agent Matcher uses the Levenshtein Distance algorithm to determine the
  * distance between to User Agents.  A tolerance is specified on the match() method
  * which limits the distance.  User Agents that match less than or equal to this
  * tolerance are consider to be a match;
- * @link http://en.wikipedia.org/wiki/Levenshtein_distance
- * @link http://www.php.net/manual/en/function.levenshtein.php
- * @see match()
+ *
+ * @link       http://en.wikipedia.org/wiki/Levenshtein_distance
+ * @link       http://www.php.net/manual/en/function.levenshtein.php
+ * @see        match()
  * @package    \Wurfl\Handlers_Matcher
  */
 class LDMatcher implements MatcherInterface
 {
     /**
-     * Instance of \Wurfl\Handlers_Matcher_LDMatcher
-     * @var \Wurfl\Handlers_Matcher_LDMatcher
+     * Instance of \Wurfl\Handlers\Matcher\LDMatcher
+     *
+     * @var \Wurfl\Handlers\Matcher\LDMatcher
      */
     private static $instance;
-    
+
     /**
      * Returns an instance of the LDMatcher singleton
-     * @return \Wurfl\Handlers_LDMatcher
+     *
+     * @return \Wurfl\Handlers\Matcher\LDMatcher
      */
     public static function INSTANCE()
     {
         if (self::$instance === null) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
-    
+
     public function match(&$collection, $needle, $tolerance)
     {
-        $best = $tolerance;
+        $best  = $tolerance;
         $match = '';
-        foreach ( $collection as $userAgent ) {
-            if (abs ( strlen ( $needle ) - strlen ( $userAgent ) ) <= $tolerance) {
+        foreach ($collection as $userAgent) {
+            if (abs(strlen($needle) - strlen($userAgent)) <= $tolerance) {
                 $current = levenshtein($needle, $userAgent);
                 if ($current <= $best) {
-                    $best = $current - 1;
+                    $best  = $current - 1;
                     $match = $userAgent;
                 }
             }
         }
+
         return $match;
     }
 }

@@ -1,47 +1,49 @@
 <?php
 namespace Wurfl;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Refer to the COPYING.txt file distributed with this package.
- *
- * @category   WURFL
- * @package    WURFL
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    WURFL
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @version    $id$
+     */
+use Wurfl\DeviceRepository;
+use Wurfl\Storage\Base;
+
 /**
  * WURFL Capability Service
+ *
  * @package    WURFL
  */
 class CapabilityService
 {
     /**
-     * @var \Wurfl\DeviceRepository
+     * @var DeviceRepository
      */
     private $_deviceRepository;
     /**
-     * @var \Wurfl\Storage\Base
+     * @var Base
      */
     private $_cacheProvider;
-    
+
     /**
      * Initialize the CapabilityService
      *
-     * @param \Wurfl\DeviceRepository $deviceRepository
-     * @param \Wurfl\Storage\Base $cacheProvider
+     * @param DeviceRepository $deviceRepository
+     * @param Base     $cacheProvider
      */
-    public function __construct($deviceRepository, $cacheProvider)
+    public function __construct(DeviceRepository $deviceRepository, Base $cacheProvider)
     {
         $this->_deviceRepository = $deviceRepository;
-        $this->_cacheProvider = $cacheProvider;
+        $this->_cacheProvider    = $cacheProvider;
     }
 
     /**
@@ -49,17 +51,20 @@ class CapabilityService
      *
      * @param string $deviceID
      * @param string $capabilityName
+     *
      * @return string
      */
     public function getCapabilityForDevice($deviceID, $capabilityName)
     {
-        $key = $deviceID . $capabilityName;
+        $key             = $deviceID . $capabilityName;
         $capabilityValue = $this->_cacheProvider->get($key);
+
         if (empty($capabilityValue)) {
             $capabilityValue = $this->_deviceRepository->getCapabilityForDevice($deviceID, $capabilityName);
             // save it in cache
             $this->_cacheProvider->put($key, $capabilityValue);
         }
+
         return $capabilityValue;
     }
 
@@ -67,6 +72,7 @@ class CapabilityService
      * Returns all the capabilities of the device
      *
      * @param string $deviceID
+     *
      * @return array
      */
     public function getAllCapabilitiesForDevice($deviceID)
@@ -84,23 +90,24 @@ class CapabilityService
         return $this->_deviceRepository->getListOfGroups();
     }
 
-
     /**
      * Returns an array of capabilities name for the given gorup id
      *
      * @param string $groupID
+     *
      * @return array
      */
     public function getCapabilitiesNameForGroup($groupID)
     {
         return $this->_deviceRepository->getCapabilitiesNameForGroup($groupID);
     }
-    
+
     /**
-     * Return a list of fallback devices starting from 
-     * the given 
+     * Return a list of fallback devices starting from
+     * the given
      *
      * @param string $deviceID
+     *
      * @return array of devices
      */
     public function getDeviceHierarchy($deviceID)
@@ -109,18 +116,18 @@ class CapabilityService
     }
 
     /**
-     * 
-     *
      * @param string $deviceID
+     *
      * @return array
      */
     public function getFallBackListForDevice($deviceID)
     {
-        $devices = $this->_deviceRepository->getDeviceHierarchy($deviceID);
+        $devices   = $this->_deviceRepository->getDeviceHierarchy($deviceID);
         $fallBacks = array();
         foreach ($devices as $device) {
             $fallBacks[] = $device->id;
         }
+
         return $fallBacks;
     }
 }

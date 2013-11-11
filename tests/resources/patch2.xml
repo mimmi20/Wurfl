@@ -7,6 +7,6 @@
                 <capability name="columns" value="7"/>
                 <capability name="new_capability_name" value="3"/>
             </group>
-         </device>
-     </devices>
+        </device>
+    </devices>
 </wurfl_patch>

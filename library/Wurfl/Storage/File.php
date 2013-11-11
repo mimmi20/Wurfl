@@ -3,12 +3,10 @@ namespace Wurfl\Storage;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
@@ -19,52 +17,53 @@ namespace Wurfl\Storage;
  * @version    $id$
  */
 
-use \Wurfl\FileUtils;
+use Wurfl\FileUtils;
 
 /**
  * WURFL Storage
+ *
  * @package    \Wurfl\Storage
  */
 class File extends Base
 {
     private $defaultParams = array(
-        'dir' => '/tmp',
+        'dir'        => '/tmp',
         'expiration' => 0,
-        'readonly' => 'false',
+        'readonly'   => 'false',
     );
 
     private $expire;
     private $root;
     private $readonly;
-    
+
     const DIR = 'dir';
 
     protected $supports_secondary_caching = true;
-    
+
     public function __construct($params)
     {
-        $currentParams = is_array($params)? array_merge($this->defaultParams, $params): $this->defaultParams;
+        $currentParams = is_array($params) ? array_merge($this->defaultParams, $params) : $this->defaultParams;
         $this->initialize($currentParams);
     }
 
     public function initialize($params)
     {
-        $this->root = $params[self::DIR];
-        $this->expire = $params['expiration'];
+        $this->root     = $params[self::DIR];
+        $this->expire   = $params['expiration'];
         $this->readonly = ($params['readonly'] == 'true' || $params['readonly'] === true);
         $this->createRootDirIfNotExist();
     }
-    
+
     private function createRootDirIfNotExist()
     {
         if (!is_dir($this->root)) {
-            @mkdir ($this->root, 0777, true);
-            if(!is_dir($this->root)){
-                throw new Exception("The file storage directory does not exist and could not be created. Please make sure the directory is writeable: ".$this->root);
+            @mkdir($this->root, 0777, true);
+            if (!is_dir($this->root)) {
+                throw new Exception("The file storage directory does not exist and could not be created. Please make sure the directory is writeable: " . $this->root);
             }
         }
-        if(!$this->readonly && !is_writeable($this->root)){
-            throw new Exception("The file storage directory is not writeable: ".$this->root);
+        if (!$this->readonly && !is_writeable($this->root)) {
+            throw new Exception("The file storage directory is not writeable: " . $this->root);
         }
     }
 
@@ -73,28 +72,32 @@ class File extends Base
         if (($data = $this->cacheLoad($key)) !== null) {
             return $data->value();
         } else {
-            $path = $this->keyPath($key);
+            $path  = $this->keyPath($key);
             $value = FileUtils::read($path);
             if ($value === null) {
                 return null;
             }
             $this->cacheSave($key, $value);
+
             return $this->unwrap($value, $path);
         }
     }
 
-    private function unwrap($value, $path)
+    private function unwrap(StorageObject $value, $path)
     {
         if ($value->isExpired()) {
             unlink($path);
+
             return null;
         }
+
         return $value->value();
     }
 
-    public function save($key, $value, $expiration=null) {
-        $value = new StorageObject($value, (($expiration === null)? $this->expire: $expiration));
-        $path = $this->keyPath($key);
+    public function save($key, $value, $expiration = null)
+    {
+        $value = new StorageObject($value, (($expiration === null) ? $this->expire : $expiration));
+        $path  = $this->keyPath($key);
         FileUtils::write($path, $value);
     }
 
@@ -112,13 +115,13 @@ class File extends Base
     private function spread($md5, $n = 2)
     {
         $path = '';
-        
+
         for ($i = 0; $i < $n; $i++) {
             $path .= $md5 [$i] . DIRECTORY_SEPARATOR;
         }
-        
+
         $path .= substr($md5, $n);
-        
+
         return $path;
     }
 }

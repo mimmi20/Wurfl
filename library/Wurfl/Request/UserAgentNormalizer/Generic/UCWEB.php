@@ -3,12 +3,10 @@ namespace Wurfl\Request\UserAgentNormalizer\Generic;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
@@ -19,10 +17,11 @@ namespace Wurfl\Request\UserAgentNormalizer\Generic;
  * @version    $id$
  */
 
-use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
+use Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer - removes UCWEB garbage from user agent
+ *
  * @package    \Wurfl\Request_UserAgentNormalizer_Generic
  */
 class UCWEB implements NormalizerInterface
@@ -31,6 +30,7 @@ class UCWEB implements NormalizerInterface
      * This method remove the "UP.Link" substring from user agent string.
      *
      * @param string $userAgent
+     *
      * @return string Normalized user agent
      */
     public function normalize($userAgent)
@@ -40,6 +40,7 @@ class UCWEB implements NormalizerInterface
             $userAgent = preg_replace('/^(JUC \(Linux; U;)(?= \d)/', '$1 Android', $userAgent);
             $userAgent = preg_replace('/(Android|JUC|[;\)])(?=[\w|\(])/', '$1 ', $userAgent);
         }
+
         return $userAgent;
     }
 }

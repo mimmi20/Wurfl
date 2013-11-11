@@ -3,7 +3,7 @@
     "description": "the Wurfl PHP Library for PHP 5.3",
     "type": "library",
     "license": "LGPL-2.1",
-    "keywords": ["Wurfl","Browser","user agent","http","parser","user-agent"],
+    "keywords": ["Wurfl", "Browser", "user agent", "http", "parser", "user-agent"],
     "homepage": "https://github.com/mimmi20/Wurfl",
     "require": {
         "php": ">=5.3.3",
@@ -11,7 +11,9 @@
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "ext-xdebug": "*"
+        "ext-xdebug": "*",
+        "zendframework/zend-cache": "2.2.*",
+        "zendframework/zend-config": "2.2.*"
     },
     "suggest": {
         "monolog/monolog": "if you want to log to more than a file",

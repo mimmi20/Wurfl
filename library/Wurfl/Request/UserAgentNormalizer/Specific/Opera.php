@@ -3,12 +3,10 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
@@ -19,17 +17,17 @@ namespace Wurfl\Request\UserAgentNormalizer\Specific;
  * @version    $id$
  */
 
-use \Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
-use \Wurfl\Handlers\Utils;
+use Wurfl\Handlers\Utils;
+use Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer
- * Return the safari user agent stripping out 
+ * Return the safari user agent stripping out
  *     - all the chararcters between U; and Safari/xxx
- *    
  *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.1 Safari/525.18
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
+ *
  * @package    \Wurfl\Request_UserAgentNormalizer_Specific
  */
 class Opera implements NormalizerInterface
@@ -41,9 +39,10 @@ class Opera implements NormalizerInterface
         // Into:      Opera/11.50 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
         if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
             if (preg_match('#Version/(\d+\.\d+)#', $userAgent, $matches)) {
-                $userAgent = str_replace('Opera/9.80', 'Opera/'.$matches[1], $userAgent);
+                $userAgent = str_replace('Opera/9.80', 'Opera/' . $matches[1], $userAgent);
             }
         }
+
         return $userAgent;
     }
 }

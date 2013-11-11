@@ -6,12 +6,13 @@
 /**
  *  test case.
  */
-class Wurfl_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
+class Wurfl_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
+{
 
-
-    public function testShouldCreateAConfiguration() {
+    public function testShouldCreateAConfiguration()
+    {
         $configPath = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-config.xml";
-        $config = new \Wurfl\Configuration\XmlConfig($configPath);
+        $config     = new \Wurfl\Configuration\XmlConfig($configPath);
         $this->assertNotNull($config->persistence);
 
         $this->assertEquals(__DIR__ . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
@@ -19,21 +20,23 @@ class Wurfl_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals(true, $config->allowReload);
 
-        $cacheDir = __DIR__ . DIRECTORY_SEPARATOR . "cache";
+        $cacheDir    = __DIR__ . DIRECTORY_SEPARATOR . "cache";
         $persistence = $config->persistence;
         $this->assertEquals("file", $persistence ["provider"]);
         $this->assertEquals(array(\Wurfl\Configuration\Config::DIR => $cacheDir), $persistence ["params"]);
 
         $cache = $config->cache;
         $this->assertEquals("file", $cache ["provider"]);
-        $this->assertEquals(array(\Wurfl\Configuration\Config::DIR => $cacheDir, \Wurfl\Configuration\Config::EXPIRATION => 36000), $cache ["params"]);
-
+        $this->assertEquals(
+            array(\Wurfl\Configuration\Config::DIR => $cacheDir, \Wurfl\Configuration\Config::EXPIRATION => 36000),
+            $cache ["params"]
+        );
     }
 
-
-    public function testShouldCreateConfigurationWithAPCPersistence() {
+    public function testShouldCreateConfigurationWithAPCPersistence()
+    {
         $configPath = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-config-apc-persistence.xml";
-        $config = new \Wurfl\Configuration\XmlConfig($configPath);
+        $config     = new \Wurfl\Configuration\XmlConfig($configPath);
         $this->assertNotNull($config->persistence);
 
         $this->assertEquals(__DIR__ . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
@@ -48,16 +51,18 @@ class Wurfl_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
 
         $cache = $config->cache;
         $this->assertEquals("apc", $cache ["provider"]);
-        $this->assertEquals(array(
-            "namespace" => "wurfl",
-            "expiration" => 86400), $cache ["params"]);
-
+        $this->assertEquals(
+            array(
+                 "namespace"  => "wurfl",
+                 "expiration" => 86400
+            ), $cache ["params"]
+        );
     }
 
-
-    public function testShouldAcceptEmptyOptionalElements() {
+    public function testShouldAcceptEmptyOptionalElements()
+    {
         $configPath = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-config-no-optional.xml";
-        $config = new \Wurfl\Configuration\XmlConfig($configPath);
+        $config     = new \Wurfl\Configuration\XmlConfig($configPath);
 
         $this->assertEquals(__DIR__ . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
         $this->assertEquals(array(), $config->wurflPatches);
@@ -69,9 +74,6 @@ class Wurfl_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase {
 
         $cache = $config->cache;
         $this->assertTrue(empty($cache));
-
     }
-
-
 }
 

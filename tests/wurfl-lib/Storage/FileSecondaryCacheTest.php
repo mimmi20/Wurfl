@@ -1,42 +1,46 @@
 <?php
 
-require_once __DIR__.'/FileTest.php';
+require_once __DIR__ . '/FileTest.php';
 
-class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest {
+class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest
+{
 
-    public function testMemcache() {
+    public function testMemcache()
+    {
         $this->checkMemcacheDeps();
-        $cache = new WURFL_Storage_Memcache(array(
-                'host' => '127.0.0.1',
-        ));
+        $cache = new \Wurfl\Storage\Memcache(array(
+                                                  'host' => '127.0.0.1',
+                                             ));
         $this->assertCacheAllowed($cache);
     }
-    
-    public function testApc() {
+
+    public function testApc()
+    {
         $this->checkApcDeps();
-        $cache = new WURFL_Storage_Apc(array());
+        $cache = new \Wurfl\Storage\Apc(array());
         $this->assertCacheAllowed($cache);
     }
-    
-    private function assertCacheAllowed(WURFL_Storage_Base $cache) {
-        
+
+    private function assertCacheAllowed(\Wurfl\Storage\Base $cache)
+    {
+
         $config = array(
-            "dir" => self::storageDir(),
+            "dir"                                   => self::storageDir(),
             \Wurfl\Configuration\Config::EXPIRATION => 0,
         );
-        
-        $storage = new \Wurfl\Storage\File($config);
+
+        $storage          = new \Wurfl\Storage\File($config);
         $uncached_storage = new \Wurfl\Storage\File($config);
 
         $this->assertTrue($storage->supportsSecondaryCaching());
         $this->assertTrue($storage->validSecondaryCache($cache));
-        
+
         $storage->setCacheStorage($cache);
 
         $storage->save("foo", "foo");
-        
+
         sleep(1);
-        
+
         // Make sure it's there
         $this->assertEquals("foo", $storage->load("foo"));
         $cache->clear();
@@ -49,18 +53,23 @@ class WURFL_Storage_FileSecondaryCacheTest extends WURFL_Storage_FileTest {
         // Clear cache
         $cache->clear();
         $this->assertNull($storage->load("foo"));
-        
     }
 
-    private function checkMemcacheDeps() {
+    private function checkMemcacheDeps()
+    {
         if (!extension_loaded('memcache')) {
-            $this->markTestSkipped("PHP extension 'memcache' must be loaded and a local memcache server running to run this test.");
+            $this->markTestSkipped(
+                "PHP extension 'memcache' must be loaded and a local memcache server running to run this test."
+            );
         }
     }
 
-    private function checkApcDeps() {
+    private function checkApcDeps()
+    {
         if (!extension_loaded('apc') || @apc_cache_info() === false) {
-            $this->markTestSkipped("PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli).");
+            $this->markTestSkipped(
+                "PHP extension 'apc' must be loaded and enabled for CLI to run this test (http://www.php.net/manual/en/apc.configuration.php#ini.apc.enable-cli)."
+            );
         }
     }
 }

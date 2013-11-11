@@ -1,38 +1,37 @@
 <?php
 namespace Wurfl\Handlers;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Refer to the COPYING.txt file distributed with this package.
- *
- * @category   WURFL
- * @package    \Wurfl\Handlers
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    \Wurfl\Handlers
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @version    $id$
+     */
 
 /**
  * OperaHandlder
  *
- *
  * @category   WURFL
  * @package    \Wurfl\Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class OperaMiniHandler extends Handler {
+class OperaMiniHandler extends Handler
+{
 
     protected $prefix = "OPERA_MINI";
 
-    public function canHandle($userAgent) {
+    public function canHandle($userAgent)
+    {
         return Utils::checkIfContains($userAgent, "Opera Mini");
     }
 
@@ -44,7 +43,8 @@ class OperaMiniHandler extends Handler {
         'Opera Mini/5' => 'generic_opera_mini_version5',
     );
 
-    function applyRecoveryMatch($userAgent) {
+    function applyRecoveryMatch($userAgent)
+    {
         foreach ($this->operaMinis as $key => $deviceId) {
             if (Utils::checkIfContains($userAgent, $key)) {
                 return $deviceId;
@@ -53,6 +53,7 @@ class OperaMiniHandler extends Handler {
         if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
             return 'generic_opera_mini_version4';
         }
+
         return 'generic_opera_mini_version1';
     }
 }

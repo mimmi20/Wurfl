@@ -1,28 +1,25 @@
 <?php
 namespace Wurfl\Configuration;
 
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    \Wurfl\Configuration
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @version    $id$
+     */
+
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Refer to the COPYING.txt file distributed with this package.
- *
- *
- * @category   WURFL
- * @package    \Wurfl\Configuration
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- */
-/**
- * Array-style WURFL configuration.  To use this method you must create a php file that contains 
+ * Array-style WURFL configuration.  To use this method you must create a php file that contains
  * an array called $configuration with all of the required settings.  NOTE: every path that you
  * specify in the configuration must be absolute or relative to the folder that it is in.
- * 
  * Example: Here is an example for file persistence without caching
  * <code>
  * <?php
@@ -60,20 +57,24 @@ namespace Wurfl\Configuration;
  * );
  * ?>
  * </code>
+ *
  * @package    \Wurfl\Configuration
  */
 class ZendConfig extends Config
 {
     /**
      * Creates a new WURFL Configuration object from $configFilePath
-     * @param string $configFilePath Complete filename of configuration file 
+     *
+     * @param null|string $configuration
+     *
+     * @internal param string $configFilePath Complete filename of configuration file
      */
     public function __construct($configuration)
     {
-        if ($configuration instanceof \Zend\Config\Config) {
+        if ($configuration instanceof Config) {
             $configuration = $configuration->toArray();
         }
-        
+
         $this->init($configuration);
     }
 
@@ -84,49 +85,54 @@ class ZendConfig extends Config
     {
         //
     }
-    
-    private function init($configuration) {
-        
+
+    private function init($configuration)
+    {
+
         if (array_key_exists(Config::WURFL, $configuration)) {
             $this->setWurflConfiguration($configuration[Config::WURFL]);
         }
-        
+
         if (array_key_exists(Config::PERSISTENCE, $configuration)) {
             $this->setPersistenceConfiguration($configuration[Config::PERSISTENCE]);
         }
-        
+
         if (array_key_exists(Config::CACHE, $configuration)) {
             $this->setCacheConfiguration($configuration[Config::CACHE]);
         }
-        
+
         if (array_key_exists(Config::LOGGER, $configuration)) {
             $this->setLoggerConfiguration($configuration[Config::LOGGER]);
         }
-        
+
         if (array_key_exists(Config::MATCH_MODE, $configuration)) {
             $this->setMatchMode($configuration[Config::MATCH_MODE]);
         }
 
-        $this->allowReload = array_key_exists(Config::ALLOW_RELOAD, $configuration)? $configuration[Config::ALLOW_RELOAD]: false; 
+        $this->allowReload = array_key_exists(Config::ALLOW_RELOAD, $configuration)
+            ? $configuration[Config::ALLOW_RELOAD] : false;
     }
-    
+
     private function setWurflConfiguration(array $wurflConfig)
     {
         if (array_key_exists(Config::MAIN_FILE, $wurflConfig)) {
             $this->wurflFile = parent::getFullPath($wurflConfig[Config::MAIN_FILE]);
         }
-        
+
         if (array_key_exists(Config::PATCHES, $wurflConfig)) {
             foreach ($wurflConfig[Config::PATCHES] as $wurflPatch) {
                 $this->wurflPatches[] = parent::getFullPath($wurflPatch);
             }
-        }        
+        }
     }
-    
+
     private function setPersistenceConfiguration(array $persistenceConfig)
     {
         $this->persistence = $persistenceConfig;
-        if(array_key_exists('params', $this->persistence) && array_key_exists(Config::DIR, $this->persistence['params'])) {
+        if (array_key_exists('params', $this->persistence) && array_key_exists(
+                Config::DIR, $this->persistence['params']
+            )
+        ) {
             $this->persistence['params'][Config::DIR] = parent::getFullPath($this->persistence['params'][Config::DIR]);
         }
     }
@@ -135,17 +141,17 @@ class ZendConfig extends Config
     {
         $this->cache = $cacheConfig;
     }
-    
+
     private function setLoggerConfiguration($logger)
     {
         if (!empty($logger['logDir']) && !is_writable($logger['logDir'])) {
             $this->logger['type'] = 'Null';
             unset($logger['logDir']);
         }
-        
+
         $this->logger = $logger;
     }
-    
+
     private function setMatchMode($mode)
     {
         $this->matchMode = $mode;

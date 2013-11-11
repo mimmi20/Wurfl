@@ -2,6 +2,6 @@
 <wurfl>
     <devices>
         <device fall_back="root" id="foo" user_agent="" specific="true"/>
-        <device fall_back="root" id="bar" user_agent="" />
+        <device fall_back="root" id="bar" user_agent=""/>
     </devices>
 </wurfl>

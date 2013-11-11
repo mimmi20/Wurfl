@@ -1,16 +1,18 @@
 <?php
 
-class WURFL_TestUtils_MockPersistenceProvider  {
+class WURFL_TestUtils_MockPersistenceProvider
+{
 
-    private $data;
-    
-    public  function __construct($datas) {
+    private $datas;
+
+    public function __construct($datas)
+    {
         $this->datas = $datas;
     }
-    
-    public function load($objectId){
-        return $this->datas[$objectId];        
+
+    public function load($objectId)
+    {
+        return $this->datas[$objectId];
     }
-    
 }
 
