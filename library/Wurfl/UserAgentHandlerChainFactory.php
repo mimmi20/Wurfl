@@ -41,10 +41,6 @@ class UserAgentHandlerChainFactory
 
         if ($cached_data !== null) {
             self::$_userAgentHandlerChain = $cached_data;
-
-            foreach (self::$_userAgentHandlerChain->getHandlers() as $handler) {
-                $handler->setupContext($context);
-            }
         }
 
         if (!(self::$_userAgentHandlerChain instanceof UserAgentHandlerChain)) {
