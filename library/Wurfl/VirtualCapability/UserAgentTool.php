@@ -142,13 +142,13 @@ class UserAgentTool
             ) !== false
         ) {
             $device->os->name = 'iOS';
-
+            
             if ($device->os->setRegex(
                 '/^Mozilla\/[45]\.[0-9] \((iPhone|iPod|iPad);(?: U;)? CPU(?: iPhone|) OS ([0-9]_[0-9](?:_[0-9])?) like Mac OS X/',
                 'iOS', 2
             )
             ) {
-                $device->os->version = str_replace("_", ".", $device->os->version);
+                $device->os->version = str_replace('_', '.', $device->os->version);
             }
 
             //Is UA Chrome Mobile on iOS?
