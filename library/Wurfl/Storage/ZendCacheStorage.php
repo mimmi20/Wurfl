@@ -16,9 +16,9 @@ namespace Wurfl\Storage;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-use Zend\Cache\Cache;
-use Zend\Cache\Frontend;
-use Zend\Cache\Manager;
+use Zend\Cache\Storage;
+use Zend\Cache\Storage\StorageInterface;
+use Zend\Cache\StorageFactory;
 use Zend\Config\Config;
 
 /**
@@ -28,6 +28,7 @@ use Zend\Config\Config;
  */
 class ZendCacheStorage extends Base
 {
+    /** @var null|StorageInterface  */
     private $_zendCacheObject = null;
 
     protected $supports_secondary_caching = true;
@@ -48,16 +49,9 @@ class ZendCacheStorage extends Base
         }
 
         if (is_array($params)) {
-            $this->_zendCacheObject = Cache::factory(
-                $params['frontend'],
-                $params['backend'],
-                $params['front'],
-                $params['back']
-            );
-        } elseif ($params instanceof Frontend) {
+            $this->_zendCacheObject = StorageFactory::factory($params);
+        } elseif ($params instanceof StorageInterface) {
             $this->_zendCacheObject = clone $params;
-        } elseif ($params instanceof Manager) {
-            $this->_zendCacheObject = $params->getCache('wurfl');
         }
 
         if (null === $this->_zendCacheObject) {
@@ -71,7 +65,10 @@ class ZendCacheStorage extends Base
             return $value;
         }
 
-        if (($value = $this->_zendCacheObject->load($key)) !== null) {
+        $success = false;
+        $value   = $this->_zendCacheObject->getItem($key, $success);
+
+        if ($success) {
             $this->cacheSave($key, $value);
 
             return $value;
@@ -84,7 +81,7 @@ class ZendCacheStorage extends Base
     {
         $this->cacheSave($key, $value);
 
-        return $this->_zendCacheObject->save($value, $key, array('wurfl'));
+        return $this->_zendCacheObject->setItem($key, $value);
     }
 
     /**
@@ -96,7 +93,7 @@ class ZendCacheStorage extends Base
      */
     public function remove($objectId)
     {
-        $this->_zendCacheObject->remove($objectId);
+        $this->_zendCacheObject->removeItem($objectId);
 
         return $this;
     }
