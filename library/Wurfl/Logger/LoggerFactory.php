@@ -28,11 +28,11 @@ class LoggerFactory
     /**
      * Create Logger for undetected devices with filename undetected_devices.log
      *
-     * @param Config $wurflConfig
+     * @param array $wurflConfig
      *
      * @return LoggerInterface Logger object
      */
-    public static function createUndetectedDeviceLogger(Config $wurflConfig = null)
+    public static function createUndetectedDeviceLogger(array $wurflConfig = null)
     {
         if (self::isLoggingConfigured($wurflConfig)) {
             return self::buildLogger($wurflConfig, 'undetected_devices.log');
@@ -60,12 +60,12 @@ class LoggerFactory
     /**
      * Creates Logger for general logging (not undetected devices)
      *
-     * @param Config $wurflConfig
+     * @param array  $wurflConfig
      * @param string $fileName
      *
      * @return LoggerInterface Logger object
      */
-    private static function buildLogger(Config $wurflConfig = null, $fileName = null)
+    private static function buildLogger(array $wurflConfig = null, $fileName = null)
     {
         switch (strtolower($wurflConfig['type'])) {
             case 'file':
@@ -83,12 +83,12 @@ class LoggerFactory
     /**
      * Creates a new file logger
      *
-     * @param Config $wurflConfig
+     * @param array  $wurflConfig
      * @param string $fileName
      *
      * @return LoggerInterface File logger
      */
-    private static function createFileLogger(Config $wurflConfig, $fileName)
+    private static function createFileLogger(array $wurflConfig, $fileName)
     {
         $logFileName = self::createLogFile($wurflConfig['logDir'], $fileName);
 
