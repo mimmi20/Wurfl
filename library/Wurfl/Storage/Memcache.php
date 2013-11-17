@@ -27,7 +27,7 @@ class Memcache extends Base
     const DEFAULT_PORT          = 11211;
 
     /**
-     * @var memcache
+     * @var \Memcache
      */
     private $memcache;
     private $host;
@@ -67,9 +67,9 @@ class Memcache extends Base
         $this->_ensureModuleExistence();
         $this->memcache = new \Memcache();
         // support multiple hosts using semicolon to separate hosts
-        $hosts = explode(";", $this->host);
+        $hosts = explode(';', $this->host);
         // different ports for each hosts the same way
-        $ports = explode(";", $this->port);
+        $ports = explode(';', $this->port);
         if (count($hosts) > 1) {
             if (count($ports) < 1) {
                 $ports = array_fill(0, count($hosts), self::DEFAULT_PORT);

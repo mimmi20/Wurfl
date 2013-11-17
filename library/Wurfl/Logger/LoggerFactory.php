@@ -44,11 +44,11 @@ class LoggerFactory
     /**
      * Creates Logger for general logging (not undetected devices)
      *
-     * @param Config $wurflConfig
+     * @param array $wurflConfig
      *
      * @return LoggerInterface Logger object
      */
-    public static function create(Config $wurflConfig = null)
+    public static function create(array $wurflConfig = null)
     {
         if (self::isLoggingConfigured($wurflConfig)) {
             return self::buildLogger($wurflConfig, 'wurfl.log');
@@ -67,7 +67,7 @@ class LoggerFactory
      */
     private static function buildLogger(Config $wurflConfig = null, $fileName = null)
     {
-        switch (strtolower($wurflConfig->logger['type'])) {
+        switch (strtolower($wurflConfig['type'])) {
             case 'file':
                 $logger = self::createFileLogger($wurflConfig, $fileName);
                 break;
@@ -90,7 +90,7 @@ class LoggerFactory
      */
     private static function createFileLogger(Config $wurflConfig, $fileName)
     {
-        $logFileName = self::createLogFile($wurflConfig->logger['logDir'], $fileName);
+        $logFileName = self::createLogFile($wurflConfig['logDir'], $fileName);
 
         return new FileLogger($logFileName);
     }
@@ -98,28 +98,27 @@ class LoggerFactory
     /**
      * Returns true if $wurflConfig specifies a Logger
      *
-     * @param Config $wurflConfig
+     * @param array $wurflConfig
      *
      * @return bool
      */
-    private static function isLoggingConfigured(Config $wurflConfig = null)
+    private static function isLoggingConfigured(array $wurflConfig = null)
     {
         if (is_null($wurflConfig)
-            || is_null($wurflConfig->logger)
-            || empty($wurflConfig->logger['type'])
+            || empty($wurflConfig['type'])
         ) {
             return false;
         }
 
-        if ('Null' === $wurflConfig->logger['type']) {
+        if ('Null' === $wurflConfig['type']) {
             // null logger
             return true;
         }
 
-        if ('File' === $wurflConfig->logger['type']
-            && !empty($wurflConfig->logger['logDir'])
-            && is_dir($wurflConfig->logger['logDir'])
-            && is_writable($wurflConfig->logger['logDir'])
+        if ('File' === $wurflConfig['type']
+            && !empty($wurflConfig['logDir'])
+            && is_dir($wurflConfig['logDir'])
+            && is_writable($wurflConfig['logDir'])
         ) {
             // file logger and log dir is writable
             return true;

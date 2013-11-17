@@ -33,6 +33,7 @@ class IsLargescreen extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->resolution_width >= 480 && $this->device->resolution_height >= 480);
+        return ($this->device->getCapability('resolution_width') >= 480
+            && $this->device->getCapability('resolution_height') >= 480);
     }
 }

@@ -65,14 +65,14 @@ class CapabilitiesHolder
         }
 
         $key             = $this->_device->id . '_' . $capabilityName;
-        $capabilityValue = $this->_cacheProvider->get($key);
+        $capabilityValue = $this->_cacheProvider->load($key);
         if (empty($capabilityValue)) {
 
             $capabilityValue = $this->_deviceRepository->getCapabilityForDevice(
                 $this->_device->fallBack, $capabilityName
             );
             // save it in cache
-            $this->_cacheProvider->put($key, $capabilityValue);
+            $this->_cacheProvider->save($key, $capabilityValue);
         }
 
         return $capabilityValue;

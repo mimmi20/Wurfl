@@ -62,10 +62,12 @@ class Info
     }
 
     /**
-     * @return Info Empty \Wurfl\Xml_Info object
+     * creates an empty Info object
+     *
+     * @return Info object
      */
     public static function noInfo()
     {
-        return new Info('', '', '');
+        return new self('', '', '');
     }
 }

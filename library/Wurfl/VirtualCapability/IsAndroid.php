@@ -30,6 +30,6 @@ class IsAndroid extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->device_os == 'Android');
+        return ('Android' === $this->device->getCapability('device_os'));
     }
 }

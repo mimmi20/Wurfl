@@ -30,6 +30,6 @@ class IsTouchscreen extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->pointing_method == 'touchscreen');
+        return ('touchscreen' === $this->device->getCapability('pointing_method'));
     }
 }

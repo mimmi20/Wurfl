@@ -103,7 +103,7 @@ class ZendCacheStorage extends Base
      */
     public function clear()
     {
-        $this->_zendCacheObject->clean('all', array('wurfl'));
+        //$this->_zendCacheObject->clean('all', array('wurfl'));
 
         return $this;
     }

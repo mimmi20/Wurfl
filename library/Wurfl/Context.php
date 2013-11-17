@@ -24,34 +24,44 @@ use Psr\Log\LoggerInterface;
  * @package    WURFL
  * @property-read \Wurfl\Storage\Base      $persistenceProvider
  * @property-read \Wurfl\Storage\Base      $cacheProvider
- * @property-read \Psr\Log\LoggerInterface $logger
+ * @property-read LoggerInterface $logger
  */
 class Context
 {
     /**
-     * @var \Wurfl\Storage\Base
+     * @var Storage\StorageInterface
      */
     private $persistenceProvider;
 
     /**
-     * @var \Wurfl\Storage\Base
+     * @var Storage\StorageInterface
      */
     private $cacheProvider;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
+    /**
+     * @param Storage\StorageInterface $persistenceProvider
+     * @param Storage\StorageInterface $cacheProvider
+     * @param LoggerInterface                 $logger
+     */
     public function __construct(
-        Storage\Base $persistenceProvider = null, Storage\Base $cacheProvider = null, LoggerInterface $logger = null)
+        Storage\StorageInterface $persistenceProvider = null, Storage\StorageInterface $cacheProvider = null, LoggerInterface $logger = null)
     {
         $this->persistenceProvider = is_null($persistenceProvider) ? new Storage\NullStorage() : $persistenceProvider;
         $this->cacheProvider       = is_null($cacheProvider) ? new Storage\NullStorage() : $cacheProvider;
         $this->logger              = is_null($logger) ? new Logger\NullLogger() : $logger;
     }
 
-    public function cacheProvider(Storage\Base $cacheProvider)
+    /**
+     * @param Storage\StorageInterface $cacheProvider
+     *
+     * @return $this
+     */
+    public function cacheProvider(Storage\StorageInterface $cacheProvider)
     {
         $this->cacheProvider = is_null($cacheProvider) ? new Storage\NullStorage() : $cacheProvider;
 

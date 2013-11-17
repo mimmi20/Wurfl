@@ -29,6 +29,8 @@ class IsHtmlPreferred extends VirtualCapability
 
     protected function compute()
     {
-        return (strpos($this->device->preferred_markup, 'html_web') === 0);
+        $markup = $this->device->getCapability('preferred_markup');
+
+        return (0 === strpos($markup, 'html_web'));
     }
 }

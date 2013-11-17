@@ -15,6 +15,7 @@ namespace Wurfl\Configuration;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+use Zend\Config\Config as ZendConfigConfig;
 
 /**
  * Array-style WURFL configuration.  To use this method you must create a php file that contains
@@ -65,13 +66,13 @@ class ZendConfig extends Config
     /**
      * Creates a new WURFL Configuration object from $configFilePath
      *
-     * @param null|string $configuration
+     * @param array|ZendConfigConfig $configuration
      *
      * @internal param string $configFilePath Complete filename of configuration file
      */
     public function __construct($configuration)
     {
-        if ($configuration instanceof Config) {
+        if ($configuration instanceof ZendConfigConfig) {
             $configuration = $configuration->toArray();
         }
 

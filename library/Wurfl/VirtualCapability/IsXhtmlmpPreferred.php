@@ -32,6 +32,9 @@ class IsXhtmlmpPreferred extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->xhtml_support_level > 0 && strpos($this->device->preferred_markup, 'html_web') !== 0);
+        $supportLevel = $this->device->getCapability('xhtml_support_level');
+        $markup       = $this->device->getCapability('preferred_markup');
+
+        return ($supportLevel > 0 && 0 !== strpos($markup, 'html_web'));
     }
 }

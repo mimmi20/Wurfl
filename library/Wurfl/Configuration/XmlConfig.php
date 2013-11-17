@@ -32,16 +32,17 @@ class XmlConfig extends Config
     {
         $xmlConfig = simplexml_load_file($this->configFilePath);
 
-        $this->wurflFile        = $this->wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
-        $this->wurflPatches     = $this->wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
-        $this->allowReload      = $this->allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
+        $this->wurflFile        = $this->wurflFile($xmlConfig->wurfl->{'main-file'});
+        $this->wurflPatches     = $this->wurflPatches($xmlConfig->wurfl->patches->patch);
+        $this->allowReload      = (boolean) $xmlConfig->{'allow-reload'};
+
         $this->capabilityFilter = $this->capabilityFilter(
-            $xmlConfig->xpath('/wurfl-config/capability-filter/capability')
+            $xmlConfig->{'capability-filter'}->capability
         );
-        $this->persistence      = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
-        $this->cache            = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
-        $this->logger           = $this->logger($xmlConfig->xpath('/wurfl-config/logger'));
-        $this->matchMode        = $this->matchMode($xmlConfig->xpath('/wurfl-config/match-mode'));
+        $this->persistence      = $this->persistence($xmlConfig->persistence);
+        $this->cache            = $this->persistence($xmlConfig->cache);
+        $this->logger           = $this->logger($xmlConfig->logger);
+        $this->matchMode        = $this->matchMode($xmlConfig->{'match-mode'});
     }
 
     /**
@@ -53,7 +54,7 @@ class XmlConfig extends Config
      */
     private function wurflFile($mainFileElement)
     {
-        return parent::getFullPath((string) $mainFileElement[0]);
+        return parent::getFullPath((string) $mainFileElement);
     }
 
     /**
@@ -96,22 +97,6 @@ class XmlConfig extends Config
     }
 
     /**
-     * Returns true if reload is allowed, according to $allowReloadElement
-     *
-     * @param array $allowReloadElement array of SimpleXMLElement objects
-     *
-     * @return boolean
-     */
-    private function allowReload($allowReloadElement)
-    {
-        if (!empty($allowReloadElement)) {
-            return (bool) $allowReloadElement[0];
-        }
-
-        return false;
-    }
-
-    /**
      * Returns the mode of operation if set, otherwise null
      *
      * @param array $modeElement array of SimpleXMLElement objects
@@ -122,7 +107,7 @@ class XmlConfig extends Config
     private function matchMode($modeElement)
     {
         if (!empty($modeElement)) {
-            $mode = $modeElement[0];
+            $mode = (string) $modeElement;
             if (!$mode) {
                 return $this->matchMode;
             }
@@ -147,8 +132,8 @@ class XmlConfig extends Config
         $logger = array();
 
         if (!empty($logDirElement)) {
-            $logger['logDir'] = parent::getFullPath((string) $logDirElement[0]->logDir);
-            $logger['type']   = (string) $logDirElement[0]->type;
+            $logger['logDir'] = parent::getFullPath((string) $logDirElement->logDir);
+            $logger['type']   = (string) $logDirElement->type;
         }
 
         return $logger;
@@ -166,8 +151,8 @@ class XmlConfig extends Config
         $persistence = array();
 
         if ($persistenceElement) {
-            $persistence['provider'] = (string) $persistenceElement[0]->provider;
-            $persistence['params']   = $this->_toArray((string) $persistenceElement[0]->params);
+            $persistence['provider'] = (string) $persistenceElement->provider;
+            $persistence['params']   = $this->_toArray((string) $persistenceElement->params);
         }
 
         return $persistence;

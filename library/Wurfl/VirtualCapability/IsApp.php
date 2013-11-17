@@ -70,9 +70,10 @@ class IsApp extends VirtualCapability
     {
         $ua = $this->request->userAgent;
 
-        if ($this->device->device_os == "iOS" && !Utils::checkIfContains($ua, "Safari")) {
+        if ('iOS' === $this->device->getCapability('device_os') && !Utils::checkIfContains($ua, 'Safari')) {
             return true;
         }
+
         foreach ($this->patterns as $pattern) {
             if ($pattern[0] === '#') {
                 // Regex

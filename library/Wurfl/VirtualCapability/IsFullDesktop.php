@@ -30,6 +30,6 @@ class IsFullDesktop extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->ux_full_desktop == 'true');
+        return ('true' === $this->device->getCapability('ux_full_desktop'));
     }
 }

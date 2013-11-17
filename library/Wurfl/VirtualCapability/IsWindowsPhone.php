@@ -29,6 +29,6 @@ class IsWindowsPhone extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->device_os == 'Windows Phone OS');
+        return ('Windows Phone OS' === $this->device->getCapability('device_os'));
     }
 }

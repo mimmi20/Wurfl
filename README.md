@@ -8,6 +8,14 @@ Submitting bugs and feature requests
 
 Bugs and feature request are tracked on [GitHub](https://github.com/mimmi20/Wurfl/issues)
 
+Important changes
+-----------------
+
+These changes are made:
+- added Wurfl namespace, removed the part "WURFL" from the filenames
+- merged the \Wurfl\Service and \Wurfl\ManagerFactory into \Wurl\Manager
+- replaced the \Wurfl\UserAgentHandlerChain with \SplDoublyLinkedList
+
 # the official WURFL PHP API #
 ==============================
 
@@ -86,12 +94,8 @@ $wurflConfig->cache(
     )
 );
 
-// Create a WURFL Manager Factory from the WURFL Configuration
-$wurflManagerFactory = new \Wurfl\ManagerFactory($wurflConfig);
-
-// Create a WURFL Manager
-/* @var $wurflManager \Wurfl\Manager */
-$wurflManager = $wurflManagerFactory->create();
+// Create a WURFL Manager from the WURFL Configuration
+$wurflManager = new \Wurfl\Manager($wurflConfig);
 ```
 
 Now you can use some of the `\Wurfl\Manager` class methods;
@@ -134,14 +138,35 @@ $device->getVirtualCapability('is_smartphone');
 ```php
 // Create WURFL Configuration
 $wurflConfig = new \Wurfl\Configuration\InMemoryConfig();
+
 // Set location of the WURFL File
 $wurflConfig->wurflFile($resourcesDir . '/wurfl.zip');
-// Set the match mode for the API ('performance' or 'accuracy')
-$wurflConfig->matchMode('performance');
+
+/*
+ * Set the match mode for the API
+ *
+ * It is recommended to use the defined class constants instead of their
+ * string values:
+ *
+ * \Wurfl\Configuration\Config::MATCH_MODE_PERFORMANCE
+ * \Wurfl\Configuration\Config::MATCH_MODE_ACCURACY
+ */
+$wurflConfig->matchMode(\Wurfl\Configuration\Config::MATCH_MODE_PERFORMANCE);
+
 // Setup WURFL Persistence
-$wurflConfig->persistence('file', array('dir' => $persistenceDir));
+$wurflConfig->persistence(
+    'file',
+    array(\Wurfl\Configuration\Config::DIR => $persistenceDir)
+);
+
 // Setup Caching
-$wurflConfig->cache('file', array('dir' => $cacheDir, 'expiration' => 36000));
+$wurflConfig->cache(
+    'file',
+    array(
+        \Wurfl\Configuration\Config::DIR        => $cacheDir,
+        \Wurfl\Configuration\Config::EXPIRATION => 36000
+    )
+);
 ```
 
 ## Using the WURFL PHP API ##

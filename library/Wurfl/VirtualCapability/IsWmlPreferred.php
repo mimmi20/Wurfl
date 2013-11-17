@@ -29,6 +29,6 @@ class IsWmlPreferred extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->xhtml_support_level <= 0);
+        return ($this->device->getCapability('xhtml_support_level') <= 0);
     }
 }

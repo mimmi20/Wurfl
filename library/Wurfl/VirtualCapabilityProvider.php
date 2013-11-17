@@ -105,12 +105,13 @@ class VirtualCapabilityProvider
             if (strpos($vc_name, '.') !== false) {
                 // Group of capabilities
                 list($group, $property) = explode('.', $vc_name);
-                $class = 'VirtualCapability\\' . $group . 'Group';
+                $class = 'VirtualCapability\\Groups\\' . $group . 'Group';
             } else {
                 // Individual capability
                 $class = 'VirtualCapability\\' . $vc_name;
             }
 
+            /** @var $model VirtualCapability */
             $model = new $class();
             $caps  = array_unique(array_merge($caps, $model->getRequiredCapabilities()));
             unset($model);

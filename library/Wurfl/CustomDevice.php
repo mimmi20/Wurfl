@@ -16,6 +16,7 @@ namespace Wurfl;
  * @version    $id$
  */
 use Wurfl\Request\GenericRequestFactory;
+use Wurfl\Xml\ModelDevice;
 
 /**
  * WURFL Custom Device - this is the core class that is used by developers to access the
@@ -160,7 +161,7 @@ class CustomDevice
      * it is returned.  Some devices have no device roots in their fall back tree, like generic_android, since
      * no devices above it (itself included) are real devices (actual device roots).
      *
-     * @return \Wurfl\Xml\ModelDevice
+     * @return ModelDevice
      */
     public function getActualDeviceRootAncestor()
     {
@@ -169,7 +170,7 @@ class CustomDevice
         }
 
         foreach ($this->modelDevices as $modelDevice) {
-            /* @var \Wurfl\Xml\ModelDevice $modelDevice */
+            /* @var ModelDevice $modelDevice */
             if ($modelDevice->actualDeviceRoot) {
                 return $modelDevice;
             }
@@ -216,12 +217,13 @@ class CustomDevice
      * Returns capabilities and their values for the current device
      *
      * @return array Device capabilities array
-     * @see Xml\ModelDevice::getCapabilities()
+     * @see ModelDevice::getCapabilities()
      */
     public function getAllCapabilities()
     {
         $capabilities = array();
 
+        /** @var $modelDevice ModelDevice */
         foreach (array_reverse($this->modelDevices) as $modelDevice) {
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }

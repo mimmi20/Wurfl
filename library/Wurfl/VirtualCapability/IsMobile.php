@@ -29,6 +29,6 @@ class IsMobile extends VirtualCapability
 
     protected function compute()
     {
-        return $this->device->is_wireless_device;
+        return $this->device->getCapability('is_wireless_device');
     }
 }

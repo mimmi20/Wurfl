@@ -15,7 +15,6 @@ namespace Wurfl;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
-use Wurfl\CapabilitiesHolder;
 use Wurfl\Xml\ModelDevice;
 
 /**

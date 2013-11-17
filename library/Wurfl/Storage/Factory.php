@@ -27,7 +27,7 @@ class Factory
      * @var array Default configuration
      */
     private static $defaultConfiguration = array(
-        "provider" => "memory",
+        "provider" => 'memory',
         "params"   => array()
     );
 
@@ -36,7 +36,7 @@ class Factory
      *
      * @param array $configuration
      *
-     * @return \Wurfl\Storage\Base Storage object, initialized with the given $configuration
+     * @return StorageInterface Storage object, initialized with the given $configuration
      */
     public static function create($configuration)
     {

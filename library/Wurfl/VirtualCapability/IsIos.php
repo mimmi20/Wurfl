@@ -30,6 +30,6 @@ class IsIos extends VirtualCapability
 
     protected function compute()
     {
-        return ($this->device->device_os == 'iOS');
+        return ('iOS' === $this->device->getCapability('device_os'));
     }
 }

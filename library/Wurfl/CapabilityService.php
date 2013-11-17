@@ -15,7 +15,6 @@ namespace Wurfl;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
-use Wurfl\DeviceRepository;
 use Wurfl\Storage\Base;
 
 /**
@@ -57,12 +56,12 @@ class CapabilityService
     public function getCapabilityForDevice($deviceID, $capabilityName)
     {
         $key             = $deviceID . $capabilityName;
-        $capabilityValue = $this->_cacheProvider->get($key);
+        $capabilityValue = $this->_cacheProvider->load($key);
 
         if (empty($capabilityValue)) {
             $capabilityValue = $this->_deviceRepository->getCapabilityForDevice($deviceID, $capabilityName);
             // save it in cache
-            $this->_cacheProvider->put($key, $capabilityValue);
+            $this->_cacheProvider->save($key, $capabilityValue);
         }
 
         return $capabilityValue;

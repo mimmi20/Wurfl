@@ -15,6 +15,8 @@ namespace Wurfl;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+use Wurfl\Storage\StorageInterface;
+
 /**
  * Builds a \Wurfl\DeviceRepository
  *
@@ -23,12 +25,12 @@ namespace Wurfl;
 class DeviceRepositoryBuilder
 {
     /**
-     * @var Storage\Base
+     * @var StorageInterface
      */
     private $persistenceProvider;
 
     /**
-     * @var UserAgentHandlerChain
+     * @var \SplDoublyLinkedList
      */
     private $userAgentHandlerChain;
 
@@ -52,13 +54,13 @@ class DeviceRepositoryBuilder
     private $lockStyle = 'r';
 
     /**
-     * @param Storage\Base          $persistenceProvider
-     * @param UserAgentHandlerChain $userAgentHandlerChain
+     * @param StorageInterface          $persistenceProvider
+     * @param \SplDoublyLinkedList  $userAgentHandlerChain
      * @param Xml\DevicePatcher     $devicePatcher
      */
     public function __construct(
-        Storage\Base $persistenceProvider,
-        UserAgentHandlerChain $userAgentHandlerChain,
+        StorageInterface $persistenceProvider,
+        \SplDoublyLinkedList  $userAgentHandlerChain,
         Xml\DevicePatcher $devicePatcher)
     {
         $this->persistenceProvider   = $persistenceProvider;
@@ -194,8 +196,15 @@ class DeviceRepositoryBuilder
     private function deviceClassificationNames()
     {
         $deviceClusterNames = array();
-        foreach ($this->userAgentHandlerChain->getHandlers() as $userAgentHandler) {
+
+        $this->userAgentHandlerChain->rewind();
+
+        while ( $this->userAgentHandlerChain->valid() ) {
+            /** @var $userAgentHandler Handlers\Handler */
+            $userAgentHandler     = $this->userAgentHandlerChain->current();
             $deviceClusterNames[] = $userAgentHandler->getPrefix();
+
+            $this->userAgentHandlerChain->next();
         }
 
         return $deviceClusterNames;
@@ -269,23 +278,35 @@ class DeviceRepositoryBuilder
      *
      * @param Xml\ModelDevice $device
      *
-     * @see WURFL_UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
+     * @see Storage\Base::save()
      */
     private function classifyAndPersistDevice(Xml\ModelDevice $device)
     {
-        $this->userAgentHandlerChain->filter($device->userAgent, $device->id);
+        Handlers\Utils::reset();
+
+        $this->userAgentHandlerChain->rewind();
+
+        /** @var $userAgentHandler Handlers\Handler */
+        $userAgentHandler = $this->userAgentHandlerChain->current();
+        $userAgentHandler->filter($device->userAgent, $device->id);
 
         $this->persistenceProvider->save($device->id, $device);
     }
 
     /**
      * Save the User Agent Map in the UserAgentHandlerChain
-     *
-     * @see WURFL_UserAgentHandlerChain::persistData()
      */
     private function persistClassifiedDevicesUserAgentMap()
     {
-        $this->userAgentHandlerChain->persistData();
+        $this->userAgentHandlerChain->rewind();
+
+        while ( $this->userAgentHandlerChain->valid() ) {
+            /** @var $userAgentHandler Handlers\Handler */
+            $userAgentHandler = $this->userAgentHandlerChain->current();
+            $userAgentHandler->persistData();
+
+            $this->userAgentHandlerChain->next();
+        }
     }
 
     private function patchDevice(Xml\ModelDevice $device, Xml\ModelDevice $patchingDevice)
