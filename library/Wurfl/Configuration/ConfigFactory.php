@@ -49,6 +49,6 @@ class ConfigFactory
      */
     private static function isXmlConfiguration($fileName)
     {
-        return (strcmp("xml", substr($fileName, -3)) === 0) ? true : false;
+        return ('xml' === substr($fileName, -3)) ? true : false;
     }
 }

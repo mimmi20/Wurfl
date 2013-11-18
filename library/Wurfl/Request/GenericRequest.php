@@ -30,11 +30,11 @@ namespace Wurfl\Request;
  */
 class GenericRequest
 {
-    private $_userAgent;
-    private $_userAgentProfile;
-    private $_xhtmlDevice;
-    private $_id;
-    private $_matchInfo;
+    private $userAgent;
+    private $userAgentProfile;
+    private $xhtmlDevice;
+    private $id;
+    private $matchInfo;
 
     /**
      * @param string $userAgent
@@ -43,17 +43,15 @@ class GenericRequest
      */
     public function __construct($userAgent, $userAgentProfile = null, $xhtmlDevice = null)
     {
-        $this->_userAgent        = $userAgent;
-        $this->_userAgentProfile = $userAgentProfile;
-        $this->_xhtmlDevice      = $xhtmlDevice;
-        $this->_id               = md5($userAgent);
-        $this->_matchInfo        = new MatchInfo();
+        $this->userAgent        = $userAgent;
+        $this->userAgentProfile = $userAgentProfile;
+        $this->xhtmlDevice      = $xhtmlDevice;
+        $this->id               = md5($userAgent);
+        $this->matchInfo        = new MatchInfo();
     }
 
     public function __get($name)
     {
-        $name = '_' . $name;
-
         return $this->$name;
     }
 }

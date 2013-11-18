@@ -20,6 +20,7 @@ use SplDoublyLinkedList;
 use Wurfl\Configuration\Config;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\StorageInterface;
+use Wurfl\Constants;
 
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
@@ -279,7 +280,8 @@ class Manager
             && $this->wurflConfig->isHighPerformance()
             && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
         ) {
-            // This device has been identified as a web browser programatically, so no call to WURFL is necessary
+            // This device has been identified as a web browser programatically,
+            // so no call to WURFL is necessary
             return $this->getDevice(Constants::GENERIC_WEB_BROWSER, $request);
         }
 
@@ -304,9 +306,25 @@ class Manager
             /** @var $userAgentHandlerChain SplDoublyLinkedList */
             $userAgentHandlerChain = $this->buildChain();
             $userAgentHandlerChain->rewind();
-            /** @var $userAgentHandler Handlers\Handler */
-            $userAgentHandler     = $userAgentHandlerChain->current();
-            $deviceId = $userAgentHandler->match($request);
+            
+            $found = false;
+
+            while ( $userAgentHandlerChain->valid() ) {
+                /** @var $userAgentHandler Handlers\Handler */
+                $userAgentHandler = $userAgentHandlerChain->current();
+                
+                if ($userAgentHandler->canHandle($request->userAgent)) {
+                    $deviceId = $userAgentHandler->match($request);
+                    $found    = true;
+                    break;
+                }
+
+                $userAgentHandlerChain->next();
+            }
+            
+            if (!$found) {
+                $deviceId = Constants::GENERIC;
+            }
 
             // save it in cache
             $cache->save($request->id, $deviceId);

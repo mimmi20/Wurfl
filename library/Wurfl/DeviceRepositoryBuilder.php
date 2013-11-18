@@ -285,10 +285,17 @@ class DeviceRepositoryBuilder
         Handlers\Utils::reset();
 
         $this->userAgentHandlerChain->rewind();
+        
+        while ( $userAgentHandlerChain->valid() ) {
+            /** @var $userAgentHandler Handlers\Handler */
+            $userAgentHandler = $userAgentHandlerChain->current();
+            
+            if ($userAgentHandler->filter($device->userAgent, $device->id)) {
+                break;
+            }
 
-        /** @var $userAgentHandler Handlers\Handler */
-        $userAgentHandler = $this->userAgentHandlerChain->current();
-        $userAgentHandler->filter($device->userAgent, $device->id);
+            $userAgentHandlerChain->next();
+        }
 
         $this->persistenceProvider->save($device->id, $device);
     }

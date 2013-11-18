@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl\VirtualCapability;
+namespace Wurfl\VirtualCapability\Groups;
 
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.

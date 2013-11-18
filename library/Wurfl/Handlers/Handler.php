@@ -98,16 +98,6 @@ abstract class Handler implements Filter, Matcher
     }
 
     /**
-     * Sets the next Handler
-     *
-     * @param Handler $handler
-     */
-    public function setNextHandler(Handler $handler)
-    {
-        $this->nextHandler = $handler;
-    }
-
-    /**
      * Alias for getPrefix()
      *
      * @return string Prefix
@@ -138,20 +128,17 @@ abstract class Handler implements Filter, Matcher
      * @param string $userAgent
      * @param string $deviceID
      *
-     * @return null
+     * @return boolean
      */
     public function filter($userAgent, $deviceID)
     {
         if ($this->canHandle($userAgent)) {
             $this->updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
 
-            return null;
-        }
-        if (isset($this->nextHandler)) {
-            return $this->nextHandler->filter($userAgent, $deviceID);
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -231,16 +218,7 @@ abstract class Handler implements Filter, Matcher
      */
     public function match(GenericRequest $request)
     {
-        $userAgent = $request->userAgent;
-        if ($this->canHandle($userAgent)) {
-            return $this->applyMatch($request);
-        }
-
-        if (isset($this->nextHandler)) {
-            return $this->nextHandler->match($request);
-        }
-
-        return Constants::GENERIC;
+        return $this->applyMatch($request);
     }
 
     /**
