@@ -348,6 +348,8 @@ class Manager
     private function getWrappedDevice($deviceId, GenericRequest $request = null)
     {
         $cache  = $this->buildCacheStorage();
+        
+        /** @var $device CustomDevice */
         $device = $cache->load('DEV_' . $deviceId);
 
         if (empty($device)) {

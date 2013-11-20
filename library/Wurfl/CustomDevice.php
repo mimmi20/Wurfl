@@ -94,6 +94,12 @@ class CustomDevice
     {
         if (isset($name)) {
             switch ($name) {
+                case 'request':
+                    return $this->request;
+                    break;
+                case 'matchInfo':
+                    return $this->request->matchInfo;
+                    break;
                 case 'id':
                 case 'userAgent':
                 case 'fallBack':
