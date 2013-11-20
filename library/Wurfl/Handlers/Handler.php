@@ -38,13 +38,6 @@ use Wurfl\Storage\Base;
 abstract class Handler implements Filter, Matcher
 {
     /**
-     * The next User Agent Handler
-     *
-     * @var Handler
-     */
-    private $nextHandler;
-
-    /**
      * @var UserAgentNormalizer
      */
     private $userAgentNormalizer;
@@ -247,6 +240,8 @@ abstract class Handler implements Filter, Matcher
         // Start with an Exact match
         $request->matchInfo->matcher_history .= "$class_name(exact),";
         $request->matchInfo->match_type = 'exact';
+        $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
+
         $deviceID                       = $this->applyExactMatch($userAgent);
 
         // Try with the conclusive Match

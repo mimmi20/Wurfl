@@ -16,6 +16,7 @@ namespace Wurfl\Configuration;
  * @version    $id$
  */
 
+use SimpleXMLElement;
 use Wurfl\Exception;
 
 /**
@@ -30,29 +31,37 @@ class XmlConfig extends Config
      */
     protected function initialize()
     {
+        /** @var $xmlConfig SimpleXMLElement */
         $xmlConfig = simplexml_load_file($this->configFilePath);
 
-        $this->wurflFile        = $this->wurflFile($xmlConfig->wurfl->{'main-file'});
-        $this->wurflPatches     = $this->wurflPatches($xmlConfig->wurfl->patches->patch);
-        $this->allowReload      = (boolean) $xmlConfig->{'allow-reload'};
+        $this->wurflFile = $this->wurflFile($xmlConfig->wurfl->{'main-file'});
 
-        $this->capabilityFilter = $this->capabilityFilter(
-            $xmlConfig->{'capability-filter'}->capability
-        );
-        $this->persistence      = $this->persistence($xmlConfig->persistence);
-        $this->cache            = $this->persistence($xmlConfig->cache);
-        $this->logger           = $this->logger($xmlConfig->logger);
-        $this->matchMode        = $this->matchMode($xmlConfig->{'match-mode'});
+        if ($xmlConfig->wurfl->patches->patch) {
+            $this->wurflPatches = $this->wurflPatches($xmlConfig->wurfl->patches->patch);
+        }
+
+        $this->allowReload = (boolean) $xmlConfig->{'allow-reload'};
+
+        if ($xmlConfig->{'capability-filter'}->capability) {
+            $this->capabilityFilter = $this->capabilityFilter(
+                $xmlConfig->{'capability-filter'}->capability
+            );
+        }
+
+        $this->persistence = $this->persistence($xmlConfig->persistence);
+        $this->cache       = $this->persistence($xmlConfig->cache);
+        $this->logger      = $this->logger($xmlConfig->logger);
+        $this->matchMode   = $this->matchMode($xmlConfig->{'match-mode'});
     }
 
     /**
      * Returns the full path to the WURFL file
      *
-     * @param array $mainFileElement array of SimpleXMLElement objects
+     * @param SimpleXMLElement $mainFileElement array of SimpleXMLElement objects
      *
      * @return string full path
      */
-    private function wurflFile($mainFileElement)
+    private function wurflFile(SimpleXMLElement $mainFileElement)
     {
         return parent::getFullPath((string) $mainFileElement);
     }
@@ -60,11 +69,11 @@ class XmlConfig extends Config
     /**
      * Returns an array of full path WURFL patches
      *
-     * @param array $patchElements array of SimpleXMLElement objects
+     * @param SimpleXMLElement $patchElements array of SimpleXMLElement objects
      *
      * @return array WURFL Patches
      */
-    private function wurflPatches($patchElements)
+    private function wurflPatches(SimpleXMLElement $patchElements = null)
     {
         $patches = array();
         if ($patchElements) {
@@ -79,11 +88,11 @@ class XmlConfig extends Config
     /**
      * Returns an array of WURFL Capabilities
      *
-     * @param array $capabilityFilter array of SimpleXMLElement objects
+     * @param SimpleXMLElement $capabilityFilter array of SimpleXMLElement objects
      *
      * @return array WURFL Capabilities
      */
-    private function capabilityFilter($capabilityFilter)
+    private function capabilityFilter(SimpleXMLElement $capabilityFilter = null)
     {
         $filter = array();
 
@@ -99,21 +108,24 @@ class XmlConfig extends Config
     /**
      * Returns the mode of operation if set, otherwise null
      *
-     * @param array $modeElement array of SimpleXMLElement objects
+     * @param SimpleXMLElement $modeElement array of SimpleXMLElement objects
      *
      * @return boolean
      * @throws Exception
      */
-    private function matchMode($modeElement)
+    private function matchMode(SimpleXMLElement $modeElement)
     {
         if (!empty($modeElement)) {
             $mode = (string) $modeElement;
+
             if (!$mode) {
                 return $this->matchMode;
             }
+
             if (!self::validMatchMode($mode)) {
                 throw new Exception('Invalid Match Mode: ' . $mode);
             }
+
             $this->matchMode = $mode;
         }
 
@@ -123,11 +135,11 @@ class XmlConfig extends Config
     /**
      * Returns log directory from XML config
      *
-     * @param array $logDirElement array of SimpleXMLElement objects
+     * @param SimpleXMLElement $logDirElement array of SimpleXMLElement objects
      *
      * @return string Log directory
      */
-    private function logger($logDirElement)
+    private function logger(SimpleXMLElement $logDirElement)
     {
         $logger = array();
 
@@ -142,11 +154,11 @@ class XmlConfig extends Config
     /**
      * Returns persistence provider info from XML config
      *
-     * @param array $persistenceElement array of SimpleXMLElement objects
+     * @param SimpleXMLElement $persistenceElement array of SimpleXMLElement objects
      *
      * @return array Persistence info
      */
-    private function persistence($persistenceElement)
+    private function persistence(SimpleXMLElement $persistenceElement)
     {
         $persistence = array();
 

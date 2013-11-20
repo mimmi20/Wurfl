@@ -74,8 +74,8 @@ class CustomDevice
 
         if ($request === null) {
             // This might happen if a device is looked up by its ID directly, without providing a user agent
-            $requestFactory = new GenericRequestFactory();
-            $request        = $requestFactory->createRequestForUserAgent($this->userAgent);
+            /** @var $request Request\GenericRequest */
+            $request = GenericRequestFactory::createRequestForUserAgent($this->userAgent);
         }
 
         $this->request                   = $request;
@@ -99,6 +99,9 @@ class CustomDevice
                     break;
                 case 'matchInfo':
                     return $this->request->matchInfo;
+                    break;
+                case 'modelDevices':
+                    return $this->modelDevices;
                     break;
                 case 'id':
                 case 'userAgent':

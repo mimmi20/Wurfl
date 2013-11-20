@@ -16,7 +16,6 @@ namespace Wurfl\Logger;
  * @version    $id$
  */
 use Psr\Log\LoggerInterface;
-use Wurfl\Configuration\Config;
 
 /**
  * Logging factory

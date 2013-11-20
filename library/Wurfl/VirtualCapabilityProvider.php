@@ -201,6 +201,7 @@ class VirtualCapabilityProvider
 
                 if (!array_key_exists($group, $this->group_cache)) {
                     $class = '\\Wurfl\\VirtualCapability\\Groups\\' . $group . 'Group';
+
                     // Cache the group
                     $this->group_cache[$group] = new $class($this->device, $this->request);
                     $this->group_cache[$group]->compute();

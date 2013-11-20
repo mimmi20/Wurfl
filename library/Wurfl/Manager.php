@@ -20,7 +20,6 @@ use SplDoublyLinkedList;
 use Wurfl\Configuration\Config;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\StorageInterface;
-use Wurfl\Constants;
 
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
@@ -174,12 +173,12 @@ class Manager
      */
     public function getDeviceForHttpRequest(array $httpRequest = array())
     {
-        if (empty($httpRequest)) {
+        if (!isset($httpRequest)) {
             throw new Exception('The $httpRequest parameter must be set.');
         }
 
-        $requestFactory = new Request\GenericRequestFactory();
-        $request        = $requestFactory->createRequest($httpRequest);
+        /** @var $request Request\GenericRequest */
+        $request = Request\GenericRequestFactory::createRequest($httpRequest);
 
         return $this->getDeviceForRequest($request);
     }
@@ -192,15 +191,14 @@ class Manager
      * @return CustomDevice device
      * @throws Exception if $userAgent is not set
      */
-    public function getDeviceForUserAgent($userAgent)
+    public function getDeviceForUserAgent($userAgent = '')
     {
         if (!isset($userAgent)) {
-            $userAgent = '';
+            throw new Exception('The $httpRequest parameter must be set.');
         }
 
-        $requestFactory = new Request\GenericRequestFactory();
-
-        $request = $requestFactory->createRequestForUserAgent($userAgent);
+        /** @var $request Request\GenericRequest */
+        $request = Request\GenericRequestFactory::createRequestForUserAgent($userAgent);
 
         return $this->getDeviceForRequest($request);
     }
@@ -270,10 +268,15 @@ class Manager
      *
      * @param GenericRequest $request
      *
+     * @throws Exception
      * @return CustomDevice
      */
     private function getDeviceForRequest(GenericRequest $request)
     {
+        if (!isset($request)) {
+            throw new Exception('The request parameter must be set.');
+        }
+
         Handlers\Utils::reset();
 
         if (null !== $this->wurflConfig

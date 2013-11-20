@@ -35,6 +35,7 @@ class GenericRequest
     private $xhtmlDevice;
     private $id;
     private $matchInfo;
+    private $userAgentsWithDeviceID;
 
     /**
      * @param string $userAgent
@@ -48,11 +49,17 @@ class GenericRequest
         $this->xhtmlDevice      = $xhtmlDevice;
         $this->id               = md5($userAgent);
         $this->matchInfo        = new MatchInfo();
+        $this->userAgentsWithDeviceID = null;
     }
 
     public function __get($name)
     {
         return $this->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->$name = $value;;
     }
 }
 

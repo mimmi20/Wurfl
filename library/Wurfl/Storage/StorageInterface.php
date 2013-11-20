@@ -63,4 +63,8 @@ interface StorageInterface
 
      */
     public function clear();
+
+    public function isWurflLoaded();
+
+    public function setWurflLoaded();
 }

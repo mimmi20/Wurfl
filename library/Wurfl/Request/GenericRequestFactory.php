@@ -31,9 +31,9 @@ class GenericRequestFactory
      *
      * @param array $request HTTP Request
      *
-     * @return \Wurfl\Request\GenericRequest
+     * @return GenericRequest
      */
-    public function createRequest($request)
+    static public function createRequest($request)
     {
         $userAgent        = Utils::getUserAgent($request);
         $userAgentProfile = Utils::getUserAgentProfile($request);
@@ -47,9 +47,9 @@ class GenericRequestFactory
      *
      * @param string $userAgent
      *
-     * @return \Wurfl\Request\GenericRequest
+     * @return GenericRequest
      */
-    public function createRequestForUserAgent($userAgent)
+    static public function createRequestForUserAgent($userAgent)
     {
         return new GenericRequest($userAgent, null, false);
     }

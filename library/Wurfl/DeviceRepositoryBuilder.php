@@ -163,16 +163,9 @@ class DeviceRepositoryBuilder
     }
 
     /**
-     * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
-     *
-     * @param array $wurflPatches     Array of (string)filenames
-     * @param array $capabilityFilter Array of (string) WURFL capabilities
-     *
-     * @return array Array of WURFL_Xml_DeviceIterator objects
-     */
-
-    /**
      * @return bool true if device repository is already built (WURFL is loaded in persistence proivder)
+     *
+     * @see \Wurfl\Storage\Base::isWurflLoaded()
      */
     private function isRepositoryBuilt()
     {
@@ -182,7 +175,7 @@ class DeviceRepositoryBuilder
     /**
      * Marks the WURFL as loaded in the persistence provider
      *
-     * @see WURFL_Storage_Base::setWurflLoaded()
+     * @see \Wurfl\Storage\Base::setWurflLoaded()
      */
     private function setRepositoryBuilt()
     {
@@ -285,16 +278,16 @@ class DeviceRepositoryBuilder
         Handlers\Utils::reset();
 
         $this->userAgentHandlerChain->rewind();
-        
-        while ( $userAgentHandlerChain->valid() ) {
+
+        while ($this->userAgentHandlerChain->valid()) {
             /** @var $userAgentHandler Handlers\Handler */
-            $userAgentHandler = $userAgentHandlerChain->current();
-            
+            $userAgentHandler = $this->userAgentHandlerChain->current();
+            var_dump('$userAgentHandler->filter($device->userAgent, $device->id)', $device->userAgent, $device->id);
             if ($userAgentHandler->filter($device->userAgent, $device->id)) {
                 break;
             }
 
-            $userAgentHandlerChain->next();
+            $this->userAgentHandlerChain->next();
         }
 
         $this->persistenceProvider->save($device->id, $device);
