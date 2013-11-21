@@ -30,7 +30,7 @@ class DeviceRepositoryBuilder
     private $persistenceProvider;
 
     /**
-     * @var \SplDoublyLinkedList
+     * @var Chain\UserAgentHandlerChain
      */
     private $userAgentHandlerChain;
 
@@ -55,12 +55,12 @@ class DeviceRepositoryBuilder
 
     /**
      * @param StorageInterface          $persistenceProvider
-     * @param \SplDoublyLinkedList  $userAgentHandlerChain
+     * @param Chain\UserAgentHandlerChain  $userAgentHandlerChain
      * @param Xml\DevicePatcher     $devicePatcher
      */
     public function __construct(
         StorageInterface $persistenceProvider,
-        \SplDoublyLinkedList  $userAgentHandlerChain,
+        Chain\UserAgentHandlerChain  $userAgentHandlerChain,
         Xml\DevicePatcher $devicePatcher)
     {
         $this->persistenceProvider   = $persistenceProvider;
@@ -188,19 +188,7 @@ class DeviceRepositoryBuilder
      */
     private function deviceClassificationNames()
     {
-        $deviceClusterNames = array();
-
-        $this->userAgentHandlerChain->rewind();
-
-        while ( $this->userAgentHandlerChain->valid() ) {
-            /** @var $userAgentHandler Handlers\Handler */
-            $userAgentHandler     = $this->userAgentHandlerChain->current();
-            $deviceClusterNames[] = $userAgentHandler->getPrefix();
-
-            $this->userAgentHandlerChain->next();
-        }
-
-        return $deviceClusterNames;
+        return $this->userAgentHandlerChain->getPrefixes();
     }
 
     /**
@@ -275,20 +263,7 @@ class DeviceRepositoryBuilder
      */
     private function classifyAndPersistDevice(Xml\ModelDevice $device)
     {
-        Handlers\Utils::reset();
-
-        $this->userAgentHandlerChain->rewind();
-
-        while ($this->userAgentHandlerChain->valid()) {
-            /** @var $userAgentHandler Handlers\Handler */
-            $userAgentHandler = $this->userAgentHandlerChain->current();
-            var_dump('$userAgentHandler->filter($device->userAgent, $device->id)', $device->userAgent, $device->id);
-            if ($userAgentHandler->filter($device->userAgent, $device->id)) {
-                break;
-            }
-
-            $this->userAgentHandlerChain->next();
-        }
+        $this->userAgentHandlerChain->filter($device->userAgent, $device->id);
 
         $this->persistenceProvider->save($device->id, $device);
     }
@@ -298,15 +273,7 @@ class DeviceRepositoryBuilder
      */
     private function persistClassifiedDevicesUserAgentMap()
     {
-        $this->userAgentHandlerChain->rewind();
-
-        while ( $this->userAgentHandlerChain->valid() ) {
-            /** @var $userAgentHandler Handlers\Handler */
-            $userAgentHandler = $this->userAgentHandlerChain->current();
-            $userAgentHandler->persistData();
-
-            $this->userAgentHandlerChain->next();
-        }
+        $this->userAgentHandlerChain->persistData();
     }
 
     private function patchDevice(Xml\ModelDevice $device, Xml\ModelDevice $patchingDevice)
@@ -364,6 +331,7 @@ class DeviceRepositoryBuilder
     private function toArray(Xml\DeviceIterator $deviceIterator)
     {
         $patchingDevices = array();
+        
         foreach ($deviceIterator as $device) {
             $patchingDevices[$device->id] = $device;
         }

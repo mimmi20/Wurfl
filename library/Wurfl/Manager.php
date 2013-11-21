@@ -16,7 +16,6 @@ namespace Wurfl;
      * @version    $id$
      */
 use Psr\Log\LoggerInterface;
-use SplDoublyLinkedList;
 use Wurfl\Configuration\Config;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\StorageInterface;
@@ -306,28 +305,9 @@ class Manager
         $deviceId = $cache->load($request->id);
 
         if (empty($deviceId)) {
-            /** @var $userAgentHandlerChain SplDoublyLinkedList */
+            /** @var $userAgentHandlerChain Chain\UserAgentHandlerChain */
             $userAgentHandlerChain = $this->buildChain();
-            $userAgentHandlerChain->rewind();
-            
-            $found = false;
-
-            while ( $userAgentHandlerChain->valid() ) {
-                /** @var $userAgentHandler Handlers\Handler */
-                $userAgentHandler = $userAgentHandlerChain->current();
-                
-                if ($userAgentHandler->canHandle($request->userAgent)) {
-                    $deviceId = $userAgentHandler->match($request);
-                    $found    = true;
-                    break;
-                }
-
-                $userAgentHandlerChain->next();
-            }
-            
-            if (!$found) {
-                $deviceId = Constants::GENERIC;
-            }
+            $deviceId              = $userAgentHandlerChain->match($request);
 
             // save it in cache
             $cache->save($request->id, $deviceId);
@@ -396,13 +376,13 @@ class Manager
     }
 
     /**
-     * @return SplDoublyLinkedList
+     * @return Chain\UserAgentHandlerChain
      */
     private function buildChain()
     {
         $context = new Context($this->buildPersistenceStorage(), $this->buildCacheStorage(), $this->buildLogger());
 
-        return UserAgentHandlerChainFactory::createFrom($context);
+        return Chain\UserAgentHandlerChainFactory::createFrom($context);
     }
 
     /**

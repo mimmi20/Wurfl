@@ -80,11 +80,15 @@ class CatchAllHandler extends Handler
             return $this->userAgentsWithDeviceID[$userAgent];
         }
 
-        if (array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
+        if (is_array($this->mozilla4UserAgentsWithDeviceID)
+            && array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)
+        ) {
             return $this->mozilla4UserAgentsWithDeviceID[$userAgent];
         }
 
-        if (array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
+        if (is_array($this->mozilla5UserAgentsWithDeviceID)
+            && array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)
+        ) {
             return $this->mozilla5UserAgentsWithDeviceID[$userAgent];
         }
 

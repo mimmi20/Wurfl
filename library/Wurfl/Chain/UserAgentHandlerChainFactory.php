@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl;
+namespace Wurfl\Chain;
 
     /**
      * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -15,7 +15,11 @@ namespace Wurfl;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+
 use SplDoublyLinkedList;
+use Wurfl\Context;
+use Wurfl\Request;
+use Wurfl\Handlers;
 
 /**
  * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating User Agent Handler Chains
@@ -29,13 +33,14 @@ class UserAgentHandlerChainFactory
      *
      * @param Context $context
      *
-     * @return SplDoublyLinkedList
+     * @return UserAgentHandlerChain
      */
     public static function createFrom(Context $context)
     {
         $chain = $context->cacheProvider->load('UserAgentHandlerChain');
 
-        if (!($chain instanceof SplDoublyLinkedList )) {
+        if (!($chain instanceof UserAgentHandlerChain)) {
+            /** @var $chain UserAgentHandlerChain */
             $chain = self::init($context);
             
             $context->cacheProvider->save('UserAgentHandlerChain', $chain, 3600);
@@ -49,11 +54,11 @@ class UserAgentHandlerChainFactory
      *
      * @param Context $context
      *
-     * @return SplDoublyLinkedList
+     * @return UserAgentHandlerChain
      */
     static private function init(Context $context)
     {
-        $chain = new SplDoublyLinkedList();
+        $chain = new UserAgentHandlerChain();
         $chain->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
 
         /** @var $genericNormalizers Request\UserAgentNormalizer */
