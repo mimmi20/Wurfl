@@ -31,9 +31,10 @@ class UcwebU2Handler extends Handler
 {
     protected $prefix = "UCWEBU2";
 
-    public static $constantIDs = array(
-        'generic_ucweb',
-    );
+    public static $constantIDs
+        = array(
+            'generic_ucweb',
+        );
 
     public function canHandle($userAgent)
     {

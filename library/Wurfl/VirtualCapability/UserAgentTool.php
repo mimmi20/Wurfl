@@ -60,7 +60,9 @@ class UserAgentTool
 
             //Is FB app?
             if ($device->browser->setRegex(
-                '/^Mozilla\/[45]\.0.+?Android.+?AppleWebKit.+FBAN/', 'FaceBook Android App', $device->os->version
+                '/^Mozilla\/[45]\.0.+?Android.+?AppleWebKit.+FBAN/',
+                'FaceBook Android App',
+                $device->os->version
             )
             ) {
                 return $device;
@@ -73,7 +75,9 @@ class UserAgentTool
 
             //Is UA Fennec?
             if ($device->browser->setRegex(
-                '/(?:Firefox|Fennec)\/([0-9]?[0-9]\.[0-9]?)/', 'Firefox Mobile', 1
+                '/(?:Firefox|Fennec)\/([0-9]?[0-9]\.[0-9]?)/',
+                'Firefox Mobile',
+                1
             )
             ) {
                 return $device;
@@ -91,7 +95,9 @@ class UserAgentTool
 
             //Is UA Opera Tablet?
             if ($device->browser->setRegex(
-                '/Opera Tablet\/.*Version\/([0-9]?[0-9])/', 'Opera Tablet', 1
+                '/Opera Tablet\/.*Version\/([0-9]?[0-9])/',
+                'Opera Tablet',
+                1
             )
             ) {
                 return $device;
@@ -109,7 +115,9 @@ class UserAgentTool
 
             //Is UA Amazon Silk browser?
             if ($device->browser->setRegex(
-                '/Silk\/([0-9]\.[0-9]).+?Silk\-Accelerated/', 'Amazon Silk Browser', 1
+                '/Silk\/([0-9]\.[0-9]).+?Silk\-Accelerated/',
+                'Amazon Silk Browser',
+                1
             )
             ) {
                 return $device;
@@ -118,7 +126,8 @@ class UserAgentTool
             //Is Android Stock Browser?
             if ($device->browser->setRegex(
                 '/^Mozilla\/[45]\.0.+?Android.+?AppleWeb(?:K|k)it.+?(?:(?:Mobile |)?Safari)/',
-                'Android', $device->os->version
+                'Android',
+                $device->os->version
             )
             ) {
                 return $device;
@@ -128,8 +137,11 @@ class UserAgentTool
         }
 
         //Is UA Amazon Silk browser without the word Android?
-        if (strpos($device->ua, 'Silk') !== false && $device->browser->setRegex(
-                '/Silk\/([0-9]\.[0-9]).+?Silk\-Accelerated/', 'Amazon Silk Browser', 1
+        if (strpos($device->ua, 'Silk') !== false
+            && $device->browser->setRegex(
+                '/Silk\/([0-9]\.[0-9]).+?Silk\-Accelerated/',
+                'Amazon Silk Browser',
+                1
             )
             && $device->os->set("Android", null)
         ) {
@@ -137,15 +149,18 @@ class UserAgentTool
         }
 
         //Is UA iOS?
-        if (strpos($device->ua, 'iPhone') !== false || strpos($device->ua, 'iPad') !== false || strpos(
-                $device->ua, 'iPod'
+        if (strpos($device->ua, 'iPhone') !== false || strpos($device->ua, 'iPad') !== false
+            || strpos(
+                $device->ua,
+                'iPod'
             ) !== false
         ) {
             $device->os->name = 'iOS';
-            
+
             if ($device->os->setRegex(
                 '/^Mozilla\/[45]\.[0-9] \((iPhone|iPod|iPad);(?: U;)? CPU(?: iPhone|) OS ([0-9]_[0-9](?:_[0-9])?) like Mac OS X/',
-                'iOS', 2
+                'iOS',
+                2
             )
             ) {
                 $device->os->version = str_replace('_', '.', $device->os->version);
@@ -154,7 +169,8 @@ class UserAgentTool
             //Is UA Chrome Mobile on iOS?
             if ($device->browser->setRegex(
                 '/^Mozilla\/[45]\.0.+?like Mac OS X.+?CriOS\/([0-9]+?)\.[0-9].+?Mobile\/[0-9A-Za-z]+ Safari\/[0-9A-Za-z]+\./',
-                'Chrome Mobile iOS', 1
+                'Chrome Mobile iOS',
+                1
             )
             ) {
                 return $device;
@@ -163,7 +179,8 @@ class UserAgentTool
             //Is UA UC Web Browser?
             if ($device->browser->setRegex(
                 '/^Mozilla\/[45]\.0.+?like Mac OS X.+?AppleWebKit.+?Mobile\/[0-9A-Za-z]+ Safari\/[0-9A-Za-z]+.*UCBrowser\/?([0-9]+)\./',
-                'UC Web Browser on iOS', 1
+                'UC Web Browser on iOS',
+                1
             )
             ) {
                 return $device;
@@ -193,7 +210,8 @@ class UserAgentTool
         }
 
         //Is UA Windows Mobile?
-        if ($device->os->setContains('Windows CE', 'Windows Mobile') && $device->browser->set(
+        if ($device->os->setContains('Windows CE', 'Windows Mobile')
+            && $device->browser->set(
                 'IE Mobile'
             )
         ) {
@@ -204,7 +222,8 @@ class UserAgentTool
             //Is UA Windows Phone?
             if ($device->os->setRegex(
                 '/^Mozilla\/[45].0 \(compatible; MSIE ([0-9]+\.[0-9]); Windows Phone(?: OS)? ([0-9]\.[0-9])/',
-                'Windows Phone', 2
+                'Windows Phone',
+                2
             )
             ) {
                 $device->browser->set('IE Mobile', $device->os->getLastRegexMatch(1));
@@ -215,7 +234,8 @@ class UserAgentTool
             // Is UA Windows Phones OS - Loose match?
             if ($device->os->setRegex(
                 '/^Mozilla\/[45].0 \(compatible; MSIE ([0-9]+\.[0-9]);.+?Windows Phone(?: OS)? ([0-9]\.[0-9])/',
-                'Windows Phone', 2
+                'Windows Phone',
+                2
             )
             ) {
                 $device->browser->set('IE Mobile', $device->os->getLastRegexMatch(1));
@@ -225,17 +245,23 @@ class UserAgentTool
         }
 
         //Is UA S40 Ovi Browser?
-        if (strpos($device->ua, 'OviBrowser') !== false && $device->browser->setRegex(
-                '/\bS40OviBrowser\/([0-9]\.[0-9])/', 'S40 Ovi Browser', 1
-            ) && $device->os->set('Nokia Series 40')
+        if (strpos($device->ua, 'OviBrowser') !== false
+            && $device->browser->setRegex(
+                '/\bS40OviBrowser\/([0-9]\.[0-9])/',
+                'S40 Ovi Browser',
+                1
+            )
+            && $device->os->set('Nokia Series 40')
         ) {
             return $device;
         }
 
         //Is Series60?
-        if (strpos($device->ua, 'Symbian') !== false && $device->os->setRegex(
+        if (strpos($device->ua, 'Symbian') !== false
+            && $device->os->setRegex(
                 '/(?:SymbianOS\/([0-9]\.[0-9]).+?Series60\/[0-9]\.?[0-9]?)|(?:Series60\/([0-9]\.?[0-9]?) )|(?:S60\/([0-9]\.?[0-9]?))/',
-                'Symbian S60', 1
+                'Symbian S60',
+                1
             )
         ) {
 
@@ -248,7 +274,9 @@ class UserAgentTool
             }
 
             if ($device->browser->setRegex(
-                '/Opera Mobi.+Version\/([0-9]?[0-9]\.[0-9]?[0-9])/', 'Opera Mobi', 1
+                '/Opera Mobi.+Version\/([0-9]?[0-9]\.[0-9]?[0-9])/',
+                'Opera Mobi',
+                1
             )
             ) {
                 return $device;
@@ -260,13 +288,17 @@ class UserAgentTool
         }
 
         //Is UA Blackberry?
-        if (strpos($device->ua, 'BlackBerry') !== false && $device->os->setRegex(
-                '/(?:BlackBerry)|(?:^Mozilla\/5.0 \(BB10; ([a-zA-Z0-9])\))/', 'BlackBerry'
+        if (strpos($device->ua, 'BlackBerry') !== false
+            && $device->os->setRegex(
+                '/(?:BlackBerry)|(?:^Mozilla\/5.0 \(BB10; ([a-zA-Z0-9])\))/',
+                'BlackBerry'
             )
         ) {
 
             if ($device->os->setRegex(
-                '/^BlackBerry[0-9A-Za-z]+?\/([0-9]\.[0-9]).+?UC Browser\/?([0-9]\.[0-9])/', null, 1
+                '/^BlackBerry[0-9A-Za-z]+?\/([0-9]\.[0-9]).+?UC Browser\/?([0-9]\.[0-9])/',
+                null,
+                1
             )
             ) {
                 $device->browser->set('UC Web', $device->os->getLastRegexMatch(2));
@@ -276,7 +308,8 @@ class UserAgentTool
 
             if ($device->os->setRegex(
                 '/^UCWEB\/[0-9]\.0.+?; [a-zA-Z][a-zA-Z]?\-[a-zA-Z]?[a-zA-Z]; [0-9]+?\/([0-9]\.[0-9]).+?UCBrowser\/?([0-9]\.[0-9])/',
-                null, 1
+                null,
+                1
             )
             ) {
                 $device->browser->set('UC Web', $device->os->getLastRegexMatch(2));
@@ -291,7 +324,9 @@ class UserAgentTool
             }
 
             if ($device->os->setRegex(
-                '/^Mozilla\/[45]\.0 \(BlackBerry;(?: U;)? BlackBerry.+?Version\/([0-9]\.[0-9])/', null, 1
+                '/^Mozilla\/[45]\.0 \(BlackBerry;(?: U;)? BlackBerry.+?Version\/([0-9]\.[0-9])/',
+                null,
+                1
             )
             ) {
                 $device->browser->set('BlackBerry Browser', $device->os->version);
@@ -362,7 +397,9 @@ class UserAgentTool
             //Is UA Opera Mobi?
             if ($device->browser->setContains('Opera Mobi', 'Opera Mobile')) {
                 if ($device->browser->setRegex(
-                    '/Opera Mobi.+Version\/([0-9]?[0-9]\.[0-9]?[0-9])/', null, 1
+                    '/Opera Mobi.+Version\/([0-9]?[0-9]\.[0-9]?[0-9])/',
+                    null,
+                    1
                 )
                 ) {
                     return $device;
@@ -379,7 +416,8 @@ class UserAgentTool
             //Is UA Opera Sync?
             if ($device->browser->setRegex(
                 '/Browser\/Opera Sync\/SyncClient.+?Version\/([0-9]?[0-9]\.[0-9][0-9]?)/',
-                'Opera Link Sync', 1
+                'Opera Link Sync',
+                1
             )
             ) {
                 return $device;
@@ -428,7 +466,8 @@ class UserAgentTool
         if (strpos($device->ua, 'Chrome') !== false) {
             //Chrome Mac
             if ($device->os->setRegex(
-                '/^Mozilla\/[0-9]\.0 \(Macintosh;(?: U;)?([a-zA-Z_ \.0-9]+)(?:;)?.+? Chrome\/([0-9]+\.[]0-9]+)\.?/', 1
+                '/^Mozilla\/[0-9]\.0 \(Macintosh;(?: U;)?([a-zA-Z_ \.0-9]+)(?:;)?.+? Chrome\/([0-9]+\.[]0-9]+)\.?/',
+                1
             )
             ) {
                 $device->browser->set('Chrome', $device->os->getLastRegexMatch(2));
@@ -463,7 +502,8 @@ class UserAgentTool
         if (strpos($device->ua, 'Firefox') !== false) {
             //Firefox - Windows
             if ($device->os->setRegex(
-                '/^Mozilla\/[0-9]\.0 .+(Windows [0-9A-Za-z \.]+;).+?rv:.+?Firefox\/([0-9]?[0-9]\.[0-9])/', 1
+                '/^Mozilla\/[0-9]\.0 .+(Windows [0-9A-Za-z \.]+;).+?rv:.+?Firefox\/([0-9]?[0-9]\.[0-9])/',
+                1
             )
             ) {
                 $device->browser->set('Firefox', $device->os->getLastRegexMatch(2));
@@ -486,7 +526,8 @@ class UserAgentTool
         //Opera
         if (strpos($device->ua, 'Opera') !== false
             && $device->os->setRegex(
-                '/^Opera\/([0-9]?[0-9]\.[0-9][0-9]?) .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+) ?;/', 2
+                '/^Opera\/([0-9]?[0-9]\.[0-9][0-9]?) .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+) ?;/',
+                2
             )
         ) {
             $device->browser->set('Opera', $device->os->getLastRegexMatch(1));

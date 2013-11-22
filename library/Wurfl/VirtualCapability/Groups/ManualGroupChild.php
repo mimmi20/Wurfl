@@ -35,8 +35,11 @@ class ManualGroupChild extends VirtualCapability
     protected $group;
 
     public function __construct(
-        CustomDevice $device, GenericRequest $request, Group $group, $value = null)
-    {
+        CustomDevice $device,
+        GenericRequest $request,
+        Group $group,
+        $value = null
+    ) {
         $this->group = $group;
         parent::__construct($device, $request);
         $this->manual_value = $value;

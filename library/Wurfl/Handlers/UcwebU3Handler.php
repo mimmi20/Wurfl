@@ -31,29 +31,27 @@ class UcwebU3Handler extends Handler
 {
     protected $prefix = "UCWEBU3";
 
-    public static $constantIDs = array(
-        'generic_ucweb',
-
-        'generic_ucweb_android_ver1',
-        'generic_ucweb_android_ver2',
-        'generic_ucweb_android_ver3',
-        'generic_ucweb_android_ver4',
-        'generic_ucweb_android_ver5',
-
-        'apple_iphone_ver1_subuaucweb',
-        'apple_iphone_ver2_subuaucweb',
-        'apple_iphone_ver3_subuaucweb',
-        'apple_iphone_ver4_subuaucweb',
-        'apple_iphone_ver5_subuaucweb',
-        'apple_iphone_ver6_subuaucweb',
-        'apple_iphone_ver7_subuaucweb',
-
-        'apple_ipad_ver1_subuaucweb',
-        'apple_ipad_ver1_sub4_subuaucweb',
-        'apple_ipad_ver1_sub5_subuaucweb',
-        'apple_ipad_ver1_sub6_subuaucweb',
-        'apple_ipad_ver1_sub7_subuaucweb',
-    );
+    public static $constantIDs
+        = array(
+            'generic_ucweb',
+            'generic_ucweb_android_ver1',
+            'generic_ucweb_android_ver2',
+            'generic_ucweb_android_ver3',
+            'generic_ucweb_android_ver4',
+            'generic_ucweb_android_ver5',
+            'apple_iphone_ver1_subuaucweb',
+            'apple_iphone_ver2_subuaucweb',
+            'apple_iphone_ver3_subuaucweb',
+            'apple_iphone_ver4_subuaucweb',
+            'apple_iphone_ver5_subuaucweb',
+            'apple_iphone_ver6_subuaucweb',
+            'apple_iphone_ver7_subuaucweb',
+            'apple_ipad_ver1_subuaucweb',
+            'apple_ipad_ver1_sub4_subuaucweb',
+            'apple_ipad_ver1_sub5_subuaucweb',
+            'apple_ipad_ver1_sub6_subuaucweb',
+            'apple_ipad_ver1_sub7_subuaucweb',
+        );
 
     public function canHandle($userAgent)
     {

@@ -29,23 +29,22 @@ class AppleHandler extends Handler
 {
     protected $prefix = "APPLE";
 
-    public static $constantIDs = array(
-        'apple_ipod_touch_ver1',
-        'apple_ipod_touch_ver2',
-        'apple_ipod_touch_ver3',
-        'apple_ipod_touch_ver4',
-        'apple_ipod_touch_ver5',
-
-        'apple_ipad_ver1',
-        'apple_ipad_ver1_sub42',
-        'apple_ipad_ver1_sub5',
-
-        'apple_iphone_ver1',
-        'apple_iphone_ver2',
-        'apple_iphone_ver3',
-        'apple_iphone_ver4',
-        'apple_iphone_ver5',
-    );
+    public static $constantIDs
+        = array(
+            'apple_ipod_touch_ver1',
+            'apple_ipod_touch_ver2',
+            'apple_ipod_touch_ver3',
+            'apple_ipod_touch_ver4',
+            'apple_ipod_touch_ver5',
+            'apple_ipad_ver1',
+            'apple_ipad_ver1_sub42',
+            'apple_ipad_ver1_sub5',
+            'apple_iphone_ver1',
+            'apple_iphone_ver2',
+            'apple_iphone_ver3',
+            'apple_iphone_ver4',
+            'apple_iphone_ver5',
+        );
 
     public function canHandle($userAgent)
     {
@@ -53,8 +52,10 @@ class AppleHandler extends Handler
             return false;
         }
 
-        return (Utils::checkIfStartsWith($userAgent, 'Mozilla/5') && Utils::checkIfContainsAnyOf(
-                $userAgent, array('iPhone', 'iPod', 'iPad')
+        return (Utils::checkIfStartsWith($userAgent, 'Mozilla/5')
+            && Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('iPhone', 'iPod', 'iPad')
             ));
     }
 
@@ -81,7 +82,7 @@ class AppleHandler extends Handler
     public function applyRecoveryMatch($userAgent)
     {
         if (preg_match('/ (\d)_(\d)[ _]/', $userAgent, $matches)) {
-            $major_version = (int) $matches[1];
+            $major_version = (int)$matches[1];
         } else {
             $major_version = -1;
         }

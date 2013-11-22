@@ -30,11 +30,12 @@ class NokiaHandler extends Handler
 
     protected $prefix = "NOKIA";
 
-    public static $constantIDs = array(
-        'nokia_generic_series60',
-        'nokia_generic_series80',
-        'nokia_generic_meego',
-    );
+    public static $constantIDs
+        = array(
+            'nokia_generic_series60',
+            'nokia_generic_series80',
+            'nokia_generic_meego',
+        );
 
     public function canHandle($userAgent)
     {

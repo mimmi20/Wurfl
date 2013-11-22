@@ -30,11 +30,12 @@ class NintendoHandler extends Handler
 
     protected $prefix = "NINTENDO";
 
-    public static $constantIDs = array(
-        'nintendo_wii_ver1',
-        'nintendo_dsi_ver1',
-        'nintendo_ds_ver1',
-    );
+    public static $constantIDs
+        = array(
+            'nintendo_wii_ver1',
+            'nintendo_dsi_ver1',
+            'nintendo_ds_ver1',
+        );
 
     public function canHandle($userAgent)
     {
@@ -45,8 +46,10 @@ class NintendoHandler extends Handler
             return true;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla/') && Utils::checkIfContainsAll(
-            $userAgent, array('Nitro', 'Opera')
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla/')
+        && Utils::checkIfContainsAll(
+            $userAgent,
+            array('Nitro', 'Opera')
         );
     }
 
@@ -63,8 +66,10 @@ class NintendoHandler extends Handler
         if (Utils::checkIfContains($userAgent, 'Nintendo DSi')) {
             return 'nintendo_dsi_ver1';
         }
-        if ((Utils::checkIfStartsWith($userAgent, 'Mozilla/') && Utils::checkIfContainsAll(
-                $userAgent, array('Nitro', 'Opera')
+        if ((Utils::checkIfStartsWith($userAgent, 'Mozilla/')
+            && Utils::checkIfContainsAll(
+                $userAgent,
+                array('Nitro', 'Opera')
             ))
         ) {
             return 'nintendo_ds_ver1';

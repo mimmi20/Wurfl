@@ -32,14 +32,17 @@ class HTCMacHandler extends Handler
 
     protected $prefix = "HTCMAC";
 
-    public static $constantIDs = array(
-        'generic_android_htc_disguised_as_mac',
-    );
+    public static $constantIDs
+        = array(
+            'generic_android_htc_disguised_as_mac',
+        );
 
     public function canHandle($userAgent)
     {
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh') && Utils::checkIfContains(
-            $userAgent, 'HTC'
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh')
+        && Utils::checkIfContains(
+            $userAgent,
+            'HTC'
         );
     }
 

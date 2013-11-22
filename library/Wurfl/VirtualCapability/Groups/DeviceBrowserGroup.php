@@ -24,12 +24,13 @@ class DeviceBrowserGroup extends Group
 {
     protected $required_capabilities = array();
 
-    protected $storage = array(
-        'DeviceOs'        => null,
-        'DeviceOsVersion' => null,
-        'Browser'         => null,
-        'BrowserVersion'  => null,
-    );
+    protected $storage
+        = array(
+            'DeviceOs'        => null,
+            'DeviceOsVersion' => null,
+            'Browser'         => null,
+            'BrowserVersion'  => null,
+        );
 
     /**
      * @var UserAgentTool
@@ -45,9 +46,12 @@ class DeviceBrowserGroup extends Group
         // Run the UserAgentTool to get the relevant details
         $device = self::$ua_tool->getDevice($this->request->userAgent);
 
-        $this->storage['DeviceOs']        = new ManualGroupChild($this->device, $this->request, $this, $device->os->name);
-        $this->storage['DeviceOsVersion'] = new ManualGroupChild($this->device, $this->request, $this, $device->os->version);
-        $this->storage['Browser']         = new ManualGroupChild($this->device, $this->request, $this, $device->browser->name);
-        $this->storage['BrowserVersion']  = new ManualGroupChild($this->device, $this->request, $this, $device->browser->version);
+        $this->storage['DeviceOs'] = new ManualGroupChild($this->device, $this->request, $this, $device->os->name);
+        $this->storage['DeviceOsVersion']
+                                   = new ManualGroupChild($this->device, $this->request, $this, $device->os->version);
+        $this->storage['Browser']
+                                   = new ManualGroupChild($this->device, $this->request, $this, $device->browser->name);
+        $this->storage['BrowserVersion']
+                                   = new ManualGroupChild($this->device, $this->request, $this, $device->browser->version);
     }
 }

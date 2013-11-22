@@ -30,15 +30,16 @@ class OperaHandler extends Handler
 
     protected $prefix = "OPERA";
 
-    public static $constantIDs = array(
-        'opera',
-        'opera_7',
-        'opera_8',
-        'opera_9',
-        'opera_10',
-        'opera_11',
-        'opera_12',
-    );
+    public static $constantIDs
+        = array(
+            'opera',
+            'opera_7',
+            'opera_8',
+            'opera_9',
+            'opera_10',
+            'opera_11',
+            'opera_12',
+        );
 
     public function canHandle($userAgent)
     {

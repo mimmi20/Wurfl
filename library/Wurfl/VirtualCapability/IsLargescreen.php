@@ -26,10 +26,11 @@ use Wurfl\VirtualCapability;
 class IsLargescreen extends VirtualCapability
 {
 
-    protected $required_capabilities = array(
-        'resolution_width',
-        'resolution_height',
-    );
+    protected $required_capabilities
+        = array(
+            'resolution_width',
+            'resolution_height',
+        );
 
     protected function compute()
     {

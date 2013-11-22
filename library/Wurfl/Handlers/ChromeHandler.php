@@ -29,9 +29,10 @@ class ChromeHandler extends Handler
 {
     protected $prefix = "CHROME";
 
-    public static $constantIDs = array(
-        'google_chrome'
-    );
+    public static $constantIDs
+        = array(
+            'google_chrome'
+        );
 
     public function canHandle($userAgent)
     {

@@ -38,7 +38,8 @@ class DevicePatcher
             return $patchingDevice;
         }
         $groupIdCapabilitiesMap = Utils::array_merge_recursive_unique(
-            $device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap()
+            $device->getGroupIdCapabilitiesMap(),
+            $patchingDevice->getGroupIdCapabilitiesMap()
         );
 
         return new ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);

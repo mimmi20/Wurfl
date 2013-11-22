@@ -1,20 +1,20 @@
 <?php
 namespace Wurfl\Handlers\Matcher;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * Refer to the COPYING.txt file distributed with this package.
- *
- * @category   WURFL
- * @package    \Wurfl\Handlers_Matcher
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    \Wurfl\Handlers_Matcher
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @version    $id$
+     */
 
 /**
  * WURFL Reduction in String user agent matcher.
@@ -65,7 +65,7 @@ class RISMatcher implements MatcherInterface
         $high         = count($collection) - 1;
         $bestIndex    = 0;
         while ($low <= $high) {
-            $mid      = (int) round(($low + $high) / 2);
+            $mid      = (int)round(($low + $high) / 2);
             $find     = $collection[$mid];
             $distance = $this->longestCommonPrefixLength($needle, $find);
             if ($distance >= $tolerance && $distance > $bestDistance) {
@@ -108,8 +108,10 @@ class RISMatcher implements MatcherInterface
      */
     private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
     {
-        while ($bestIndex > 0 && $this->longestCommonPrefixLength(
-                $collection[$bestIndex - 1], $needle
+        while ($bestIndex > 0
+            && $this->longestCommonPrefixLength(
+                $collection[$bestIndex - 1],
+                $needle
             ) == $bestDistance) {
             $bestIndex = $bestIndex - 1;
         }

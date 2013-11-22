@@ -30,9 +30,10 @@ class KDDIHandler extends Handler
 
     protected $prefix = "KDDI";
 
-    public static $constantIDs = array(
-        'opwv_v62_generic'
-    );
+    public static $constantIDs
+        = array(
+            'opwv_v62_generic'
+        );
 
     public function canHandle($userAgent)
     {

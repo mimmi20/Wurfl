@@ -27,9 +27,10 @@ namespace Wurfl\Handlers;
  */
 class JavaMidletHandler extends Handler
 {
-    public static $constantIDs = array(
-        'generic_midp_midlet',
-    );
+    public static $constantIDs
+        = array(
+            'generic_midp_midlet',
+        );
 
     public function canHandle($userAgent)
     {

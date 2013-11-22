@@ -65,7 +65,8 @@ class UcwebU2 implements NormalizerInterface
                     $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
 
                     if (preg_match(
-                        '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/', $userAgent,
+                        '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/',
+                        $userAgent,
                         $matches
                     )
                     ) {

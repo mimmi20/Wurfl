@@ -22,11 +22,12 @@ namespace Wurfl;
  */
 class Utils
 {
-    private static $userAgentSearchOrder = array(
-        'HTTP_DEVICE_STOCK_UA',
-        'HTTP_X_OPERAMINI_PHONE_UA',
-        'HTTP_USER_AGENT',
-    );
+    private static $userAgentSearchOrder
+        = array(
+            'HTTP_DEVICE_STOCK_UA',
+            'HTTP_X_OPERAMINI_PHONE_UA',
+            'HTTP_USER_AGENT',
+        );
 
     /**
      * returns the User Agent From $request or empty string if not found

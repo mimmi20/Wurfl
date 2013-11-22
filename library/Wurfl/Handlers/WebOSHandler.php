@@ -32,10 +32,11 @@ class WebOSHandler extends Handler
 
     protected $prefix = "WEBOS";
 
-    public static $constantIDs = array(
-        'hp_tablet_webos_generic',
-        'hp_webos_generic',
-    );
+    public static $constantIDs
+        = array(
+            'hp_tablet_webos_generic',
+            'hp_webos_generic',
+        );
 
     public function canHandle($userAgent)
     {

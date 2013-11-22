@@ -25,10 +25,11 @@ use Wurfl\VirtualCapability;
 
 class IsXhtmlmpPreferred extends VirtualCapability
 {
-    protected $required_capabilities = array(
-        'xhtml_support_level',
-        'preferred_markup',
-    );
+    protected $required_capabilities
+        = array(
+            'xhtml_support_level',
+            'preferred_markup',
+        );
 
     protected function compute()
     {

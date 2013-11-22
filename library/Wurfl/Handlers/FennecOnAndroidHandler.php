@@ -31,11 +31,12 @@ class FennecOnAndroidHandler extends Handler
 {
     protected $prefix = "FENNECONANDROID";
 
-    public static $constantIDs = array(
-        'generic_android_ver2_0_fennec',
-        'generic_android_ver2_0_fennec_tablet',
-        'generic_android_ver2_0_fennec_desktop',
-    );
+    public static $constantIDs
+        = array(
+            'generic_android_ver2_0_fennec',
+            'generic_android_ver2_0_fennec_tablet',
+            'generic_android_ver2_0_fennec_desktop',
+        );
 
     public function canHandle($userAgent)
     {
@@ -43,8 +44,10 @@ class FennecOnAndroidHandler extends Handler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
-                $userAgent, array('Fennec', 'Firefox')
+        return (Utils::checkIfContains($userAgent, 'Android')
+            && Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('Fennec', 'Firefox')
             ));
     }
 

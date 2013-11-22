@@ -48,25 +48,26 @@ class VirtualCapabilityProvider
      *
      * @var array
      */
-    public static $virtual_capabilities = array(
-        'is_android'                   => 'IsAndroid',
-        'is_ios'                       => 'IsIos',
-        'is_windows_phone'             => 'IsWindowsPhone',
-        'is_app'                       => 'IsApp',
-        'is_full_desktop'              => 'IsFullDesktop',
-        'is_largescreen'               => 'IsLargescreen',
-        'is_mobile'                    => 'IsMobile',
-        'is_robot'                     => 'IsRobot',
-        'is_smartphone'                => 'IsSmartphone',
-        'is_touchscreen'               => 'IsTouchscreen',
-        'is_wml_preferred'             => 'IsWmlPreferred',
-        'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
-        'is_html_preferred'            => 'IsHtmlPreferred',
-        'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
-        'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
-        'advertised_browser'           => 'DeviceBrowser.Browser',
-        'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
-    );
+    public static $virtual_capabilities
+        = array(
+            'is_android'                   => 'IsAndroid',
+            'is_ios'                       => 'IsIos',
+            'is_windows_phone'             => 'IsWindowsPhone',
+            'is_app'                       => 'IsApp',
+            'is_full_desktop'              => 'IsFullDesktop',
+            'is_largescreen'               => 'IsLargescreen',
+            'is_mobile'                    => 'IsMobile',
+            'is_robot'                     => 'IsRobot',
+            'is_smartphone'                => 'IsSmartphone',
+            'is_touchscreen'               => 'IsTouchscreen',
+            'is_wml_preferred'             => 'IsWmlPreferred',
+            'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
+            'is_html_preferred'            => 'IsHtmlPreferred',
+            'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
+            'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
+            'advertised_browser'           => 'DeviceBrowser.Browser',
+            'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
+        );
 
     /**
      * Storage for the WURFL_VirtualCapability objects
@@ -161,7 +162,7 @@ class VirtualCapabilityProvider
                 // break omitted
             case self::WURFL_CONTROL_DEFAULT:
                 /*
-                 * The control capability was not used, 
+                 * The control capability was not used,
                  * -> use the \Wurfl\VirtualCapability provider
                  */
                 $returnValue = $this->getObject($name)->getValue();

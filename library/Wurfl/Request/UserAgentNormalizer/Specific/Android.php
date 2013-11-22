@@ -29,13 +29,14 @@ use Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
  */
 class Android implements NormalizerInterface
 {
-    private $skip_normalization = array(
-        'Opera Mini',
-        'Fennec',
-        'Firefox',
-        'UCWEB7',
-        'NetFrontLifeBrowser/2.2',
-    );
+    private $skip_normalization
+        = array(
+            'Opera Mini',
+            'Fennec',
+            'Firefox',
+            'UCWEB7',
+            'NetFrontLifeBrowser/2.2',
+        );
 
     public function normalize($userAgent)
     {
@@ -50,7 +51,9 @@ class Android implements NormalizerInterface
             $android_version = AndroidHandler::getAndroidVersion($userAgent, false);
             if ($opera_version !== null && $android_version !== null) {
                 $opera_model = $is_opera_tablet ? 'Opera Tablet' : 'Opera Mobi';
-                $prefix      = $opera_model . ' ' . $opera_version . ' Android ' . $android_version . Constants::RIS_DELIMITER;
+                $prefix
+                             =
+                    $opera_model . ' ' . $opera_version . ' Android ' . $android_version . Constants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }

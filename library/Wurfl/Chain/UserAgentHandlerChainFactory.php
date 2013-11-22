@@ -1,25 +1,25 @@
 <?php
 namespace Wurfl\Chain;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ * @version    $id$
+ */
 
 use SplDoublyLinkedList;
 use Wurfl\Context;
-use Wurfl\Request;
 use Wurfl\Handlers;
+use Wurfl\Request;
 
 /**
  * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating User Agent Handler Chains
@@ -42,7 +42,7 @@ class UserAgentHandlerChainFactory
         if (!($chain instanceof UserAgentHandlerChain)) {
             /** @var $chain UserAgentHandlerChain */
             $chain = self::init($context);
-            
+
             $context->cacheProvider->save('UserAgentHandlerChain', $chain, 3600);
         }
 
@@ -274,15 +274,15 @@ class UserAgentHandlerChainFactory
     private static function createGenericNormalizers()
     {
         return new Request\UserAgentNormalizer(array(
-             new Request\UserAgentNormalizer\Generic\UCWEB(),
-             new Request\UserAgentNormalizer\Generic\UPLink(),
-             new Request\UserAgentNormalizer\Generic\SerialNumbers(),
-             new Request\UserAgentNormalizer\Generic\LocaleRemover(),
-             new Request\UserAgentNormalizer\Generic\BlackBerry(),
-             new Request\UserAgentNormalizer\Generic\YesWAP(),
-             new Request\UserAgentNormalizer\Generic\BabelFish(),
-             new Request\UserAgentNormalizer\Generic\NovarraGoogleTranslator(),
-             new Request\UserAgentNormalizer\Generic\TransferEncoding(),
-        ));
+                                                    new Request\UserAgentNormalizer\Generic\UCWEB(),
+                                                    new Request\UserAgentNormalizer\Generic\UPLink(),
+                                                    new Request\UserAgentNormalizer\Generic\SerialNumbers(),
+                                                    new Request\UserAgentNormalizer\Generic\LocaleRemover(),
+                                                    new Request\UserAgentNormalizer\Generic\BlackBerry(),
+                                                    new Request\UserAgentNormalizer\Generic\YesWAP(),
+                                                    new Request\UserAgentNormalizer\Generic\BabelFish(),
+                                                    new Request\UserAgentNormalizer\Generic\NovarraGoogleTranslator(),
+                                                    new Request\UserAgentNormalizer\Generic\TransferEncoding(),
+                                               ));
     }
 }

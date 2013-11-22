@@ -31,63 +31,58 @@ class AndroidHandler extends Handler
 {
     protected $prefix = "ANDROID";
 
-    public static $constantIDs = array(
-        'generic_android',
-        'generic_android_ver1_5',
-        'generic_android_ver1_6',
-        'generic_android_ver2',
-        'generic_android_ver2_1',
-        'generic_android_ver2_2',
-        'generic_android_ver2_3',
-        'generic_android_ver3_0',
-        'generic_android_ver3_1',
-        'generic_android_ver3_2',
-        'generic_android_ver3_3',
-        'generic_android_ver4',
-        'generic_android_ver4_1',
-        'generic_android_ver4_2',
-        'generic_android_ver4_3',
-        'generic_android_ver5_0',
-
-        'uabait_opera_mini_android_v50',
-        'uabait_opera_mini_android_v51',
-        'generic_opera_mini_android_version5',
-
-        'generic_android_ver1_5_opera_mobi',
-        'generic_android_ver1_6_opera_mobi',
-        'generic_android_ver2_0_opera_mobi',
-        'generic_android_ver2_1_opera_mobi',
-        'generic_android_ver2_2_opera_mobi',
-        'generic_android_ver2_3_opera_mobi',
-        'generic_android_ver4_0_opera_mobi',
-        'generic_android_ver4_1_opera_mobi',
-        'generic_android_ver4_2_opera_mobi',
-
-        'generic_android_ver2_1_opera_tablet',
-        'generic_android_ver2_2_opera_tablet',
-        'generic_android_ver2_3_opera_tablet',
-        'generic_android_ver3_0_opera_tablet',
-        'generic_android_ver3_1_opera_tablet',
-        'generic_android_ver3_2_opera_tablet',
-        'generic_android_ver4_0_opera_tablet',
-        'generic_android_ver4_1_opera_tablet',
-        'generic_android_ver4_2_opera_tablet',
-
-        'generic_android_ver2_0_fennec',
-        'generic_android_ver2_0_fennec_tablet',
-        'generic_android_ver2_0_fennec_desktop',
-
-        'generic_android_ver1_6_ucweb',
-        'generic_android_ver2_0_ucweb',
-        'generic_android_ver2_1_ucweb',
-        'generic_android_ver2_2_ucweb',
-        'generic_android_ver2_3_ucweb',
-
-        'generic_android_ver2_0_netfrontlifebrowser',
-        'generic_android_ver2_1_netfrontlifebrowser',
-        'generic_android_ver2_2_netfrontlifebrowser',
-        'generic_android_ver2_3_netfrontlifebrowser',
-    );
+    public static $constantIDs
+        = array(
+            'generic_android',
+            'generic_android_ver1_5',
+            'generic_android_ver1_6',
+            'generic_android_ver2',
+            'generic_android_ver2_1',
+            'generic_android_ver2_2',
+            'generic_android_ver2_3',
+            'generic_android_ver3_0',
+            'generic_android_ver3_1',
+            'generic_android_ver3_2',
+            'generic_android_ver3_3',
+            'generic_android_ver4',
+            'generic_android_ver4_1',
+            'generic_android_ver4_2',
+            'generic_android_ver4_3',
+            'generic_android_ver5_0',
+            'uabait_opera_mini_android_v50',
+            'uabait_opera_mini_android_v51',
+            'generic_opera_mini_android_version5',
+            'generic_android_ver1_5_opera_mobi',
+            'generic_android_ver1_6_opera_mobi',
+            'generic_android_ver2_0_opera_mobi',
+            'generic_android_ver2_1_opera_mobi',
+            'generic_android_ver2_2_opera_mobi',
+            'generic_android_ver2_3_opera_mobi',
+            'generic_android_ver4_0_opera_mobi',
+            'generic_android_ver4_1_opera_mobi',
+            'generic_android_ver4_2_opera_mobi',
+            'generic_android_ver2_1_opera_tablet',
+            'generic_android_ver2_2_opera_tablet',
+            'generic_android_ver2_3_opera_tablet',
+            'generic_android_ver3_0_opera_tablet',
+            'generic_android_ver3_1_opera_tablet',
+            'generic_android_ver3_2_opera_tablet',
+            'generic_android_ver4_0_opera_tablet',
+            'generic_android_ver4_1_opera_tablet',
+            'generic_android_ver4_2_opera_tablet',
+            'generic_android_ver2_0_fennec',
+            'generic_android_ver2_0_fennec_tablet',
+            'generic_android_ver2_0_fennec_desktop',
+            'generic_android_ver1_6_ucweb',
+            'generic_android_ver2_0_ucweb',
+            'generic_android_ver2_1_ucweb',
+            'generic_android_ver2_2_ucweb',
+            'generic_android_ver2_3_ucweb',
+            'generic_android_ver2_0_netfrontlifebrowser',
+            'generic_android_ver2_1_netfrontlifebrowser',
+            'generic_android_ver2_2_netfrontlifebrowser',
+            'generic_android_ver2_3_netfrontlifebrowser',
+        );
 
     public function canHandle($userAgent)
     {
@@ -159,7 +154,8 @@ class AndroidHandler extends Handler
 
         // Standard RIS Matching
         $tolerance = min(
-            Utils::indexOfOrLength($userAgent, ' Build/'), Utils::indexOfOrLength($userAgent, ' AppleWebKit')
+            Utils::indexOfOrLength($userAgent, ' Build/'),
+            Utils::indexOfOrLength($userAgent, ' AppleWebKit')
         );
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
@@ -251,21 +247,38 @@ class AndroidHandler extends Handler
     /********* Android Utility Functions ***********/
     const ANDROID_DEFAULT_VERSION = 2.0;
 
-    public static $validAndroidVersions = array(
-        '1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2', '4.3',
-        '5.0'
-    );
-    public static $androidReleaseMap = array(
-        'Cupcake'            => '1.5',
-        'Donut'              => '1.6',
-        'Eclair'             => '2.1',
-        'Froyo'              => '2.2',
-        'Gingerbread'        => '2.3',
-        'Honeycomb'          => '3.0',
-        'Ice Cream Sandwich' => '4.0',
-        'Jelly Bean'         => '4.1', // Note: 4.2 is also Jelly Bean
-        'Key Lime Pie'       => '5.0',
-    );
+    public static $validAndroidVersions
+        = array(
+            '1.0',
+            '1.5',
+            '1.6',
+            '2.0',
+            '2.1',
+            '2.2',
+            '2.3',
+            '2.4',
+            '3.0',
+            '3.1',
+            '3.2',
+            '3.3',
+            '4.0',
+            '4.1',
+            '4.2',
+            '4.3',
+            '5.0'
+        );
+    public static $androidReleaseMap
+        = array(
+            'Cupcake'            => '1.5',
+            'Donut'              => '1.6',
+            'Eclair'             => '2.1',
+            'Froyo'              => '2.2',
+            'Gingerbread'        => '2.3',
+            'Honeycomb'          => '3.0',
+            'Ice Cream Sandwich' => '4.0',
+            'Jelly Bean'         => '4.1', // Note: 4.2 is also Jelly Bean
+            'Key Lime Pie'       => '5.0',
+        );
 
     /**
      * Get the Android version from the User Agent, or the default Android version is it cannot be determined

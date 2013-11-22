@@ -21,7 +21,8 @@ class Wurfl_CustomDeviceTest extends PHPUnit_Framework_TestCase
 
     public function testShouldTreatNullCapablityValuesAsValidValue()
     {
-        $modelDevice = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => null)));
+        $modelDevice
+            = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => null)));
 
         $device          = new \Wurfl\CustomDevice (array($modelDevice));
         $capabilityValue = $device->getCapability("claims_web_support");
@@ -30,8 +31,10 @@ class Wurfl_CustomDeviceTest extends PHPUnit_Framework_TestCase
 
     public function testShouldLaunchExceptionIfCapabilityNameIsNotDefined()
     {
-        $modelDevice      = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => "true")));
-        $childModelDevice = new \Wurfl\Xml\ModelDevice ("id", "ua", "parent", true, false, array("product_info" => array("is_wireless_device" => "true")));
+        $modelDevice
+            = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => "true")));
+        $childModelDevice
+            = new \Wurfl\Xml\ModelDevice ("id", "ua", "parent", true, false, array("product_info" => array("is_wireless_device" => "true")));
 
         try {
             $device = new \Wurfl\CustomDevice (array($childModelDevice, $modelDevice));
@@ -75,8 +78,9 @@ class Wurfl_CustomDeviceTest extends PHPUnit_Framework_TestCase
 
     public function testShouldReturnCapabilityDefinedInModelDevice()
     {
-        $modelDevice = new \Wurfl\Xml\ModelDevice ("id", "ua", "root", true, false, array("product_info" => array("is_wireless_device" => "true")));
-        $device      = new \Wurfl\CustomDevice (array($modelDevice));
+        $modelDevice
+                = new \Wurfl\Xml\ModelDevice ("id", "ua", "root", true, false, array("product_info" => array("is_wireless_device" => "true")));
+        $device = new \Wurfl\CustomDevice (array($modelDevice));
 
         $capabilityValue = $device->getCapability("is_wireless_device");
         self::assertEquals("true", $capabilityValue);
@@ -84,8 +88,10 @@ class Wurfl_CustomDeviceTest extends PHPUnit_Framework_TestCase
 
     public function testShouldRetrunCapabilityDefinedInParentModelDevices()
     {
-        $modelDevice      = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => "false")));
-        $childModelDevice = new \Wurfl\Xml\ModelDevice ("id", "ua", "parent", true, false, array("product_info" => array("is_wireless_device" => "true")));
+        $modelDevice
+            = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => "false")));
+        $childModelDevice
+            = new \Wurfl\Xml\ModelDevice ("id", "ua", "parent", true, false, array("product_info" => array("is_wireless_device" => "true")));
 
         $device          = new \Wurfl\CustomDevice (array($childModelDevice, $modelDevice));
         $capabilityValue = $device->getCapability("claims_web_support");
@@ -94,8 +100,10 @@ class Wurfl_CustomDeviceTest extends PHPUnit_Framework_TestCase
 
     public function testShouldReturnAllCapabilities()
     {
-        $modelDevice      = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => "false")));
-        $childModelDevice = new \Wurfl\Xml\ModelDevice ("id", "ua", "parent", true, false, array("product_info" => array("is_wireless_device" => "true")));
+        $modelDevice
+            = new \Wurfl\Xml\ModelDevice ("parent", "ua", "root", true, false, array("product_info" => array("claims_web_support" => "false")));
+        $childModelDevice
+            = new \Wurfl\Xml\ModelDevice ("id", "ua", "parent", true, false, array("product_info" => array("is_wireless_device" => "true")));
 
         $device          = new \Wurfl\CustomDevice (array($childModelDevice, $modelDevice));
         $allCapabilities = $device->getAllCapabilities();
@@ -110,7 +118,8 @@ class Wurfl_CustomDeviceTest extends PHPUnit_Framework_TestCase
     public function testShouldBeNotSpecificIfHasNotActualDeviceRootInHierarchy()
     {
         $modelDevices = array(
-            new \Wurfl\Xml\ModelDevice ("3", "", "", "", false), new \Wurfl\Xml\ModelDevice ("2", "", "", "", false),
+            new \Wurfl\Xml\ModelDevice ("3", "", "", "", false),
+            new \Wurfl\Xml\ModelDevice ("2", "", "", "", false),
             new \Wurfl\Xml\ModelDevice ("generic", "", "", "", false)
         );
 

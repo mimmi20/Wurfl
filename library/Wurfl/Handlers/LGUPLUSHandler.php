@@ -32,12 +32,13 @@ class LGUPLUSHandler extends Handler
 
     protected $prefix = "LGUPLUS";
 
-    public static $constantIDs = array(
-        'generic_lguplus_rexos_facebook_browser',
-        'generic_lguplus_rexos_webviewer_browser',
-        'generic_lguplus_winmo_facebook_browser',
-        'generic_lguplus_android_webkit_browser',
-    );
+    public static $constantIDs
+        = array(
+            'generic_lguplus_rexos_facebook_browser',
+            'generic_lguplus_rexos_webviewer_browser',
+            'generic_lguplus_winmo_facebook_browser',
+            'generic_lguplus_android_webkit_browser',
+        );
 
     public function canHandle($userAgent)
     {
@@ -56,7 +57,8 @@ class LGUPLUSHandler extends Handler
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAll(
-            $userAgent, array('Windows NT 5', 'POLARIS')
+            $userAgent,
+            array('Windows NT 5', 'POLARIS')
         )
         ) {
             return 'generic_lguplus_rexos_facebook_browser';
@@ -65,13 +67,15 @@ class LGUPLUSHandler extends Handler
             return 'generic_lguplus_rexos_webviewer_browser';
         }
         if (Utils::checkIfContainsAll(
-            $userAgent, array('Windows CE', 'POLARIS')
+            $userAgent,
+            array('Windows CE', 'POLARIS')
         )
         ) {
             return 'generic_lguplus_winmo_facebook_browser';
         }
         if (Utils::checkIfContainsAll(
-            $userAgent, array('Android', 'AppleWebKit')
+            $userAgent,
+            array('Android', 'AppleWebKit')
         )
         ) {
             return 'generic_lguplus_android_webkit_browser';

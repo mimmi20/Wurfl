@@ -1,20 +1,20 @@
 <?php
 namespace Wurfl;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ * @version    $id$
+ */
 use Wurfl\Storage\StorageInterface;
 
 /**
@@ -54,15 +54,15 @@ class DeviceRepositoryBuilder
     private $lockStyle = 'r';
 
     /**
-     * @param StorageInterface          $persistenceProvider
-     * @param Chain\UserAgentHandlerChain  $userAgentHandlerChain
-     * @param Xml\DevicePatcher     $devicePatcher
+     * @param StorageInterface            $persistenceProvider
+     * @param Chain\UserAgentHandlerChain $userAgentHandlerChain
+     * @param Xml\DevicePatcher           $devicePatcher
      */
     public function __construct(
         StorageInterface $persistenceProvider,
-        Chain\UserAgentHandlerChain  $userAgentHandlerChain,
-        Xml\DevicePatcher $devicePatcher)
-    {
+        Chain\UserAgentHandlerChain $userAgentHandlerChain,
+        Xml\DevicePatcher $devicePatcher
+    ) {
         $this->persistenceProvider   = $persistenceProvider;
         $this->userAgentHandlerChain = $userAgentHandlerChain;
         $this->devicePatcher         = $devicePatcher;
@@ -120,8 +120,8 @@ class DeviceRepositoryBuilder
     private function buildRepository(
         Xml\VersionIterator $wurflInfoIterator,
         Xml\DeviceIterator $deviceIterator,
-        array $patchDeviceIterators = array())
-    {
+        array $patchDeviceIterators = array()
+    ) {
         $this->persistWurflInfo($wurflInfoIterator);
 
         $patchingDevices = $this->toListOfPatchingDevices($patchDeviceIterators);
@@ -313,7 +313,8 @@ class DeviceRepositoryBuilder
         foreach ($newPatchingDevices as $deviceId => $newPatchingDevice) {
             if (isset($currentPatchingDevices[$deviceId])) {
                 $currentPatchingDevices[$deviceId] = $this->patchDevice(
-                    $currentPatchingDevices[$deviceId], $newPatchingDevice
+                    $currentPatchingDevices[$deviceId],
+                    $newPatchingDevice
                 );
             } else {
                 $currentPatchingDevices[$deviceId] = $newPatchingDevice;
@@ -331,7 +332,7 @@ class DeviceRepositoryBuilder
     private function toArray(Xml\DeviceIterator $deviceIterator)
     {
         $patchingDevices = array();
-        
+
         foreach ($deviceIterator as $device) {
             $patchingDevices[$device->id] = $device;
         }

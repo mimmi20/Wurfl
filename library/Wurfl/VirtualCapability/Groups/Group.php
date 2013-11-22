@@ -45,8 +45,8 @@ abstract class Group
      */
     public function __construct(
         CustomDevice $device = null,
-        GenericRequest $request = null)
-    {
+        GenericRequest $request = null
+    ) {
         $this->device  = $device;
         $this->request = $request;
     }

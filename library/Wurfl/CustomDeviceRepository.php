@@ -52,7 +52,7 @@ class CustomDeviceRepository implements DeviceRepository
      * Creates a new Device Repository from the given $persistenceStorage and $deviceClassificationNames
      *
      * @param Storage\StorageInterface $persistenceStorage
-     * @param array        $deviceClassificationNames
+     * @param array                    $deviceClassificationNames
      *
      * @throws \InvalidArgumentException
      */

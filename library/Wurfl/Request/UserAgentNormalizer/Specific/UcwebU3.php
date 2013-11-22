@@ -64,7 +64,9 @@ class UcwebU3 implements NormalizerInterface
                 if (Utils::checkIfContains($userAgent, 'iPad')) {
 
                     if (preg_match(
-                        '/CPU OS (\d)_?(\d)?.+like Mac.+; iPad([0-9,]+)\) AppleWebKit/', $userAgent, $matches
+                        '/CPU OS (\d)_?(\d)?.+like Mac.+; iPad([0-9,]+)\) AppleWebKit/',
+                        $userAgent,
+                        $matches
                     )
                     ) {
                         $version = $matches[1] . '.' . $matches[2];

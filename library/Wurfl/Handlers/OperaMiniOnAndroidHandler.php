@@ -32,11 +32,12 @@ class OperaMiniOnAndroidHandler extends Handler
 
     protected $prefix = "OPERAMINIONANDROID";
 
-    public static $constantIDs = array(
-        'uabait_opera_mini_android_v50',
-        'uabait_opera_mini_android_v51',
-        'generic_opera_mini_android_version5',
-    );
+    public static $constantIDs
+        = array(
+            'uabait_opera_mini_android_v50',
+            'uabait_opera_mini_android_v51',
+            'generic_opera_mini_android_version5',
+        );
 
     public function canHandle($userAgent)
     {

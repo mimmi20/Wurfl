@@ -29,7 +29,8 @@ class IsSmartphone extends VirtualCapability
         $use_caching = true;
 
     protected
-        $required_capabilities = array(
+        $required_capabilities
+        = array(
         'is_wireless_device',
         'is_tablet',
         'pointing_method',
@@ -56,7 +57,7 @@ class IsSmartphone extends VirtualCapability
             return false;
         }
 
-        $osVersion = (float) $this->device->getCapability('device_os_version');
+        $osVersion = (float)$this->device->getCapability('device_os_version');
         switch ($this->device->getCapability('device_os')) {
             case 'iOS':
                 return ($osVersion >= 3.0);

@@ -34,12 +34,16 @@ class WURFLRequestFactoryTest extends PHPUnit_Framework_TestCase
                 if (strpos($line, '#') === false && strcmp($line, "\n") != 0) {
                     $values     = explode(':', trim($line));
                     $keys       = array(
-                        'HTTP_USER_AGENT', 'HTTP_X_DEVICE_USER_AGENT', 'HTTP_X_SKYFIRE_VERSION', 'HTTP_X_BLUECOAT_VIA',
+                        'HTTP_USER_AGENT',
+                        'HTTP_X_DEVICE_USER_AGENT',
+                        'HTTP_X_SKYFIRE_VERSION',
+                        'HTTP_X_BLUECOAT_VIA',
                         'EXPECTED_USER_AGENT'
                     );
                     $serverData = self::arrayCombine($keys, $values, $notNullCondition);
                     $testData[] = array(
-                        '_SERVER' => $serverData, 'EXPECTED_USER_AGENT' => $serverData['EXPECTED_USER_AGENT']
+                        '_SERVER'             => $serverData,
+                        'EXPECTED_USER_AGENT' => $serverData['EXPECTED_USER_AGENT']
                     );
                 }
             }

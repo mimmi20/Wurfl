@@ -31,9 +31,10 @@ class WindowsRTHandler extends Handler
 {
     protected $prefix = "WINDOWSRT";
 
-    public static $constantIDs = array(
-        'generic_windows_8_rt',
-    );
+    public static $constantIDs
+        = array(
+            'generic_windows_8_rt',
+        );
 
     public function canHandle($userAgent)
     {

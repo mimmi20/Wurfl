@@ -29,9 +29,10 @@ class FirefoxHandler extends Handler
 {
     protected $prefix = "FIREFOX";
 
-    public static $constantIDs = array(
-        'firefox',
-    );
+    public static $constantIDs
+        = array(
+            'firefox',
+        );
 
     public function canHandle($userAgent)
     {

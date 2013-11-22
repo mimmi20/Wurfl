@@ -40,7 +40,9 @@ class OperaMobiOrTabletOnAndroid implements NormalizerInterface
             $android_version = AndroidHandler::getAndroidVersion($userAgent, false);
             if ($opera_version !== null && $android_version !== null) {
                 $opera_model = $is_opera_tablet ? 'Opera Tablet' : 'Opera Mobi';
-                $prefix      = $opera_model . ' ' . $opera_version . ' Android ' . $android_version . Constants::RIS_DELIMITER;
+                $prefix
+                             =
+                    $opera_model . ' ' . $opera_version . ' Android ' . $android_version . Constants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }

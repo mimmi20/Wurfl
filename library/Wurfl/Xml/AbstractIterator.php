@@ -119,7 +119,7 @@ abstract class AbstractIterator implements \Iterator
     {
         $this->xmlReader->read();
 
-        return (string) $this->xmlReader->value;
+        return (string)$this->xmlReader->value;
     }
 
     /**

@@ -30,12 +30,13 @@ class SmartTVHandler extends Handler
 
     protected $prefix = "SMARTTV";
 
-    public static $constantIDs = array(
-        'generic_smarttv_browser',
-        'generic_smarttv_googletv_browser',
-        'generic_smarttv_appletv_browser',
-        'generic_smarttv_boxeebox_browser',
-    );
+    public static $constantIDs
+        = array(
+            'generic_smarttv_browser',
+            'generic_smarttv_googletv_browser',
+            'generic_smarttv_appletv_browser',
+            'generic_smarttv_boxeebox_browser',
+        );
 
     public function canHandle($userAgent)
     {

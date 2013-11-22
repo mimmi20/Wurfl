@@ -23,16 +23,17 @@ namespace Wurfl\Storage;
  */
 class Mysql extends Base
 {
-    private $defaultParams = array(
-        "host"        => "localhost",
-        "port"        => 3306,
-        "db"          => "wurfl_persistence_db",
-        "user"        => "",
-        "pass"        => "",
-        "table"       => "wurfl_object_cache",
-        "keycolumn"   => "key",
-        "valuecolumn" => "value"
-    );
+    private $defaultParams
+        = array(
+            "host"        => "localhost",
+            "port"        => 3306,
+            "db"          => "wurfl_persistence_db",
+            "user"        => "",
+            "pass"        => "",
+            "table"       => "wurfl_object_cache",
+            "keycolumn"   => "key",
+            "valuecolumn" => "value"
+        );
 
     private $link;
     private $host;
@@ -105,7 +106,8 @@ class Mysql extends Base
             throw new Exception("MySql error " . mysql_error($this->link) . "deleting $objectId in $this->db");
         }
 
-        $sql     = "insert into `$this->db`.`$this->table` (`$this->keycolumn`,`$this->valuecolumn`) VALUES ('$objectId','$object')";
+        $sql
+                 = "insert into `$this->db`.`$this->table` (`$this->keycolumn`,`$this->valuecolumn`) VALUES ('$objectId','$object')";
         $success = mysql_query($sql, $this->link);
         if (!$success) {
             throw new Exception("MySQL error " . mysql_error($this->link) . "setting $objectId in $this->db");

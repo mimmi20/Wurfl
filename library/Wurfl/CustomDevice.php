@@ -103,6 +103,9 @@ class CustomDevice
                 case 'modelDevices':
                     return $this->modelDevices;
                     break;
+                case 'userAgentsWithDeviceID':
+                    return $this->request->userAgentsWithDeviceID;
+                    break;
                 case 'id':
                 case 'userAgent':
                 case 'fallBack':

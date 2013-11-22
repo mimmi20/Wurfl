@@ -33,38 +33,39 @@ class IsApp extends VirtualCapability
      *
      * @var array
      */
-    protected $patterns = array(
-        '^Dalvik',
-        'Darwin/',
-        'CFNetwork',
-        '^Windows Phone Ad Client',
-        '^NativeHost',
-        '^AndroidDownloadManager',
-        '-HttpClient',
-        '^AppCake',
-        'AppEngine-Google',
-        'AppleCoreMedia',
-        '^AppTrailers',
-        '^ChoiceFM',
-        '^ClassicFM',
-        '^Clipfish',
-        '^FaceFighter',
-        '^Flixster',
-        '^Gold/',
-        '^GoogleAnalytics/',
-        '^Heart/',
-        '^iBrowser/',
-        'iTunes-',
-        '^Java/',
-        '^LBC/3.',
-        'Twitter',
-        'Pinterest',
-        '^Instagram',
-        'FBAN',
-        '#iP(hone|od|ad)[\d],[\d]#',
-        // namespace notation (com.google.youtube)
-        '#[a-z]{3,}(?:\.[a-z]+){2,}#',
-    );
+    protected $patterns
+        = array(
+            '^Dalvik',
+            'Darwin/',
+            'CFNetwork',
+            '^Windows Phone Ad Client',
+            '^NativeHost',
+            '^AndroidDownloadManager',
+            '-HttpClient',
+            '^AppCake',
+            'AppEngine-Google',
+            'AppleCoreMedia',
+            '^AppTrailers',
+            '^ChoiceFM',
+            '^ClassicFM',
+            '^Clipfish',
+            '^FaceFighter',
+            '^Flixster',
+            '^Gold/',
+            '^GoogleAnalytics/',
+            '^Heart/',
+            '^iBrowser/',
+            'iTunes-',
+            '^Java/',
+            '^LBC/3.',
+            'Twitter',
+            'Pinterest',
+            '^Instagram',
+            'FBAN',
+            '#iP(hone|od|ad)[\d],[\d]#',
+            // namespace notation (com.google.youtube)
+            '#[a-z]{3,}(?:\.[a-z]+){2,}#',
+        );
 
     protected function compute()
     {

@@ -30,16 +30,17 @@ class MSIEHandler extends Handler
 
     protected $prefix = "MSIE";
 
-    public static $constantIDs = array(
-        'msie',
-        'msie_4',
-        'msie_5',
-        'msie_5_5',
-        'msie_6',
-        'msie_7',
-        'msie_8',
-        'msie_9',
-    );
+    public static $constantIDs
+        = array(
+            'msie',
+            'msie_4',
+            'msie_5',
+            'msie_5_5',
+            'msie_6',
+            'msie_7',
+            'msie_8',
+            'msie_9',
+        );
 
     public function canHandle($userAgent)
     {

@@ -62,8 +62,13 @@ class ModelDevice
      * @param array  $groupIdCapabilitiesMap
      */
     public function __construct(
-        $id, $userAgent, $fallBack, $actualDeviceRoot = false, $specific = false, $groupIdCapabilitiesMap = null)
-    {
+        $id,
+        $userAgent,
+        $fallBack,
+        $actualDeviceRoot = false,
+        $specific = false,
+        $groupIdCapabilitiesMap = null
+    ) {
         $this->id               = $id;
         $this->userAgent        = $userAgent;
         $this->fallBack         = $fallBack;

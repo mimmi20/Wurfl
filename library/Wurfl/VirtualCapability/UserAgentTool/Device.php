@@ -40,16 +40,17 @@ class Device
         $this->os       = new NameVersionPair($this);
     }
 
-    protected static $windows_map = array(
-        '4.0' => 'NT 4.0',
-        '5.0' => '2000',
-        '5.1' => 'XP',
-        '5.2' => 'XP',
-        '6.0' => 'Vista',
-        '6.1' => '7',
-        '6.2' => '8',
-        '6.3' => '8.1',
-    );
+    protected static $windows_map
+        = array(
+            '4.0' => 'NT 4.0',
+            '5.0' => '2000',
+            '5.1' => 'XP',
+            '5.2' => 'XP',
+            '6.0' => 'Vista',
+            '6.1' => '7',
+            '6.2' => '8',
+            '6.3' => '8.1',
+        );
 
     public function normalize()
     {

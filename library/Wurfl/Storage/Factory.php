@@ -26,10 +26,11 @@ class Factory
     /**
      * @var array Default configuration
      */
-    private static $defaultConfiguration = array(
-        "provider" => 'memory',
-        "params"   => array()
-    );
+    private static $defaultConfiguration
+        = array(
+            "provider" => 'memory',
+            "params"   => array()
+        );
 
     /**
      * Create a configuration based on the default configuration with the differences from $configuration

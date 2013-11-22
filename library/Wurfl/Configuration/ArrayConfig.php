@@ -109,7 +109,7 @@ class ArrayConfig extends Config
         }
 
         if (array_key_exists(Config::CACHE, $configuration)) {
-            $this->setCacheConfiguration($configuration [Config::CACHE]);
+            $this->setCacheConfiguration($configuration[Config::CACHE]);
         }
 
         if (array_key_exists(Config::CAPABILITY_FILTER, $configuration)) {
@@ -145,8 +145,10 @@ class ArrayConfig extends Config
     {
         $this->persistence = $persistenceConfig;
 
-        if (array_key_exists('params', $this->persistence) && array_key_exists(
-                Config::DIR, $this->persistence['params']
+        if (array_key_exists('params', $this->persistence)
+            && array_key_exists(
+                Config::DIR,
+                $this->persistence['params']
             )
         ) {
             $this->persistence['params'][Config::DIR] = parent::getFullPath($this->persistence['params'][Config::DIR]);

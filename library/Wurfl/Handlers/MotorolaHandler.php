@@ -30,9 +30,10 @@ class MotorolaHandler extends Handler
 
     protected $prefix = "MOTOROLA";
 
-    public static $constantIDs = array(
-        'mot_mib22_generic',
-    );
+    public static $constantIDs
+        = array(
+            'mot_mib22_generic',
+        );
 
     public function canHandle($userAgent)
     {
@@ -40,8 +41,8 @@ class MotorolaHandler extends Handler
             return false;
         }
 
-        return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
-            Utils::checkIfContains($userAgent, 'Motorola'));
+        return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto'))
+            || Utils::checkIfContains($userAgent, 'Motorola'));
     }
 
     public function applyConclusiveMatch($userAgent)

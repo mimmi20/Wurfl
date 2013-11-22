@@ -30,12 +30,13 @@ class NetFrontOnAndroidHandler extends Handler
 
     protected $prefix = "NETFRONTONANDROID";
 
-    public static $constantIDs = array(
-        'generic_android_ver2_0_netfrontlifebrowser',
-        'generic_android_ver2_1_netfrontlifebrowser',
-        'generic_android_ver2_2_netfrontlifebrowser',
-        'generic_android_ver2_3_netfrontlifebrowser',
-    );
+    public static $constantIDs
+        = array(
+            'generic_android_ver2_0_netfrontlifebrowser',
+            'generic_android_ver2_1_netfrontlifebrowser',
+            'generic_android_ver2_2_netfrontlifebrowser',
+            'generic_android_ver2_3_netfrontlifebrowser',
+        );
 
     public function canHandle($userAgent)
     {
@@ -43,8 +44,10 @@ class NetFrontOnAndroidHandler extends Handler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContains(
-                $userAgent, 'NetFrontLifeBrowser/2.2'
+        return (Utils::checkIfContains($userAgent, 'Android')
+            && Utils::checkIfContains(
+                $userAgent,
+                'NetFrontLifeBrowser/2.2'
             ));
     }
 

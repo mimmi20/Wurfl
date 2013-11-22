@@ -1,20 +1,20 @@
 <?php
 namespace Wurfl;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ * @version    $id$
+ */
 use Psr\Log\LoggerInterface;
 use Wurfl\Configuration\Config;
 use Wurfl\Request\GenericRequest;
@@ -43,7 +43,7 @@ class Manager
      * @var DeviceRepository
      */
     private $deviceRepository = null;
-    
+
     /**
      * @var StorageInterface
      */
@@ -71,7 +71,7 @@ class Manager
     /**
      * Creates a new Wurfl Manager object
      *
-     * @param Config     $wurflConfig
+     * @param Config                   $wurflConfig
      * @param Storage\StorageInterface $persistenceStorage
      * @param Storage\StorageInterface $cacheStorage
      */
@@ -79,8 +79,7 @@ class Manager
         Config $wurflConfig = null,
         Storage\StorageInterface $persistenceStorage = null,
         Storage\StorageInterface $cacheStorage = null
-        )
-    {
+    ) {
         if (null !== $wurflConfig) {
             $this->setWurflConfig($wurflConfig);
         }
@@ -102,7 +101,7 @@ class Manager
     public function setWurflConfig(Config $wurflConfig)
     {
         $this->wurflConfig = $wurflConfig;
-        
+
         return $this;
     }
 
@@ -205,7 +204,7 @@ class Manager
     /**
      * Return a device for the given device id
      *
-     * @param string                 $deviceId
+     * @param string         $deviceId
      * @param GenericRequest $request
      *
      * @return CustomDevice
@@ -323,15 +322,15 @@ class Manager
      * Wraps the model device with \Wurfl\Xml_ModelDevice.  This function takes the
      * Device ID and returns the \Wurfl\CustomDevice with all capabilities.
      *
-     * @param string                 $deviceId
+     * @param string         $deviceId
      * @param GenericRequest $request
      *
      * @return CustomDevice
      */
     private function getWrappedDevice($deviceId, GenericRequest $request = null)
     {
-        $cache  = $this->buildCacheStorage();
-        
+        $cache = $this->buildCacheStorage();
+
         /** @var $device CustomDevice */
         $device = $cache->load('DEV_' . $deviceId);
 

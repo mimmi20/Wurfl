@@ -34,7 +34,8 @@ class Wurfl_Configuration_ArrayConfigTest extends PHPUnit_Framework_TestCase
         $wurflFile    = realpath($resourcesDir . '/wurfl-regression.xml');
         self::assertEquals($wurflFile, $this->arrayConfig->wurflFile);
         $expectedWurlPatches = array(
-            realpath($resourcesDir . '/web_browsers_patch.xml'), realpath($resourcesDir . '/spv_patch.xml')
+            realpath($resourcesDir . '/web_browsers_patch.xml'),
+            realpath($resourcesDir . '/spv_patch.xml')
         );
         self::assertAttributeEquals($expectedWurlPatches, "wurflPatches", $this->arrayConfig);
         self::assertTrue($this->arrayConfig->allowReload);

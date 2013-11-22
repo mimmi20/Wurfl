@@ -35,12 +35,13 @@ class Memcache extends Base
     private $expiration;
     private $namespace;
 
-    private $defaultParams = array(
-        "host"       => "127.0.0.1",
-        "port"       => "11211",
-        "namespace"  => "wurfl",
-        "expiration" => 0
-    );
+    private $defaultParams
+        = array(
+            "host"       => "127.0.0.1",
+            "port"       => "11211",
+            "namespace"  => "wurfl",
+            "expiration" => 0
+        );
 
     protected $is_volatile = true;
 
@@ -90,7 +91,9 @@ class Memcache extends Base
     public function save($objectId, $object, $expiration = null)
     {
         return $this->memcache->set(
-            $this->encode($this->namespace, $objectId), $object, 0,
+            $this->encode($this->namespace, $objectId),
+            $object,
+            0,
             (($expiration === null) ? $this->expiration : $expiration)
         );
     }

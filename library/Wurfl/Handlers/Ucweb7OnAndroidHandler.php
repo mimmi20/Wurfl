@@ -29,13 +29,14 @@ class Ucweb7OnAndroidHandler extends Handler
 {
     protected $prefix = "UCWEB7ONANDROID";
 
-    public static $constantIDs = array(
-        'generic_android_ver1_6_ucweb',
-        'generic_android_ver2_0_ucweb',
-        'generic_android_ver2_1_ucweb',
-        'generic_android_ver2_2_ucweb',
-        'generic_android_ver2_3_ucweb',
-    );
+    public static $constantIDs
+        = array(
+            'generic_android_ver1_6_ucweb',
+            'generic_android_ver2_0_ucweb',
+            'generic_android_ver2_1_ucweb',
+            'generic_android_ver2_2_ucweb',
+            'generic_android_ver2_3_ucweb',
+        );
 
     public function canHandle($userAgent)
     {

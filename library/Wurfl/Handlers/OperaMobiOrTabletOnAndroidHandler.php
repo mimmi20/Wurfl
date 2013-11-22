@@ -31,27 +31,27 @@ class OperaMobiOrTabletOnAndroidHandler extends Handler
 {
     protected $prefix = "OPERAMOBIORTABLETONANDROID";
 
-    public static $constantIDs = array(
-        'generic_android_ver1_5_opera_mobi',
-        'generic_android_ver1_6_opera_mobi',
-        'generic_android_ver2_0_opera_mobi',
-        'generic_android_ver2_1_opera_mobi',
-        'generic_android_ver2_2_opera_mobi',
-        'generic_android_ver2_3_opera_mobi',
-        'generic_android_ver4_0_opera_mobi',
-        'generic_android_ver4_1_opera_mobi',
-        'generic_android_ver4_2_opera_mobi',
-
-        'generic_android_ver2_1_opera_tablet',
-        'generic_android_ver2_2_opera_tablet',
-        'generic_android_ver2_3_opera_tablet',
-        'generic_android_ver3_0_opera_tablet',
-        'generic_android_ver3_1_opera_tablet',
-        'generic_android_ver3_2_opera_tablet',
-        'generic_android_ver4_0_opera_tablet',
-        'generic_android_ver4_1_opera_tablet',
-        'generic_android_ver4_2_opera_tablet',
-    );
+    public static $constantIDs
+        = array(
+            'generic_android_ver1_5_opera_mobi',
+            'generic_android_ver1_6_opera_mobi',
+            'generic_android_ver2_0_opera_mobi',
+            'generic_android_ver2_1_opera_mobi',
+            'generic_android_ver2_2_opera_mobi',
+            'generic_android_ver2_3_opera_mobi',
+            'generic_android_ver4_0_opera_mobi',
+            'generic_android_ver4_1_opera_mobi',
+            'generic_android_ver4_2_opera_mobi',
+            'generic_android_ver2_1_opera_tablet',
+            'generic_android_ver2_2_opera_tablet',
+            'generic_android_ver2_3_opera_tablet',
+            'generic_android_ver3_0_opera_tablet',
+            'generic_android_ver3_1_opera_tablet',
+            'generic_android_ver3_2_opera_tablet',
+            'generic_android_ver4_0_opera_tablet',
+            'generic_android_ver4_1_opera_tablet',
+            'generic_android_ver4_2_opera_tablet',
+        );
 
     public function canHandle($userAgent)
     {
@@ -59,8 +59,10 @@ class OperaMobiOrTabletOnAndroidHandler extends Handler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
-                $userAgent, array('Opera Mobi', 'Opera Tablet')
+        return (Utils::checkIfContains($userAgent, 'Android')
+            && Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('Opera Mobi', 'Opera Tablet')
             ));
     }
 

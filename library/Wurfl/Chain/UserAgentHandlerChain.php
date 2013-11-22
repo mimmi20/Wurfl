@@ -20,27 +20,33 @@ namespace Wurfl\Chain;
  */
 
 use SplDoublyLinkedList;
+use Wurfl\Constants;
+use Wurfl\Handlers;
+use Wurfl\Handlers\Utils;
+use Wurfl\Request;
 
 /**
  * Handles the chain of \Wurfl\Handlers\Handler objects
+ *
  * @package    WURFL
- * @see \Wurfl\Handlers\Handler
+ * @see        \Wurfl\Handlers\Handler
  */
 class UserAgentHandlerChain extends SplDoublyLinkedList
 {
     /**
      * Adds a \Wurfl\Handlers\Handler to the chain
      *
-     * @param \Wurfl\Handlers\Handler $handler
+     * @param Handlers\Handler $handler
+     *
      * @return UserAgentHandlerChain $this
      */
-    public function addUserAgentHandler(\Wurfl\Handlers\Handler $handler)
+    public function addUserAgentHandler(Handlers\Handler $handler)
     {
         $this->push($handler);
-        
+
         return $this;
     }
-    
+
     /**
      * @return array An array of all the \Wurfl\Handlers\Handler objects
      */
@@ -48,24 +54,25 @@ class UserAgentHandlerChain extends SplDoublyLinkedList
     {
         return $this->_userAgentHandlers;
     }
-    
+
     /**
      * Adds the pair $userAgent, $deviceID to the clusters they belong to.
      *
      * @param String $userAgent
      * @param String $deviceID
+     *
      * @see \Wurfl\Handlers\Handler::filter()
      */
     public function filter($userAgent, $deviceID)
     {
-        Handlers\Utils::reset();
-        
+        Utils::reset();
+
         $this->rewind();
 
         while ($this->valid()) {
             /** @var $userAgentHandler Handlers\Handler */
             $userAgentHandler = $this->current();
-            
+
             if ($userAgentHandler->filter($userAgent, $deviceID)) {
                 break;
             }
@@ -73,44 +80,40 @@ class UserAgentHandlerChain extends SplDoublyLinkedList
             $this->next();
         }
     }
-    
+
     /**
-     * Return the the device id for the request 
+     * Return the the device id for the request
      *
-     * @param \Wurfl\Request\GenericRequest $request
+     * @param Request\GenericRequest $request
      *
      * @return String deviceID
      */
-    public function match(\Wurfl\Request\GenericRequest $request)
+    public function match(Request\GenericRequest $request)
     {
-        \Wurfl\Handlers\Utils::reset();
-        
+        Utils::reset();
+
         $this->rewind();
-        
-        $found = false;
+
+        $deviceId = Constants::GENERIC;
 
         while ($this->valid()) {
             /** @var $userAgentHandler Handlers\Handler */
             $userAgentHandler = $this->current();
-            
+
             if ($userAgentHandler->canHandle($request->userAgent)) {
                 $deviceId = $userAgentHandler->match($request);
-                $found    = true;
                 break;
             }
 
             $this->next();
         }
-        
-        if (!$found) {
-            $deviceId = Constants::GENERIC;
-        }
-        
+
         return $deviceId;
     }
-    
+
     /**
      * Save the data from each \Wurfl\Handlers\Handler
+     *
      * @see \Wurfl\Handlers\Handler::persistData()
      */
     public function persistData()
@@ -123,45 +126,49 @@ class UserAgentHandlerChain extends SplDoublyLinkedList
             $userAgentHandler->persistData();
 
             $this->next();
-        }        
+        }
     }
-    
+
     /**
      * Collect data
+     *
      * @return array data
      */
     public function collectData()
     {
-        $userAgentsWithDeviceId = array();        
-        
-        foreach ($this->_userAgentHandlers as $userAgentHandler) {
-            /**
-             * @see \Wurfl\Handlers\Handler::getUserAgentsWithDeviceId()
-             */
-            $current = $userAgentHandler->getUserAgentsWithDeviceId();
-            
-            if(!empty($current)) {
-                $userAgentsWithDeviceId = array_merge($userAgentsWithDeviceId, $current);
-            } 
-        }
-        
-        return $userAgentsWithDeviceId;
-    }    
-    
-    public function getPrefixes()
-    {
-        $deviceClusterNames = array();
-        
+        $userAgentsWithDeviceId = array();
+
         $this->rewind();
 
         while ($this->valid()) {
             /** @var $userAgentHandler Handlers\Handler */
             $userAgentHandler = $this->current();
+            $current          = $userAgentHandler->getUserAgentsWithDeviceId();
+
+            if (is_array($current)) {
+                $userAgentsWithDeviceId = array_merge($userAgentsWithDeviceId, $current);
+            }
+
+            $this->next();
+        }
+
+        return $userAgentsWithDeviceId;
+    }
+
+    public function getPrefixes()
+    {
+        $deviceClusterNames = array();
+
+        $this->rewind();
+
+        while ($this->valid()) {
+            /** @var $userAgentHandler Handlers\Handler */
+            $userAgentHandler     = $this->current();
             $deviceClusterNames[] = $userAgentHandler->getPrefix();
 
             $this->next();
         }
-        
+
         return $deviceClusterNames;
     }
 }

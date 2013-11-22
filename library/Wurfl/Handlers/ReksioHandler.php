@@ -30,9 +30,10 @@ class ReksioHandler extends Handler
 
     protected $prefix = "REKSIO";
 
-    public static $constantIDs = array(
-        'generic_reksio',
-    );
+    public static $constantIDs
+        = array(
+            'generic_reksio',
+        );
 
     public function canHandle($userAgent)
     {

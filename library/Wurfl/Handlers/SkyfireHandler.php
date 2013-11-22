@@ -30,10 +30,11 @@ class SkyfireHandler extends Handler
 
     protected $prefix = "SKYFIRE";
 
-    public static $constantIDs = array(
-        'generic_skyfire_version1',
-        'generic_skyfire_version2',
-    );
+    public static $constantIDs
+        = array(
+            'generic_skyfire_version1',
+            'generic_skyfire_version2',
+        );
 
     public function canHandle($userAgent)
     {

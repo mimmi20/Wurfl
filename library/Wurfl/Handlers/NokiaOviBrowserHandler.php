@@ -32,9 +32,10 @@ class NokiaOviBrowserHandler extends Handler
 
     protected $prefix = "NOKIAOVIBROWSER";
 
-    public static $constantIDs = array(
-        'nokia_generic_series40_ovibrosr',
-    );
+    public static $constantIDs
+        = array(
+            'nokia_generic_series40_ovibrosr',
+        );
 
     public function canHandle($userAgent)
     {

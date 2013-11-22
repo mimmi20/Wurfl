@@ -32,14 +32,15 @@ class KindleHandler extends Handler
 
     protected $prefix = "KINDLE";
 
-    public static $constantIDs = array(
-        'amazon_kindle_ver1',
-        'amazon_kindle2_ver1',
-        'amazon_kindle3_ver1',
-        'amazon_kindle_fire_ver1',
-        'generic_amazon_android_kindle',
-        'generic_amazon_kindle',
-    );
+    public static $constantIDs
+        = array(
+            'amazon_kindle_ver1',
+            'amazon_kindle2_ver1',
+            'amazon_kindle3_ver1',
+            'amazon_kindle_fire_ver1',
+            'generic_amazon_android_kindle',
+            'generic_amazon_kindle',
+        );
 
     public function canHandle($userAgent)
     {

@@ -1,21 +1,21 @@
 <?php
 namespace Wurfl\Request;
 
-/**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * Refer to the COPYING.txt file distributed with this package.
- *
- * @category   WURFL
- * @package    \Wurfl\Request
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
- */
+    /**
+     * Copyright (c) 2012 ScientiaMobile, Inc.
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     * Refer to the COPYING.txt file distributed with this package.
+     *
+     * @category   WURFL
+     * @package    \Wurfl\Request
+     * @copyright  ScientiaMobile, Inc.
+     * @license    GNU Affero General Public License
+     * @author     Fantayeneh Asres Gizaw
+     * @version    $id$
+     */
 
 /**
  * Generic WURFL Request object containing User Agent, UAProf and xhtml device data; its id
@@ -44,11 +44,11 @@ class GenericRequest
      */
     public function __construct($userAgent, $userAgentProfile = null, $xhtmlDevice = null)
     {
-        $this->userAgent        = $userAgent;
-        $this->userAgentProfile = $userAgentProfile;
-        $this->xhtmlDevice      = $xhtmlDevice;
-        $this->id               = md5($userAgent);
-        $this->matchInfo        = new MatchInfo();
+        $this->userAgent              = $userAgent;
+        $this->userAgentProfile       = $userAgentProfile;
+        $this->xhtmlDevice            = $xhtmlDevice;
+        $this->id                     = md5($userAgent);
+        $this->matchInfo              = new MatchInfo();
         $this->userAgentsWithDeviceID = null;
     }
 

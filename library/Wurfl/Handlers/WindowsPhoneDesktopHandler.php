@@ -32,10 +32,11 @@ class WindowsPhoneDesktopHandler extends Handler
 
     protected $prefix = "WINDOWSPHONEDESKTOP";
 
-    public static $constantIDs = array(
-        'generic_ms_phone_os7_desktopmode',
-        'generic_ms_phone_os7_5_desktopmode',
-    );
+    public static $constantIDs
+        = array(
+            'generic_ms_phone_os7_desktopmode',
+            'generic_ms_phone_os7_5_desktopmode',
+        );
 
     public function canHandle($userAgent)
     {

@@ -31,10 +31,11 @@ class XboxHandler extends Handler
 {
     protected $prefix = "XBOX";
 
-    public static $constantIDs = array(
-        'microsoft_xbox360_ver1',
-        'microsoft_xbox360_ver1_subie10',
-    );
+    public static $constantIDs
+        = array(
+            'microsoft_xbox360_ver1',
+            'microsoft_xbox360_ver1_subie10',
+        );
 
     public function canHandle($userAgent)
     {

@@ -30,11 +30,12 @@ class MaemoHandler extends Handler
 
     protected $prefix = "MAEMO";
 
-    public static $constantIDs = array(
-        'generic_opera_mobi_maemo',
-        'nokia_generic_maemo_with_firefox',
-        'nokia_generic_maemo',
-    );
+    public static $constantIDs
+        = array(
+            'generic_opera_mobi_maemo',
+            'nokia_generic_maemo_with_firefox',
+            'nokia_generic_maemo',
+        );
 
     public function canHandle($userAgent)
     {

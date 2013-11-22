@@ -31,11 +31,12 @@ class FirefoxOSHandler extends Handler
 {
     protected $prefix = "FIREFOXOS";
 
-    public static $constantIDs = array(
-        'generic_firefox_os',
-        'firefox_os_ver1',
-        'firefox_os_ver1_1',
-    );
+    public static $constantIDs
+        = array(
+            'generic_firefox_os',
+            'firefox_os_ver1',
+            'firefox_os_ver1_1',
+        );
 
     public function canHandle($userAgent)
     {

@@ -55,7 +55,8 @@ class SafariHandler extends Handler
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAnyOf(
-            $userAgent, array('Macintosh', 'Windows')
+            $userAgent,
+            array('Macintosh', 'Windows')
         )
         ) {
             return Constants::GENERIC_WEB_BROWSER;

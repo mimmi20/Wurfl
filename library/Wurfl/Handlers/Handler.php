@@ -72,13 +72,13 @@ abstract class Handler implements Filter, Matcher
     public static $constantIDs = array();
 
     /**
-     * @param Context                                         $wurflContext
+     * @param Context             $wurflContext
      * @param NormalizerInterface $userAgentNormalizer
      */
     public function __construct(
         Context $wurflContext,
-        NormalizerInterface $userAgentNormalizer = null)
-    {
+        NormalizerInterface $userAgentNormalizer = null
+    ) {
         if (is_null($userAgentNormalizer)) {
             $this->userAgentNormalizer = new NullNormalizer();
         } else {
@@ -239,10 +239,10 @@ abstract class Handler implements Filter, Matcher
         $deviceID = null;
         // Start with an Exact match
         $request->matchInfo->matcher_history .= "$class_name(exact),";
-        $request->matchInfo->match_type = 'exact';
+        $request->matchInfo->match_type  = 'exact';
         $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
 
-        $deviceID                       = $this->applyExactMatch($userAgent);
+        $deviceID = $this->applyExactMatch($userAgent);
 
         // Try with the conclusive Match
         if ($this->isBlankOrGeneric($deviceID)) {
@@ -255,15 +255,15 @@ abstract class Handler implements Filter, Matcher
                 // Log the ua and the ua profile
                 //$this->logger->debug($request);
                 $request->matchInfo->match_type = 'recovery';
-                $request->matchInfo->matcher_history .= "$class_name(recovery),";
-                $this->logger->debug("$this->prefix :Applying Recovery Match for ua: $userAgent");
+                $request->matchInfo->matcher_history .= $class_name . '(recovery),';
+                $this->logger->debug($this->prefix . ' :Applying Recovery Match for ua: ' . $userAgent);
                 $deviceID = $this->applyRecoveryMatch($userAgent);
 
                 // Try with catch all recovery Match
                 if ($this->isBlankOrGeneric($deviceID)) {
                     $request->matchInfo->match_type = 'recovery-catchall';
-                    $request->matchInfo->matcher_history .= "$class_name(recovery-catchall),";
-                    $this->logger->debug("$this->prefix :Applying Catch All Recovery Match for ua: $userAgent");
+                    $request->matchInfo->matcher_history .= $class_name . '(recovery-catchall),';
+                    $this->logger->debug($this->prefix . ' :Applying Catch All Recovery Match for ua: ' . $userAgent);
                     $deviceID = $this->applyRecoveryCatchAllMatch($userAgent);
 
                     // All attempts to match have failed

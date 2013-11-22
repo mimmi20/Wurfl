@@ -59,7 +59,8 @@ class DeviceIterator extends AbstractIterator
                             $specific                   = $this->xmlReader->getAttribute(XmlInterface::SPECIFIC);
                             $currentCapabilityNameValue = array();
                             if ($this->xmlReader->isEmptyElement) {
-                                $this->currentElement = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific);
+                                $this->currentElement
+                                    = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific);
                                 break 3;
                             }
                             break;
@@ -87,7 +88,8 @@ class DeviceIterator extends AbstractIterator
                     break;
                 case \XMLReader::END_ELEMENT:
                     if ($nodeName == XmlInterface::DEVICE) {
-                        $this->currentElement = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific, $groupIDCapabilitiesMap);
+                        $this->currentElement
+                            = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific, $groupIDCapabilitiesMap);
                         break 2;
                     }
             }

@@ -29,10 +29,11 @@ class DoCoMoHandler extends Handler
 {
     protected $prefix = "DOCOMO";
 
-    public static $constantIDs = array(
-        'docomo_generic_jap_ver1',
-        'docomo_generic_jap_ver2',
-    );
+    public static $constantIDs
+        = array(
+            'docomo_generic_jap_ver1',
+            'docomo_generic_jap_ver2',
+        );
 
     public function canHandle($userAgent)
     {

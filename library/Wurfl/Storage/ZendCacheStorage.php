@@ -28,7 +28,7 @@ use Zend\Config\Config;
  */
 class ZendCacheStorage extends Base
 {
-    /** @var null|StorageInterface  */
+    /** @var null|StorageInterface */
     private $_zendCacheObject = null;
 
     protected $supports_secondary_caching = true;

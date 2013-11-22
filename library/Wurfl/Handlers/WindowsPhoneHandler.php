@@ -31,12 +31,13 @@ class WindowsPhoneHandler extends Handler
 {
     protected $prefix = "WINDOWSPHONE";
 
-    public static $constantIDs = array(
-        'generic_ms_winmo6_5',
-        'generic_ms_phone_os7',
-        'generic_ms_phone_os7_5',
-        'generic_ms_phone_os8',
-    );
+    public static $constantIDs
+        = array(
+            'generic_ms_winmo6_5',
+            'generic_ms_phone_os7',
+            'generic_ms_phone_os7_5',
+            'generic_ms_phone_os8',
+        );
 
     public function canHandle($userAgent)
     {

@@ -24,10 +24,11 @@ namespace Wurfl\Storage;
 class Apc extends Base
 {
     const EXTENSION_MODULE_NAME = "apc";
-    private $currentParams = array(
-        "namespace"  => "wurfl",
-        "expiration" => 0
-    );
+    private $currentParams
+        = array(
+            "namespace"  => "wurfl",
+            "expiration" => 0
+        );
 
     protected $is_volatile = true;
 
@@ -47,7 +48,8 @@ class Apc extends Base
     public function save($objectId, $object, $expiration = null)
     {
         $value = apc_store(
-            $this->encode($this->apcNameSpace(), $objectId), $object,
+            $this->encode($this->apcNameSpace(), $objectId),
+            $object,
             (($expiration === null) ? $this->expire() : $expiration)
         );
         if ($value === false) {
