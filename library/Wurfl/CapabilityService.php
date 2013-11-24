@@ -121,8 +121,9 @@ class CapabilityService
      */
     public function getFallBackListForDevice($deviceID)
     {
-        $devices   = $this->_deviceRepository->getDeviceHierarchy($deviceID);
+        $devices   = $this->getDeviceHierarchy($deviceID);
         $fallBacks = array();
+
         foreach ($devices as $device) {
             $fallBacks[] = $device->id;
         }

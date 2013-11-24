@@ -263,7 +263,7 @@ class DeviceRepositoryBuilder
      */
     private function classifyAndPersistDevice(Xml\ModelDevice $device)
     {
-        $this->userAgentHandlerChain->filter($device->userAgent, $device->id);
+        $this->userAgentHandlerChain->filter($device);
 
         $this->persistenceProvider->save($device->id, $device);
     }

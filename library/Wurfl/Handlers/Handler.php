@@ -24,6 +24,7 @@ use Wurfl\Request\UserAgentNormalizer\NormalizerInterface;
 use WURFL\Request\UserAgentNormalizer\NullNormalizer;
 use Wurfl\Request\UserAgentNormalizer;
 use Wurfl\Storage\Base;
+use Wurfl\Xml\ModelDevice;
 
 /**
  * \Wurfl\Handlers_Handler is the base class that combines the classification of
@@ -40,7 +41,7 @@ abstract class Handler implements Filter, Matcher
     /**
      * @var UserAgentNormalizer
      */
-    private $userAgentNormalizer;
+    protected $userAgentNormalizer;
 
     /**
      * @var string Prefix for this User Agent Handler
@@ -85,9 +86,20 @@ abstract class Handler implements Filter, Matcher
             $this->userAgentNormalizer = $userAgentNormalizer;
         }
 
-        $this->logger = $wurflContext->logger;
+        $this->setupContext($wurflContext);
+    }
 
+    /**
+     * @param Context $wurflContext
+     *
+     * @return Handler
+     */
+    public function setupContext(Context $wurflContext)
+    {
+        $this->logger              = $wurflContext->logger;
         $this->persistenceProvider = $wurflContext->persistenceProvider;
+
+        return $this;
     }
 
     /**
@@ -118,15 +130,14 @@ abstract class Handler implements Filter, Matcher
     /**
      * Classifies the given $userAgent and specified $deviceID
      *
-     * @param string $userAgent
-     * @param string $deviceID
+     * @param \Wurfl\Xml\ModelDevice $device
      *
      * @return boolean
      */
-    public function filter($userAgent, $deviceID)
+    public function filter(ModelDevice $device)
     {
-        if ($this->canHandle($userAgent)) {
-            $this->updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
+        if ($this->canHandle($device->userAgent)) {
+            $this->updateUserAgentsWithDeviceIDMap($device);
 
             return true;
         }
@@ -140,15 +151,14 @@ abstract class Handler implements Filter, Matcher
      * Before adding the user agent to the map it normalizes by using the normalizeUserAgent
      * function.
      *
-     * @see normalizeUserAgent()
-     * @see userAgentsWithDeviceID
+     * @see      normalizeUserAgent()
+     * @see      userAgentsWithDeviceID
      *
-     * @param string $userAgent
-     * @param string $deviceID
+     * @param ModelDevice $device
      */
-    final function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID)
+    final public function updateUserAgentsWithDeviceIDMap(ModelDevice $device)
     {
-        $this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
+        $this->userAgentsWithDeviceID[$this->normalizeUserAgent($device->userAgent)] = $device->id;
     }
 
     /**
@@ -293,7 +303,7 @@ abstract class Handler implements Filter, Matcher
      */
     private function isBlankOrGeneric($deviceID)
     {
-        return ($deviceID === null || strcmp($deviceID, "generic") === 0 || strlen(trim($deviceID)) == 0);
+        return (null === $deviceID || 0 === strcmp($deviceID, 'generic') || 0 == strlen(trim($deviceID)));
     }
 
     public function applyExactMatch($userAgent)
@@ -315,6 +325,7 @@ abstract class Handler implements Filter, Matcher
     public function applyConclusiveMatch($userAgent)
     {
         $match = $this->lookForMatchingUserAgent($userAgent);
+
         if (!empty($match)) {
             //die('<pre>'.htmlspecialchars(var_export($this->userAgentsWithDeviceID, true)).'</pre>');
             return $this->userAgentsWithDeviceID[$match];
@@ -350,6 +361,7 @@ abstract class Handler implements Filter, Matcher
     public function getDeviceIDFromLD($userAgent, $tolerance = null)
     {
         $match = Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+
         if (!empty($match)) {
             return $this->userAgentsWithDeviceID[$match];
         }
@@ -380,6 +392,7 @@ abstract class Handler implements Filter, Matcher
         if (Utils::isDesktopBrowserHeavyDutyAnalysis($userAgent)) {
             return Constants::GENERIC_WEB_BROWSER;
         }
+
         $mobile  = Utils::isMobileBrowser($userAgent);
         $desktop = Utils::isDesktopBrowser($userAgent);
 
@@ -393,6 +406,7 @@ abstract class Handler implements Filter, Matcher
         if ($mobile) {
             return Constants::GENERIC_MOBILE;
         }
+
         if ($desktop) {
             return Constants::GENERIC_WEB_BROWSER;
         }
@@ -431,6 +445,7 @@ abstract class Handler implements Filter, Matcher
     protected function isDeviceExist($deviceId)
     {
         $ids = array_values($this->userAgentsWithDeviceID);
+
         if (in_array($deviceId, $ids)) {
             return true;
         }

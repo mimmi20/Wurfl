@@ -25,8 +25,8 @@ use Wurfl\Storage\StorageInterface;
  * the API for device capabilities and WURFL information
  * Examples:
  * <code>
- * // Example 1. Instantiate Manager from Factory:
- * $wurflManager = $wurflManagerFactory->create();
+ * // Example 1. Instantiate Manager:
+ * $wurflManager = new $wurflManager();
  * // Example 2: Get Visiting Device from HTTP Request
  * $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
  * // Example 3: Get Visiting Device from User Agent
@@ -202,7 +202,13 @@ class Manager
     }
 
     /**
-     * Return a device for the given device id
+     * Wraps the model device with \Wurfl\Xml\ModelDevice.  This function takes the
+     * Device ID and returns the \Wurfl\CustomDevice with all capabilities.
+     *
+     * @param string         $deviceId
+     * @param GenericRequest $request
+     *
+     * @return CustomDevice
      *
      * @param string         $deviceId
      * @param GenericRequest $request
@@ -211,7 +217,20 @@ class Manager
      */
     public function getDevice($deviceId, GenericRequest $request = null)
     {
-        return $this->getWrappedDevice($deviceId, $request);
+        $cache = $this->buildCacheStorage();
+
+        /** @var $device CustomDevice */
+        $device = $cache->load('DEV_' . $deviceId);
+
+        if (empty($device)) {
+            /** @var $modelDevices array */
+            $modelDevices = $this->buildRepository()->getDeviceHierarchy($deviceId);
+            $device       = new CustomDevice($modelDevices, $request);
+
+            $cache->save('DEV_' . $deviceId, $device);
+        }
+
+        return $device;
     }
 
     /**
@@ -288,7 +307,7 @@ class Manager
 
         $deviceId = $this->deviceIdForRequest($request);
 
-        return $this->getWrappedDevice($deviceId, $request);
+        return $this->getDevice($deviceId, $request);
     }
 
     /**
@@ -316,31 +335,6 @@ class Manager
         }
 
         return $deviceId;
-    }
-
-    /**
-     * Wraps the model device with \Wurfl\Xml_ModelDevice.  This function takes the
-     * Device ID and returns the \Wurfl\CustomDevice with all capabilities.
-     *
-     * @param string         $deviceId
-     * @param GenericRequest $request
-     *
-     * @return CustomDevice
-     */
-    private function getWrappedDevice($deviceId, GenericRequest $request = null)
-    {
-        $cache = $this->buildCacheStorage();
-
-        /** @var $device CustomDevice */
-        $device = $cache->load('DEV_' . $deviceId);
-
-        if (empty($device)) {
-            $modelDevices = $this->buildRepository()->getDeviceHierarchy($deviceId);
-            $device       = new CustomDevice($modelDevices, $request);
-            $cache->save('DEV_' . $deviceId, $device);
-        }
-
-        return $device;
     }
 
     /**

@@ -21,9 +21,11 @@ namespace Wurfl\Chain;
 
 use SplDoublyLinkedList;
 use Wurfl\Constants;
+use Wurfl\Context;
 use Wurfl\Handlers;
 use Wurfl\Handlers\Utils;
 use Wurfl\Request;
+use Wurfl\Xml\ModelDevice;
 
 /**
  * Handles the chain of \Wurfl\Handlers\Handler objects
@@ -34,11 +36,37 @@ use Wurfl\Request;
 class UserAgentHandlerChain extends SplDoublyLinkedList
 {
     /**
+     * Adds the pair $userAgent, $deviceID to the clusters they belong to.
+     *
+     * @param \Wurfl\Context $wurflContext
+     *
+     * @return UserAgentHandlerChain
+     *
+     * @see      \Wurfl\Handlers\Handler::setupContext()
+     */
+    public function setupContext(Context $wurflContext)
+    {
+        Utils::reset();
+
+        $this->rewind();
+
+        while ($this->valid()) {
+            /** @var $userAgentHandler Handlers\Handler */
+            $userAgentHandler = $this->current();
+            $userAgentHandler->setupContext($wurflContext);
+
+            $this->next();
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds a \Wurfl\Handlers\Handler to the chain
      *
      * @param Handlers\Handler $handler
      *
-     * @return UserAgentHandlerChain $this
+     * @return UserAgentHandlerChain
      */
     public function addUserAgentHandler(Handlers\Handler $handler)
     {
@@ -58,12 +86,15 @@ class UserAgentHandlerChain extends SplDoublyLinkedList
     /**
      * Adds the pair $userAgent, $deviceID to the clusters they belong to.
      *
-     * @param String $userAgent
-     * @param String $deviceID
+     * @param ModelDevice $device
      *
-     * @see \Wurfl\Handlers\Handler::filter()
+     * @internal param String $userAgent
+     * @internal param String $deviceID
+     *
+     * @return UserAgentHandlerChain
+     * @see      \Wurfl\Handlers\Handler::filter()
      */
-    public function filter($userAgent, $deviceID)
+    public function filter(ModelDevice $device)
     {
         Utils::reset();
 
@@ -73,12 +104,14 @@ class UserAgentHandlerChain extends SplDoublyLinkedList
             /** @var $userAgentHandler Handlers\Handler */
             $userAgentHandler = $this->current();
 
-            if ($userAgentHandler->filter($userAgent, $deviceID)) {
+            if ($userAgentHandler->filter($device)) {
                 break;
             }
 
             $this->next();
         }
+
+        return $this;
     }
 
     /**
@@ -114,6 +147,8 @@ class UserAgentHandlerChain extends SplDoublyLinkedList
     /**
      * Save the data from each \Wurfl\Handlers\Handler
      *
+     * @return UserAgentHandlerChain
+     *
      * @see \Wurfl\Handlers\Handler::persistData()
      */
     public function persistData()
@@ -127,6 +162,8 @@ class UserAgentHandlerChain extends SplDoublyLinkedList
 
             $this->next();
         }
+
+        return $this;
     }
 
     /**

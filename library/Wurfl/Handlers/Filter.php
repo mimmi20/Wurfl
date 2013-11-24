@@ -15,6 +15,8 @@ namespace Wurfl\Handlers;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+use Wurfl\Xml\ModelDevice;
+
 /**
  * \Wurfl\Handlers_Filter is the base interface that concrete classes
  * must implement to classify the devices by user agent and then persist
@@ -33,10 +35,11 @@ interface Filter
      * The filter() method is used to classify devices based on patterns
      * in their user agents.
      *
-     * @param string $userAgent User Agent of the device
-     * @param string $deviceID  id of the the device
+     * @param \Wurfl\Xml\ModelDevice $device
+     *
+     * @return
      */
-    public function filter($userAgent, $deviceID);
+    public function filter(ModelDevice $device);
 
     /**
      * The persistData() method is resposible to

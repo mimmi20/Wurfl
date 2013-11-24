@@ -44,6 +44,8 @@ class UserAgentHandlerChainFactory
             $chain = self::init($context);
 
             $context->cacheProvider->save('UserAgentHandlerChain', $chain, 3600);
+        } else {
+            $chain->setupContext($context);
         }
 
         return $chain;
