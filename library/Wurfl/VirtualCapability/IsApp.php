@@ -1,13 +1,14 @@
 <?php
-namespace Wurfl\VirtualCapability;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
+ *
  * Refer to the COPYING.txt file distributed with this package.
+ *
  *
  * @category   WURFL
  * @package    WURFL_VirtualCapability
@@ -15,26 +16,20 @@ namespace Wurfl\VirtualCapability;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-use Wurfl\Handlers\Utils;
-use Wurfl\VirtualCapability;
-
 /**
  * Virtual capability helper
- *
  * @package    WURFL_VirtualCapability
  */
+ 
+class WURFL_VirtualCapability_IsApp extends WURFL_VirtualCapability {
 
-class IsApp extends VirtualCapability
-{
     protected $required_capabilities = array('device_os');
 
     /**
      * Simple strings or regex patterns that indicate a UA is from a native app
-     *
      * @var array
-     */
-    protected $patterns
-        = array(
+    */
+    protected $patterns = array(
             '^Dalvik',
             'Darwin/',
             'CFNetwork',
@@ -65,48 +60,36 @@ class IsApp extends VirtualCapability
             '#iP(hone|od|ad)[\d],[\d]#',
             // namespace notation (com.google.youtube)
             '#[a-z]{3,}(?:\.[a-z]+){2,}#',
-        );
+    );
 
-    protected function compute()
-    {
+    protected function compute() {
         $ua = $this->request->userAgent;
 
-        if ('iOS' === $this->device->getCapability('device_os') && !Utils::checkIfContains($ua, 'Safari')) {
-            return true;
-        }
-
+        if ($this->device->device_os == "iOS" && !WURFL_Handlers_Utils::checkIfContains($ua, "Safari")) return true;
         foreach ($this->patterns as $pattern) {
             if ($pattern[0] === '#') {
                 // Regex
-                if (preg_match($pattern, $ua)) {
-                    return true;
-                }
+                if (preg_match($pattern, $ua)) return true;
                 continue;
             }
-
+                
             // Substring matches are not abstracted for performance
             $pattern_len = strlen($pattern);
-            $ua_len      = strlen($ua);
+            $ua_len = strlen($ua);
 
             if ($pattern[0] === '^') {
                 // Starts with
-                if (strpos($ua, substr($pattern, 1)) === 0) {
-                    return true;
-                }
+                if (strpos($ua, substr($pattern, 1)) === 0) return true;
+
+            } else if ($pattern[$pattern_len - 1] === '$') {
+                // Ends with
+                $pattern_len--;
+                $pattern = substr($pattern, 0, $pattern_len);
+                if (strpos($ua, $pattern) === ($ua_len - $pattern_len)) return true;
+
             } else {
-                if ($pattern[$pattern_len - 1] === '$') {
-                    // Ends with
-                    $pattern_len--;
-                    $pattern = substr($pattern, 0, $pattern_len);
-                    if (strpos($ua, $pattern) === ($ua_len - $pattern_len)) {
-                        return true;
-                    }
-                } else {
-                    // Match anywhere
-                    if (strpos($ua, $pattern) !== false) {
-                        return true;
-                    }
-                }
+                // Match anywhere
+                if (strpos($ua, $pattern) !== false) return true;
             }
         }
 

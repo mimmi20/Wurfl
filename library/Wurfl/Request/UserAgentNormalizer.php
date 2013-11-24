@@ -1,94 +1,79 @@
 <?php
-namespace Wurfl\Request;
-
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    \Wurfl\Request
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @author     Fantayeneh Asres Gizaw
-     * @version    $id$
-     */
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ * @category   WURFL
+ * @package    WURFL_Request
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ * @author     Fantayeneh Asres Gizaw
+ * @version    $id$
+ */
 /**
  * User Agent Normalizer
- *
- * @package    \Wurfl\Request
+ * @package    WURFL_Request
  */
-class UserAgentNormalizer implements UserAgentNormalizer\NormalizerInterface
-{
+class WURFL_Request_UserAgentNormalizer implements WURFL_Request_UserAgentNormalizer_Interface {
+
     /**
-     * UserAgentNormalizer chain - array of \Wurfl\Request_UserAgentNormalizer objects
-     *
+     * UserAgentNormalizer chain - array of WURFL_Request_UserAgentNormalizer objects
      * @var array
      */
     protected $_userAgentNormalizers = array();
-
+    
     /**
      * Set the User Agent Normalizers
-     *
-     * @param array $normalizers Array of \Wurfl\Request_UserAgentNormalizer objects
+     * @param array $normalizers Array of WURFL_Request_UserAgentNormalizer objects
      */
-    public function __construct($normalizers = array())
-    {
-        if (is_array($normalizers)) {
+    public function __construct($normalizers = array()) {
+        if(is_array($normalizers)) {
             $this->_userAgentNormalizers = $normalizers;
         }
     }
-
+    
     /**
      * Adds a new UserAgent Normalizer to the chain
-     *
-     * @param \Wurfl\Request\UserAgentNormalizer\NormalizerInterface $normalizer
-     *
-     * @return UserAgentNormalizer
+     * @param WURFL_Request_UserAgentNormalizer_Interface $normalizer
+     * @return WURFL_Request_UserAgentNormalizer
      */
-    public function addUserAgentNormalizer(UserAgentNormalizer\NormalizerInterface $normalizer)
-    {
-        $userAgentNormalizers   = $this->_userAgentNormalizers;
+    public function addUserAgentNormalizer(WURFL_Request_UserAgentNormalizer_Interface $normalizer) {
+        $userAgentNormalizers = $this->_userAgentNormalizers; 
         $userAgentNormalizers[] = $normalizer;
-
-        return new UserAgentNormalizer($userAgentNormalizers);
+        return new WURFL_Request_UserAgentNormalizer($userAgentNormalizers);
     }
-
+    
     /**
      * Return the number of normalizers currently registered
-     *
      * @return int count
      */
-    public function count()
-    {
+    public function count() {
         return count($this->_userAgentNormalizers);
     }
-
+    
     /**
-     * Normalize the given $userAgent by passing down the chain
+     * Normalize the given $userAgent by passing down the chain 
      * of normalizers
      *
      * @param string $userAgent
-     *
      * @return string Normalized user agent
      */
-    public function normalize($userAgent)
-    {
+    public function normalize($userAgent) {
         // Don't normalize generic user agents
-        if ('DO_NOT_MATCH' === substr($userAgent, 0, 12)) {
+        if (substr($userAgent, 0, 12) == 'DO_NOT_MATCH') {
             return $userAgent;
         }
-
         $normalizedUserAgent = $userAgent;
-
         foreach ($this->_userAgentNormalizers as $normalizer) {
-            /* @var $normalizer UserAgentNormalizer\NormalizerInterface */
             $normalizedUserAgent = $normalizer->normalize($normalizedUserAgent);
         }
-
         return $normalizedUserAgent;
     }
 }
+

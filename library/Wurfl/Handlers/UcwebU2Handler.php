@@ -1,13 +1,14 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
+ *
  * Refer to the COPYING.txt file distributed with this package.
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -15,11 +16,10 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-
-use Wurfl\Constants;
 
 /**
  * UcwebU2UserAgentHandler
+ * 
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -27,37 +27,29 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class UcwebU2Handler extends Handler
-{
+class WURFL_Handlers_UcwebU2Handler extends WURFL_Handlers_Handler {
+    
     protected $prefix = "UCWEBU2";
-
-    public static $constantIDs
-        = array(
-            'generic_ucweb',
-        );
-
-    public function canHandle($userAgent)
-    {
-        if (Utils::isDesktopBrowser($userAgent)) {
-            return false;
-        }
-
-        return (Utils::checkIfStartsWith($userAgent, 'UCWEB') && Utils::checkIfContains($userAgent, 'UCBrowser'));
+    
+    public static $constantIDs = array(
+        'generic_ucweb',
+    );
+    
+    public function canHandle($userAgent) {
+        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
+        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'UCWEB') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCBrowser'));
     }
-
-    public function applyConclusiveMatch($userAgent)
-    {
-        $tolerance = Utils::toleranceToRisDelimeter($userAgent);
-
+    
+    public function applyConclusiveMatch($userAgent) {
+        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-
-        return Constants::NO_MATCH;
+        
+        return WURFL_Constants::NO_MATCH;
     }
-
-    public function applyRecoveryMatch($userAgent)
-    {
+    
+    public function applyRecoveryMatch($userAgent) {
         return 'generic_ucweb';
     }
 }

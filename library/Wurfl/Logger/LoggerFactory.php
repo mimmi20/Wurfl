@@ -1,146 +1,83 @@
 <?php
-namespace Wurfl\Logger;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
+ *
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Logger
+ * @package    WURFL_Logger
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-use Psr\Log\LoggerInterface;
-
 /**
  * Logging factory
- *
- * @package    \Wurfl\Logger
+ * 
+ * @package    WURFL_Logger
  */
-class LoggerFactory
-{
+class WURFL_Logger_LoggerFactory {
+    
     /**
      * Create Logger for undetected devices with filename undetected_devices.log
-     *
-     * @param array $wurflConfig
-     *
-     * @return LoggerInterface Logger object
+     * @param WURFL_Configuration_Config $wurflConfig
+     * @return WURFL_Logger_Interface Logger object
      */
-    public static function createUndetectedDeviceLogger(array $wurflConfig = null)
-    {
-        if (self::isLoggingConfigured($wurflConfig)) {
-            return self::buildLogger($wurflConfig, 'undetected_devices.log');
+    public static function createUndetectedDeviceLogger($wurflConfig=null) {    
+        if(self::isLoggingConfigured($wurflConfig)) {
+            return self::createFileLogger($wurflConfig, "undetected_devices.log");
         }
-
-        return new NullLogger();
+        return new WURFL_Logger_NullLogger();
     }
-
+    
     /**
      * Creates Logger for general logging (not undetected devices)
-     *
-     * @param array $wurflConfig
-     *
-     * @return LoggerInterface Logger object
+     * @param WURFL_Configuration_Config $wurflConfig
+     * @return WURFL_Logger_Interface Logger object
      */
-    public static function create(array $wurflConfig = null)
-    {
-        if (self::isLoggingConfigured($wurflConfig)) {
-            return self::buildLogger($wurflConfig, 'wurfl.log');
+    public static function create($wurflConfig=NULL) {
+        if(self::isLoggingConfigured($wurflConfig)) {
+            return self::createFileLogger($wurflConfig, "wurfl.log");
         }
-
-        return new NullLogger();
+        return new WURFL_Logger_NullLogger();                
     }
-
-    /**
-     * Creates Logger for general logging (not undetected devices)
-     *
-     * @param array  $wurflConfig
-     * @param string $fileName
-     *
-     * @return LoggerInterface Logger object
-     */
-    private static function buildLogger(array $wurflConfig = null, $fileName = null)
-    {
-        switch (strtolower($wurflConfig['type'])) {
-            case 'file':
-                $logger = self::createFileLogger($wurflConfig, $fileName);
-                break;
-            case 'null':
-            default:
-                $logger = new NullLogger();
-                break;
-        }
-
-        return $logger;
-    }
-
+    
     /**
      * Creates a new file logger
-     *
-     * @param array  $wurflConfig
+     * @param WURFL_Configuration_Config $wurflConfig
      * @param string $fileName
-     *
-     * @return LoggerInterface File logger
+     * @return WURFL_Logger_FileLogger File logger
      */
-    private static function createFileLogger(array $wurflConfig, $fileName)
-    {
-        $logFileName = self::createLogFile($wurflConfig['logDir'], $fileName);
-
-        return new FileLogger($logFileName);
+    private static function createFileLogger($wurflConfig, $fileName) {
+        $logFileName = self::createLogFile($wurflConfig->logDir, $fileName);
+        return new WURFL_Logger_FileLogger($logFileName);
     }
-
+    
     /**
      * Returns true if $wurflConfig specifies a Logger
-     *
-     * @param array $wurflConfig
-     *
+     * @param WURFL_Configuration_Config $wurflConfig
      * @return bool
      */
-    private static function isLoggingConfigured(array $wurflConfig = null)
-    {
-        if (is_null($wurflConfig)
-            || empty($wurflConfig['type'])
-        ) {
+    private static function isLoggingConfigured($wurflConfig) {    
+        if(is_null($wurflConfig)) {
             return false;
         }
-
-        if ('Null' === $wurflConfig['type']) {
-            // null logger
-            return true;
-        }
-
-        if ('File' === $wurflConfig['type']
-            && !empty($wurflConfig['logDir'])
-            && is_dir($wurflConfig['logDir'])
-            && is_writable($wurflConfig['logDir'])
-        ) {
-            // file logger and log dir is writable
-            return true;
-        }
-
-        // every else
-        return false;
+        return !is_null ( $wurflConfig->logDir ) && is_writable ( $wurflConfig->logDir );
     }
-
+    
     /**
      * Creates a new log file in given $logDir with given $fileName
-     *
      * @param string $logDir
      * @param string $fileName
-     *
      * @return string Complete filename to created logfile
-     */
-    private static function createLogFile($logDir, $fileName)
-    {
-        $file = $logDir . DIRECTORY_SEPARATOR . $fileName;
-
+     */    
+    private static function createLogFile($logDir, $fileName) {
+        $file = realpath($logDir . DIRECTORY_SEPARATOR . $fileName);
         touch($file);
-
         return $file;
     }
 }
