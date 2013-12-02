@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_XboxHandler extends WURFL_Handlers_Handler {
+class XboxHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "XBOX";
     
@@ -37,16 +39,16 @@ class WURFL_Handlers_XboxHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Xbox');
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Xbox');
     }
     
     public function applyConclusiveMatch($userAgent) {
         // Exact and recovery matching only
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent){
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE 10.0')) return 'microsoft_xbox360_ver1_subie10';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'MSIE 10.0')) return 'microsoft_xbox360_ver1_subie10';
         return 'microsoft_xbox360_ver1';
     }
 }

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -19,45 +21,45 @@
  * Holds WURFL Device capabilities
  * @package    WURFL
  */
-class WURFL_CapabilitiesHolder {
-    
+class CapabilitiesHolder {
+
     /**
-     * @var WURFL_Xml_ModelDevice
+     * @var \Wurfl\Xml\ModelDevice
      */
     private $_device;
     /**
-     * @var WURFL_DeviceRepository
+     * @var \Wurfl\DeviceRepository
      */
     private $_deviceRepository;
     /**
-     * @var WURFL_Cache_CacheProvider
+     * @var \Wurfl\Storage\StorageInterface
      */
     private $_cacheProvider;
-    
+
     /**
-     * @param WURFL_Xml_ModelDevice $device
-     * @param WURFL_DeviceRepository $deviceRepository
-     * @param WURFL_Cache_CacheProvider $cacheProvider
+     * @param \Wurfl\Xml\ModelDevice $device
+     * @param \Wurfl\DeviceRepository $deviceRepository
+     * @param \Wurfl\Storage\StorageInterface $cacheProvider
      */
-    public function __construct($device, $deviceRepository, $cacheProvider) {
+    public function __construct(\Wurfl\Xml\ModelDevice $device, \Wurfl\DeviceRepository $deviceRepository, \Wurfl\Storage\StorageInterface $cacheProvider) {
         $this->_device = $device;
         $this->_deviceRepository = $deviceRepository;
         $this->_cacheProvider = $cacheProvider;
     }
-    
+
     /**
      * Returns the value of a given capability name
-     * 
+     *
      * @param string $capabilityName
      * @return string Capability value
      * @throws WURFLException if the value of the $capability name is illegal
      */
     public function getCapability($capabilityName) {
-        
+
         if(isset($this->_device->capabilities[$capabilityName])) {
              return $this->_device->capabilities[$capabilityName];
          }
-                 
+
          $key = $this->_device->id . "_" . $capabilityName;
          $capabilityValue = $this->_cacheProvider->get($key);
          if (empty($capabilityValue)) {
@@ -72,13 +74,13 @@ class WURFL_CapabilitiesHolder {
 
          return $capabilityValue;
      }
-    
+
     /**
      * Returns all the capabilities value of the current device as <capabilityName, capabilityValue>
      * @return array All capabilities
      */
     public function getAllCapabilities() {
-        return  $this->_deviceRepository->getAllCapabilitiesForDevice($this->_device->id);        
+        return  $this->_deviceRepository->getAllCapabilitiesForDevice($this->_device->id);
     }
-    
+
 }

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Storage;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,4 +22,4 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Exception extends Exception {}
+class Exception extends \Wurfl\Exception {}

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Request;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @property string $id Unique ID used for caching: MD5($userAgent)
  * @property WURFL_Request_MatchInfo $matchInfo Information about the match (available after matching)
  */
-class WURFL_Request_GenericRequest {
+class GenericRequest {
     
     private $_userAgent;
     private $_userAgentProfile;
@@ -46,7 +48,7 @@ class WURFL_Request_GenericRequest {
         $this->_userAgentProfile = $userAgentProfile;
         $this->_xhtmlDevice = $xhtmlDevice;
         $this->_id = md5($userAgent);
-        $this->_matchInfo = new WURFL_Request_MatchInfo();
+        $this->_matchInfo = new MatchInfo();
         $this->_userAgentsWithDeviceID = null;
     }
     

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Storage;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -28,16 +30,17 @@
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-abstract class WURFL_Storage_Base implements WURFL_Storage {
+abstract class Base implements StorageInterface
+{
 
     const APPLICATION_PREFIX = "WURFL_";
     const WURFL_LOADED = "WURFL_WURFL_LOADED";
 
     /**
-     * @var WURFL_Storage_Base
+     * @var StorageInterface
      */
     private $cache;
-    
+
     protected $is_volatile = false;
     protected $supports_secondary_caching = false;
 
@@ -83,63 +86,65 @@ abstract class WURFL_Storage_Base implements WURFL_Storage {
     public function isVolatile() {
         return $this->is_volatile;
     }
-    
+
     /**
-     * This storage provider supports a caching layer in front of it, for example, the File provider 
+     * This storage provider supports a caching layer in front of it, for example, the File provider
      * supports a volatile cache like Memcache in front of it, whereas APC does not.
      * @return boolean
      */
     public function supportsSecondaryCaching() {
         return $this->supports_secondary_caching;
     }
-    
+
     /**
      * This storage provider can be used as a secondary cache
-     * @param WURFL_Storage_Base $cache
-     * @return boolean
+     *
+*@param StorageInterface $cache
+     *
+*@return boolean
      */
-    public function validSecondaryCache(WURFL_Storage_Base $cache) {
+    public function validSecondaryCache(StorageInterface $cache) {
         /**
-         * True if $this supports secondary caching and the cache provider is not the 
+         * True if $this supports secondary caching and the cache provider is not the
          * same class type since this would always decrease performance
          */
         return ($this->supports_secondary_caching && get_class($this) != get_class($cache));
     }
-    
+
     /**
-     * Sets the cache provider for the persistence provider; this is used to 
-     * cache data in a volatile storage system like APC in front of a slow 
+     * Sets the cache provider for the persistence provider; this is used to
+     * cache data in a volatile storage system like APC in front of a slow
      * persistence provider like the filesystem.
-     * 
-     * @param WURFL_Storage_Base $cache
+     *
+     * @param StorageInterface $cache
      */
-    public function setCacheStorage(WURFL_Storage_Base $cache) {
+    public function setCacheStorage(StorageInterface $cache) {
         if (!$this->supportsSecondaryCaching()) {
-            throw new WURFL_Storage_Exception("The storage provider ".get_class($cache)." cannot be used as a cache for ".get_class($this));
+            throw new Exception("The storage provider ".get_class($cache)." cannot be used as a cache for ".get_class($this));
         }
         $this->cache = $cache;
     }
-    
+
     protected function cacheSave($objectId, $object) {
         if ($this->cache === null) return;
         $this->cache->save('FCACHE_'.$objectId, $object);
     }
-    
+
     protected function cacheLoad($objectId) {
         if ($this->cache === null) return null;
         return $this->cache->load('FCACHE_'.$objectId);
     }
-    
+
     protected function cacheRemove($objectId) {
         if ($this->cache === null) return;
         $this->cache->remove('FCACHE_'.$objectId);
     }
-    
+
     protected function cacheClear() {
         if ($this->cache === null) return;
         $this->cache->clear();
     }
-    
+
     /**
      * Checks if WURFL is Loaded
      * @return bool

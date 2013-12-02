@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,7 +22,7 @@
  * WURFL PHP API Constants
  * @package    WURFL
  */
-class WURFL_Constants {
+class Constants {
 
     private function __construct(){}
     

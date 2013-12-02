@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Storage;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,7 +22,7 @@
  * APC Storage class
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Apc extends WURFL_Storage_Base {
+class Apc extends Base {
 
     const EXTENSION_MODULE_NAME = "apc";
     private $currentParams = array(
@@ -29,7 +31,7 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base {
     );
 
     protected $is_volatile = true;
-    
+
     public function __construct($params = array()) {
         if(is_array($params))  {
             array_merge($this->currentParams, $params);
@@ -45,7 +47,7 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base {
     public function save($objectId, $object, $expiration=null) {
         $value = apc_store($this->encode($this->apcNameSpace(), $objectId), $object, (($expiration === null)? $this->expire(): $expiration));
         if ($value === false) {
-            throw new WURFL_Storage_Exception("Error saving variable in APC cache. Cache may be full.");
+            throw new Exception("Error saving variable in APC cache. Cache may be full.");
         }
     }
 
@@ -72,16 +74,16 @@ class WURFL_Storage_Apc extends WURFL_Storage_Base {
     }
 
     private function expire() {
-        return $this->currentParams["expiration"];   
+        return $this->currentParams["expiration"];
     }
 
     /**
      * Ensures the existence of the the PHP Extension apc
-     * @throws WURFL_Storage_Exception required extension is unavailable
+     * @throws Exception required extension is unavailable
      */
     private function ensureModuleExistence() {
         if (!(extension_loaded(self::EXTENSION_MODULE_NAME) && ini_get('apc.enabled') == true)) {
-            throw new WURFL_Storage_Exception ("The PHP extension apc must be installed, loaded and enabled.");
+            throw new Exception ("The PHP extension apc must be installed, loaded and enabled.");
         }
     }
 

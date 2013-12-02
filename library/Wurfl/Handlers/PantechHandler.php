@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,21 +29,21 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_PantechHandler extends WURFL_Handlers_Handler {
+class PantechHandler extends \Wurfl\Handlers\AbstractHandler {
     
     const PANTECH_TOLERANCE = 5;
     protected $prefix = "PANTECH";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Pantech', 'PT-', 'PANTECH', 'PG-'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Pantech', 'PT-', 'PANTECH', 'PG-'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Pantech")) {
+        if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, "Pantech")) {
             $tolerance = self::PANTECH_TOLERANCE;
         } else {
-            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+            $tolerance = \Wurfl\Handlers\Utils::firstSlash($userAgent);
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

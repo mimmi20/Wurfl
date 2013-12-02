@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
+class WindowsPhoneHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "WINDOWSPHONE";
     
@@ -39,36 +41,36 @@ class WURFL_Handlers_WindowsPhoneHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'NativeHost'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'NativeHost'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'NativeHost')) {
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'NativeHost')) {
             return 'generic_ms_phone_os7';
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent){
         // "Windows Phone OS 8" is for MS Ad SDK issues
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone 8', 'Windows Phone OS 8'))) return 'generic_ms_phone_os8';
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone 8', 'Windows Phone OS 8'))) return 'generic_ms_phone_os8';
         
         // WP OS 7.10 = Windows Phone 7.5 or 7.8
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone OS 7.5', 'Windows Phone OS 7.10'))) return 'generic_ms_phone_os7_5';
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone OS 7.5', 'Windows Phone OS 7.10'))) return 'generic_ms_phone_os7_5';
         
         // Looking for "Windows Phone OS 7" instead of "Windows Phone OS 7.0" to address all WP 7 UAs that we may not catch else where
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone OS 7')) return 'generic_ms_phone_os7';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Windows Phone OS 7')) return 'generic_ms_phone_os7';
         
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public static function getWindowsPhoneModel($ua) {

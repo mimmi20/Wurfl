@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers\Matcher;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,7 +12,7 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL_Handlers_Matcher
+ * @package    \Wurfl\Handlers\MatcherInterface
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
@@ -21,19 +23,19 @@
  * removing characters from the right side of the User Agents one-by-one until either
  * a match is found, or the string length is lower than the specified tolerance.
  * @see match()
- * @package    WURFL_Handlers_Matcher
+ * @package    \Wurfl\Handlers\MatcherInterface
  */
-class WURFL_Handlers_Matcher_RISMatcher implements WURFL_Handlers_Matcher_Interface {
+class RISMatcher implements MatcherInterface {
     
     /**
-     * Instance of WURFL_Handlers_Matcher_LDMatcher
-     * @var WURFL_Handlers_Matcher_LDMatcher
+     * Instance of \Wurfl\Handlers\Matcher\LDMatcher
+     * @var \Wurfl\Handlers\Matcher\LDMatcher
      */
     private static $instance;
     
     /**
      * Returns an instance of the RISMatcher singleton
-     * @return WURFL_Handlers_RISMatcher
+     * @return \Wurfl\Handlers\RISMatcher
      */
     public static function INSTANCE() {
         if (self::$instance === null) {

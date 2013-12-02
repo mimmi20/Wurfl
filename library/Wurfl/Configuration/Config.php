@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Configuration;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -31,7 +33,7 @@
  * @property string $logDir
  * @property string $matchMode
  */
-abstract class  WURFL_Configuration_Config {
+abstract class Config {
 
     const WURFL = "wurfl";
     const MAIN_FILE = "main-file";
@@ -98,7 +100,7 @@ abstract class  WURFL_Configuration_Config {
      */
     public function __construct($configFilePath) {
         if(!file_exists($configFilePath)) {
-            throw new InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
+            throw new \InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
         }
         $this->configFilePath = $configFilePath;
         $this->configurationFileDir = dirname($this->configFilePath);
@@ -162,7 +164,7 @@ abstract class  WURFL_Configuration_Config {
      * Return the full path
      *
      * @param string $fileName
-     * @throws WURFL_WURFLException The configuration file does not exist
+     * @throws \Wurfl\Exception The configuration file does not exist
      * @return string File name including full path
      */
     protected function getFullPath($fileName) {;
@@ -175,6 +177,6 @@ abstract class  WURFL_Configuration_Config {
         if(file_exists($fullName)) {
             return $fullName;
         }
-        throw new WURFL_WURFLException("The specified path '" . $fullName . "' does not exist");
+        throw new \Wurfl\Exception("The specified path '" . $fullName . "' does not exist");
     }
 }

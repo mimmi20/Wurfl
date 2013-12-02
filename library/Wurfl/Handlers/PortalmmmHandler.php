@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,16 +29,16 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_PortalmmmHandler extends WURFL_Handlers_Handler {
+class PortalmmmHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "PORTALMMM";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "portalmmm");
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, "portalmmm");
     }
     
     public function applyConclusiveMatch($userAgent) {
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 }

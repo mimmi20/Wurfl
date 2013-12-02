@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler {
+class FirefoxOSHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "FIREFOXOS";
     
@@ -38,7 +40,7 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox/') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mobile'));
+        return (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Firefox/') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Mobile'));
     }
     
     public function applyConclusiveMatch($userAgent) {
@@ -47,7 +49,7 @@ class WURFL_Handlers_FirefoxOSHandler extends WURFL_Handlers_Handler {
             $tolerance = $matches[1][1] + 1;
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent) {

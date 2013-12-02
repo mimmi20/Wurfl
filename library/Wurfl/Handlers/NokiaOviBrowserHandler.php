@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler {
+class NokiaOviBrowserHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "NOKIAOVIBROWSER";
     
@@ -36,14 +38,14 @@ class WURFL_Handlers_NokiaOviBrowserHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'S40OviBrowser');
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'S40OviBrowser');
     }
     
     public function applyConclusiveMatch($userAgent) {
         $idx = strpos($userAgent, 'Nokia');
-        if ($idx === false) return WURFL_Constants::NO_MATCH;
-        $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);
+        if ($idx === false) return \Wurfl\Constants::NO_MATCH;
+        $tolerance = \Wurfl\Handlers\Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
     

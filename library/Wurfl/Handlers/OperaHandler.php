@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -26,7 +28,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
+class OperaHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "OPERA";
     
@@ -41,13 +43,13 @@ class WURFL_Handlers_OperaHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera');
+        if (\Wurfl\Handlers\Utils::isMobileBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera');
     }
     
     public function applyConclusiveMatch($userAgent) {
         $opera_idx = strpos($userAgent, 'Opera');
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '.', $opera_idx);
+        $tolerance = \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, '.', $opera_idx);
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
     

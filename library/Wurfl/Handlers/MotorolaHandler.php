@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler {
+class MotorolaHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "MOTOROLA";
     
@@ -36,22 +38,22 @@ class WURFL_Handlers_MotorolaHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
-            WURFL_Handlers_Utils::checkIfContains($userAgent, 'Motorola'));    
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
+            \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Motorola'));    
     }
     
     public function applyConclusiveMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
-            return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::firstSlash($userAgent));
+        if (\Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
+            return $this->getDeviceIDFromRIS($userAgent, \Wurfl\Handlers\Utils::firstSlash($userAgent));
         }
         return $this->getDeviceIDFromLD($userAgent, 5);
     }
     
     public function applyRecoveryMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
             return "mot_mib22_generic";
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 }

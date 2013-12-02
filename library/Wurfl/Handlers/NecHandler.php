@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,19 +29,19 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_NecHandler extends WURFL_Handlers_Handler {
+class NecHandler extends \Wurfl\Handlers\AbstractHandler {
     
     const NEC_KGT_TOLERANCE = 2;
     protected $prefix = "NEC";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('NEC-', 'KGT'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('NEC-', 'KGT'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "NEC-")) {
-            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, "NEC-")) {
+            $tolerance = \Wurfl\Handlers\Utils::firstSlash($userAgent);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         return $this->getDeviceIDFromLD($userAgent, self::NEC_KGT_TOLERANCE);

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Handler {
+class OperaMobiOrTabletOnAndroidHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "OPERAMOBIORTABLETONANDROID";
     
@@ -54,24 +56,24 @@ class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Ha
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera Mobi', 'Opera Tablet')));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Android') && \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Opera Mobi', 'Opera Tablet')));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent) {
-        $is_opera_mobi = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi');
-        $is_opera_tablet = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Tablet');
+        $is_opera_mobi = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera Mobi');
+        $is_opera_tablet = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera Tablet');
         if ($is_opera_mobi || $is_opera_tablet) {
-            $android_version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent);
+            $android_version = \Wurfl\Handlers\AndroidHandler::getAndroidVersion($userAgent);
             $android_version_string = str_replace('.', '_', $android_version);
             $type = $is_opera_tablet? 'tablet': 'mobi';
             $deviceID = 'generic_android_ver'.$android_version_string.'_opera_'.$type;
@@ -82,7 +84,7 @@ class WURFL_Handlers_OperaMobiOrTabletOnAndroidHandler extends WURFL_Handlers_Ha
             }
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     const OPERA_DEFAULT_VERSION = '10';

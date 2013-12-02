@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
+class AppleHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "APPLE";
     
@@ -57,8 +59,8 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Mozilla/5') && \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')));
     }
     
     public function applyConclusiveMatch($userAgent) {
@@ -88,7 +90,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
             $minor_version = -1;
         }
         // Check iPods first since they also contain 'iPhone'
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPod')) {
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'iPod')) {
             $deviceID = 'apple_ipod_touch_ver'.$major_version;
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
@@ -97,7 +99,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
             }
         
         // Now check for iPad
-        } else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
+        } else if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'iPad')) {
             $deviceID = 'apple_ipad_ver1_sub'.$major_version;
             
             if ($major_version == 3) {
@@ -113,7 +115,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
             }
         
         // Check iPhone last
-        } else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone')) {
+        } else if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'iPhone')) {
             $deviceID = 'apple_iphone_ver'.$major_version;
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
@@ -121,7 +123,7 @@ class WURFL_Handlers_AppleHandler extends WURFL_Handlers_Handler {
                 return 'apple_iphone_ver1';
             }
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 
 }

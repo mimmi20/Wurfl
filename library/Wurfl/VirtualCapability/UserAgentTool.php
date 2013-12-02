@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\VirtualCapability;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,32 +13,32 @@
  *
  *
  * @category   WURFL
- * @package    WURFL_VirtualCapability
+ * @package    \Wurfl\VirtualCapability\VirtualCapability
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
  */
 /**
  * Standalone utility for deriving device capabilities from a user agent
- * @package WURFL_VirtualCapability
+ * @package \Wurfl\VirtualCapability\VirtualCapability
  */
-class WURFL_VirtualCapability_UserAgentTool {
+class UserAgentTool {
     
     /**
      * Gets a device from the UA
      * @param string $ua
-     * @return WURFL_VirtualCapability_UserAgentTool_Device
+     * @return \Wurfl\VirtualCapability\UserAgentTool_Device
      */
     public function getDevice($ua) {
-        $device = $this->assignProperties(new WURFL_VirtualCapability_UserAgentTool_Device($ua));
+        $device = $this->assignProperties(new \Wurfl\VirtualCapability\Tool\Device($ua));
         $device->normalize();
         return $device;
     }
     
     /**
      * Sets the device properties
-     * @param WURFL_VirtualCapability_UserAgentTool_Device $device
-     * @return WURFL_VirtualCapability_UserAgentTool_Device
+     * @param \Wurfl\VirtualCapability\UserAgentTool_Device $device
+     * @return \Wurfl\VirtualCapability\UserAgentTool_Device
      */
     protected function assignProperties($device) {
         //Is UA Android?

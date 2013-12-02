@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler {
+class KDDIHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "KDDI";
     
@@ -36,15 +38,15 @@ class WURFL_Handlers_KDDIHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'KDDI-');
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'KDDI-');
     }
     
     public function applyConclusiveMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
-            $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
+        if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
+            $tolerance = \Wurfl\Handlers\Utils::secondSlash($userAgent);
         } else {
-            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+            $tolerance = \Wurfl\Handlers\Utils::firstSlash($userAgent);
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

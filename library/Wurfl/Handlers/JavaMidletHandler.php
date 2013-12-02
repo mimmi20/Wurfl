@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,14 +29,14 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_JavaMidletHandler extends WURFL_Handlers_Handler {
+class JavaMidletHandler extends \Wurfl\Handlers\AbstractHandler {
     
     public static $constantIDs = array(
         'generic_midp_midlet',
     );
     
     public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'UNTRUSTED/1.0');
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'UNTRUSTED/1.0');
     }
     
     public function applyConclusiveMatch($userAgent) {

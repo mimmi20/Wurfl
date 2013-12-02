@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Reloader;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *

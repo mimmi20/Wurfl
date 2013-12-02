@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_FennecOnAndroidHandler extends WURFL_Handlers_Handler {
+class FennecOnAndroidHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "FENNECONANDROID";
     
@@ -38,8 +40,8 @@ class WURFL_Handlers_FennecOnAndroidHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox')));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Android') && \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox')));
     }
     
     public function applyConclusiveMatch($userAgent) {
@@ -50,20 +52,20 @@ class WURFL_Handlers_FennecOnAndroidHandler extends WURFL_Handlers_Handler {
         if (preg_match('|^.+?\(.+?rv:\d+(\.)|', $userAgent, $matches, PREG_OFFSET_CAPTURE)) {
             return $this->getDeviceIDFromRIS($userAgent, $matches[1][1] + 1);
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent) {
-        $is_fennec = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Fennec');
-        $is_firefox = WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox');
+        $is_fennec = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Fennec');
+        $is_firefox = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Firefox');
         if ($is_fennec || $is_firefox) {
-            if ($is_fennec || WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mobile')) return 'generic_android_ver2_0_fennec';
+            if ($is_fennec || \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Mobile')) return 'generic_android_ver2_0_fennec';
             if ($is_firefox) {
-                if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tablet')) return 'generic_android_ver2_0_fennec_tablet';
-                if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Desktop')) return 'generic_android_ver2_0_fennec_desktop';
-                return WURFL_Constants::NO_MATCH;
+                if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Tablet')) return 'generic_android_ver2_0_fennec_tablet';
+                if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Desktop')) return 'generic_android_ver2_0_fennec_desktop';
+                return \Wurfl\Constants::NO_MATCH;
             }
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 }

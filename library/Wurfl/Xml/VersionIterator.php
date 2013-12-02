@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Xml;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,10 +22,10 @@
  * Extracts version information from XML file
  * @package    WURFL_Xml
  */
-class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator {
-    
+class VersionIterator extends AbstractIterator {
+
     private $found_version_info = false;
-    
+
     public function readNextElement() {
         $version = "";
         $lastUpdated = "";
@@ -31,7 +33,7 @@ class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator {
         while ($this->xmlReader->read()) {
             $nodeName = $this->xmlReader->name;
             switch ($this->xmlReader->nodeType) {
-                case XMLReader::ELEMENT:
+                case \XMLReader::ELEMENT:
                     switch ($nodeName) {
                         case 'ver':
                             $version = $this->getTextValue();
@@ -44,19 +46,19 @@ class WURFL_Xml_VersionIterator extends WURFL_Xml_AbstractIterator {
                             break;
                     }
                     break;
-                case XMLReader::END_ELEMENT:
+                case \XMLReader::END_ELEMENT:
                     switch ($nodeName) {
                         case 'version':
                             $this->found_version_info = true;
-                            $this->currentElement = new WURFL_Xml_Info($version, $lastUpdated, $officialURL);
+                            $this->currentElement = new \Wurfl\Xml\Info($version, $lastUpdated, $officialURL);
                             return;
                     }
                     break;
             }
         } // end of while
     }
-    
-    
+
+
     public function valid() {
         // We're finished with the version node, nothing else to do
         if ($this->found_version_info === true) {

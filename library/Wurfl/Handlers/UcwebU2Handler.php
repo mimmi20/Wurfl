@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_UcwebU2Handler extends WURFL_Handlers_Handler {
+class UcwebU2Handler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "UCWEBU2";
     
@@ -36,17 +38,17 @@ class WURFL_Handlers_UcwebU2Handler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'UCWEB') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCBrowser'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'UCWEB') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'UCBrowser'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent) {

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -26,7 +28,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
+class MSIEHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "MSIE";
     
@@ -44,13 +46,13 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) return false;
+        if (\Wurfl\Handlers\Utils::isMobileBrowser($userAgent)) return false;
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) return false;
         
         // IE 11 signature
-        $has_trident_rv = (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Trident') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'rv:'));
+        $has_trident_rv = (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Trident') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'rv:'));
         // IE < 11 signature
-        $has_msie = WURFL_Handlers_Utils::checkIfContains($userAgent, 'MSIE');
+        $has_msie = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'MSIE');
         return ($has_msie || $has_trident_rv);
     }
     
@@ -73,17 +75,17 @@ class WURFL_Handlers_MSIEHandler extends WURFL_Handlers_Handler {
             }
         }
         
-        return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::indexOfOrLength($userAgent, 'Trident'));
+        return $this->getDeviceIDFromRIS($userAgent, \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, 'Trident'));
     }
     
     public function applyRecoveryMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array(
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array(
             'SLCC1',
             'Media Center PC',
             '.NET CLR',
             'OfficeLiveConnector',
-        ))) return WURFL_Constants::GENERIC_WEB_BROWSER;
+        ))) return \Wurfl\Constants::GENERIC_WEB_BROWSER;
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 }

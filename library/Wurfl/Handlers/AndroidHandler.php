@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
+class AndroidHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "ANDROID";
     
@@ -65,21 +67,21 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android');
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Android');
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Froyo')){
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Froyo')){
             return 'generic_android_ver2_2';
         }
         $android_version = self::getAndroidVersion($userAgent);
@@ -88,8 +90,8 @@ class WURFL_Handlers_AndroidHandler extends WURFL_Handlers_Handler {
         if ($deviceID == 'generic_android_ver2_0') $deviceID = 'generic_android_ver2';
         if ($deviceID == 'generic_android_ver4_0') $deviceID = 'generic_android_ver4';
         if (($android_version < 3.0 || $android_version >= 4.0)
-                && WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari')
-                && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mobile')) {
+                && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Safari')
+                && !\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Mobile')) {
             // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a "_tablet" ID)
             if (in_array($deviceID.'_tablet', self::$constantIDs)) {
                 return $deviceID.'_tablet';

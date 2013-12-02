@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_OperaMiniOnAndroidHandler extends WURFL_Handlers_Handler {
+class OperaMiniOnAndroidHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "OPERAMINIONANDROID";
     
@@ -38,13 +40,13 @@ class WURFL_Handlers_OperaMiniOnAndroidHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', 'Opera Mini'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContainsAll($userAgent, array('Android', 'Opera Mini'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, ' Build/')) {
-            return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::indexOfOrLength($userAgent, ' Build/'));
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, ' Build/')) {
+            return $this->getDeviceIDFromRIS($userAgent, \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, ' Build/'));
         }
         $prefixes = array(
             'Opera/9.80 (J2ME/MIDP; Opera Mini/5' => 'uabait_opera_mini_android_v50',
@@ -52,19 +54,19 @@ class WURFL_Handlers_OperaMiniOnAndroidHandler extends WURFL_Handlers_Handler {
             'Opera/9.80 (Android; Opera Mini/5.1' => 'uabait_opera_mini_android_v51',
         );
         foreach ($prefixes as $prefix => $defaultID) {
-            if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, $prefix)) {
+            if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, $prefix)) {
                 // If RIS returns a non-generic match, return it, else, return the default
                 $tolerance = strlen($prefix);
                 $deviceID = $this->getDeviceIDFromRIS($userAgent, $tolerance);
                 
-                if ($deviceID == WURFL_Constants::NO_MATCH) {
+                if ($deviceID == \Wurfl\Constants::NO_MATCH) {
                     return $defaultID;
                 }
                 return $deviceID;
             }
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent) {

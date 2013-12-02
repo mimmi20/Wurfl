@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler {
+class DoCoMoHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "DOCOMO";
     
@@ -37,15 +39,15 @@ class WURFL_Handlers_DoCoMoHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "DoCoMo");
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, "DoCoMo");
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, '/', 2);
+        $tolerance = \Wurfl\Handlers\Utils::ordinalIndexOf($userAgent, '/', 2);
         if ($tolerance === -1) {
             //  DoCoMo/2.0 F01A(c100;TB;W24H17)
-            $tolerance = WURFL_Handlers_Utils::indexOfOrLength('(', $userAgent);
+            $tolerance = \Wurfl\Handlers\Utils::indexOfOrLength('(', $userAgent);
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

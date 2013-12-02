@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Reloader;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,16 +29,16 @@ class WURFL_Reloader_DefaultWURFLReloader implements WURFL_Reloader_Interface {
     public function reload($wurflConfigurationPath) {
         $wurflConfig = $this->fromFile ( $wurflConfigurationPath );
         touch($wurflConfig->wurflFile);
-        $wurflManagerFactory = new WURFL_WURFLManagerFactory($wurflConfig);
+        $wurflManagerFactory = new \Wurfl\ManagerFactory($wurflConfig);
         $wurflManagerFactory->create();    
         
     }
     
     private function fromFile($wurflConfigurationPath) {
         if ($this->endsWith ( $wurflConfigurationPath, ".xml" )) {
-            return new WURFL_Configuration_XmlConfig ( $wurflConfigurationPath );
+            return new \Wurfl\Configuration\XmlConfig ( $wurflConfigurationPath );
         }
-        return new WURFL_Configuration_ArrayConfig($wurflConfigurationPath);
+        return new \Wurfl\Configuration\ArrayConfig($wurflConfigurationPath);
     }
     
     private function endsWith($haystack, $needle) {

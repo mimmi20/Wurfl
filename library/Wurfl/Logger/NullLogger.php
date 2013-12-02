@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Logger;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -19,16 +21,16 @@
  * Class that is used to supress logging
  * @package    WURFL_Logger
  */
-class WURFL_Logger_NullLogger implements WURFL_Logger_Interface  {
-    
+class NullLogger {
+
     public function log($message, $type="") {
         //echo $message . "\n";
     }
-    
+
     public function debug($message) {
-        //echo $message . "\n";        
+        //echo $message . "\n";
     }
-    
+
     public function info($message){}
 }
 

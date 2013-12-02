@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,12 +29,12 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_GrundigHandler extends WURFL_Handlers_Handler {
+class GrundigHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "GRUNDIG";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Grundig', 'GRUNDIG'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Grundig', 'GRUNDIG'));
     }
 }

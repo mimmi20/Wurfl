@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler {
+class NokiaHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "NOKIA";
     
@@ -38,19 +40,19 @@ class WURFL_Handlers_NokiaHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Nokia');
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Nokia');
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+        $tolerance = \Wurfl\Handlers\Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
     
     public function applyRecoveryMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Series60')) return 'nokia_generic_series60';
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Series80')) return 'nokia_generic_series80';
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'MeeGo')) return 'nokia_generic_meego';
-        return WURFL_Constants::NO_MATCH;
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Series60')) return 'nokia_generic_series60';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Series80')) return 'nokia_generic_series80';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'MeeGo')) return 'nokia_generic_meego';
+        return \Wurfl\Constants::NO_MATCH;
     }
 }

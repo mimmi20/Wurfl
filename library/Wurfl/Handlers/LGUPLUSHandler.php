@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -26,7 +28,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler {
+class LGUPLUSHandler extends \Wurfl\Handlers\AbstractHandler {
 
     protected $prefix = "LGUPLUS";
 
@@ -38,19 +40,19 @@ class WURFL_Handlers_LGUPLUSHandler extends WURFL_Handlers_Handler {
     );
 
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
     }
 
     public function applyConclusiveMatch($userAgent) {
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Windows NT 5', 'POLARIS'))) return 'generic_lguplus_rexos_facebook_browser';
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Windows NT 5')) return 'generic_lguplus_rexos_webviewer_browser';
-        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Windows CE', 'POLARIS'))) return 'generic_lguplus_winmo_facebook_browser';
-        if (WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', 'AppleWebKit'))) return 'generic_lguplus_android_webkit_browser';
-        return WURFL_Constants::NO_MATCH;
+        if (\Wurfl\Handlers\Utils::checkIfContainsAll($userAgent, array('Windows NT 5', 'POLARIS'))) return 'generic_lguplus_rexos_facebook_browser';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Windows NT 5')) return 'generic_lguplus_rexos_webviewer_browser';
+        if (\Wurfl\Handlers\Utils::checkIfContainsAll($userAgent, array('Windows CE', 'POLARIS'))) return 'generic_lguplus_winmo_facebook_browser';
+        if (\Wurfl\Handlers\Utils::checkIfContainsAll($userAgent, array('Android', 'AppleWebKit'))) return 'generic_lguplus_android_webkit_browser';
+        return \Wurfl\Constants::NO_MATCH;
     }
 }

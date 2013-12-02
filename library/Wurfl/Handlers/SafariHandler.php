@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -26,28 +28,28 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SafariHandler extends WURFL_Handlers_Handler {
+class SafariHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "SAFARI";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'Safari') 
-            && WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows'));
+        if (\Wurfl\Handlers\Utils::isMobileBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Safari') 
+            && \Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent){
-        if (WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Macintosh', 'Windows'))) return WURFL_Constants::GENERIC_WEB_BROWSER;
-        return WURFL_Constants::NO_MATCH;
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Macintosh', 'Windows'))) return \Wurfl\Constants::GENERIC_WEB_BROWSER;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public static function getSafariVersion($ua) {

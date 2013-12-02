@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Configuration;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -19,7 +21,7 @@
  * XML Configuration
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
+class XmlConfig extends \Wurfl\Configuration\Config {
 
     /**
      * Initialize XML Configuration
@@ -99,7 +101,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
                 return $this->matchMode;
             }
             if (!self::validMatchMode($mode)) {
-                throw new WURFL_WURFLException('Invalid Match Mode: '.$mode);
+                throw new \Wurfl\Exception('Invalid Match Mode: '.$mode);
             }
             $this->matchMode = $mode;
         }
@@ -143,7 +145,7 @@ class WURFL_Configuration_XmlConfig extends WURFL_Configuration_Config {
         foreach (explode(',', $params) as $param) {
             $paramNameValue = explode('=', $param);
             if(count($paramNameValue) > 1) {
-                if (strcmp(WURFL_Configuration_Config::DIR, $paramNameValue[0]) == 0) {
+                if (strcmp(\Wurfl\Configuration\Config::DIR, $paramNameValue[0]) == 0) {
                     $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
                 }
                 $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);                                

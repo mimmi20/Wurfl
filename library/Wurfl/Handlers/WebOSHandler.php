@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler {
+class WebOSHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "WEBOS";
     
@@ -37,22 +39,22 @@ class WURFL_Handlers_WebOSHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('webOS', 'hpwOS'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('webOS', 'hpwOS'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $delimiter_idx = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
+        $delimiter_idx = strpos($userAgent, \Wurfl\Constants::RIS_DELIMITER);
         if ($delimiter_idx !== false) {
-            $tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
+            $tolerance = $delimiter_idx + strlen(\Wurfl\Constants::RIS_DELIMITER);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent){
-        return WURFL_Handlers_Utils::checkIfContains($userAgent, 'hpwOS/3')? 'hp_tablet_webos_generic': 'hp_webos_generic';
+        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'hpwOS/3')? 'hp_tablet_webos_generic': 'hp_webos_generic';
     }
     
     public static function getWebOSModelVersion($ua) {

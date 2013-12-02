@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -26,17 +28,17 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_VodafoneHandler extends WURFL_Handlers_Handler {
+class VodafoneHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "VODAFONE";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Vodafone');
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Vodafone');
     }
 
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+        $tolerance = \Wurfl\Handlers\Utils::firstSlash($userAgent);
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

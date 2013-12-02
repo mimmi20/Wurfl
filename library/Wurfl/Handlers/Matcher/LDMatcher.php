@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers\Matcher;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -10,7 +12,7 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL_Handlers_Matcher
+ * @package    \Wurfl\Handlers\MatcherInterface
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
@@ -24,19 +26,19 @@
  * @link http://en.wikipedia.org/wiki/Levenshtein_distance
  * @link http://www.php.net/manual/en/function.levenshtein.php
  * @see match()
- * @package    WURFL_Handlers_Matcher
+ * @package    \Wurfl\Handlers\MatcherInterface
  */
-class WURFL_Handlers_Matcher_LDMatcher implements WURFL_Handlers_Matcher_Interface {
+class LDMatcher implements MatcherInterface {
     
     /**
-     * Instance of WURFL_Handlers_Matcher_LDMatcher
-     * @var WURFL_Handlers_Matcher_LDMatcher
+     * Instance of \Wurfl\Handlers\Matcher\LDMatcher
+     * @var \Wurfl\Handlers\Matcher\LDMatcher
      */
     private static $instance;
     
     /**
      * Returns an instance of the LDMatcher singleton
-     * @return WURFL_Handlers_LDMatcher
+     * @return \Wurfl\Handlers\LDMatcher
      */
     public static function INSTANCE() {
         if (self::$instance === null) {

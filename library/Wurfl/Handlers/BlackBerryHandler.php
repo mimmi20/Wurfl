@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -28,7 +30,7 @@
  * @version    $id$
  */
 
-class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
+class BlackBerryHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "BLACKBERRY";
     
@@ -54,28 +56,28 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
-            || WURFL_Handlers_Utils::checkIfContains($userAgent, '(BB10;'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
+            || \Wurfl\Handlers\Utils::checkIfContains($userAgent, '(BB10;'));
     }
         
     public function applyConclusiveMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'BB10')) {
-            $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, ')');
-        } else if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/4')) {
-            $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
-        } else if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5')) {
-            $tolerance = WURFL_Handlers_Utils::ordinalIndexOf($userAgent, ';', 3);
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'BB10')) {
+            $tolerance = \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, ')');
+        } else if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Mozilla/4')) {
+            $tolerance = \Wurfl\Handlers\Utils::secondSlash($userAgent);
+        } else if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Mozilla/5')) {
+            $tolerance = \Wurfl\Handlers\Utils::ordinalIndexOf($userAgent, ';', 3);
         } else {
-            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+            $tolerance = \Wurfl\Handlers\Utils::firstSlash($userAgent);
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
     
     public function applyRecoveryMatch($userAgent) {
         // BlackBerry 10
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'BB10')) {
-            if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Mobile')) {
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'BB10')) {
+            if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Mobile')) {
                 return 'blackberry_generic_ver10';
             } else {
                 return 'blackberry_generic_ver10_tablet';
@@ -88,6 +90,6 @@ class WURFL_Handlers_BlackBerryHandler extends WURFL_Handlers_Handler {
                 }
             }
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
 }

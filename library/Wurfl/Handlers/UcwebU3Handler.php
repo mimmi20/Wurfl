@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
+class UcwebU3Handler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "UCWEBU3";
     
@@ -56,24 +58,24 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'UCBrowser'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Mozilla') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'UCBrowser'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::toleranceToRisDelimeter($userAgent);
+        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
         
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent) {
         //Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android')) {
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Android')) {
             // Apply Version+Model--- matching normalization
-            $version = WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent, false);
+            $version = \Wurfl\Handlers\AndroidHandler::getAndroidVersion($userAgent, false);
             $significant_version = explode('.', $version);
             if ($significant_version[0] !== null) {
                 $deviceID = 'generic_ucweb_android_ver'.$significant_version[0];
@@ -86,7 +88,7 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
         }
 
         //iPhone U3K
-        else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPhone;')) {
+        else if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'iPhone;')) {
             if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
                 $significant_version = $matches[1];
                 $deviceID = 'apple_iphone_ver'.$significant_version.'_subuaucweb';
@@ -100,7 +102,7 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
 
 
         //iPad U3K
-        else if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad')) {
+        else if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'iPad')) {
                 
             if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
                 $significant_version = $matches[1];
@@ -128,12 +130,12 @@ class WURFL_Handlers_UcwebU3Handler extends WURFL_Handlers_Handler {
     public static function getUcAndroidVersion($ua, $use_default=true) {
         if (preg_match('/; Adr (\d+\.\d+)\.?/', $ua, $matches)) {
             $u2k_an_version = $matches[1];
-            if (in_array($u2k_an_version, WURFL_Handlers_AndroidHandler::$validAndroidVersions)) {
+            if (in_array($u2k_an_version, \Wurfl\Handlers\AndroidHandler::$validAndroidVersions)) {
                 return $u2k_an_version;
             }
     
         }
-        return $use_default? WURFL_Handlers_AndroidHandler::ANDROID_DEFAULT_VERSION: null;
+        return $use_default? \Wurfl\Handlers\AndroidHandler::ANDROID_DEFAULT_VERSION: null;
     }
     
     //Slightly modified from Android's get model function

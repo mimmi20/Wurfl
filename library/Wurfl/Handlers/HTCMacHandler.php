@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_HTCMacHandler extends WURFL_Handlers_Handler {
+class HTCMacHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "HTCMAC";    
     
@@ -36,16 +38,16 @@ class WURFL_Handlers_HTCMacHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'HTC');
+        return \Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'HTC');
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $delimiter_idx = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
+        $delimiter_idx = strpos($userAgent, \Wurfl\Constants::RIS_DELIMITER);
         if ($delimiter_idx !== false) {
-            $tolerance = $delimiter_idx + strlen(WURFL_Constants::RIS_DELIMITER);
+            $tolerance = $delimiter_idx + strlen(\Wurfl\Constants::RIS_DELIMITER);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent) {

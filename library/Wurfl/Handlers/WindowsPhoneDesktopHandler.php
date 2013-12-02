@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_WindowsPhoneDesktopHandler extends WURFL_Handlers_Handler {
+class WindowsPhoneDesktopHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "WINDOWSPHONEDESKTOP";
     
@@ -38,17 +40,17 @@ class WURFL_Handlers_WindowsPhoneDesktopHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'));
+        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'));
     }
     
     public function applyConclusiveMatch($userAgent) {
         // Exact and Recovery match only
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent){
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'WPDesktop')) return 'generic_ms_phone_os8_desktopmode';
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Trident/5.0')) return 'generic_ms_phone_os7_5_desktopmode';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'WPDesktop')) return 'generic_ms_phone_os8_desktopmode';
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Trident/5.0')) return 'generic_ms_phone_os7_5_desktopmode';
         return 'generic_ms_phone_os7_desktopmode';
     }
 }

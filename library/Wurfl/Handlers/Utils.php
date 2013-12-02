@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,7 +22,7 @@
  * WURFL user agent hander utilities
  * @package    WURFL
  */
-class WURFL_Handlers_Utils {
+class Utils {
     
     /**
      * The worst allowed match tolerance
@@ -162,11 +164,11 @@ class WURFL_Handlers_Utils {
         'Windows CE' => 'generic_ms_mobile',
 
         // Generic XHTML
-        'Obigo' => WURFL_Constants::GENERIC_XHTML,
-           'AU-MIC/2' => WURFL_Constants::GENERIC_XHTML,
-        'AU-MIC-' =>  WURFL_Constants::GENERIC_XHTML,
-        'AU-OBIGO/' =>  WURFL_Constants::GENERIC_XHTML,
-        'Teleca Q03B1' =>  WURFL_Constants::GENERIC_XHTML,
+        'Obigo' => \Wurfl\Constants::GENERIC_XHTML,
+           'AU-MIC/2' => \Wurfl\Constants::GENERIC_XHTML,
+        'AU-MIC-' =>  \Wurfl\Constants::GENERIC_XHTML,
+        'AU-OBIGO/' =>  \Wurfl\Constants::GENERIC_XHTML,
+        'Teleca Q03B1' =>  \Wurfl\Constants::GENERIC_XHTML,
 
         // Opera Mini
         'Opera Mini/1' => 'generic_opera_mini_version1',
@@ -181,27 +183,27 @@ class WURFL_Handlers_Utils {
     );
     
     /** 
-     * Alias of WURFL_Handlers_Matcher_RISMatcher::match()
+     * Alias of \Wurfl\Handlers\Matcher\RISMatcher::match()
      * @param array $collection
      * @param string $needle
      * @param int $tolerance
      * @return string Matched user agent
-     * @see WURFL_Handlers_Matcher_RISMatcher::match()
+     * @see \Wurfl\Handlers\Matcher\RISMatcher::match()
      */
     public static function risMatch($collection, $needle, $tolerance) {
-        return WURFL_Handlers_Matcher_RISMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+        return \Wurfl\Handlers\Matcher\RISMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
     }
     
     /**
-     * Alias of WURFL_Handlers_Matcher_LDMatcher::match()
+     * Alias of \Wurfl\Handlers\Matcher\LDMatcher::match()
      * @param array $collection
      * @param string $needle
      * @param int $tolerance
      * @return string Matched user agent
-     * @see WURFL_Handlers_Matcher_LDMatcher::match()
+     * @see \Wurfl\Handlers\Matcher\LDMatcher::match()
      */
     public static function ldMatch($collection, $needle, $tolerance = 7) {
-        return WURFL_Handlers_Matcher_LDMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
+        return \Wurfl\Handlers\Matcher\LDMatcher::INSTANCE ()->match ( $collection, $needle, $tolerance );
     }
     
     /**
@@ -316,7 +318,7 @@ class WURFL_Handlers_Utils {
                 return $deviceId;
             }
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     /**
@@ -326,21 +328,21 @@ class WURFL_Handlers_Utils {
      */
     public static function isDesktopBrowserHeavyDutyAnalysis($userAgent){
         // Check Smart TV keywords
-        if (WURFL_Handlers_Utils::isSmartTV($userAgent)) return false;
+        if (\Wurfl\Handlers\Utils::isSmartTV($userAgent)) return false;
         // Chrome
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Chrome') && !WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))) return true;
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Chrome') && !\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))) return true;
         // Check mobile keywords
-        if (WURFL_Handlers_Utils::isMobileBrowser($userAgent)) return false;
+        if (\Wurfl\Handlers\Utils::isMobileBrowser($userAgent)) return false;
 
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'PPC')) return false; // PowerPC; not always mobile, but we'll kick it out
-        // Firefox;  fennec is already handled in the WURFL_Constants::$MOBILE_BROWSERS keywords
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Firefox') && !WURFL_Handlers_Utils::checkIfContains($userAgent, 'Tablet')) return true;
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'PPC')) return false; // PowerPC; not always mobile, but we'll kick it out
+        // Firefox;  fennec is already handled in the \Wurfl\Constants::$MOBILE_BROWSERS keywords
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Firefox') && !\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Tablet')) return true;
         // Safari
         if (preg_match('#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ Safari/[\d\.]+$#', $userAgent)) return true;
         // Opera Desktop
-        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) return true;
+        if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) return true;
         // Check desktop keywords
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return true;
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return true;
         // Internet Explorer 9
         if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) return true;
         // Internet Explorer <9
@@ -397,16 +399,16 @@ class WURFL_Handlers_Utils {
      * @param string $haystack
      * @param string $needle
      * @param int $ordinal
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @return int Char index of occurance
      */
     public static function ordinalIndexOf($haystack, $needle, $ordinal) {
         if (is_null ( $haystack ) || empty ( $haystack )) {
-            throw new InvalidArgumentException ( "haystack must not be null or empty" );
+            throw new \InvalidArgumentException ( "haystack must not be null or empty" );
         }
         
         if (! is_integer ( $ordinal )) {
-            throw new InvalidArgumentException ( "ordinal must be a positive ineger" );
+            throw new \InvalidArgumentException ( "ordinal must be a positive ineger" );
         }
         
         $found = 0;
@@ -557,12 +559,12 @@ class WURFL_Handlers_Utils {
      * @return int|bool
      */
     public static function toleranceToRisDelimeter($userAgent) {
-        $tolerance = strpos($userAgent, WURFL_Constants::RIS_DELIMITER);
+        $tolerance = strpos($userAgent, \Wurfl\Constants::RIS_DELIMITER);
         if ($tolerance === false) {
             return false;
         }
         // Push the tolerance to the *end* of the RIS Delimiter
-        return $tolerance + strlen(WURFL_Constants::RIS_DELIMITER);
+        return $tolerance + strlen(\Wurfl\Constants::RIS_DELIMITER);
     }
     
     /**

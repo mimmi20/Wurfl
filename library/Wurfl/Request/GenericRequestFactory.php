@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Request;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,29 +22,29 @@
  * Creates a Generic WURFL Request from the raw HTTP Request
  * @package    WURFL_Request
  */
-class WURFL_Request_GenericRequestFactory {
+class GenericRequestFactory {
 
 
     /**
      * Creates Generic Request from the given HTTP Request (normally $_SERVER)
      * @param array $request HTTP Request
-     * @return WURFL_Request_GenericRequest
+     * @return \Wurfl\Request\GenericRequest
      */
     public function createRequest($request) {
-        $userAgent = WURFL_WURFLUtils::getUserAgent($request);
-        $userAgentProfile = WURFL_WURFLUtils::getUserAgentProfile($request);
-        $isXhtmlDevice = WURFL_WURFLUtils::isXhtmlRequester($request);
+        $userAgent = \Wurfl\Utils::getUserAgent($request);
+        $userAgentProfile = \Wurfl\Utils::getUserAgentProfile($request);
+        $isXhtmlDevice = \Wurfl\Utils::isXhtmlRequester($request);
 
-        return new WURFL_Request_GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
+        return new \Wurfl\Request\GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
     }
     
     /**
      * Create a Generic Request from the given $userAgent
      * @param string $userAgent
-     * @return WURFL_Request_GenericRequest
+     * @return \Wurfl\Request\GenericRequest
      */
     public function createRequestForUserAgent($userAgent) {
-        return new WURFL_Request_GenericRequest($userAgent, null, false);
+        return new \Wurfl\Request\GenericRequest($userAgent, null, false);
     }
 
     

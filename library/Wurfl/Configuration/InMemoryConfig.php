@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Configuration;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,7 +22,7 @@
  * In-memory WURFL Configuration
  * @package    WURFL_Configuration
  */
-class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
+class InMemoryConfig extends  \Wurfl\Configuration\Config {
 
     /**
      * Instantiate an In-Memory Configuration
@@ -29,7 +31,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
     
     /**
      * @param string $wurflFile
-     * @return WURFL_Configuration_InMemoryConfig $this
+     * @return \Wurfl\Configuration\InMemoryConfig $this
      */
     public function wurflFile($wurflFile) {
         $this->wurflFile = $wurflFile;
@@ -38,7 +40,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
     
     /**
      * @param string $wurflPatch
-     * @return WURFL_Configuration_InMemoryConfig $this
+     * @return \Wurfl\Configuration\InMemoryConfig $this
      */
     public function wurflPatch($wurflPatch) {
         $this->wurflPatches[] = $wurflPatch;
@@ -47,7 +49,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
     
     /**
      * @param array $capabilityFilter
-     * @return WURFL_Configuration_InMemoryConfig $this
+     * @return \Wurfl\Configuration\InMemoryConfig $this
      */
     public function capabilityFilter(array $capabilityFilter) {
         $this->capabilityFilter = $capabilityFilter;
@@ -58,7 +60,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
      * Set persistence provider
      * @param string $provider
      * @param array $params
-     * @return WURFL_Configuration_InMemoryConfig $this
+     * @return \Wurfl\Configuration\InMemoryConfig $this
      */
     public function persistence($provider, $params = array()) {
         $this->persistence = array_merge(array("provider"=> $provider), array("params" => $params));
@@ -68,7 +70,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
      * Set Cache provider
      * @param string $provider
      * @param array $params
-     * @return WURFL_Configuration_InMemoryConfig $this
+     * @return \Wurfl\Configuration\InMemoryConfig $this
      */
     public function cache($provider, $params = array()) {
         $this->cache = array_merge(array("provider"=> $provider), array("params" => $params));
@@ -77,7 +79,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
     /**
      * Set logging directory
      * @param string $dir
-     * @return WURFL_Configuration_InMemoryConfig $this
+     * @return \Wurfl\Configuration\InMemoryConfig $this
      */
     public function logDir($dir) {
         $this->logDir = $dir;
@@ -86,7 +88,7 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
     /**
      * Specifies whether reloading is allowed
      * @param bool $reload
-     * @return WURFL_Configuration_InMemoryConfig $this
+     * @return \Wurfl\Configuration\InMemoryConfig $this
      */
     public function allowReload($reload=true) {
         $this->allowReload = $reload;
@@ -96,11 +98,11 @@ class WURFL_Configuration_InMemoryConfig extends  WURFL_Configuration_Config {
     /**
      * Sets the API match mode
      * @param string $mode
-     * @return WURFL_Configuration_InMemoryConfig
+     * @return \Wurfl\Configuration\InMemoryConfig
      */
     public function matchMode($mode) {
         if (!self::validMatchMode($mode)) {
-            throw new WURFL_WURFLException('Invalid Match Mode: '.$mode);
+            throw new \Wurfl\Exception('Invalid Match Mode: '.$mode);
         }
         $this->matchMode = $mode;
         return $this;

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Storage;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,8 +22,8 @@
  * WURFL Storage factory
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Factory {
-    
+class Factory {
+
     /**
      * @var array Default configuration
      */
@@ -29,11 +31,11 @@ class WURFL_Storage_Factory {
         "provider" => "memory",
         "params" => array()
     );
-    
+
     /**
      * Create a configuration based on the default configuration with the differences from $configuration
      * @param array $configuration
-     * @return WURFL_Storage_Base Storage object, initialized with the given $configuration
+     * @return \Wurfl\Storage\StorageInterface Storage object, initialized with the given $configuration
      */
     public static function create($configuration) {
         $currentConfiguration = is_array($configuration) ?
@@ -42,7 +44,7 @@ class WURFL_Storage_Factory {
         $class = self::className($currentConfiguration);
         return new $class($currentConfiguration["params"]);
     }
-    
+
     /**
      * Return the Storage Provider Class name from the given $configuration by using its 'provider' element
      * @param array $configuration
@@ -50,6 +52,6 @@ class WURFL_Storage_Factory {
      */
     private static function className($configuration) {
         $provider = $configuration["provider"];
-        return "WURFL_Storage_" . ucfirst($provider);
+        return "\\Wurfl\\Storage\\" . ucfirst($provider);
     }
 }

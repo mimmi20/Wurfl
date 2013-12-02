@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,17 +29,17 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_LGHandler extends WURFL_Handlers_Handler {
+class LGHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "LG";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('lg', 'LG'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('lg', 'LG'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', stripos($userAgent, 'LG'));
+        $tolerance = \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, '/', stripos($userAgent, 'LG'));
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
     

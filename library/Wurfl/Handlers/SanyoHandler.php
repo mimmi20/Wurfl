@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,21 +29,21 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SanyoHandler extends WURFL_Handlers_Handler {
+class SanyoHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "SANYO";
 
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || WURFL_Handlers_Utils::checkIfContains($userAgent, 'MobilePhone');
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'MobilePhone');
     }
     
     public function applyConclusiveMatch($userAgent) {
         $idx = strpos($userAgent, 'MobilePhone');
         if ($idx !== false) {
-            $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', $idx);
+            $tolerance = \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, '/', $idx);
         } else {
-            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
+            $tolerance = \Wurfl\Handlers\Utils::firstSlash($userAgent);
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

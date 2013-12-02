@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,33 +29,33 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_SamsungHandler extends WURFL_Handlers_Handler {
+class SamsungHandler extends \Wurfl\Handlers\AbstractHandler {
 
     protected $prefix = "SAMSUNG";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG'))
-            || WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG'))
+            || \Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
     }
     
     public function applyConclusiveMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("SEC-", "SAMSUNG-", "SCH"))) {
-            $tolerance = WURFL_Handlers_Utils::firstSlash($userAgent);
-        } else if (WURFL_Handlers_Utils::checkIfStartsWithAnyOf($userAgent, array("Samsung", "SPH", "SGH"))) {
-            $tolerance = WURFL_Handlers_Utils::firstSpace($userAgent);
+        if (\Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array("SEC-", "SAMSUNG-", "SCH"))) {
+            $tolerance = \Wurfl\Handlers\Utils::firstSlash($userAgent);
+        } else if (\Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array("Samsung", "SPH", "SGH"))) {
+            $tolerance = \Wurfl\Handlers\Utils::firstSpace($userAgent);
         } else {
-            $tolerance = WURFL_Handlers_Utils::secondSlash($userAgent);
+            $tolerance = \Wurfl\Handlers\Utils::secondSlash($userAgent);
         }
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
     
     public function applyRecoveryMatch($userAgent) {
-        if (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, 'SAMSUNG')) {
+        if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'SAMSUNG')) {
             $tolerance = 8;
             return $this->getDeviceIDFromLD($userAgent, $tolerance);
         } else {
-            $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
+            $tolerance = \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
     }

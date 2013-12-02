@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -19,29 +21,29 @@
  * Provides methods for accessing a repository of WURFL Devices
  * @package    WURFL
  */
-interface WURFL_DeviceRepository {
-    
+interface DeviceRepository {
+
     /**
-     * Return a WURFL_Xml_Info object containing: 
+     * Return a \Wurfl\Xml\Info object containing:
      *  - version
      *  - lastUpdated
      *  - officialURL
-     *  @return WURFL_Xml_Info WURFL Version info
+     *  @return \Wurfl\Xml\Info WURFL Version info
      */
     public function getWURFLInfo();
-    
+
     /**
      * Returns loaded WURFL version
      * @return string Loaded WURFL version
      */
     public function getVersion();
-    
+
     /**
      * Returns loaded WURFL last updated date
      * @return string Loaded WURFL last updated date
      */
     public function getLastUpdated();
-    
+
     /**
      * Returns a device for the given $deviceId
      *
@@ -50,21 +52,21 @@ interface WURFL_DeviceRepository {
      * @throws WURFL_Exception if $deviceID is not defined in device repository
      */
     public function getDevice($deviceId);
-    
+
     /**
      * Return an array of all devices defined in the wurfl + patch files
      * @return array
      */
     public function getAllDevices();
-    
+
     /**
      * Returns an array of all the device ids
      *
      * @return array
      */
     public function getAllDevicesID();
-    
-    
+
+
     /**
      * Returns the Capability value for the given device id
      * and capablility name
@@ -74,18 +76,18 @@ interface WURFL_DeviceRepository {
      * @return string
      */
     public function getCapabilityForDevice($deviceId, $capabilityName);
-    
-    
+
+
     /**
-     * Returns an associative array of capabilityName => capabilityValue 
-     * for the given device 
-     * 
+     * Returns an associative array of capabilityName => capabilityValue
+     * for the given device
+     *
      *
      * @param string $deviceId
      * @return array associative array of capabilityName, capabilityValue
      */
     public function getAllCapabilitiesForDevice($deviceId);
-    
+
     /**
      * Returns an array containing all devices from the root
      * device to the device of the given id
@@ -94,15 +96,15 @@ interface WURFL_DeviceRepository {
      * @return array
      */
     public function getDeviceHierarchy($deviceId);
-    
-    
+
+
     /**
      * Returns an array of the group IDs defined in wurfl
      *
      * @return array
      */
     public function getListOfGroups();
-    
+
     /**
      * Returns an array of all capability names defined in the given group ID
      *
@@ -110,7 +112,7 @@ interface WURFL_DeviceRepository {
      * @return array of capability names
      */
     public function getCapabilitiesNameForGroup($groupID);
-    
+
     /**
      * Returns the group id in which the given capabiliy name belongs to
      *
@@ -118,6 +120,5 @@ interface WURFL_DeviceRepository {
      * @return string Group ID
      */
     public function getGroupIDForCapability($capability);
-
 }
 

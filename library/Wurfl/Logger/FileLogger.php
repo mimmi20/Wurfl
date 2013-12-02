@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Logger;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -17,10 +19,11 @@
  */
 /**
  * WURFL File Logger
- * 
+ *
  * @package    WURFL_Logger
  */
-class WURFL_Logger_FileLogger implements WURFL_Logger_Interface  {
+class FileLogger
+{
 
     /**
      * @var string DEBUG Log level
@@ -30,43 +33,43 @@ class WURFL_Logger_FileLogger implements WURFL_Logger_Interface  {
      * @var string INFO Log level
      */
     const INFO = "INFO";
-    
+
     /**
      * @var int File pointer
      */
     private $fp;
-    
+
     /**
      * Creates a new FileLogger object
      * @param string $fileName
-     * @throws InvalidArgumentException Log file specified is not writable
-     * @throws WURFL_WURFLException Unable to open log file
+     * @throws \InvalidArgumentException Log file specified is not writable
+     * @throws \Wurfl\Exception Unable to open log file
      */
     public function __construct($fileName) {
         if(!is_writable($fileName)) {
-            throw new InvalidArgumentException("Log file specified is not writable");
+            throw new \InvalidArgumentException("Log file specified is not writable");
         }
         $this->fp = @fopen($fileName, "a");
         if(!$this->fp){
-            throw new WURFL_WURFLException("Unable to open log file: ");
+            throw new Exception("Unable to open log file: ");
         }
     }
-    
+
     public function log($message, $type="") {
         $time = date("F jS Y, h:iA");
         $fullMessage = "[$time] [$type] $message";
         fwrite($this->fp, $fullMessage."\n");
     }
-    
+
     public function info($message) {
         $this->log($message, self::INFO);
     }
-    
-    
+
+
     public function debug($message) {
         $this->log($message, self::DEBUG);
     }
-    
+
     /**
      * Close open files
      */

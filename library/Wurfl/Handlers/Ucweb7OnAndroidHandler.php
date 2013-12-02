@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_Ucweb7OnAndroidHandler extends WURFL_Handlers_Handler {
+class Ucweb7OnAndroidHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "UCWEB7ONANDROID";
     
@@ -40,14 +42,14 @@ class WURFL_Handlers_Ucweb7OnAndroidHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Android', 'UCWEB7'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContainsAll($userAgent, array('Android', 'UCWEB7'));
     }
     
     public function applyConclusiveMatch($userAgent) {
         // The tolerance is after UCWEB7, not before
         $find = 'UCWEB7';
-        $tolerance = WURFL_Handlers_Utils::indexOfOrLength($userAgent, $find) + strlen($find);
+        $tolerance = \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, $find) + strlen($find);
         if ($tolerance > strlen($userAgent)) {
             $tolerance = strlen($userAgent);
         }
@@ -55,7 +57,7 @@ class WURFL_Handlers_Ucweb7OnAndroidHandler extends WURFL_Handlers_Handler {
     }
     
     public function applyRecoveryMatch($userAgent) {
-        $android_version_string = str_replace('.', '_', WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent));
+        $android_version_string = str_replace('.', '_', \Wurfl\Handlers\AndroidHandler::getAndroidVersion($userAgent));
         $deviceID = 'generic_android_ver'.$android_version_string.'_ucweb';
         if (in_array($deviceID, self::$constantIDs)) {
             return $deviceID;

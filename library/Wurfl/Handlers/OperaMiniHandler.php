@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -26,7 +28,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
+class OperaMiniHandler extends \Wurfl\Handlers\AbstractHandler {
 
     protected $prefix = "OPERA_MINI";
     
@@ -41,8 +43,8 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
     );
 
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return WURFL_Handlers_Utils::checkIfContainsAnyOf($userAgent, array('Opera Mini', 'Opera Mobi'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Opera Mini', 'Opera Mobi'));
     }
     
     public function applyConclusiveMatch($userAgent) {
@@ -55,16 +57,16 @@ class WURFL_Handlers_OperaMiniHandler extends WURFL_Handlers_Handler {
                 return $this->getDeviceIDFromRIS($userAgent, $tolerance + 1);
             }
         }
-        return $this->getDeviceIDFromRIS($userAgent, WURFL_Handlers_Utils::firstSlash($userAgent));
+        return $this->getDeviceIDFromRIS($userAgent, \Wurfl\Handlers\Utils::firstSlash($userAgent));
     }
     
     public function applyRecoveryMatch($userAgent) {
         foreach (self::$constantIDs as $keyword => $device_id) {
-            if (WURFL_Handlers_Utils::checkIfContains($userAgent, $keyword)) {
+            if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, $keyword)) {
                 return $device_id;
             }
         }
-        if (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Opera Mobi')) {
+        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera Mobi')) {
             return 'generic_opera_mini_version4';
         }
         return 'generic_opera_mini_version1';

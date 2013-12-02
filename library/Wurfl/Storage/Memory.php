@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Storage;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -20,12 +22,12 @@
  * WURFL Storage
  * @package    WURFL_Storage
  */
-class WURFL_Storage_Memory extends WURFL_Storage_Base {
+class Memory extends Base {
 
     const IN_MEMORY = "memory";
 
     protected $persistenceIdentifier = "MEMORY_PERSISTENCE_PROVIDER";
-    
+
     private $map;
 
     public function __construct($params=array()) {
@@ -55,7 +57,7 @@ class WURFL_Storage_Memory extends WURFL_Storage_Base {
     }
 
     private $tree_template = array('0'=>array(),'1'=>array(),'2'=>array(),'3'=>array(),'4'=>array(),'5'=>array(),'6'=>array(),'7'=>array(),'8'=>array(),'9'=>array(),'a'=>array(),'b'=>array(),'c'=>array(),'d'=>array(),'e'=>array(),'f'=>array());
-    
+
     /**
      * Removes all entry from the Persistence Provier
      */

@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_NetFrontOnAndroidHandler extends WURFL_Handlers_Handler {
+class NetFrontOnAndroidHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "NETFRONTONANDROID";
     
@@ -39,8 +41,8 @@ class WURFL_Handlers_NetFrontOnAndroidHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfContains($userAgent, 'Android') && WURFL_Handlers_Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser/2.2'));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Android') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'NetFrontLifeBrowser/2.2'));
     }
     
     public function applyConclusiveMatch($userAgent) {
@@ -53,7 +55,7 @@ class WURFL_Handlers_NetFrontOnAndroidHandler extends WURFL_Handlers_Handler {
     }
     
     public function applyRecoveryMatch($userAgent) {
-        $android_version_string = str_replace('.', '_', WURFL_Handlers_AndroidHandler::getAndroidVersion($userAgent));
+        $android_version_string = str_replace('.', '_', \Wurfl\Handlers\AndroidHandler::getAndroidVersion($userAgent));
         $deviceID = 'generic_android_ver'.$android_version_string.'_netfrontlifebrowser';
         if (in_array($deviceID, self::$constantIDs)) {
             return $deviceID;

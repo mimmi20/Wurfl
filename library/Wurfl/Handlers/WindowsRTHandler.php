@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,7 +29,7 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_WindowsRTHandler extends WURFL_Handlers_Handler {
+class WindowsRTHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "WINDOWSRT";
     
@@ -36,7 +38,7 @@ class WURFL_Handlers_WindowsRTHandler extends WURFL_Handlers_Handler {
     );
     
     public function canHandle($userAgent) {
-        return WURFL_Handlers_Utils::checkIfContainsAll($userAgent, array('Windows NT 6.2', ' ARM;'));
+        return \Wurfl\Handlers\Utils::checkIfContainsAll($userAgent, array('Windows NT 6.2', ' ARM;'));
     }
     
     public function applyConclusiveMatch($userAgent) {
@@ -46,7 +48,7 @@ class WURFL_Handlers_WindowsRTHandler extends WURFL_Handlers_Handler {
             // Match to the end of the search string
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
         }
-        return WURFL_Constants::NO_MATCH;
+        return \Wurfl\Constants::NO_MATCH;
     }
     
     public function applyRecoveryMatch($userAgent){

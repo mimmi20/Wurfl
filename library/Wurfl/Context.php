@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -19,38 +21,38 @@
  * WURFL Context stores the persistence provider, cache provider and logger objects
  * @package    WURFL
  * 
- * @property-read WURFL_Storage_Base $persistenceProvider
- * @property-read WURFL_Storage_Base $cacheProvider
- * @property-read WURFL_Logger_Interface $logger
+ * @property-read \Wurfl\Storage\StorageInterface $persistenceProvider
+ * @property-read \Wurfl\Storage\StorageInterface $cacheProvider
+ * @property-read \Wurfl\Logger\LoggerInterface $logger
  */
-class WURFL_Context {
+class Context {
     
     /**
-     * @var WURFL_Storage_Base
+     * @var \Wurfl\Storage\StorageInterface
      */
     private $_persistenceProvider;
     /**
-     * @var WURFL_Storage_Base
+     * @var \Wurfl\Storage\StorageInterface
      */
     private $_cacheProvider;
     /**
-     * @var WURFL_Logger_Interface
+     * @var \Wurfl\Logger\LoggerInterface
      */
     private $_logger;
     
-    public function __construct($persistenceProvider, $cacheProvider = null, $logger = null) {
+    public function __construct(\Wurfl\Storage\StorageInterface $persistenceProvider, \Wurfl\Storage\StorageInterface $cacheProvider = null, \Wurfl\Logger\LoggerInterface $logger = null) {
         $this->_persistenceProvider = $persistenceProvider;
-        $this->_cacheProvider = is_null($cacheProvider)? new WURFL_Storage_Null(): $cacheProvider;
-        $this->_logger = is_null($logger)? new WURFL_Logger_NullLogger(): $logger;
+        $this->_cacheProvider = is_null($cacheProvider)? new \Wurfl\Storage\NullStorage(): $cacheProvider;
+        $this->_logger = is_null($logger)? new \Wurfl\Logger\NullLogger(): $logger;
     }
     
     public function cacheProvider($cacheProvider) {
-        $this->_cacheProvider = is_null($cacheProvider)? new WURFL_Storage_Null(): $cacheProvider;
+        $this->_cacheProvider = is_null($cacheProvider)? new \Wurfl\Storage\NullStorage(): $cacheProvider;
         return $this;
     }
     
     public function logger($logger) {
-        $this->_logger = is_null($logger)? new WURFL_Logger_NullLogger(): $logger;
+        $this->_logger = is_null($logger)? new \Wurfl\Logger\NullLogger(): $logger;
         return $this;
     }
     

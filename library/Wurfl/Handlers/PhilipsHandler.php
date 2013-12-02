@@ -1,4 +1,6 @@
 <?php
+namespace Wurfl\Handlers;
+
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -27,12 +29,12 @@
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WURFL_Handlers_PhilipsHandler extends WURFL_Handlers_Handler {
+class PhilipsHandler extends \Wurfl\Handlers\AbstractHandler {
     
     protected $prefix = "PHILIPS";
     
     public function canHandle($userAgent) {
-        if (WURFL_Handlers_Utils::isDesktopBrowser($userAgent)) return false;
-        return (WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "Philips") || WURFL_Handlers_Utils::checkIfStartsWith($userAgent, "PHILIPS"));
+        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
+        return (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, "Philips") || \Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, "PHILIPS"));
     }
 }
