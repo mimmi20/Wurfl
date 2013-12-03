@@ -71,7 +71,7 @@ abstract class Config {
     /**
      * @var array Array of WURFL patches
      */
-    protected $wurflPatches;
+    protected $wurflPatches = array();
     /**
      * @var array Array of capabilities to be loaded
      */
