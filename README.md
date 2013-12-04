@@ -3,6 +3,9 @@ Wurfl
 
 an clone of the official Wurfl PHP library updated for PHP 5.3
 
+[![Build Status](https://secure.travis-ci.org/mimmi20/wurfl.png?branch=master)](http://travis-ci.org/mimmi20/wurfl)
+[![Dependency Status](http://depending.in/mimmi20/Wurfl.png)](http://depending.in/mimmi20/Wurfl)
+
 Submitting bugs and feature requests
 ------------------------------------
 
@@ -14,7 +17,6 @@ Important changes
 These changes are made:
 - added Wurfl namespace, removed the part "WURFL" from the filenames
 - merged the \Wurfl\Service and \Wurfl\ManagerFactory into \Wurl\Manager
-- replaced the \Wurfl\UserAgentHandlerChain with \SplDoublyLinkedList
 
 # the official WURFL PHP API #
 ==============================
