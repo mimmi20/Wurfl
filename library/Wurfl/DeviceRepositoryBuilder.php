@@ -15,8 +15,6 @@ namespace Wurfl;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
-use Wurfl\Storage\StorageInterface;
-
 /**
  * Builds a \Wurfl\DeviceRepository
  *
@@ -25,12 +23,12 @@ use Wurfl\Storage\StorageInterface;
 class DeviceRepositoryBuilder
 {
     /**
-     * @var StorageInterface
+     * @var Storage\Base
      */
     private $persistenceProvider;
 
     /**
-     * @var \SplDoublyLinkedList
+     * @var UserAgentHandlerChain
      */
     private $userAgentHandlerChain;
 
@@ -40,13 +38,6 @@ class DeviceRepositoryBuilder
     private $devicePatcher;
 
     /**
-     * Filename of lockfile to prevent concurrent DeviceRepository builds
-     *
-     * @var string
-     */
-    private $lockFile;
-
-    /**
      * Determines the fopen() mode that is used on the lockfile
      *
      * @var string
@@ -54,13 +45,13 @@ class DeviceRepositoryBuilder
     private $lockStyle = 'r';
 
     /**
-     * @param StorageInterface          $persistenceProvider
-     * @param \SplDoublyLinkedList  $userAgentHandlerChain
+     * @param Storage\Base          $persistenceProvider
+     * @param UserAgentHandlerChain $userAgentHandlerChain
      * @param Xml\DevicePatcher     $devicePatcher
      */
     public function __construct(
-        StorageInterface $persistenceProvider,
-        \SplDoublyLinkedList  $userAgentHandlerChain,
+        Storage\Base $persistenceProvider,
+        UserAgentHandlerChain $userAgentHandlerChain,
         Xml\DevicePatcher $devicePatcher)
     {
         $this->persistenceProvider   = $persistenceProvider;
@@ -82,25 +73,27 @@ class DeviceRepositoryBuilder
         // TODO: Create a better locking solution
         if (!$this->isRepositoryBuilt()) {
             // Determine Lockfile location
-            if (strpos(PHP_OS, 'SunOS') === false) {
-                $this->lockFile = __DIR__ . '/DeviceRepositoryBuilder.php';
-            } else {
+            $lockFile  = FileUtils::getTempDir() . '/wurfl.lock';
+            $lockStyle = 'r';
+
+            if (!file_exists($lockFile) || strpos(PHP_OS, 'SunOS') !== false) {
                 // Solaris can't handle exclusive file locks on files unless they are opened for RW
-                $this->lockStyle = 'w+';
-                $this->lockFile  = FileUtils::getTempDir() . '/wurfl.lock';
+                $lockStyle = 'w+';
             }
 
             // Update Data
-            $fp = fopen($this->lockFile, $this->lockStyle);
+            if ($fp = fopen($lockFile, $lockStyle)) {
+                if (flock($fp, LOCK_EX | LOCK_NB)) {
+                    $infoIterator   = new Xml\VersionIterator($wurflFile);
+                    $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilityFilter);
+                    $patchIterators = $this->toPatchIterators($wurflPatches, $capabilityFilter);
 
-            if (flock($fp, LOCK_EX | LOCK_NB)) {
-                $infoIterator   = new Xml\VersionIterator($wurflFile);
-                $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilityFilter);
-                $patchIterators = $this->toPatchIterators($wurflPatches, $capabilityFilter);
+                    $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
+                    $this->setRepositoryBuilt();
+                    flock($fp, LOCK_UN);
+                }
 
-                $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
-                $this->setRepositoryBuilt();
-                flock($fp, LOCK_UN);
+                fclose($fp);
             }
         }
         $deviceClassificationNames = $this->deviceClassificationNames();
@@ -196,15 +189,8 @@ class DeviceRepositoryBuilder
     private function deviceClassificationNames()
     {
         $deviceClusterNames = array();
-
-        $this->userAgentHandlerChain->rewind();
-
-        while ( $this->userAgentHandlerChain->valid() ) {
-            /** @var $userAgentHandler Handlers\Handler */
-            $userAgentHandler     = $this->userAgentHandlerChain->current();
+        foreach ($this->userAgentHandlerChain->getHandlers() as $userAgentHandler) {
             $deviceClusterNames[] = $userAgentHandler->getPrefix();
-
-            $this->userAgentHandlerChain->next();
         }
 
         return $deviceClusterNames;
@@ -278,35 +264,23 @@ class DeviceRepositoryBuilder
      *
      * @param Xml\ModelDevice $device
      *
-     * @see Storage\Base::save()
+     * @see WURFL_UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
      */
     private function classifyAndPersistDevice(Xml\ModelDevice $device)
     {
-        Handlers\Utils::reset();
-
-        $this->userAgentHandlerChain->rewind();
-
-        /** @var $userAgentHandler Handlers\Handler */
-        $userAgentHandler = $this->userAgentHandlerChain->current();
-        $userAgentHandler->filter($device->userAgent, $device->id);
+        $this->userAgentHandlerChain->filter($device->userAgent, $device->id);
 
         $this->persistenceProvider->save($device->id, $device);
     }
 
     /**
      * Save the User Agent Map in the UserAgentHandlerChain
+     *
+     * @see WURFL_UserAgentHandlerChain::persistData()
      */
     private function persistClassifiedDevicesUserAgentMap()
     {
-        $this->userAgentHandlerChain->rewind();
-
-        while ( $this->userAgentHandlerChain->valid() ) {
-            /** @var $userAgentHandler Handlers\Handler */
-            $userAgentHandler = $this->userAgentHandlerChain->current();
-            $userAgentHandler->persistData();
-
-            $this->userAgentHandlerChain->next();
-        }
+        $this->userAgentHandlerChain->persistData();
     }
 
     private function patchDevice(Xml\ModelDevice $device, Xml\ModelDevice $patchingDevice)

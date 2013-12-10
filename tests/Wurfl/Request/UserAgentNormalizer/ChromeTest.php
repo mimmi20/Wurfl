@@ -33,7 +33,8 @@ class WURFL_Request_UserAgentNormalizer_ChromeTest extends WURFL_Request_UserAge
         return array(
             array(
                 @"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13"
-            , "Chrome/0"
+            ,
+                "Chrome/0"
             ),
             array("Chrome/9.x", "Chrome/9"),
             array("Mozilla", "Mozilla"),

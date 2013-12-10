@@ -63,7 +63,7 @@ class WURFL_Storage_MemcacheTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $keys
+     * @param array    $keys
      * @param Memcache $storage
      */
     private function assertThanNoElementsAreInStorage(array $keys = array(), $storage)

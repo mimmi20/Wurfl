@@ -33,12 +33,12 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
             ->wurflPatch($resourcesDir . "/new_devices.xml");
 
         $params = array(
-            Config::DIR                                   => $cacheDir,
+            Config::DIR        => $cacheDir,
             Config::EXPIRATION => 0
         );
         $config->persistence('file', $params);
-        self::$persistenceStorage  = new Memory($params);
-        $wurflManager = new \Wurfl\Manager ();
+        self::$persistenceStorage = new Memory($params);
+        $wurflManager             = new \Wurfl\Manager ();
         $wurflManager
             ->setWurflConfig($config)
             ->setPersistenceStorage(self::$persistenceStorage)
@@ -80,7 +80,14 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
     public function testGetListOfGroups()
     {
         $actualGroups = array(
-            "product_info", "wml_ui", "chtml_ui", "xhtml_ui", "markup", "cache", "display", "image_format"
+            "product_info",
+            "wml_ui",
+            "chtml_ui",
+            "xhtml_ui",
+            "markup",
+            "cache",
+            "display",
+            "image_format"
         );
         $listOfGroups = self::$wurflManager->getListOfGroups();
         foreach ($actualGroups as $groupId) {
@@ -127,10 +134,16 @@ class WURFL_WURFLManagerTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                "chtml_ui", array(
-                "chtml_display_accesskey", "emoji", "chtml_can_display_images_and_text_on_same_line",
-                "chtml_displays_image_in_center", "imode_region", "chtml_make_phone_call_string", "chtml_table_support"
-            )
+                "chtml_ui",
+                array(
+                    "chtml_display_accesskey",
+                    "emoji",
+                    "chtml_can_display_images_and_text_on_same_line",
+                    "chtml_displays_image_in_center",
+                    "imode_region",
+                    "chtml_make_phone_call_string",
+                    "chtml_table_support"
+                )
             )
         );
     }

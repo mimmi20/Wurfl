@@ -56,7 +56,8 @@ class Wurfl_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
             array(
                  "namespace"  => "wurfl",
                  "expiration" => 86400
-            ), $cache ["params"]
+            ),
+            $cache ["params"]
         );
     }
 

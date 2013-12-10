@@ -1,30 +1,25 @@
 <?php
+use Wurfl\Request\GenericRequestFactory;
+
 /**
  * test case
  */
 class WURFLRequestFactoryTest extends PHPUnit_Framework_TestCase
 {
-    /** @var  \Wurfl\Request\GenericRequestFactory */
-    private $_genericRequestFactory;
-
     private $_testData = array();
 
     public function setUp()
     {
         $configurationFile = __DIR__ . DIRECTORY_SEPARATOR . '../resources/request.yml';
-
-        $userAgentNormalizer          = new \Wurfl\Request\UserAgentNormalizer ();
-        $this->_genericRequestFactory = new \Wurfl\Request\GenericRequestFactory($userAgentNormalizer);
-
-        $this->_testData = self::_loadData($configurationFile);
+        $this->_testData   = self::_loadData($configurationFile);
     }
 
     public function testCreateRequest()
     {
         foreach ($this->_testData as $testData) {
-            $request = $this->_genericRequestFactory->createRequest($testData ["_SERVER"]);
+            $request = GenericRequestFactory::createRequest($testData ['_SERVER']);
 
-            self::assertEquals($request->userAgent, $testData ["EXPECTED_USER_AGENT"]);
+            self::assertEquals($request->userAgent, $testData ['EXPECTED_USER_AGENT']);
         }
     }
 
@@ -39,12 +34,16 @@ class WURFLRequestFactoryTest extends PHPUnit_Framework_TestCase
                 if (strpos($line, '#') === false && strcmp($line, "\n") != 0) {
                     $values     = explode(':', trim($line));
                     $keys       = array(
-                        'HTTP_USER_AGENT', 'HTTP_X_DEVICE_USER_AGENT', 'HTTP_X_SKYFIRE_VERSION', 'HTTP_X_BLUECOAT_VIA',
+                        'HTTP_USER_AGENT',
+                        'HTTP_X_DEVICE_USER_AGENT',
+                        'HTTP_X_SKYFIRE_VERSION',
+                        'HTTP_X_BLUECOAT_VIA',
                         'EXPECTED_USER_AGENT'
                     );
                     $serverData = self::arrayCombine($keys, $values, $notNullCondition);
                     $testData[] = array(
-                        '_SERVER' => $serverData, 'EXPECTED_USER_AGENT' => $serverData['EXPECTED_USER_AGENT']
+                        '_SERVER'             => $serverData,
+                        'EXPECTED_USER_AGENT' => $serverData['EXPECTED_USER_AGENT']
                     );
                 }
             }

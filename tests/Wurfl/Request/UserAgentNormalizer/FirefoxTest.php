@@ -31,7 +31,8 @@ class WURFL_Request_UserAgentNormalizer_FirefoxTest extends WURFL_Request_UserAg
     {
         return array(
             array(
-                "Mozilla/5.0 (X11; U; Linux armv6l; en-US; rv:1.9a6pre) Gecko/20070810 Firefox/3.0a1", "Firefox/3.0a1"
+                "Mozilla/5.0 (X11; U; Linux armv6l; en-US; rv:1.9a6pre) Gecko/20070810 Firefox/3.0a1",
+                "Firefox/3.0a1"
             ),
             array("Firefox/3.x", "Firefox/3.x"),
             array("Mozilla", "Mozilla"),

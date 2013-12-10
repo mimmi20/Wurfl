@@ -1,89 +1,91 @@
 <?php
 namespace Wurfl\Handlers;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    \Wurfl\Handlers
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
-
 /**
- * MSIEAgentHandler
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Handlers
+ * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class MSIEHandler extends Handler
-{
 
+/**
+ * MSIEAgentHandler
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL_Handlers
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ * @version    $id$
+ */
+class MSIEHandler extends \Wurfl\Handlers\AbstractHandler {
+    
     protected $prefix = "MSIE";
-
+    
     public static $constantIDs = array(
-        'msie',
-        'msie_4',
-        'msie_5',
-        'msie_5_5',
-        'msie_6',
-        'msie_7',
-        'msie_8',
-        'msie_9',
+        0     => 'msie',
+        4     => 'msie_4',
+        5     => 'msie_5',
+        '5.5' => 'msie_5_5',
+        6     => 'msie_6',
+        7     => 'msie_7',
+        8     => 'msie_8',
+        9     => 'msie_9',
+        10    => 'msie_10',
+        11    => 'msie_11',
     );
-
-    public function canHandle($userAgent)
-    {
-        if (Utils::isMobileBrowser($userAgent)) {
-            return false;
-        }
-        if (Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
-            return false;
-        }
-
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla') && Utils::checkIfContains($userAgent, 'MSIE');
+    
+    public function canHandle($userAgent) {
+        if (\Wurfl\Handlers\Utils::isMobileBrowser($userAgent)) return false;
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) return false;
+        
+        // IE 11 signature
+        $has_trident_rv = (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Trident') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'rv:'));
+        // IE < 11 signature
+        $has_msie = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'MSIE');
+        return ($has_msie || $has_trident_rv);
     }
-
-    public function applyConclusiveMatch($userAgent)
-    {
+    
+    public function applyConclusiveMatch($userAgent) {
         $matches = array();
-        if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE (\d)\.(\d);/', $userAgent, $matches)) {
-            switch ($matches[1]) {
-                // cases are intentionally out of sequence for performance
-                case 7:
-                    return 'msie_7';
-                    break;
-                case 8:
-                    return 'msie_8';
-                    break;
-                case 9:
-                    return 'msie_9';
-                    break;
-                case 6:
-                    return 'msie_6';
-                    break;
-                case 4:
-                    return 'msie_4';
-                    break;
-                case 5:
-                    return ($matches[2] == 5) ? 'msie_5_5' : 'msie_5';
-                    break;
-                default:
-                    return 'msie';
-                    break;
+        if (preg_match('/^Mozilla\/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)/', $userAgent, $matches)
+                || preg_match('/^Mozilla\/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);/', $userAgent, $matches)) {
+            
+            $major = (int)$matches[1];
+            $minor = (int)$matches[2];
+                
+            // MSIE 5.5 is handled specifically
+            if ($major == 5 && $minor == 5) {
+                return 'msie_5_5';
+            }
+                
+            // Look for version in constant ID array
+            if (array_key_exists($major, self::$constantIDs)) {
+                return self::$constantIDs[$major];
             }
         }
-        $tolerance = Utils::firstSlash($userAgent);
-
-        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+        
+        return $this->getDeviceIDFromRIS($userAgent, \Wurfl\Handlers\Utils::indexOfOrLength($userAgent, 'Trident'));
+    }
+    
+    public function applyRecoveryMatch($userAgent) {
+        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array(
+            'SLCC1',
+            'Media Center PC',
+            '.NET CLR',
+            'OfficeLiveConnector',
+        ))) return \Wurfl\Constants::GENERIC_WEB_BROWSER;
+        
+        return \Wurfl\Constants::NO_MATCH;
     }
 }
