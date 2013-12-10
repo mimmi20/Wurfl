@@ -7,13 +7,8 @@
     "homepage": "https://github.com/mimmi20/Wurfl",
     "require": {
         "php": ">=5.3.3",
-<<<<<<< HEAD
         "psr/log": "~1.0",
         "mimmi20/wurflcache": "1.0.*"
-=======
-        "psr/log": "~1.0,
-        "mimmi20/wurflcache": "dev-master"
->>>>>>> b55a195aa82bb749db6d7691aa678f2b5872f758
     },
     "require-dev": {
         "phpunit/phpunit": "*",
