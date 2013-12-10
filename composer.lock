@@ -3,8 +3,55 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e558f7c002165e069c5fba614794a31e",
+    "hash": "9883df3ac8b082af927a84c900f8ed1a",
     "packages": [
+        {
+            "name": "mimmi20/wurflcache",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mimmi20/WurflCache.git",
+                "reference": "04991be58c7d6bd1fcfed3650899abb9375cc1d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mimmi20/WurflCache/zipball/04991be58c7d6bd1fcfed3650899abb9375cc1d2",
+                "reference": "04991be58c7d6bd1fcfed3650899abb9375cc1d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "desarrolla2/cache": "dev-master",
+                "doctrine/cache": "1.4.*@dev",
+                "ext-xdebug": "*",
+                "mikey179/vfsstream": "1.3.*@dev",
+                "phpunit/phpunit": "*",
+                "zendframework/zend-cache": "2.2.*",
+                "zetacomponents/cache": "dev-master"
+            },
+            "suggest": {
+                "zendframework/zend-cache": "to use other caches"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "WurflCache\\": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "the Cache Classes for the Wurfl PHP Library for PHP 5.3",
+            "homepage": "https://github.com/mimmi20/WurflCache",
+            "keywords": [
+                "Wurfl",
+                "cache"
+            ],
+            "time": "2013-12-10 19:26:05"
+        },
         {
             "name": "psr/log",
             "version": "1.0.0",
@@ -414,17 +461,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.3.6",
+            "version": "v2.4.0",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "6bb881b948368482e1abf1a75c08bcf88a1c5fc3"
+                "reference": "1ae235a1b9d3ad3d9f3860ff20acc072df95b7f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/6bb881b948368482e1abf1a75c08bcf88a1c5fc3",
-                "reference": "6bb881b948368482e1abf1a75c08bcf88a1c5fc3",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/1ae235a1b9d3ad3d9f3860ff20acc072df95b7f5",
+                "reference": "1ae235a1b9d3ad3d9f3860ff20acc072df95b7f5",
                 "shasum": ""
             },
             "require": {
@@ -433,7 +480,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -457,7 +504,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-09-22 18:04:39"
+            "time": "2013-11-26 16:40:27"
         },
         {
             "name": "zendframework/zend-cache",
