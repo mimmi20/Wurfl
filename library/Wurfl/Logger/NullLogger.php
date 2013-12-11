@@ -21,16 +21,20 @@ namespace Wurfl\Logger;
  * Class that is used to supress logging
  * @package    WURFL_Logger
  */
-class NullLogger {
-
-    public function log($message, $type="") {
-        //echo $message . "\n";
+class NullLogger extends AbstractLogger
+{
+    /**
+     * Logs with an arbitrary level.
+     *
+     * @param mixed  $level
+     * @param string $message
+     * @param array  $context
+     *
+     * @return null
+     */
+    public function log($level, $message, array $context = array())
+    {
+        // do nothing here
     }
-
-    public function debug($message) {
-        //echo $message . "\n";
-    }
-
-    public function info($message){}
 }
 

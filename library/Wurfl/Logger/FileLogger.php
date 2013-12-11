@@ -22,18 +22,8 @@ namespace Wurfl\Logger;
  *
  * @package    WURFL_Logger
  */
-class FileLogger
+class FileLogger extends AbstractLogger
 {
-
-    /**
-     * @var string DEBUG Log level
-     */
-    const DEBUG = "DEBUG";
-    /**
-     * @var string INFO Log level
-     */
-    const INFO = "INFO";
-
     /**
      * @var int File pointer
      */
@@ -45,7 +35,8 @@ class FileLogger
      * @throws \InvalidArgumentException Log file specified is not writable
      * @throws \Wurfl\Exception Unable to open log file
      */
-    public function __construct($fileName) {
+    public function __construct($fileName)
+    {
         if(!is_writable($fileName)) {
             throw new \InvalidArgumentException("Log file specified is not writable");
         }
@@ -55,25 +46,27 @@ class FileLogger
         }
     }
 
-    public function log($message, $type="") {
-        $time = date("F jS Y, h:iA");
-        $fullMessage = "[$time] [$type] $message";
-        fwrite($this->fp, $fullMessage."\n");
-    }
-
-    public function info($message) {
-        $this->log($message, self::INFO);
-    }
-
-
-    public function debug($message) {
-        $this->log($message, self::DEBUG);
-    }
-
     /**
      * Close open files
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         fclose($this->fp);
+    }
+    
+    /**
+     * Logs with an arbitrary level.
+     *
+     * @param mixed  $level
+     * @param string $message
+     * @param array  $context
+     *
+     * @return null
+     */
+    public function log($level, $message, array $context = array())
+    {
+        $time = date("F jS Y, h:iA");
+        $fullMessage = "[$time] [$type] $message";
+        fwrite($this->fp, $fullMessage."\n");
     }
 }

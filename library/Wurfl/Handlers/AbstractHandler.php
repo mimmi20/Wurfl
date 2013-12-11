@@ -57,11 +57,11 @@ abstract class AbstractHandler implements \Wurfl\Handlers\FilterInterface, \Wurf
     protected $persistenceProvider;
 
     /**
-     * @var \Wurfl\Logger\LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
     /**
-     * @var \Wurfl\Logger\LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $undetectedDeviceLogger;
 

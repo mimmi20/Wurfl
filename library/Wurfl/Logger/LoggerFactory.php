@@ -27,7 +27,7 @@ class LoggerFactory {
     /**
      * Create Logger for undetected devices with filename undetected_devices.log
      * @param \Wurfl\Configuration\Config $wurflConfig
-     * @return \Wurfl\Logger\LoggerInterface Logger object
+     * @return \Psr\Log\LoggerInterface Logger object
      */
     public static function createUndetectedDeviceLogger($wurflConfig=null) {
         if(self::isLoggingConfigured($wurflConfig)) {
@@ -39,7 +39,7 @@ class LoggerFactory {
     /**
      * Creates Logger for general logging (not undetected devices)
      * @param \Wurfl\Configuration\Config $wurflConfig
-     * @return \Wurfl\Logger\LoggerInterface Logger object
+     * @return \Psr\Log\LoggerInterface Logger object
      */
     public static function create($wurflConfig=NULL) {
         if(self::isLoggingConfigured($wurflConfig)) {

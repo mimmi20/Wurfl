@@ -23,7 +23,7 @@ namespace Wurfl;
  * 
  * @property-read \Wurfl\Storage\Storage $persistenceProvider
  * @property-read \Wurfl\Storage\Storage $cacheProvider
- * @property-read \Wurfl\Logger\LoggerInterface $logger
+ * @property-read \Psr\Log\LoggerInterface $logger
  */
 class Context {
     
@@ -36,11 +36,11 @@ class Context {
      */
     private $_cacheProvider;
     /**
-     * @var \Wurfl\Logger\LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     private $_logger;
     
-    public function __construct(\Wurfl\Storage\Storage $persistenceProvider, \Wurfl\Storage\Storage $cacheProvider = null, \Wurfl\Logger\LoggerInterface $logger = null) {
+    public function __construct(\Wurfl\Storage\Storage $persistenceProvider, \Wurfl\Storage\Storage $cacheProvider = null, \Psr\Log\LoggerInterface $logger = null) {
         $this->_persistenceProvider = $persistenceProvider;
         $this->cacheProvider($cacheProvider);
         $this->_logger = is_null($logger)? new \Wurfl\Logger\NullLogger(): $logger;
