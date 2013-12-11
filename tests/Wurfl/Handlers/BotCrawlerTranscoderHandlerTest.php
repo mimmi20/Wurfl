@@ -17,7 +17,7 @@ class WURFL_Hanlders_BotCrawlerTranscoderHandlerTest extends PHPUnit_Framework_T
 
     function setUp()
     {
-        $normalizer    = new \Wurfl\Request\UserAgentNormalizer\NullNormalizer();
+        $normalizer    = new \Wurfl\Request\Normalizer\NullNormalizer();
         $context       = new \Wurfl\Context(null);
         $this->handler = new BotCrawlerTranscoderHandler($context, $normalizer);
     }

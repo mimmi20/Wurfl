@@ -15,7 +15,7 @@ class WURFL_Handlers_MSIEHandlerTest extends PHPUnit_Framework_TestCase
     function setUp()
     {
         $context             = new \Wurfl\Context (null);
-        $userAgentNormalizer = new \Wurfl\Request\UserAgentNormalizer\Specific\MSIE ();
+        $userAgentNormalizer = new \Wurfl\Request\Normalizer\Specific\MSIE ();
         $this->msieHandler   = new MSIEHandler ($context, $userAgentNormalizer);
     }
 

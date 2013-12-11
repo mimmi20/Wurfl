@@ -7,9 +7,9 @@ class WURFL_Request_UserAgentNormalizerTest extends PHPUnit_Framework_TestCase
 
     function testShouldAddANormalizer()
     {
-        $userAgentNormalizer = new \Wurfl\Request\UserAgentNormalizer();
+        $userAgentNormalizer = new \Wurfl\Request\Normalizer\UserAgentNormalizer();
         $currentNormalizer   = $userAgentNormalizer->addUserAgentNormalizer(
-            new \Wurfl\Request\UserAgentNormalizer\Specific\Chrome()
+            new \Wurfl\Request\Normalizer\Specific\Chrome()
         );
 
         self::assertEquals(0, $userAgentNormalizer->count());
@@ -19,9 +19,9 @@ class WURFL_Request_UserAgentNormalizerTest extends PHPUnit_Framework_TestCase
     function testShouldAddToAlreadyPresentNormalizers()
     {
         $userAgentNormalizer
-                             = new \Wurfl\Request\UserAgentNormalizer(array(new \Wurfl\Request\UserAgentNormalizer\Generic\BabelFish()));
+                             = new \Wurfl\Request\Normalizer\UserAgentNormalizer(array(new \Wurfl\Request\Normalizer\Generic\BabelFish()));
         $userAgentNormalizer = $userAgentNormalizer->addUserAgentNormalizer(
-            new \Wurfl\Request\UserAgentNormalizer\Specific\Chrome()
+            new \Wurfl\Request\Normalizer\Specific\Chrome()
         );
 
         self::assertEquals(2, $userAgentNormalizer->count());

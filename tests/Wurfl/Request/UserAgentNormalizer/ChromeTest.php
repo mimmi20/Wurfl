@@ -15,7 +15,7 @@ class WURFL_Request_UserAgentNormalizer_ChromeTest extends WURFL_Request_UserAge
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Specific\Chrome();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\Chrome();
     }
 
     /**

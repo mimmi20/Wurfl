@@ -1,5 +1,6 @@
 .idea/
 phpdoc/
 vendor
+build/
 composer.phar
 *.bak

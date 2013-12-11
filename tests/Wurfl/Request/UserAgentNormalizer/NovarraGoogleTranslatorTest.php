@@ -13,7 +13,7 @@ class WURFL_Request_UserAgentNormalizer_NovarraGoogleTranslatorTest extends WURF
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Generic\NovarraGoogleTranslator();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Generic\NovarraGoogleTranslator();
     }
 
     /**

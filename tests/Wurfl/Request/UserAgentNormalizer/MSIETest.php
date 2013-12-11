@@ -16,7 +16,7 @@ class WURFL_Request_UserAgentNormalizer_MSIETest extends WURFL_Request_UserAgent
      */
     protected function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Specific\MSIE();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\MSIE();
     }
 
     /**

@@ -13,7 +13,7 @@ class WURFL_Hanlders_MotorolaHandlerTest extends PHPUnit_Framework_TestCase
     function setUp()
     {
         $context               = new \Wurfl\Context (null);
-        $userAgentNormalizer   = new \Wurfl\Request\UserAgentNormalizer\NullNormalizer ();
+        $userAgentNormalizer   = new \Wurfl\Request\Normalizer\NullNormalizer ();
         $this->motorolaHandler = new \Wurfl\Handlers\MotorolaHandler ($context, $userAgentNormalizer);
     }
 

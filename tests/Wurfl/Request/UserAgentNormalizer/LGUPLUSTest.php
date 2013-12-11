@@ -13,7 +13,7 @@ class WURFL_Request_UserAgentNormalizer_LGUPLUSTest extends WURFL_Request_UserAg
 
     public function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Specific\LG();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\LG();
     }
 
     /**

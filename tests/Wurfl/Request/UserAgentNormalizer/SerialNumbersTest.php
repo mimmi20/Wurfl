@@ -12,7 +12,7 @@ class WURFL_Request_UserAgentNormalizer_SerialNumbersTest extends WURFL_Request_
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Generic\SerialNumbers();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Generic\SerialNumbers();
     }
 
     /**

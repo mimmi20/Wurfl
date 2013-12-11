@@ -7,7 +7,7 @@
  */
 class WURFL_Request_UserAgentNormalizer_BaseTest extends PHPUnit_Framework_TestCase
 {
-    /** @var  Wurfl\Request\UserAgentNormalizer\NormalizerInterface */
+    /** @var  Wurfl\Request\Normalizer\NormalizerInterface */
     protected $normalizer;
 
     public function assertNormalizeEqualsExpected($userAgent, $expected)

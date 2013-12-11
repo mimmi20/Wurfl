@@ -13,7 +13,7 @@ class WURFL_Request_UserAgentNormalizer_BlackBerryTest extends WURFL_Request_Use
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Generic\BlackBerry ();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Generic\BlackBerry ();
     }
 
     /**

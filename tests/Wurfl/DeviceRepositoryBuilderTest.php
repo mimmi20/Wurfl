@@ -6,7 +6,7 @@
 /**
  * \Wurfl\DeviceRepositoryBuilder test case.
  */
-class \Wurfl\DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
+class DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
 {
 
     const WURFL_FILE     = '../resources/wurfl_base.xml';

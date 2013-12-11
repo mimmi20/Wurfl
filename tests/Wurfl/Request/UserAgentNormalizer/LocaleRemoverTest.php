@@ -13,7 +13,7 @@ class WURFL_Request_UserAgentNormalizer_LocaleRemoverTest extends WURFL_Request_
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Generic\LocaleRemover();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Generic\LocaleRemover();
     }
 
     /**

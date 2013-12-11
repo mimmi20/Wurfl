@@ -13,7 +13,7 @@ class WURFL_Request_UserAgentNormalizer_FirefoxTest extends WURFL_Request_UserAg
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Specific\Firefox ();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\Firefox ();
     }
 
     /**

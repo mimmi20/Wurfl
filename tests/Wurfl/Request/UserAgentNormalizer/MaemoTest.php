@@ -13,7 +13,7 @@ class WURFL_Request_UserAgentNormalizer_MaemoTest extends WURFL_Request_UserAgen
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Specific\Maemo();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\Maemo();
     }
 
     /**

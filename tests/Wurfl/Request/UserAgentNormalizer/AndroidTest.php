@@ -12,7 +12,7 @@ class WURFL_Request_UserAgentNormalizer_AndroidTest extends WURFL_Request_UserAg
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\UserAgentNormalizer\Specific\Android();
+        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\Android();
     }
 
     /**
@@ -23,7 +23,7 @@ class WURFL_Request_UserAgentNormalizer_AndroidTest extends WURFL_Request_UserAg
     function trimsToTwoDigitTheOsVersion($userAgent, $expected)
     {
         // Locale must be normalized before Android normalizer can be run
-        $locale_normalizer = new \Wurfl\Request\UserAgentNormalizer\Generic\LocaleRemover();
+        $locale_normalizer = new \Wurfl\Request\Normalizer\Generic\LocaleRemover();
         $found             = $this->normalizer->normalize($locale_normalizer->normalize($userAgent));
         self::assertEquals($expected, $found);
     }
