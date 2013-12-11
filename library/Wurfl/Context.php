@@ -21,18 +21,18 @@ namespace Wurfl;
  * WURFL Context stores the persistence provider, cache provider and logger objects
  * @package    WURFL
  * 
- * @property-read \Wurfl\Storage\StorageInterface $persistenceProvider
- * @property-read \Wurfl\Storage\StorageInterface $cacheProvider
+ * @property-read \Wurfl\Storage\Storage $persistenceProvider
+ * @property-read \Wurfl\Storage\Storage $cacheProvider
  * @property-read \Wurfl\Logger\LoggerInterface $logger
  */
 class Context {
     
     /**
-     * @var \Wurfl\Storage\StorageInterface
+     * @var \Wurfl\Storage\Storage
      */
     private $_persistenceProvider;
     /**
-     * @var \Wurfl\Storage\StorageInterface
+     * @var \Wurfl\Storage\Storage
      */
     private $_cacheProvider;
     /**
@@ -40,14 +40,14 @@ class Context {
      */
     private $_logger;
     
-    public function __construct(\Wurfl\Storage\StorageInterface $persistenceProvider, \Wurfl\Storage\StorageInterface $cacheProvider = null, \Wurfl\Logger\LoggerInterface $logger = null) {
+    public function __construct(\Wurfl\Storage\Storage $persistenceProvider, \Wurfl\Storage\Storage $cacheProvider = null, \Wurfl\Logger\LoggerInterface $logger = null) {
         $this->_persistenceProvider = $persistenceProvider;
-        $this->_cacheProvider = is_null($cacheProvider)? new \Wurfl\Storage\NullStorage(): $cacheProvider;
+        $this->cacheProvider($cacheProvider);
         $this->_logger = is_null($logger)? new \Wurfl\Logger\NullLogger(): $logger;
     }
     
     public function cacheProvider($cacheProvider) {
-        $this->_cacheProvider = is_null($cacheProvider)? new \Wurfl\Storage\NullStorage(): $cacheProvider;
+        $this->_cacheProvider = is_null($cacheProvider)? new \Wurfl\Storage\Storage(\Wurfl\Storage\Factory::create(array('provider' => 'null'))): $cacheProvider;
         return $this;
     }
     

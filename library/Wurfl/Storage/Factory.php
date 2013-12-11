@@ -28,21 +28,21 @@ class Factory {
      * @var array Default configuration
      */
     private static $defaultConfiguration = array(
-        "provider" => "memory",
-        "params" => array()
+        'provider' => 'memory',
+        'params' => array()
     );
 
     /**
      * Create a configuration based on the default configuration with the differences from $configuration
      * @param array $configuration
-     * @return \Wurfl\Storage\StorageInterface Storage object, initialized with the given $configuration
+     * @return \WurflCache\Adapter\AdapterInterface Storage object, initialized with the given $configuration
      */
     public static function create($configuration) {
         $currentConfiguration = is_array($configuration) ?
                 array_merge(self::$defaultConfiguration, $configuration)
                 : self::$defaultConfiguration;
         $class = self::className($currentConfiguration);
-        return new $class($currentConfiguration["params"]);
+        return new $class($currentConfiguration['params']);
     }
 
     /**
@@ -51,7 +51,12 @@ class Factory {
      * @return string WURFL Storage Provider class name
      */
     private static function className($configuration) {
-        $provider = $configuration["provider"];
-        return "\\Wurfl\\Storage\\" . ucfirst($provider);
+        $provider = (empty($configuration['provider']) : 'null' ? $configuration['provider']);
+        
+        if ('null' === $provider) {
+            $provider = 'NullStorage';
+        }
+        
+        return '\\WurflCache\\Adapter\\' . ucfirst($provider);
     }
 }

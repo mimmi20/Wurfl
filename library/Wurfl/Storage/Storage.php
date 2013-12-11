@@ -30,25 +30,28 @@ namespace Wurfl\Storage;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
-abstract class Base implements StorageInterface
+class Storage
 {
 
-    const APPLICATION_PREFIX = "WURFL_";
-    const WURFL_LOADED = "WURFL_WURFL_LOADED";
+    const APPLICATION_PREFIX = 'WURFL_';
+    const WURFL_LOADED = 'WURFL_WURFL_LOADED';
 
     /**
-     * @var StorageInterface
+     * @var \WurflCache\Adapter\AdapterInterface
      */
-    private $cache;
+    private $adapter;
 
-    protected $is_volatile = false;
-    protected $supports_secondary_caching = false;
+    private $is_volatile = false;
+    private $supports_secondary_caching = false;
 
     /**
      * Creates a new WURFL_Storage_Base
      * @param array $params
      */
-    public function __construct($params = array()) {}
+    public function __construct(\WurflCache\Adapter\AdapterInterface $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
     /**
      * Saves the object
@@ -56,34 +59,54 @@ abstract class Base implements StorageInterface
      * @param mixed $object
      * @param integer $expiration If supported by the provider, this is used to specify the expiration
      */
-    public function save($objectId, $object, $expiration=null) {}
+    public function save($objectId, $object, $expiration=null)
+    {
+        $this->adapter->setItem($objectId, $object);
+    }
 
     /**
      * Returns the object identified by $objectId
      * @param string $objectId
      * @return mixed value
      */
-    public function load($objectId) {}
+    public function load($objectId)
+    {
+        $success = null;
+        $value   = $this->adapter->getItem($objectId, $success);
+        
+        if ($success) {
+            return $value;
+        }
+        
+        return null;
+    }
 
 
     /**
      * Removes the object identified by $objectId from the persistence provider
      * @param string $objectId
      */
-    public function remove($objectId) {}
+    public function remove($objectId)
+    {
+        $this->adapter->removeItem($objectId);
+    }
 
 
     /**
      * Removes all entries from the Persistence Provider
      */
-    public function clear() {}
+    public function clear()
+    {
+        $this->adapter->flush();
+    }
 
     /**
      * Returns true if the cache is an in-memory volatile cache, like Memcache or APC, or false if
      * it is a persistent cache like Filesystem or MySQL
      * @return boolean
      */
-    public function isVolatile() {
+    public function isVolatile()
+    {
         return $this->is_volatile;
     }
 
@@ -92,18 +115,20 @@ abstract class Base implements StorageInterface
      * supports a volatile cache like Memcache in front of it, whereas APC does not.
      * @return boolean
      */
-    public function supportsSecondaryCaching() {
+    public function supportsSecondaryCaching()
+    {
         return $this->supports_secondary_caching;
     }
 
     /**
      * This storage provider can be used as a secondary cache
      *
-*@param StorageInterface $cache
+*@param \WurflCache\Adapter\AdapterInterface $cache
      *
 *@return boolean
      */
-    public function validSecondaryCache(StorageInterface $cache) {
+    public function validSecondaryCache(Storage $cache)
+    {
         /**
          * True if $this supports secondary caching and the cache provider is not the
          * same class type since this would always decrease performance
@@ -116,31 +141,36 @@ abstract class Base implements StorageInterface
      * cache data in a volatile storage system like APC in front of a slow
      * persistence provider like the filesystem.
      *
-     * @param StorageInterface $cache
+     * @param \WurflCache\Adapter\AdapterInterface $cache
      */
-    public function setCacheStorage(StorageInterface $cache) {
+    public function setCacheStorage(Storage $cache)
+    {
         if (!$this->supportsSecondaryCaching()) {
-            throw new Exception("The storage provider ".get_class($cache)." cannot be used as a cache for ".get_class($this));
+            throw new Exception('The storage provider '.get_class($cache).' cannot be used as a cache for '.get_class($this));
         }
         $this->cache = $cache;
     }
 
-    protected function cacheSave($objectId, $object) {
+    protected function cacheSave($objectId, $object)
+    {
         if ($this->cache === null) return;
         $this->cache->save('FCACHE_'.$objectId, $object);
     }
 
-    protected function cacheLoad($objectId) {
+    protected function cacheLoad($objectId)
+    {
         if ($this->cache === null) return null;
         return $this->cache->load('FCACHE_'.$objectId);
     }
 
-    protected function cacheRemove($objectId) {
+    protected function cacheRemove($objectId)
+    {
         if ($this->cache === null) return;
         $this->cache->remove('FCACHE_'.$objectId);
     }
 
-    protected function cacheClear() {
+    protected function cacheClear()
+    {
         if ($this->cache === null) return;
         $this->cache->clear();
     }
@@ -149,7 +179,8 @@ abstract class Base implements StorageInterface
      * Checks if WURFL is Loaded
      * @return bool
      */
-    public function isWURFLLoaded() {
+    public function isWURFLLoaded()
+    {
         return $this->load(self::WURFL_LOADED);
     }
 
@@ -157,60 +188,9 @@ abstract class Base implements StorageInterface
      * Sets the WURFL Loaded flag
      * @param bool $loaded
      */
-    public function setWURFLLoaded($loaded = true) {
+    public function setWURFLLoaded($loaded = true)
+    {
         $this->save(self::WURFL_LOADED, $loaded);
-        $this->cacheSave(self::WURFL_LOADED, new StorageObject($loaded, 0));
+        $this->cacheSave(self::WURFL_LOADED, $loaded);
     }
-
-
-    /**
-     * Encode the Object Id using the Persistence Identifier
-     * @param string $namespace
-     * @param string $input
-     * @return string $input with the given $namespace as a prefix
-     */
-    protected function encode($namespace, $input) {
-        return join(":", array(self::APPLICATION_PREFIX, $namespace, $input));
-    }
-
-    /**
-     * Decode the Object Id
-     * @param string $namespace
-     * @param string $input
-     * @return string value
-     */
-    protected function decode($namespace, $input) {
-        $inputs = explode(":", $input);
-        return $inputs[2];
-    }
-}
-
-/**
- * Object for storing data
- * @package WURFL_Storage
- */
-class StorageObject {
-    private $value;
-    private $expiringOn;
-
-    public function __construct($value, $expire) {
-        $this->value = $value;
-        $this->expiringOn = ($expire === 0) ? $expire : time() + $expire;
-    }
-
-    public function value() {
-        return $this->value;
-    }
-
-    public function isExpired() {
-        if ($this->expiringOn === 0) {
-            return false;
-        }
-        return $this->expiringOn < time();
-    }
-
-    public function expiringOn() {
-        return $this->expiringOn;
-    }
-
 }

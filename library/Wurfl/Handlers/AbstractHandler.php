@@ -52,7 +52,7 @@ abstract class AbstractHandler implements \Wurfl\Handlers\FilterInterface, \Wurf
     protected $userAgentsWithDeviceID;
 
     /**
-     * @var \Wurfl\Storage\StorageInterface
+     * @var \Wurfl\Storage\Storage
      */
     protected $persistenceProvider;
 

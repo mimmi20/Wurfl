@@ -29,7 +29,7 @@ class CustomDeviceRepository implements DeviceRepository
 
     /**
      * The persistence provider for this device repository
-     * @var \Wurfl\Storage\StorageInterface
+     * @var \Wurfl\Storage\Storage
      */
     private $persistenceStorage;
     /**
@@ -53,11 +53,11 @@ class CustomDeviceRepository implements DeviceRepository
 
     /**
      * Creates a new Device Repository from the given $persistenceStorage and $deviceClassificationNames
-     * @param \Wurfl\Storage\StorageInterface $persistenceStorage
+     * @param \Wurfl\Storage\Storage $persistenceStorage
      * @param array $deviceClassificationNames
      * @throws \InvalidArgumentException
      */
-    public function __construct(\Wurfl\Storage\StorageInterface $persistenceStorage, array $deviceClassificationNames) {
+    public function __construct(\Wurfl\Storage\Storage $persistenceStorage, array $deviceClassificationNames) {
         if (is_null($persistenceStorage)) {
             throw new \InvalidArgumentException("Persistence Provider cannot be null");
         }

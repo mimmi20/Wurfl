@@ -46,11 +46,11 @@ class Manager
      */
     private $wurflManager;
     /**
-     * @var \Wurfl\Storage\StorageInterface
+     * @var \Wurfl\Storage\Storage
      */
     private $persistenceStorage;
     /**
-     * @var \Wurfl\Storage\StorageInterface
+     * @var \Wurfl\Storage\Storage
      */
     private $cacheStorage;
     
@@ -67,15 +67,24 @@ class Manager
      * Creates a new Wurfl Manager object
      *
      * @param \Wurfl\Configuration\Config $wurflConfig
-     * @param \Wurfl\Storage\StorageInterface $persistenceStorage
-     * @param \Wurfl\Storage\StorageInterface $cacheStorage
+     * @param \WurflCache\Adapter\AdapterInterface $persistenceStorage
+     * @param \WurflCache\Adapter\AdapterInterface $cacheStorage
      */
-    public function __construct(\Wurfl\Configuration\Config $wurflConfig, \Wurfl\Storage\StorageInterface $persistenceStorage=null, \Wurfl\Storage\StorageInterface $cacheStorage=null)
+    public function __construct(\Wurfl\Configuration\Config $wurflConfig, \WurflCache\Adapter\AdapterInterface $persistenceStorage=null, \WurflCache\Adapter\AdapterInterface $cacheStorage=null)
     {
         $this->wurflConfig = $wurflConfig;
         
-        $this->persistenceStorage = $persistenceStorage? $persistenceStorage: \Wurfl\Storage\Factory::create($this->wurflConfig->persistence);
-        $this->cacheStorage = $cacheStorage? $cacheStorage: \Wurfl\Storage\Factory::create($this->wurflConfig->cache);
+        if (null === $persistenceStorage) {
+            $persistenceStorage = \Wurfl\Storage\Factory::create($this->wurflConfig->persistence);
+        }
+        
+        if (null === $cacheStorage) {
+            $cacheStorage = \Wurfl\Storage\Factory::create($this->wurflConfig->cache);
+        }
+        
+        $this->persistenceStorage = new \Wurfl\Storage\Storage($persistenceStorage);
+        $this->cacheStorage       = new \Wurfl\Storage\Storage($cacheStorage);
+        
         if ($this->persistenceStorage->validSecondaryCache($this->cacheStorage)) {
             $this->persistenceStorage->setCacheStorage($this->cacheStorage);
         }
@@ -130,7 +139,7 @@ class Manager
 
     /**
      * Invalidates (clears) cache in the cache provider
-     * @see \Wurfl\Storage\StorageInterface::clear()
+     * @see \Wurfl\Storage\Storage::clear()
      */
     private function invalidateCache() {
         $this->cacheStorage->clear();
@@ -138,7 +147,7 @@ class Manager
 
     /**
      * Clears the data in the persistence provider
-     * @see \Wurfl\Storage\StorageInterface::clear()
+     * @see \Wurfl\Storage\Storage::clear()
      */
     public function remove() {
         $this->persistenceStorage->clear();
@@ -148,7 +157,7 @@ class Manager
      * Initializes the WURFL Manager Factory by assigning cache and persistence providers
      */
     private function init() {
-        $logger = null; //$this->logger($wurflConfig->logger);
+        $logger = null;
         $context = new \Wurfl\Context($this->persistenceStorage, $this->cacheStorage, $logger);
         $this->_userAgentHandlerChain = \Wurfl\UserAgentHandlerChainFactory::createFrom($context);
         $this->_deviceRepository = $this->deviceRepository($this->persistenceStorage, $this->_userAgentHandlerChain);
@@ -156,12 +165,12 @@ class Manager
 
     /**
      * Returns a WURFL device repository
-     * @param \Wurfl\Storage\StorageInterface $persistenceStorage
+     * @param \Wurfl\Storage\Storage $persistenceStorage
      * @param \Wurfl\UserAgentHandlerChain $userAgentHandlerChain
      * @return \Wurfl\CustomDeviceRepository Device repository
      * @see \Wurfl\DeviceRepositoryBuilder::build()
      */
-    private function deviceRepository(\Wurfl\Storage\StorageInterface $persistenceStorage, $userAgentHandlerChain) {
+    private function deviceRepository(\Wurfl\Storage\Storage $persistenceStorage, $userAgentHandlerChain) {
         $devicePatcher = new \Wurfl\Xml\DevicePatcher();
         $deviceRepositoryBuilder = new \Wurfl\DeviceRepositoryBuilder($persistenceStorage, $userAgentHandlerChain, $devicePatcher);
         return $deviceRepositoryBuilder->build($this->wurflConfig->wurflFile, $this->wurflConfig->wurflPatches, $this->wurflConfig->capabilityFilter);

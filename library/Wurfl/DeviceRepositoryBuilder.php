@@ -23,7 +23,7 @@ namespace Wurfl;
 class DeviceRepositoryBuilder
 {
     /**
-     * @var Storage\Base
+     * @var \Wurfl\Storage\Storage
      */
     private $persistenceProvider;
 
@@ -45,12 +45,12 @@ class DeviceRepositoryBuilder
     private $lockStyle = 'r';
 
     /**
-     * @param Storage\Base          $persistenceProvider
-     * @param UserAgentHandlerChain $userAgentHandlerChain
-     * @param Xml\DevicePatcher     $devicePatcher
+     * @param \Wurfl\Storage\Storage $persistenceProvider
+     * @param UserAgentHandlerChain  $userAgentHandlerChain
+     * @param Xml\DevicePatcher      $devicePatcher
      */
     public function __construct(
-        Storage\Base $persistenceProvider,
+        \Wurfl\Storage\Storage $persistenceProvider,
         UserAgentHandlerChain $userAgentHandlerChain,
         Xml\DevicePatcher $devicePatcher)
     {
