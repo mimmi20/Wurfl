@@ -2,7 +2,7 @@
 use Wurfl\Configuration\Config;
 use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\Manager;
-use Wurfl\Storage\Memory;
+use WurflCache\Adapter\Memory;
 
 /**
  * test case

@@ -61,29 +61,6 @@ class Wurfl_Configuration_InMemoryConfigTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testShouldCreateConfigurationWithAPCPersistenceProviderAndAPCCacheProvider()
-    {
-        $config = new \Wurfl\Configuration\InMemoryConfig ();
-        $params = array("host" => "127.0.0.1");
-        $config->wurflFile("wurfl.xml")
-            ->wurflPatch("new_web_browsers_patch.xml")->wurflPatch("spv_patch.xml")
-            ->persistence(\Wurfl\Storage\Apc::EXTENSION_MODULE_NAME, $params)
-            ->cache(\Wurfl\Storage\Apc::EXTENSION_MODULE_NAME, $params);
-
-        self::assertNotNull($config->persistence);
-
-        self::assertEquals("wurfl.xml", $config->wurflFile);
-        self::assertEquals(array("new_web_browsers_patch.xml", "spv_patch.xml"), $config->wurflPatches);
-
-        $persistence = $config->persistence;
-        self::assertEquals("apc", $persistence ["provider"]);
-        self::assertEquals($params, $persistence ["params"]);
-
-        $cache = $config->cache;
-        self::assertEquals("apc", $cache ["provider"]);
-        self::assertEquals($params, $cache ["params"]);
-    }
-
     public function testShouldCreateConfigurationForMultipleMemcacheBackend()
     {
         $config = new \Wurfl\Configuration\InMemoryConfig ();

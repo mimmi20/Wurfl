@@ -41,6 +41,11 @@ class Storage
      */
     private $adapter;
 
+    /**
+     * @var \Wurfl\Storage\Storage
+     */
+    private $cache;
+
     private $is_volatile = false;
     private $supports_secondary_caching = false;
 

@@ -18,7 +18,7 @@ class DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $persistenceProvider   = new \Wurfl\Storage\Memory();
+        $persistenceProvider   = new \Wurfl\Storage\Storage(new \WurflCache\Adapter\Memory());
         $context               = new \Wurfl\Context ($persistenceProvider);
         $userAgentHandlerChain = \Wurfl\UserAgentHandlerChainFactory::createFrom($context);
         $devicePatcher         = new \Wurfl\Xml\DevicePatcher ();
@@ -67,7 +67,7 @@ class DeviceRepositoryBuilderTest extends PHPUnit_Framework_TestCase
 
     public function testShouldNotRebuildTheRepositoryIfAlreadyBuild()
     {
-        $persistenceProvider = new \Wurfl\Storage\Memory();
+        $persistenceProvider = new \Wurfl\Storage\Storage(new \WurflCache\Adapter\Memory());
         $persistenceProvider->setWURFLLoaded(true);
         $context               = new \Wurfl\Context ($persistenceProvider);
         $userAgentHandlerChain = \Wurfl\UserAgentHandlerChainFactory::createFrom($context);

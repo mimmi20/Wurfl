@@ -51,7 +51,7 @@ class Factory {
      * @return string WURFL Storage Provider class name
      */
     private static function className($configuration) {
-        $provider = (empty($configuration['provider']) : 'null' ? $configuration['provider']);
+        $provider = (empty($configuration['provider']) ? 'null' : $configuration['provider']);
         
         if ('null' === $provider) {
             $provider = 'NullStorage';

@@ -28,14 +28,15 @@ class XmlConfig extends \Wurfl\Configuration\Config {
      */
     protected function initialize() {
         $xmlConfig = simplexml_load_file($this->configFilePath);
-        $this->wurflFile = $this->wurflFile($xmlConfig->xpath('/wurfl-config/wurfl/main-file'));
-        $this->wurflPatches = $this->wurflPatches($xmlConfig->xpath('/wurfl-config/wurfl/patches/patch'));
-        $this->allowReload = $this->allowReload($xmlConfig->xpath('/wurfl-config/allow-reload'));
-        $this->capabilityFilter = $this->capabilityFilter($xmlConfig->xpath('/wurfl-config/capability-filter/capability'));
-        $this->persistence = $this->persistence($xmlConfig->xpath('/wurfl-config/persistence'));
-        $this->cache = $this->persistence($xmlConfig->xpath('/wurfl-config/cache'));
-        $this->logDir = $this->logDir($xmlConfig->xpath('/wurfl-config/logDir'));
-        $this->matchMode = $this->matchMode($xmlConfig->xpath('/wurfl-config/match-mode'));
+        
+        $this->wurflFile        = $this->wurflFile($xmlConfig->{Config::WURFL}->{Config::MAIN_FILE});
+        $this->wurflPatches     = $this->wurflPatches($xmlConfig->{Config::WURFL}->{Config::PATCHES}->{Config::PATCH});
+        $this->allowReload      = ('true' === (string) $xmlConfig->{Config::ALLOW_RELOAD});
+        $this->capabilityFilter = $this->capabilityFilter($xmlConfig->{Config::CAPABILITY_FILTER}->{'capability'});
+        $this->persistence      = $this->persistence($xmlConfig->{Config::PERSISTENCE});
+        $this->cache            = $this->persistence($xmlConfig->{Config::CACHE});
+        $this->logDir           = $this->logDir($xmlConfig->{Config::LOG_DIR});
+        $this->matchMode        = $this->matchMode($xmlConfig->{Config::MATCH_MODE});
     }
 
     /**
@@ -75,18 +76,6 @@ class XmlConfig extends \Wurfl\Configuration\Config {
             }
         }
         return $filter;
-    }
-
-    /**
-     * Returns true if reload is allowed, according to $allowReloadElement
-     * @param array $allowReloadElement array of SimpleXMLElement objects
-     * @return boolean
-     */
-    private function allowReload($allowReloadElement) {
-        if (!empty($allowReloadElement)) {
-            return (bool)$allowReloadElement[0];
-        }
-        return false;
     }
     
     /**
