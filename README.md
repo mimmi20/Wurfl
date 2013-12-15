@@ -6,6 +6,17 @@ an clone of the official Wurfl PHP library updated for PHP 5.3
 [![Build Status](https://api.travis-ci.org/mimmi20/Wurfl.png?branch=master)](https://travis-ci.org/mimmi20/Wurfl)
 [![Dependency Status](https://depending.in/mimmi20/Wurfl.png)](http://depending.in/mimmi20/Wurfl)
 
+[![Coverage Status](https://coveralls.io/repos/mimmi20/Wurfl/badge.png?branch=master)](https://coveralls.io/r/mimmi20/Wurfl?branch=master)
+[![Dependency Status](https://www.versioneye.com/php/mimmi20:wurfl/dev-master/badge.png)](https://www.versioneye.com/php/mimmi20:wurfl/dev-master)
+
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/mimmi20/Wurfl/badges/quality-score.png?s=5e88e19d3a659f74ca468170d70c30c94c4ab2c0)](https://scrutinizer-ci.com/g/mimmi20/Wurfl/) 
+[![Code Coverage](https://scrutinizer-ci.com/g/mimmi20/Wurfl/badges/coverage.png?s=b9a661d611e63c513c3d6800572c3f06e520bae4)](https://scrutinizer-ci.com/g/mimmi20/Wurfl/)
+
+[![Latest Stable Version](https://poser.pugx.org/mimmi20/Wurfl/v/stable.png)](https://packagist.org/packages/mimmi20/Wurfl)
+[![Latest Unstable Version](https://poser.pugx.org/mimmi20/Wurfl/v/unstable.png)](https://packagist.org/packages/mimmi20/Wurfl)
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mimmi20/wurfl/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 Submitting bugs and feature requests
 ------------------------------------
 
