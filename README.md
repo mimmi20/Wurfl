@@ -16,6 +16,7 @@ an clone of the official Wurfl PHP library updated for PHP 5.3
 [![Latest Unstable Version](https://poser.pugx.org/mimmi20/wurfl/v/unstable.png)](https://packagist.org/packages/mimmi20/wurfl)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mimmi20/wurfl/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Total views](https://sourcegraph.com/api/repos/github.com/mimmi20/Wurfl/counters/views.png)](https://sourcegraph.com/github.com/mimmi20/Wurfl)
 
 Submitting bugs and feature requests
 ------------------------------------

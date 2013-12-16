@@ -29,7 +29,7 @@ class Wurfl_Configuration_XmlConfigTest extends PHPUnit_Framework_TestCase
         $cache = $config->cache;
         self::assertEquals("file", $cache ["provider"]);
         self::assertEquals(
-            array(\Wurfl\Configuration\Config::DIR => $cacheDir, \Wurfl\Configuration\Config::EXPIRATION => 36000),
+            array(\Wurfl\Configuration\Config::DIR => $cacheDir, 'expiration' => 36000),
             $cache ["params"]
         );
     }
