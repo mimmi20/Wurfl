@@ -18,36 +18,50 @@ namespace Wurfl\Configuration;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Exception;
+
 /**
  * WURFL Configuration holder singleton
+ *
  * @package    WURFL_Configuration
  */
-class ConfigHolder {
-    
+class ConfigHolder
+{
+
     /**
-     * @var \Wurfl\Configuration\Config
+     * @var Config
      */
     private static $_wurflConfig = null;
-    
-    private function __construct() {}
-    private function __clone() {}
-    
+
+    private function __construct()
+    {
+    }
+
+    private function __clone()
+    {
+    }
+
     /**
      * Returns a Configuration object
-     * @return \Wurfl\Configuration\Config
+     *
+     * @throws \Wurfl\Exception
+     * @return Config
      */
-    public static function getWURFLConfig() {
+    public static function getWURFLConfig()
+    {
         if (self::$_wurflConfig === null) {
-            throw new \Wurfl\Exception("The Configuration Holder is not initialized with a valid WURFLConfig object");
+            throw new Exception("The Configuration Holder is not initialized with a valid WURFLConfig object");
         }
         return self::$_wurflConfig;
     }
-    
+
     /**
      * Sets the Configuration object
-     * @param \Wurfl\Configuration\Config $wurflConfig
+     *
+     * @param Config $wurflConfig
      */
-    public static function setWURFLConfig(\Wurfl\Configuration\Config $wurflConfig) {
+    public static function setWURFLConfig(Config $wurflConfig)
+    {
         self::$_wurflConfig = $wurflConfig;
     }
 }

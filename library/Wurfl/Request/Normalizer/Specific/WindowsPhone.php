@@ -18,25 +18,35 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Constants;
+use Wurfl\Handlers\Utils;
+use Wurfl\Handlers\WindowsPhoneHandler;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class WindowsPhone implements \Wurfl\Request\Normalizer\NormalizerInterface {
-    public function normalize($userAgent) {
-        if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client')) {
-            $model = \Wurfl\Handlers\WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
-            $version = \Wurfl\Handlers\WindowsPhoneHandler::getWindowsPhoneAdClientVersion($userAgent);
-        } else if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'NativeHost')) {
-            return $userAgent;
+class WindowsPhone implements NormalizerInterface
+{
+    public function normalize($userAgent)
+    {
+        if (Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client')) {
+            $model   = WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
+            $version = WindowsPhoneHandler::getWindowsPhoneAdClientVersion($userAgent);
         } else {
-            $model = \Wurfl\Handlers\WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
-            $version = \Wurfl\Handlers\WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+            if (Utils::checkIfContains($userAgent, 'NativeHost')) {
+                return $userAgent;
+            } else {
+                $model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
+                $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+            }
         }
 
         if ($model !== null && $version !== null) {
-            $prefix = 'WP'.$version.' '.$model.\Wurfl\Constants::RIS_DELIMITER;
-            return $prefix.$userAgent;
+            $prefix = 'WP' . $version . ' ' . $model . Constants::RIS_DELIMITER;
+            return $prefix . $userAgent;
         }
         return $userAgent;
     }

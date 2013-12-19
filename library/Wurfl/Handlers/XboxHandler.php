@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * XboxUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,26 +30,33 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class XboxHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class XboxHandler extends AbstractHandler
+{
+
     protected $prefix = "XBOX";
-    
-    public static $constantIDs = array(
-        'microsoft_xbox360_ver1',
-        'microsoft_xbox360_ver1_subie10',
-    );
-    
-    public function canHandle($userAgent) {
-        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Xbox');
+
+    public static $constantIDs
+        = array(
+            'microsoft_xbox360_ver1',
+            'microsoft_xbox360_ver1_subie10',
+        );
+
+    public function canHandle($userAgent)
+    {
+        return Utils::checkIfContains($userAgent, 'Xbox');
     }
-    
-    public function applyConclusiveMatch($userAgent) {
+
+    public function applyConclusiveMatch($userAgent)
+    {
         // Exact and recovery matching only
-        return \Wurfl\Constants::NO_MATCH;
+        return Constants::NO_MATCH;
     }
-    
-    public function applyRecoveryMatch($userAgent){
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'MSIE 10.0')) return 'microsoft_xbox360_ver1_subie10';
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (Utils::checkIfContains($userAgent, 'MSIE 10.0')) {
+            return 'microsoft_xbox360_ver1_subie10';
+        }
         return 'microsoft_xbox360_ver1';
     }
 }

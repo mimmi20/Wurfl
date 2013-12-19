@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * WindowsRTUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,29 +30,34 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WindowsRTHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class WindowsRTHandler extends AbstractHandler
+{
+
     protected $prefix = "WINDOWSRT";
-    
-    public static $constantIDs = array(
-        'generic_windows_8_rt',
-    );
-    
-    public function canHandle($userAgent) {
-        return \Wurfl\Handlers\Utils::checkIfContainsAll($userAgent, array('Windows NT 6.2', ' ARM;'));
+
+    public static $constantIDs
+        = array(
+            'generic_windows_8_rt',
+        );
+
+    public function canHandle($userAgent)
+    {
+        return Utils::checkIfContainsAll($userAgent, array('Windows NT 6.2', ' ARM;'));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
+
+    public function applyConclusiveMatch($userAgent)
+    {
         $search = ' ARM;';
-        $idx = strpos($userAgent, $search);
+        $idx    = strpos($userAgent, $search);
         if ($idx !== false) {
             // Match to the end of the search string
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
         }
-        return \Wurfl\Constants::NO_MATCH;
+        return Constants::NO_MATCH;
     }
-    
-    public function applyRecoveryMatch($userAgent){
+
+    public function applyRecoveryMatch($userAgent)
+    {
         return 'generic_windows_8_rt';
     }
 }

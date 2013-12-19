@@ -18,40 +18,44 @@ namespace Wurfl\Configuration;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Exception;
+
 /**
  * Abstract base class for WURFL Configuration
+ *
  * @package    WURFL_Configuration
- * 
- * @property string $configFilePath
- * @property string $configurationFileDir
+ *
+ * @property string  $configFilePath
+ * @property string  $configurationFileDir
  * @property boolean $allowReload
- * @property array $capabilityFilter
- * @property string $wurflFile
- * @property array $wurflPatches
- * @property array $persistence 
- * @property array $cache 
- * @property string $logDir
- * @property string $matchMode
+ * @property array   $capabilityFilter
+ * @property string  $wurflFile
+ * @property array   $wurflPatches
+ * @property array   $persistence
+ * @property array   $cache
+ * @property string  $logDir
+ * @property string  $matchMode
  */
-abstract class Config {
+abstract class Config
+{
 
-    const WURFL = "wurfl";
-    const MAIN_FILE = "main-file";
-    const PATCHES = "patches";
-    const PATCH = "patch";
-    const CACHE = "cache";
-    const PERSISTENCE = "persistence";
-    const PROVIDER = "provider";
-    const PARAMS = "params";
-    const LOG_DIR = "logDir";
-    const ALLOW_RELOAD = "allow-reload";
-    const CAPABILITY_FILTER = "capability-filter";
-    const DIR = "dir";
-    const EXPIRATION = "expiration";
-    const MATCH_MODE = "match-mode";
+    const WURFL                  = "wurfl";
+    const MAIN_FILE              = "main-file";
+    const PATCHES                = "patches";
+    const PATCH                  = "patch";
+    const CACHE                  = "cache";
+    const PERSISTENCE            = "persistence";
+    const PROVIDER               = "provider";
+    const PARAMS                 = "params";
+    const LOG_DIR                = "logDir";
+    const ALLOW_RELOAD           = "allow-reload";
+    const CAPABILITY_FILTER      = "capability-filter";
+    const DIR                    = "dir";
+    const EXPIRATION             = "expiration";
+    const MATCH_MODE             = "match-mode";
     const MATCH_MODE_PERFORMANCE = "performance";
-    const MATCH_MODE_ACCURACY = "accuracy";
-    
+    const MATCH_MODE_ACCURACY    = "accuracy";
+
     /**
      * @var string Path to the configuration file
      */
@@ -90,19 +94,24 @@ abstract class Config {
     protected $logDir;
     /**
      * Mode of operation (performance or accuracy)
+     *
      * @var string
      */
     protected $matchMode = self::MATCH_MODE_ACCURACY;
-    
+
     /**
      * Creates a new WURFL Configuration object from $configFilePath
-     * @param string $configFilePath Complete filename of configuration file 
+     *
+     * @param string $configFilePath Complete filename of configuration file
+     *
+     * @throws \InvalidArgumentException
      */
-    public function __construct($configFilePath) {
-        if(!file_exists($configFilePath)) {
+    public function __construct($configFilePath)
+    {
+        if (!file_exists($configFilePath)) {
             throw new \InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
         }
-        $this->configFilePath = $configFilePath;
+        $this->configFilePath       = $configFilePath;
         $this->configurationFileDir = dirname($this->configFilePath);
         $this->initialize();
     }
@@ -111,72 +120,84 @@ abstract class Config {
      * Initialize the Configuration object
      */
     protected abstract function initialize();
-    
+
     /**
-     * Magic Method 
+     * Magic Method
      *
      * @param string $name
+     *
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         return $this->$name;
     }
-    
+
     /**
      * True if the engine is in High Performance mode
+     *
      * @return boolean
      */
-    public function isHighPerformance() {
+    public function isHighPerformance()
+    {
         return ($this->matchMode == self::MATCH_MODE_PERFORMANCE);
     }
-    
-    public static function validMatchMode($mode) {
+
+    public static function validMatchMode($mode)
+    {
         if ($mode == self::MATCH_MODE_PERFORMANCE || $mode == self::MATCH_MODE_ACCURACY) {
             return true;
         }
         return false;
     }
-    
+
     /**
      * @return string Config file including full path and filename
      */
-    protected function getConfigFilePath() {
+    protected function getConfigFilePath()
+    {
         return $this->configFilePath;
     }
-    
+
     /**
      * @return string Config file directory
      */
-    protected function getConfigurationFileDir() {
+    protected function getConfigurationFileDir()
+    {
         return $this->configurationFileDir;
     }
-    
+
     /**
      * @param string $confLocation
+     *
      * @return bool file exists
      */
-    protected function fileExist($confLocation) {
+    protected function fileExist($confLocation)
+    {
         $fullFileLocation = $this->getFullPath($confLocation);
         return file_exists($fullFileLocation);
     }
-        
+
     /**
      * Return the full path
      *
      * @param string $fileName
-     * @throws \Wurfl\Exception The configuration file does not exist
+     *
+     * @throws Exception The configuration file does not exist
      * @return string File name including full path
      */
-    protected function getFullPath($fileName) {;
+    protected function getFullPath($fileName)
+    {
+        ;
         $fileName = trim($fileName);
-        if(realpath($fileName) && !(basename($fileName) === $fileName )) {
+        if (realpath($fileName) && !(basename($fileName) === $fileName)) {
             return realpath($fileName);
         }
         $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
-        
-        if(file_exists($fullName)) {
+
+        if (file_exists($fullName)) {
             return $fullName;
         }
-        throw new \Wurfl\Exception("The specified path '" . $fullName . "' does not exist");
+        throw new Exception("The specified path '" . $fullName . "' does not exist");
     }
 }

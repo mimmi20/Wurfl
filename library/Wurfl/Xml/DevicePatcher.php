@@ -18,50 +18,68 @@ namespace Wurfl\Xml;
  * @version    $id$
  *
  */
+use Wurfl\Exception;
+use Wurfl\Utils;
+
 /**
  * Device Patcher patches an existing device with a new device
+ *
  * @package    WURFL_Xml
  */
-class DevicePatcher {
+class DevicePatcher
+{
 
     /**
      * Patch an existing $device with a $patchingDevice
-     * @param \Wurfl\Xml\ModelDevice $device
-     * @param \Wurfl\Xml\ModelDevice $patchingDevice
-     * @return \Wurfl\Xml\ModelDevice Patched device
+     *
+     * @param ModelDevice $device
+     * @param ModelDevice $patchingDevice
+     *
+     * @return ModelDevice Patched device
      */
-    public function patch(\Wurfl\Xml\ModelDevice $device, \Wurfl\Xml\ModelDevice $patchingDevice) {
-        if(!$this->haveSameId($device, $patchingDevice)) {
+    public function patch(ModelDevice $device, ModelDevice $patchingDevice)
+    {
+        if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
         }
-        $groupIdCapabilitiesMap = \Wurfl\Utils::array_merge_recursive_unique($device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap());
-        return new \Wurfl\Xml\ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
-
+        $groupIdCapabilitiesMap = Utils::array_merge_recursive_unique(
+            $device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap()
+        );
+        return new ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
     }
 
     /**
      * Returns true if $device and $patchingDevice have the same device id
-     * @param \Wurfl\Xml\ModelDevice $device
-     * @param \Wurfl\Xml\ModelDevice $patchingDevice
+     *
+     * @param ModelDevice $device
+     * @param ModelDevice $patchingDevice
+     *
      * @return bool
      */
-    private function haveSameId(\Wurfl\Xml\ModelDevice $device, \Wurfl\Xml\ModelDevice $patchingDevice) {
+    private function haveSameId(ModelDevice $device, ModelDevice $patchingDevice)
+    {
         return (strcmp($patchingDevice->id, $device->id) === 0);
     }
 
     /**
      * Returns true if a $patchingDevice can be used to patch $device
-     * @param \Wurfl\Xml\ModelDevice $device
-     * @param \Wurfl\Xml\ModelDevice $patchingDevice
-     * @throws \Wurfl\Exception
+     *
+     * @param ModelDevice $device
+     * @param ModelDevice $patchingDevice
+     *
+     * @throws Exception
      * @return bool
      * @deprecated
      */
-    private function checkIfCanPatch(\Wurfl\Xml\ModelDevice $device, \Wurfl\Xml\ModelDevice $patchingDevice) {
+    private function checkIfCanPatch(ModelDevice $device, ModelDevice $patchingDevice)
+    {
 
-        if (strcmp ( $patchingDevice->userAgent, $device->userAgent ) !== 0) {
-            $message = "Patch Device : " . $patchingDevice->id . " can't override user agent " . $device->userAgent . " with " . $patchingDevice->userAgent;
-            throw new \Wurfl\Exception ( $message );
+        if (strcmp($patchingDevice->userAgent, $device->userAgent) !== 0) {
+            $message
+                =
+                "Patch Device : " . $patchingDevice->id . " can't override user agent " . $device->userAgent . " with "
+                . $patchingDevice->userAgent;
+            throw new Exception ($message);
         }
     }
 }

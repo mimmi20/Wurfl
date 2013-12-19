@@ -18,6 +18,9 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Handlers\Utils;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
  * Return the safari user agent stripping out
@@ -26,17 +29,20 @@ namespace Wurfl\Request\Normalizer\Specific;
  *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.1 Safari/525.18
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class Opera implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class Opera implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         // Repair Opera user agents using fake version 9.80
         // Normalize: Opera/9.80 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
         // Into:      Opera/11.50 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
-        if (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
+        if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
             if (preg_match('#Version/(\d+\.\d+)#', $userAgent, $matches)) {
-                $userAgent = str_replace('Opera/9.80', 'Opera/'.$matches[1], $userAgent);
+                $userAgent = str_replace('Opera/9.80', 'Opera/' . $matches[1], $userAgent);
             }
         }
         return $userAgent;

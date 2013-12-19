@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * OperaMobiOrTabletOnAndroidUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,82 +30,95 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class OperaMobiOrTabletOnAndroidHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
+{
+
     protected $prefix = "OPERAMOBIORTABLETONANDROID";
-    
-    public static $constantIDs = array(
-        'generic_android_ver1_5_opera_mobi',
-        'generic_android_ver1_6_opera_mobi',
-        'generic_android_ver2_0_opera_mobi',
-        'generic_android_ver2_1_opera_mobi',
-        'generic_android_ver2_2_opera_mobi',
-        'generic_android_ver2_3_opera_mobi',
-        'generic_android_ver4_0_opera_mobi',
-        'generic_android_ver4_1_opera_mobi',
-        'generic_android_ver4_2_opera_mobi',
-    
-        'generic_android_ver2_1_opera_tablet',
-        'generic_android_ver2_2_opera_tablet',
-        'generic_android_ver2_3_opera_tablet',
-        'generic_android_ver3_0_opera_tablet',
-        'generic_android_ver3_1_opera_tablet',
-        'generic_android_ver3_2_opera_tablet',
-        'generic_android_ver4_0_opera_tablet',
-        'generic_android_ver4_1_opera_tablet',
-        'generic_android_ver4_2_opera_tablet',
-    );
-    
-    public function canHandle($userAgent) {
-        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
-        return (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Android') && \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Opera Mobi', 'Opera Tablet')));
+
+    public static $constantIDs
+        = array(
+            'generic_android_ver1_5_opera_mobi',
+            'generic_android_ver1_6_opera_mobi',
+            'generic_android_ver2_0_opera_mobi',
+            'generic_android_ver2_1_opera_mobi',
+            'generic_android_ver2_2_opera_mobi',
+            'generic_android_ver2_3_opera_mobi',
+            'generic_android_ver4_0_opera_mobi',
+            'generic_android_ver4_1_opera_mobi',
+            'generic_android_ver4_2_opera_mobi',
+
+            'generic_android_ver2_1_opera_tablet',
+            'generic_android_ver2_2_opera_tablet',
+            'generic_android_ver2_3_opera_tablet',
+            'generic_android_ver3_0_opera_tablet',
+            'generic_android_ver3_1_opera_tablet',
+            'generic_android_ver3_2_opera_tablet',
+            'generic_android_ver4_0_opera_tablet',
+            'generic_android_ver4_1_opera_tablet',
+            'generic_android_ver4_2_opera_tablet',
+        );
+
+    public function canHandle($userAgent)
+    {
+        if (Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return (Utils::checkIfContains($userAgent, 'Android')
+            && Utils::checkIfContainsAnyOf(
+                $userAgent, array('Opera Mobi', 'Opera Tablet')
+            ));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
-        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
-        return \Wurfl\Constants::NO_MATCH;
+
+        return Constants::NO_MATCH;
     }
-    
-    public function applyRecoveryMatch($userAgent) {
-        $is_opera_mobi = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera Mobi');
-        $is_opera_tablet = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera Tablet');
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        $is_opera_mobi   = Utils::checkIfContains($userAgent, 'Opera Mobi');
+        $is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
         if ($is_opera_mobi || $is_opera_tablet) {
-            $android_version = \Wurfl\Handlers\AndroidHandler::getAndroidVersion($userAgent);
+            $android_version        = AndroidHandler::getAndroidVersion($userAgent);
             $android_version_string = str_replace('.', '_', $android_version);
-            $type = $is_opera_tablet? 'tablet': 'mobi';
-            $deviceID = 'generic_android_ver'.$android_version_string.'_opera_'.$type;
+            $type                   = $is_opera_tablet ? 'tablet' : 'mobi';
+            $deviceID               = 'generic_android_ver' . $android_version_string . '_opera_' . $type;
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
             } else {
-                return $is_opera_tablet? 'generic_android_ver2_1_opera_tablet': 'generic_android_ver2_0_opera_mobi';
+                return $is_opera_tablet ? 'generic_android_ver2_1_opera_tablet' : 'generic_android_ver2_0_opera_mobi';
             }
         }
-        
-        return \Wurfl\Constants::NO_MATCH;
+
+        return Constants::NO_MATCH;
     }
-    
+
     const OPERA_DEFAULT_VERSION = '10';
-    
+
     public static $validOperaVersions = array('10', '11', '12');
+
     /**
      * Get the Opera browser version from an Opera Android user agent
-     * @param string $ua User Agent
+     *
+     * @param string  $ua          User Agent
      * @param boolean $use_default Return the default version on fail, else return null
+     *
      * @return string Opera version
      * @see self::$defaultOperaVersion
-    */
-    public static function getOperaOnAndroidVersion($ua, $use_default=true) {
+     */
+    public static function getOperaOnAndroidVersion($ua, $use_default = true)
+    {
         if (preg_match('/Version\/(\d\d)/', $ua, $matches)) {
             $version = $matches[1];
             if (in_array($version, self::$validOperaVersions)) {
                 return $version;
             }
         }
-        return $use_default? self::OPERA_DEFAULT_VERSION: null;
+        return $use_default ? self::OPERA_DEFAULT_VERSION : null;
     }
-    
 }

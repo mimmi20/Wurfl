@@ -18,16 +18,21 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsHtmlPreferred extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsHtmlPreferred extends VirtualCapability
+{
 
     protected $required_capabilities = array('preferred_markup');
 
-    protected function compute() {
+    protected function compute()
+    {
         return (strpos($this->device->preferred_markup, 'html_web') === 0);
     }
 }

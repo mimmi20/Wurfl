@@ -18,15 +18,20 @@ namespace Wurfl\Request\Normalizer\Generic;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes BabelFish garbage from user agent
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */
-class BabelFish implements \Wurfl\Request\Normalizer\NormalizerInterface  {
+class BabelFish implements NormalizerInterface
+{
 
     const BABEL_FISH_REGEX = "/\\s*\\(via babelfish.yahoo.com\\)\\s*/";
 
-    public function normalize($userAgent) {
-        return  preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);
+    public function normalize($userAgent)
+    {
+        return preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);
     }
 }

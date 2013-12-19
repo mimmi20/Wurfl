@@ -18,29 +18,43 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsSmartphone extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsSmartphone extends VirtualCapability
+{
 
     protected $use_caching = true;
 
-    protected $required_capabilities = array(
-        'is_wireless_device',
-        'is_tablet',
-        'pointing_method',
-        'resolution_width',
-        'device_os_version',
-        'device_os',
-    );
+    protected $required_capabilities
+        = array(
+            'is_wireless_device',
+            'is_tablet',
+            'pointing_method',
+            'resolution_width',
+            'device_os_version',
+            'device_os',
+        );
 
-    protected function compute() {
-        if ($this->device->is_wireless_device != "true") return false;
-        if ($this->device->is_tablet == "true") return false;
-        if ($this->device->pointing_method != 'touchscreen') return false;
-        if ($this->device->resolution_width < 320) return false;
+    protected function compute()
+    {
+        if ($this->device->is_wireless_device != "true") {
+            return false;
+        }
+        if ($this->device->is_tablet == "true") {
+            return false;
+        }
+        if ($this->device->pointing_method != 'touchscreen') {
+            return false;
+        }
+        if ($this->device->resolution_width < 320) {
+            return false;
+        }
         $os_ver = (float)$this->device->device_os_version;
         switch ($this->device->device_os) {
             case 'iOS':

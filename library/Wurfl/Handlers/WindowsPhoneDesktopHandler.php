@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * WindowsPhoneDesktopUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,28 +30,37 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WindowsPhoneDesktopHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class WindowsPhoneDesktopHandler extends AbstractHandler
+{
+
     protected $prefix = "WINDOWSPHONEDESKTOP";
-    
-    public static $constantIDs = array(
-        'generic_ms_phone_os7_desktopmode',
-        'generic_ms_phone_os7_5_desktopmode',
-        'generic_ms_phone_os8_desktopmode',
-    );
-    
-    public function canHandle($userAgent) {
-        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'));
+
+    public static $constantIDs
+        = array(
+            'generic_ms_phone_os7_desktopmode',
+            'generic_ms_phone_os7_5_desktopmode',
+            'generic_ms_phone_os8_desktopmode',
+        );
+
+    public function canHandle($userAgent)
+    {
+        return Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
+
+    public function applyConclusiveMatch($userAgent)
+    {
         // Exact and Recovery match only
-        return \Wurfl\Constants::NO_MATCH;
+        return Constants::NO_MATCH;
     }
-    
-    public function applyRecoveryMatch($userAgent){
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'WPDesktop')) return 'generic_ms_phone_os8_desktopmode';
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Trident/5.0')) return 'generic_ms_phone_os7_5_desktopmode';
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (Utils::checkIfContains($userAgent, 'WPDesktop')) {
+            return 'generic_ms_phone_os8_desktopmode';
+        }
+        if (Utils::checkIfContains($userAgent, 'Trident/5.0')) {
+            return 'generic_ms_phone_os7_5_desktopmode';
+        }
         return 'generic_ms_phone_os7_desktopmode';
     }
 }

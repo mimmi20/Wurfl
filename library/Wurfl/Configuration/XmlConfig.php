@@ -17,21 +17,26 @@ namespace Wurfl\Configuration;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Exception;
+
 /**
  * XML Configuration
+ *
  * @package    WURFL_Configuration
  */
-class XmlConfig extends \Wurfl\Configuration\Config {
+class XmlConfig extends Config
+{
 
     /**
      * Initialize XML Configuration
      */
-    protected function initialize() {
+    protected function initialize()
+    {
         $xmlConfig = simplexml_load_file($this->configFilePath);
-        
+
         $this->wurflFile        = $this->wurflFile($xmlConfig->{Config::WURFL}->{Config::MAIN_FILE});
         $this->wurflPatches     = $this->wurflPatches($xmlConfig->{Config::WURFL}->{Config::PATCHES}->{Config::PATCH});
-        $this->allowReload      = ('true' === (string) $xmlConfig->{Config::ALLOW_RELOAD});
+        $this->allowReload      = ('true' === (string)$xmlConfig->{Config::ALLOW_RELOAD});
         $this->capabilityFilter = $this->capabilityFilter($xmlConfig->{Config::CAPABILITY_FILTER}->{'capability'});
         $this->persistence      = $this->persistence($xmlConfig->{Config::PERSISTENCE});
         $this->cache            = $this->persistence($xmlConfig->{Config::CACHE});
@@ -41,19 +46,25 @@ class XmlConfig extends \Wurfl\Configuration\Config {
 
     /**
      * Returns the full path to the WURFL file
-     * @param array $mainFileElement array of SimpleXMLElement objects 
+     *
+     * @param array $mainFileElement array of SimpleXMLElement objects
+     *
      * @return string full path
      */
-    private function wurflFile($mainFileElement) {
+    private function wurflFile($mainFileElement)
+    {
         return parent::getFullPath((string)$mainFileElement[0]);
     }
-    
+
     /**
      * Returns an array of full path WURFL patches
+     *
      * @param array $patchElements array of SimpleXMLElement objects
+     *
      * @return array WURFL Patches
      */
-    private function wurflPatches($patchElements) {
+    private function wurflPatches($patchElements)
+    {
         $patches = array();
         if ($patchElements) {
             foreach ($patchElements as $patchElement) {
@@ -62,13 +73,16 @@ class XmlConfig extends \Wurfl\Configuration\Config {
         }
         return $patches;
     }
-    
+
     /**
      * Returns an array of WURFL Capabilities
+     *
      * @param array $capabilityFilter array of SimpleXMLElement objects
+     *
      * @return array WURFL Capabilities
      */
-    private function capabilityFilter($capabilityFilter) {
+    private function capabilityFilter($capabilityFilter)
+    {
         $filter = array();
         if ($capabilityFilter) {
             foreach ($capabilityFilter as $filterElement) {
@@ -77,32 +91,39 @@ class XmlConfig extends \Wurfl\Configuration\Config {
         }
         return $filter;
     }
-    
+
     /**
      * Returns the mode of operation if set, otherwise null
+     *
      * @param array $modeElement array of SimpleXMLElement objects
+     *
+     * @throws \Wurfl\Exception
      * @return boolean
      */
-    private function matchMode($modeElement) {
+    private function matchMode($modeElement)
+    {
         if (!empty($modeElement)) {
             $mode = $modeElement[0];
             if (!$mode) {
                 return $this->matchMode;
             }
             if (!self::validMatchMode($mode)) {
-                throw new \Wurfl\Exception('Invalid Match Mode: '.$mode);
+                throw new Exception('Invalid Match Mode: ' . $mode);
             }
             $this->matchMode = $mode;
         }
         return $this->matchMode;
     }
-    
+
     /**
      * Returns log directory from XML config
+     *
      * @param array $logDirElement array of SimpleXMLElement objects
+     *
      * @return string Log directory
      */
-    private function logDir($logDirElement) {
+    private function logDir($logDirElement)
+    {
         if (!empty($logDirElement)) {
             return parent::getFullPath((string)$logDirElement[0]);
         }
@@ -111,44 +132,51 @@ class XmlConfig extends \Wurfl\Configuration\Config {
 
     /**
      * Returns persistence provider info from XML config
+     *
      * @param array $persistenceElement array of SimpleXMLElement objects
+     *
      * @return array Persistence info
      */
-    private function persistence($persistenceElement) {
+    private function persistence($persistenceElement)
+    {
         $persistence = array();
         if ($persistenceElement) {
             $persistence['provider'] = (string)$persistenceElement[0]->provider;
-            $persistence['params'] = $this->_toArray((string)$persistenceElement[0]->params);
+            $persistence['params']   = $this->_toArray((string)$persistenceElement[0]->params);
         }
         return $persistence;
     }
 
     /**
      * Converts given CSV $params to array of parameters
+     *
      * @param string $params Comma-seperated list of parameters
+     *
      * @return array Parameters
      */
-    private function _toArray($params) {
+    private function _toArray($params)
+    {
         $paramsArray = array();
 
         foreach (explode(',', $params) as $param) {
             $paramNameValue = explode('=', $param);
-            if(count($paramNameValue) > 1) {
-                if (strcmp(\Wurfl\Configuration\Config::DIR, $paramNameValue[0]) == 0) {
+            if (count($paramNameValue) > 1) {
+                if (strcmp(Config::DIR, $paramNameValue[0]) == 0) {
                     $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
                 }
-                $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);                                
+                $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);
             }
         }
         return $paramsArray;
     }
 
- 
     /**
      * WURFL XML Schema
+     *
      * @var string
      */
-    const WURFL_CONF_SCHEMA = '<?xml version="1.0" encoding="utf-8" ?>
+    const WURFL_CONF_SCHEMA
+        = '<?xml version="1.0" encoding="utf-8" ?>
     <element name="wurfl-config" xmlns="http://relaxng.org/ns/structure/1.0">
         <element name="wurfl">
             <element name="main-file"><text/></element>

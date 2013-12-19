@@ -18,16 +18,21 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsWmlPreferred extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsWmlPreferred extends VirtualCapability
+{
 
     protected $required_capabilities = array('xhtml_support_level');
 
-    protected function compute() {
+    protected function compute()
+    {
         return ($this->device->xhtml_support_level <= 0);
     }
 }

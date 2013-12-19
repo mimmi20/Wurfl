@@ -18,15 +18,20 @@ namespace Wurfl\Request\Normalizer\Generic;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - returns the substring starting from "BlackBerry"
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */
-class BlackBerry implements \Wurfl\Request\Normalizer\NormalizerInterface  {
+class BlackBerry implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         $userAgent = str_ireplace('blackberry', 'BlackBerry', $userAgent);
-        $pos = strpos($userAgent, 'BlackBerry');
+        $pos       = strpos($userAgent, 'BlackBerry');
         if ($pos !== false && $pos > 0) {
             $userAgent = substr($userAgent, $pos);
         }

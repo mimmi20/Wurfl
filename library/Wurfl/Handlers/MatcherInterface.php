@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Request\GenericRequest;
 
 /**
- * \Wurfl\Handlers\MatcherInterface is the base interface that concrete classes 
- * must implement to retrieve a device with the given request    
+ * \Wurfl\Handlers\MatcherInterface is the base interface that concrete classes
+ * must implement to retrieve a device with the given request
  *
  * @category   WURFL
  * @package    WURFL
@@ -29,16 +30,17 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-interface MatcherInterface {
-    
+interface MatcherInterface
+{
+
     /**
-     * Returns a matching device id for the given request, 
+     * Returns a matching device id for the given request,
      * if no matching device is found will return "generic"
-     * 
-     * @param \Wurfl\Request\GenericRequest $request
+     *
+     * @param GenericRequest $request
+     *
      * @return string Matching device id
      */
-    public function match(\Wurfl\Request\GenericRequest $request);
-    
+    public function match(GenericRequest $request);
 }
 

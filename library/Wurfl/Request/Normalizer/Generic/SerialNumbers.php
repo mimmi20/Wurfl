@@ -18,17 +18,21 @@ namespace Wurfl\Request\Normalizer\Generic;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes serial numbers from user agent
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */
-class SerialNumbers implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class SerialNumbers implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         $userAgent = preg_replace('/\/SN[\dX]+/', '/SNXXXXXXXXXXXXXXX', $userAgent);
         $userAgent = preg_replace('/\[(ST|TF|NT)[\dX]+\]/', 'TFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', $userAgent);
         return $userAgent;
     }
-
 }
 

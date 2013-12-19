@@ -23,7 +23,7 @@ namespace Wurfl;
 class DeviceRepositoryBuilder
 {
     /**
-     * @var \Wurfl\Storage\Storage
+     * @var Storage\Storage
      */
     private $persistenceProvider;
 
@@ -45,15 +45,15 @@ class DeviceRepositoryBuilder
     private $lockStyle = 'r';
 
     /**
-     * @param \Wurfl\Storage\Storage $persistenceProvider
-     * @param UserAgentHandlerChain  $userAgentHandlerChain
-     * @param Xml\DevicePatcher      $devicePatcher
+     * @param Storage\Storage       $persistenceProvider
+     * @param UserAgentHandlerChain $userAgentHandlerChain
+     * @param Xml\DevicePatcher     $devicePatcher
      */
     public function __construct(
-        \Wurfl\Storage\Storage $persistenceProvider,
+        Storage\Storage $persistenceProvider,
         UserAgentHandlerChain $userAgentHandlerChain,
-        Xml\DevicePatcher $devicePatcher)
-    {
+        Xml\DevicePatcher $devicePatcher
+    ) {
         $this->persistenceProvider   = $persistenceProvider;
         $this->userAgentHandlerChain = $userAgentHandlerChain;
         $this->devicePatcher         = $devicePatcher;
@@ -113,8 +113,8 @@ class DeviceRepositoryBuilder
     private function buildRepository(
         Xml\VersionIterator $wurflInfoIterator,
         Xml\DeviceIterator $deviceIterator,
-        array $patchDeviceIterators = array())
-    {
+        array $patchDeviceIterators = array()
+    ) {
         $this->persistWurflInfo($wurflInfoIterator);
 
         $patchingDevices = $this->toListOfPatchingDevices($patchDeviceIterators);

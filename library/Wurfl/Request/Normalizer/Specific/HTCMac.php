@@ -18,16 +18,23 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Constants;
+use Wurfl\Handlers\HTCMacHandler;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class HTCMac implements \Wurfl\Request\Normalizer\NormalizerInterface {
-    public function normalize($userAgent) {
-        $model = \Wurfl\Handlers\HTCMacHandler::getHTCMacModel($userAgent, false);
+class HTCMac implements NormalizerInterface
+{
+    public function normalize($userAgent)
+    {
+        $model = HTCMacHandler::getHTCMacModel($userAgent, false);
         if ($model !== null) {
-            $prefix = $model.\Wurfl\Constants::RIS_DELIMITER;
-            return $prefix.$userAgent;
+            $prefix = $model . Constants::RIS_DELIMITER;
+            return $prefix . $userAgent;
         }
         return $userAgent;
     }

@@ -2,6 +2,8 @@
 
 namespace Wurfl\Logger;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * This is a simple Logger implementation that other Loggers can inherit from.
  *
@@ -9,7 +11,7 @@ namespace Wurfl\Logger;
  * reduce boilerplate code that a simple Logger that does the same thing with
  * messages regardless of the error level has to implement.
  */
-abstract class AbstractLogger implements \Psr\Log\LoggerInterface
+abstract class AbstractLogger implements LoggerInterface
 {
     /**
      * System is unusable.

@@ -18,17 +18,24 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Constants;
+use Wurfl\Handlers\WebOSHandler;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class WebOS implements \Wurfl\Request\Normalizer\NormalizerInterface {
-    public function normalize($userAgent) {
-        $model = \Wurfl\Handlers\WebOSHandler::getWebOSModelVersion($userAgent);
-        $os_ver = \Wurfl\Handlers\WebOSHandler::getWebOSVersion($userAgent);
+class WebOS implements NormalizerInterface
+{
+    public function normalize($userAgent)
+    {
+        $model  = WebOSHandler::getWebOSModelVersion($userAgent);
+        $os_ver = WebOSHandler::getWebOSVersion($userAgent);
         if ($model !== null && $os_ver !== null) {
-            $prefix = $model.' '.$os_ver.\Wurfl\Constants::RIS_DELIMITER;
-            return $prefix.$userAgent;
+            $prefix = $model . ' ' . $os_ver . Constants::RIS_DELIMITER;
+            return $prefix . $userAgent;
         }
         return $userAgent;
     }

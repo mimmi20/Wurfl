@@ -18,25 +18,30 @@ namespace Wurfl\Request\Normalizer\Generic;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes UP.Link garbage from user agent
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */
-class UPLink implements \Wurfl\Request\Normalizer\NormalizerInterface  {
+class UPLink implements NormalizerInterface
+{
 
     /**
      * This method remove the "UP.Link" substring from user agent string.
      *
      * @param string $userAgent
+     *
      * @return string Normalized user agent
      */
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         $index = strpos($userAgent, " UP.Link");
         if ($index > 0) {
             return substr($userAgent, 0, $index);
         }
         return $userAgent;
     }
-
 }
 

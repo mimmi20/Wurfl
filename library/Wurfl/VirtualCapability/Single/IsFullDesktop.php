@@ -18,16 +18,21 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsFullDesktop extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsFullDesktop extends VirtualCapability
+{
 
     protected $required_capabilities = array('ux_full_desktop');
 
-    protected function compute() {
+    protected function compute()
+    {
         return ($this->device->ux_full_desktop == 'true');
     }
 }

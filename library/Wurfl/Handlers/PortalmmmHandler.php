@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * PortalmmmUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,16 +30,21 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class PortalmmmHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class PortalmmmHandler extends AbstractHandler
+{
+
     protected $prefix = "PORTALMMM";
-    
-    public function canHandle($userAgent) {
-        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
-        return \Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, "portalmmm");
+
+    public function canHandle($userAgent)
+    {
+        if (Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return Utils::checkIfStartsWith($userAgent, "portalmmm");
     }
-    
-    public function applyConclusiveMatch($userAgent) {
-        return \Wurfl\Constants::NO_MATCH;
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        return Constants::NO_MATCH;
     }
 }

@@ -18,16 +18,21 @@ namespace Wurfl\Request\Normalizer\Generic;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Handlers\Utils;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes locale information from user agent
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */
-class LocaleRemover implements \Wurfl\Request\Normalizer\NormalizerInterface  {
+class LocaleRemover implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
-        return \Wurfl\Handlers\Utils::removeLocale($userAgent);
+    public function normalize($userAgent)
+    {
+        return Utils::removeLocale($userAgent);
     }
-
 }
 
 

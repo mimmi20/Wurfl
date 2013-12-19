@@ -18,11 +18,15 @@ namespace Wurfl\Xml;
  * @version    $id$
  *
  */
+use Wurfl\FileUtils;
+
 /**
  * Iterates over a WURFL/Patch XML file
+ *
  * @package    WURFL_Xml
  */
-abstract class AbstractIterator implements \Iterator {
+abstract class AbstractIterator implements \Iterator
+{
 
     /**
      * @var string filename with path to wurfl.xml or patch file
@@ -40,11 +44,15 @@ abstract class AbstractIterator implements \Iterator {
 
     /**
      * Loads given XML $inputFile
+     *
      * @param string $inputFile
+     *
+     * @throws \InvalidArgumentException
      */
-    public function __construct($inputFile) {
-        $inputFile = \Wurfl\FileUtils::cleanFilename($inputFile);
-        if(!file_exists($inputFile)) {
+    public function __construct($inputFile)
+    {
+        $inputFile = FileUtils::cleanFilename($inputFile);
+        if (!file_exists($inputFile)) {
             throw new \InvalidArgumentException("cannot locate [$inputFile] file!");
         }
         $this->inputFile = Utils::getXMLFile($inputFile);
@@ -52,33 +60,40 @@ abstract class AbstractIterator implements \Iterator {
 
     /**
      * Returns the current XML element
+     *
      * @return \XMLReader Current XML element
      */
-    public function current() {
+    public function current()
+    {
         return $this->currentElement;
     }
 
     /**
      * Prepare for next XML element
      */
-    public function next() {
+    public function next()
+    {
         $this->currentElement = null;
     }
 
     /**
      * Returns the current element id
+     *
      * @return string Current element id
      */
-    public function key() {
+    public function key()
+    {
         return $this->currentElementId;
     }
 
     /**
      * Returns true if the current XML element is valid for processing
+     *
      * @return bool
      */
-    public function valid() {
-        if($this->currentElement === null) {
+    public function valid()
+    {
+        if ($this->currentElement === null) {
             $this->readNextElement();
         }
         return $this->currentElement != null;
@@ -86,20 +101,24 @@ abstract class AbstractIterator implements \Iterator {
 
     /**
      * Open the input file and position cursor at the beginning
+     *
      * @see $inputFile
      */
-    public function rewind() {
+    public function rewind()
+    {
         $this->xmlReader = new \XMLReader();
         $this->xmlReader->open($this->inputFile);
-        $this->currentElement = null;
+        $this->currentElement   = null;
         $this->currentElementId = null;
     }
 
     /**
      * Gets the text value from the current node
+     *
      * @return string value
      */
-    public function getTextValue() {
+    public function getTextValue()
+    {
         $this->xmlReader->read();
         return (string)$this->xmlReader->value;
     }

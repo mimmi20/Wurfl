@@ -18,6 +18,10 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Constants;
+use Wurfl\Handlers\SafariHandler;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
  * Return the safari user agent stripping out
@@ -26,16 +30,19 @@ namespace Wurfl\Request\Normalizer\Specific;
  *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.1 Safari/525.18
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class Safari implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class Safari implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
-        $safari_version = \Wurfl\Handlers\SafariHandler::getSafariVersion($userAgent);
+    public function normalize($userAgent)
+    {
+        $safari_version = SafariHandler::getSafariVersion($userAgent);
         if (!$safari_version) {
             return $userAgent;
         }
-        $prefix = 'Safari '.$safari_version.\Wurfl\Constants::RIS_DELIMITER;
-        return $prefix.$userAgent;
+        $prefix = 'Safari ' . $safari_version . Constants::RIS_DELIMITER;
+        return $prefix . $userAgent;
     }
 }

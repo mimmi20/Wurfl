@@ -18,24 +18,32 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - Return the Chrome string with the major version
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class Chrome implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class Chrome implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         return $this->chromeWithMajorVersion($userAgent);
     }
 
     /**
      * Returns Google Chrome's Major version number
+     *
      * @param string $userAgent
+     *
      * @return string|int Version number
      */
-    private function chromeWithMajorVersion($userAgent) {
+    private function chromeWithMajorVersion($userAgent)
+    {
         $start_idx = strpos($userAgent, 'Chrome');
-        $end_idx = strpos($userAgent, '.', $start_idx);
+        $end_idx   = strpos($userAgent, '.', $start_idx);
         if ($end_idx === false) {
             return substr($userAgent, $start_idx);
         } else {

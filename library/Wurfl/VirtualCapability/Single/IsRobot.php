@@ -18,19 +18,25 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Handlers\Utils;
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsRobot extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsRobot extends VirtualCapability
+{
 
     protected $required_capabilities = array();
 
-    protected function compute() {
+    protected function compute()
+    {
         // Control cap, "controlcap_is_robot" is checked before this function is called
 
         // Check against standard bot list
-        return \Wurfl\Handlers\Utils::isRobot($this->request->userAgent);
+        return Utils::isRobot($this->request->userAgent);
     }
 }

@@ -18,16 +18,21 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsMobile extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsMobile extends VirtualCapability
+{
 
     protected $required_capabilities = array('is_wireless_device');
 
-    protected function compute() {
+    protected function compute()
+    {
         return $this->device->is_wireless_device;
     }
 }

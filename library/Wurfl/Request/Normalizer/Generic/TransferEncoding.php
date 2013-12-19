@@ -15,17 +15,21 @@ namespace Wurfl\Request\Normalizer\Generic;
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author Steve Kamerman
+ * @author     Steve Kamerman
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes locale information from user agent
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */
-class TransferEncoding implements \Wurfl\Request\Normalizer\NormalizerInterface  {
+class TransferEncoding implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         return str_replace(',gzip(gfe)', '', $userAgent);
     }
-
 }

@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * FirefoxOSUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,36 +30,41 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class FirefoxOSHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class FirefoxOSHandler extends AbstractHandler
+{
+
     protected $prefix = "FIREFOXOS";
-    
-    public static $constantIDs = array(
-        'generic_firefox_os',
-        'firefox_os_ver1',
-        'firefox_os_ver1_1',
-    );
-    
-    public function canHandle($userAgent) {
-        return (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Firefox/') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Mobile'));
+
+    public static $constantIDs
+        = array(
+            'generic_firefox_os',
+            'firefox_os_ver1',
+            'firefox_os_ver1_1',
+        );
+
+    public function canHandle($userAgent)
+    {
+        return (Utils::checkIfContains($userAgent, 'Firefox/') && Utils::checkIfContains($userAgent, 'Mobile'));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
+
+    public function applyConclusiveMatch($userAgent)
+    {
         // Mozilla/5.0 (Mobile; rv:18.0) Gecko/18.0 Firefox/18.0
         if (preg_match('#\brv:\d+\.\d+(.)#', $userAgent, $matches, PREG_OFFSET_CAPTURE)) {
             $tolerance = $matches[1][1] + 1;
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        return \Wurfl\Constants::NO_MATCH;
+        return Constants::NO_MATCH;
     }
-    
-    public function applyRecoveryMatch($userAgent) {
+
+    public function applyRecoveryMatch($userAgent)
+    {
         if (preg_match('#\brv:(\d+\.\d+)#', $userAgent, $matches)) {
             if ($matches[1] > 18.0) {
                 return 'firefox_os_ver1_1';
             } else {
                 return 'firefox_os_ver1';
-            } 
+            }
         }
         return 'generic_firefox_os';
     }

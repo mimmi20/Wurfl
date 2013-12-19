@@ -18,23 +18,34 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Constants;
+use Wurfl\Handlers\AndroidHandler;
+use Wurfl\Handlers\OperaMobiOrTabletOnAndroidHandler;
+use Wurfl\Handlers\Utils;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class OperaMobiOrTabletOnAndroid implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class OperaMobiOrTabletOnAndroid implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
 
-        $is_opera_mobi = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera Mobi');
-        $is_opera_tablet = \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Opera Tablet');
+        $is_opera_mobi   = Utils::checkIfContains($userAgent, 'Opera Mobi');
+        $is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
         if ($is_opera_mobi || $is_opera_tablet) {
-            $opera_version = \Wurfl\Handlers\OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion($userAgent, false);
-            $android_version = \Wurfl\Handlers\AndroidHandler::getAndroidVersion($userAgent, false);
+            $opera_version   = OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion($userAgent, false);
+            $android_version = AndroidHandler::getAndroidVersion($userAgent, false);
             if ($opera_version !== null && $android_version !== null) {
-                $opera_model = $is_opera_tablet? 'Opera Tablet': 'Opera Mobi';
-                $prefix = $opera_model.' '.$opera_version.' Android '.$android_version.\Wurfl\Constants::RIS_DELIMITER;
-                return $prefix.$userAgent;
+                $opera_model = $is_opera_tablet ? 'Opera Tablet' : 'Opera Mobi';
+                $prefix
+                             =
+                    $opera_model . ' ' . $opera_version . ' Android ' . $android_version . Constants::RIS_DELIMITER;
+                return $prefix . $userAgent;
             }
         }
 

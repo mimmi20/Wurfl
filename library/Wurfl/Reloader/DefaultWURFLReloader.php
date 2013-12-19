@@ -19,29 +19,36 @@ namespace Wurfl\Reloader;
  * @version    $id$
  * @deprecated
  */
+use Wurfl\Configuration\ArrayConfig;
+use Wurfl\Configuration\XmlConfig;
+use Wurfl\Manager;
+
 /**
  * WURFL Reloader
+ *
  * @package    WURFL_Reloader
  * @deprecated
  */
-class WURFL_Reloader_DefaultWURFLReloader implements WURFL_Reloader_Interface {
-    
-    public function reload($wurflConfigurationPath) {
-        $wurflConfig = $this->fromFile ( $wurflConfigurationPath );
+class DefaultWURFLReloader implements ReloaderInterface
+{
+
+    public function reload($wurflConfigurationPath)
+    {
+        $wurflConfig = $this->fromFile($wurflConfigurationPath);
         touch($wurflConfig->wurflFile);
-        $wurflManagerFactory = new \Wurfl\ManagerFactory($wurflConfig);
-        $wurflManagerFactory->create();    
-        
+        new Manager($wurflConfig);
     }
-    
-    private function fromFile($wurflConfigurationPath) {
-        if ($this->endsWith ( $wurflConfigurationPath, ".xml" )) {
-            return new \Wurfl\Configuration\XmlConfig ( $wurflConfigurationPath );
+
+    private function fromFile($wurflConfigurationPath)
+    {
+        if ($this->endsWith($wurflConfigurationPath, ".xml")) {
+            return new XmlConfig ($wurflConfigurationPath);
         }
-        return new \Wurfl\Configuration\ArrayConfig($wurflConfigurationPath);
+        return new ArrayConfig($wurflConfigurationPath);
     }
-    
-    private function endsWith($haystack, $needle) {
-        return strrpos($haystack, $needle) === strlen($haystack)-strlen($needle);
+
+    private function endsWith($haystack, $needle)
+    {
+        return strrpos($haystack, $needle) === strlen($haystack) - strlen($needle);
     }
 }

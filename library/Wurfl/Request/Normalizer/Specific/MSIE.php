@@ -18,21 +18,33 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - MSIE String with the Major and Minor Version Only.
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class MSIE implements \Wurfl\Request\Normalizer\NormalizerInterface  {
+class MSIE implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         return $this->msieWithVersion($userAgent);
     }
+
     /**
      * Returns version info
+     *
      * @param string $userAgent
+     *
      * @return string Version info
      */
-    private function msieWithVersion($userAgent) {
-        return preg_replace('/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/', '', $userAgent);
+    private function msieWithVersion($userAgent)
+    {
+        return preg_replace(
+            '/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/', '',
+            $userAgent
+        );
     }
 }

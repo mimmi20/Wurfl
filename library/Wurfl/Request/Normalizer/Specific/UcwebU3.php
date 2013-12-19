@@ -18,49 +18,61 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Constants;
+use Wurfl\Handlers\AndroidHandler;
+use Wurfl\Handlers\UcwebU3Handler;
+use Wurfl\Handlers\Utils;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class UcwebU3 implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class UcwebU3 implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
 
-        $ucb_version = \Wurfl\Handlers\UcwebU3Handler::getUcBrowserVersion($userAgent);
+        $ucb_version = UcwebU3Handler::getUcBrowserVersion($userAgent);
         if ($ucb_version === null) {
             return $userAgent;
         }
 
         //Android U3K Mobile + Tablet
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Android')) {
+        if (Utils::checkIfContains($userAgent, 'Android')) {
             // Apply Version+Model--- matching normalization
 
-            $model = \Wurfl\Handlers\AndroidHandler::getAndroidModel($userAgent, false);
-            $version = \Wurfl\Handlers\AndroidHandler::getAndroidVersion($userAgent, false);
+            $model   = AndroidHandler::getAndroidModel($userAgent, false);
+            $version = AndroidHandler::getAndroidVersion($userAgent, false);
             if ($model !== null && $version !== null) {
-                $prefix = "$version U3Android $ucb_version $model".\Wurfl\Constants::RIS_DELIMITER;
-                return $prefix.$userAgent;
+                $prefix = "$version U3Android $ucb_version $model" . Constants::RIS_DELIMITER;
+                return $prefix . $userAgent;
             }
-        }
+        } //iPhone U3K
+        else {
+            if (Utils::checkIfContains($userAgent, 'iPhone;')) {
 
-        //iPhone U3K
-        else if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'iPhone;')) {
+                if (preg_match('/iPhone OS (\d+)(?:_(\d+))?(?:_\d+)* like/', $userAgent, $matches)) {
+                    $version = $matches[1] . '.' . $matches[2];
+                    $prefix  = "$version U3iPhone $ucb_version" . Constants::RIS_DELIMITER;
+                    return $prefix . $userAgent;
+                }
+            } //iPad U3K
+            else {
+                if (Utils::checkIfContains($userAgent, 'iPad')) {
 
-            if (preg_match('/iPhone OS (\d+)(?:_(\d+))?(?:_\d+)* like/', $userAgent, $matches)) {
-                $version = $matches[1].'.'.$matches[2];
-                $prefix = "$version U3iPhone $ucb_version".\Wurfl\Constants::RIS_DELIMITER;
-                return $prefix.$userAgent;
-            }
-        }
-
-        //iPad U3K
-        else if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'iPad')) {
-
-            if (preg_match('/CPU OS (\d)_?(\d)?.+like Mac.+; iPad([0-9,]+)\) AppleWebKit/', $userAgent, $matches)) {
-                $version = $matches[1].'.'.$matches[2];
-                $model = $matches[3];
-                $prefix = "$version U3iPad $ucb_version $model".\Wurfl\Constants::RIS_DELIMITER;
-                return $prefix.$userAgent;
+                    if (preg_match(
+                        '/CPU OS (\d)_?(\d)?.+like Mac.+; iPad([0-9,]+)\) AppleWebKit/', $userAgent, $matches
+                    )
+                    ) {
+                        $version = $matches[1] . '.' . $matches[2];
+                        $model   = $matches[3];
+                        $prefix  = "$version U3iPad $ucb_version $model" . Constants::RIS_DELIMITER;
+                        return $prefix . $userAgent;
+                    }
+                }
             }
         }
 

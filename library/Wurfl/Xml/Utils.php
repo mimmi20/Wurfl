@@ -17,23 +17,35 @@ namespace Wurfl\Xml;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Exception;
+use Wurfl\FileUtils;
+
 /**
  * WURFL XML Utilities Static Class
+ *
  * @package    WURFL_Xml
  */
-class Utils {
+class Utils
+{
 
     //
-    private function __construct() {}
-    private function __clone() {}
+    private function __construct()
+    {
+    }
 
+    private function __clone()
+    {
+    }
 
     /**
      * Returns the file path of the $xmlResource; if the $xmlResource is zipped it is uncompressed first
+     *
      * @param string $xmlResource XML Resource file
+     *
      * @return string XML Resource file
      */
-    public static function getXMLFile($xmlResource) {
+    public static function getXMLFile($xmlResource)
+    {
         if (self::isZipFile($xmlResource)) {
             return self::getZippedFile($xmlResource);
         }
@@ -42,47 +54,52 @@ class Utils {
 
     /**
      * Returns a XML Resource filename for the uncompressed contents of the provided zipped $filename
+     *
      * @param string $filename of zipped XML data
-     * @throws \Wurfl\Exception ZipArchive extension is not loaded or the ZIP file is corrupt
+     *
+     * @throws Exception ZipArchive extension is not loaded or the ZIP file is corrupt
      * @return string Full filename and path of extracted XML file
      */
-    private static function getZippedFile($filename) {
-        if(!self::zipModuleLoaded()) {
-            throw new \Wurfl\Exception("The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file");
+    private static function getZippedFile($filename)
+    {
+        if (!self::zipModuleLoaded()) {
+            throw new Exception("The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file");
         }
-        $tmpDir = \Wurfl\FileUtils::getTempDir();
-        $zip = new ZipArchive();
+        $tmpDir = FileUtils::getTempDir();
+        $zip    = new \ZipArchive();
 
         if ($zip->open($filename) !== true) {
-            throw new \Wurfl\Exception("The Zip file <$filename> could not be opened");
+            throw new Exception("The Zip file <$filename> could not be opened");
         }
 
         $zippedFile = $zip->statIndex(0);
-        $wurflFile = $zippedFile['name'];
-
-        //$wurflFile = md5(uniqid(rand(), true));
-        //$zip->extractTo($tmpDir, $wurflFile);
+        $wurflFile  = $zippedFile['name'];
 
         $zip->extractTo($tmpDir);
         $zip->close();
 
-        return \Wurfl\FileUtils::cleanFilename($tmpDir.DIRECTORY_SEPARATOR.$wurflFile);
+        return FileUtils::cleanFilename($tmpDir . DIRECTORY_SEPARATOR . $wurflFile);
     }
 
     /**
      * Returns true if the $filename is that of a Zip file
+     *
      * @param string $fileName
+     *
      * @return bool
      */
-    private static function isZipFile($fileName) {
-        return strcmp("zip", substr($fileName, -3)) === 0 ? TRUE : FALSE;
+    private static function isZipFile($fileName)
+    {
+        return strcmp("zip", substr($fileName, -3)) === 0 ? true : false;
     }
 
     /**
      * Returns true if the ZipArchive extension is loaded
+     *
      * @return bool
      */
-    private static function zipModuleLoaded() {
+    private static function zipModuleLoaded()
+    {
         return class_exists('ZipArchive');
     }
 }

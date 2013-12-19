@@ -1,5 +1,5 @@
 <?php
-namespace Wurfl\Handlers;
+namespace Wurfl\Reloader;
 
     /**
      * Copyright (c) 2012 ScientiaMobile, Inc.
@@ -13,16 +13,21 @@ namespace Wurfl\Handlers;
      *
      *
      * @category   WURFL
-     * @package    WURFL
+     * @package    WURFL_Reloader
      * @copyright  ScientiaMobile, Inc.
      * @license    GNU Affero General Public License
      * @version    $id$
+     * @deprecated
      */
 /**
- * Base class for WURFL Exceptions
+ * WURFL Reloader Interface
  *
- * @package    WURFL
+ * @package    WURFL_Reloader
+ * @deprecated
  */
-class Exception extends \Wurfl\Exception
+interface ReloaderInterface
 {
+    public function reload($wurflConfigurationPath);
 }
+
+

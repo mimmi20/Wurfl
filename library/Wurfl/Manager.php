@@ -1,20 +1,22 @@
 <?php
 namespace Wurfl;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ * @version    $id$
+ */
+use WurflCache\Adapter\AdapterInterface;
+
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
  * the API for device capabilities and WURFL information
@@ -38,22 +40,19 @@ class Manager
 
     /**
      * WURFL Configuration
-     * @var \Wurfl\Configuration\Config
+     *
+     * @var Configuration\Config
      */
     private $wurflConfig;
     /**
-     * @var WURFL_WURFLManager
-     */
-    private $wurflManager;
-    /**
-     * @var \Wurfl\Storage\Storage
+     * @var Storage\Storage
      */
     private $persistenceStorage;
     /**
-     * @var \Wurfl\Storage\Storage
+     * @var Storage\Storage
      */
     private $cacheStorage;
-    
+
     /**
      * @var \Wurfl\DeviceRepository
      */
@@ -66,29 +65,31 @@ class Manager
     /**
      * Creates a new Wurfl Manager object
      *
-     * @param \Wurfl\Configuration\Config $wurflConfig
-     * @param \WurflCache\Adapter\AdapterInterface $persistenceStorage
-     * @param \WurflCache\Adapter\AdapterInterface $cacheStorage
+     * @param Configuration\Config $wurflConfig
+     * @param AdapterInterface     $persistenceStorage
+     * @param AdapterInterface     $cacheStorage
      */
-    public function __construct(\Wurfl\Configuration\Config $wurflConfig, \WurflCache\Adapter\AdapterInterface $persistenceStorage=null, \WurflCache\Adapter\AdapterInterface $cacheStorage=null)
-    {
+    public function __construct(
+        Configuration\Config $wurflConfig, AdapterInterface $persistenceStorage = null,
+        AdapterInterface $cacheStorage = null
+    ) {
         $this->wurflConfig = $wurflConfig;
-        
+
         if (null === $persistenceStorage) {
-            $persistenceStorage = \Wurfl\Storage\Factory::create($this->wurflConfig->persistence);
+            $persistenceStorage = Storage\Factory::create($this->wurflConfig->persistence);
         }
-        
+
         if (null === $cacheStorage) {
-            $cacheStorage = \Wurfl\Storage\Factory::create($this->wurflConfig->cache);
+            $cacheStorage = Storage\Factory::create($this->wurflConfig->cache);
         }
-        
-        $this->persistenceStorage = new \Wurfl\Storage\Storage($persistenceStorage);
-        $this->cacheStorage       = new \Wurfl\Storage\Storage($cacheStorage);
-        
+
+        $this->persistenceStorage = new Storage\Storage($persistenceStorage);
+        $this->cacheStorage       = new Storage\Storage($cacheStorage);
+
         if ($this->persistenceStorage->validSecondaryCache($this->cacheStorage)) {
             $this->persistenceStorage->setCacheStorage($this->cacheStorage);
         }
-        
+
         if ($this->hasToBeReloaded()) {
             $this->reload();
         } else {
@@ -99,7 +100,8 @@ class Manager
     /**
      * Reload the WURFL Data into the persistence provider
      */
-    private function reload() {
+    private function reload()
+    {
         $this->persistenceStorage->setWURFLLoaded(false);
         $this->invalidateCache();
         $this->init();
@@ -108,9 +110,11 @@ class Manager
 
     /**
      * Returns true if the WURFL is out of date or otherwise needs to be reloaded
+     *
      * @return bool
      */
-    public function hasToBeReloaded() {
+    public function hasToBeReloaded()
+    {
         if (!$this->wurflConfig->allowReload) {
             return false;
         }
@@ -120,60 +124,78 @@ class Manager
 
     /**
      * Returns true if the current application state is the same as the given state
+     *
      * @param string $state
+     *
      * @return boolean
      */
-    private function isStateCurrent($state) {
+    private function isStateCurrent($state)
+    {
         return (strcmp($this->getState(), $state) === 0);
     }
 
     /**
      * Generates a string specific to the loaded WURFL API and WURFL Data to be used for checking cache state.
      * If the API Version or the WURFL data file timestamp changes, the state string changes.
+     *
      * @return string
      */
-    private function getState() {
+    private function getState()
+    {
         $wurflMtime = filemtime($this->wurflConfig->wurflFile);
-        return \Wurfl\Constants::API_VERSION.'::'.$wurflMtime;
+        return Constants::API_VERSION . '::' . $wurflMtime;
     }
 
     /**
      * Invalidates (clears) cache in the cache provider
+     *
      * @see \Wurfl\Storage\Storage::clear()
      */
-    private function invalidateCache() {
+    private function invalidateCache()
+    {
         $this->cacheStorage->clear();
     }
 
     /**
      * Clears the data in the persistence provider
+     *
      * @see \Wurfl\Storage\Storage::clear()
      */
-    public function remove() {
+    public function remove()
+    {
         $this->persistenceStorage->clear();
     }
 
     /**
      * Initializes the WURFL Manager Factory by assigning cache and persistence providers
      */
-    private function init() {
-        $logger = null;
-        $context = new \Wurfl\Context($this->persistenceStorage, $this->cacheStorage, $logger);
-        $this->_userAgentHandlerChain = \Wurfl\UserAgentHandlerChainFactory::createFrom($context);
-        $this->_deviceRepository = $this->deviceRepository($this->persistenceStorage, $this->_userAgentHandlerChain);
+    private function init()
+    {
+        $logger                       = null;
+        $context                      = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
+        $this->_userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
+        $this->_deviceRepository      = $this->deviceRepository(
+            $this->persistenceStorage, $this->_userAgentHandlerChain
+        );
     }
 
     /**
      * Returns a WURFL device repository
-     * @param \Wurfl\Storage\Storage $persistenceStorage
+     *
+     * @param Storage\Storage              $persistenceStorage
      * @param \Wurfl\UserAgentHandlerChain $userAgentHandlerChain
+     *
      * @return \Wurfl\CustomDeviceRepository Device repository
      * @see \Wurfl\DeviceRepositoryBuilder::build()
      */
-    private function deviceRepository(\Wurfl\Storage\Storage $persistenceStorage, $userAgentHandlerChain) {
-        $devicePatcher = new \Wurfl\Xml\DevicePatcher();
-        $deviceRepositoryBuilder = new \Wurfl\DeviceRepositoryBuilder($persistenceStorage, $userAgentHandlerChain, $devicePatcher);
-        return $deviceRepositoryBuilder->build($this->wurflConfig->wurflFile, $this->wurflConfig->wurflPatches, $this->wurflConfig->capabilityFilter);
+    private function deviceRepository(Storage\Storage $persistenceStorage, $userAgentHandlerChain)
+    {
+        $devicePatcher = new Xml\DevicePatcher();
+        $deviceRepositoryBuilder
+                       = new DeviceRepositoryBuilder($persistenceStorage, $userAgentHandlerChain, $devicePatcher);
+        return $deviceRepositoryBuilder->build(
+            $this->wurflConfig->wurflFile, $this->wurflConfig->wurflPatches, $this->wurflConfig->capabilityFilter
+        );
     }
 
     /**

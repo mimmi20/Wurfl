@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * WindowsPhoneUserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,51 +30,73 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WindowsPhoneHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class WindowsPhoneHandler extends AbstractHandler
+{
+
     protected $prefix = "WINDOWSPHONE";
-    
-    public static $constantIDs = array(
-        'generic_ms_winmo6_5',
-        'generic_ms_phone_os7',
-        'generic_ms_phone_os7_5',
-        'generic_ms_phone_os8',
-    );
-    
-    public function canHandle($userAgent) {
-        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
-        return \Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'NativeHost'));
+
+    public static $constantIDs
+        = array(
+            'generic_ms_winmo6_5',
+            'generic_ms_phone_os7',
+            'generic_ms_phone_os7_5',
+            'generic_ms_phone_os8',
+        );
+
+    public function canHandle($userAgent)
+    {
+        if (Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'NativeHost'));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
-        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'NativeHost')) {
+
+        if (Utils::checkIfContains($userAgent, 'NativeHost')) {
             return 'generic_ms_phone_os7';
         }
-        
-        return \Wurfl\Constants::NO_MATCH;
+
+        return Constants::NO_MATCH;
     }
-    
-    public function applyRecoveryMatch($userAgent){
+
+    public function applyRecoveryMatch($userAgent)
+    {
         // "Windows Phone OS 8" is for MS Ad SDK issues
-        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone 8', 'Windows Phone OS 8'))) return 'generic_ms_phone_os8';
-        
+        if (Utils::checkIfContainsAnyOf(
+            $userAgent, array('Windows Phone 8', 'Windows Phone OS 8')
+        )
+        ) {
+            return 'generic_ms_phone_os8';
+        }
+
         // WP OS 7.10 = Windows Phone 7.5 or 7.8
-        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone OS 7.5', 'Windows Phone OS 7.10'))) return 'generic_ms_phone_os7_5';
-        
+        if (Utils::checkIfContainsAnyOf(
+            $userAgent, array('Windows Phone OS 7.5', 'Windows Phone OS 7.10')
+        )
+        ) {
+            return 'generic_ms_phone_os7_5';
+        }
+
         // Looking for "Windows Phone OS 7" instead of "Windows Phone OS 7.0" to address all WP 7 UAs that we may not catch else where
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Windows Phone OS 7')) return 'generic_ms_phone_os7';
-        
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) return 'generic_ms_winmo6_5';
-        
-        return \Wurfl\Constants::NO_MATCH;
+        if (Utils::checkIfContains($userAgent, 'Windows Phone OS 7')) {
+            return 'generic_ms_phone_os7';
+        }
+
+        if (Utils::checkIfContains($userAgent, 'Windows Phone 6.5')) {
+            return 'generic_ms_winmo6_5';
+        }
+
+        return Constants::NO_MATCH;
     }
-    
-    public static function getWindowsPhoneModel($ua) {
+
+    public static function getWindowsPhoneModel($ua)
+    {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
         // This regex is relatively fast because there is not much backtracking, and almost all UAs will match
@@ -99,16 +122,21 @@ class WindowsPhoneHandler extends \Wurfl\Handlers\AbstractHandler {
             //   Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; RM-821_eu_euro2_248)
             //   Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; RM-821_eu_sweden_235)
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
-            
+
             return $model;
         }
         return null;
     }
-    
-    public static function getWindowsPhoneAdClientModel($ua){
+
+    public static function getWindowsPhoneAdClientModel($ua)
+    {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
-        if (preg_match('|Windows Phone Ad Client/[0-9\.]+ \(.+; ?Windows Phone(?: OS)? [0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches)) {
+        if (preg_match(
+            '|Windows Phone Ad Client/[0-9\.]+ \(.+; ?Windows Phone(?: OS)? [0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|', $ua,
+            $matches
+        )
+        ) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
@@ -117,22 +145,23 @@ class WindowsPhoneHandler extends \Wurfl\Handlers\AbstractHandler {
         return null;
     }
 
-        
-    public static function getWindowsPhoneVersion($ua) {
+    public static function getWindowsPhoneVersion($ua)
+    {
         if (preg_match('|Windows Phone(?: OS)? (\d+\.\d+)|', $ua, $matches)) {
             return $matches[1];
         }
         return null;
     }
-    
-    public static function getWindowsPhoneAdClientVersion($ua) {
+
+    public static function getWindowsPhoneAdClientVersion($ua)
+    {
         if (preg_match('|Windows Phone(?: OS)? (\d+)\.(\d+)|', $ua, $matches)) {
             switch ((int)$matches[1]) {
                 case 8:
                     return '8.0';
                     break;
                 case 7:
-                    return ((int)$matches[2] == 10)? '7.5': '7.0';
+                    return ((int)$matches[2] == 10) ? '7.5' : '7.0';
                     break;
             }
         }

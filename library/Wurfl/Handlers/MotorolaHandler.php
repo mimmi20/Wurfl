@@ -18,6 +18,7 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * MotorolaUserAgentHandler
@@ -29,31 +30,38 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class MotorolaHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class MotorolaHandler extends AbstractHandler
+{
+
     protected $prefix = "MOTOROLA";
-    
-    public static $constantIDs = array(
-        'mot_mib22_generic',
-    );
-    
-    public function canHandle($userAgent) {
-        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
-        return (\Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto')) ||
-            \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Motorola'));    
+
+    public static $constantIDs
+        = array(
+            'mot_mib22_generic',
+        );
+
+    public function canHandle($userAgent)
+    {
+        if (Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto'))
+            || Utils::checkIfContains($userAgent, 'Motorola'));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
-        if (\Wurfl\Handlers\Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
-            return $this->getDeviceIDFromRIS($userAgent, \Wurfl\Handlers\Utils::firstSlash($userAgent));
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        if (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
+            return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
         }
         return $this->getDeviceIDFromLD($userAgent, 5);
     }
-    
-    public function applyRecoveryMatch($userAgent) {
-        if (\Wurfl\Handlers\Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
             return "mot_mib22_generic";
         }
-        return \Wurfl\Constants::NO_MATCH;
+        return Constants::NO_MATCH;
     }
 }

@@ -18,23 +18,31 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - Return the firefox string with the major and minor version only
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class Firefox implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class Firefox implements NormalizerInterface
+{
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         return $this->firefoxWithMajorAndMinorVersion($userAgent);
     }
+
     /**
      * Returns FireFox major and minor version numbers
+     *
      * @param string $userAgent
+     *
      * @return string Major and minor version
      */
-    private function firefoxWithMajorAndMinorVersion($userAgent) {
+    private function firefoxWithMajorAndMinorVersion($userAgent)
+    {
         return substr($userAgent, strpos($userAgent, "Firefox"));
     }
-
 }
 

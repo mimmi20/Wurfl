@@ -18,19 +18,25 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsLargescreen extends \Wurfl\VirtualCapability\VirtualCapability {
 
-    protected $required_capabilities = array(
-        'resolution_width',
-        'resolution_height',
-    );
+class IsLargescreen extends VirtualCapability
+{
 
-    protected function compute() {
+    protected $required_capabilities
+        = array(
+            'resolution_width',
+            'resolution_height',
+        );
+
+    protected function compute()
+    {
         return ($this->device->resolution_width >= 480 && $this->device->resolution_height >= 480);
     }
 }

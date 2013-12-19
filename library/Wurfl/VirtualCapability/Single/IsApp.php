@@ -18,20 +18,27 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Handlers\Utils;
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsApp extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsApp extends VirtualCapability
+{
 
     protected $required_capabilities = array('device_os');
 
     /**
      * Simple strings or regex patterns that indicate a UA is from a native app
+     *
      * @var array
-    */
-    protected $patterns = array(
+     */
+    protected $patterns
+        = array(
             '^Dalvik',
             'Darwin/',
             'CFNetwork',
@@ -62,36 +69,47 @@ class IsApp extends \Wurfl\VirtualCapability\VirtualCapability {
             '#iP(hone|od|ad)[\d],[\d]#',
             // namespace notation (com.google.youtube)
             '#[a-z]{3,}(?:\.[a-z]+){2,}#',
-    );
+        );
 
-    protected function compute() {
+    protected function compute()
+    {
         $ua = $this->request->userAgent;
 
-        if ($this->device->device_os == "iOS" && !\Wurfl\Handlers\Utils::checkIfContains($ua, "Safari")) return true;
+        if ($this->device->device_os == "iOS" && !Utils::checkIfContains($ua, "Safari")) {
+            return true;
+        }
         foreach ($this->patterns as $pattern) {
             if ($pattern[0] === '#') {
                 // Regex
-                if (preg_match($pattern, $ua)) return true;
+                if (preg_match($pattern, $ua)) {
+                    return true;
+                }
                 continue;
             }
-                
+
             // Substring matches are not abstracted for performance
             $pattern_len = strlen($pattern);
-            $ua_len = strlen($ua);
+            $ua_len      = strlen($ua);
 
             if ($pattern[0] === '^') {
                 // Starts with
-                if (strpos($ua, substr($pattern, 1)) === 0) return true;
-
-            } else if ($pattern[$pattern_len - 1] === '$') {
-                // Ends with
-                $pattern_len--;
-                $pattern = substr($pattern, 0, $pattern_len);
-                if (strpos($ua, $pattern) === ($ua_len - $pattern_len)) return true;
-
+                if (strpos($ua, substr($pattern, 1)) === 0) {
+                    return true;
+                }
             } else {
-                // Match anywhere
-                if (strpos($ua, $pattern) !== false) return true;
+                if ($pattern[$pattern_len - 1] === '$') {
+                    // Ends with
+                    $pattern_len--;
+                    $pattern = substr($pattern, 0, $pattern_len);
+                    if (strpos($ua, $pattern) === ($ua_len - $pattern_len)) {
+                        return true;
+                    }
+                } else {
+                    // Match anywhere
+                    if (strpos($ua, $pattern) !== false) {
+                        return true;
+                    }
+                }
             }
         }
 

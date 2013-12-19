@@ -18,19 +18,25 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsXhtmlmpPreferred extends \Wurfl\VirtualCapability\VirtualCapability {
 
-    protected $required_capabilities = array(
-        'xhtml_support_level',
-        'preferred_markup',
-    );
+class IsXhtmlmpPreferred extends VirtualCapability
+{
 
-    protected function compute() {
+    protected $required_capabilities
+        = array(
+            'xhtml_support_level',
+            'preferred_markup',
+        );
+
+    protected function compute()
+    {
         return ($this->device->xhtml_support_level > 0 && strpos($this->device->preferred_markup, 'html_web') !== 0);
     }
 }

@@ -18,34 +18,45 @@ namespace Wurfl\VirtualCapability\Group;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\CustomDevice;
+use Wurfl\Request\GenericRequest;
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class ManualGroupChild extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class ManualGroupChild extends VirtualCapability
+{
     protected $use_caching = false;
     protected $manual_value;
     /**
-     * @var \Wurfl\VirtualCapability\VirtualCapabilityGroup
+     * @var Group
      */
     protected $group;
 
-    public function __construct(\Wurfl\CustomDevice $device, \Wurfl\Request\GenericRequest $request, \Wurfl\VirtualCapability\Group\Group $group, $value=null) {
+    public function __construct(
+        CustomDevice $device, GenericRequest $request, Group $group, $value = null
+    ) {
         $this->group = $group;
         parent::__construct($device, $request);
         $this->manual_value = $value;
     }
 
-    public function compute() {
+    public function compute()
+    {
         return $this->manual_value;
     }
 
-    public function hasRequiredCapabilities() {
+    public function hasRequiredCapabilities()
+    {
         return $this->group->hasRequiredCapabilities();
     }
 
-    public function getRequiredCapabilities() {
+    public function getRequiredCapabilities()
+    {
         return $this->group->getRequiredCapabilities();
     }
 }

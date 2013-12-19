@@ -18,16 +18,21 @@ namespace Wurfl\VirtualCapability\Single;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\VirtualCapability\VirtualCapability;
+
 /**
  * Virtual capability helper
+ *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
- 
-class IsTouchscreen extends \Wurfl\VirtualCapability\VirtualCapability {
+
+class IsTouchscreen extends VirtualCapability
+{
 
     protected $required_capabilities = array('pointing_method');
 
-    protected function compute() {
+    protected function compute()
+    {
         return ($this->device->pointing_method == 'touchscreen');
     }
 }

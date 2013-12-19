@@ -18,6 +18,7 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * NokiaUserAgentHandler
@@ -29,30 +30,43 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class NokiaHandler extends \Wurfl\Handlers\AbstractHandler {
-    
+class NokiaHandler extends AbstractHandler
+{
+
     protected $prefix = "NOKIA";
-    
-    public static $constantIDs = array(
-        'nokia_generic_series60',
-        'nokia_generic_series80',
-        'nokia_generic_meego',
-    );
-    
-    public function canHandle($userAgent) {
-        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
-        return \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Nokia');
+
+    public static $constantIDs
+        = array(
+            'nokia_generic_series60',
+            'nokia_generic_series80',
+            'nokia_generic_meego',
+        );
+
+    public function canHandle($userAgent)
+    {
+        if (Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return Utils::checkIfContains($userAgent, 'Nokia');
     }
-    
-    public function applyConclusiveMatch($userAgent) {
-        $tolerance = \Wurfl\Handlers\Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
-    
-    public function applyRecoveryMatch($userAgent) {
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Series60')) return 'nokia_generic_series60';
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'Series80')) return 'nokia_generic_series80';
-        if (\Wurfl\Handlers\Utils::checkIfContains($userAgent, 'MeeGo')) return 'nokia_generic_meego';
-        return \Wurfl\Constants::NO_MATCH;
+
+    public function applyRecoveryMatch($userAgent)
+    {
+        if (Utils::checkIfContains($userAgent, 'Series60')) {
+            return 'nokia_generic_series60';
+        }
+        if (Utils::checkIfContains($userAgent, 'Series80')) {
+            return 'nokia_generic_series80';
+        }
+        if (Utils::checkIfContains($userAgent, 'MeeGo')) {
+            return 'nokia_generic_meego';
+        }
+        return Constants::NO_MATCH;
     }
 }

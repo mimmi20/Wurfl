@@ -17,47 +17,58 @@ namespace Wurfl;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Psr\Log\LoggerInterface;
+
 /**
  * WURFL Context stores the persistence provider, cache provider and logger objects
+ *
  * @package    WURFL
- * 
- * @property-read \Wurfl\Storage\Storage $persistenceProvider
- * @property-read \Wurfl\Storage\Storage $cacheProvider
- * @property-read \Psr\Log\LoggerInterface $logger
+ *
+ * @property-read Storage\Storage $persistenceProvider
+ * @property-read Storage\Storage $cacheProvider
+ * @property-read LoggerInterface $logger
  */
-class Context {
-    
+class Context
+{
+
     /**
-     * @var \Wurfl\Storage\Storage
+     * @var Storage\Storage
      */
     private $_persistenceProvider;
     /**
-     * @var \Wurfl\Storage\Storage
+     * @var Storage\Storage
      */
     private $_cacheProvider;
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $_logger;
-    
-    public function __construct(\Wurfl\Storage\Storage $persistenceProvider, \Wurfl\Storage\Storage $cacheProvider = null, \Psr\Log\LoggerInterface $logger = null) {
+
+    public function __construct(
+        Storage\Storage $persistenceProvider, Storage\Storage $cacheProvider = null, LoggerInterface $logger = null
+    ) {
         $this->_persistenceProvider = $persistenceProvider;
         $this->cacheProvider($cacheProvider);
-        $this->_logger = is_null($logger)? new \Wurfl\Logger\NullLogger(): $logger;
+        $this->_logger = is_null($logger) ? new Logger\NullLogger() : $logger;
     }
-    
-    public function cacheProvider($cacheProvider) {
-        $this->_cacheProvider = is_null($cacheProvider)? new \Wurfl\Storage\Storage(\Wurfl\Storage\Factory::create(array('provider' => 'null'))): $cacheProvider;
+
+    public function cacheProvider($cacheProvider)
+    {
+        $this->_cacheProvider = is_null($cacheProvider) ? new Storage\Storage(Storage\Factory::create(
+            array('provider' => 'null')
+        )) : $cacheProvider;
         return $this;
     }
-    
-    public function logger($logger) {
-        $this->_logger = is_null($logger)? new \Wurfl\Logger\NullLogger(): $logger;
+
+    public function logger($logger)
+    {
+        $this->_logger = is_null($logger) ? new Logger\NullLogger() : $logger;
         return $this;
     }
-    
-    public function __get($name) {
-        $name = '_'.$name;
+
+    public function __get($name)
+    {
+        $name = '_' . $name;
         return $this->$name;
     }
 }

@@ -18,16 +18,23 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Constants;
+use Wurfl\Handlers\MaemoHandler;
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class Maemo implements \Wurfl\Request\Normalizer\NormalizerInterface {
-    public function normalize($userAgent) {
-        $model = \Wurfl\Handlers\MaemoHandler::getMaemoModel($userAgent);
+class Maemo implements NormalizerInterface
+{
+    public function normalize($userAgent)
+    {
+        $model = MaemoHandler::getMaemoModel($userAgent);
         if ($model !== null) {
-            $prefix = 'Maemo '.$model.\Wurfl\Constants::RIS_DELIMITER;
-            return $prefix.$userAgent;
+            $prefix = 'Maemo ' . $model . Constants::RIS_DELIMITER;
+            return $prefix . $userAgent;
         }
         return $userAgent;
     }

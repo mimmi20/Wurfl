@@ -18,29 +18,36 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - Return the Konqueror user agent with the major version
  * e.g
  *     Mozilla/5.0 (compatible; Konqueror/4.1; Linux) KHTML/4.1.2 (like Gecko) -> Konqueror/4
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
  */
-class Konqueror implements \Wurfl\Request\Normalizer\NormalizerInterface  {
+class Konqueror implements NormalizerInterface
+{
 
     const KONQUEROR = "Konqueror";
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         return $this->konquerorWithMajorVersion($userAgent);
     }
 
     /**
      * Return KDE Konquerer major version
+     *
      * @param string $userAgent
+     *
      * @return string|int Major version number
      */
-    private function konquerorWithMajorVersion($userAgent) {
+    private function konquerorWithMajorVersion($userAgent)
+    {
         return substr($userAgent, strpos($userAgent, self::KONQUEROR), 10);
     }
-
 }
 
 

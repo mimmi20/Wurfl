@@ -18,17 +18,21 @@ namespace Wurfl\Request\Normalizer\Generic;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+use Wurfl\Request\Normalizer\NormalizerInterface;
+
 /**
  * User Agent Normalizer - removes Novarra garbage from user agent
+ *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */
-class NovarraGoogleTranslator implements \Wurfl\Request\Normalizer\NormalizerInterface {
+class NovarraGoogleTranslator implements NormalizerInterface
+{
 
     const NOVARRA_GOOGLE_TRANSLATOR_PATTERN = "/(\sNovarra-Vision.*)|(,gzip\(gfe\)\s+\(via translate.google.com\))/";
 
-    public function normalize($userAgent) {
+    public function normalize($userAgent)
+    {
         return preg_replace(self::NOVARRA_GOOGLE_TRANSLATOR_PATTERN, "", $userAgent);
     }
-
 }
 

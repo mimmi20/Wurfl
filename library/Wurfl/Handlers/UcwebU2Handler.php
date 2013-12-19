@@ -18,10 +18,11 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+use Wurfl\Constants;
 
 /**
  * UcwebU2UserAgentHandler
- * 
+ *
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -29,29 +30,36 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class UcwebU2Handler extends \Wurfl\Handlers\AbstractHandler {
-    
+class UcwebU2Handler extends AbstractHandler
+{
+
     protected $prefix = "UCWEBU2";
-    
-    public static $constantIDs = array(
-        'generic_ucweb',
-    );
-    
-    public function canHandle($userAgent) {
-        if (\Wurfl\Handlers\Utils::isDesktopBrowser($userAgent)) return false;
-        return (\Wurfl\Handlers\Utils::checkIfStartsWith($userAgent, 'UCWEB') && \Wurfl\Handlers\Utils::checkIfContains($userAgent, 'UCBrowser'));
+
+    public static $constantIDs
+        = array(
+            'generic_ucweb',
+        );
+
+    public function canHandle($userAgent)
+    {
+        if (Utils::isDesktopBrowser($userAgent)) {
+            return false;
+        }
+        return (Utils::checkIfStartsWith($userAgent, 'UCWEB') && Utils::checkIfContains($userAgent, 'UCBrowser'));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
-        $tolerance = \Wurfl\Handlers\Utils::toleranceToRisDelimeter($userAgent);
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::toleranceToRisDelimeter($userAgent);
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        
-        return \Wurfl\Constants::NO_MATCH;
+
+        return Constants::NO_MATCH;
     }
-    
-    public function applyRecoveryMatch($userAgent) {
+
+    public function applyRecoveryMatch($userAgent)
+    {
         return 'generic_ucweb';
     }
 }
