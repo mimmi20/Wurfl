@@ -30,7 +30,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Wurfl\\": "library/"
+            "Wurfl\\": "library/",
+            "WurflTest\\": "tests/"
         }
     }
 }

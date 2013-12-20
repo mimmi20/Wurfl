@@ -14,7 +14,7 @@
          processIsolation="false">
     <testsuites>
         <testsuite name="Wurfl Cache Tests">
-            <directory>./tests/Wurfl/</directory>
+            <directory>./tests/WurflTest/</directory>
         </testsuite>
     </testsuites>
     <filter>
