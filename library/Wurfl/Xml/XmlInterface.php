@@ -40,4 +40,3 @@ interface XmlInterface
     const CAPABILITY_NAME  = "name";
     const CAPABILITY_VALUE = "value";
 }
-

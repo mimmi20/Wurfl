@@ -43,4 +43,3 @@ interface MatcherInterface
      */
     public function match(GenericRequest $request);
 }
-

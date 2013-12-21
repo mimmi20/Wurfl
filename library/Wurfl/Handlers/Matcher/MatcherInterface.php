@@ -36,4 +36,3 @@ interface MatcherInterface
      */
     public function match(&$collection, $needle, $tolerance);
 }
-

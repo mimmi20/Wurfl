@@ -1,29 +1,33 @@
 <?php
 namespace WurflTest\Request;
 
+use Wurfl\Request\Normalizer\Generic\BabelFish;
+use Wurfl\Request\Normalizer\Specific\Chrome;
+use Wurfl\Request\Normalizer\UserAgentNormalizer;
+
 /**
  * test case
  */
 class UserAgentNormalizerTest extends \PHPUnit_Framework_TestCase
 {
-
-    function testShouldAddANormalizer()
+    public function testShouldAddANormalizer()
     {
-        $userAgentNormalizer = new \Wurfl\Request\Normalizer\UserAgentNormalizer();
+        $userAgentNormalizer = new UserAgentNormalizer();
         $currentNormalizer   = $userAgentNormalizer->addUserAgentNormalizer(
-            new \Wurfl\Request\Normalizer\Specific\Chrome()
+            new Chrome()
         );
 
         self::assertEquals(0, $userAgentNormalizer->count());
         self::assertEquals(1, $currentNormalizer->count());
     }
 
-    function testShouldAddToAlreadyPresentNormalizers()
+    public function testShouldAddToAlreadyPresentNormalizers()
     {
-        $userAgentNormalizer
-                             = new \Wurfl\Request\Normalizer\UserAgentNormalizer(array(new \Wurfl\Request\Normalizer\Generic\BabelFish()));
+        $userAgentNormalizer = new UserAgentNormalizer(
+            array(new BabelFish())
+        );
         $userAgentNormalizer = $userAgentNormalizer->addUserAgentNormalizer(
-            new \Wurfl\Request\Normalizer\Specific\Chrome()
+            new Chrome()
         );
 
         self::assertEquals(2, $userAgentNormalizer->count());

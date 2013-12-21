@@ -9,7 +9,7 @@ use Wurfl\Request\Normalizer\Generic\NovarraGoogleTranslator;
 class NovarraGoogleTranslatorTest extends BaseTest
 {
 
-    function setUp()
+    protected function setUp()
     {
         $this->normalizer = new NovarraGoogleTranslator();
     }
@@ -19,13 +19,13 @@ class NovarraGoogleTranslatorTest extends BaseTest
      * @dataProvider novarraGoogleTranslatorDataProvider
      *
      */
-    function shouldNovarraAndGoogleTranslator($userAgent, $expected)
+    public function testNovarraAndGoogleTranslator($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
         self::assertEquals($expected, $found);
     }
 
-    function novarraGoogleTranslatorDataProvider()
+    public function novarraGoogleTranslatorDataProvider()
     {
         return array(
             array(

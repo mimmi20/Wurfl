@@ -130,4 +130,3 @@ interface DeviceRepository
      */
     public function getGroupIDForCapability($capability);
 }
-

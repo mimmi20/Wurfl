@@ -50,4 +50,3 @@ interface FilterInterface
      */
     public function persistData();
 }
-

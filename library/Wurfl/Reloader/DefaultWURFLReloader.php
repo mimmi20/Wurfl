@@ -32,9 +32,9 @@ use Wurfl\Manager;
 class DefaultWURFLReloader implements ReloaderInterface
 {
 
-    public function reload($wurflConfigurationPath)
+    public function reload($configurationPath)
     {
-        $wurflConfig = $this->fromFile($wurflConfigurationPath);
+        $wurflConfig = $this->fromFile($configurationPath);
         touch($wurflConfig->wurflFile);
         new Manager($wurflConfig);
     }
@@ -42,7 +42,7 @@ class DefaultWURFLReloader implements ReloaderInterface
     private function fromFile($wurflConfigurationPath)
     {
         if ($this->endsWith($wurflConfigurationPath, ".xml")) {
-            return new XmlConfig ($wurflConfigurationPath);
+            return new XmlConfig($wurflConfigurationPath);
         }
         return new ArrayConfig($wurflConfigurationPath);
     }

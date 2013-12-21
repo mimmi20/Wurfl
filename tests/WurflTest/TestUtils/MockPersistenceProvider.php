@@ -17,4 +17,3 @@ class MockPersistenceProvider
         return $this->datas[$objectId];
     }
 }
-

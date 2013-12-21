@@ -27,7 +27,5 @@ namespace Wurfl\Reloader;
  */
 interface ReloaderInterface
 {
-    public function reload($wurflConfigurationPath);
+    public function reload($configurationPath);
 }
-
-

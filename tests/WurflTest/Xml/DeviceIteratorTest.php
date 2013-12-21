@@ -1,6 +1,8 @@
 <?php
 namespace WurflTest\Xml;
 
+use Wurfl\Xml\DeviceIterator;
+
 /**
  * test case
  */
@@ -12,19 +14,19 @@ class DeviceIteratorTest extends \PHPUnit_Framework_TestCase
     const WURFL_FILE    = "../../resources/wurfl_base.xml";
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testShouldLaunchExceptionForInvalidInputFile()
     {
         $wurflFile = "";
-        new \Wurfl\Xml\DeviceIterator ($wurflFile);
+        new DeviceIterator($wurflFile);
     }
 
     public function testShouldReadTheSpecificAttribute()
     {
         $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RESOURCES_DIR . "wurfl-specific-attribute.xml";
 
-        $deviceIterator = new \Wurfl\Xml\DeviceIterator ($wurflFile);
+        $deviceIterator = new DeviceIterator($wurflFile);
         $devices        = $this->toList($deviceIterator);
 
         self::assertEquals("foo", $devices[0]->id);
@@ -43,4 +45,3 @@ class DeviceIteratorTest extends \PHPUnit_Framework_TestCase
         return $deviceList;
     }
 }
-

@@ -16,7 +16,3 @@ $configuration["wurfl"]        = $wurfl;
 $configuration["allow-reload"] = true;
 $configuration["persistence"]  = $persistence;
 $configuration["cache"]        = $cache;
-
-
-
-

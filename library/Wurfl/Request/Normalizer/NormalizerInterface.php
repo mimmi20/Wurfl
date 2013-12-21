@@ -35,4 +35,3 @@ interface NormalizerInterface
      */
     public function normalize($userAgent);
 }
-
