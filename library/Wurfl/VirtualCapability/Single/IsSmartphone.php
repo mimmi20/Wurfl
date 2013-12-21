@@ -43,31 +43,27 @@ class IsSmartphone extends VirtualCapability
 
     protected function compute()
     {
-        if ($this->device->is_wireless_device != "true") {
+        if ($this->device->is_wireless_device != 'true'
+            || $this->device->is_tablet == 'true'
+            || $this->device->pointing_method != 'touchscreen'
+            || $this->device->resolution_width < 320
+        ) {
             return false;
         }
-        if ($this->device->is_tablet == "true") {
-            return false;
-        }
-        if ($this->device->pointing_method != 'touchscreen') {
-            return false;
-        }
-        if ($this->device->resolution_width < 320) {
-            return false;
-        }
-        $os_ver = (float)$this->device->device_os_version;
+
+        $osVersion = (float)$this->device->device_os_version;
         switch ($this->device->device_os) {
             case 'iOS':
-                return ($os_ver >= 3.0);
+                return ($osVersion >= 3.0);
                 break;
             case 'Android':
-                return ($os_ver >= 2.2);
+                return ($osVersion >= 2.2);
                 break;
             case 'Windows Phone OS':
                 return true;
                 break;
             case 'RIM OS':
-                return ($os_ver >= 7.0);
+                return ($osVersion >= 7.0);
                 break;
             case 'webOS':
                 return true;
@@ -76,7 +72,7 @@ class IsSmartphone extends VirtualCapability
                 return true;
                 break;
             case 'Bada OS':
-                return ($os_ver >= 2.0);
+                return ($osVersion >= 2.0);
                 break;
             default:
                 return false;

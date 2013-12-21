@@ -48,11 +48,13 @@ class HTCMacHandler extends AbstractHandler
 
     public function applyConclusiveMatch($userAgent)
     {
-        $delimiter_idx = strpos($userAgent, Constants::RIS_DELIMITER);
-        if ($delimiter_idx !== false) {
-            $tolerance = $delimiter_idx + strlen(Constants::RIS_DELIMITER);
+        $delimiterIndex = strpos($userAgent, Constants::RIS_DELIMITER);
+
+        if ($delimiterIndex !== false) {
+            $tolerance = $delimiterIndex + strlen(Constants::RIS_DELIMITER);
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
+
         return Constants::NO_MATCH;
     }
 
@@ -61,9 +63,9 @@ class HTCMacHandler extends AbstractHandler
         return 'generic_android_htc_disguised_as_mac';
     }
 
-    public static function getHTCMacModel($ua)
+    public static function getHTCMacModel($userAgent)
     {
-        if (preg_match('/(HTC[^;\)]+)/', $ua, $matches)) {
+        if (preg_match('/(HTC[^;\)]+)/', $userAgent, $matches)) {
             $model = preg_replace('#[ _\-/]#', '~', $matches[1]);
             return $model;
         }

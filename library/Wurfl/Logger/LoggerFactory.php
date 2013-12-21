@@ -24,22 +24,6 @@ namespace Wurfl\Logger;
  */
 class LoggerFactory
 {
-
-    /**
-     * Create Logger for undetected devices with filename undetected_devices.log
-     *
-     * @param \Wurfl\Configuration\Config $wurflConfig
-     *
-     * @return \Psr\Log\LoggerInterface Logger object
-     */
-    public static function createUndetectedDeviceLogger($wurflConfig = null)
-    {
-        if (self::isLoggingConfigured($wurflConfig)) {
-            return self::createFileLogger($wurflConfig, "undetected_devices.log");
-        }
-        return new NullLogger();
-    }
-
     /**
      * Creates Logger for general logging (not undetected devices)
      *

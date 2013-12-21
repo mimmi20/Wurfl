@@ -49,27 +49,33 @@ class OperaHandler extends AbstractHandler
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContains($userAgent, 'Opera');
     }
 
     public function applyConclusiveMatch($userAgent)
     {
-        $opera_idx = strpos($userAgent, 'Opera');
-        $tolerance = Utils::indexOfOrLength($userAgent, '.', $opera_idx);
+        $operaIndex = strpos($userAgent, 'Opera');
+        $tolerance  = Utils::indexOfOrLength($userAgent, '.', $operaIndex);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
     public function applyRecoveryMatch($userAgent)
     {
-        $opera_version = self::getOperaVersion($userAgent);
-        if ($opera_version === null) {
+        $operaVersion = self::getOperaVersion($userAgent);
+
+        if ($operaVersion === null) {
             return 'opera';
         }
-        $major_version = floor($opera_version);
-        $id            = 'opera_' . $major_version;
+
+        $majorVersion = floor($operaVersion);
+        $id           = 'opera_' . $majorVersion;
+
         if (in_array($id, self::$constantIDs)) {
             return $id;
         }
+
         return 'opera';
     }
 
@@ -78,6 +84,7 @@ class OperaHandler extends AbstractHandler
         if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
             return ($matches[1]);
         }
+
         return null;
     }
 }

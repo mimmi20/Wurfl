@@ -38,6 +38,7 @@ class KonquerorHandler extends AbstractHandler
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContains($userAgent, 'Konqueror');
     }
 }

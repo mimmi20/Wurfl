@@ -25,17 +25,6 @@ namespace Wurfl\Xml;
  */
 interface XmlInterface
 {
-
-    /**
-     * Parses the given file and returns a WURFL_Xml_ParsingResult
-     * object
-     *
-     * @param string $fileName
-     *
-     * @return WURFL_Xml_ParsingResult
-     */
-    public function parse($fileName);
-
     const ID                 = "id";
     const USER_AGENT         = "user_agent";
     const FALL_BACK          = "fall_back";

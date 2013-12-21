@@ -31,7 +31,6 @@ namespace Wurfl\Handlers;
  */
 class LGHandler extends AbstractHandler
 {
-
     protected $prefix = "LG";
 
     public function canHandle($userAgent)
@@ -39,6 +38,7 @@ class LGHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfStartsWithAnyOf($userAgent, array('lg', 'LG'));
     }
 

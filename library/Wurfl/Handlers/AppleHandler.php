@@ -66,6 +66,7 @@ class AppleHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return (Utils::checkIfStartsWith($userAgent, 'Mozilla/5')
             && Utils::checkIfContainsAnyOf(
                 $userAgent, array('iPhone', 'iPod', 'iPad')
@@ -75,11 +76,13 @@ class AppleHandler extends AbstractHandler
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = strpos($userAgent, '_');
+
         if ($tolerance !== false) {
             // The first char after the first underscore
             $tolerance++;
         } else {
             $index = strpos($userAgent, 'like Mac OS X;');
+
             if ($index !== false) {
                 // Step through the search string to the semicolon at the end
                 $tolerance = $index + 14;
@@ -88,20 +91,22 @@ class AppleHandler extends AbstractHandler
                 $tolerance = strlen($userAgent);
             }
         }
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
     public function applyRecoveryMatch($userAgent)
     {
         if (preg_match('/ (\d)_(\d)[ _]/', $userAgent, $matches)) {
-            $major_version = (int)$matches[1];
+            $majorVersion = (int)$matches[1];
         } else {
-            $major_version = -1;
+            $majorVersion = -1;
         }
 
         // Check iPods first since they also contain 'iPhone'
         if (Utils::checkIfContains($userAgent, 'iPod')) {
-            $deviceID = 'apple_ipod_touch_ver' . $major_version;
+            $deviceID = 'apple_ipod_touch_ver' . $majorVersion;
+
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
             } else {
@@ -110,12 +115,12 @@ class AppleHandler extends AbstractHandler
             // Now check for iPad
         } else {
             if (Utils::checkIfContains($userAgent, 'iPad')) {
-                $deviceID = 'apple_ipad_ver1_sub' . $major_version;
+                $deviceID = 'apple_ipad_ver1_sub' . $majorVersion;
 
-                if ($major_version == 3) {
+                if ($majorVersion == 3) {
                     return 'apple_ipad_ver1_subua32';
                 } else {
-                    if ($major_version == 4) {
+                    if ($majorVersion == 4) {
                         return 'apple_ipad_ver1_sub42';
                     }
                 }
@@ -128,7 +133,7 @@ class AppleHandler extends AbstractHandler
                 // Check iPhone last
             } else {
                 if (Utils::checkIfContains($userAgent, 'iPhone')) {
-                    $deviceID = 'apple_iphone_ver' . $major_version;
+                    $deviceID = 'apple_iphone_ver' . $majorVersion;
                     if (in_array($deviceID, self::$constantIDs)) {
                         return $deviceID;
                     } else {

@@ -47,6 +47,7 @@ class NetFrontOnAndroidHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return (Utils::checkIfContains($userAgent, 'Android')
             && Utils::checkIfContains(
                 $userAgent, 'NetFrontLifeBrowser/2.2'
@@ -57,16 +58,19 @@ class NetFrontOnAndroidHandler extends AbstractHandler
     {
         $find      = 'NetFrontLifeBrowser/2.2';
         $tolerance = strpos($userAgent, $find) + strlen($find);
+
         if ($tolerance > strlen($userAgent)) {
             $tolerance = strlen($userAgent);
         }
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
     public function applyRecoveryMatch($userAgent)
     {
-        $android_version_string = str_replace('.', '_', AndroidHandler::getAndroidVersion($userAgent));
-        $deviceID               = 'generic_android_ver' . $android_version_string . '_netfrontlifebrowser';
+        $androidVersionString = str_replace('.', '_', AndroidHandler::getAndroidVersion($userAgent));
+        $deviceID             = 'generic_android_ver' . $androidVersionString . '_netfrontlifebrowser';
+
         if (in_array($deviceID, self::$constantIDs)) {
             return $deviceID;
         } else {

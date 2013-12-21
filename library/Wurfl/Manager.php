@@ -258,7 +258,7 @@ class Manager
     {
         Handlers\Utils::reset();
 
-        if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance()
+        if ($this->wurflConfig->isHighPerformance()
             && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
         ) {
             // This device has been identified as a web browser programatically, so no call to WURFL is necessary

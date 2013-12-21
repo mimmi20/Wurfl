@@ -43,6 +43,7 @@ class ChromeHandler extends AbstractHandler
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContains($userAgent, 'Chrome');
     }
 

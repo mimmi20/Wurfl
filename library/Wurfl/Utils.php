@@ -63,19 +63,19 @@ class Utils
      */
     public static function getUserAgentProfile($request)
     {
-        if (isset($request["HTTP_X_WAP_PROFILE"])) {
-            return $request["HTTP_X_WAP_PROFILE"];
+        if (isset($request['HTTP_X_WAP_PROFILE'])) {
+            return $request['HTTP_X_WAP_PROFILE'];
         }
-        if (isset($request["HTTP_PROFILE"])) {
-            return $request["HTTP_PROFILE"];
+        if (isset($request['HTTP_PROFILE'])) {
+            return $request['HTTP_PROFILE'];
         }
-        if (isset($request["Opt"])) {
-            $opt              = $request["Opt"];
-            $regex            = "/ns=\\d+/";
+        if (isset($request['Opt'])) {
+            $opt              = $request['Opt'];
+            $regex            = '/ns=\\d+/';
             $matches          = array();
             $namespaceProfile = null;
             if (preg_match($regex, $opt, $matches)) {
-                $namespaceProfile = substr($matches[0], 2) . "-Profile";
+                $namespaceProfile = substr($matches[0], 2) . '-Profile';
             }
             if ($namespaceProfile !== null && isset($request[$namespaceProfile])) {
                 return $request[$namespaceProfile];
@@ -94,11 +94,11 @@ class Utils
      */
     public static function isXhtmlRequester($request)
     {
-        if (!isset($request["accept"])) {
+        if (!isset($request['accept'])) {
             return false;
         }
 
-        $accept = $request["accept"];
+        $accept = $request['accept'];
         if (isset($accept)) {
             if ((strpos($accept, Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
                 || (strpos($accept, Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
@@ -137,7 +137,7 @@ class Utils
     public static function array_merge_recursive_unique($array1, $array2)
     {
         // LOOP THROUGH $array2
-        foreach ($array2 AS $k => $v) {
+        foreach ($array2 as $k => $v) {
 
             // CHECK IF VALUE EXISTS IN $array1
             if (!empty($array1[$k])) {

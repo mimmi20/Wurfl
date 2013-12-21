@@ -53,24 +53,26 @@ class MSIEHandler extends AbstractHandler
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
         if (Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
             return false;
         }
 
         // IE 11 signature
-        $has_trident_rv = (Utils::checkIfContains($userAgent, 'Trident') && Utils::checkIfContains($userAgent, 'rv:'));
+        $hasTridentRv = (Utils::checkIfContains($userAgent, 'Trident') && Utils::checkIfContains($userAgent, 'rv:'));
         // IE < 11 signature
-        $has_msie = Utils::checkIfContains($userAgent, 'MSIE');
-        return ($has_msie || $has_trident_rv);
+        $hasMsie = Utils::checkIfContains($userAgent, 'MSIE');
+
+        return ($hasMsie || $hasTridentRv);
     }
 
     public function applyConclusiveMatch($userAgent)
     {
         $matches = array();
+
         if (preg_match('/^Mozilla\/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)/', $userAgent, $matches)
             || preg_match('/^Mozilla\/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);/', $userAgent, $matches)
         ) {
-
             $major = (int)$matches[1];
             $minor = (int)$matches[2];
 
@@ -91,12 +93,13 @@ class MSIEHandler extends AbstractHandler
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAnyOf(
-            $userAgent, array(
-                             'SLCC1',
-                             'Media Center PC',
-                             '.NET CLR',
-                             'OfficeLiveConnector',
-                        )
+            $userAgent,
+            array(
+                 'SLCC1',
+                 'Media Center PC',
+                 '.NET CLR',
+                 'OfficeLiveConnector',
+            )
         )
         ) {
             return Constants::GENERIC_WEB_BROWSER;

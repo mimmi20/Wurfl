@@ -47,6 +47,7 @@ class NokiaHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContains($userAgent, 'Nokia');
     }
 
@@ -61,12 +62,15 @@ class NokiaHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'Series60')) {
             return 'nokia_generic_series60';
         }
+
         if (Utils::checkIfContains($userAgent, 'Series80')) {
             return 'nokia_generic_series80';
         }
+
         if (Utils::checkIfContains($userAgent, 'MeeGo')) {
             return 'nokia_generic_meego';
         }
+
         return Constants::NO_MATCH;
     }
 }

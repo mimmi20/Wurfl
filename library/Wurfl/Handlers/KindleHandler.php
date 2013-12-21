@@ -56,11 +56,13 @@ class KindleHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'Android')) {
             // UA was already restructured by the specific normalizer
             $tolerance = Utils::toleranceToRisDelimeter($userAgent);
+
             if ($tolerance) {
                 return $this->getDeviceIDFromRIS($userAgent, $tolerance);
             } else {
                 $search = 'Silk/';
                 $idx    = strpos($userAgent, $search);
+
                 if ($idx !== false) {
                     $tolerance = $idx + strlen($search) + 1;
                     return $this->getDeviceIDFromRIS($userAgent, $tolerance);
@@ -70,6 +72,7 @@ class KindleHandler extends AbstractHandler
 
         // Desktop-mode Kindle Fire
         $idx = strpos($userAgent, 'Build/');
+
         if ($idx !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $idx);
         }
@@ -77,13 +80,15 @@ class KindleHandler extends AbstractHandler
         // Kindle e-reader
         $search = 'Kindle/';
         $idx    = strpos($userAgent, $search);
+
         if ($idx !== false) {
-            // Version/4.0 Kindle/3.0 (screen 600x800; rotate) Mozilla/5.0 (Linux; U; zh-cn.utf8) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+)
+            // Version/4.0 Kindle/3.0 (screen 600x800; rotate) Mozilla/5.0 (Linux; U; zh-cn.utf8) AppleWebKit/528.5+ ...
             //        $idx ^      ^ $tolerance
-            $tolerance      = $idx + strlen($search) + 1;
-            $kindle_version = $userAgent[$tolerance];
+            $tolerance     = $idx + strlen($search) + 1;
+            $kindleVersion = $userAgent[$tolerance];
+
             // RIS match only Kindle/1-3
-            if ($kindle_version >= 1 && $kindle_version <= 3) {
+            if ($kindleVersion >= 1 && $kindleVersion <= 3) {
                 return $this->getDeviceIDFromRIS($userAgent, $tolerance);
             }
         }
@@ -91,6 +96,7 @@ class KindleHandler extends AbstractHandler
         // PlayStation Vita
         $search = 'PlayStation Vita';
         $idx    = strpos($userAgent, $search);
+
         if ($idx !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search) + 1);
         }
@@ -107,11 +113,13 @@ class KindleHandler extends AbstractHandler
             'Kindle Fire' => 'amazon_kindle_fire_ver1',
             'Silk'        => 'amazon_kindle_fire_ver1',
         );
+
         foreach ($map as $keyword => $id) {
             if (Utils::checkIfContains($userAgent, $keyword)) {
                 return $id;
             }
         }
+
         return 'generic_amazon_kindle';
     }
 }

@@ -39,6 +39,7 @@ class PanasonicHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfStartsWith($userAgent, "Panasonic");
     }
 }

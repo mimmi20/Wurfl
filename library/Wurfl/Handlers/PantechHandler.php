@@ -40,6 +40,7 @@ class PantechHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfStartsWithAnyOf($userAgent, array('Pantech', 'PT-', 'PANTECH', 'PG-'));
     }
 
@@ -50,6 +51,7 @@ class PantechHandler extends AbstractHandler
         } else {
             $tolerance = Utils::firstSlash($userAgent);
         }
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

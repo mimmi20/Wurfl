@@ -63,15 +63,18 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return (Utils::checkIfContains($userAgent, 'Android')
             && Utils::checkIfContainsAnyOf(
-                $userAgent, array('Opera Mobi', 'Opera Tablet')
+                $userAgent,
+                array('Opera Mobi', 'Opera Tablet')
             ));
     }
 
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::toleranceToRisDelimeter($userAgent);
+
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
@@ -81,17 +84,19 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
 
     public function applyRecoveryMatch($userAgent)
     {
-        $is_opera_mobi   = Utils::checkIfContains($userAgent, 'Opera Mobi');
-        $is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
-        if ($is_opera_mobi || $is_opera_tablet) {
-            $android_version        = AndroidHandler::getAndroidVersion($userAgent);
-            $android_version_string = str_replace('.', '_', $android_version);
-            $type                   = $is_opera_tablet ? 'tablet' : 'mobi';
-            $deviceID               = 'generic_android_ver' . $android_version_string . '_opera_' . $type;
+        $isOperaMobi   = Utils::checkIfContains($userAgent, 'Opera Mobi');
+        $isOperaTablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
+
+        if ($isOperaMobi || $isOperaTablet) {
+            $androidVersion       = AndroidHandler::getAndroidVersion($userAgent);
+            $androidVersionString = str_replace('.', '_', $androidVersion);
+            $type                 = $isOperaTablet ? 'tablet' : 'mobi';
+            $deviceID             = 'generic_android_ver' . $androidVersionString . '_opera_' . $type;
+
             if (in_array($deviceID, self::$constantIDs)) {
                 return $deviceID;
             } else {
-                return $is_opera_tablet ? 'generic_android_ver2_1_opera_tablet' : 'generic_android_ver2_0_opera_mobi';
+                return $isOperaTablet ? 'generic_android_ver2_1_opera_tablet' : 'generic_android_ver2_0_opera_mobi';
             }
         }
 
@@ -105,20 +110,22 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
     /**
      * Get the Opera browser version from an Opera Android user agent
      *
-     * @param string  $ua          User Agent
-     * @param boolean $use_default Return the default version on fail, else return null
+     * @param string  $userAgent  User Agent
+     * @param boolean $useDefault Return the default version on fail, else return null
      *
      * @return string Opera version
      * @see self::$defaultOperaVersion
      */
-    public static function getOperaOnAndroidVersion($ua, $use_default = true)
+    public static function getOperaOnAndroidVersion($userAgent, $useDefault = true)
     {
-        if (preg_match('/Version\/(\d\d)/', $ua, $matches)) {
+        if (preg_match('/Version\/(\d\d)/', $userAgent, $matches)) {
             $version = $matches[1];
+
             if (in_array($version, self::$validOperaVersions)) {
                 return $version;
             }
         }
-        return $use_default ? self::OPERA_DEFAULT_VERSION : null;
+
+        return $useDefault ? self::OPERA_DEFAULT_VERSION : null;
     }
 }

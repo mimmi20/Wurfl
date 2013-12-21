@@ -45,16 +45,20 @@ class NokiaOviBrowserHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContains($userAgent, 'S40OviBrowser');
     }
 
     public function applyConclusiveMatch($userAgent)
     {
         $idx = strpos($userAgent, 'Nokia');
+
         if ($idx === false) {
             return Constants::NO_MATCH;
         }
+
         $tolerance = Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 

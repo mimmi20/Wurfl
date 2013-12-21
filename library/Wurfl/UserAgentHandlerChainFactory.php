@@ -18,7 +18,8 @@ namespace Wurfl;
      * @version    $id$
      */
 /**
- * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating User Agent Handler Chains
+ * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating
+ * User Agent Handler Chains
  *
  * @package    WURFL
  * @see        \Wurfl\UserAgentHandlerChain
@@ -46,6 +47,7 @@ class UserAgentHandlerChainFactory
             self::$userAgentHandlerChain = $cachedData;
 
             foreach (self::$userAgentHandlerChain->getHandlers() as $handler) {
+                /** @var $handler \Wurfl\Handlers\AbstractHandler */
                 $handler->setupContext($context);
             }
         }

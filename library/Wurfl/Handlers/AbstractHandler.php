@@ -66,10 +66,6 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $undetectedDeviceLogger;
 
     /**
      * @var array Array of WURFL IDs that are hard-coded in this matcher
@@ -88,6 +84,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         } else {
             $this->userAgentNormalizer = $userAgentNormalizer;
         }
+
         $this->setupContext($wurflContext);
     }
 
@@ -114,8 +111,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
 
     public function setupContext(Context $wurflContext)
     {
-        $this->logger = $wurflContext->logger;
-        //$this->undtectedDeviceLogger = $wurflContext->undetectedDeviceLogger;
+        $this->logger              = $wurflContext->logger;
         $this->persistenceProvider = $wurflContext->persistenceProvider;
     }
 
@@ -126,7 +122,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      *
      * @return bool
      */
-    abstract function canHandle($userAgent);
+    abstract public function canHandle($userAgent);
 
     //********************************************************
     //
@@ -147,9 +143,11 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
             $this->updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
             return null;
         }
+
         if (isset($this->nextHandler)) {
             return $this->nextHandler->filter($userAgent, $deviceID);
         }
+
         return null;
     }
 
@@ -165,7 +163,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      * @param string $userAgent
      * @param string $deviceID
      */
-    final function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID)
+    final public function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID)
     {
         $this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
     }
@@ -212,6 +210,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         if (!isset($this->userAgentsWithDeviceID)) {
             $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
         }
+
         return $this->userAgentsWithDeviceID;
     }
 
@@ -230,6 +229,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     public function match(GenericRequest $request)
     {
         $userAgent = $request->userAgent;
+
         if ($this->canHandle($userAgent)) {
             return $this->applyMatch($request);
         }
@@ -250,13 +250,13 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      */
     public function applyMatch(GenericRequest $request)
     {
-        $class_name                  = get_class($this);
-        $request->matchInfo->matcher = $class_name;
-        $start_time                  = microtime(true);
+        $className                   = get_class($this);
+        $request->matchInfo->matcher = $className;
+        $startTime                   = microtime(true);
 
         $userAgent                                 = $this->normalizeUserAgent($request->userAgent);
         $request->matchInfo->normalized_user_agent = $userAgent;
-        $this->logger->debug("START: Matching For  " . $userAgent);
+        $this->logger->debug('START: Matching For  ' . $userAgent);
 
         // Get The data associated with this current handler
         $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
@@ -265,7 +265,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         }
         $deviceID = null;
         // Start with an Exact match
-        $request->matchInfo->matcher_history .= "$class_name(exact),";
+        $request->matchInfo->matcher_history .= $className . '(exact),';
         $request->matchInfo->match_type  = 'exact';
         $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
 
@@ -273,8 +273,8 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
 
         // Try with the conclusive Match
         if ($this->isBlankOrGeneric($deviceID)) {
-            $request->matchInfo->matcher_history .= "$class_name(conclusive),";
-            $this->logger->debug("$this->prefix :Applying Conclusive Match for ua: $userAgent");
+            $request->matchInfo->matcher_history .= $className . '(conclusive),';
+            $this->logger->debug($this->prefix . ' :Applying Conclusive Match for ua: ' . $userAgent);
             $deviceID = $this->applyConclusiveMatch($userAgent);
 
             // Try with recovery match
@@ -282,20 +282,21 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
                 // Log the ua and the ua profile
                 //$this->logger->debug($request);
                 $request->matchInfo->match_type = 'recovery';
-                $request->matchInfo->matcher_history .= "$class_name(recovery),";
-                $this->logger->debug("$this->prefix :Applying Recovery Match for ua: $userAgent");
+                $request->matchInfo->matcher_history .= $className . '(recovery),';
+                $this->logger->debug($this->prefix . ' :Applying Recovery Match for ua: ' . $userAgent);
                 $deviceID = $this->applyRecoveryMatch($userAgent);
 
                 // Try with catch all recovery Match
                 if ($this->isBlankOrGeneric($deviceID)) {
                     $request->matchInfo->match_type = 'recovery-catchall';
-                    $request->matchInfo->matcher_history .= "$class_name(recovery-catchall),";
-                    $this->logger->debug("$this->prefix :Applying Catch All Recovery Match for ua: $userAgent");
+                    $request->matchInfo->matcher_history .= $className . '(recovery-catchall),';
+                    $this->logger->debug($this->prefix . ' :Applying Catch All Recovery Match for ua: ' . $userAgent);
                     $deviceID = $this->applyRecoveryCatchAllMatch($userAgent);
 
                     // All attempts to match have failed
                     if ($this->isBlankOrGeneric($deviceID)) {
                         $request->matchInfo->match_type = 'none';
+
                         if ($request->userAgentProfile) {
                             $deviceID = Constants::GENERIC_MOBILE;
                         } else {
@@ -305,8 +306,10 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
                 }
             }
         }
-        $this->logger->debug("END: Matching For  " . $userAgent);
-        $request->matchInfo->lookup_time = microtime(true) - $start_time;
+
+        $this->logger->debug('END: Matching For  ' . $userAgent);
+        $request->matchInfo->lookup_time = microtime(true) - $startTime;
+
         return $deviceID;
     }
 
@@ -319,7 +322,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      */
     private function isBlankOrGeneric($deviceID)
     {
-        return ($deviceID === null || strcmp($deviceID, "generic") === 0 || strlen(trim($deviceID)) == 0);
+        return ($deviceID === null || strcmp($deviceID, 'generic') === 0 || strlen(trim($deviceID)) == 0);
     }
 
     public function applyExactMatch($userAgent)
@@ -348,7 +351,8 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     }
 
     /**
-     * Find a matching WURFL device from the given $userAgent. Override this method to give an alternative way to do the matching
+     * Find a matching WURFL device from the given $userAgent. Override this method to give an alternative way to do
+     * the matching
      *
      * @param string $userAgent
      *
@@ -422,21 +426,22 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
 
     /**
      * Returns the prefix for this Handler, like BLACKBERRY_DEVICEIDS for the
-     * BlackBerry Handler.  The "BLACKBERRY_" portion comes from the individual
-     * Handler's $prefix property and "_DEVICEIDS" is added here.
+     * BlackBerry Handler.  The 'BLACKBERRY_' portion comes from the individual
+     * Handler's $prefix property and '_DEVICEIDS' is added here.
      *
      * @return string
      */
     public function getPrefix()
     {
-        return $this->prefix . "_DEVICEIDS";
+        return $this->prefix . '_DEVICEIDS';
     }
 
     public function getNiceName()
     {
-        $class_name = get_class($this);
+        $className = get_class($this);
+
         // \Wurfl\Handlers\AlcatelHandler
-        preg_match('/^\Wurfl\Handlers\(.+)Handler$/', $class_name, $matches);
+        preg_match('/^\Wurfl\Handlers\(.+)Handler$/', $className, $matches);
         return $matches[1];
     }
 

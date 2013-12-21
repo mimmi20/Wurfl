@@ -45,7 +45,9 @@ class Context
     private $logger;
 
     public function __construct(
-        Storage\Storage $persistenceProvider, Storage\Storage $cacheProvider = null, LoggerInterface $logger = null
+        Storage\Storage $persistenceProvider,
+        Storage\Storage $cacheProvider = null,
+        LoggerInterface $logger = null
     ) {
         $this->persistenceProvider = $persistenceProvider;
         $this->setCacheProvider($cacheProvider);

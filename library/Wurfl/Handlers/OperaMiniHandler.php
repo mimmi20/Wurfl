@@ -54,28 +54,33 @@ class OperaMiniHandler extends AbstractHandler
 
     public function applyConclusiveMatch($userAgent)
     {
-        $opera_mini_idx = strpos($userAgent, 'Opera Mini');
-        if ($opera_mini_idx !== false) {
+        $operaMiniIndex = strpos($userAgent, 'Opera Mini');
+
+        if ($operaMiniIndex !== false) {
             // Match up to the first '.' after 'Opera Mini'
-            $tolerance = strpos($userAgent, '.', $opera_mini_idx);
+            $tolerance = strpos($userAgent, '.', $operaMiniIndex);
+
             if ($tolerance !== false) {
                 // +1 to match just after the '.'
                 return $this->getDeviceIDFromRIS($userAgent, $tolerance + 1);
             }
         }
+
         return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
     }
 
     public function applyRecoveryMatch($userAgent)
     {
-        foreach (self::$constantIDs as $keyword => $device_id) {
+        foreach (self::$constantIDs as $keyword => $deviceId) {
             if (Utils::checkIfContains($userAgent, $keyword)) {
-                return $device_id;
+                return $deviceId;
             }
         }
+
         if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
             return 'generic_opera_mini_version4';
         }
+
         return 'generic_opera_mini_version1';
     }
 }

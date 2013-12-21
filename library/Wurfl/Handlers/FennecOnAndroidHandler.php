@@ -47,9 +47,11 @@ class FennecOnAndroidHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return (Utils::checkIfContains($userAgent, 'Android')
             && Utils::checkIfContainsAnyOf(
-                $userAgent, array('Fennec', 'Firefox')
+                $userAgent,
+                array('Fennec', 'Firefox')
             ));
     }
 
@@ -62,27 +64,29 @@ class FennecOnAndroidHandler extends AbstractHandler
         if (preg_match('|^.+?\(.+?rv:\d+(\.)|', $userAgent, $matches, PREG_OFFSET_CAPTURE)) {
             return $this->getDeviceIDFromRIS($userAgent, $matches[1][1] + 1);
         }
+
         return Constants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent)
     {
-        $is_fennec  = Utils::checkIfContains($userAgent, 'Fennec');
-        $is_firefox = Utils::checkIfContains($userAgent, 'Firefox');
-        if ($is_fennec || $is_firefox) {
-            if ($is_fennec || Utils::checkIfContains($userAgent, 'Mobile')) {
+        $isFennec  = Utils::checkIfContains($userAgent, 'Fennec');
+        $isFirefox = Utils::checkIfContains($userAgent, 'Firefox');
+
+        if ($isFennec || $isFirefox) {
+            if ($isFennec || Utils::checkIfContains($userAgent, 'Mobile')) {
                 return 'generic_android_ver2_0_fennec';
             }
-            if ($is_firefox) {
-                if (Utils::checkIfContains($userAgent, 'Tablet')) {
-                    return 'generic_android_ver2_0_fennec_tablet';
-                }
-                if (Utils::checkIfContains($userAgent, 'Desktop')) {
-                    return 'generic_android_ver2_0_fennec_desktop';
-                }
-                return Constants::NO_MATCH;
+
+            if (Utils::checkIfContains($userAgent, 'Tablet')) {
+                return 'generic_android_ver2_0_fennec_tablet';
+            }
+
+            if (Utils::checkIfContains($userAgent, 'Desktop')) {
+                return 'generic_android_ver2_0_fennec_desktop';
             }
         }
+
         return Constants::NO_MATCH;
     }
 }

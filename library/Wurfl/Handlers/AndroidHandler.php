@@ -92,16 +92,20 @@ class AndroidHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'Froyo')) {
             return 'generic_android_ver2_2';
         }
-        $android_version = self::getAndroidVersion($userAgent);
-        $version_string  = str_replace('.', '_', $android_version);
-        $deviceID        = 'generic_android_ver' . $version_string;
+
+        $androidVersion = self::getAndroidVersion($userAgent);
+        $versionString  = str_replace('.', '_', $androidVersion);
+        $deviceID       = 'generic_android_ver' . $versionString;
+
         if ($deviceID == 'generic_android_ver2_0') {
             $deviceID = 'generic_android_ver2';
         }
+
         if ($deviceID == 'generic_android_ver4_0') {
             $deviceID = 'generic_android_ver4';
         }
-        if (($android_version < 3.0 || $android_version >= 4.0)
+
+        if (($androidVersion < 3.0 || $androidVersion >= 4.0)
             && Utils::checkIfContains($userAgent, 'Safari')
             && !Utils::checkIfContains($userAgent, 'Mobile')
         ) {
@@ -109,8 +113,10 @@ class AndroidHandler extends AbstractHandler
             if (in_array($deviceID . '_tablet', self::$constantIDs)) {
                 return $deviceID . '_tablet';
             }
+
             return 'generic_android_ver1_5_tablet';
         }
+
         if (in_array($deviceID, self::$constantIDs)) {
             return $deviceID;
         }
@@ -140,24 +146,27 @@ class AndroidHandler extends AbstractHandler
     /**
      * Get the Android version from the User Agent, or the default Android version is it cannot be determined
      *
-     * @param string  $ua          User Agent
-     * @param boolean $use_default Return the default version on fail, else return null
+     * @param string  $ua         User Agent
+     * @param boolean $useDefault Return the default version on fail, else return null
      *
      * @return string Android version
      * @see self::ANDROID_DEFAULT_VERSION
      */
-    public static function getAndroidVersion($ua, $use_default = true)
+    public static function getAndroidVersion($ua, $useDefault = true)
     {
         // Replace Android version names with their numbers
         // ex: Froyo => 2.2
         $ua = str_replace(array_keys(self::$androidReleaseMap), array_values(self::$androidReleaseMap), $ua);
+
         if (preg_match('/Android (\d\.\d)/', $ua, $matches)) {
             $version = $matches[1];
+
             if (in_array($version, self::$validAndroidVersions)) {
                 return $version;
             }
         }
-        return $use_default ? self::ANDROID_DEFAULT_VERSION : null;
+
+        return $useDefault ? self::ANDROID_DEFAULT_VERSION : null;
     }
 
     /**
@@ -194,6 +203,7 @@ class AndroidHandler extends AbstractHandler
             $model = preg_replace('#(/| +V?\d)[\.\d]+$#', '', $model);
             $model = preg_replace('#/.*$#', '', $model);
         }
+
         // Samsung
         $model = preg_replace('#(SAMSUNG[^/]+)/.*$#', '$1', $model);
 

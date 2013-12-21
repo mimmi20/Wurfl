@@ -43,9 +43,11 @@ class FirefoxHandler extends AbstractHandler
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
         if (Utils::checkIfContainsAnyOf($userAgent, array('Tablet', 'Sony', 'Novarra', 'Opera'))) {
             return false;
         }
+
         return Utils::checkIfContains($userAgent, 'Firefox');
     }
 

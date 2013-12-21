@@ -45,6 +45,7 @@ class MotorolaHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto'))
             || Utils::checkIfContains($userAgent, 'Motorola'));
     }
@@ -54,6 +55,7 @@ class MotorolaHandler extends AbstractHandler
         if (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
             return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
         }
+
         return $this->getDeviceIDFromLD($userAgent, 5);
     }
 
@@ -62,6 +64,7 @@ class MotorolaHandler extends AbstractHandler
         if (Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
             return "mot_mib22_generic";
         }
+
         return Constants::NO_MATCH;
     }
 }
