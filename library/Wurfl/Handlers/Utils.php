@@ -268,10 +268,10 @@ class Utils
      */
     public static function reset()
     {
-        self::$_is_desktop_browser = null;
-        self::$_is_mobile_browser  = null;
-        self::$_is_smarttv         = null;
-        self::$_is_robot           = null;
+        self::$isDesktopBrowser = null;
+        self::$isMobileBrowser  = null;
+        self::$isSmartTv         = null;
+        self::$isRobot           = null;
     }
 
     /**
@@ -283,21 +283,21 @@ class Utils
      */
     public static function isMobileBrowser($userAgent)
     {
-        if (self::$_is_mobile_browser !== null) {
-            return self::$_is_mobile_browser;
+        if (self::$isMobileBrowser !== null) {
+            return self::$isMobileBrowser;
         }
-        self::$_is_mobile_browser = false;
+        self::$isMobileBrowser = false;
         $userAgent                = strtolower($userAgent);
         foreach (self::$mobileBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
-                self::$_is_mobile_browser = true;
+                self::$isMobileBrowser = true;
                 break;
             }
         }
-        return self::$_is_mobile_browser;
+        return self::$isMobileBrowser;
     }
 
-    private static $_is_mobile_browser;
+    private static $isMobileBrowser;
 
     /**
      * Returns true if the give $userAgent is from a desktop device
@@ -308,21 +308,21 @@ class Utils
      */
     public static function isDesktopBrowser($userAgent)
     {
-        if (self::$_is_desktop_browser !== null) {
-            return self::$_is_desktop_browser;
+        if (self::$isDesktopBrowser !== null) {
+            return self::$isDesktopBrowser;
         }
-        self::$_is_desktop_browser = false;
+        self::$isDesktopBrowser = false;
         $userAgent                 = strtolower($userAgent);
         foreach (self::$desktopBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
-                self::$_is_desktop_browser = true;
+                self::$isDesktopBrowser = true;
                 break;
             }
         }
-        return self::$_is_desktop_browser;
+        return self::$isDesktopBrowser;
     }
 
-    private static $_is_desktop_browser;
+    private static $isDesktopBrowser;
 
     /**
      * Returns true if the give $userAgent is from a robot
@@ -333,21 +333,21 @@ class Utils
      */
     public static function isRobot($userAgent)
     {
-        if (self::$_is_robot !== null) {
-            return self::$_is_robot;
+        if (self::$isRobot !== null) {
+            return self::$isRobot;
         }
-        self::$_is_robot = false;
+        self::$isRobot = false;
         $userAgent       = strtolower($userAgent);
         foreach (self::$robots as $key) {
             if (strpos($userAgent, $key) !== false) {
-                self::$_is_robot = true;
+                self::$isRobot = true;
                 break;
             }
         }
-        return self::$_is_robot;
+        return self::$isRobot;
     }
 
-    private static $_is_robot;
+    private static $isRobot;
 
     /**
      * Returns true if the give $userAgent is from a mobile device
@@ -382,7 +382,8 @@ class Utils
         // Chrome
         if (Utils::checkIfContains($userAgent, 'Chrome')
             && !Utils::checkIfContainsAnyOf(
-                $userAgent, array('Android', 'Ventana')
+                $userAgent,
+                array('Android', 'Ventana')
             )
         ) {
             return true;
@@ -393,7 +394,8 @@ class Utils
         }
 
         if (Utils::checkIfContains(
-            $userAgent, 'PPC'
+            $userAgent,
+            'PPC'
         )
         ) {
             return false;
@@ -404,7 +406,8 @@ class Utils
         }
         // Safari
         if (preg_match(
-            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ Safari/[\d\.]+$#',
+            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ '
+            . 'Safari/[\d\.]+$#',
             $userAgent
         )
         ) {
@@ -438,21 +441,21 @@ class Utils
      */
     public static function isSmartTV($userAgent)
     {
-        if (self::$_is_smarttv !== null) {
-            return self::$_is_smarttv;
+        if (self::$isSmartTv !== null) {
+            return self::$isSmartTv;
         }
-        self::$_is_smarttv = false;
+        self::$isSmartTv = false;
         $userAgent         = strtolower($userAgent);
         foreach (self::$smartTVBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
-                self::$_is_smarttv = true;
+                self::$isSmartTv = true;
                 break;
             }
         }
-        return self::$_is_smarttv;
+        return self::$isSmartTv;
     }
 
-    private static $_is_smarttv;
+    private static $isSmartTv;
 
     /**
      * Returns true if the give $userAgent is from a spam bot or crawler
@@ -463,7 +466,6 @@ class Utils
      */
     public static function isSpamOrCrawler($userAgent)
     {
-        //$spamOrCrawlers = array("FunWebProducts", "Spam");
         return self::checkIfContains($userAgent, "Spam") || self::checkIfContains($userAgent, "FunWebProducts");
     }
 
@@ -498,11 +500,11 @@ class Utils
     public static function ordinalIndexOf($haystack, $needle, $ordinal)
     {
         if (is_null($haystack) || empty ($haystack)) {
-            throw new \InvalidArgumentException ("haystack must not be null or empty");
+            throw new \InvalidArgumentException("haystack must not be null or empty");
         }
 
         if (!is_integer($ordinal)) {
-            throw new \InvalidArgumentException ("ordinal must be a positive ineger");
+            throw new \InvalidArgumentException("ordinal must be a positive ineger");
         }
 
         $found = 0;
