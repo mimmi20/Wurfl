@@ -162,7 +162,9 @@ class VirtualCapabilityProvider
         if ($control_value === 'force_true') {
             return true;
         }
-        if ($control_value === 'force_false') return false;
+        if ($control_value === 'force_false') {
+            return false;
+        }
 
         // Use the control value from WURFL
         return $control_value;

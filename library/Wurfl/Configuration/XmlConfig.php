@@ -142,7 +142,7 @@ class XmlConfig extends Config
         $persistence = array();
         if ($persistenceElement) {
             $persistence['provider'] = (string)$persistenceElement[0]->provider;
-            $persistence['params']   = $this->_toArray((string)$persistenceElement[0]->params);
+            $persistence['params']   = $this->toArray((string)$persistenceElement[0]->params);
         }
         return $persistence;
     }
@@ -154,7 +154,7 @@ class XmlConfig extends Config
      *
      * @return array Parameters
      */
-    private function _toArray($params)
+    private function toArray($params)
     {
         $paramsArray = array();
 

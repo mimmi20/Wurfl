@@ -30,7 +30,7 @@ class UserAgentHandlerChain
     /**
      * @var array of \Wurfl\Handlers\AbstractHandler objects
      */
-    private $_userAgentHandlers = array();
+    private $userAgentHandlers = array();
 
     /**
      * Adds a \Wurfl\Handlers\AbstractHandler to the chain
@@ -41,11 +41,13 @@ class UserAgentHandlerChain
      */
     public function addUserAgentHandler(Handlers\AbstractHandler $handler)
     {
-        $size = count($this->_userAgentHandlers);
+        $size = count($this->userAgentHandlers);
+
         if ($size > 0) {
-            $this->_userAgentHandlers[$size - 1]->setNextHandler($handler);
+            $this->userAgentHandlers[$size - 1]->setNextHandler($handler);
         }
-        $this->_userAgentHandlers[] = $handler;
+
+        $this->userAgentHandlers[] = $handler;
         return $this;
     }
 
@@ -54,7 +56,7 @@ class UserAgentHandlerChain
      */
     public function getHandlers()
     {
-        return $this->_userAgentHandlers;
+        return $this->userAgentHandlers;
     }
 
     /**
@@ -68,7 +70,7 @@ class UserAgentHandlerChain
     public function filter($userAgent, $deviceID)
     {
         Handlers\Utils::reset();
-        $this->_userAgentHandlers[0]->filter($userAgent, $deviceID);
+        $this->userAgentHandlers[0]->filter($userAgent, $deviceID);
     }
 
     /**
@@ -81,7 +83,7 @@ class UserAgentHandlerChain
     public function match(Request\GenericRequest $request)
     {
         Handlers\Utils::reset();
-        return $this->_userAgentHandlers[0]->match($request);
+        return $this->userAgentHandlers[0]->match($request);
     }
 
     /**
@@ -91,7 +93,7 @@ class UserAgentHandlerChain
      */
     public function persistData()
     {
-        foreach ($this->_userAgentHandlers as $userAgentHandler) {
+        foreach ($this->userAgentHandlers as $userAgentHandler) {
             $userAgentHandler->persistData();
         }
     }
@@ -103,16 +105,19 @@ class UserAgentHandlerChain
      */
     public function collectData()
     {
-        $userAgentsWithDeviceId = array();
-        foreach ($this->_userAgentHandlers as $userAgentHandler) {
+        $userAgents = array();
+
+        foreach ($this->userAgentHandlers as $userAgentHandler) {
             /**
              * @see \Wurfl\Handlers\AbstractHandler::getUserAgentsWithDeviceId()
              */
             $current = $userAgentHandler->getUserAgentsWithDeviceId();
+
             if (!empty($current)) {
-                $userAgentsWithDeviceId = array_merge($userAgentsWithDeviceId, $current);
+                $userAgents = array_merge($userAgents, $current);
             }
         }
-        return $userAgentsWithDeviceId;
+
+        return $userAgents;
     }
 }

@@ -56,11 +56,11 @@ class Manager
     /**
      * @var \Wurfl\DeviceRepository
      */
-    private $_deviceRepository;
+    private $deviceRepository;
     /**
      * @var \Wurfl\UserAgentHandlerChain
      */
-    private $_userAgentHandlerChain;
+    private $userAgentHandlerChain;
 
     /**
      * Creates a new Wurfl Manager object
@@ -70,7 +70,8 @@ class Manager
      * @param AdapterInterface     $cacheStorage
      */
     public function __construct(
-        Configuration\Config $wurflConfig, AdapterInterface $persistenceStorage = null,
+        Configuration\Config $wurflConfig,
+        AdapterInterface $persistenceStorage = null,
         AdapterInterface $cacheStorage = null
     ) {
         $this->wurflConfig = $wurflConfig;
@@ -171,11 +172,12 @@ class Manager
      */
     private function init()
     {
-        $logger                       = null;
-        $context                      = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
-        $this->_userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
-        $this->_deviceRepository      = $this->deviceRepository(
-            $this->persistenceStorage, $this->_userAgentHandlerChain
+        $logger                      = null;
+        $context                     = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
+        $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
+        $this->deviceRepository      = $this->deviceRepository(
+            $this->persistenceStorage,
+            $this->userAgentHandlerChain
         );
     }
 
@@ -190,11 +192,17 @@ class Manager
      */
     private function deviceRepository(Storage\Storage $persistenceStorage, $userAgentHandlerChain)
     {
-        $devicePatcher = new Xml\DevicePatcher();
-        $deviceRepositoryBuilder
-                       = new DeviceRepositoryBuilder($persistenceStorage, $userAgentHandlerChain, $devicePatcher);
+        $devicePatcher           = new Xml\DevicePatcher();
+        $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
+            $persistenceStorage,
+            $userAgentHandlerChain,
+            $devicePatcher
+        );
+
         return $deviceRepositoryBuilder->build(
-            $this->wurflConfig->wurflFile, $this->wurflConfig->wurflPatches, $this->wurflConfig->capabilityFilter
+            $this->wurflConfig->wurflFile,
+            $this->wurflConfig->wurflPatches,
+            $this->wurflConfig->capabilityFilter
         );
     }
 
@@ -215,7 +223,7 @@ class Manager
      */
     public function getWurflInfo()
     {
-        return $this->_deviceRepository->getWurflInfo();
+        return $this->deviceRepository->getWurflInfo();
     }
 
     /**
@@ -249,12 +257,14 @@ class Manager
     private function getDeviceForRequest(Request\GenericRequest $request)
     {
         Handlers\Utils::reset();
-        /*
-        if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)) {
+
+        if (Configuration\ConfigHolder::getWURFLConfig()->isHighPerformance()
+            && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
+        ) {
             // This device has been identified as a web browser programatically, so no call to WURFL is necessary
-            return $this->_wurflService->getDevice(WURFL_Constants::GENERIC_WEB_BROWSER, $request);
+            return $this->getDevice(Constants::GENERIC_WEB_BROWSER, $request);
         }
-        /**/
+
         $deviceId = $this->deviceIdForRequest($request);
 
         return $this->getWrappedDevice($deviceId, $request);
@@ -301,7 +311,7 @@ class Manager
      */
     public function getListOfGroups()
     {
-        return $this->_deviceRepository->getListOfGroups();
+        return $this->deviceRepository->getListOfGroups();
     }
 
     /**
@@ -313,7 +323,7 @@ class Manager
      */
     public function getCapabilitiesNameForGroup($groupId)
     {
-        return $this->_deviceRepository->getCapabilitiesNameForGroup($groupId);
+        return $this->deviceRepository->getCapabilitiesNameForGroup($groupId);
     }
 
     /**
@@ -326,7 +336,7 @@ class Manager
      */
     public function getFallBackDevices($deviceId)
     {
-        return $this->_deviceRepository->getDeviceHierarchy($deviceId);
+        return $this->deviceRepository->getDeviceHierarchy($deviceId);
     }
 
     /**
@@ -336,7 +346,7 @@ class Manager
      */
     public function getAllDevicesID()
     {
-        return $this->_deviceRepository->getAllDevicesID();
+        return $this->deviceRepository->getAllDevicesID();
     }
 
     // ******************** private functions *****************************
@@ -352,7 +362,7 @@ class Manager
     {
         $deviceId = $this->cacheStorage->load($request->id);
         if (empty($deviceId)) {
-            $deviceId = $this->_userAgentHandlerChain->match($request);
+            $deviceId = $this->userAgentHandlerChain->match($request);
             // save it in cache
             $this->cacheStorage->save($request->id, $deviceId);
         } else {
@@ -377,7 +387,7 @@ class Manager
         $device = $this->cacheStorage->load('DEV_' . $deviceId);
 
         if (empty($device)) {
-            $modelDevices = $this->_deviceRepository->getDeviceHierarchy($deviceId);
+            $modelDevices = $this->deviceRepository->getDeviceHierarchy($deviceId);
             $device       = new CustomDevice($modelDevices, $request);
             $this->cacheStorage->save('DEV_' . $deviceId, $device);
         }

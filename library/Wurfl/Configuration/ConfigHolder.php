@@ -31,7 +31,7 @@ class ConfigHolder
     /**
      * @var Config
      */
-    private static $_wurflConfig = null;
+    private static $wurflConfig = null;
 
     private function __construct()
     {
@@ -49,10 +49,10 @@ class ConfigHolder
      */
     public static function getWURFLConfig()
     {
-        if (self::$_wurflConfig === null) {
+        if (self::$wurflConfig === null) {
             throw new Exception("The Configuration Holder is not initialized with a valid WURFLConfig object");
         }
-        return self::$_wurflConfig;
+        return self::$wurflConfig;
     }
 
     /**
@@ -62,6 +62,6 @@ class ConfigHolder
      */
     public static function setWURFLConfig(Config $wurflConfig)
     {
-        self::$_wurflConfig = $wurflConfig;
+        self::$wurflConfig = $wurflConfig;
     }
 }

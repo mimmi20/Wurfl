@@ -55,7 +55,7 @@ class NetFrontOnAndroidHandler extends AbstractHandler
 
     public function applyConclusiveMatch($userAgent)
     {
-        $find = 'NetFrontLifeBrowser/2.2';
+        $find      = 'NetFrontLifeBrowser/2.2';
         $tolerance = strpos($userAgent, $find) + strlen($find);
         if ($tolerance > strlen($userAgent)) {
             $tolerance = strlen($userAgent);

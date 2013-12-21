@@ -132,13 +132,13 @@ class FileUtils
      */
     public static function getTempDir()
     {
-        $temp_dir = ini_get('upload_tmp_dir');
+        $tempDir = ini_get('upload_tmp_dir');
 
-        if (!$temp_dir) {
-            $temp_dir = function_exists('\\sys_get_temp_dir') ? sys_get_temp_dir() : '/tmp';
+        if (!$tempDir) {
+            $tempDir = function_exists('\\sys_get_temp_dir') ? sys_get_temp_dir() : '/tmp';
         }
 
-        return realpath($temp_dir);
+        return realpath($tempDir);
     }
 
     /**

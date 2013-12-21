@@ -49,48 +49,55 @@ class UcwebU2 implements NormalizerInterface
                 return $prefix . $userAgent;
             }
         } //iPhone U2K
-        else if (Utils::checkIfContains($userAgent, 'iPh OS')) {
-
-            if (preg_match('/iPh OS (\d)_?(\d)?[ _\d]?.+; iPh(\d), ?(\d)\) U2/', $userAgent, $matches)) {
-                $version = $matches[1] . '.' . $matches[2];
-                $model   = $matches[3] . '.' . $matches[4];
-                $prefix  = "$version U2iPhone $ucb_version $model" . Constants::RIS_DELIMITER;
-                return $prefix . $userAgent;
-            }
-        } //WP7&8 U2K
-        else if (Utils::checkIfContains($userAgent, 'wds')) {
-            //Add spaces and normalize
-            $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
-            if (preg_match(
-                '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/', $userAgent, $matches
-            )
-            ) {
-                $version = $matches[1] . '.' . $matches[2];
-                $model   = $matches[3] . '.' . $matches[4];
-                //Standard normalization stuff from WP matcher
-                $model  = str_replace('_blocked', '', $model);
-                $model  = preg_replace('/(NOKIA.RM-.+?)_.*/', '$1', $model, 1);
-                $prefix = "$version U2WindowsPhone $ucb_version $model" . Constants::RIS_DELIMITER;
-                return $prefix . $userAgent;
-            }
-        } //Symbian U2K
-        else if (Utils::checkIfContains($userAgent, 'Symbian')) {
-
-            if (preg_match('/^UCWEB.+; S60 V(\d); .+; (.+)\) U2/', $userAgent, $matches)) {
-                $version = 'S60 V' . $matches[1];
-                $model   = $matches[2];
-                $prefix  = "$version U2Symbian $ucb_version $model" . Constants::RIS_DELIMITER;
-                return $prefix . $userAgent;
-            }
-        } //Java U2K - check results for regex
         else {
-            if (Utils::checkIfContains($userAgent, 'Java')) {
+            if (Utils::checkIfContains($userAgent, 'iPh OS')) {
 
-                if (preg_match('/^UCWEB[^\(]+\(Java; .+; (.+)\) U2/', $userAgent, $matches)) {
-                    $version = 'Java';
-                    $model   = $matches[1];
-                    $prefix  = "$version U2JavaApp $ucb_version $model" . Constants::RIS_DELIMITER;
+                if (preg_match('/iPh OS (\d)_?(\d)?[ _\d]?.+; iPh(\d), ?(\d)\) U2/', $userAgent, $matches)) {
+                    $version = $matches[1] . '.' . $matches[2];
+                    $model   = $matches[3] . '.' . $matches[4];
+                    $prefix  = "$version U2iPhone $ucb_version $model" . Constants::RIS_DELIMITER;
                     return $prefix . $userAgent;
+                }
+            } //WP7&8 U2K
+            else {
+                if (Utils::checkIfContains($userAgent, 'wds')) {
+                    //Add spaces and normalize
+                    $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
+                    if (preg_match(
+                        '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/', $userAgent,
+                        $matches
+                    )
+                    ) {
+                        $version = $matches[1] . '.' . $matches[2];
+                        $model   = $matches[3] . '.' . $matches[4];
+                        //Standard normalization stuff from WP matcher
+                        $model  = str_replace('_blocked', '', $model);
+                        $model  = preg_replace('/(NOKIA.RM-.+?)_.*/', '$1', $model, 1);
+                        $prefix = "$version U2WindowsPhone $ucb_version $model" . Constants::RIS_DELIMITER;
+                        return $prefix . $userAgent;
+                    }
+                } //Symbian U2K
+                else {
+                    if (Utils::checkIfContains($userAgent, 'Symbian')) {
+
+                        if (preg_match('/^UCWEB.+; S60 V(\d); .+; (.+)\) U2/', $userAgent, $matches)) {
+                            $version = 'S60 V' . $matches[1];
+                            $model   = $matches[2];
+                            $prefix  = "$version U2Symbian $ucb_version $model" . Constants::RIS_DELIMITER;
+                            return $prefix . $userAgent;
+                        }
+                    } //Java U2K - check results for regex
+                    else {
+                        if (Utils::checkIfContains($userAgent, 'Java')) {
+
+                            if (preg_match('/^UCWEB[^\(]+\(Java; .+; (.+)\) U2/', $userAgent, $matches)) {
+                                $version = 'Java';
+                                $model   = $matches[1];
+                                $prefix  = "$version U2JavaApp $ucb_version $model" . Constants::RIS_DELIMITER;
+                                return $prefix . $userAgent;
+                            }
+                        }
+                    }
                 }
             }
         }

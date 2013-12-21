@@ -34,41 +34,40 @@ class Context
     /**
      * @var Storage\Storage
      */
-    private $_persistenceProvider;
+    private $persistenceProvider;
     /**
      * @var Storage\Storage
      */
-    private $_cacheProvider;
+    private $cacheProvider;
     /**
      * @var LoggerInterface
      */
-    private $_logger;
+    private $logger;
 
     public function __construct(
         Storage\Storage $persistenceProvider, Storage\Storage $cacheProvider = null, LoggerInterface $logger = null
     ) {
-        $this->_persistenceProvider = $persistenceProvider;
-        $this->cacheProvider($cacheProvider);
-        $this->_logger = is_null($logger) ? new Logger\NullLogger() : $logger;
+        $this->persistenceProvider = $persistenceProvider;
+        $this->setCacheProvider($cacheProvider);
+        $this->logger = is_null($logger) ? new Logger\NullLogger() : $logger;
     }
 
-    public function cacheProvider($cacheProvider)
+    public function setCacheProvider($cacheProvider)
     {
-        $this->_cacheProvider = is_null($cacheProvider) ? new Storage\Storage(Storage\Factory::create(
+        $this->cacheProvider = is_null($cacheProvider) ? new Storage\Storage(Storage\Factory::create(
             array('provider' => 'null')
         )) : $cacheProvider;
         return $this;
     }
 
-    public function logger($logger)
+    public function setLogger($logger)
     {
-        $this->_logger = is_null($logger) ? new Logger\NullLogger() : $logger;
+        $this->logger = is_null($logger) ? new Logger\NullLogger() : $logger;
         return $this;
     }
 
     public function __get($name)
     {
-        $name = '_' . $name;
         return $this->$name;
     }
 }

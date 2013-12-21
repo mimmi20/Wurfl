@@ -95,8 +95,12 @@ class AndroidHandler extends AbstractHandler
         $android_version = self::getAndroidVersion($userAgent);
         $version_string  = str_replace('.', '_', $android_version);
         $deviceID        = 'generic_android_ver' . $version_string;
-        if ($deviceID == 'generic_android_ver2_0') $deviceID = 'generic_android_ver2';
-        if ($deviceID == 'generic_android_ver4_0') $deviceID = 'generic_android_ver4';
+        if ($deviceID == 'generic_android_ver2_0') {
+            $deviceID = 'generic_android_ver2';
+        }
+        if ($deviceID == 'generic_android_ver4_0') {
+            $deviceID = 'generic_android_ver4';
+        }
         if (($android_version < 3.0 || $android_version >= 4.0)
             && Utils::checkIfContains($userAgent, 'Safari')
             && !Utils::checkIfContains($userAgent, 'Mobile')

@@ -67,7 +67,7 @@ class FennecOnAndroidHandler extends AbstractHandler
 
     public function applyRecoveryMatch($userAgent)
     {
-        $is_fennec = Utils::checkIfContains($userAgent, 'Fennec');
+        $is_fennec  = Utils::checkIfContains($userAgent, 'Fennec');
         $is_firefox = Utils::checkIfContains($userAgent, 'Firefox');
         if ($is_fennec || $is_firefox) {
             if ($is_fennec || Utils::checkIfContains($userAgent, 'Mobile')) {

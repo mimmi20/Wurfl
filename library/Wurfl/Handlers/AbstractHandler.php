@@ -414,7 +414,9 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         if ($mobile) {
             return Constants::GENERIC_MOBILE;
         }
-        if ($desktop) return Constants::GENERIC_WEB_BROWSER;
+        if ($desktop) {
+            return Constants::GENERIC_WEB_BROWSER;
+        }
         return Constants::GENERIC;
     }
 

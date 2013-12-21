@@ -119,7 +119,7 @@ abstract class Config
     /**
      * Initialize the Configuration object
      */
-    protected abstract function initialize();
+    abstract protected function initialize();
 
     /**
      * Magic Method

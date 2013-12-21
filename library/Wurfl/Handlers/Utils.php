@@ -308,7 +308,9 @@ class Utils
      */
     public static function isDesktopBrowser($userAgent)
     {
-        if (self::$_is_desktop_browser !== null) return self::$_is_desktop_browser;
+        if (self::$_is_desktop_browser !== null) {
+            return self::$_is_desktop_browser;
+        }
         self::$_is_desktop_browser = false;
         $userAgent                 = strtolower($userAgent);
         foreach (self::$desktopBrowsers as $key) {
@@ -331,7 +333,9 @@ class Utils
      */
     public static function isRobot($userAgent)
     {
-        if (self::$_is_robot !== null) return self::$_is_robot;
+        if (self::$_is_robot !== null) {
+            return self::$_is_robot;
+        }
         self::$_is_robot = false;
         $userAgent       = strtolower($userAgent);
         foreach (self::$robots as $key) {
@@ -372,36 +376,56 @@ class Utils
     public static function isDesktopBrowserHeavyDutyAnalysis($userAgent)
     {
         // Check Smart TV keywords
-        if (Utils::isSmartTV($userAgent)) return false;
+        if (Utils::isSmartTV($userAgent)) {
+            return false;
+        }
         // Chrome
         if (Utils::checkIfContains($userAgent, 'Chrome')
             && !Utils::checkIfContainsAnyOf(
                 $userAgent, array('Android', 'Ventana')
             )
-        ) return true;
+        ) {
+            return true;
+        }
         // Check mobile keywords
-        if (Utils::isMobileBrowser($userAgent)) return false;
+        if (Utils::isMobileBrowser($userAgent)) {
+            return false;
+        }
 
         if (Utils::checkIfContains(
             $userAgent, 'PPC'
         )
-        ) return false; // PowerPC; not always mobile, but we'll kick it out
+        ) {
+            return false;
+        } // PowerPC; not always mobile, but we'll kick it out
         // Firefox;  fennec is already handled in the \Wurfl\Constants::$MOBILE_BROWSERS keywords
-        if (Utils::checkIfContains($userAgent, 'Firefox') && !Utils::checkIfContains($userAgent, 'Tablet')) return true;
+        if (Utils::checkIfContains($userAgent, 'Firefox') && !Utils::checkIfContains($userAgent, 'Tablet')) {
+            return true;
+        }
         // Safari
         if (preg_match(
             '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ Safari/[\d\.]+$#',
             $userAgent
         )
-        ) return true;
+        ) {
+            return true;
+        }
         // Opera Desktop
-        if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) return true;
+        if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) {
+            return true;
+        }
         // Check desktop keywords
-        if (Utils::isDesktopBrowser($userAgent)) return true;
+        if (Utils::isDesktopBrowser($userAgent)) {
+            return true;
+        }
         // Internet Explorer 9
-        if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) return true;
+        if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) {
+            return true;
+        }
         // Internet Explorer <9
-        if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE \d\.\d; Windows NT \d\.\d/', $userAgent)) return true;
+        if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE \d\.\d; Windows NT \d\.\d/', $userAgent)) {
+            return true;
+        }
         return false;
     }
 
@@ -414,7 +438,9 @@ class Utils
      */
     public static function isSmartTV($userAgent)
     {
-        if (self::$_is_smarttv !== null) return self::$_is_smarttv;
+        if (self::$_is_smarttv !== null) {
+            return self::$_is_smarttv;
+        }
         self::$_is_smarttv = false;
         $userAgent         = strtolower($userAgent);
         foreach (self::$smartTVBrowsers as $key) {
@@ -516,8 +542,9 @@ class Utils
     public static function secondSlash($string)
     {
         $firstSlash = strpos($string, "/");
-        if ($firstSlash === false)
+        if ($firstSlash === false) {
             return strlen($string);
+        }
         return strpos(substr($string, $firstSlash + 1), "/") + $firstSlash;
     }
 
@@ -584,7 +611,9 @@ class Utils
     public static function checkIfContainsAnyOf($haystack, $needles)
     {
         foreach ($needles as $needle) {
-            if (self::checkIfContains($haystack, $needle)) return true;
+            if (self::checkIfContains($haystack, $needle)) {
+                return true;
+            }
         }
         return false;
     }
@@ -600,7 +629,9 @@ class Utils
     public static function checkIfContainsAll($haystack, $needles = array())
     {
         foreach ($needles as $needle) {
-            if (!self::checkIfContains($haystack, $needle)) return false;
+            if (!self::checkIfContains($haystack, $needle)) {
+                return false;
+            }
         }
         return true;
     }

@@ -70,7 +70,7 @@ class CustomDevice
     public function __construct(Array $modelDevices, Request\GenericRequest $request = null)
     {
         if (!is_array($modelDevices) || count($modelDevices) < 1) {
-            throw new \InvalidArgumentException ("modelDevices must be an array of at least one ModelDevice.");
+            throw new \InvalidArgumentException("modelDevices must be an array of at least one ModelDevice.");
         }
         $this->modelDevices = $modelDevices;
         if ($request === null) {
@@ -110,7 +110,7 @@ class CustomDevice
             case "actualDeviceRoot":
                 return $this->modelDevices[0]->$name;
                 break;
-            default :
+            default:
                 return $this->getCapability($name);
                 break;
         }
@@ -220,6 +220,7 @@ class CustomDevice
     {
         $capabilities = array();
         foreach (array_reverse($this->modelDevices) as $modelDevice) {
+            /** @var \Wurfl\Xml\ModelDevice $modelDevice */
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
         return $capabilities;

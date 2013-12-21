@@ -147,7 +147,8 @@ class ArrayConfig extends Config
         $this->persistence = $persistenceConfig;
         if (array_key_exists('params', $this->persistence)
             && array_key_exists(
-                Config::DIR, $this->persistence['params']
+                Config::DIR,
+                $this->persistence['params']
             )
         ) {
             $this->persistence['params'][Config::DIR] = parent::getFullPath($this->persistence['params'][Config::DIR]);

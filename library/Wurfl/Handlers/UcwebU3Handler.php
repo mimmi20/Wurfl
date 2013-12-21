@@ -94,28 +94,32 @@ class UcwebU3Handler extends AbstractHandler
 
             return 'generic_ucweb_android_ver1';
         } //iPhone U3K
-        else if (Utils::checkIfContains($userAgent, 'iPhone;')) {
-            if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
-                $significant_version = $matches[1];
-                $deviceID            = 'apple_iphone_ver' . $significant_version . '_subuaucweb';
-                if (in_array($deviceID, self::$constantIDs)) {
-                    return $deviceID;
+        else {
+            if (Utils::checkIfContains($userAgent, 'iPhone;')) {
+                if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
+                    $significant_version = $matches[1];
+                    $deviceID            = 'apple_iphone_ver' . $significant_version . '_subuaucweb';
+                    if (in_array($deviceID, self::$constantIDs)) {
+                        return $deviceID;
+                    }
+                }
+
+                return 'apple_iphone_ver1_subuaucweb';
+            } //iPad U3K
+            else {
+                if (Utils::checkIfContains($userAgent, 'iPad')) {
+
+                    if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
+                        $significant_version = $matches[1];
+                        $deviceID            = 'apple_ipad_ver1_sub' . $significant_version . '_subuaucweb';
+                        if (in_array($deviceID, self::$constantIDs)) {
+                            return $deviceID;
+                        }
+                    }
+
+                    return 'apple_ipad_ver1_subuaucweb';
                 }
             }
-
-            return 'apple_iphone_ver1_subuaucweb';
-        } //iPad U3K
-        else if (Utils::checkIfContains($userAgent, 'iPad')) {
-
-            if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
-                $significant_version = $matches[1];
-                $deviceID            = 'apple_ipad_ver1_sub' . $significant_version . '_subuaucweb';
-                if (in_array($deviceID, self::$constantIDs)) {
-                    return $deviceID;
-                }
-            }
-
-            return 'apple_ipad_ver1_subuaucweb';
         }
 
         return 'generic_ucweb';

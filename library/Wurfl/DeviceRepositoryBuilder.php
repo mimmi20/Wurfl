@@ -38,24 +38,17 @@ class DeviceRepositoryBuilder
     private $devicePatcher;
 
     /**
-     * Determines the fopen() mode that is used on the lockfile
-     *
-     * @var string
-     */
-    private $lockStyle = 'r';
-
-    /**
      * @param Storage\Storage       $persistenceProvider
-     * @param UserAgentHandlerChain $userAgentHandlerChain
+     * @param UserAgentHandlerChain $chain
      * @param Xml\DevicePatcher     $devicePatcher
      */
     public function __construct(
         Storage\Storage $persistenceProvider,
-        UserAgentHandlerChain $userAgentHandlerChain,
+        UserAgentHandlerChain $chain,
         Xml\DevicePatcher $devicePatcher
     ) {
         $this->persistenceProvider   = $persistenceProvider;
-        $this->userAgentHandlerChain = $userAgentHandlerChain;
+        $this->userAgentHandlerChain = $chain;
         $this->devicePatcher         = $devicePatcher;
     }
 
@@ -82,23 +75,22 @@ class DeviceRepositoryBuilder
             }
 
             // Update Data
-            if ($fp = fopen($lockFile, $lockStyle)) {
-                if (flock($fp, LOCK_EX | LOCK_NB)) {
+            if ($filePointer = fopen($lockFile, $lockStyle)) {
+                if (flock($filePointer, LOCK_EX | LOCK_NB)) {
                     $infoIterator   = new Xml\VersionIterator($wurflFile);
                     $deviceIterator = new Xml\DeviceIterator($wurflFile, $capabilityFilter);
                     $patchIterators = $this->toPatchIterators($wurflPatches, $capabilityFilter);
 
                     $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
                     $this->setRepositoryBuilt();
-                    flock($fp, LOCK_UN);
+                    flock($filePointer, LOCK_UN);
                 }
 
-                fclose($fp);
+                fclose($filePointer);
             }
         }
-        $deviceClassificationNames = $this->deviceClassificationNames();
 
-        return new CustomDeviceRepository($this->persistenceProvider, $deviceClassificationNames);
+        return new CustomDeviceRepository($this->persistenceProvider, $this->deviceClassificationNames());
     }
 
     /**
@@ -189,6 +181,7 @@ class DeviceRepositoryBuilder
     private function deviceClassificationNames()
     {
         $deviceClusterNames = array();
+
         foreach ($this->userAgentHandlerChain->getHandlers() as $userAgentHandler) {
             $deviceClusterNames[] = $userAgentHandler->getPrefix();
         }
@@ -215,7 +208,6 @@ class DeviceRepositoryBuilder
     {
         foreach ($wurflInfoIterator as $info) {
             $this->persistenceProvider->save(Xml\Info::PERSISTENCE_KEY, $info);
-
             return;
         }
     }
@@ -228,21 +220,21 @@ class DeviceRepositoryBuilder
      */
     private function process(Xml\DeviceIterator $deviceIterator, array $patchingDevices = array())
     {
-        $usedPatchingDeviceIds = array();
+        $usedPatches = array();
 
         foreach ($deviceIterator as $device) {
             /* @var $device Xml\ModelDevice */
             $toPatch = isset($patchingDevices[$device->id]);
 
             if ($toPatch) {
-                $device                             = $this->patchDevice($device, $patchingDevices [$device->id]);
-                $usedPatchingDeviceIds[$device->id] = $device->id;
+                $device                   = $this->patchDevice($device, $patchingDevices [$device->id]);
+                $usedPatches[$device->id] = $device->id;
             }
 
             $this->classifyAndPersistDevice($device);
         }
 
-        $this->classifyAndPersistNewDevices(array_diff_key($patchingDevices, $usedPatchingDeviceIds));
+        $this->classifyAndPersistNewDevices(array_diff_key($patchingDevices, $usedPatches));
         $this->persistClassifiedDevicesUserAgentMap();
     }
 
@@ -320,7 +312,8 @@ class DeviceRepositoryBuilder
         foreach ($newPatchingDevices as $deviceId => $newPatchingDevice) {
             if (isset($currentPatchingDevices[$deviceId])) {
                 $currentPatchingDevices[$deviceId] = $this->patchDevice(
-                    $currentPatchingDevices[$deviceId], $newPatchingDevice
+                    $currentPatchingDevices[$deviceId],
+                    $newPatchingDevice
                 );
             } else {
                 $currentPatchingDevices[$deviceId] = $newPatchingDevice;
@@ -338,6 +331,7 @@ class DeviceRepositoryBuilder
     private function toArray(Xml\DeviceIterator $deviceIterator)
     {
         $patchingDevices = array();
+
         foreach ($deviceIterator as $device) {
             $patchingDevices[$device->id] = $device;
         }
