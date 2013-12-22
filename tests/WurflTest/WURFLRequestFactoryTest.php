@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest;
 
-
+use Wurfl\Request\GenericRequestFactory;
 
 /**
  * test case
@@ -19,7 +19,7 @@ class WURFLRequestFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateRequest()
     {
         foreach ($this->_testData as $testData) {
-            $requestFactory = new Request\GenericRequestFactory();
+            $requestFactory = new GenericRequestFactory();
             $request = $requestFactory->createRequest($testData ['_SERVER']);
 
             self::assertEquals($request->userAgent, $testData ['EXPECTED_USER_AGENT']);
