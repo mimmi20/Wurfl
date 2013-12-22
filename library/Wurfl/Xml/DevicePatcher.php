@@ -18,7 +18,6 @@ namespace Wurfl\Xml;
  * @version    $id$
  *
  */
-use Wurfl\Exception;
 use Wurfl\Utils;
 
 /**
@@ -59,28 +58,6 @@ class DevicePatcher
     private function haveSameId(ModelDevice $device, ModelDevice $patchingDevice)
     {
         return (strcmp($patchingDevice->id, $device->id) === 0);
-    }
-
-    /**
-     * Returns true if a $patchingDevice can be used to patch $device
-     *
-     * @param ModelDevice $device
-     * @param ModelDevice $patchingDevice
-     *
-     * @throws Exception
-     * @return bool
-     * @deprecated
-     */
-    private function checkIfCanPatch(ModelDevice $device, ModelDevice $patchingDevice)
-    {
-
-        if (strcmp($patchingDevice->userAgent, $device->userAgent) !== 0) {
-            $message
-                =
-                "Patch Device : " . $patchingDevice->id . " can't override user agent " . $device->userAgent . " with "
-                . $patchingDevice->userAgent;
-            throw new Exception ($message);
-        }
     }
 }
 

@@ -109,16 +109,17 @@ class VirtualCapabilityProvider
     {
         $caps = array();
 
-        foreach (self::$virtual_capabilities as $cap_name => $vc_name) {
-            if (strpos($vc_name, '.') !== false) {
+        foreach (self::$virtual_capabilities as $vcName) {
+            if (strpos($vcName, '.') !== false) {
                 // Group of capabilities
-                list($group, $property) = explode('.', $vc_name);
-                $class = "\Wurfl\VirtualCapability\VirtualCapability_{$group}Group";
+                list($group, $property) = explode('.', $vcName);
+                $class = '\\Wurfl\\VirtualCapability\\Group\\' . $group . 'Group';
             } else {
                 // Individual capability
-                $class = "\Wurfl\VirtualCapability\VirtualCapability_$vc_name";
+                $class = '\\Wurfl\\VirtualCapability\\Single\\' . $vcName;
             }
 
+            /** @var $model \Wurfl\VirtualCapability\VirtualCapability */
             $model = new $class();
             $caps  = array_unique(array_merge($caps, $model->getRequiredCapabilities()));
             unset($model);
@@ -130,7 +131,7 @@ class VirtualCapabilityProvider
     /**
      * Gets an array of all the virtual capabilities
      *
-     * @return array Virtual capabilities in format "name => value"
+     * @return array Virtual capabilities in format 'name => value'
      */
     public function getAll()
     {

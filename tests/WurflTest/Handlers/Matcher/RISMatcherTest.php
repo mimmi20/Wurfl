@@ -4,17 +4,19 @@ namespace WurflTest\Handlers\Matcher;
     /**
  * test case
  */
+use Wurfl\Handlers\Matcher\RISMatcher;
+
 /**
  * WURFL_Handlers_Matcher_RISMatcher test case.
  */
 class RISMatcherTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var  \Wurfl\Handlers\Matcher\RISMatcher */
+    /** @var  RISMatcher */
     private $risMatcher;
 
     protected function setUp()
     {
-        $this->risMatcher = \Wurfl\Handlers\Matcher\RISMatcher::INSTANCE();
+        $this->risMatcher = RISMatcher::INSTANCE();
     }
 
     /**

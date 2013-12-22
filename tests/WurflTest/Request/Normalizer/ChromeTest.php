@@ -1,6 +1,8 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
+use Wurfl\Request\Normalizer\Specific\Chrome;
+
 /**
  *  test case.
  */
@@ -11,7 +13,7 @@ class ChromeTest extends BaseTest
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\Chrome();
+        $this->normalizer = new Chrome();
     }
 
     /**

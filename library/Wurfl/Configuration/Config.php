@@ -60,38 +60,52 @@ abstract class Config
      * @var string Path to the configuration file
      */
     protected $configFilePath;
+
     /**
      * @var string Directory that the configuration file is in
      */
     protected $configurationFileDir;
+
     /**
      * @var bool true if a WURFL reload is allowed
      */
     protected $allowReload = false;
+
     /**
      * @var string wurfl file (normally wurfl.xml)
      */
     protected $wurflFile;
+
     /**
      * @var array Array of WURFL patches
      */
     protected $wurflPatches = array();
+
     /**
      * @var array Array of capabilities to be loaded
      */
     protected $capabilityFilter = array();
+
     /**
      * @var array
      */
     protected $persistence = array();
+
     /**
      * @var array
      */
     protected $cache = array();
+
     /**
      * @var string
      */
     protected $logDir;
+
+    /**
+     * @var array
+     */
+    protected $logger;
+
     /**
      * Mode of operation (performance or accuracy)
      *

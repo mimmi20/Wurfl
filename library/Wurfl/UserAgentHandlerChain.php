@@ -44,7 +44,11 @@ class UserAgentHandlerChain
         $size = count($this->userAgentHandlers);
 
         if ($size > 0) {
-            $this->userAgentHandlers[$size - 1]->setNextHandler($handler);
+            /**
+             * @var $lastHandler Handlers\AbstractHandler
+             */
+            $lastHandler = $this->userAgentHandlers[$size - 1];
+            $lastHandler->setNextHandler($handler);
         }
 
         $this->userAgentHandlers[] = $handler;
@@ -70,7 +74,10 @@ class UserAgentHandlerChain
     public function filter($userAgent, $deviceID)
     {
         Handlers\Utils::reset();
-        $this->userAgentHandlers[0]->filter($userAgent, $deviceID);
+
+        /** @var $firstHandler Handlers\AbstractHandler */
+        $firstHandler = $this->userAgentHandlers[0];
+        $firstHandler->filter($userAgent, $deviceID);
     }
 
     /**
@@ -83,7 +90,10 @@ class UserAgentHandlerChain
     public function match(Request\GenericRequest $request)
     {
         Handlers\Utils::reset();
-        return $this->userAgentHandlers[0]->match($request);
+
+        /** @var $firstHandler Handlers\AbstractHandler */
+        $firstHandler = $this->userAgentHandlers[0];
+        return $firstHandler->match($request);
     }
 
     /**
@@ -94,6 +104,7 @@ class UserAgentHandlerChain
     public function persistData()
     {
         foreach ($this->userAgentHandlers as $userAgentHandler) {
+            /** @var $userAgentHandler Handlers\AbstractHandler */
             $userAgentHandler->persistData();
         }
     }
@@ -108,9 +119,7 @@ class UserAgentHandlerChain
         $userAgents = array();
 
         foreach ($this->userAgentHandlers as $userAgentHandler) {
-            /**
-             * @see \Wurfl\Handlers\AbstractHandler::getUserAgentsWithDeviceId()
-             */
+            /** @var $userAgentHandler Handlers\AbstractHandler */
             $current = $userAgentHandler->getUserAgentsWithDeviceId();
 
             if (!empty($current)) {

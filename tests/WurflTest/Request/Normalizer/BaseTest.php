@@ -6,7 +6,7 @@ namespace WurflTest\Request\Normalizer;
  */
 class BaseTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var  Wurfl\Request\Normalizer\NormalizerInterface */
+    /** @var  \Wurfl\Request\Normalizer\NormalizerInterface */
     protected $normalizer;
 
     public function assertNormalizeEqualsExpected($userAgent, $expected)
@@ -17,7 +17,6 @@ class BaseTest extends \PHPUnit_Framework_TestCase
 
     protected function userAgentsProvider($testFilePath)
     {
-
         $fullTestFilePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . $testFilePath;
         $useragents       = file($fullTestFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $map              = array();

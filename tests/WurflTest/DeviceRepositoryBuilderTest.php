@@ -4,6 +4,12 @@ namespace WurflTest;
     /**
  * test case
  */
+use Wurfl\Context;
+use Wurfl\DeviceRepositoryBuilder;
+use Wurfl\Storage\Storage;
+use Wurfl\UserAgentHandlerChainFactory;
+use Wurfl\Xml\DevicePatcher;
+use WurflCache\Adapter\Memory;
 
 /**
  * \Wurfl\DeviceRepositoryBuilder test case.
@@ -15,17 +21,17 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
     const PATCH_FILE_ONE = '../resources/patch1.xml';
     const PATCH_FILE_TWO = '../resources/patch2.xml';
 
-    /** @var  \Wurfl\DeviceRepositoryBuilder */
+    /** @var  DeviceRepositoryBuilder */
     private $deviceRepositoryBuilder;
 
     public function setUp()
     {
-        $persistenceProvider   = new \Wurfl\Storage\Storage(new \WurflCache\Adapter\Memory());
-        $context               = new \Wurfl\Context ($persistenceProvider);
-        $userAgentHandlerChain = \Wurfl\UserAgentHandlerChainFactory::createFrom($context);
-        $devicePatcher         = new \Wurfl\Xml\DevicePatcher ();
+        $persistenceProvider   = new Storage(new Memory());
+        $context               = new Context ($persistenceProvider);
+        $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
+        $devicePatcher         = new DevicePatcher ();
         $this->deviceRepositoryBuilder
-                               = new \Wurfl\DeviceRepositoryBuilder ($persistenceProvider, $userAgentHandlerChain, $devicePatcher);
+                               = new DeviceRepositoryBuilder ($persistenceProvider, $userAgentHandlerChain, $devicePatcher);
     }
 
     public function testShouldBuildARepositoryOfAllDevicesFromTheXmlFile()
@@ -69,13 +75,13 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldNotRebuildTheRepositoryIfAlreadyBuild()
     {
-        $persistenceProvider = new \Wurfl\Storage\Storage(new \WurflCache\Adapter\Memory());
+        $persistenceProvider = new Storage(new Memory());
         $persistenceProvider->setWURFLLoaded(true);
-        $context               = new \Wurfl\Context ($persistenceProvider);
-        $userAgentHandlerChain = \Wurfl\UserAgentHandlerChainFactory::createFrom($context);
-        $devicePatcher         = new \Wurfl\Xml\DevicePatcher ();
+        $context               = new Context ($persistenceProvider);
+        $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
+        $devicePatcher         = new DevicePatcher ();
         $deviceRepositoryBuilder
-                               = new \Wurfl\DeviceRepositoryBuilder ($persistenceProvider, $userAgentHandlerChain, $devicePatcher);
+                               = new DeviceRepositoryBuilder ($persistenceProvider, $userAgentHandlerChain, $devicePatcher);
         self::assertNotNull($deviceRepositoryBuilder);
         $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
 

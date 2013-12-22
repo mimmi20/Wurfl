@@ -1,7 +1,9 @@
 <?php
 namespace WurflTest\Handlers;
 
+use Wurfl\Context;
 use Wurfl\Handlers\MSIEHandler;
+use Wurfl\Request\Normalizer\Specific\MSIE;
 
 /**
  * test case
@@ -16,8 +18,8 @@ class MSIEHandlerTest extends \PHPUnit_Framework_TestCase
 
     function setUp()
     {
-        $context             = new \Wurfl\Context (null);
-        $userAgentNormalizer = new \Wurfl\Request\Normalizer\Specific\MSIE ();
+        $context             = new Context (null);
+        $userAgentNormalizer = new MSIE ();
         $this->msieHandler   = new MSIEHandler ($context, $userAgentNormalizer);
     }
 

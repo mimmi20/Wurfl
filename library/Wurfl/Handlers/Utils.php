@@ -270,8 +270,8 @@ class Utils
     {
         self::$isDesktopBrowser = null;
         self::$isMobileBrowser  = null;
-        self::$isSmartTv         = null;
-        self::$isRobot           = null;
+        self::$isSmartTv        = null;
+        self::$isRobot          = null;
     }
 
     /**
@@ -287,7 +287,7 @@ class Utils
             return self::$isMobileBrowser;
         }
         self::$isMobileBrowser = false;
-        $userAgent                = strtolower($userAgent);
+        $userAgent             = strtolower($userAgent);
         foreach (self::$mobileBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
                 self::$isMobileBrowser = true;
@@ -312,7 +312,7 @@ class Utils
             return self::$isDesktopBrowser;
         }
         self::$isDesktopBrowser = false;
-        $userAgent                 = strtolower($userAgent);
+        $userAgent              = strtolower($userAgent);
         foreach (self::$desktopBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
                 self::$isDesktopBrowser = true;
@@ -337,7 +337,7 @@ class Utils
             return self::$isRobot;
         }
         self::$isRobot = false;
-        $userAgent       = strtolower($userAgent);
+        $userAgent     = strtolower($userAgent);
         foreach (self::$robots as $key) {
             if (strpos($userAgent, $key) !== false) {
                 self::$isRobot = true;
@@ -445,7 +445,7 @@ class Utils
             return self::$isSmartTv;
         }
         self::$isSmartTv = false;
-        $userAgent         = strtolower($userAgent);
+        $userAgent       = strtolower($userAgent);
         foreach (self::$smartTVBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
                 self::$isSmartTv = true;

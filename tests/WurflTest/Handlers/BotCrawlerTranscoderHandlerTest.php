@@ -1,7 +1,9 @@
 <?php
 namespace WurflTest\Handlers;
 
+use Wurfl\Context;
 use Wurfl\Handlers\BotCrawlerTranscoderHandler;
+use Wurfl\Request\Normalizer\NullNormalizer;
 
 /**
  * test case
@@ -19,8 +21,8 @@ class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
 
     function setUp()
     {
-        $normalizer    = new \Wurfl\Request\Normalizer\NullNormalizer();
-        $context       = new \Wurfl\Context(null);
+        $normalizer    = new NullNormalizer();
+        $context       = new Context(null);
         $this->handler = new BotCrawlerTranscoderHandler($context, $normalizer);
     }
 

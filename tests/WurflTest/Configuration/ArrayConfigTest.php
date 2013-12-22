@@ -4,6 +4,7 @@ namespace WurflTest\Configuration;
     /**
  * test case
  */
+use Wurfl\Configuration\ArrayConfig;
 
 /**
  *  test case.
@@ -16,7 +17,7 @@ class ArrayConfigTest extends \PHPUnit_Framework_TestCase
     function setUp()
     {
         $configurationFile = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-array-config.php";
-        $this->arrayConfig = new \Wurfl\Configuration\ArrayConfig($configurationFile);
+        $this->arrayConfig = new ArrayConfig($configurationFile);
     }
 
     /**
@@ -26,7 +27,7 @@ class ArrayConfigTest extends \PHPUnit_Framework_TestCase
     public function testShoudThrowInvalidArgumentExceptionForNullConfigurationFilePath()
     {
         $configurationFile = null;
-        $arrayConfig       = new \Wurfl\Configuration\ArrayConfig($configurationFile);
+        $arrayConfig       = new ArrayConfig($configurationFile);
         self::assertNotNull($arrayConfig);
     }
 

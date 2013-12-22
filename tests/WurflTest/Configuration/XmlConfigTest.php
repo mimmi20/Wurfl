@@ -4,6 +4,8 @@ namespace WurflTest\Configuration;
     /**
  * test case
  */
+use Wurfl\Configuration\Config;
+use Wurfl\Configuration\XmlConfig;
 
 /**
  *  test case.
@@ -14,7 +16,7 @@ class XmlConfigTest extends \PHPUnit_Framework_TestCase
     public function testShouldCreateAConfiguration()
     {
         $configPath = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-config.xml";
-        $config     = new \Wurfl\Configuration\XmlConfig($configPath);
+        $config     = new XmlConfig($configPath);
 
         self::assertNotNull($config->persistence);
 
@@ -26,12 +28,12 @@ class XmlConfigTest extends \PHPUnit_Framework_TestCase
         $cacheDir    = __DIR__ . DIRECTORY_SEPARATOR . "cache";
         $persistence = $config->persistence;
         self::assertEquals("file", $persistence ["provider"]);
-        self::assertEquals(array(\Wurfl\Configuration\Config::DIR => $cacheDir), $persistence ["params"]);
+        self::assertEquals(array(Config::DIR => $cacheDir), $persistence ["params"]);
 
         $cache = $config->cache;
         self::assertEquals("file", $cache ["provider"]);
         self::assertEquals(
-            array(\Wurfl\Configuration\Config::DIR => $cacheDir, 'expiration' => 36000),
+            array(Config::DIR => $cacheDir, 'expiration' => 36000),
             $cache ["params"]
         );
     }
@@ -39,7 +41,7 @@ class XmlConfigTest extends \PHPUnit_Framework_TestCase
     public function testShouldCreateConfigurationWithAPCPersistence()
     {
         $configPath = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-config-apc-persistence.xml";
-        $config     = new \Wurfl\Configuration\XmlConfig($configPath);
+        $config     = new XmlConfig($configPath);
         self::assertNotNull($config->persistence);
 
         self::assertEquals(__DIR__ . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
@@ -66,7 +68,7 @@ class XmlConfigTest extends \PHPUnit_Framework_TestCase
     public function testShouldAcceptEmptyOptionalElements()
     {
         $configPath = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-config-no-optional.xml";
-        $config     = new \Wurfl\Configuration\XmlConfig($configPath);
+        $config     = new XmlConfig($configPath);
 
         self::assertEquals(__DIR__ . DIRECTORY_SEPARATOR . "wurfl.xml", $config->wurflFile);
         self::assertEquals(array(), $config->wurflPatches);

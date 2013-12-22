@@ -78,6 +78,7 @@ class CustomDeviceRepository implements DeviceRepository
      */
     private function init()
     {
+        /** @var $genericDevice \Wurfl\Xml\ModelDevice */
         $genericDevice = $this->getDevice(Constants::GENERIC);
 
         if (!is_null($genericDevice)) {
@@ -113,7 +114,7 @@ class CustomDeviceRepository implements DeviceRepository
      * @param string $deviceId
      *
      * @throws Exception
-     * @return \Wurfl\CustomDevice
+     * @return \Wurfl\Xml\ModelDevice
      */
     public function getDevice($deviceId)
     {

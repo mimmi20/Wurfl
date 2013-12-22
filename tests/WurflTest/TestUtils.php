@@ -9,14 +9,14 @@ class TestUtils
      *
      * @param $filePath
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @internal param string $fileName
      * @return array
      */
     static function loadUserAgentsWithIdFromFile($filePath)
     {
         if (!file_exists($filePath)) {
-            throw new InvalidArgumentException("File path $filePath does not exist!!!");
+            throw new \InvalidArgumentException("File path $filePath does not exist!!!");
         }
 
         $testData    = array();
@@ -31,25 +31,32 @@ class TestUtils
         return $testData;
     }
 
+    /**
+     * @param string $filePath
+     *
+     * @return array
+     * @throws \InvalidArgumentException
+     */
     static function loadUserAgentsAsArray($filePath)
     {
         if (!file_exists($filePath)) {
-            throw new InvalidArgumentException("File path $filePath does not exist!!!");
+            throw new \InvalidArgumentException("File path $filePath does not exist!!!");
         }
 
         $testData    = array();
-        $file_handle = fopen($filePath, "r");
+        $fileHandle = fopen($filePath, "r");
 
-        while (!feof($file_handle)) {
-            $line       = fgets($file_handle);
+        while (!feof($fileHandle)) {
+            $line       = fgets($fileHandle);
             $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
+
             if ($isTestData) {
                 $userAgentArray   = array();
                 $userAgentArray[] = $line;
                 $testData[]       = $userAgentArray;
             }
         }
-        fclose($file_handle);
+        fclose($fileHandle);
 
         return $testData;
     }
@@ -57,14 +64,17 @@ class TestUtils
     static function loadTestData($fileName)
     {
         $testData    = array();
-        $file_handle = fopen($fileName, "r");
-        while (!feof($file_handle)) {
-            $line = fgets($file_handle);
+        $fileHandle = fopen($fileName, "r");
+
+        while (!feof($fileHandle)) {
+            $line = fgets($fileHandle);
+
             if (strpos($line, "#") === false && strcmp($line, "\n") != 0) {
                 $testData[] = explode("=", trim($line));
             }
         }
-        fclose($file_handle);
+
+        fclose($fileHandle);
 
         return $testData;
     }
@@ -72,6 +82,7 @@ class TestUtils
     static private function updateTestData(&$testData, $line)
     {
         $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
+
         if ($isTestData) {
             $testData[] = explode("=", trim($line));
         }

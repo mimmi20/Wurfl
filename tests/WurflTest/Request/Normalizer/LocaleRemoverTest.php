@@ -1,6 +1,8 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
+use Wurfl\Request\Normalizer\Generic\LocaleRemover;
+
 /**
  * test case.
  */
@@ -9,7 +11,7 @@ class LocaleRemoverTest extends BaseTest
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\Normalizer\Generic\LocaleRemover();
+        $this->normalizer = new LocaleRemover();
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
+use Wurfl\Request\Normalizer\Specific\MSIE;
+
 /**
  *  test case.
  */
@@ -12,7 +14,7 @@ class MSIETest extends BaseTest
      */
     protected function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\MSIE();
+        $this->normalizer = new MSIE();
     }
 
     /**

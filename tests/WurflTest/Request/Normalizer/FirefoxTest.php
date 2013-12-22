@@ -1,6 +1,8 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
+use Wurfl\Request\Normalizer\Specific\Firefox;
+
 /**
  * test case.
  */
@@ -9,7 +11,7 @@ class FirefoxTest extends BaseTest
 
     function setUp()
     {
-        $this->normalizer = new \Wurfl\Request\Normalizer\Specific\Firefox ();
+        $this->normalizer = new Firefox ();
     }
 
     /**

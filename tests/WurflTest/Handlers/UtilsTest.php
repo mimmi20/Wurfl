@@ -4,6 +4,7 @@ namespace WurflTest\Handlers;
     /**
  * test case
  */
+use Wurfl\Handlers\Utils;
 
 /**
  * WURFL_Handlers_Utils test case.
@@ -12,27 +13,27 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testShouldThrowExceptionForNullString()
     {
-        \Wurfl\Handlers\Utils::ordinalIndexOf(null, "", 0);
+        Utils::ordinalIndexOf(null, "", 0);
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testShouldThrowExceptionForEmptyString()
     {
-        \Wurfl\Handlers\Utils::ordinalIndexOf("", "", 0);
+        Utils::ordinalIndexOf("", "", 0);
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testShouldThrowExceptionForNonNumericOrdinalVlaue()
     {
-        \Wurfl\Handlers\Utils::ordinalIndexOf("useranget", "", "");
+        Utils::ordinalIndexOf("useranget", "", "");
     }
 
     /**
@@ -40,7 +41,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      */
     public function testOrdinalIndexOf($haystack, $needle, $ordinal, $expectedIndex)
     {
-        $found = \Wurfl\Handlers\Utils::ordinalIndexOf($haystack, $needle, $ordinal);
+        $found = Utils::ordinalIndexOf($haystack, $needle, $ordinal);
         self::assertEquals($expectedIndex, $found);
     }
 
@@ -48,7 +49,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
     {
         $haystack = "Mozilla/4.0 (compatible; MSIE 4.0; Windows 95; .NET CLR 1.1.4322; .NET CLR 2.0.50727)";
         $needle   = ":";
-        $expected = \Wurfl\Handlers\Utils::ordinalIndexOf($haystack, $needle, 1);
+        $expected = Utils::ordinalIndexOf($haystack, $needle, 1);
         self::assertEquals(-1, $expected);
     }
 
@@ -57,7 +58,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      */
     public function testContainsAll($haystack, $needles, $contains)
     {
-        $expected = \Wurfl\Handlers\Utils::checkIfContainsAll($haystack, $needles);
+        $expected = Utils::checkIfContainsAll($haystack, $needles);
         self::assertEquals($contains, $expected);
     }
 
@@ -75,7 +76,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndexOfAnyOrLength($haystack, $expected)
     {
-        $found = \Wurfl\Handlers\Utils::indexOfAnyOrLength($haystack, array(" ", "/"), 0);
+        $found = Utils::indexOfAnyOrLength($haystack, array(" ", "/"), 0);
         self::assertEquals($expected, $found);
     }
 

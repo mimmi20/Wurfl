@@ -35,7 +35,7 @@ class WURFLManagerTest extends \PHPUnit_Framework_TestCase
         );
         $config->persistence('file', $params);
         self::$persistenceStorage = new Memory($params);
-        $wurflManager             = new \Wurfl\Manager($config, self::$persistenceStorage, self::$persistenceStorage);
+        $wurflManager             = new Manager($config, self::$persistenceStorage, self::$persistenceStorage);
         self::$wurflManager = $wurflManager;
     }
 

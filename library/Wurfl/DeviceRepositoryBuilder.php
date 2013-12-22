@@ -183,6 +183,7 @@ class DeviceRepositoryBuilder
         $deviceClusterNames = array();
 
         foreach ($this->userAgentHandlerChain->getHandlers() as $userAgentHandler) {
+            /** @var $userAgentHandler \Wurfl\Handlers\AbstractHandler */
             $deviceClusterNames[] = $userAgentHandler->getPrefix();
         }
 
