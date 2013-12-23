@@ -16,7 +16,7 @@ class RISMatcherTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->risMatcher = RISMatcher::INSTANCE();
+        $this->risMatcher = RISMatcher::getInstance();
     }
 
     /**
