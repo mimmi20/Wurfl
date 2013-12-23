@@ -11,7 +11,7 @@ class ChromeTest extends BaseTest
 
     const CHROME_USERAGENTS_FILE = "chrome.txt";
 
-    function setUp()
+    protected function setUp()
     {
         $this->normalizer = new Chrome();
     }
@@ -21,12 +21,12 @@ class ChromeTest extends BaseTest
      * @dataProvider chromeUserAgentsDataProvider
      *
      */
-    function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
+    public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
     {
         $this->assertNormalizeEqualsExpected($userAgent, $expected);
     }
 
-    function chromeUserAgentsDataProvider()
+    public function chromeUserAgentsDataProvider()
     {
         return array(
             array(
@@ -41,4 +41,3 @@ class ChromeTest extends BaseTest
         );
     }
 }
-

@@ -56,5 +56,3 @@ class GenericRequestFactory
         return new GenericRequest($userAgent, null, false);
     }
 }
-
-

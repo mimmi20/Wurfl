@@ -25,9 +25,14 @@ use Wurfl\VirtualCapability\UserAgentTool;
  */
 class DeviceBrowserGroup extends Group
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array();
 
-    protected $required_capabilities = array();
-
+    /**
+     * @var array
+     */
     protected $storage
         = array(
             'DeviceOs'        => null,
@@ -39,20 +44,23 @@ class DeviceBrowserGroup extends Group
     /**
      * @var UserAgentTool
      */
-    protected static $ua_tool;
+    protected static $userAgentTool;
 
+    /**
+     *
+     */
     public function compute()
     {
-        if (self::$ua_tool === null) {
-            self::$ua_tool = new UserAgentTool();
+        if (self::$userAgentTool === null) {
+            self::$userAgentTool = new UserAgentTool();
         }
 
         // Run the UserAgentTool to get the relevant details
-        $device = self::$ua_tool->getDevice($this->request->userAgent);
+        $device = self::$userAgentTool->getDevice($this->request->userAgent);
 
-        $this->storage['DeviceOs'] = new ManualGroupChild($this->device, $this->request, $this, $device->os->name);
+        $this->storage['DeviceOs'] = new ManualGroupChild($this->device, $this->request, $this, $device->platform->name);
         $this->storage['DeviceOsVersion']
-                                   = new ManualGroupChild($this->device, $this->request, $this, $device->os->version);
+                                   = new ManualGroupChild($this->device, $this->request, $this, $device->platform->version);
         $this->storage['Browser']
                                    = new ManualGroupChild($this->device, $this->request, $this, $device->browser->name);
         $this->storage['BrowserVersion']

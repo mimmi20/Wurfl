@@ -25,13 +25,12 @@ namespace Wurfl\Request\Normalizer;
  */
 class UserAgentNormalizer implements NormalizerInterface
 {
-
     /**
      * UserAgentNormalizer chain - array of \Wurfl\Request\Normalizer\UserAgentNormalizer objects
      *
      * @var array
      */
-    protected $_userAgentNormalizers = array();
+    protected $normalizers = array();
 
     /**
      * Set the User Agent Normalizers
@@ -41,7 +40,7 @@ class UserAgentNormalizer implements NormalizerInterface
     public function __construct($normalizers = array())
     {
         if (is_array($normalizers)) {
-            $this->_userAgentNormalizers = $normalizers;
+            $this->normalizers = $normalizers;
         }
     }
 
@@ -54,7 +53,7 @@ class UserAgentNormalizer implements NormalizerInterface
      */
     public function addUserAgentNormalizer(NormalizerInterface $normalizer)
     {
-        $userAgentNormalizers   = $this->_userAgentNormalizers;
+        $userAgentNormalizers   = $this->normalizers;
         $userAgentNormalizers[] = $normalizer;
         return new UserAgentNormalizer($userAgentNormalizers);
     }
@@ -66,7 +65,7 @@ class UserAgentNormalizer implements NormalizerInterface
      */
     public function count()
     {
-        return count($this->_userAgentNormalizers);
+        return count($this->normalizers);
     }
 
     /**
@@ -86,11 +85,11 @@ class UserAgentNormalizer implements NormalizerInterface
 
         $normalizedUserAgent = $userAgent;
 
-        foreach ($this->_userAgentNormalizers as $normalizer) {
+        foreach ($this->normalizers as $normalizer) {
             /** @var $normalizer \Wurfl\Request\Normalizer\NormalizerInterface */
             $normalizedUserAgent = $normalizer->normalize($normalizedUserAgent);
         }
+
         return $normalizedUserAgent;
     }
 }
-

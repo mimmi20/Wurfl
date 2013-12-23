@@ -205,7 +205,7 @@ class Utils
      */
     public static function risMatch($collection, $needle, $tolerance)
     {
-        return Matcher\RISMatcher::INSTANCE()->match($collection, $needle, $tolerance);
+        return Matcher\RISMatcher::getInstance()->match($collection, $needle, $tolerance);
     }
 
     /**
@@ -220,7 +220,7 @@ class Utils
      */
     public static function ldMatch($collection, $needle, $tolerance = 7)
     {
-        return Matcher\LDMatcher::INSTANCE()->match($collection, $needle, $tolerance);
+        return Matcher\LDMatcher::getInstance()->match($collection, $needle, $tolerance);
     }
 
     /**
@@ -237,6 +237,7 @@ class Utils
     {
         $length = strlen($string);
         $pos    = strpos($string, $target, $startingIndex);
+
         return $pos === false ? $length : $pos;
     }
 
@@ -250,16 +251,19 @@ class Utils
      *
      * @return int Char index of left-most match or length of string
      */
-    public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex)
+    public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex = 0)
     {
         $positions = array();
+
         foreach ($needles as $needle) {
             $pos = strpos($userAgent, $needle, $startIndex);
             if ($pos !== false) {
                 $positions [] = $pos;
             }
         }
+
         sort($positions);
+
         return count($positions) > 0 ? $positions [0] : strlen($userAgent);
     }
 
@@ -286,14 +290,17 @@ class Utils
         if (self::$isMobileBrowser !== null) {
             return self::$isMobileBrowser;
         }
+
         self::$isMobileBrowser = false;
         $userAgent             = strtolower($userAgent);
+
         foreach (self::$mobileBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
                 self::$isMobileBrowser = true;
                 break;
             }
         }
+
         return self::$isMobileBrowser;
     }
 
@@ -311,14 +318,17 @@ class Utils
         if (self::$isDesktopBrowser !== null) {
             return self::$isDesktopBrowser;
         }
+
         self::$isDesktopBrowser = false;
         $userAgent              = strtolower($userAgent);
+
         foreach (self::$desktopBrowsers as $key) {
             if (strpos($userAgent, $key) !== false) {
                 self::$isDesktopBrowser = true;
                 break;
             }
         }
+
         return self::$isDesktopBrowser;
     }
 
@@ -336,14 +346,17 @@ class Utils
         if (self::$isRobot !== null) {
             return self::$isRobot;
         }
+
         self::$isRobot = false;
         $userAgent     = strtolower($userAgent);
+
         foreach (self::$robots as $key) {
             if (strpos($userAgent, $key) !== false) {
                 self::$isRobot = true;
                 break;
             }
         }
+
         return self::$isRobot;
     }
 
@@ -354,7 +367,7 @@ class Utils
      *
      * @param string $userAgent
      *
-     * @return bool
+     * @return string|null
      */
     public static function getMobileCatchAllId($userAgent)
     {
@@ -363,6 +376,7 @@ class Utils
                 return $deviceId;
             }
         }
+
         return Constants::NO_MATCH;
     }
 
@@ -379,6 +393,7 @@ class Utils
         if (Utils::isSmartTV($userAgent)) {
             return false;
         }
+
         // Chrome
         if (Utils::checkIfContains($userAgent, 'Chrome')
             && !Utils::checkIfContainsAnyOf(
@@ -388,6 +403,7 @@ class Utils
         ) {
             return true;
         }
+
         // Check mobile keywords
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
@@ -400,10 +416,12 @@ class Utils
         ) {
             return false;
         } // PowerPC; not always mobile, but we'll kick it out
+
         // Firefox;  fennec is already handled in the \Wurfl\Constants::$MOBILE_BROWSERS keywords
         if (Utils::checkIfContains($userAgent, 'Firefox') && !Utils::checkIfContains($userAgent, 'Tablet')) {
             return true;
         }
+
         // Safari
         if (preg_match(
             '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ '
@@ -413,22 +431,27 @@ class Utils
         ) {
             return true;
         }
+
         // Opera Desktop
         if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) {
             return true;
         }
+
         // Check desktop keywords
         if (Utils::isDesktopBrowser($userAgent)) {
             return true;
         }
+
         // Internet Explorer 9
         if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) {
             return true;
         }
+
         // Internet Explorer <9
         if (preg_match('/^Mozilla\/4\.0 \(compatible; MSIE \d\.\d; Windows NT \d\.\d/', $userAgent)) {
             return true;
         }
+
         return false;
     }
 

@@ -12,15 +12,12 @@ use Wurfl\Xml\ModelDevice;
  */
 class CustomDeviceTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testShouldLaunchExceptionIfPassedArraysDoesNotContainAtLeastOneDevice()
     {
-        try {
-            new CustomDevice(array());
-        } catch (\InvalidArgumentException $expected) {
-            return;
-        }
-        $this->fail('An expected exception has not been raised.');
+        new CustomDevice(array());
     }
 
     public function testShouldTreatNullCapablityValuesAsValidValue()
@@ -108,7 +105,7 @@ class CustomDeviceTest extends \PHPUnit_Framework_TestCase
             false,
             array('product_info' => array('is_wireless_device' => 'true'))
         );
-        $device = new CustomDevice (array($modelDevice));
+        $device = new CustomDevice(array($modelDevice));
 
         $capabilityValue = $device->getCapability('is_wireless_device');
         self::assertEquals('true', $capabilityValue);
@@ -124,6 +121,7 @@ class CustomDeviceTest extends \PHPUnit_Framework_TestCase
             false,
             array('product_info' => array('claims_web_support' => 'false'))
         );
+
         $childModelDevice = new ModelDevice(
             'id',
             'ua',
@@ -207,4 +205,3 @@ class CustomDeviceTest extends \PHPUnit_Framework_TestCase
         self::assertTrue($device->isSpecific());
     }
 }
-

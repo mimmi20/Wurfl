@@ -25,12 +25,16 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsWmlPreferred extends VirtualCapability
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array('xhtml_support_level');
 
-    protected $required_capabilities = array('xhtml_support_level');
-
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         return ($this->device->xhtml_support_level <= 0);

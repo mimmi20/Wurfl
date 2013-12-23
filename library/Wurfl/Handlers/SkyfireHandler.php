@@ -47,9 +47,10 @@ class SkyfireHandler extends AbstractHandler
 
     public function applyConclusiveMatch($userAgent)
     {
-        $skyfire_idx = strpos($userAgent, 'Skyfire');
+        $skyfireIndex = strpos($userAgent, 'Skyfire');
+
         // Matches the first decimal point after the Skyfire keyword: Skyfire/2.0
-        return $this->getDeviceIDFromRIS($userAgent, Utils::indexOfOrLength($userAgent, '.', $skyfire_idx));
+        return $this->getDeviceIDFromRIS($userAgent, Utils::indexOfOrLength($userAgent, '.', $skyfireIndex));
     }
 
     public function applyRecoveryMatch($userAgent)

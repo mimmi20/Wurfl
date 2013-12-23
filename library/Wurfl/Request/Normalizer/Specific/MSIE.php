@@ -12,7 +12,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -23,11 +23,15 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - MSIE String with the Major and Minor Version Only.
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  */
 class MSIE implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         return $this->msieWithVersion($userAgent);
@@ -43,7 +47,8 @@ class MSIE implements NormalizerInterface
     private function msieWithVersion($userAgent)
     {
         return preg_replace(
-            '/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/', '',
+            '/( \.NET CLR [\d\.]+;?| Media Center PC [\d\.]+;?| OfficeLive[a-zA-Z0-9\.\d]+;?| InfoPath[\.\d]+;?)/',
+            '',
             $userAgent
         );
     }

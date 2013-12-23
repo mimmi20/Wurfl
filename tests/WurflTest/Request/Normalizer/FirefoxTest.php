@@ -9,9 +9,9 @@ use Wurfl\Request\Normalizer\Specific\Firefox;
 class FirefoxTest extends BaseTest
 {
 
-    function setUp()
+    protected function setUp()
     {
-        $this->normalizer = new Firefox ();
+        $this->normalizer = new Firefox();
     }
 
     /**
@@ -19,13 +19,13 @@ class FirefoxTest extends BaseTest
      * @dataProvider firefoxUserAgentsDataProvider
      *
      */
-    function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
+    public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
         self::assertEquals($found, $expected);
     }
 
-    function firefoxUserAgentsDataProvider()
+    public function firefoxUserAgentsDataProvider()
     {
         return array(
             array(
@@ -38,4 +38,3 @@ class FirefoxTest extends BaseTest
         );
     }
 }
-

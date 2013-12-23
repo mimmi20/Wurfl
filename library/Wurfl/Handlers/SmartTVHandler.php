@@ -59,15 +59,19 @@ class SmartTVHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'SmartTV')) {
             return 'generic_smarttv_browser';
         }
+
         if (Utils::checkIfContains($userAgent, 'GoogleTV')) {
             return 'generic_smarttv_googletv_browser';
         }
+
         if (Utils::checkIfContains($userAgent, 'AppleTV')) {
             return 'generic_smarttv_appletv_browser';
         }
+
         if (Utils::checkIfContains($userAgent, 'Boxee')) {
             return 'generic_smarttv_boxeebox_browser';
         }
+
         return 'generic_smarttv_browser';
     }
 }

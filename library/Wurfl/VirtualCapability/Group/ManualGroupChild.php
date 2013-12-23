@@ -30,31 +30,53 @@ use Wurfl\VirtualCapability\VirtualCapability;
 
 class ManualGroupChild extends VirtualCapability
 {
-    protected $use_caching = false;
-    protected $manual_value;
+    /**
+     * @var bool
+     */
+    protected $useCaching = false;
+
+    /**
+     * @var CustomDevice
+     */
+    protected $manualValue;
+
     /**
      * @var Group
      */
     protected $group;
 
-    public function __construct(
-        CustomDevice $device, GenericRequest $request, Group $group, $value = null
-    ) {
+    /**
+     * @param CustomDevice   $device
+     * @param GenericRequest $request
+     * @param Group          $group
+     * @param null           $value
+     */
+    public function __construct(CustomDevice $device, GenericRequest $request, Group $group, $value = null)
+    {
         $this->group = $group;
         parent::__construct($device, $request);
-        $this->manual_value = $value;
+        $this->manualValue = $value;
     }
 
+    /**
+     * @return mixed|null|CustomDevice
+     */
     public function compute()
     {
-        return $this->manual_value;
+        return $this->manualValue;
     }
 
+    /**
+     * @return bool
+     */
     public function hasRequiredCapabilities()
     {
         return $this->group->hasRequiredCapabilities();
     }
 
+    /**
+     * @return array
+     */
     public function getRequiredCapabilities()
     {
         return $this->group->getRequiredCapabilities();

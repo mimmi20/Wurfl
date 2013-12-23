@@ -23,28 +23,41 @@ namespace Wurfl\VirtualCapability\Tool;
  */
 class Device
 {
-
     /**
      * @var NameVersionPair
      */
     public $browser;
+
     /**
      * @var NameVersionPair
      */
-    public $os;
+    public $platform;
 
-    public $ua;
-    public $ua_lower;
+    /**
+     * @var string
+     */
+    public $userAgent;
 
-    public function __construct($user_agent)
+    /**
+     * @var string
+     */
+    public $userAgentLower;
+
+    /**
+     * @param string $userAgent
+     */
+    public function __construct($userAgent)
     {
-        $this->ua       = $user_agent;
-        $this->ua_lower = strtolower($user_agent);
+        $this->userAgent       = $userAgent;
+        $this->userAgentLower = strtolower($userAgent);
         $this->browser  = new NameVersionPair($this);
-        $this->os       = new NameVersionPair($this);
+        $this->platform       = new NameVersionPair($this);
     }
 
-    protected static $windows_map
+    /**
+     * @var array
+     */
+    protected static $windowsMap
         = array(
             '4.0' => 'NT 4.0',
             '5.0' => '2000',
@@ -53,51 +66,65 @@ class Device
             '6.0' => 'Vista',
             '6.1' => '7',
             '6.2' => '8',
+            '6.3' => '8.1',
         );
 
+    /**
+     *
+     */
     public function normalize()
     {
         $this->normalizeOS();
     }
 
+    /**
+     *
+     */
     protected function normalizeOS()
     {
-        if (strpos($this->ua, 'Windows') !== false) {
-            if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->os->name, $matches)) {
-                $this->os->name    = "Windows";
-                $this->os->version = array_key_exists($matches[1], self::$windows_map) ? self::$windows_map[$matches[1]]
+        if (strpos($this->userAgent, 'Windows') !== false) {
+            if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->platform->name, $matches)) {
+                $this->platform->name    = "Windows";
+                $this->platform->version = array_key_exists($matches[1], self::$windowsMap)
+                    ? self::$windowsMap[$matches[1]]
                     : $matches[1];
                 return;
             }
 
-            if (preg_match('/Windows [0-9\.]+/', $this->os->name)) {
+            if (preg_match('/Windows [0-9\.]+/', $this->platform->name)) {
                 return;
             }
         }
 
-        if ($this->os->setRegex('/PPC.+OS X ([0-9\._]+)/', 'Mac OS X')) {
-            $this->os->version = str_replace('_', '.', $this->os->version);
+        if ($this->platform->setRegex('/PPC.+OS X ([0-9\._]+)/', 'Mac OS X')) {
+            $this->platform->version = str_replace('_', '.', $this->platform->version);
             return;
         }
-        if ($this->os->setRegex('/PPC.+OS X/', 'Mac OS X')) {
+
+        if ($this->platform->setRegex('/PPC.+OS X/', 'Mac OS X')) {
             return;
         }
-        if ($this->os->setRegex('/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
-            $this->os->version = str_replace('_', '.', $this->os->version);
+
+        if ($this->platform->setRegex('/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
+            $this->platform->version = str_replace('_', '.', $this->platform->version);
             return;
         }
-        if ($this->os->setContains('Mac_PowerPC', 'Mac OS X')) {
+
+        if ($this->platform->setContains('Mac_PowerPC', 'Mac OS X')) {
             return;
         }
-        if ($this->os->setContains('CrOS', 'Chrome OS')) {
+
+        if ($this->platform->setContains('CrOS', 'Chrome OS')) {
             return;
         }
-        if ($this->os->name != '') {
+
+        if ($this->platform->name != '') {
             return;
         }
+
         // Last ditch efforts
-        if (strpos($this->ua, 'Linux') !== false || strpos($this->ua, 'X11') !== false) {
-            $this->os->name = 'Linux';
+        if (strpos($this->userAgent, 'Linux') !== false || strpos($this->userAgent, 'X11') !== false) {
+            $this->platform->name = 'Linux';
             return;
         }
     }

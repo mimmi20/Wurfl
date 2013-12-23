@@ -27,9 +27,16 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class YesWAP implements NormalizerInterface
 {
-
+    /**
+     * @var string
+     */
     const YES_WAP_REGEX = "/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)/";
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         return preg_replace(self::YES_WAP_REGEX, "", $userAgent);

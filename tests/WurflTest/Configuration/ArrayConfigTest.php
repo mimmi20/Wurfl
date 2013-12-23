@@ -11,10 +11,12 @@ use Wurfl\Configuration\ArrayConfig;
  */
 class ArrayConfigTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @var ArrayConfig
+     */
     private $arrayConfig;
 
-    function setUp()
+    protected function setUp()
     {
         $configurationFile = __DIR__ . DIRECTORY_SEPARATOR . "wurfl-array-config.php";
         $this->arrayConfig = new ArrayConfig($configurationFile);
@@ -51,4 +53,3 @@ class ArrayConfigTest extends \PHPUnit_Framework_TestCase
         self::assertArrayHasKey("params", $persistence);
     }
 }
-

@@ -9,7 +9,7 @@ use Wurfl\Request\Normalizer\Generic\SerialNumbers;
 class SerialNumbersTest extends BaseTest
 {
 
-    public function setUp()
+    protected function setUp()
     {
         $this->normalizer = new SerialNumbers();
     }

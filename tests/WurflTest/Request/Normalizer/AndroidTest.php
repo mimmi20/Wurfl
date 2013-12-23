@@ -8,15 +8,13 @@ use Wurfl\Constants;
 use Wurfl\Request\Normalizer\Generic\LocaleRemover;
 use Wurfl\Request\Normalizer\Specific\Android;
 
-require_once 'BaseTest.php';
-
 /**
  * test case.
  */
 class AndroidTest extends BaseTest
 {
 
-    function setUp()
+    protected function setUp()
     {
         $this->normalizer = new Android();
     }
@@ -24,9 +22,8 @@ class AndroidTest extends BaseTest
     /**
      * @test
      * @dataProvider normalizerDataProvider
-     *
      */
-    function trimsToTwoDigitTheOsVersion($userAgent, $expected)
+    public function testtrimsToTwoDigitTheOsVersion($userAgent, $expected)
     {
         // Locale must be normalized before Android normalizer can be run
         $localeNormalizer = new LocaleRemover();
@@ -34,7 +31,7 @@ class AndroidTest extends BaseTest
         self::assertEquals($expected, $found);
     }
 
-    function normalizerDataProvider()
+    public function normalizerDataProvider()
     {
         return array(
             array("FOO", "FOO"),

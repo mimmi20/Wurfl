@@ -18,57 +18,89 @@ namespace Wurfl\VirtualCapability\Group;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+use Wurfl\CustomDevice;
+use Wurfl\Request\GenericRequest;
+
 /**
  * @package \Wurfl\VirtualCapability\VirtualCapability
  */
 abstract class Group
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array();
 
-    protected $required_capabilities = array();
-    protected $virtual_capabilities = array();
+    /**
+     * @var array
+     */
+    protected $virtualCapabilities = array();
+
+    /**
+     * @var array
+     */
     protected $storage = array();
 
-    private static $loaded_capabilities;
+    /**
+     * @var array
+     */
+    private static $loadedCapabilities = array();
 
     /**
      * @var \Wurfl\CustomDevice
      */
-    protected $device;
+    protected $device = null;
 
     /**
      * @var \Wurfl\Request\GenericRequest
      */
-    protected $request;
+    protected $request = null;
 
     /**
      * @param \Wurfl\CustomDevice           $device
      * @param \Wurfl\Request\GenericRequest $request
      */
-    public function __construct($device = null, $request = null)
+    public function __construct(CustomDevice $device = null, GenericRequest $request = null)
     {
         $this->device  = $device;
         $this->request = $request;
     }
 
+    /**
+     * @return bool
+     */
     public function hasRequiredCapabilities()
     {
-        if (empty($this->required_capabilities)) {
+        if (empty($this->requiredCapabilities)) {
             return true;
         }
-        if (self::$loaded_capabilities === null) {
-            self::$loaded_capabilities = $this->device->getRootDevice()->getCapabilityNames();
+
+        if (self::$loadedCapabilities === null) {
+            self::$loadedCapabilities = $this->device->getRootDevice()->getCapabilityNames();
         }
-        $missing_caps = array_diff($this->required_capabilities, self::$loaded_capabilities);
-        return empty($missing_caps);
+
+        $missingCaps = array_diff($this->requiredCapabilities, self::$loadedCapabilities);
+        return empty($missingCaps);
     }
 
+    /**
+     * @return array
+     */
     public function getRequiredCapabilities()
     {
-        return $this->required_capabilities;
+        return $this->requiredCapabilities;
     }
 
+    /**
+     * @return mixed
+     */
     abstract public function compute();
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     */
     public function get($name)
     {
         return $this->storage[$name];

@@ -32,9 +32,14 @@ use Wurfl\Constants;
  */
 class AndroidHandler extends AbstractHandler
 {
-
+    /**
+     * @var string
+     */
     protected $prefix = "ANDROID";
 
+    /**
+     * @var array
+     */
     public static $constantIDs
         = array(
             'generic_android',
@@ -69,17 +74,29 @@ class AndroidHandler extends AbstractHandler
             'generic_android_ver5_0_tablet',
         );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContains($userAgent, 'Android');
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::toleranceToRisDelimeter($userAgent);
+
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
@@ -87,6 +104,11 @@ class AndroidHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, 'Froyo')) {
@@ -125,11 +147,22 @@ class AndroidHandler extends AbstractHandler
     }
 
     /********* Android Utility Functions ***********/
+
+    /**
+     * @var float
+     */
     const ANDROID_DEFAULT_VERSION = 2.0;
 
+    /**
+     * @var array
+     */
     public static $validAndroidVersions
         = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2',
                 '4.3', '4.4', '5.0');
+
+    /**
+     * @var array
+     */
     public static $androidReleaseMap
         = array(
             'Cupcake'            => '1.5',
@@ -146,19 +179,23 @@ class AndroidHandler extends AbstractHandler
     /**
      * Get the Android version from the User Agent, or the default Android version is it cannot be determined
      *
-     * @param string  $ua         User Agent
+     * @param string  $userAgent         User Agent
      * @param boolean $useDefault Return the default version on fail, else return null
      *
      * @return string Android version
      * @see self::ANDROID_DEFAULT_VERSION
      */
-    public static function getAndroidVersion($ua, $useDefault = true)
+    public static function getAndroidVersion($userAgent, $useDefault = true)
     {
         // Replace Android version names with their numbers
         // ex: Froyo => 2.2
-        $ua = str_replace(array_keys(self::$androidReleaseMap), array_values(self::$androidReleaseMap), $ua);
+        $userAgent = str_replace(
+            array_keys(self::$androidReleaseMap),
+            array_values(self::$androidReleaseMap),
+            $userAgent
+        );
 
-        if (preg_match('/Android (\d\.\d)/', $ua, $matches)) {
+        if (preg_match('/Android (\d\.\d)/', $userAgent, $matches)) {
             $version = $matches[1];
 
             if (in_array($version, self::$validAndroidVersions)) {
@@ -172,17 +209,17 @@ class AndroidHandler extends AbstractHandler
     /**
      * Get the model name from the provided user agent or null if it cannot be determined
      *
-     * @param string $ua
+     * @param string $userAgent
      *
      * @return NULL|string
      */
-    public static function getAndroidModel($ua)
+    public static function getAndroidModel($userAgent)
     {
         // Normalize spaces in UA before capturing parts
-        $ua = preg_replace('|;(?! )|', '; ', $ua);
+        $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
 
         // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
-        if (!preg_match('#Android [^;]+;(?>(?: xx-xx ?;)?) (.+?)(?: Build/|\))#', $ua, $matches)) {
+        if (!preg_match('#Android [^;]+;(?>(?: xx-xx ?;)?) (.+?)(?: Build/|\))#', $userAgent, $matches)) {
             return null;
         }
 

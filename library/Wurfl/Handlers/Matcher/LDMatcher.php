@@ -44,11 +44,12 @@ class LDMatcher implements MatcherInterface
      *
      * @return LDMatcher
      */
-    public static function INSTANCE()
+    public static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
@@ -56,16 +57,18 @@ class LDMatcher implements MatcherInterface
     {
         $best  = $tolerance;
         $match = '';
+
         foreach ($collection as $userAgent) {
             if (abs(strlen($needle) - strlen($userAgent)) <= $tolerance) {
                 $current = levenshtein($needle, $userAgent);
+
                 if ($current <= $best) {
                     $best  = $current - 1;
                     $match = $userAgent;
                 }
             }
         }
+
         return $match;
     }
 }
-

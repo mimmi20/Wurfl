@@ -13,20 +13,20 @@ class TestUtils
      * @internal param string $fileName
      * @return array
      */
-    static function loadUserAgentsWithIdFromFile($filePath)
+    public static function loadUserAgentsWithIdFromFile($filePath)
     {
         if (!file_exists($filePath)) {
             throw new \InvalidArgumentException("File path $filePath does not exist!!!");
         }
 
         $testData    = array();
-        $file_handle = fopen($filePath, "r");
+        $fileHandle = fopen($filePath, "r");
 
-        while (!feof($file_handle)) {
-            $line = fgets($file_handle);
+        while (!feof($fileHandle)) {
+            $line = fgets($fileHandle);
             self::updateTestData($testData, $line);
         }
-        fclose($file_handle);
+        fclose($fileHandle);
 
         return $testData;
     }
@@ -37,7 +37,7 @@ class TestUtils
      * @return array
      * @throws \InvalidArgumentException
      */
-    static function loadUserAgentsAsArray($filePath)
+    public static function loadUserAgentsAsArray($filePath)
     {
         if (!file_exists($filePath)) {
             throw new \InvalidArgumentException("File path $filePath does not exist!!!");
@@ -61,7 +61,7 @@ class TestUtils
         return $testData;
     }
 
-    static function loadTestData($fileName)
+    public static function loadTestData($fileName)
     {
         $testData    = array();
         $fileHandle = fopen($fileName, "r");
@@ -79,7 +79,7 @@ class TestUtils
         return $testData;
     }
 
-    static private function updateTestData(&$testData, $line)
+    private static function updateTestData(&$testData, $line)
     {
         $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
 
@@ -88,4 +88,3 @@ class TestUtils
         }
     }
 }
-

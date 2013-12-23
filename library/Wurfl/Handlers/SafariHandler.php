@@ -56,7 +56,8 @@ class SafariHandler extends AbstractHandler
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAnyOf(
-            $userAgent, array('Macintosh', 'Windows')
+            $userAgent,
+            array('Macintosh', 'Windows')
         )
         ) {
             return Constants::GENERIC_WEB_BROWSER;
@@ -64,17 +65,21 @@ class SafariHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
-    public static function getSafariVersion($ua)
+    public static function getSafariVersion($userAgent)
     {
         $search = 'Version/';
-        $idx    = strpos($ua, $search) + strlen($search);
+        $idx    = strpos($userAgent, $search) + strlen($search);
+
         if ($idx === false) {
             return null;
         }
-        $end_idx = strpos($ua, '.', $idx);
-        if ($end_idx === false) {
+
+        $endIdx = strpos($userAgent, '.', $idx);
+
+        if ($endIdx === false) {
             return null;
         }
-        return substr($ua, $idx, $end_idx - $idx);
+
+        return substr($userAgent, $idx, $endIdx - $idx);
     }
 }

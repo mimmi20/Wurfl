@@ -27,7 +27,7 @@ class FileLogger extends AbstractLogger
     /**
      * @var int File pointer
      */
-    private $fp;
+    private $filePointer;
 
     /**
      * Creates a new FileLogger object
@@ -42,8 +42,10 @@ class FileLogger extends AbstractLogger
         if (!is_writable($fileName)) {
             throw new \InvalidArgumentException("Log file specified is not writable");
         }
-        $this->fp = @fopen($fileName, "a");
-        if (!$this->fp) {
+
+        $this->filePointer = @fopen($fileName, "a");
+
+        if (!$this->filePointer) {
             throw new Exception("Unable to open log file: ");
         }
     }
@@ -53,7 +55,7 @@ class FileLogger extends AbstractLogger
      */
     public function __destruct()
     {
-        fclose($this->fp);
+        fclose($this->filePointer);
     }
 
     /**
@@ -69,6 +71,6 @@ class FileLogger extends AbstractLogger
     {
         $time        = date("F jS Y, h:iA");
         $fullMessage = '[' . $time . '] [' . $level . '] ' . $message;
-        fwrite($this->fp, $fullMessage . "\n");
+        fwrite($this->filePointer, $fullMessage . "\n");
     }
 }

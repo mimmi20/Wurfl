@@ -12,7 +12,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -27,11 +27,13 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  */
 class Android implements NormalizerInterface
 {
-
+    /**
+     * @var array
+     */
     private $skip_normalization
         = array(
             'Opera Mini',
@@ -41,22 +43,29 @@ class Android implements NormalizerInterface
             'NetFrontLifeBrowser/2.2',
         );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         // Normalize Android version
         $userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
 
         // Opera Mobi/Tablet
-        $is_opera_mobi   = Utils::checkIfContains($userAgent, 'Opera Mobi');
-        $is_opera_tablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
-        if ($is_opera_mobi || $is_opera_tablet) {
-            $opera_version   = OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion($userAgent, false);
-            $android_version = AndroidHandler::getAndroidVersion($userAgent, false);
-            if ($opera_version !== null && $android_version !== null) {
-                $opera_model = $is_opera_tablet ? 'Opera Tablet' : 'Opera Mobi';
+        $isOperaMobile   = Utils::checkIfContains($userAgent, 'Opera Mobi');
+        $isOperaTablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
+
+        if ($isOperaMobile || $isOperaTablet) {
+            $operaVersion   = OperaMobiOrTabletOnAndroidHandler::getOperaOnAndroidVersion($userAgent, false);
+            $androidVersion = AndroidHandler::getAndroidVersion($userAgent, false);
+
+            if ($operaVersion !== null && $androidVersion !== null) {
+                $operaModel = $isOperaTablet ? 'Opera Tablet' : 'Opera Mobi';
                 $prefix
                              =
-                    $opera_model . ' ' . $opera_version . ' Android ' . $android_version . Constants::RIS_DELIMITER;
+                    $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . Constants::RIS_DELIMITER;
                 return $prefix . $userAgent;
             }
         }
@@ -65,11 +74,13 @@ class Android implements NormalizerInterface
         if (!Utils::checkIfContainsAnyOf($userAgent, $this->skip_normalization)) {
             $model   = AndroidHandler::getAndroidModel($userAgent, false);
             $version = AndroidHandler::getAndroidVersion($userAgent, false);
+
             if ($model !== null && $version !== null) {
                 $prefix = $version . ' ' . $model . Constants::RIS_DELIMITER;
                 return $prefix . $userAgent;
             }
         }
+
         return $userAgent;
     }
 }

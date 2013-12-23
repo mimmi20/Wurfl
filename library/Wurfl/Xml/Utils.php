@@ -27,12 +27,16 @@ use Wurfl\FileUtils;
  */
 class Utils
 {
-
-    //
+    /**
+     *
+     */
     private function __construct()
     {
     }
 
+    /**
+     *
+     */
     private function __clone()
     {
     }
@@ -49,6 +53,7 @@ class Utils
         if (self::isZipFile($xmlResource)) {
             return self::getZippedFile($xmlResource);
         }
+
         return $xmlResource;
     }
 
@@ -63,8 +68,11 @@ class Utils
     private static function getZippedFile($filename)
     {
         if (!self::zipModuleLoaded()) {
-            throw new Exception("The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file");
+            throw new Exception(
+                "The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file"
+            );
         }
+
         $tmpDir = FileUtils::getTempDir();
         $zip    = new \ZipArchive();
 

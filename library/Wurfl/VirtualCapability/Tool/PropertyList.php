@@ -24,15 +24,21 @@ namespace Wurfl\VirtualCapability\Tool;
 class PropertyList
 {
     /**
-     * @var \Wurfl\VirtualCapability\Tool\Device
+     * @var Device
      */
     protected $device;
 
-    public function __construct($device)
+    /**
+     * @param $device
+     */
+    public function __construct(Device $device)
     {
         $this->device = $device;
     }
 
+    /**
+     * @return bool
+     */
     public function set()
     {
         return true;

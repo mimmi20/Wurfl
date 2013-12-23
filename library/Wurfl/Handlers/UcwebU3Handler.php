@@ -84,77 +84,85 @@ class UcwebU3Handler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'Android')) {
             // Apply Version+Model--- matching normalization
             $version             = AndroidHandler::getAndroidVersion($userAgent, false);
-            $significant_version = explode('.', $version);
-            if ($significant_version[0] !== null) {
-                $deviceID = 'generic_ucweb_android_ver' . $significant_version[0];
+            $significantVersion = explode('.', $version);
+
+            if ($significantVersion[0] !== null) {
+                $deviceID = 'generic_ucweb_android_ver' . $significantVersion[0];
+
                 if (in_array($deviceID, self::$constantIDs)) {
                     return $deviceID;
                 }
             }
 
             return 'generic_ucweb_android_ver1';
-        } //iPhone U3K
-        else {
-            if (Utils::checkIfContains($userAgent, 'iPhone;')) {
-                if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
-                    $significant_version = $matches[1];
-                    $deviceID            = 'apple_iphone_ver' . $significant_version . '_subuaucweb';
-                    if (in_array($deviceID, self::$constantIDs)) {
-                        return $deviceID;
-                    }
-                }
+        } elseif (Utils::checkIfContains($userAgent, 'iPhone;')) {
+            //iPhone U3K
+            if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
+                $significantVersion = $matches[1];
+                $deviceID            = 'apple_iphone_ver' . $significantVersion . '_subuaucweb';
 
-                return 'apple_iphone_ver1_subuaucweb';
-            } //iPad U3K
-            else {
-                if (Utils::checkIfContains($userAgent, 'iPad')) {
-
-                    if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
-                        $significant_version = $matches[1];
-                        $deviceID            = 'apple_ipad_ver1_sub' . $significant_version . '_subuaucweb';
-                        if (in_array($deviceID, self::$constantIDs)) {
-                            return $deviceID;
-                        }
-                    }
-
-                    return 'apple_ipad_ver1_subuaucweb';
+                if (in_array($deviceID, self::$constantIDs)) {
+                    return $deviceID;
                 }
             }
+
+            return 'apple_iphone_ver1_subuaucweb';
+        } elseif (Utils::checkIfContains($userAgent, 'iPad')) {
+            //iPad U3K
+
+            if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
+                $significantVersion = $matches[1];
+                $deviceID            = 'apple_ipad_ver1_sub' . $significantVersion . '_subuaucweb';
+
+                if (in_array($deviceID, self::$constantIDs)) {
+                    return $deviceID;
+                }
+            }
+
+            return 'apple_ipad_ver1_subuaucweb';
         }
 
         return 'generic_ucweb';
     }
 
     /**
-     * @param string $ua
+     * @param string $userAgent
      *
      * @return string|null
      */
-    public static function getUcBrowserVersion($ua)
+    public static function getUcBrowserVersion($userAgent)
     {
-        if (preg_match('/UCBrowser\/(\d+)\.\d/', $ua, $matches)) {
-            $uc_version = $matches[1];
-            return $uc_version;
+        if (preg_match('/UCBrowser\/(\d+)\.\d/', $userAgent, $matches)) {
+            return $matches[1];
         }
+
         return null;
     }
 
-    public static function getUcAndroidVersion($ua, $use_default = true)
+    /**
+     * @param string     $userAgent
+     * @param bool $useDefault
+     *
+     * @return float|null
+     */
+    public static function getUcAndroidVersion($userAgent, $useDefault = true)
     {
-        if (preg_match('/; Adr (\d+\.\d+)\.?/', $ua, $matches)) {
-            $u2k_an_version = $matches[1];
-            if (in_array($u2k_an_version, AndroidHandler::$validAndroidVersions)) {
-                return $u2k_an_version;
+        if (preg_match('/; Adr (\d+\.\d+)\.?/', $userAgent, $matches)) {
+            $u2kAndroidVersion = $matches[1];
+
+            if (in_array($u2kAndroidVersion, AndroidHandler::$validAndroidVersions)) {
+                return $u2kAndroidVersion;
             }
         }
-        return $use_default ? AndroidHandler::ANDROID_DEFAULT_VERSION : null;
+
+        return $useDefault ? AndroidHandler::ANDROID_DEFAULT_VERSION : null;
     }
 
     //Slightly modified from Android's get model function
-    public static function getUcAndroidModel($ua)
+    public static function getUcAndroidModel($userAgent)
     {
         // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
-        if (!preg_match('#Adr [\d\.]+; [a-zA-Z]+-[a-zA-Z]+; (.*)\) U2#', $ua, $matches)) {
+        if (!preg_match('#Adr [\d\.]+; [a-zA-Z]+-[a-zA-Z]+; (.*)\) U2#', $userAgent, $matches)) {
             return null;
         }
 
@@ -168,6 +176,7 @@ class UcwebU3Handler extends AbstractHandler
             $model = preg_replace('#(/| +V?\d)[\.\d]+$#', '', $model);
             $model = preg_replace('#/.*$#', '', $model);
         }
+
         // Samsung
         $model = preg_replace('#(SAMSUNG[^/]+)/.*$#', '$1', $model);
         // Orange

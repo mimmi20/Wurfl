@@ -25,7 +25,6 @@ namespace Wurfl\Storage;
  */
 class Factory
 {
-
     /**
      * @var array Default configuration
      */
@@ -47,7 +46,9 @@ class Factory
         $currentConfiguration = is_array($configuration) ?
             array_merge(self::$defaultConfiguration, $configuration)
             : self::$defaultConfiguration;
+
         $class                = self::className($currentConfiguration);
+
         return new $class($currentConfiguration['params']);
     }
 

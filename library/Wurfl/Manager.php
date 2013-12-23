@@ -27,7 +27,8 @@ use WurflCache\Adapter\AdapterInterface;
  * // Example 2: Get Visiting Device from HTTP Request
  * $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
  * // Example 3: Get Visiting Device from User Agent
- * $userAgent = 'Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10';
+ * $userAgent = 'Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) '
+ * . 'Version/4.0.4 Mobile/7B334b Safari/531.21.10';
  * $device = $wurflManager->getDeviceForUserAgent($userAgent);
  * </code>
  *
@@ -366,8 +367,8 @@ class Manager
             // save it in cache
             $this->cacheStorage->save($request->id, $deviceId);
         } else {
-            $request->matchInfo->from_cache  = true;
-            $request->matchInfo->lookup_time = 0.0;
+            $request->matchInfo->fromCache  = true;
+            $request->matchInfo->lookupTime = 0.0;
         }
 
         return $deviceId;

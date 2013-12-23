@@ -82,4 +82,3 @@ class XmlConfigTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(empty($cache));
     }
 }
-

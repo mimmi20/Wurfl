@@ -25,12 +25,16 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsFullDesktop extends VirtualCapability
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array('ux_full_desktop');
 
-    protected $required_capabilities = array('ux_full_desktop');
-
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         return ($this->device->ux_full_desktop == 'true');

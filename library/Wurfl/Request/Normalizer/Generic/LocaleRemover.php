@@ -28,11 +28,16 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class LocaleRemover implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         return Utils::removeLocale($userAgent);
     }
 }
+
 
 

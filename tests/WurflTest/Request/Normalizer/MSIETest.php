@@ -22,12 +22,12 @@ class MSIETest extends BaseTest
      * @dataProvider msieUserAgentsDataProvider
      *
      */
-    function shoudRemoveAllTheCharactersAfterTheMinorVersion($userAgent, $expected)
+    public function shoudRemoveAllTheCharactersAfterTheMinorVersion($userAgent, $expected)
     {
         $this->assertNormalizeEqualsExpected($userAgent, $expected);
     }
 
-    function msieUserAgentsDataProvider()
+    public function msieUserAgentsDataProvider()
     {
         return array(
             array("Mozilla/2.0 (compatible; MSIE 3.02; Windows CE; Smartphone; 176x220)", "MSIE 3.0"),
@@ -39,4 +39,3 @@ class MSIETest extends BaseTest
         );
     }
 }
-

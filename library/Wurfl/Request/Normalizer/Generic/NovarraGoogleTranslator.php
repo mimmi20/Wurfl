@@ -27,12 +27,18 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class NovarraGoogleTranslator implements NormalizerInterface
 {
-
+    /**
+     * @var string
+     */
     const NOVARRA_GOOGLE_TRANSLATOR_PATTERN = "/(\sNovarra-Vision.*)|(,gzip\(gfe\)\s+\(via translate.google.com\))/";
 
+    /**
+     * @param string $userAgent
+     *
+     * @return mixed|string
+     */
     public function normalize($userAgent)
     {
         return preg_replace(self::NOVARRA_GOOGLE_TRANSLATOR_PATTERN, "", $userAgent);
     }
 }
-

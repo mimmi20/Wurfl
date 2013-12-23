@@ -28,27 +28,38 @@ namespace Wurfl\Xml;
  */
 class Info
 {
-
     /**
      * Key used in persistence provider to store version-related information
      *
      * @var string
      */
     const PERSISTENCE_KEY = "\Wurfl\Xml\Info";
-    private $_version;
-    private $_lastUpdated;
-    private $_officialURL;
+
+    /**
+     * @var string
+     */
+    private $version;
+
+    /**
+     * @var string
+     */
+    private $lastUpdated;
+
+    /**
+     * @var string
+     */
+    private $officialUrl;
 
     /**
      * @param string $version     WURFL Version
      * @param string $lastUpdated WURFL Last Updated data
-     * @param string $officialURL WURFL URL
+     * @param string $officialUrl WURFL URL
      */
-    public function __construct($version, $lastUpdated, $officialURL)
+    public function __construct($version, $lastUpdated, $officialUrl)
     {
-        $this->_version     = $version;
-        $this->_lastUpdated = $lastUpdated;
-        $this->_officialURL = $officialURL;
+        $this->version     = $version;
+        $this->lastUpdated = $lastUpdated;
+        $this->officialUrl = $officialUrl;
     }
 
     /**
@@ -60,7 +71,15 @@ class Info
      */
     public function __get($name)
     {
-        $name = '_' . $name;
+        switch ($name) {
+            case 'officialURL':
+                return $this->officialUrl;
+                break;
+            default:
+                // nothing to do here
+                break;
+        }
+
         return $this->$name;
     }
 

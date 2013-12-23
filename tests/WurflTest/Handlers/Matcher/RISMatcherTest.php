@@ -28,13 +28,6 @@ class RISMatcherTest extends \PHPUnit_Framework_TestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @dataProvider distanceData
-     */
-    public function testDistance($t1, $t2, $expected)
-    {
-    }
-
     public function testMatchMustReturnFirstMatch()
     {
 
@@ -61,10 +54,4 @@ class RISMatcherTest extends \PHPUnit_Framework_TestCase
             array($candidates, "aaa bbb ccc ddd", 3, "aaa bbb ccc ddd")
         );
     }
-
-    public function distanceData()
-    {
-        return array(array("pippo", "pippotopo", 5), array("pippo", "pippo", 5), array("pippo", "pixxxxx", 2));
-    }
 }
-

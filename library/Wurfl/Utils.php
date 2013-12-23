@@ -134,7 +134,7 @@ class Utils
      *
      * @return array
      */
-    public static function array_merge_recursive_unique($array1, $array2)
+    public static function arrayMergeRecursiveUnique($array1, $array2)
     {
         // LOOP THROUGH $array2
         foreach ($array2 as $k => $v) {
@@ -147,7 +147,7 @@ class Utils
                     $array1[$k] = $array2[$k];
                 } else {
                     // RECURSE IF IT'S AN ARRAY
-                    $array1[$k] = self::array_merge_recursive_unique($array1[$k], $array2[$k]);
+                    $array1[$k] = self::arrayMergeRecursiveUnique($array1[$k], $array2[$k]);
                 }
             } else {
                 // IF VALUE DOESN'T EXIST IN $array1 USE $array2 VALUE

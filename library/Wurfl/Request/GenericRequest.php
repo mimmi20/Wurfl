@@ -32,13 +32,35 @@ namespace Wurfl\Request;
  */
 class GenericRequest
 {
+    /**
+     * @var string
+     */
+    private $userAgent;
 
-    private $_userAgent;
-    private $_userAgentProfile;
-    private $_xhtmlDevice;
-    private $_id;
-    private $_matchInfo;
-    private $_userAgentsWithDeviceID;
+    /**
+     * @var null|string
+     */
+    private $userAgentProfile;
+
+    /**
+     * @var null|string
+     */
+    private $xhtmlDevice;
+
+    /**
+     * @var string
+     */
+    private $id;
+
+    /**
+     * @var MatchInfo
+     */
+    private $matchInfo;
+
+    /**
+     * @var array|null
+     */
+    private $userAgentsWithDeviceID;
 
     /**
      * @param string $userAgent
@@ -47,24 +69,34 @@ class GenericRequest
      */
     public function __construct($userAgent, $userAgentProfile = null, $xhtmlDevice = null)
     {
-        $this->_userAgent              = $userAgent;
-        $this->_userAgentProfile       = $userAgentProfile;
-        $this->_xhtmlDevice            = $xhtmlDevice;
-        $this->_id                     = md5($userAgent);
-        $this->_matchInfo              = new MatchInfo();
-        $this->_userAgentsWithDeviceID = null;
+        $this->userAgent              = $userAgent;
+        $this->userAgentProfile       = $userAgentProfile;
+        $this->xhtmlDevice            = $xhtmlDevice;
+        $this->id                     = md5($userAgent);
+        $this->matchInfo              = new MatchInfo();
+        $this->userAgentsWithDeviceID = null;
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     */
     public function __get($name)
     {
-        $name = '_' . $name;
         return $this->$name;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     *
+     * @return GenericRequest
+     */
     public function __set($name, $value)
     {
-        $name        = '_' . $name;
-        $this->$name = $value;;
+        $this->$name = $value;
+
+        return $this;
     }
 }
-

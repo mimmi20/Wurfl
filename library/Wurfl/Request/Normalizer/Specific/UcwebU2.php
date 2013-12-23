@@ -12,7 +12,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -26,14 +26,17 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  */
 class UcwebU2 implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
-
         $ucbVersion = UcwebU3Handler::getUcBrowserVersion($userAgent);
 
         if ($ucbVersion === null) {
@@ -62,7 +65,8 @@ class UcwebU2 implements NormalizerInterface
             //Add spaces and normalize
             $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
             if (preg_match(
-                '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/', $userAgent,
+                '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/',
+                $userAgent,
                 $matches
             )
             ) {

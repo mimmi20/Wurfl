@@ -25,14 +25,18 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsTouchscreen extends VirtualCapability
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array('pointing_method');
 
-    protected $required_capabilities = array('pointing_method');
-
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
-        return ($this->device->pointing_method == 'touchscreen');
+        return ('touchscreen' === $this->device->pointing_method);
     }
 }

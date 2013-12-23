@@ -12,7 +12,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -25,17 +25,24 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  */
 class HTCMac implements NormalizerInterface
 {
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         $model = HTCMacHandler::getHTCMacModel($userAgent, false);
+
         if ($model !== null) {
             $prefix = $model . Constants::RIS_DELIMITER;
             return $prefix . $userAgent;
         }
+
         return $userAgent;
     }
 }

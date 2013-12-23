@@ -43,4 +43,3 @@ class NovarraGoogleTranslatorTest extends BaseTest
         );
     }
 }
-

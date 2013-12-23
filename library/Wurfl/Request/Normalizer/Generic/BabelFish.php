@@ -27,9 +27,16 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class BabelFish implements NormalizerInterface
 {
-
+    /**
+     * @var string
+     */
     const BABEL_FISH_REGEX = "/\\s*\\(via babelfish.yahoo.com\\)\\s*/";
 
+    /**
+     * @param string $userAgent
+     *
+     * @return mixed|string
+     */
     public function normalize($userAgent)
     {
         return preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);

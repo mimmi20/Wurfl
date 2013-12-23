@@ -25,7 +25,6 @@ namespace Wurfl\Request\Normalizer;
  */
 interface NormalizerInterface
 {
-
     /**
      * Return the normalized user agent
      *

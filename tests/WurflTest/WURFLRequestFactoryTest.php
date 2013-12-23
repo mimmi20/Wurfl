@@ -8,17 +8,20 @@ use Wurfl\Request\GenericRequestFactory;
  */
 class WURFLRequestFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    private $_testData = array();
+    /**
+     * @var array
+     */
+    private $testData = array();
 
-    public function setUp()
+    protected function setUp()
     {
         $configurationFile = __DIR__ . DIRECTORY_SEPARATOR . '../resources/request.yml';
-        $this->_testData   = self::_loadData($configurationFile);
+        $this->testData   = self::loadData($configurationFile);
     }
 
     public function testCreateRequest()
     {
-        foreach ($this->_testData as $testData) {
+        foreach ($this->testData as $testData) {
             $requestFactory = new GenericRequestFactory();
             $request = $requestFactory->createRequest($testData ['_SERVER']);
 
@@ -26,7 +29,7 @@ class WURFLRequestFactoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    private static function _loadData($fileName)
+    private static function loadData($fileName)
     {
         $handle           = fopen($fileName, 'r');
         $testData         = array();
@@ -72,20 +75,3 @@ class WURFLRequestFactoryTest extends \PHPUnit_Framework_TestCase
         return $combinedArray;
     }
 }
-
-/**
- * Utility Classes
- *
- */
-//interface Condition {
-//    function check($key, $value);
-//}
-
-class NotNullCondition
-{
-    public function check($key, $value)
-    {
-        return empty($key) || empty($value) ? false : true;
-    }
-}
-

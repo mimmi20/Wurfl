@@ -25,12 +25,16 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsIos extends VirtualCapability
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array('device_os');
 
-    protected $required_capabilities = array('device_os');
-
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         return ($this->device->device_os == 'iOS');

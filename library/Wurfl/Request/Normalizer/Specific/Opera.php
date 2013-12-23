@@ -12,7 +12,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -26,15 +26,19 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  * Return the safari user agent stripping out
  *     - all the chararcters between U; and Safari/xxx
  *
- *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.1 Safari/525.18
+ *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) ... Version/3.1.1 Safari/525.18
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  */
 class Opera implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         // Repair Opera user agents using fake version 9.80
@@ -45,6 +49,7 @@ class Opera implements NormalizerInterface
                 $userAgent = str_replace('Opera/9.80', 'Opera/' . $matches[1], $userAgent);
             }
         }
+
         return $userAgent;
     }
 }

@@ -15,7 +15,7 @@ class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldCreateFilePersistence()
     {
-        $config = new InMemoryConfig ();
+        $config = new InMemoryConfig();
         $config->wurflFile("./wurfl.xml")
             ->wurflPatch("./new_web_browsers_patch.xml")
             ->wurflPatch("./spv_patch.xml")
@@ -39,7 +39,7 @@ class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldCreateConfiguration()
     {
-        $config = new InMemoryConfig ();
+        $config = new InMemoryConfig();
         $params = array("host" => "127.0.0.1");
         $config->wurflFile("wurfl.xml")->wurflPatch("new_web_browsers_patch.xml")->wurflPatch("spv_patch.xml")
             ->persistence("memcache", $params)
@@ -67,7 +67,7 @@ class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldCreateConfigurationForMultipleMemcacheBackend()
     {
-        $config = new InMemoryConfig ();
+        $config = new InMemoryConfig();
         $params = array(
             "host"      => "10.211.55.10;10.211.55.2",
             "port"      => "11211",
@@ -78,4 +78,3 @@ class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
             ->persistence("memcache", $params);
     }
 }
-

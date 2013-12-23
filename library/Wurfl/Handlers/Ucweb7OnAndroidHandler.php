@@ -48,6 +48,7 @@ class Ucweb7OnAndroidHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContainsAll($userAgent, array('Android', 'UCWEB7'));
     }
 
@@ -56,16 +57,19 @@ class Ucweb7OnAndroidHandler extends AbstractHandler
         // The tolerance is after UCWEB7, not before
         $find      = 'UCWEB7';
         $tolerance = Utils::indexOfOrLength($userAgent, $find) + strlen($find);
+
         if ($tolerance > strlen($userAgent)) {
             $tolerance = strlen($userAgent);
         }
+
         $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
     public function applyRecoveryMatch($userAgent)
     {
-        $android_version_string = str_replace('.', '_', AndroidHandler::getAndroidVersion($userAgent));
-        $deviceID               = 'generic_android_ver' . $android_version_string . '_ucweb';
+        $androidVersion = str_replace('.', '_', AndroidHandler::getAndroidVersion($userAgent));
+        $deviceID               = 'generic_android_ver' . $androidVersion . '_ucweb';
+
         if (in_array($deviceID, self::$constantIDs)) {
             return $deviceID;
         } else {

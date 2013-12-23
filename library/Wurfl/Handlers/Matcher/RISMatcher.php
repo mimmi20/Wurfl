@@ -41,11 +41,12 @@ class RISMatcher implements MatcherInterface
      *
      * @return RISMatcher
      */
-    public static function INSTANCE()
+    public static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
@@ -65,10 +66,12 @@ class RISMatcher implements MatcherInterface
         $low          = 0;
         $high         = count($collection) - 1;
         $bestIndex    = 0;
+
         while ($low <= $high) {
             $mid      = (int)round(($low + $high) / 2);
             $find     = $collection[$mid];
             $distance = $this->longestCommonPrefixLength($needle, $find);
+
             if ($distance >= $tolerance && $distance > $bestDistance) {
                 $bestIndex    = $mid;
                 $match        = $find;
@@ -90,9 +93,11 @@ class RISMatcher implements MatcherInterface
         if ($bestDistance < $tolerance) {
             return null;
         }
+
         if ($bestIndex == 0) {
             return $match;
         }
+
         return $this->firstOfTheBests($collection, $needle, $bestIndex, $bestDistance);
     }
 
@@ -108,32 +113,35 @@ class RISMatcher implements MatcherInterface
      */
     private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
     {
-
         while ($bestIndex > 0
             && $this->longestCommonPrefixLength($collection[$bestIndex - 1], $needle) == $bestDistance) {
             $bestIndex = $bestIndex - 1;
         }
+
         return $collection[$bestIndex];
     }
 
     /**
      * Returns the largest number of matching characters between $s and $t
      *
-     * @param $s string String 1
-     * @param $t string String 2
+     * @param $string1 string String 1
+     * @param $string2 string String 2
      *
      * @return integer Longest prefix length
      */
-    private function longestCommonPrefixLength($s, $t)
+    private function longestCommonPrefixLength($string1, $string2)
     {
-        $length = min(strlen($s), strlen($t));
-        $i      = 0;
-        while ($i < $length) {
-            if ($s [$i] !== $t [$i]) {
+        $length = min(strlen($string1), strlen($string2));
+        $index      = 0;
+
+        while ($index < $length) {
+            if ($string1[$index] !== $string2[$index]) {
                 break;
             }
-            $i++;
+
+            $index++;
         }
-        return $i;
+
+        return $index;
     }
 }

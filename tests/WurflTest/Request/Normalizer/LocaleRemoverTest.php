@@ -9,7 +9,7 @@ use Wurfl\Request\Normalizer\Generic\LocaleRemover;
 class LocaleRemoverTest extends BaseTest
 {
 
-    function setUp()
+    protected function setUp()
     {
         $this->normalizer = new LocaleRemover();
     }
@@ -19,13 +19,13 @@ class LocaleRemoverTest extends BaseTest
      * @dataProvider userAgentsDataProvider
      *
      */
-    function shouldNormalizeTheLocale($userAgent, $expected)
+    public function shouldNormalizeTheLocale($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
         self::assertEquals($found, $expected);
     }
 
-    function userAgentsDataProvider()
+    public function userAgentsDataProvider()
     {
         return array(
             array(
@@ -89,4 +89,3 @@ class LocaleRemoverTest extends BaseTest
         );
     }
 }
-

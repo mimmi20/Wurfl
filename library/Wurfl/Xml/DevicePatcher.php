@@ -27,7 +27,6 @@ use Wurfl\Utils;
  */
 class DevicePatcher
 {
-
     /**
      * Patch an existing $device with a $patchingDevice
      *
@@ -41,10 +40,19 @@ class DevicePatcher
         if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
         }
-        $groupIdCapabilitiesMap = Utils::array_merge_recursive_unique(
-            $device->getGroupIdCapabilitiesMap(), $patchingDevice->getGroupIdCapabilitiesMap()
+
+        $groupIdCapabilitiesMap = Utils::arrayMergeRecursiveUnique(
+            $device->getGroupIdCapabilitiesMap(),
+            $patchingDevice->getGroupIdCapabilitiesMap()
         );
-        return new ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
+        return new ModelDevice(
+            $device->id,
+            $device->userAgent,
+            $device->fallBack,
+            $device->actualDeviceRoot,
+            $device->specific,
+            $groupIdCapabilitiesMap
+        );
     }
 
     /**
@@ -60,4 +68,3 @@ class DevicePatcher
         return (strcmp($patchingDevice->id, $device->id) === 0);
     }
 }
-

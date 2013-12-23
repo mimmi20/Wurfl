@@ -23,71 +23,114 @@ namespace Wurfl\VirtualCapability\Tool;
  */
 class NameVersionPair extends PropertyList
 {
+    /**
+     * @var string|null
+     */
     public $name;
+
+    /**
+     * @var string|null
+     */
     public $version;
 
-    protected $regex_matches = array();
+    /**
+     * @var array
+     */
+    protected $regexMatches = array();
 
+    /**
+     * @param string|null $name
+     * @param string|null $version
+     *
+     * @return bool
+     */
     public function set($name = null, $version = null)
     {
         if ($name !== null) {
             $this->name = trim($name);
         }
+
         if ($version !== null) {
             $this->version = trim($version);
         }
+
         return true;
     }
 
+    /**
+     * @param      $regex
+     * @param null $name
+     * @param null $version
+     *
+     * @return bool
+     */
     public function setRegex($regex, $name = null, $version = null)
     {
         // No need to capture the matches if we're not going to use them
         if (!is_int($name) && !is_int($version)) {
-            if (preg_match($regex, $this->device->ua)) {
+            if (preg_match($regex, $this->device->userAgent)) {
                 $this->name    = trim($name);
                 $this->version = trim($version);
                 return true;
             } else {
                 return false;
             }
-        } else {
-            if (preg_match($regex, $this->device->ua, $this->regex_matches)) {
-                if ($name !== null) {
-                    $this->name = is_int($name) ? $this->regex_matches[$name] : $name;
-                    $this->name = trim($this->name);
-                }
-                if ($version !== null) {
-                    //if (!isset($this->regex_matches[$version])) throw new Exception(var_export(array('regex'=>$regex,'matches'=>$this->regex_matches), true));
-                    $this->version = is_int($version) ? $this->regex_matches[$version] : $version;
-                    $this->version = trim($this->version);
-                }
-                return true;
+        } elseif (preg_match($regex, $this->device->userAgent, $this->regexMatches)) {
+            if ($name !== null) {
+                $this->name = is_int($name) ? $this->regexMatches[$name] : $name;
+                $this->name = trim($this->name);
             }
+
+            if ($version !== null) {
+                $this->version = is_int($version) ? $this->regexMatches[$version] : $version;
+                $this->version = trim($this->version);
+            }
+
+            return true;
         }
+
         return false;
     }
 
+    /**
+     * @param string     $needle
+     * @param string     $name
+     * @param null $version
+     *
+     * @return bool
+     */
     public function setContains($needle, $name, $version = null)
     {
-        if (strpos($this->device->ua, $needle) !== false) {
+        if (strpos($this->device->userAgent, $needle) !== false) {
             if ($name !== null) {
                 $this->name = trim($name);
             }
+
             if ($version !== null) {
                 $this->version = trim($version);
             }
+
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return array
+     */
     public function getLastRegexMatches()
     {
-        return $this->regex_matches;
+        return $this->regexMatches;
     }
 
-    public function getLastRegexMatch($match_number)
+    /**
+     * @param $matchNumber
+     *
+     * @return mixed
+     */
+    public function getLastRegexMatch($matchNumber)
     {
-        return $this->regex_matches[$match_number];
+        return $this->regexMatches[$matchNumber];
     }
 }

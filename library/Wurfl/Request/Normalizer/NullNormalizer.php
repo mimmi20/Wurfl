@@ -25,7 +25,11 @@ namespace Wurfl\Request\Normalizer;
  */
 class NullNormalizer implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         return $userAgent;

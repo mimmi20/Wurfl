@@ -25,29 +25,33 @@ namespace Wurfl\Request;
  */
 class MatchInfo
 {
-
     /**
      * @var boolean Response was returned from cache
      */
-    public $from_cache = false;
+    public $fromCache = false;
+
     /**
      * @var string The type of match that was made
      */
-    public $match_type;
+    public $matchType;
+
     /**
      * @var string The responsible Matcher/Handler
      */
     public $matcher;
+
     /**
      * @var string The history of Matchers/Handlers
      */
-    public $matcher_history = '';
+    public $matcherHistory = '';
+
     /**
      * @var float The time it took to lookup the user agent
      */
-    public $lookup_time;
+    public $lookupTime;
+
     /**
      * @var string The user agent after normalization
      */
-    public $normalized_user_agent;
+    public $normalizedUserAgent;
 }

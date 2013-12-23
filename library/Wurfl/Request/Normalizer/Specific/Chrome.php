@@ -12,7 +12,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -23,11 +23,15 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - Return the Chrome string with the major version
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  */
 class Chrome implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         return $this->chromeWithMajorVersion($userAgent);
@@ -38,16 +42,17 @@ class Chrome implements NormalizerInterface
      *
      * @param string $userAgent
      *
-     * @return string|int Version number
+     * @return string Version number
      */
     private function chromeWithMajorVersion($userAgent)
     {
-        $start_idx = strpos($userAgent, 'Chrome');
-        $end_idx   = strpos($userAgent, '.', $start_idx);
-        if ($end_idx === false) {
-            return substr($userAgent, $start_idx);
+        $startIndex = strpos($userAgent, 'Chrome');
+        $endIndex   = strpos($userAgent, '.', $startIndex);
+
+        if ($endIndex === false) {
+            return substr($userAgent, $startIndex);
         } else {
-            return substr($userAgent, $start_idx, ($end_idx - $start_idx));
+            return substr($userAgent, $startIndex, ($endIndex - $startIndex));
         }
     }
 }

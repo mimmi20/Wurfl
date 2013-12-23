@@ -27,7 +27,6 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class UCWEB implements NormalizerInterface
 {
-
     /**
      * This method remove the "UP.Link" substring from user agent string.
      *
@@ -42,6 +41,7 @@ class UCWEB implements NormalizerInterface
             $userAgent = preg_replace('/^(JUC \(Linux; U;)(?= \d)/', '$1 Android', $userAgent);
             $userAgent = preg_replace('/(Android|JUC|[;\)])(?=[\w|\(])/', '$1 ', $userAgent);
         }
+
         return $userAgent;
     }
 }

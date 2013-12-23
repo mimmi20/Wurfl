@@ -25,12 +25,16 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsHtmlPreferred extends VirtualCapability
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array('preferred_markup');
 
-    protected $required_capabilities = array('preferred_markup');
-
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         return (strpos($this->device->preferred_markup, 'html_web') === 0);

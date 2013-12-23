@@ -9,9 +9,9 @@ use Wurfl\Request\Normalizer\Generic\BlackBerry;
 class BlackBerryTest extends BaseTest
 {
 
-    function setUp()
+    protected function setUp()
     {
-        $this->normalizer = new BlackBerry ();
+        $this->normalizer = new BlackBerry();
     }
 
     /**
@@ -19,13 +19,13 @@ class BlackBerryTest extends BaseTest
      * @dataProvider blackberryUserAgentsDataProvider
      *
      */
-    function shouldRemoveAllCharactersBeforeTheLastBlackberryString($userAgent, $expected)
+    public function shouldRemoveAllCharactersBeforeTheLastBlackberryString($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
         self::assertEquals($expected, $found);
     }
 
-    function blackberryUserAgentsDataProvider()
+    public function blackberryUserAgentsDataProvider()
     {
         return array(
             array(
@@ -40,4 +40,3 @@ class BlackBerryTest extends BaseTest
         );
     }
 }
-

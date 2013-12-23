@@ -33,8 +33,14 @@ use WurflCache\Adapter\AdapterInterface;
  */
 class Storage
 {
-
+    /**
+     * @var string
+     */
     const APPLICATION_PREFIX = 'WURFL_';
+
+    /**
+     * @var string
+     */
     const WURFL_LOADED       = 'WURFL_WURFL_LOADED';
 
     /**
@@ -46,9 +52,6 @@ class Storage
      * @var \Wurfl\Storage\Storage
      */
     private $cache;
-
-    private $is_volatile = false;
-    private $supports_secondary_caching = false;
 
     /**
      * Creates a new WURFL_Storage_Base
@@ -69,6 +72,10 @@ class Storage
      */
     public function save($objectId, $object, $expiration = null)
     {
+        if (null !== $expiration) {
+            $this->adapter->setExpiration($expiration);
+        }
+
         $this->adapter->setItem($objectId, $object);
     }
 
@@ -110,28 +117,6 @@ class Storage
     }
 
     /**
-     * Returns true if the cache is an in-memory volatile cache, like Memcache or APC, or false if
-     * it is a persistent cache like Filesystem or MySQL
-     *
-     * @return boolean
-     */
-    public function isVolatile()
-    {
-        return $this->is_volatile;
-    }
-
-    /**
-     * This storage provider supports a caching layer in front of it, for example, the File provider
-     * supports a volatile cache like Memcache in front of it, whereas APC does not.
-     *
-     * @return boolean
-     */
-    public function supportsSecondaryCaching()
-    {
-        return $this->supports_secondary_caching;
-    }
-
-    /**
      * This storage provider can be used as a secondary cache
      *
      * @param \Wurfl\Storage\Storage $cache
@@ -144,7 +129,7 @@ class Storage
          * True if $this supports secondary caching and the cache provider is not the
          * same class type since this would always decrease performance
          */
-        return ($this->supports_secondary_caching && get_class($this) != get_class($cache));
+        return (get_class($this) != get_class($cache));
     }
 
     /**
@@ -154,46 +139,70 @@ class Storage
      *
      * @param \Wurfl\Storage\Storage $cache
      *
+     * @return Storage
      * @throws Exception
      */
     public function setCacheStorage(Storage $cache)
     {
-        if (!$this->supportsSecondaryCaching()) {
-            throw new Exception('The storage provider ' . get_class($cache) . ' cannot be used as a cache for '
-                . get_class($this));
-        }
         $this->cache = $cache;
+
+        return $this;
     }
 
+    /**
+     * saves an entry to the cache
+     *
+     * @param $objectId
+     * @param $object
+     */
     protected function cacheSave($objectId, $object)
     {
         if ($this->cache === null) {
             return;
         }
+
         $this->cache->save('FCACHE_' . $objectId, $object);
     }
 
+    /**
+     * loads an entry from the cache
+     *
+     * @param $objectId
+     *
+     * @return mixed|null
+     */
     protected function cacheLoad($objectId)
     {
         if ($this->cache === null) {
             return null;
         }
+
         return $this->cache->load('FCACHE_' . $objectId);
     }
 
+    /**
+     * removes an entry from the cache
+     *
+     * @param $objectId
+     */
     protected function cacheRemove($objectId)
     {
         if ($this->cache === null) {
             return;
         }
+
         $this->cache->remove('FCACHE_' . $objectId);
     }
 
+    /**
+     * clears the cache
+     */
     protected function cacheClear()
     {
         if ($this->cache === null) {
             return;
         }
+
         $this->cache->clear();
     }
 

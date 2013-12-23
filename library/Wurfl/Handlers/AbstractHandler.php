@@ -255,7 +255,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         $startTime                   = microtime(true);
 
         $userAgent                                 = $this->normalizeUserAgent($request->userAgent);
-        $request->matchInfo->normalized_user_agent = $userAgent;
+        $request->matchInfo->normalizedUserAgent = $userAgent;
         $this->logger->debug('START: Matching For  ' . $userAgent);
 
         // Get The data associated with this current handler
@@ -265,15 +265,15 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         }
         $deviceID = null;
         // Start with an Exact match
-        $request->matchInfo->matcher_history .= $className . '(exact),';
-        $request->matchInfo->match_type  = 'exact';
+        $request->matchInfo->matcherHistory .= $className . '(exact),';
+        $request->matchInfo->matchType  = 'exact';
         $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
 
         $deviceID = $this->applyExactMatch($userAgent);
 
         // Try with the conclusive Match
         if ($this->isBlankOrGeneric($deviceID)) {
-            $request->matchInfo->matcher_history .= $className . '(conclusive),';
+            $request->matchInfo->matcherHistory .= $className . '(conclusive),';
             $this->logger->debug($this->prefix . ' :Applying Conclusive Match for ua: ' . $userAgent);
             $deviceID = $this->applyConclusiveMatch($userAgent);
 
@@ -281,21 +281,21 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
             if ($this->isBlankOrGeneric($deviceID)) {
                 // Log the ua and the ua profile
                 //$this->logger->debug($request);
-                $request->matchInfo->match_type = 'recovery';
-                $request->matchInfo->matcher_history .= $className . '(recovery),';
+                $request->matchInfo->matchType = 'recovery';
+                $request->matchInfo->matcherHistory .= $className . '(recovery),';
                 $this->logger->debug($this->prefix . ' :Applying Recovery Match for ua: ' . $userAgent);
                 $deviceID = $this->applyRecoveryMatch($userAgent);
 
                 // Try with catch all recovery Match
                 if ($this->isBlankOrGeneric($deviceID)) {
-                    $request->matchInfo->match_type = 'recovery-catchall';
-                    $request->matchInfo->matcher_history .= $className . '(recovery-catchall),';
+                    $request->matchInfo->matchType = 'recovery-catchall';
+                    $request->matchInfo->matcherHistory .= $className . '(recovery-catchall),';
                     $this->logger->debug($this->prefix . ' :Applying Catch All Recovery Match for ua: ' . $userAgent);
                     $deviceID = $this->applyRecoveryCatchAllMatch($userAgent);
 
                     // All attempts to match have failed
                     if ($this->isBlankOrGeneric($deviceID)) {
-                        $request->matchInfo->match_type = 'none';
+                        $request->matchInfo->matchType = 'none';
 
                         if ($request->userAgentProfile) {
                             $deviceID = Constants::GENERIC_MOBILE;
@@ -308,7 +308,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         }
 
         $this->logger->debug('END: Matching For  ' . $userAgent);
-        $request->matchInfo->lookup_time = microtime(true) - $startTime;
+        $request->matchInfo->lookupTime = microtime(true) - $startTime;
 
         return $deviceID;
     }

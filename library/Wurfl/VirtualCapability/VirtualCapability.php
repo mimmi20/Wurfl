@@ -18,6 +18,9 @@ namespace Wurfl\VirtualCapability;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+use Wurfl\CustomDevice;
+use Wurfl\Request\GenericRequest;
+
 /**
  * Defines the virtual capabilities
  *
@@ -25,66 +28,99 @@ namespace Wurfl\VirtualCapability;
  */
 abstract class VirtualCapability
 {
-
-    protected $required_capabilities = array();
-    protected $use_caching = false;
-    protected $cached_value;
-
-    private static $loaded_capabilities;
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array();
 
     /**
-     * @var \Wurfl\CustomDevice
+     * @var bool
      */
-    protected $device;
+    protected $useCaching = false;
 
     /**
-     * @var \Wurfl\Request\GenericRequest
+     * @var mixed
      */
-    protected $request;
+    protected $cachedValue = null;
 
     /**
-     * @param \Wurfl\CustomDevice           $device
-     * @param \Wurfl\Request\GenericRequest $request
+     * @var array
      */
-    public function __construct($device = null, $request = null)
+    private static $loadedCapabilities = array();
+
+    /**
+     * @var CustomDevice
+     */
+    protected $device = null;
+
+    /**
+     * @var GenericRequest
+     */
+    protected $request = null;
+
+    /**
+     * @param CustomDevice           $device
+     * @param GenericRequest $request
+     */
+    public function __construct(CustomDevice $device = null, GenericRequest $request = null)
     {
         $this->device  = $device;
         $this->request = $request;
     }
 
+    /**
+     * @return bool
+     */
     public function hasRequiredCapabilities()
     {
-        if (empty($this->required_capabilities)) {
+        if (empty($this->requiredCapabilities)) {
             return true;
         }
-        if (self::$loaded_capabilities === null) {
-            self::$loaded_capabilities = $this->device->getRootDevice()->getCapabilityNames();
+
+        if (self::$loadedCapabilities === null) {
+            self::$loadedCapabilities = $this->device->getRootDevice()->getCapabilityNames();
         }
-        $missing_caps = array_diff($this->required_capabilities, self::$loaded_capabilities);
-        return empty($missing_caps);
+
+        $missingCaps = array_diff($this->requiredCapabilities, self::$loadedCapabilities);
+        return empty($missingCaps);
     }
 
+    /**
+     * @return array
+     */
     public function getRequiredCapabilities()
     {
-        return $this->required_capabilities;
+        return $this->requiredCapabilities;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getValue()
     {
-        $value = ($this->use_caching) ? $this->computeCached() : $this->compute();
+        $value = ($this->useCaching) ? $this->computeCached() : $this->compute();
+
         if (is_bool($value)) {
             return $value ? 'true' : 'false';
         }
+
         return $value;
     }
 
+    /**
+     * @return mixed
+     */
     abstract protected function compute();
 
+    /**
+     * @return mixed
+     */
     private function computeCached()
     {
-        if ($this->cached_value === null) {
-            $this->cached_value = $this->compute();
+        if ($this->cachedValue === null) {
+            $this->cachedValue = $this->compute();
         }
-        return $this->cached_value;
+
+        return $this->cachedValue;
     }
 }

@@ -13,7 +13,7 @@ class DevicePatcherTest extends \PHPUnit_Framework_TestCase
     /** @var  DevicePatcher */
     private $devicePatcher;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->devicePatcher = new DevicePatcher();
     }

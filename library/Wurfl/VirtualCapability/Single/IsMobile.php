@@ -25,12 +25,16 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsMobile extends VirtualCapability
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array('is_wireless_device');
 
-    protected $required_capabilities = array('is_wireless_device');
-
+    /**
+     * @return mixed|string
+     */
     protected function compute()
     {
         return $this->device->is_wireless_device;

@@ -8,8 +8,7 @@ use Wurfl\Request\Normalizer\Specific\LG;
  */
 class LGUPLUSTest extends BaseTest
 {
-
-    public function setUp()
+    protected function setUp()
     {
         $this->normalizer = new LG();
     }
@@ -19,7 +18,7 @@ class LGUPLUSTest extends BaseTest
      * @dataProvider lguplusUserAgentsDataProvider
      *
      */
-    public function shouLd($userAgent, $expected)
+    public function should($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
         self::assertEquals($found, $expected);
@@ -54,4 +53,3 @@ class LGUPLUSTest extends BaseTest
         );
     }
 }
-

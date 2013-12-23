@@ -27,7 +27,11 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class TransferEncoding implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return mixed|string
+     */
     public function normalize($userAgent)
     {
         return str_replace(',gzip(gfe)', '', $userAgent);

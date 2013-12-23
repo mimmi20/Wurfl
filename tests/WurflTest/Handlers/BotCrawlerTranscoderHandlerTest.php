@@ -19,7 +19,7 @@ class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
     /** @var  BotCrawlerTranscoderHandler */
     private $handler;
 
-    function setUp()
+    protected function setUp()
     {
         $normalizer    = new NullNormalizer();
         $context       = new Context(null);
@@ -31,13 +31,13 @@ class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $userAgent
      */
-    function testShoudHandleKnownBots($userAgent)
+    public function testShoudHandleKnownBots($userAgent)
     {
         $found = $this->handler->canHandle($userAgent);
         self::assertTrue($found);
     }
 
-    function botCrawlerTranscoderUserAgentsProvider()
+    public function botCrawlerTranscoderUserAgentsProvider()
     {
         return array(
             array("Mozilla/5.0 (compatible; BecomeBot/3.0; +http://www.become.com/site_owners.html)"),
@@ -45,4 +45,3 @@ class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
         );
     }
 }
-

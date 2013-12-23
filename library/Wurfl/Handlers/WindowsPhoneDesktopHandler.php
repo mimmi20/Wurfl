@@ -32,9 +32,14 @@ use Wurfl\Constants;
  */
 class WindowsPhoneDesktopHandler extends AbstractHandler
 {
-
+    /**
+     * @var string
+     */
     protected $prefix = "WINDOWSPHONEDESKTOP";
 
+    /**
+     * @var array
+     */
     public static $constantIDs
         = array(
             'generic_ms_phone_os7_desktopmode',
@@ -42,17 +47,32 @@ class WindowsPhoneDesktopHandler extends AbstractHandler
             'generic_ms_phone_os8_desktopmode',
         );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         return Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         // Exact and Recovery match only
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, 'WPDesktop')) {

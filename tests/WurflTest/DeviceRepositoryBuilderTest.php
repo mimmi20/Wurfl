@@ -16,22 +16,35 @@ use WurflCache\Adapter\Memory;
  */
 class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @var string
+     */
     const WURFL_FILE     = '../resources/wurfl_base.xml';
+
+    /**
+     * @var string
+     */
     const PATCH_FILE_ONE = '../resources/patch1.xml';
+
+    /**
+     * @var string
+     */
     const PATCH_FILE_TWO = '../resources/patch2.xml';
 
     /** @var  DeviceRepositoryBuilder */
     private $deviceRepositoryBuilder;
 
-    public function setUp()
+    protected function setUp()
     {
         $persistenceProvider   = new Storage(new Memory());
-        $context               = new Context ($persistenceProvider);
+        $context               = new Context($persistenceProvider);
         $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
-        $devicePatcher         = new DevicePatcher ();
-        $this->deviceRepositoryBuilder
-                               = new DeviceRepositoryBuilder ($persistenceProvider, $userAgentHandlerChain, $devicePatcher);
+        $devicePatcher         = new DevicePatcher();
+        $this->deviceRepositoryBuilder = new DeviceRepositoryBuilder(
+            $persistenceProvider,
+            $userAgentHandlerChain,
+            $devicePatcher
+        );
     }
 
     public function testShouldBuildARepositoryOfAllDevicesFromTheXmlFile()
@@ -77,11 +90,14 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $persistenceProvider = new Storage(new Memory());
         $persistenceProvider->setWURFLLoaded(true);
-        $context               = new Context ($persistenceProvider);
+        $context               = new Context($persistenceProvider);
         $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
-        $devicePatcher         = new DevicePatcher ();
-        $deviceRepositoryBuilder
-                               = new DeviceRepositoryBuilder ($persistenceProvider, $userAgentHandlerChain, $devicePatcher);
+        $devicePatcher         = new DevicePatcher();
+        $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
+            $persistenceProvider,
+            $userAgentHandlerChain,
+            $devicePatcher
+        );
         self::assertNotNull($deviceRepositoryBuilder);
         $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
 

@@ -25,13 +25,17 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsSmartphone extends VirtualCapability
 {
+    /**
+     * @var bool
+     */
+    protected $useCaching = true;
 
-    protected $use_caching = true;
-
-    protected $required_capabilities
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities
         = array(
             'is_wireless_device',
             'is_tablet',
@@ -41,6 +45,9 @@ class IsSmartphone extends VirtualCapability
             'device_os',
         );
 
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         if ($this->device->is_wireless_device != 'true'

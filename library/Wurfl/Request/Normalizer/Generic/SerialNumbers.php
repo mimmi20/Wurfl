@@ -27,7 +27,11 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class SerialNumbers implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return mixed|string
+     */
     public function normalize($userAgent)
     {
         $userAgent = preg_replace('/\/SN[\dX]+/', '/SNXXXXXXXXXXXXXXX', $userAgent);
@@ -35,4 +39,3 @@ class SerialNumbers implements NormalizerInterface
         return $userAgent;
     }
 }
-

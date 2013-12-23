@@ -50,7 +50,8 @@ class NetFrontOnAndroidHandler extends AbstractHandler
 
         return (Utils::checkIfContains($userAgent, 'Android')
             && Utils::checkIfContains(
-                $userAgent, 'NetFrontLifeBrowser/2.2'
+                $userAgent,
+                'NetFrontLifeBrowser/2.2'
             ));
     }
 

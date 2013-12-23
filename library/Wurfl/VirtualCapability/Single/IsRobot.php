@@ -26,12 +26,16 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsRobot extends VirtualCapability
 {
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array();
 
-    protected $required_capabilities = array();
-
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         // Control cap, "controlcap_is_robot" is checked before this function is called

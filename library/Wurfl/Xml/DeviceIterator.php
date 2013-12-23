@@ -25,8 +25,14 @@ namespace Wurfl\Xml;
  */
 class DeviceIterator extends AbstractIterator
 {
-
+    /**
+     * @var array
+     */
     private $capabilityFilter = array();
+
+    /**
+     * @var bool
+     */
     private $useCapabilityFilter = false;
 
     /**
@@ -36,18 +42,21 @@ class DeviceIterator extends AbstractIterator
     public function __construct($inputFile, $capabilityFilter = array())
     {
         parent::__construct($inputFile);
+
         $this->capabilityFilter    = $capabilityFilter;
         $this->useCapabilityFilter = !empty($this->capabilityFilter);
     }
 
+    /**
+     *
+     */
     public function readNextElement()
     {
-
         $deviceId = $groupId = $userAgent = $fallBack = $actualDeviceRoot = $specific = $groupIDCapabilitiesMap = null;
 
         while ($this->xmlReader->read()) {
-
             $nodeName = $this->xmlReader->name;
+
             switch ($this->xmlReader->nodeType) {
                 case \XMLReader::ELEMENT:
                     switch ($nodeName) {
@@ -62,11 +71,19 @@ class DeviceIterator extends AbstractIterator
                             );
                             $specific                   = $this->xmlReader->getAttribute(XmlInterface::SPECIFIC);
                             $currentCapabilityNameValue = array();
+
                             if ($this->xmlReader->isEmptyElement) {
-                                $this->currentElement
-                                    = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific);
+                                $this->currentElement = new ModelDevice(
+                                    $deviceId,
+                                    $userAgent,
+                                    $fallBack,
+                                    $actualDeviceRoot,
+                                    $specific
+                                );
+
                                 break 3;
                             }
+
                             break;
 
                         case XmlInterface::GROUP:
@@ -75,26 +92,38 @@ class DeviceIterator extends AbstractIterator
                             break;
 
                         case XmlInterface::CAPABILITY:
-
                             $capabilityName = $this->xmlReader->getAttribute(XmlInterface::CAPABILITY_NAME);
+
                             if ($this->needToReadCapability($capabilityName)) {
-                                $capabilityValue                                   = $this->xmlReader->getAttribute(
-                                    XmlInterface::CAPABILITY_VALUE
-                                );
+                                $capabilityValue = $this->xmlReader->getAttribute(XmlInterface::CAPABILITY_VALUE);
+
                                 $currentCapabilityNameValue[$capabilityName]       = $capabilityValue;
                                 $groupIDCapabilitiesMap[$groupId][$capabilityName] = $capabilityValue;
                             }
 
+                            break;
+                        default:
+                            // nothing to do here
                             break;
                     }
 
                     break;
                 case \XMLReader::END_ELEMENT:
                     if ($nodeName == XmlInterface::DEVICE) {
-                        $this->currentElement
-                            = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific, $groupIDCapabilitiesMap);
+                        $this->currentElement = new ModelDevice(
+                            $deviceId,
+                            $userAgent,
+                            $fallBack,
+                            $actualDeviceRoot,
+                            $specific,
+                            $groupIDCapabilitiesMap
+                        );
                         break 2;
                     }
+                    break;
+                default:
+                    // nothing to do here
+                    break;
             }
         } // end of while
     }
@@ -111,6 +140,7 @@ class DeviceIterator extends AbstractIterator
         if (!$this->useCapabilityFilter) {
             return true;
         }
+
         return in_array($capabilityName, $this->capabilityFilter);
     }
 }

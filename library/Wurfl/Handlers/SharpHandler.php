@@ -39,6 +39,7 @@ class SharpHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfStartsWithAnyOf($userAgent, array('Sharp', 'SHARP'));
     }
 }

@@ -27,14 +27,20 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class BlackBerry implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return mixed|string
+     */
     public function normalize($userAgent)
     {
         $userAgent = str_ireplace('blackberry', 'BlackBerry', $userAgent);
         $pos       = strpos($userAgent, 'BlackBerry');
+
         if ($pos !== false && $pos > 0) {
             $userAgent = substr($userAgent, $pos);
         }
+
         return $userAgent;
     }
 }

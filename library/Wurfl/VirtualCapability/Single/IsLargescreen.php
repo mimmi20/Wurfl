@@ -25,16 +25,20 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsLargescreen extends VirtualCapability
 {
-
-    protected $required_capabilities
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities
         = array(
             'resolution_width',
             'resolution_height',
         );
 
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         return ($this->device->resolution_width >= 480 && $this->device->resolution_height >= 480);

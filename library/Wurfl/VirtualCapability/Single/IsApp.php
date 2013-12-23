@@ -26,11 +26,12 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsApp extends VirtualCapability
 {
-
-    protected $required_capabilities = array('device_os');
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities = array('device_os');
 
     /**
      * Simple strings or regex patterns that indicate a UA is from a native app
@@ -71,44 +72,47 @@ class IsApp extends VirtualCapability
             '#[a-z]{3,}(?:\.[a-z]+){2,}#',
         );
 
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
-        $ua = $this->request->userAgent;
+        $userAgent = $this->request->userAgent;
 
-        if ($this->device->device_os == "iOS" && !Utils::checkIfContains($ua, "Safari")) {
+        if ($this->device->device_os == "iOS" && !Utils::checkIfContains($userAgent, "Safari")) {
             return true;
         }
+
         foreach ($this->patterns as $pattern) {
             if ($pattern[0] === '#') {
                 // Regex
-                if (preg_match($pattern, $ua)) {
+                if (preg_match($pattern, $userAgent)) {
                     return true;
                 }
                 continue;
             }
 
             // Substring matches are not abstracted for performance
-            $pattern_len = strlen($pattern);
-            $ua_len      = strlen($ua);
+            $patternLength = strlen($pattern);
+            $userAgentLength      = strlen($userAgent);
 
             if ($pattern[0] === '^') {
                 // Starts with
-                if (strpos($ua, substr($pattern, 1)) === 0) {
+                if (strpos($userAgent, substr($pattern, 1)) === 0) {
+                    return true;
+                }
+            } elseif ($pattern[$patternLength - 1] === '$') {
+                // Ends with
+                $patternLength--;
+                $pattern = substr($pattern, 0, $patternLength);
+
+                if (strpos($userAgent, $pattern) === ($userAgentLength - $patternLength)) {
                     return true;
                 }
             } else {
-                if ($pattern[$pattern_len - 1] === '$') {
-                    // Ends with
-                    $pattern_len--;
-                    $pattern = substr($pattern, 0, $pattern_len);
-                    if (strpos($ua, $pattern) === ($ua_len - $pattern_len)) {
-                        return true;
-                    }
-                } else {
-                    // Match anywhere
-                    if (strpos($ua, $pattern) !== false) {
-                        return true;
-                    }
+                // Match anywhere
+                if (strpos($userAgent, $pattern) !== false) {
+                    return true;
                 }
             }
         }

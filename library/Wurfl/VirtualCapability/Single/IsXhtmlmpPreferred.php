@@ -25,16 +25,20 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
 class IsXhtmlmpPreferred extends VirtualCapability
 {
-
-    protected $required_capabilities
+    /**
+     * @var array
+     */
+    protected $requiredCapabilities
         = array(
             'xhtml_support_level',
             'preferred_markup',
         );
 
+    /**
+     * @return bool|mixed
+     */
     protected function compute()
     {
         return ($this->device->xhtml_support_level > 0 && strpos($this->device->preferred_markup, 'html_web') !== 0);

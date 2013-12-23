@@ -36,6 +36,7 @@ class LoggerFactory
         if (self::isLoggingConfigured($wurflConfig)) {
             return self::createFileLogger($wurflConfig, "wurfl.log");
         }
+
         return new NullLogger();
     }
 
@@ -65,6 +66,7 @@ class LoggerFactory
         if (is_null($wurflConfig)) {
             return false;
         }
+
         return !is_null($wurflConfig->logDir) && is_writable($wurflConfig->logDir);
     }
 

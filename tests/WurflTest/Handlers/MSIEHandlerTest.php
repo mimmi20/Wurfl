@@ -16,17 +16,16 @@ class MSIEHandlerTest extends \PHPUnit_Framework_TestCase
     /** @var  MSIEHandler */
     private $msieHandler;
 
-    function setUp()
+    protected function setUp()
     {
-        $context             = new Context (null);
-        $userAgentNormalizer = new MSIE ();
-        $this->msieHandler   = new MSIEHandler ($context, $userAgentNormalizer);
+        $context             = new Context(null);
+        $userAgentNormalizer = new MSIE();
+        $this->msieHandler   = new MSIEHandler($context, $userAgentNormalizer);
     }
 
-    function testShoudHandle()
+    public function testShoudHandle()
     {
         $userAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)";
         self::assertTrue($this->msieHandler->canHandle($userAgent));
     }
 }
-

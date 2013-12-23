@@ -12,7 +12,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  * @author     Fantayeneh Asres Gizaw
@@ -25,13 +25,20 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  * e.g
  *     Mozilla/5.0 (compatible; Konqueror/4.1; Linux) KHTML/4.1.2 (like Gecko) -> Konqueror/4
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Specific
+ * @package    \Wurfl\Request\Normalizer\Specific
  */
 class Konqueror implements NormalizerInterface
 {
-
+    /**
+     * @var string
+     */
     const KONQUEROR = "Konqueror";
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         return $this->konquerorWithMajorVersion($userAgent);
@@ -42,12 +49,10 @@ class Konqueror implements NormalizerInterface
      *
      * @param string $userAgent
      *
-     * @return string|int Major version number
+     * @return string Major version number
      */
     private function konquerorWithMajorVersion($userAgent)
     {
         return substr($userAgent, strpos($userAgent, self::KONQUEROR), 10);
     }
 }
-
-

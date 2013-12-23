@@ -27,7 +27,6 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  */
 class UPLink implements NormalizerInterface
 {
-
     /**
      * This method remove the "UP.Link" substring from user agent string.
      *
@@ -38,10 +37,11 @@ class UPLink implements NormalizerInterface
     public function normalize($userAgent)
     {
         $index = strpos($userAgent, " UP.Link");
+
         if ($index > 0) {
             return substr($userAgent, 0, $index);
         }
+
         return $userAgent;
     }
 }
-

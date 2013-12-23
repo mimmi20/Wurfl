@@ -10,7 +10,7 @@ use Wurfl\Request\Normalizer\Specific\Maemo;
 class MaemoTest extends BaseTest
 {
 
-    function setUp()
+    protected function setUp()
     {
         $this->normalizer = new Maemo();
     }
@@ -20,13 +20,13 @@ class MaemoTest extends BaseTest
      * @dataProvider maemoUserAgentsDataProvider
      *
      */
-    function shoudReturnTheStringAfterMaemo($userAgent, $expected)
+    public function shoudReturnTheStringAfterMaemo($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
         self::assertEquals($found, $expected);
     }
 
-    function maemoUserAgentsDataProvider()
+    public function maemoUserAgentsDataProvider()
     {
         return array(
             array(
@@ -43,4 +43,3 @@ class MaemoTest extends BaseTest
         );
     }
 }
-

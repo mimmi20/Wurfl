@@ -32,7 +32,7 @@ namespace Wurfl\Handlers;
 class SanyoHandler extends AbstractHandler
 {
 
-    protected $prefix = "SANYO";
+    protected $prefix = 'SANYO';
 
     public function canHandle($userAgent)
     {
@@ -41,7 +41,8 @@ class SanyoHandler extends AbstractHandler
         }
         return Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO'))
         || Utils::checkIfContains(
-            $userAgent, 'MobilePhone'
+            $userAgent,
+            'MobilePhone'
         );
     }
 

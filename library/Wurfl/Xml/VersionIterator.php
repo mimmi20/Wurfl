@@ -25,16 +25,23 @@ namespace Wurfl\Xml;
  */
 class VersionIterator extends AbstractIterator
 {
+    /**
+     * @var bool
+     */
+    private $foundVersionInfo = false;
 
-    private $found_version_info = false;
-
+    /**
+     *
+     */
     public function readNextElement()
     {
         $version     = "";
         $lastUpdated = "";
         $officialURL = "";
+
         while ($this->xmlReader->read()) {
             $nodeName = $this->xmlReader->name;
+
             switch ($this->xmlReader->nodeType) {
                 case \XMLReader::ELEMENT:
                     switch ($nodeName) {
@@ -47,29 +54,43 @@ class VersionIterator extends AbstractIterator
                         case 'official_url':
                             $officialURL = $this->getTextValue();
                             break;
+                        default:
+                            // nothing to do here
+                            break;
                     }
                     break;
                 case \XMLReader::END_ELEMENT:
                     switch ($nodeName) {
                         case 'version':
-                            $this->found_version_info = true;
+                            $this->foundVersionInfo = true;
                             $this->currentElement     = new Info($version, $lastUpdated, $officialURL);
                             return;
+                        default:
+                            // nothing to do here
+                            break;
                     }
+                    break;
+                default:
+                    // nothing to do here
                     break;
             }
         } // end of while
     }
 
+    /**
+     * @return bool
+     */
     public function valid()
     {
         // We're finished with the version node, nothing else to do
-        if ($this->found_version_info === true) {
+        if ($this->foundVersionInfo === true) {
             return false;
         }
+
         if ($this->currentElement === null) {
             $this->readNextElement();
         }
+
         return $this->currentElement != null;
     }
 }

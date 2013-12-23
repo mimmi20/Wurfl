@@ -69,7 +69,8 @@ class AppleHandler extends AbstractHandler
 
         return (Utils::checkIfStartsWith($userAgent, 'Mozilla/5')
             && Utils::checkIfContainsAnyOf(
-                $userAgent, array('iPhone', 'iPod', 'iPad')
+                $userAgent,
+                array('iPhone', 'iPod', 'iPad')
             ));
     }
 

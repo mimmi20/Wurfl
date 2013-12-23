@@ -16,11 +16,11 @@ class MotorolaHandlerTest extends \PHPUnit_Framework_TestCase
     /** @var  MotorolaHandler */
     private $motorolaHandler;
 
-    function setUp()
+    protected function setUp()
     {
-        $context               = new Context (null);
-        $userAgentNormalizer   = new NullNormalizer ();
-        $this->motorolaHandler = new MotorolaHandler ($context, $userAgentNormalizer);
+        $context               = new Context(null);
+        $userAgentNormalizer   = new NullNormalizer();
+        $this->motorolaHandler = new MotorolaHandler($context, $userAgentNormalizer);
     }
 
     public function testShouldNotHandle()

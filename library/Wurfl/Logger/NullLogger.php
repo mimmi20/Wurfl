@@ -38,4 +38,3 @@ class NullLogger extends AbstractLogger
         // do nothing here
     }
 }
-

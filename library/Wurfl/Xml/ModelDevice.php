@@ -25,31 +25,36 @@ namespace Wurfl\Xml;
  */
 class ModelDevice
 {
-
     /**
      * @var string WURFL device ID
      */
     private $id;
+
     /**
      * @var string Fallback WURFL device ID
      */
     private $fallBack;
+
     /**
      * @var string User agent
      */
     private $userAgent;
+
     /**
      * @var bool This device is an actual root device
      */
     private $actualDeviceRoot;
+
     /**
      * @var bool This device is a specific device
      */
     private $specific;
+
     /**
      * @var array Array of capabilities
      */
     private $capabilities = array();
+
     /**
      * @var array Mapping of group IDs to capability names
      */
@@ -66,7 +71,12 @@ class ModelDevice
      * @param array  $groupIdCapabilitiesMap
      */
     public function __construct(
-        $id, $userAgent, $fallBack, $actualDeviceRoot = false, $specific = false, $groupIdCapabilitiesMap = null
+        $id,
+        $userAgent,
+        $fallBack,
+        $actualDeviceRoot = false,
+        $specific = false,
+        $groupIdCapabilitiesMap = null
     ) {
 
         $this->id               = $id;
@@ -74,6 +84,7 @@ class ModelDevice
         $this->fallBack         = $fallBack;
         $this->actualDeviceRoot = $actualDeviceRoot == true ? true : false;
         $this->specific         = $specific == true ? true : false;
+
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
                 $this->groupIdCapabilitiesNameMap[$groupId] = array_keys($capabilitiesNameValue);
@@ -129,6 +140,9 @@ class ModelDevice
         return null;
     }
 
+    /**
+     * @return array
+     */
     public function getCapabilityNames()
     {
         return array_keys($this->capabilities);
@@ -162,6 +176,9 @@ class ModelDevice
         return $groupIdCapabilitiesMap;
     }
 
+    /**
+     * @return array
+     */
     public function getGroupNames()
     {
         return array_keys($this->groupIdCapabilitiesNameMap);
