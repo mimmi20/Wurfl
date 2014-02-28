@@ -39,6 +39,7 @@ class XboxHandler extends AbstractHandler
         = array(
             'microsoft_xbox360_ver1',
             'microsoft_xbox360_ver1_subie10',
+            'microsoft_xboxone_ver1',
         );
 
     public function canHandle($userAgent)
@@ -54,6 +55,13 @@ class XboxHandler extends AbstractHandler
 
     public function applyRecoveryMatch($userAgent)
     {
+        if (Utils::checkIfContains($userAgent, 'MSIE 10.0')
+            && Utils::checkIfContains(
+                $userAgent, 'Xbox One'
+            )
+        ) {
+            return 'microsoft_xboxone_ver1';
+        }
         if (Utils::checkIfContains($userAgent, 'MSIE 10.0')) {
             return 'microsoft_xbox360_ver1_subie10';
         }

@@ -45,6 +45,7 @@ class WindowsPhoneHandler extends AbstractHandler
             'generic_ms_winmo6_5',
             'generic_ms_phone_os7',
             'generic_ms_phone_os7_5',
+            'generic_ms_phone_os7_8',
             'generic_ms_phone_os8',
         );
 
@@ -95,6 +96,10 @@ class WindowsPhoneHandler extends AbstractHandler
         )
         ) {
             return 'generic_ms_phone_os8';
+        }
+
+        if (Utils::checkIfContains($userAgent, 'Windows Phone OS 7.8')) {
+            return 'generic_ms_phone_os7_8';
         }
 
         // WP OS 7.10 = Windows Phone 7.5 or 7.8

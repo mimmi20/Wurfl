@@ -18,6 +18,7 @@ namespace Wurfl\VirtualCapability\Group;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+
 use Wurfl\VirtualCapability\UserAgentTool;
 
 /**
@@ -56,7 +57,7 @@ class DeviceBrowserGroup extends Group
         }
 
         // Run the UserAgentTool to get the relevant details
-        $device = self::$userAgentTool->getDevice($this->request->userAgent);
+        $device = self::$userAgentTool->getDevice($this->request);
 
         $this->storage['DeviceOs'] = new ManualGroupChild($this->device, $this->request, $this, $device->platform->name);
         $this->storage['DeviceOsVersion']

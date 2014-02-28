@@ -18,6 +18,7 @@ namespace Wurfl\Request;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+
 use Wurfl\Utils;
 
 /**
@@ -27,7 +28,6 @@ use Wurfl\Utils;
  */
 class GenericRequestFactory
 {
-
     /**
      * Creates Generic Request from the given HTTP Request (normally $_SERVER)
      *
@@ -35,13 +35,13 @@ class GenericRequestFactory
      *
      * @return GenericRequest
      */
-    public function createRequest($request)
+    public function createRequest(array $request)
     {
         $userAgent        = Utils::getUserAgent($request);
         $userAgentProfile = Utils::getUserAgentProfile($request);
         $isXhtmlDevice    = Utils::isXhtmlRequester($request);
 
-        return new GenericRequest($userAgent, $userAgentProfile, $isXhtmlDevice);
+        return new GenericRequest($request, $userAgent, $userAgentProfile, $isXhtmlDevice);
     }
 
     /**
@@ -53,6 +53,7 @@ class GenericRequestFactory
      */
     public function createRequestForUserAgent($userAgent)
     {
-        return new GenericRequest($userAgent, null, false);
+        $request = array('HTTP_USER_AGENT' => $userAgent);
+        return new GenericRequest($request, $userAgent, null, false);
     }
 }

@@ -79,18 +79,12 @@ class UserAgentHandlerChainFactory
         /**** Mobile devices ****/
         $kindleNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Kindle());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\KindleHandler($context, $kindleNormalizer));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\LGUPLUSHandler($context, $genericNormalizers));
 
         /**** UCWEB ****/
         $ucwebu2Normalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\UcwebU2());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU2Handler($context, $ucwebu2Normalizer));
         $ucwebu3Normalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\UcwebU3());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU3Handler($context, $ucwebu3Normalizer));
-
-        /**** Java Midlets ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(
-            new Handlers\JavaMidletHandler($context, $genericNormalizers)
-        );
 
         /**** Mobile platforms ****/
         // Android Matcher Chain
@@ -115,7 +109,8 @@ class UserAgentHandlerChainFactory
         $androidNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Android());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\AndroidHandler($context, $androidNormalizer));
 
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($context, $genericNormalizers));
+        $appleNormalizer = $genericNormalizers->addUserAgentNormalizer(new \Wurfl\Request\Normalizer\Specific\Apple());
+        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($context, $appleNormalizer));
         self::$userAgentHandlerChain->addUserAgentHandler(
             new Handlers\WindowsPhoneDesktopHandler($context, $genericNormalizers)
         );
@@ -152,6 +147,7 @@ class UserAgentHandlerChainFactory
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\KyoceraHandler($context, $genericNormalizers));
         $lgNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\LG());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\LGHandler($context, $lgNormalizer));
+        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\LGUPLUSHandler($context, $genericNormalizers));
         $maemoNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Maemo());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\MaemoHandler($context, $maemoNormalizer));
         self::$userAgentHandlerChain->addUserAgentHandler(
@@ -186,6 +182,11 @@ class UserAgentHandlerChainFactory
             new Handlers\OperaMiniHandler($context, $genericNormalizers)
         );
 
+        /**** Java Midlets ****/
+        self::$userAgentHandlerChain->addUserAgentHandler(
+            new Handlers\JavaMidletHandler($context, $genericNormalizers)
+        );
+
         /**** Tablet Browsers ****/
         self::$userAgentHandlerChain->addUserAgentHandler(
             new Handlers\WindowsRTHandler($context, $genericNormalizers)
@@ -200,6 +201,10 @@ class UserAgentHandlerChainFactory
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\XboxHandler($context, $genericNormalizers));
 
         /**** Desktop Browsers ****/
+        $desktopApplicationNormalizer = $genericNormalizers->addUserAgentNormalizer(new \Wurfl\Request\Normalizer\Specific\DesktopApplication());
+        self::$userAgentHandlerChain->addUserAgentHandler(new \Wurfl\Handlers\DesktopApplicationHandler($context, $desktopApplicationNormalizer));
+
+        /**** DesktopApplications ****/
         $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Chrome());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($context, $chromeNormalizer));
 

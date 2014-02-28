@@ -18,6 +18,7 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+
 use Wurfl\Constants;
 
 /**
@@ -37,6 +38,7 @@ class NokiaOviBrowserHandler extends AbstractHandler
 
     public static $constantIDs
         = array(
+            'nokia_generic_series30plus',
             'nokia_generic_series40_ovibrosr',
         );
 
@@ -64,6 +66,10 @@ class NokiaOviBrowserHandler extends AbstractHandler
 
     public function applyRecoveryMatch($userAgent)
     {
-        return 'nokia_generic_series40_ovibrosr';
+        if (Utils::checkIfContains($userAgent, "Series30Plus")) {
+            return 'nokia_generic_series30plus';
+        } else {
+            return 'nokia_generic_series40_ovibrosr';
+        }
     }
 }

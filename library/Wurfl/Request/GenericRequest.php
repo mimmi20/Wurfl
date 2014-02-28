@@ -18,6 +18,7 @@ namespace Wurfl\Request;
      * @author     Fantayeneh Asres Gizaw
      * @version    $id$
      */
+
 /**
  * Generic WURFL Request object containing User Agent, UAProf and xhtml device data; its id
  * property is the MD5 hash of the user agent
@@ -32,6 +33,11 @@ namespace Wurfl\Request;
  */
 class GenericRequest
 {
+    /**
+     * @var array
+     */
+    private $request;
+
     /**
      * @var string
      */
@@ -63,12 +69,14 @@ class GenericRequest
     private $userAgentsWithDeviceID;
 
     /**
+     * @param array  $request Original HTTP headers
      * @param string $userAgent
      * @param string $userAgentProfile
      * @param string $xhtmlDevice
      */
-    public function __construct($userAgent, $userAgentProfile = null, $xhtmlDevice = null)
+    public function __construct(array $request, $userAgent, $userAgentProfile = null, $xhtmlDevice = null)
     {
+        $this->request                = $request;
         $this->userAgent              = $userAgent;
         $this->userAgentProfile       = $userAgentProfile;
         $this->xhtmlDevice            = $xhtmlDevice;
@@ -98,5 +106,22 @@ class GenericRequest
         $this->$name = $value;
 
         return $this;
+    }
+
+    /**
+     * Get the original HTTP header value from the request
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function getOriginalHeader($name)
+    {
+        return array_key_exists($name, $this->request) ? $this->request[$name] : null;
+    }
+
+    public function originalHeaderExists($name)
+    {
+        return array_key_exists($name, $this->request);
     }
 }

@@ -104,6 +104,7 @@ class Utils
             'viera',
             'konfabulator',
             'sony bravia',
+            'crkey',
         );
 
     private static $desktopBrowsers
@@ -224,47 +225,51 @@ class Utils
     }
 
     /**
-     * Char index of the first instance of $string found in $target, starting at $startingIndex;
-     * if no match is found, the length of the string is returned
+     * Returns the character position (index) of the $target in $string, starting from a given index.  If target is not found, returns length of user agent.
      *
-     * @param string $string        haystack
-     * @param string $target        needle
-     * @param int    $startingIndex Char index for start of search
+     * @param string $haystack      Haystack to be searched in
+     * @param string $needle        Target string to search for
+     * @param int    $startingIndex Character postition to start looking for the target
      *
-     * @return int Char index of match or length of string
+     * @return int Character position (index) or full length
      */
-    public static function indexOfOrLength($string, $target, $startingIndex = 0)
+    public static function indexOfOrLength($haystack, $needle, $startingIndex = 0)
     {
-        $length = strlen($string);
-        $pos    = strpos($string, $target, $startingIndex);
+        $length = strlen($haystack);
 
-        return $pos === false ? $length : $pos;
+        if ($startingIndex === false || $startingIndex > $length) {
+            return $length;
+        }
+
+        $pos = strpos($haystack, $needle, $startingIndex);
+        return ($pos === false) ? $length : $pos;
     }
 
     /**
      * Lowest char index of the first instance of any of the $needles found in $userAgent, starting at $startIndex;
      * if no match is found, the length of the string is returned
      *
-     * @param string $userAgent  haystack
-     * @param array  $needles    Array of (string)needles to search for in $userAgent
-     * @param int    $startIndex Char index for start of search
+     * @param string $userAgent     haystack
+     * @param array  $needles       Array of (string)needles to search for in $userAgent
+     * @param int    $startingIndex Char index for start of search
      *
      * @return int Char index of left-most match or length of string
      */
-    public static function indexOfAnyOrLength($userAgent, $needles = array(), $startIndex = 0)
+    public static function indexOfAnyOrLength($userAgent, $needles = array(), $startingIndex = 0)
     {
-        $positions = array();
+        if (count($needles) === 0) {
+            return strlen($userAgent);
+        }
 
+        $min = strlen($userAgent);
         foreach ($needles as $needle) {
-            $pos = strpos($userAgent, $needle, $startIndex);
-            if ($pos !== false) {
-                $positions [] = $pos;
+            $index = self::indexOfOrLength($userAgent, $needle, $startingIndex);
+            if ($index < $min) {
+                $min = $index;
             }
         }
 
-        sort($positions);
-
-        return count($positions) > 0 ? $positions [0] : strlen($userAgent);
+        return $min;
     }
 
     /**
@@ -734,6 +739,6 @@ class Utils
      */
     public static function removeLocale($userAgent)
     {
-        return preg_replace('/; ?[a-z]{2}(?:-[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?(?!:)/', '; xx-xx', $userAgent);
+        return preg_replace('/; ?[a-z]{2}(?:-r?[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?(?!:)/', '; xx-xx', $userAgent);
     }
 }

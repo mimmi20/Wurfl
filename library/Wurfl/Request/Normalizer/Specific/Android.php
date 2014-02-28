@@ -18,6 +18,7 @@ namespace Wurfl\Request\Normalizer\Specific;
  * @author     Fantayeneh Asres Gizaw
  * @version    $id$
  */
+
 use Wurfl\Constants;
 use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\OperaMobiOrTabletOnAndroidHandler;
@@ -51,10 +52,10 @@ class Android implements NormalizerInterface
     public function normalize($userAgent)
     {
         // Normalize Android version
-        $userAgent = preg_replace('/(Android)[ \-](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
+        $userAgent = preg_replace('/(Android)[ \-\/](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
 
         // Opera Mobi/Tablet
-        $isOperaMobile   = Utils::checkIfContains($userAgent, 'Opera Mobi');
+        $isOperaMobile = Utils::checkIfContains($userAgent, 'Opera Mobi');
         $isOperaTablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
 
         if ($isOperaMobile || $isOperaTablet) {
@@ -64,7 +65,7 @@ class Android implements NormalizerInterface
             if ($operaVersion !== null && $androidVersion !== null) {
                 $operaModel = $isOperaTablet ? 'Opera Tablet' : 'Opera Mobi';
                 $prefix
-                             =
+                            =
                     $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . Constants::RIS_DELIMITER;
                 return $prefix . $userAgent;
             }

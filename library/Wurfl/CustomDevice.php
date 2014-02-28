@@ -17,6 +17,7 @@ namespace Wurfl;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+
 /**
  * WURFL Custom Device - this is the core class that is used by developers to access the
  * properties and capabilities of a mobile device

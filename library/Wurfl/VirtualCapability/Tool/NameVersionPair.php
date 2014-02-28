@@ -18,6 +18,7 @@ namespace Wurfl\VirtualCapability\Tool;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+
 /**
  * @package \Wurfl\VirtualCapability\UserAgentTool
  */
@@ -58,24 +59,25 @@ class NameVersionPair extends PropertyList
     }
 
     /**
-     * @param      $regex
-     * @param null $name
-     * @param null $version
+     * @param string $ua
+     * @param string $regex
+     * @param string $name
+     * @param string $version
      *
      * @return bool
      */
-    public function setRegex($regex, $name = null, $version = null)
+    public function setRegex($ua, $regex, $name = null, $version = null)
     {
         // No need to capture the matches if we're not going to use them
         if (!is_int($name) && !is_int($version)) {
-            if (preg_match($regex, $this->device->userAgent)) {
+            if (preg_match($regex, $ua)) {
                 $this->name    = trim($name);
                 $this->version = trim($version);
                 return true;
             } else {
                 return false;
             }
-        } elseif (preg_match($regex, $this->device->userAgent, $this->regexMatches)) {
+        } elseif (preg_match($regex, $ua, $this->regexMatches)) {
             if ($name !== null) {
                 $this->name = is_int($name) ? $this->regexMatches[$name] : $name;
                 $this->name = trim($this->name);
@@ -93,15 +95,16 @@ class NameVersionPair extends PropertyList
     }
 
     /**
-     * @param string     $needle
-     * @param string     $name
-     * @param null $version
+     * @param string $ua
+     * @param string $needle
+     * @param string $name
+     * @param string $version
      *
      * @return bool
      */
-    public function setContains($needle, $name, $version = null)
+    public function setContains($ua, $needle, $name, $version = null)
     {
-        if (strpos($this->device->userAgent, $needle) !== false) {
+        if (strpos($ua, $needle) !== false) {
             if ($name !== null) {
                 $this->name = trim($name);
             }

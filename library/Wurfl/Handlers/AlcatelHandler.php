@@ -40,4 +40,10 @@ class AlcatelHandler extends AbstractHandler
         }
         return Utils::checkIfStartsWith($userAgent, "Alcatel") || Utils::checkIfStartsWith($userAgent, "ALCATEL");
     }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

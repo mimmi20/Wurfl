@@ -17,6 +17,7 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+
 use Wurfl\Constants;
 
 /**
@@ -68,12 +69,13 @@ class SafariHandler extends AbstractHandler
     public static function getSafariVersion($userAgent)
     {
         $search = 'Version/';
-        $idx    = strpos($userAgent, $search) + strlen($search);
+        $idx    = strpos($userAgent, $search);
 
         if ($idx === false) {
             return null;
         }
 
+        $idx += strlen($search);
         $endIdx = strpos($userAgent, '.', $idx);
 
         if ($endIdx === false) {

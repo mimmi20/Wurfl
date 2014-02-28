@@ -1,23 +1,25 @@
 <?php
 namespace Wurfl\VirtualCapability\Tool;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     *
-     * @category   WURFL
-     * @package    \Wurfl\VirtualCapability\UserAgentTool
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    \Wurfl\VirtualCapability\UserAgentTool
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ * @version    $id$
+ */
+use Wurfl\Request\GenericRequest;
+
 /**
  * @package \Wurfl\VirtualCapability\UserAgentTool
  */
@@ -31,27 +33,45 @@ class Device
     /**
      * @var NameVersionPair
      */
-    public $platform;
+    public $os;
 
     /**
+     * @var \Wurfl\Request\GenericRequest
+     */
+    public $http_request;
+
+    /**
+     * Device user agent string
+     *
      * @var string
      */
-    public $userAgent;
+    public $device_ua;
 
     /**
+     * Browser user agent string
+     *
      * @var string
      */
-    public $userAgentLower;
+    public $browser_ua;
 
     /**
-     * @param string $userAgent
+     * @param \Wurfl\Request\GenericRequest $request
      */
-    public function __construct($userAgent)
+    public function __construct(GenericRequest $request)
     {
-        $this->userAgent       = $userAgent;
-        $this->userAgentLower = strtolower($userAgent);
-        $this->browser  = new NameVersionPair($this);
-        $this->platform       = new NameVersionPair($this);
+        $this->http_request = $request;
+
+        // Use the original headers for OperaMini
+        if ($this->http_request->originalHeaderExists('HTTP_DEVICE_STOCK_UA')) {
+            $this->device_ua  = $this->http_request->getOriginalHeader('HTTP_DEVICE_STOCK_UA');
+            $this->browser_ua = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
+        } else {
+            $this->device_ua  = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
+            $this->browser_ua = $this->device_ua;
+        }
+
+        $this->browser = new NameVersionPair($this);
+        $this->os      = new NameVersionPair($this);
     }
 
     /**
@@ -82,49 +102,43 @@ class Device
      */
     protected function normalizeOS()
     {
-        if (strpos($this->userAgent, 'Windows') !== false) {
-            if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->platform->name, $matches)) {
-                $this->platform->name    = "Windows";
-                $this->platform->version = array_key_exists($matches[1], self::$windowsMap)
+        if (strpos($this->device_ua, 'Windows') !== false) {
+            if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->os->name, $matches)) {
+                $this->os->name    = "Windows";
+                $this->os->version = array_key_exists($matches[1], self::$windowsMap)
                     ? self::$windowsMap[$matches[1]]
                     : $matches[1];
                 return;
             }
 
-            if (preg_match('/Windows [0-9\.]+/', $this->platform->name)) {
+            if (preg_match('/Windows [0-9\.]+/', $this->os->name)) {
                 return;
             }
         }
 
-        if ($this->platform->setRegex('/PPC.+OS X ([0-9\._]+)/', 'Mac OS X')) {
-            $this->platform->version = str_replace('_', '.', $this->platform->version);
+        if ($this->os->setRegex($this->device_ua, '/PPC.+OS X ([0-9\._]+)/', 'Mac OS X')) {
+            $this->os->version = str_replace('_', '.', $this->os->version);
             return;
         }
-
-        if ($this->platform->setRegex('/PPC.+OS X/', 'Mac OS X')) {
+        if ($this->os->setRegex($this->device_ua, '/PPC.+OS X/', 'Mac OS X')) {
             return;
         }
-
-        if ($this->platform->setRegex('/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
-            $this->platform->version = str_replace('_', '.', $this->platform->version);
+        if ($this->os->setRegex($this->device_ua, '/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
+            $this->os->version = str_replace('_', '.', $this->os->version);
             return;
         }
-
-        if ($this->platform->setContains('Mac_PowerPC', 'Mac OS X')) {
+        if ($this->os->setContains($this->device_ua, 'Mac_PowerPC', 'Mac OS X')) {
             return;
         }
-
-        if ($this->platform->setContains('CrOS', 'Chrome OS')) {
+        if ($this->os->setContains($this->device_ua, 'CrOS', 'Chrome OS')) {
             return;
         }
-
-        if ($this->platform->name != '') {
+        if ($this->os->name != '') {
             return;
         }
-
         // Last ditch efforts
-        if (strpos($this->userAgent, 'Linux') !== false || strpos($this->userAgent, 'X11') !== false) {
-            $this->platform->name = 'Linux';
+        if (strpos($this->device_ua, 'Linux') !== false || strpos($this->device_ua, 'X11') !== false) {
+            $this->os->name = 'Linux';
             return;
         }
     }
