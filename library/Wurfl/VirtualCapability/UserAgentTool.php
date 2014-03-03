@@ -247,7 +247,7 @@ class UserAgentTool
         // Desktop Browsers
 
         //MSIE
-        if (strpos($device->device_ua, 'Trident') !== false) {
+        if (strpos($device->device_ua, 'Trident') !== false || strpos($device->device_ua, 'MSIE') !== false) {
             //MSIE 10 and below
             if ($device->os->setRegex($device->device_ua, '/^Mozilla\/[0-9]\.0 \(compatible; MSIE ([0-9][0-9]?\.[0-9][0-9]?); ((?:Windows NT [0-9]\.[0-9])|(?:Windows [0-9]\.[0-9])|(?:Windows [0-9]+)|(?:Mac_PowerPC))/', 2)) {
                 $device->browser->set('IE', $device->os->getLastRegexMatch(1));

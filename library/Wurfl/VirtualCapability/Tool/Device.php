@@ -103,7 +103,7 @@ class Device
     protected function normalizeOS()
     {
         if (strpos($this->device_ua, 'Windows') !== false) {
-            if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->os->name, $matches)) {
+            if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->device_ua, $matches)) {
                 $this->os->name    = "Windows";
                 $this->os->version = array_key_exists($matches[1], self::$windowsMap)
                     ? self::$windowsMap[$matches[1]]
@@ -111,7 +111,7 @@ class Device
                 return;
             }
 
-            if (preg_match('/Windows [0-9\.]+/', $this->os->name)) {
+            if (preg_match('/Windows [0-9\.]+/', $this->device_ua)) {
                 return;
             }
         }
