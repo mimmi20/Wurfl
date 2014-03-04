@@ -98,7 +98,7 @@ class AndroidHandler extends AbstractHandler
         }
 
         // Standard RIS Matching
-        $tolerance = tils::indexOfAnyOrLength($userAgent, array(' Build/', ' AppleWebKit'));
+        $tolerance = Utils::indexOfAnyOrLength($userAgent, array(' Build/', ' AppleWebKit'));
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 

@@ -62,7 +62,10 @@ class UserAgentTool
             if ($device->browser->setRegex($device->browser_ua, '/Chrome\/([0-9]?[0-9])\.?/', 'Chrome Mobile', 1)) return $device;
 
             //Is UA Fennec?
-            if ($device->browser->setRegex($device->browser_ua, '/(?:Firefox|Fennec)\/([0-9]?[0-9]\.[0-9]?)/', 'Firefox Mobile', 1)) return $device;
+            if ($device->browser->setRegex($device->browser_ua, '/(?:Firefox|Fennec)\/([0-9]?[0-9]\.[0-9]?)/', 'Firefox Mobile', 1)) {
+                $device->os->setRegex($device->device_ua, '#Android(?: |/)(?:[0-9]\.[0-9]).+#', 'Android', 1);
+                return $device;
+            }
 
             //Is UA Opera Mobi?
             if ($device->browser->setRegex($device->browser_ua, '/Opera Mobi\/.*Version\/([0-9]?[0-9])/', 'Opera Mobile', 1)) return $device;
