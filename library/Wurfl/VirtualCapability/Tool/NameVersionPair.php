@@ -83,8 +83,11 @@ class NameVersionPair extends PropertyList
                 $this->name = trim($this->name);
             }
 
-            if ($version !== null) {
-                $this->version = is_int($version) ? $this->regexMatches[$version] : $version;
+            if (is_int($version) && isset($this->regexMatches[$version])) {
+                $this->version = $this->regexMatches[$version];
+                $this->version = trim($this->version);
+            } elseif ($version !== null) {
+                $this->version = $version;
                 $this->version = trim($this->version);
             }
 
