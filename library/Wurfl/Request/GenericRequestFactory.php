@@ -33,7 +33,7 @@ class GenericRequestFactory
      *
      * @param array $request HTTP Request
      *
-     * @return GenericRequest
+     * @return \Wurfl\Request\GenericRequest
      */
     public function createRequest(array $request)
     {
@@ -49,7 +49,7 @@ class GenericRequestFactory
      *
      * @param string $userAgent
      *
-     * @return GenericRequest
+     * @return \Wurfl\Request\GenericRequest
      */
     public function createRequestForUserAgent($userAgent)
     {

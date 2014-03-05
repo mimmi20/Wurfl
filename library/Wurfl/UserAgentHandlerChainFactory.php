@@ -17,6 +17,10 @@ namespace Wurfl;
      * @license    GNU Affero General Public License
      * @version    $id$
      */
+
+use WurflCache\Adapter\AdapterInterface;
+use Psr\Log\LoggerInterface;
+
 /**
  * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating
  * User Agent Handler Chains
@@ -26,7 +30,6 @@ namespace Wurfl;
  */
 class UserAgentHandlerChainFactory
 {
-
     /**
      * @var UserAgentHandlerChain
      */
@@ -35,26 +38,32 @@ class UserAgentHandlerChainFactory
     /**
      * Create a \Wurfl\UserAgentHandlerChain from the given $context
      *
-     * @param Context $context
+     * @param Context                  $context
+     * @param \Wurfl\Storage\Storage   $persistenceProvider
+     * @param \Wurfl\Storage\Storage   $cacheProvider
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return UserAgentHandlerChain
      */
-    public static function createFrom(Context $context)
+    public static function createFrom(
+        Context $context, 
+        Storage $persistenceProvider, 
+        Storage $cacheProvider, 
+        LoggerInterface $logger = null)
     {
-        $cachedData = $context->cacheProvider->load('UserAgentHandlerChain');
+        self::$userAgentHandlerChain = $cacheProvider->load('UserAgentHandlerChain');
 
-        if ($cachedData !== null) {
-            self::$userAgentHandlerChain = $cachedData;
-
+        if (self::$userAgentHandlerChain instanceof UserAgentHandlerChain) {
             foreach (self::$userAgentHandlerChain->getHandlers() as $handler) {
                 /** @var $handler \Wurfl\Handlers\AbstractHandler */
-                $handler->setupContext($context);
+                $handler
+                    ->setLogger($logger)
+                    ->setPersistenceProvider($persistenceProvider)
+                ;
             }
-        }
-
-        if (!(self::$userAgentHandlerChain instanceof UserAgentHandlerChain)) {
+        } else {
             self::init($context);
-            $context->cacheProvider->save('UserAgentHandlerChain', self::$userAgentHandlerChain, 3600);
+            $cacheProvider->save('UserAgentHandlerChain', self::$userAgentHandlerChain, 3600);
         }
 
         return self::$userAgentHandlerChain;
@@ -200,11 +209,11 @@ class UserAgentHandlerChainFactory
         /**** Game Consoles ****/
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\XboxHandler($context, $genericNormalizers));
 
-        /**** Desktop Browsers ****/
+        /**** DesktopApplications ****/
         $desktopApplicationNormalizer = $genericNormalizers->addUserAgentNormalizer(new \Wurfl\Request\Normalizer\Specific\DesktopApplication());
         self::$userAgentHandlerChain->addUserAgentHandler(new \Wurfl\Handlers\DesktopApplicationHandler($context, $desktopApplicationNormalizer));
 
-        /**** DesktopApplications ****/
+        /**** Desktop Browsers ****/
         $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Chrome());
         self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($context, $chromeNormalizer));
 

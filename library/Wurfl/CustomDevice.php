@@ -68,10 +68,10 @@ class CustomDevice
      *
      * @throws \InvalidArgumentException if $modelDevices is not an array of at least one \Wurfl\Xml\ModelDevice
      */
-    public function __construct(Array $modelDevices, Request\GenericRequest $request = null)
+    public function __construct(array $modelDevices, Request\GenericRequest $request = null)
     {
         if (!is_array($modelDevices) || count($modelDevices) < 1) {
-            throw new \InvalidArgumentException("modelDevices must be an array of at least one ModelDevice.");
+            throw new \InvalidArgumentException('modelDevices must be an array of at least one ModelDevice.');
         }
         $this->modelDevices = $modelDevices;
         if ($request === null) {
@@ -145,7 +145,7 @@ class CustomDevice
     public function getCapability($capabilityName)
     {
         if (empty($capabilityName)) {
-            throw new \InvalidArgumentException("capability name must not be empty");
+            throw new \InvalidArgumentException('capability name must not be empty');
         }
         if (!$this->getRootDevice()->isCapabilityDefined($capabilityName)) {
             throw new \InvalidArgumentException("no capability named [$capabilityName] is present in wurfl.");

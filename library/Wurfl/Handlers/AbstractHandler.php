@@ -21,6 +21,7 @@ use Wurfl\Constants;
 use Wurfl\Context;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\Normalizer\NullNormalizer;
+use Psr\Log\LoggerInterface;
 
 /**
  * \Wurfl\Handlers\AbstractHandler is the base class that combines the classification of
@@ -73,12 +74,11 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     public static $constantIDs = array();
 
     /**
-     * @param Context                                       $wurflContext
+     * @param \Wurfl\Context                                $wurflContext
      * @param \Wurfl\Request\Normalizer\NormalizerInterface $userAgentNormalizer
      */
-    public function __construct($wurflContext, $userAgentNormalizer = null)
+    public function __construct(Context $wurflContext, $userAgentNormalizer = null)
     {
-
         if (is_null($userAgentNormalizer)) {
             $this->userAgentNormalizer = new NullNormalizer();
         } else {
@@ -96,6 +96,34 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     public function setNextHandler(AbstractHandler $handler)
     {
         $this->nextHandler = $handler;
+    }
+    
+    /**
+     * sets the logger
+     *
+     * @var \Psr\Log\LoggerInterface $logger
+     *
+     * @return \Wurfl\Handlers\AbstractHandler
+     */
+    public function setLogger(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+        
+        return $this;
+    }
+    
+    /**
+     * sets the Persitence Cache
+     *
+     * @var \Wurfl\Storage\Storage $persistenceProvider
+     *
+     * @return \Wurfl\Handlers\AbstractHandler
+     */
+    public function setPersistenceProvider(Storage $persistenceProvider)
+    {
+        $this->persistenceProvider = $persistenceProvider;
+        
+        return $this;
     }
 
     /**

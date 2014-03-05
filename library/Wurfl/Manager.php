@@ -44,31 +44,32 @@ class Manager
      *
      * @var Configuration\Config
      */
-    private $wurflConfig;
+    private $wurflConfig = null;
     /**
-     * @var Storage\Storage
+     * @var \WurflCache\Adapter\AdapterInterface
      */
-    private $persistenceStorage;
+    private $persistenceStorage = null;
     /**
-     * @var Storage\Storage
+     * @var \WurflCache\Adapter\AdapterInterface
      */
-    private $cacheStorage;
+    private $cacheStorage = null;
 
     /**
      * @var \Wurfl\DeviceRepository
      */
-    private $deviceRepository;
+    private $deviceRepository = null;
+
     /**
      * @var \Wurfl\UserAgentHandlerChain
      */
-    private $userAgentHandlerChain;
+    private $userAgentHandlerChain = null;
 
     /**
      * Creates a new Wurfl Manager object
      *
-     * @param Configuration\Config $wurflConfig
-     * @param AdapterInterface     $persistenceStorage
-     * @param AdapterInterface     $cacheStorage
+     * @param Configuration\Config                 $wurflConfig
+     * @param \WurflCache\Adapter\AdapterInterface $persistenceStorage
+     * @param \WurflCache\Adapter\AdapterInterface $cacheStorage
      */
     public function __construct(
         Configuration\Config $wurflConfig,
@@ -105,6 +106,7 @@ class Manager
     private function reload()
     {
         $this->persistenceStorage->setWURFLLoaded(false);
+        $this->remove();
         $this->invalidateCache();
         $this->init();
         $this->persistenceStorage->save(self::WURFL_API_STATE, $this->getState());
@@ -173,34 +175,24 @@ class Manager
      */
     private function init()
     {
-        $logger                      = null;
-        $context                     = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
-        $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
-        $this->deviceRepository      = $this->deviceRepository(
+        $logger  = null;
+        $context = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
+        
+        $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
+            $context,
             $this->persistenceStorage,
-            $this->userAgentHandlerChain
+            $this->cacheStorage,
+            $logger
         );
-    }
-
-    /**
-     * Returns a WURFL device repository
-     *
-     * @param Storage\Storage              $persistenceStorage
-     * @param \Wurfl\UserAgentHandlerChain $userAgentHandlerChain
-     *
-     * @return \Wurfl\CustomDeviceRepository Device repository
-     * @see \Wurfl\DeviceRepositoryBuilder::build()
-     */
-    private function deviceRepository(Storage\Storage $persistenceStorage, $userAgentHandlerChain)
-    {
+        
         $devicePatcher           = new Xml\DevicePatcher();
         $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
-            $persistenceStorage,
-            $userAgentHandlerChain,
+            $this->persistenceStorage,
+            $this->userAgentHandlerChain,
             $devicePatcher
         );
 
-        return $deviceRepositoryBuilder->build(
+        $this->deviceRepository = $deviceRepositoryBuilder->build(
             $this->wurflConfig->wurflFile,
             $this->wurflConfig->wurflPatches,
             $this->wurflConfig->capabilityFilter
@@ -235,7 +227,7 @@ class Manager
      * @return \Wurfl\CustomDevice device
      * @throws Exception if $httpRequest is not set
      */
-    public function getDeviceForHttpRequest($httpRequest)
+    public function getDeviceForHttpRequest(array $httpRequest = array())
     {
         if (!isset($httpRequest)) {
             throw new Exception('The $httpRequest parameter must be set.');
@@ -263,7 +255,7 @@ class Manager
             && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
         ) {
             // This device has been identified as a web browser programatically, so no call to WURFL is necessary
-            return $this->getDevice(Constants::GENERIC_WEB_BROWSER, $request);
+            return $this->getWrappedDevice(Constants::GENERIC_WEB_BROWSER, $request);
         }
 
         $deviceId = $this->deviceIdForRequest($request);
@@ -279,7 +271,7 @@ class Manager
      * @return \Wurfl\CustomDevice device
      * @throws Exception if $userAgent is not set
      */
-    public function getDeviceForUserAgent($userAgent)
+    public function getDeviceForUserAgent($userAgent = '')
     {
         if (!isset($userAgent)) {
             $userAgent = '';
@@ -362,6 +354,7 @@ class Manager
     private function deviceIdForRequest(Request\GenericRequest $request)
     {
         $deviceId = $this->cacheStorage->load($request->id);
+
         if (empty($deviceId)) {
             $deviceId = $this->userAgentHandlerChain->match($request);
             // save it in cache

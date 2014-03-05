@@ -47,7 +47,7 @@ class UserAgentTool
     protected function assignProperties(Tool\Device $device) {
         //Is UA Android?
         if (strpos($device->device_ua, 'Android') !== false) {
-            $device->os->setRegex($device->device_ua, '#Android(?: |/)([0-9]\.[0-9]).+#', 'Android', 1);
+            $device->os->setRegex($device->device_ua, '#Android(?: |/)(?:[0-9]\.[0-9]).+#', 'Android', 1);
 
             //Is Dalvik?
             if (strpos($device->browser_ua, 'Dalvik') !== false) {
@@ -63,18 +63,23 @@ class UserAgentTool
 
             //Is UA Fennec?
             if ($device->browser->setRegex($device->browser_ua, '/(?:Firefox|Fennec)\/([0-9]?[0-9]\.[0-9]?)/', 'Firefox Mobile', 1)) {
-                $device->os->setRegex($device->device_ua, '#Android(?: |/)(?:[0-9]\.[0-9]).+#', 'Android', 1);
                 return $device;
             }
 
             //Is UA Opera Mobi?
-            if ($device->browser->setRegex($device->browser_ua, '/Opera Mobi\/.*Version\/([0-9]?[0-9])/', 'Opera Mobile', 1)) return $device;
+            if ($device->browser->setRegex($device->browser_ua, '/Opera Mobi\/.*Version\/([0-9]?[0-9])/', 'Opera Mobile', 1)) {
+                return $device;
+            }
 
             //Is UA Opera Mini?
-            if ($device->browser->setRegex($device->browser_ua, '/Opera Mini\/([0-9]+)?\.[0-9]/', 'Opera Mini', 1)) return $device;
+            if ($device->browser->setRegex($device->browser_ua, '/Opera Mini\/([0-9]+)?\.[0-9]/', 'Opera Mini', 1)) {
+                return $device;
+            }
 
             //Is UA Opera Tablet?
-            if ($device->browser->setRegex($device->browser_ua, '/Opera Tablet\/.*Version\/([0-9]?[0-9])/', 'Opera Tablet', 1)) return $device;
+            if ($device->browser->setRegex($device->browser_ua, '/Opera Tablet\/.*Version\/([0-9]?[0-9])/', 'Opera Tablet', 1)) {
+                return $device;
+            }
 
             //Is UA UC Browser with UCBrowser tag?
             if ($device->browser->setRegex($device->browser_ua, '/UCBrowser\/([0-9]+)\./', 'UC Browser', 1)) return $device;

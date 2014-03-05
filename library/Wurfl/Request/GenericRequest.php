@@ -96,19 +96,6 @@ class GenericRequest
     }
 
     /**
-     * @param $name
-     * @param $value
-     *
-     * @return GenericRequest
-     */
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-
-        return $this;
-    }
-
-    /**
      * Get the original HTTP header value from the request
      *
      * @param string $name
@@ -120,6 +107,13 @@ class GenericRequest
         return array_key_exists($name, $this->request) ? $this->request[$name] : null;
     }
 
+    /**
+     * Checks if the original HTTP header is set in the request
+     *
+     * @param string $name
+     *
+     * @return boolean
+     */
     public function originalHeaderExists($name)
     {
         return array_key_exists($name, $this->request);
