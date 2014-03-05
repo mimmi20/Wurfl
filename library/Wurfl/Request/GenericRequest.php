@@ -86,13 +86,26 @@ class GenericRequest
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return mixed
      */
     public function __get($name)
     {
         return $this->$name;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return GenericRequest
+     */
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+        
+        return $this;
     }
 
     /**

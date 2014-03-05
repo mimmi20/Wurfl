@@ -46,9 +46,9 @@ class UserAgentHandlerChainFactory
      * @return UserAgentHandlerChain
      */
     public static function createFrom(
-        Context $context, 
-        Storage $persistenceProvider, 
-        Storage $cacheProvider, 
+        Context         $context, 
+        Storage\Storage $persistenceProvider, 
+        Storage\Storage $cacheProvider, 
         LoggerInterface $logger = null)
     {
         self::$userAgentHandlerChain = $cacheProvider->load('UserAgentHandlerChain');
