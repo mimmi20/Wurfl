@@ -47,7 +47,7 @@ class UserAgentTool
     protected function assignProperties(Tool\Device $device) {
         //Is UA Android?
         if (strpos($device->device_ua, 'Android') !== false) {
-            $device->os->setRegex($device->device_ua, '#Android(?: |/)(?:[0-9]\.[0-9]).+#', 'Android', 1);
+            $device->os->setRegex($device->device_ua, '#Android(?: |/)([0-9]\.[0-9]).+#', 'Android', 1);
 
             //Is Dalvik?
             if (strpos($device->browser_ua, 'Dalvik') !== false) {
