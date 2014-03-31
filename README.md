@@ -4,19 +4,11 @@ Wurfl
 an clone of the official Wurfl PHP library updated for PHP 5.3
 
 [![Build Status](https://api.travis-ci.org/mimmi20/Wurfl.png?branch=master)](https://travis-ci.org/mimmi20/Wurfl)
-[![Dependency Status](https://depending.in/mimmi20/Wurfl.png)](http://depending.in/mimmi20/Wurfl)
-
-[![Coverage Status](https://coveralls.io/repos/mimmi20/Wurfl/badge.png?branch=master)](https://coveralls.io/r/mimmi20/Wurfl?branch=master)
-[![Dependency Status](https://www.versioneye.com/php/mimmi20:wurfl/dev-master/badge.png)](https://www.versioneye.com/php/mimmi20:wurfl/dev-master)
-
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/mimmi20/Wurfl/badges/quality-score.png?s=5e88e19d3a659f74ca468170d70c30c94c4ab2c0)](https://scrutinizer-ci.com/g/mimmi20/Wurfl/) 
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/mimmi20/Wurfl/badges/quality-score.png?s=5e88e19d3a659f74ca468170d70c30c94c4ab2c0)](https://scrutinizer-ci.com/g/mimmi20/Wurfl/)
 [![Code Coverage](https://scrutinizer-ci.com/g/mimmi20/Wurfl/badges/coverage.png?s=b9a661d611e63c513c3d6800572c3f06e520bae4)](https://scrutinizer-ci.com/g/mimmi20/Wurfl/)
 
 [![Latest Stable Version](https://poser.pugx.org/mimmi20/wurfl/v/stable.png)](https://packagist.org/packages/mimmi20/wurfl)
 [![Latest Unstable Version](https://poser.pugx.org/mimmi20/wurfl/v/unstable.png)](https://packagist.org/packages/mimmi20/wurfl)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mimmi20/wurfl/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-[![Total views](https://sourcegraph.com/api/repos/github.com/mimmi20/Wurfl/counters/views.png)](https://sourcegraph.com/github.com/mimmi20/Wurfl)
 
 Submitting bugs and feature requests
 ------------------------------------
@@ -51,7 +43,7 @@ If you are not able to comply with the terms of the AGPL license, commercial
 licenses are available from ScientiaMobile, Inc at http://www.ScientiaMobile.com/
 
 # Getting Started #
-Download a release archive from wurfl site and extract it to a directory 
+Download a release archive from wurfl site and extract it to a directory
 suitable for your application.
 
 To start using the API you need to set some configuration options.
@@ -133,18 +125,18 @@ $device->getVirtualCapability('is_smartphone');
     - MySQL
     - Memory
     - File
-    
+
     Additional to the official providers the following connectots are added:
     - Zend Cache
 
-3. Configure the Cache provider by specifying the provider 
+3. Configure the Cache provider by specifying the provider
     and the extra parameters needed to initialize the provider.
     The API supports the following caching mechanisms:
     - Memcache (http://uk2.php.net/memcache)
     - APC (Alternative PHP Cache http://www.php.net/apc)
     - File
     - Null (no caching)
-    
+
     Additional to the official providers the following connectots are added:
     - Zend Cache
 
@@ -202,7 +194,7 @@ You have four methods for retrieving a device:
 
 4. `getDevice(string $deviceID)`
     Gets the device by its device ID (ex: `apple_iphone_ver1`)
-    
+
 Usage example:
 ```php
 $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
@@ -249,7 +241,7 @@ $defined     = $root->isCapabilityDefined("foobar");
 
 ### WURFL Reloader ###
 WURFL can update the persistence data automatically without any configuration
-by checking the modification time of the WURFL file.  To enable, set 
+by checking the modification time of the WURFL file.  To enable, set
 allow-reload to true in the config:
 
 ```php
