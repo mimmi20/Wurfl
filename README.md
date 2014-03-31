@@ -7,9 +7,6 @@ an clone of the official Wurfl PHP library updated for PHP 5.3
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/mimmi20/Wurfl/badges/quality-score.png?s=5e88e19d3a659f74ca468170d70c30c94c4ab2c0)](https://scrutinizer-ci.com/g/mimmi20/Wurfl/)
 [![Code Coverage](https://scrutinizer-ci.com/g/mimmi20/Wurfl/badges/coverage.png?s=b9a661d611e63c513c3d6800572c3f06e520bae4)](https://scrutinizer-ci.com/g/mimmi20/Wurfl/)
 
-[![Latest Stable Version](https://poser.pugx.org/mimmi20/wurfl/v/stable.png)](https://packagist.org/packages/mimmi20/wurfl)
-[![Latest Unstable Version](https://poser.pugx.org/mimmi20/wurfl/v/unstable.png)](https://packagist.org/packages/mimmi20/wurfl)
-
 Submitting bugs and feature requests
 ------------------------------------
 
