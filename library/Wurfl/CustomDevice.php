@@ -46,7 +46,6 @@ namespace Wurfl;
  */
 class CustomDevice
 {
-
     /**
      * @var array Array of \Wurfl\Xml\ModelDevice objects
      */
@@ -76,8 +75,7 @@ class CustomDevice
         $this->modelDevices = $modelDevices;
         if ($request === null) {
             // This might happen if a device is looked up by its ID directly, without providing a user agent
-            $requestFactory = new Request\GenericRequestFactory();
-            $request        = $requestFactory->createRequestForUserAgent($this->userAgent);
+            throw new \InvalidArgumentException('the mandatory second parameter $request is missing');
         }
         $this->request                   = $request;
         $this->virtualCapabilityProvider = new VirtualCapability\VirtualCapabilityProvider($this, $request);
@@ -105,10 +103,10 @@ class CustomDevice
             case 'userAgentsWithDeviceID':
                 return $this->request->userAgentsWithDeviceID;
                 break;
-            case "id":
-            case "userAgent":
-            case "fallBack":
-            case "actualDeviceRoot":
+            case 'id':
+            case 'userAgent':
+            case 'fallBack':
+            case 'actualDeviceRoot':
                 return $this->modelDevices[0]->$name;
                 break;
             default:
@@ -148,7 +146,9 @@ class CustomDevice
             throw new \InvalidArgumentException('capability name must not be empty');
         }
         if (!$this->getRootDevice()->isCapabilityDefined($capabilityName)) {
-            throw new \InvalidArgumentException("no capability named [$capabilityName] is present in wurfl.");
+            throw new \InvalidArgumentException(
+                'no capability named [' . $capabilityName . '] is present in wurfl.'
+            );
         }
         foreach ($this->modelDevices as $modelDevice) {
             /* @var \Wurfl\Xml\ModelDevice $modelDevice */
@@ -157,7 +157,7 @@ class CustomDevice
                 return $capabilityValue;
             }
         }
-        return "";
+        return '';
     }
 
     /**

@@ -302,6 +302,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         // Try with the conclusive Match
         if ($this->isBlankOrGeneric($deviceID)) {
             $request->matchInfo->matcherHistory .= $className . '(conclusive),';
+            $request->matchInfo->matchType  = 'conclusive';
             $this->logger->debug($this->prefix . ' :Applying Conclusive Match for ua: ' . $userAgent);
             $deviceID = $this->applyConclusiveMatch($userAgent);
 

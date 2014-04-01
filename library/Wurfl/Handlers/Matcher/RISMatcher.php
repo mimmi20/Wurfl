@@ -114,8 +114,9 @@ class RISMatcher implements MatcherInterface
     private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
     {
         while ($bestIndex > 0
-            && $this->longestCommonPrefixLength($collection[$bestIndex - 1], $needle) == $bestDistance) {
-            $bestIndex = $bestIndex - 1;
+            && $this->longestCommonPrefixLength($collection[$bestIndex - 1], $needle) == $bestDistance
+        ) {
+            $bestIndex--;
         }
 
         return $collection[$bestIndex];
@@ -132,7 +133,7 @@ class RISMatcher implements MatcherInterface
     private function longestCommonPrefixLength($string1, $string2)
     {
         $length = min(strlen($string1), strlen($string2));
-        $index      = 0;
+        $index  = 0;
 
         while ($index < $length) {
             if ($string1[$index] !== $string2[$index]) {

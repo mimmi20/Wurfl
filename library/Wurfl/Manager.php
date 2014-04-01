@@ -177,14 +177,14 @@ class Manager
     {
         $logger  = null;
         $context = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
-        
+
         $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
             $context,
             $this->persistenceStorage,
             $this->cacheStorage,
             $logger
         );
-        
+
         $devicePatcher           = new Xml\DevicePatcher();
         $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $this->persistenceStorage,
@@ -255,12 +255,16 @@ class Manager
             && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
         ) {
             // This device has been identified as a web browser programatically, so no call to WURFL is necessary
-            return $this->getWrappedDevice(Constants::GENERIC_WEB_BROWSER, $request);
+            $device = $this->getWrappedDevice(Constants::GENERIC_WEB_BROWSER, $request);
+        } else {
+            $deviceId = $this->deviceIdForRequest($request);
+
+            $device = $this->getWrappedDevice($deviceId, $request);
         }
-
-        $deviceId = $this->deviceIdForRequest($request);
-
-        return $this->getWrappedDevice($deviceId, $request);
+        
+        $device->request->userAgent = $request->userAgent;
+        
+        return $device;
     }
 
     /**
@@ -280,8 +284,11 @@ class Manager
         $requestFactory = new Request\GenericRequestFactory();
 
         $request = $requestFactory->createRequestForUserAgent($userAgent);
-
-        return $this->getDeviceForRequest($request);
+        $device  = $this->getDeviceForRequest($request);
+        
+        $device->request->userAgent = $userAgent;
+        
+        return $device;
     }
 
     /**
@@ -353,12 +360,23 @@ class Manager
      */
     private function deviceIdForRequest(Request\GenericRequest $request)
     {
-        $deviceId = $this->cacheStorage->load($request->id);
+        $id = $request->id;
+
+        if (!$id) {
+            // $request->id is not set
+            // -> do not try to get info from cache nor try to save to the cache
+            $request->matchInfo->from_cache  = 'invalid id';
+            $request->matchInfo->lookup_time = 0.0;
+
+            return $this->userAgentHandlerChain->match($request);
+        }
+
+        $deviceId = $this->cacheStorage->load($id);
 
         if (empty($deviceId)) {
             $deviceId = $this->userAgentHandlerChain->match($request);
             // save it in cache
-            $this->cacheStorage->save($request->id, $deviceId);
+            $this->cacheStorage->save($id, $deviceId);
         } else {
             $request->matchInfo->fromCache  = true;
             $request->matchInfo->lookupTime = 0.0;
@@ -379,7 +397,7 @@ class Manager
     private function getWrappedDevice($deviceId, Request\GenericRequest $request = null)
     {
         $device = $this->cacheStorage->load('DEV_' . $deviceId);
-
+        
         if (empty($device)) {
             $modelDevices = $this->deviceRepository->getDeviceHierarchy($deviceId);
             $device       = new CustomDevice($modelDevices, $request);

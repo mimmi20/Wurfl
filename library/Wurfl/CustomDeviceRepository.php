@@ -142,7 +142,9 @@ class CustomDeviceRepository implements DeviceRepository
         $devicesId = $this->getAllDevicesID();
 
         foreach ($devicesId as $deviceId) {
-            $devices[] = $this->getDevice($deviceId);
+            /** @var $device \Wurfl\Xml\ModelDevice */
+            $device    = $this->getDevice($deviceId);
+            $devices[] = $device;
         }
 
         return $devices;
@@ -230,6 +232,7 @@ class CustomDeviceRepository implements DeviceRepository
         $capabilities = array();
 
         foreach ($devices as $device) {
+            /** @var $device \Wurfl\Xml\ModelDevice */
             if (is_array($device->capabilities)) {
                 $capabilities = array_merge($capabilities, $device->capabilities);
             }
@@ -244,13 +247,14 @@ class CustomDeviceRepository implements DeviceRepository
      *
      * @param string $deviceId
      *
-     * @return array All WURFL_Device objects in the fallback tree
+     * @return array All \Wurfl\Xml\ModelDevice objects in the fallback tree
      */
     public function getDeviceHierarchy($deviceId)
     {
         $devices = array();
 
-        while (strcmp($deviceId, "root")) {
+        while (strcmp($deviceId, 'root')) {
+            /** @var $device \Wurfl\Xml\ModelDevice */
             $device    = $this->getDevice($deviceId);
             $devices[] = $device;
             $deviceId  = $device->fallBack;
@@ -284,7 +288,7 @@ class CustomDeviceRepository implements DeviceRepository
             throw new Exception("The Group ID " . $groupID . " supplied does not exist");
         }
 
-        return $this->groupIDCapabilitiesMap [$groupID];
+        return $this->groupIDCapabilitiesMap[$groupID];
     }
 
     /**
