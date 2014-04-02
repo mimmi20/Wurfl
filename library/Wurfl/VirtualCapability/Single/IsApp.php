@@ -69,7 +69,7 @@ class IsApp extends VirtualCapability
             'FBAN',
             '#iP(hone|od|ad)[\d],[\d]#',
             // namespace notation (com.google.youtube)
-            '#[a-z]{3,}(?:\.[a-z]+){2,}#',
+            '#(com)(?:\.[a-z]+){2,}#',
         );
 
     /**
@@ -78,8 +78,12 @@ class IsApp extends VirtualCapability
     protected function compute()
     {
         $userAgent = $this->request->userAgent;
+        
+        if (Utils::isRobot($userAgent)) {
+            return false;
+        }
 
-        if ($this->device->device_os == "iOS" && !Utils::checkIfContains($userAgent, "Safari")) {
+        if ($this->device->device_os == 'iOS' && !Utils::checkIfContains($userAgent, 'Safari')) {
             return true;
         }
 
@@ -93,8 +97,8 @@ class IsApp extends VirtualCapability
             }
 
             // Substring matches are not abstracted for performance
-            $patternLength = strlen($pattern);
-            $userAgentLength      = strlen($userAgent);
+            $patternLength   = strlen($pattern);
+            $userAgentLength = strlen($userAgent);
 
             if ($pattern[0] === '^') {
                 // Starts with
