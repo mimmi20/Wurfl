@@ -77,7 +77,9 @@ class NameVersionPair extends PropertyList
             } else {
                 return false;
             }
-        } elseif (preg_match($regex, $ua, $this->regexMatches)) {
+        }
+
+        if (preg_match($regex, $ua, $this->regexMatches)) {
             if ($name !== null) {
                 $this->name = is_int($name) ? $this->regexMatches[$name] : $name;
                 $this->name = trim($this->name);
