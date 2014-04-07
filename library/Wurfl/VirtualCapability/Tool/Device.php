@@ -77,17 +77,18 @@ class Device
     /**
      * @var array
      */
-    protected static $windowsMap
-        = array(
-            '4.0' => 'NT 4.0',
-            '5.0' => '2000',
-            '5.1' => 'XP',
-            '5.2' => 'XP',
-            '6.0' => 'Vista',
-            '6.1' => '7',
-            '6.2' => '8',
-            '6.3' => '8.1',
-        );
+    protected static $windowsMap = array(
+        '3.1' => 'NT 3.1',
+        '3.5' => 'NT 3.5',
+        '4.0' => 'NT 4.0',
+        '5.0' => '2000',
+        '5.1' => 'XP',
+        '5.2' => 'XP',
+        '6.0' => 'Vista',
+        '6.1' => '7',
+        '6.2' => '8',
+        '6.3' => '8.1',
+    );
 
     /**
      *
@@ -103,8 +104,10 @@ class Device
     protected function normalizeOS()
     {
         if (strpos($this->device_ua, 'Windows') !== false) {
+            $matches = array();
+
             if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->device_ua, $matches)) {
-                $this->os->name    = "Windows";
+                $this->os->name    = 'Windows';
                 $this->os->version = array_key_exists($matches[1], self::$windowsMap)
                     ? self::$windowsMap[$matches[1]]
                     : $matches[1];
@@ -134,6 +137,10 @@ class Device
             return;
         }
         if ($this->os->name != '') {
+            return;
+        }
+        if (strpos($this->device_ua, 'FreeBSD') !== false) {
+            $this->os->name = 'FreeBSD';
             return;
         }
         // Last ditch efforts

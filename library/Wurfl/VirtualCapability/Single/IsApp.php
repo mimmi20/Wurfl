@@ -69,7 +69,7 @@ class IsApp extends VirtualCapability
             'FBAN',
             '#iP(hone|od|ad)[\d],[\d]#',
             // namespace notation (com.google.youtube)
-            '#(com)(?:\.[a-z]+){2,}#',
+            '#[a-z]{3,}(?:\.[a-z]+){2,}#',
         );
 
     /**
@@ -78,10 +78,10 @@ class IsApp extends VirtualCapability
     protected function compute()
     {
         $userAgent = $this->request->userAgent;
-        
-        if (Utils::isRobot($userAgent)) {
-            return false;
-        }
+
+        // if (Utils::isRobot($userAgent)) {
+            // return false;
+        // }
 
         if ($this->device->device_os == 'iOS' && !Utils::checkIfContains($userAgent, 'Safari')) {
             return true;

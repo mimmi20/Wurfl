@@ -35,7 +35,6 @@ use Psr\Log\LoggerInterface;
  */
 abstract class AbstractHandler implements FilterInterface, MatcherInterface
 {
-
     /**
      * The next User Agent Handler
      *
@@ -97,7 +96,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     {
         $this->nextHandler = $handler;
     }
-    
+
     /**
      * sets the logger
      *
@@ -108,10 +107,10 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     public function setLogger(LoggerInterface $logger = null)
     {
         $this->logger = $logger;
-        
+
         return $this;
     }
-    
+
     /**
      * sets the Persitence Cache
      *
@@ -122,7 +121,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     public function setPersistenceProvider(Storage $persistenceProvider)
     {
         $this->persistenceProvider = $persistenceProvider;
-        
+
         return $this;
     }
 
@@ -137,10 +136,21 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         return $this->getPrefix();
     }
 
+    /**
+     * sets the logger and the storage from the context
+     *
+     * @param \Wurfl\Context $wurflContext
+     *
+     * @return \Wurfl\Handlers\AbstractHandler
+     */
     public function setupContext(Context $wurflContext)
     {
-        $this->logger              = $wurflContext->logger;
-        $this->persistenceProvider = $wurflContext->persistenceProvider;
+        $this
+            ->setLogger($wurflContext->logger)
+            ->setPersistenceProvider($wurflContext->persistenceProvider)
+        ;
+
+        return $this;
     }
 
     /**
@@ -224,6 +234,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         // we sort the array first, useful for doing ris match
         if (!empty($this->userAgentsWithDeviceID)) {
             ksort($this->userAgentsWithDeviceID);
+
             $this->persistenceProvider->save($this->getPrefix(), $this->userAgentsWithDeviceID);
         }
     }
@@ -235,8 +246,10 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      */
     public function getUserAgentsWithDeviceId()
     {
-        if (!isset($this->userAgentsWithDeviceID)) {
-            $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
+        $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
+
+        if (!is_array($this->userAgentsWithDeviceID)) {
+            $this->userAgentsWithDeviceID = array();
         }
 
         return $this->userAgentsWithDeviceID;
@@ -250,7 +263,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      * Finds the device id for the given request - if it is not found it
      * delegates to the next available handler
      *
-     * @param GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      *
      * @return string WURFL Device ID for matching device
      */
@@ -272,7 +285,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     /**
      * Template method to apply matching system to user agent
      *
-     * @param GenericRequest $request
+     * @param \Wurfl\Request\GenericRequest $request
      *
      * @return string Device ID
      */
@@ -282,57 +295,63 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         $request->matchInfo->matcher = $className;
         $startTime                   = microtime(true);
 
-        $userAgent                                 = $this->normalizeUserAgent($request->userAgent);
+        $userAgent                               = $this->normalizeUserAgent($request->userAgent);
         $request->matchInfo->normalizedUserAgent = $userAgent;
         $this->logger->debug('START: Matching For  ' . $userAgent);
 
         // Get The data associated with this current handler
-        $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
-        if (!is_array($this->userAgentsWithDeviceID)) {
-            $this->userAgentsWithDeviceID = array();
+        $this->getUserAgentsWithDeviceId();
+
+        $matches = array(
+            'exact' => array(
+                'history'  => '(exact),',
+                'function' => 'applyExactMatch',
+                'debug'    => 'Applying Exact Match',
+            ),
+            'conclusive' => array(
+                'history'  => '(conclusive),',
+                'function' => 'applyConclusiveMatch',
+                'debug'    => 'Applying Conclusive Match',
+            ),
+            'recovery' => array(
+                'history' => '(recovery),',
+                'function' => 'applyRecoveryMatch',
+                'debug'    => 'Applying Recovery Match',
+            ),
+            'recovery-catchall' => array(
+                'history' => '(recovery-catchall),',
+                'function' => 'applyRecoveryCatchAllMatch',
+                'debug'    => 'Applying Catch All Recovery Match',
+            )
+        );
+
+        $deviceID = Constants::NO_MATCH;
+
+        foreach ($matches as $matchType => $matchProps) {
+            $matchProps = (object) $matchProps;
+
+            $request->matchInfo->matcherHistory .= $className . $matchProps->history;
+            $request->matchInfo->matchType       = $matchType;
+            $request->userAgentsWithDeviceID     = $this->userAgentsWithDeviceID;
+
+            $this->logger->debug($this->prefix . ' :' . $matchProps->debug . ' for ua: ' . $userAgent);
+
+            $function = $matchProps->function;
+            $deviceID = $this->$function($userAgent);
+
+            if (!$this->isBlankOrGeneric($deviceID)) {
+                break;
+            }
         }
-        $deviceID = null;
-        // Start with an Exact match
-        $request->matchInfo->matcherHistory .= $className . '(exact),';
-        $request->matchInfo->matchType  = 'exact';
-        $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
 
-        $deviceID = $this->applyExactMatch($userAgent);
-
-        // Try with the conclusive Match
+        // All attempts to match have failed
         if ($this->isBlankOrGeneric($deviceID)) {
-            $request->matchInfo->matcherHistory .= $className . '(conclusive),';
-            $request->matchInfo->matchType  = 'conclusive';
-            $this->logger->debug($this->prefix . ' :Applying Conclusive Match for ua: ' . $userAgent);
-            $deviceID = $this->applyConclusiveMatch($userAgent);
+            $request->matchInfo->matchType = 'none';
 
-            // Try with recovery match
-            if ($this->isBlankOrGeneric($deviceID)) {
-                // Log the ua and the ua profile
-                //$this->logger->debug($request);
-                $request->matchInfo->matchType = 'recovery';
-                $request->matchInfo->matcherHistory .= $className . '(recovery),';
-                $this->logger->debug($this->prefix . ' :Applying Recovery Match for ua: ' . $userAgent);
-                $deviceID = $this->applyRecoveryMatch($userAgent);
-
-                // Try with catch all recovery Match
-                if ($this->isBlankOrGeneric($deviceID)) {
-                    $request->matchInfo->matchType = 'recovery-catchall';
-                    $request->matchInfo->matcherHistory .= $className . '(recovery-catchall),';
-                    $this->logger->debug($this->prefix . ' :Applying Catch All Recovery Match for ua: ' . $userAgent);
-                    $deviceID = $this->applyRecoveryCatchAllMatch($userAgent);
-
-                    // All attempts to match have failed
-                    if ($this->isBlankOrGeneric($deviceID)) {
-                        $request->matchInfo->matchType = 'none';
-
-                        if ($request->userAgentProfile) {
-                            $deviceID = Constants::GENERIC_MOBILE;
-                        } else {
-                            $deviceID = Constants::GENERIC;
-                        }
-                    }
-                }
+            if ($request->userAgentProfile) {
+                $deviceID = Constants::GENERIC_MOBILE;
+            } else {
+                $deviceID = Constants::GENERIC;
             }
         }
 
@@ -351,7 +370,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      */
     private function isBlankOrGeneric($deviceID)
     {
-        return ($deviceID === null || strcmp($deviceID, 'generic') === 0 || strlen(trim($deviceID)) == 0);
+        return ($deviceID === Constants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(trim($deviceID)) == 0);
     }
 
     public function applyExactMatch($userAgent)
@@ -372,10 +391,11 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     public function applyConclusiveMatch($userAgent)
     {
         $match = $this->lookForMatchingUserAgent($userAgent);
+
         if (!empty($match)) {
-            //die('<pre>'.htmlspecialchars(var_export($this->userAgentsWithDeviceID, true)).'</pre>');
             return $this->userAgentsWithDeviceID[$match];
         }
+
         return Constants::NO_MATCH;
     }
 
@@ -390,24 +410,29 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     public function lookForMatchingUserAgent($userAgent)
     {
         $tolerance = Utils::firstSlash($userAgent);
+
         return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
 
     public function getDeviceIDFromRIS($userAgent, $tolerance)
     {
         $match = Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+
         if (!empty($match)) {
             return $this->userAgentsWithDeviceID[$match];
         }
+
         return Constants::NO_MATCH;
     }
 
     public function getDeviceIDFromLD($userAgent, $tolerance = null)
     {
         $match = Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+
         if (!empty($match)) {
             return $this->userAgentsWithDeviceID[$match];
         }
+
         return Constants::NO_MATCH;
     }
 
@@ -420,6 +445,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      */
     public function applyRecoveryMatch($userAgent)
     {
+        return Constants::NO_MATCH;
     }
 
     /**
@@ -434,6 +460,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         if (Utils::isDesktopBrowserHeavyDutyAnalysis($userAgent)) {
             return Constants::GENERIC_WEB_BROWSER;
         }
+
         $mobile  = Utils::isMobileBrowser($userAgent);
         $desktop = Utils::isDesktopBrowser($userAgent);
 
@@ -447,9 +474,11 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         if ($mobile) {
             return Constants::GENERIC_MOBILE;
         }
+
         if ($desktop) {
             return Constants::GENERIC_WEB_BROWSER;
         }
+
         return Constants::GENERIC;
     }
 

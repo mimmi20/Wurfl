@@ -170,22 +170,29 @@ class VirtualCapabilityProvider
     {
         $controlValue = $this->getControlValue($name);
 
-        // The value is null if it is not in the loaded WURFL, it's default if it is loaded and not overridden
-        if ($controlValue === null || $controlValue == self::WURFL_CONTROL_DEFAULT) {
-            // The control capability was not used, use the \Wurfl\VirtualCapability\VirtualCapability provider
-            return $this->getObject($name)->getValue();
-        }
+        $value = $controlValue;
 
-        // Forced capabilities
-        if ($controlValue === 'force_true') {
-            return true;
-        }
-        if ($controlValue === 'force_false') {
-            return false;
+        switch ($controlValue) {
+            case null:
+                // break intentionally omitted
+            case self::WURFL_CONTROL_DEFAULT:
+                // The value is null if it is not in the loaded WURFL, it's default if it is loaded and not overridden
+                // The control capability was not used, use the \Wurfl\VirtualCapability\VirtualCapability provider
+                $value = $this->getObject($name)->getValue();
+                break;
+            case 'force_true':
+                $value = true;
+                break;
+            case 'force_false':
+                $value = false;
+                break;
+            default:
+                // nothing to do here
+                break;
         }
 
         // Use the control value from WURFL
-        return $controlValue;
+        return $value;
     }
 
     /**
@@ -204,15 +211,21 @@ class VirtualCapabilityProvider
                 // Group of capabilities
                 list($group, $property) = explode('.', self::$virtualCapabilities[$name]);
 
+                $class = null;
+
                 if (!array_key_exists($group, $this->groupCache)) {
                     $class = '\\Wurfl\\VirtualCapability\\Group\\' . $group . 'Group';
                     // Cache the group
                     $this->groupCache[$group] = new $class($this->device, $this->request);
                     $this->groupCache[$group]->compute();
+                } else {
+                    $class = get_class($this->groupCache[$group]);
                 }
 
+                $value = $this->groupCache[$group]->get($property);
+
                 // Cache the capability
-                $this->cache[$name] = $this->groupCache[$group]->get($property);
+                $this->cache[$name] = $value;
             } else {
                 // Individual capability
                 $class              = '\\Wurfl\\VirtualCapability\\Single\\' . self::$virtualCapabilities[$name];

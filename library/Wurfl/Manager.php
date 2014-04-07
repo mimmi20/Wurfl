@@ -261,9 +261,7 @@ class Manager
 
             $device = $this->getWrappedDevice($deviceId, $request);
         }
-        
-        $device->request->userAgent = $request->userAgent;
-        
+
         return $device;
     }
 
@@ -285,9 +283,9 @@ class Manager
 
         $request = $requestFactory->createRequestForUserAgent($userAgent);
         $device  = $this->getDeviceForRequest($request);
-        
+
         $device->request->userAgent = $userAgent;
-        
+
         return $device;
     }
 
@@ -397,7 +395,7 @@ class Manager
     private function getWrappedDevice($deviceId, Request\GenericRequest $request = null)
     {
         $device = $this->cacheStorage->load('DEV_' . $deviceId);
-        
+
         if (empty($device)) {
             $modelDevices = $this->deviceRepository->getDeviceHierarchy($deviceId);
             $device       = new CustomDevice($modelDevices, $request);
