@@ -26,7 +26,6 @@ namespace Wurfl;
  */
 class UserAgentHandlerChain
 {
-
     /**
      * @var array of \Wurfl\Handlers\AbstractHandler objects
      */
@@ -35,21 +34,21 @@ class UserAgentHandlerChain
     /**
      * Adds a \Wurfl\Handlers\AbstractHandler to the chain
      *
-     * @param Handlers\AbstractHandler $handler
+     * @param \Wurfl\Handlers\AbstractHandler $handler
      *
      * @return \Wurfl\UserAgentHandlerChain $this
      */
     public function addUserAgentHandler(Handlers\AbstractHandler $handler)
     {
-        $size = count($this->userAgentHandlers);
+        // $size = count($this->userAgentHandlers);
 
-        if ($size > 0) {
-            /**
-             * @var $lastHandler Handlers\AbstractHandler
-             */
-            $lastHandler = $this->userAgentHandlers[$size - 1];
-            $lastHandler->setNextHandler($handler);
-        }
+        // if ($size > 0) {
+            // /**
+             // * @var $lastHandler Handlers\AbstractHandler
+             // */
+            // $lastHandler = $this->userAgentHandlers[$size - 1];
+            // $lastHandler->setNextHandler($handler);
+        // }
 
         $this->userAgentHandlers[] = $handler;
         return $this;
@@ -75,9 +74,15 @@ class UserAgentHandlerChain
     {
         Handlers\Utils::reset();
 
-        /** @var $firstHandler Handlers\AbstractHandler */
-        $firstHandler = $this->userAgentHandlers[0];
-        $firstHandler->filter($userAgent, $deviceID);
+        $handlers = $this->getHandlers();
+
+        foreach ($handlers as $handler) {
+            /** @var $handler Handlers\AbstractHandler */
+            if ($handler->canHandle($userAgent)) {
+                $handler->updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
+                break;
+            }
+        }
     }
 
     /**
@@ -91,9 +96,18 @@ class UserAgentHandlerChain
     {
         Handlers\Utils::reset();
 
-        /** @var $firstHandler Handlers\AbstractHandler */
-        $firstHandler = $this->userAgentHandlers[0];
-        return $firstHandler->match($request);
+        $handlers    = $this->getHandlers();
+        $matchResult = Constants::NO_MATCH;
+
+        foreach ($handlers as $handler) {
+            /** @var $handler Handlers\AbstractHandler */
+            if ($handler->canHandle($request->userAgent)) {
+                $matchResult = $this->applyMatch($request);
+                break;
+            }
+        }
+
+        return $matchResult;
     }
 
     /**
@@ -103,9 +117,11 @@ class UserAgentHandlerChain
      */
     public function persistData()
     {
-        foreach ($this->userAgentHandlers as $userAgentHandler) {
-            /** @var $userAgentHandler Handlers\AbstractHandler */
-            $userAgentHandler->persistData();
+        $handlers = $this->getHandlers();
+
+        foreach ($handlers as $handler) {
+            /** @var $handler Handlers\AbstractHandler */
+            $handler->persistData();
         }
     }
 
@@ -117,10 +133,11 @@ class UserAgentHandlerChain
     public function collectData()
     {
         $userAgents = array();
+        $handlers   = $this->getHandlers();
 
-        foreach ($this->userAgentHandlers as $userAgentHandler) {
-            /** @var $userAgentHandler Handlers\AbstractHandler */
-            $current = $userAgentHandler->getUserAgentsWithDeviceId();
+        foreach ($handlers as $handler) {
+            /** @var $handler Handlers\AbstractHandler */
+            $current = $handler->getUserAgentsWithDeviceId();
 
             if (!empty($current)) {
                 $userAgents = array_merge($userAgents, $current);

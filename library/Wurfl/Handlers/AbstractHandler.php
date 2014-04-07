@@ -258,30 +258,6 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     //********************************************************
     //    Matching
     //
-    //********************************************************
-    /**
-     * Finds the device id for the given request - if it is not found it
-     * delegates to the next available handler
-     *
-     * @param \Wurfl\Request\GenericRequest $request
-     *
-     * @return string WURFL Device ID for matching device
-     */
-    public function match(GenericRequest $request)
-    {
-        $userAgent = $request->userAgent;
-
-        if ($this->canHandle($userAgent)) {
-            return $this->applyMatch($request);
-        }
-
-        if (isset($this->nextHandler)) {
-            return $this->nextHandler->match($request);
-        }
-
-        return Constants::GENERIC;
-    }
-
     /**
      * Template method to apply matching system to user agent
      *
@@ -289,7 +265,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
      *
      * @return string Device ID
      */
-    public function applyMatch(GenericRequest $request)
+    final public function applyMatch(GenericRequest $request)
     {
         $className                   = get_class($this);
         $request->matchInfo->matcher = $className;
@@ -373,11 +349,19 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
         return ($deviceID === Constants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(trim($deviceID)) == 0);
     }
 
+    /**
+     * Attempt to find a exact match for the given $userAgent
+     *
+     * @param string $userAgent
+     *
+     * @return string Matching WURFL deviceID
+     */
     public function applyExactMatch($userAgent)
     {
         if (array_key_exists($userAgent, $this->userAgentsWithDeviceID)) {
             return $this->userAgentsWithDeviceID[$userAgent];
         }
+
         return Constants::NO_MATCH;
     }
 
@@ -466,6 +450,7 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
 
         if (!$desktop) {
             $deviceId = Utils::getMobileCatchAllId($userAgent);
+
             if ($deviceId !== Constants::NO_MATCH) {
                 return $deviceId;
             }
@@ -513,9 +498,11 @@ abstract class AbstractHandler implements FilterInterface, MatcherInterface
     protected function isDeviceExist($deviceId)
     {
         $ids = array_values($this->userAgentsWithDeviceID);
+
         if (in_array($deviceId, $ids)) {
             return true;
         }
+
         return false;
     }
 
