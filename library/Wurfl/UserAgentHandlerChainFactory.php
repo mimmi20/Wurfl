@@ -31,11 +31,6 @@ use Psr\Log\LoggerInterface;
 class UserAgentHandlerChainFactory
 {
     /**
-     * @var UserAgentHandlerChain
-     */
-    private static $userAgentHandlerChain = null;
-
-    /**
      * Create a \Wurfl\UserAgentHandlerChain from the given $context
      *
      * @param Context                  $context
@@ -51,10 +46,11 @@ class UserAgentHandlerChainFactory
         Storage\Storage $cacheProvider, 
         LoggerInterface $logger = null)
     {
-        self::$userAgentHandlerChain = $cacheProvider->load('UserAgentHandlerChain');
+        /** @var $userAgentHandlerChain \Wurfl\UserAgentHandlerChain */
+        $userAgentHandlerChain = $cacheProvider->load('UserAgentHandlerChain');
 
-        if (self::$userAgentHandlerChain instanceof UserAgentHandlerChain) {
-            foreach (self::$userAgentHandlerChain->getHandlers() as $handler) {
+        if ($userAgentHandlerChain instanceof UserAgentHandlerChain) {
+            foreach ($userAgentHandlerChain->getHandlers() as $handler) {
                 /** @var $handler \Wurfl\Handlers\AbstractHandler */
                 $handler
                     ->setLogger($logger)
@@ -62,11 +58,11 @@ class UserAgentHandlerChainFactory
                 ;
             }
         } else {
-            self::init($context);
-            $cacheProvider->save('UserAgentHandlerChain', self::$userAgentHandlerChain, 3600);
+            $userAgentHandlerChain = self::init($context);
+            $cacheProvider->save('UserAgentHandlerChain', $userAgentHandlerChain, 3600);
         }
 
-        return self::$userAgentHandlerChain;
+        return $userAgentHandlerChain;
     }
 
     /**
@@ -74,168 +70,194 @@ class UserAgentHandlerChainFactory
      * $context
      *
      * @param Context $context
+     *
+     * @return \Wurfl\UserAgentHandlerChain
      */
     private static function init(Context $context)
     {
+        $userAgentHandlerChain = new UserAgentHandlerChain();
 
-        self::$userAgentHandlerChain = new UserAgentHandlerChain();
-
+        /** @var $genericNormalizers \Wurfl\Request\Normalizer\UserAgentNormalizer */
         $genericNormalizers = self::createGenericNormalizers();
 
         /**** Smart TVs ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SmartTVHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SmartTVHandler($context, $genericNormalizers));
 
         /**** Mobile devices ****/
-        $kindleNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Kindle());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\KindleHandler($context, $kindleNormalizer));
+        $kindleNormalizer = clone $genericNormalizers;
+        $kindleNormalizer->add(new Request\Normalizer\Specific\Kindle());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\KindleHandler($context, $kindleNormalizer));
 
         /**** UCWEB ****/
-        $ucwebu2Normalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\UcwebU2());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU2Handler($context, $ucwebu2Normalizer));
-        $ucwebu3Normalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\UcwebU3());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU3Handler($context, $ucwebu3Normalizer));
+        $ucwebu2Normalizer = clone $genericNormalizers;
+        $ucwebu2Normalizer->add(new Request\Normalizer\Specific\UcwebU2());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU2Handler($context, $ucwebu2Normalizer));
+        $ucwebu3Normalizer = clone $genericNormalizers;
+        $ucwebu3Normalizer->add(new Request\Normalizer\Specific\UcwebU3());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU3Handler($context, $ucwebu3Normalizer));
 
         /**** Mobile platforms ****/
         // Android Matcher Chain
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\OperaMiniOnAndroidHandler($context, $genericNormalizers)
         );
-        $operaMobiNormalizer = $genericNormalizers->addUserAgentNormalizer(
+        $operaMobiNormalizer = clone $genericNormalizers;
+        $operaMobiNormalizer->add(
             new Request\Normalizer\Specific\OperaMobiOrTabletOnAndroid()
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\OperaMobiOrTabletOnAndroidHandler($context, $operaMobiNormalizer)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\FennecOnAndroidHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\Ucweb7OnAndroidHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\NetFrontOnAndroidHandler($context, $genericNormalizers)
         );
-        $androidNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Android());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\AndroidHandler($context, $androidNormalizer));
+        $androidNormalizer = clone $genericNormalizers;
+        $androidNormalizer->add(new Request\Normalizer\Specific\Android());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\AndroidHandler($context, $androidNormalizer));
 
-        $appleNormalizer = $genericNormalizers->addUserAgentNormalizer(new \Wurfl\Request\Normalizer\Specific\Apple());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($context, $appleNormalizer));
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $appleNormalizer = clone $genericNormalizers;
+        $appleNormalizer->add(new \Wurfl\Request\Normalizer\Specific\Apple());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($context, $appleNormalizer));
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\WindowsPhoneDesktopHandler($context, $genericNormalizers)
         );
-        $winPhoneNormalizer = $genericNormalizers->addUserAgentNormalizer(
+        $winPhoneNormalizer = clone $genericNormalizers;
+        $winPhoneNormalizer->add(
             new Request\Normalizer\Specific\WindowsPhone()
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\WindowsPhoneHandler($context, $winPhoneNormalizer)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\NokiaOviBrowserHandler($context, $genericNormalizers)
         );
 
         /**** High workload mobile matchers ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\NokiaHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SamsungHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\NokiaHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SamsungHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\BlackBerryHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\SonyEricssonHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\MotorolaHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\MotorolaHandler($context, $genericNormalizers));
 
         /**** Other mobile matchers ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\AlcatelHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\BenQHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\DoCoMoHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\GrundigHandler($context, $genericNormalizers));
-        $htcMacNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\HTCMac());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCMacHandler($context, $htcMacNormalizer));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\KDDIHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\KyoceraHandler($context, $genericNormalizers));
-        $lgNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\LG());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\LGHandler($context, $lgNormalizer));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\LGUPLUSHandler($context, $genericNormalizers));
-        $maemoNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Maemo());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\MaemoHandler($context, $maemoNormalizer));
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\AlcatelHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\BenQHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\DoCoMoHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\GrundigHandler($context, $genericNormalizers));
+        
+        $htcMacNormalizer = clone $genericNormalizers;
+        $htcMacNormalizer->add(new Request\Normalizer\Specific\HTCMac());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCMacHandler($context, $htcMacNormalizer));
+        
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\KDDIHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\KyoceraHandler($context, $genericNormalizers));
+        $lgNormalizer = clone $genericNormalizers;
+        $lgNormalizer->add(new Request\Normalizer\Specific\LG());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\LGHandler($context, $lgNormalizer));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\LGUPLUSHandler($context, $genericNormalizers));
+        $maemoNormalizer = clone $genericNormalizers;
+        $maemoNormalizer->add(new Request\Normalizer\Specific\Maemo());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\MaemoHandler($context, $maemoNormalizer));
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\MitsubishiHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\NecHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\NintendoHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\NecHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\NintendoHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\PanasonicHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\PantechHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\PhilipsHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\PantechHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\PhilipsHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\PortalmmmHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\QtekHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\ReksioHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SagemHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SanyoHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SharpHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SiemensHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SkyfireHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SPVHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\ToshibaHandler($context, $genericNormalizers));
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\VodafoneHandler($context, $genericNormalizers));
-        $webOSNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\WebOS());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\WebOSHandler($context, $webOSNormalizer));
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\QtekHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\ReksioHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SagemHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SanyoHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SharpHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SiemensHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SkyfireHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SPVHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\ToshibaHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\VodafoneHandler($context, $genericNormalizers));
+        
+        $webOSNormalizer = clone $genericNormalizers;
+        $webOSNormalizer->add(new Request\Normalizer\Specific\WebOS());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\WebOSHandler($context, $webOSNormalizer));
+        
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\FirefoxOSHandler($context, $genericNormalizers)
         );
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\OperaMiniHandler($context, $genericNormalizers)
         );
 
         /**** Java Midlets ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\JavaMidletHandler($context, $genericNormalizers)
         );
 
         /**** Tablet Browsers ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\WindowsRTHandler($context, $genericNormalizers)
         );
 
         /**** Robots / Crawlers ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\BotCrawlerTranscoderHandler($context, $genericNormalizers)
         );
 
         /**** Game Consoles ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\XboxHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\XboxHandler($context, $genericNormalizers));
 
         /**** DesktopApplications ****/
-        $desktopApplicationNormalizer = $genericNormalizers->addUserAgentNormalizer(new \Wurfl\Request\Normalizer\Specific\DesktopApplication());
-        self::$userAgentHandlerChain->addUserAgentHandler(new \Wurfl\Handlers\DesktopApplicationHandler($context, $desktopApplicationNormalizer));
+        $desktopApplicationNormalizer = clone $genericNormalizers;
+        $desktopApplicationNormalizer->add(new \Wurfl\Request\Normalizer\Specific\DesktopApplication());
+        $userAgentHandlerChain->addUserAgentHandler(new \Wurfl\Handlers\DesktopApplicationHandler($context, $desktopApplicationNormalizer));
 
         /**** Desktop Browsers ****/
-        $chromeNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Chrome());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($context, $chromeNormalizer));
+        $chromeNormalizer = clone $genericNormalizers;
+        $chromeNormalizer->add(new Request\Normalizer\Specific\Chrome());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($context, $chromeNormalizer));
 
-        $firefoxNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Firefox());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\FirefoxHandler($context, $firefoxNormalizer));
+        $firefoxNormalizer = clone $genericNormalizers;
+        $firefoxNormalizer->add(new Request\Normalizer\Specific\Firefox());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\FirefoxHandler($context, $firefoxNormalizer));
 
-        $msieNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\MSIE());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\MSIEHandler($context, $msieNormalizer));
+        $msieNormalizer = clone $genericNormalizers;
+        $msieNormalizer->add(new Request\Normalizer\Specific\MSIE());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\MSIEHandler($context, $msieNormalizer));
 
-        $operaNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Opera());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($context, $operaNormalizer));
+        $operaNormalizer = clone $genericNormalizers;
+        $operaNormalizer->add(new Request\Normalizer\Specific\Opera());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($context, $operaNormalizer));
 
-        $safariNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Safari());
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\SafariHandler($context, $safariNormalizer));
+        $safariNormalizer = clone $genericNormalizers;
+        $safariNormalizer->add(new Request\Normalizer\Specific\Safari());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\SafariHandler($context, $safariNormalizer));
 
-        $konquerorNormalizer = $genericNormalizers->addUserAgentNormalizer(new Request\Normalizer\Specific\Konqueror());
-        self::$userAgentHandlerChain->addUserAgentHandler(
+        $konquerorNormalizer = clone $genericNormalizers;
+        $konquerorNormalizer->add(new Request\Normalizer\Specific\Konqueror());
+        $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\KonquerorHandler($context, $konquerorNormalizer)
         );
 
         /**** All other requests ****/
-        self::$userAgentHandlerChain->addUserAgentHandler(new Handlers\CatchAllHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\CatchAllHandler($context, $genericNormalizers));
+        
+        return $userAgentHandlerChain;
     }
 
     /**

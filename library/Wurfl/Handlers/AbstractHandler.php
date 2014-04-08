@@ -22,6 +22,7 @@ use Wurfl\Context;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\Normalizer\NullNormalizer;
 use Psr\Log\LoggerInterface;
+use Wurfl\Storage\Storage;
 
 /**
  * \Wurfl\Handlers\AbstractHandler is the base class that combines the classification of
@@ -33,7 +34,7 @@ use Psr\Log\LoggerInterface;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-abstract class AbstractHandler implements FilterInterface, MatcherInterface
+abstract class AbstractHandler implements FilterInterface
 {
     /**
      * The next User Agent Handler

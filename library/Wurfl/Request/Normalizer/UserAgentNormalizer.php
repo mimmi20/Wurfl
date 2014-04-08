@@ -51,11 +51,10 @@ class UserAgentNormalizer implements NormalizerInterface
      *
      * @return UserAgentNormalizer
      */
-    public function addUserAgentNormalizer(NormalizerInterface $normalizer)
+    public function add(NormalizerInterface $normalizer)
     {
-        $userAgentNormalizers   = $this->normalizers;
-        $userAgentNormalizers[] = $normalizer;
-        return new UserAgentNormalizer($userAgentNormalizers);
+        $this->normalizers[] = $normalizer;
+        return $this;
     }
 
     /**
