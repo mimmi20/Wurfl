@@ -147,7 +147,11 @@ class UserAgentTool
         }
 
         //Is UA Windows Mobile?
-        if ($device->os->setContains($device->device_ua, 'Windows CE', 'Windows Mobile') && $device->browser->set('IE Mobile')) return $device;
+        if ($device->os->setContains($device->device_ua, 'Windows CE', 'Windows Mobile')
+            && $device->browser->set('IE Mobile')
+        ) {
+            return $device;
+        }
 
         if (strpos($device->device_ua, 'Windows Phone') !== false) {
             // Is UA Windows Phone OS?
@@ -159,7 +163,6 @@ class UserAgentTool
                 $device->browser->set('IE Mobile');
                 return $device;
             }
-
         }
 
         //Is UA S40 Ovi Browser?
@@ -170,10 +173,8 @@ class UserAgentTool
         }
 
         //Is Series60?
-        if($device->os->setRegex($device->device_ua, '#(?:SymbianOS|Series60|S60)/(\d+(?:\.\d+)?)#','Symbian S60', 1)) {
-            if ($device->os->setRegex($device->device_ua, '/^Mozilla\/[45]\.0 \(Symbian\/3/', 'Symbian', '^3')) {
-                return $device;
-            }
+        if ($device->os->setRegex($device->device_ua, '#(?:SymbianOS|Series60|S60)/(\d+(?:\.\d+)?)#', 'Symbian S60', 1)) {
+            $device->os->setRegex($device->device_ua, '/^Mozilla\/[45]\.0 \(Symbian\/3/', 'Symbian', '^3');
 
             if ($device->browser->setRegex($device->browser_ua, '/NokiaBrowser\/([0-9]\.[0-9])/', 'Symbian S60 Browser', 1)) {
                 return $device;
