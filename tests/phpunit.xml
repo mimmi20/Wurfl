@@ -1,24 +1,12 @@
-<phpunit bootstrap="./bootstrap.php"
-         verbose="false"
-         stopOnError="false"
-         stopOnFailure="false"
-         stopOnIncomplete="false"
-         stopOnSkipped="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         colors="false"
-         forceCoversAnnotation="false"
-         strict="false"
-         processIsolation="false">
+<phpunit bootstrap="./bootstrap.php">
     <testsuites>
         <testsuite name="Wurfl Tests">
-            <directory>./Wurfl/</directory>
+            <directory>./WurflTest/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">../library/Wurfl</directory>
+            <directory suffix=".php">../src/</directory>
         </whitelist>
     </filter>
 </phpunit>

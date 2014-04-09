@@ -2,12 +2,12 @@
 <phpunit bootstrap="./tests/bootstrap.php">
     <testsuites>
         <testsuite name="Wurfl Cache Tests">
-            <directory>./tests/WurflTest/</directory>
+            <directory suffix="Test.php">./tests/WurflTest/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">./library/Wurfl</directory>
+            <directory suffix=".php">./src/</directory>
         </whitelist>
     </filter>
 </phpunit>

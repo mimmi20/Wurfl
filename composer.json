@@ -12,19 +12,18 @@
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "zendframework/zend-config": "2.2.*",
+        "zendframework/zend-config": "2.*",
         "monolog/monolog": "1.*@dev",
         "mikey179/vfsStream": "1.3.*@dev"
     },
     "suggest": {
         "monolog/monolog": "if you want to log to more than a file",
-        "zendframework/zend-cache": "to use other caches",
         "zendframework/zend-config": "to use an other configuration"
     },
     "autoload": {
-        "psr-0": {
-            "Wurfl\\": "library/",
-            "WurflTest\\": "tests/"
+        "psr-4": {
+            "Wurfl\\": "src/",
+            "WurflTest\\": "tests/WurflTest/"
         }
     }
 }
