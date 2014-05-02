@@ -13,7 +13,7 @@ class UserAgentNormalizerTest extends \PHPUnit_Framework_TestCase
     public function testShouldAddANormalizer()
     {
         $userAgentNormalizer = new UserAgentNormalizer();
-        $currentNormalizer   = $userAgentNormalizer->addUserAgentNormalizer(
+        $currentNormalizer   = $userAgentNormalizer->add(
             new Chrome()
         );
 
@@ -26,7 +26,7 @@ class UserAgentNormalizerTest extends \PHPUnit_Framework_TestCase
         $userAgentNormalizer = new UserAgentNormalizer(
             array(new BabelFish())
         );
-        $userAgentNormalizer = $userAgentNormalizer->addUserAgentNormalizer(
+        $userAgentNormalizer = $userAgentNormalizer->add(
             new Chrome()
         );
 

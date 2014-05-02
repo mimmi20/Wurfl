@@ -177,7 +177,7 @@ class Manager
      */
     private function init()
     {
-        $logger  = new \WurflCache\Adapter\NullStorage();
+        $logger  = new \Psr\Log\NullLogger();
         $context = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
 
         $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
