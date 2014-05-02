@@ -122,7 +122,9 @@ class Manager
         if (!$this->wurflConfig->allowReload) {
             return false;
         }
+
         $state = $this->persistenceStorage->load(self::WURFL_API_STATE);
+
         return !$this->isStateCurrent($state);
     }
 
@@ -175,7 +177,7 @@ class Manager
      */
     private function init()
     {
-        $logger  = null;
+        $logger  = new \WurflCache\Adapter\NullStorage();
         $context = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
 
         $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
