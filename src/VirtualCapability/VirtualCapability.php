@@ -49,18 +49,18 @@ abstract class VirtualCapability
     private static $loadedCapabilities = array();
 
     /**
-     * @var CustomDevice
+     * @var \Wurfl\CustomDevice
      */
     protected $device = null;
 
     /**
-     * @var GenericRequest
+     * @var \Wurfl\Request\GenericRequest
      */
     protected $request = null;
 
     /**
-     * @param CustomDevice           $device
-     * @param GenericRequest $request
+     * @param \Wurfl\CustomDevice           $device
+     * @param \Wurfl\Request\GenericRequest $request
      */
     public function __construct(CustomDevice $device = null, GenericRequest $request = null)
     {
