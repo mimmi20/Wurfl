@@ -43,6 +43,7 @@ class IsSmartphone extends VirtualCapability
             'resolution_width',
             'device_os_version',
             'device_os',
+            'can_assign_phone_number',
         );
 
     /**
@@ -54,6 +55,7 @@ class IsSmartphone extends VirtualCapability
             || $this->device->is_tablet == 'true'
             || $this->device->pointing_method != 'touchscreen'
             || $this->device->resolution_width < 320
+            || $this->device->can_assign_phone_number == 'false'
         ) {
             return false;
         }

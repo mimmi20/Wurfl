@@ -88,6 +88,8 @@ class VirtualCapabilityProvider
             'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
             'advertised_browser'           => 'DeviceBrowser.Browser',
             'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
+            'complete_device_name' => 'CompleteDeviceName',
+            'form_factor' => 'FormFactor',
         );
 
     /**

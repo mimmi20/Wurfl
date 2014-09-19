@@ -32,12 +32,13 @@ class GenericRequestFactory
      * Creates Generic Request from the given HTTP Request (normally $_SERVER)
      *
      * @param array $request HTTP Request
+     * @param bool  $override_sideloaded_browser_ua
      *
      * @return \Wurfl\Request\GenericRequest
      */
-    public function createRequest(array $request)
+    public function createRequest(array $request, $override_sideloaded_browser_ua = true)
     {
-        $userAgent        = Utils::getUserAgent($request);
+        $userAgent        = Utils::getUserAgent($request, $override_sideloaded_browser_ua);
         $userAgentProfile = Utils::getUserAgentProfile($request);
         $isXhtmlDevice    = Utils::isXhtmlRequester($request);
 

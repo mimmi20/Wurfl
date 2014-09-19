@@ -42,6 +42,17 @@ class OperaHandler extends AbstractHandler
             'opera_10',
             'opera_11',
             'opera_12',
+            'opera_15',
+            'opera_16',
+            'opera_17',
+            'opera_18',
+            'opera_19',
+            'opera_20',
+            'opera_21',
+            'opera_22',
+            'opera_23',
+            'opera_24',
+            'opera_25',
         );
 
     public function canHandle($userAgent)
@@ -50,7 +61,7 @@ class OperaHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Opera');
+        return Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'OPR/'));
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -79,12 +90,10 @@ class OperaHandler extends AbstractHandler
         return 'opera';
     }
 
-    public static function getOperaVersion($userAgent)
-    {
+    public static function getOperaVersion($userAgent) {
         if (preg_match('#Opera[ /]?(\d+\.\d+)#', $userAgent, $matches)) {
-            return ($matches[1]);
+            return($matches[1]);
         }
-
         return null;
     }
 }

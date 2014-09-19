@@ -70,6 +70,8 @@ class IsApp extends VirtualCapability
             '#iP(hone|od|ad)[\d],[\d]#',
             // namespace notation (com.google.youtube)
             '#[a-z]{3,}(?:\.[a-z]+){2,}#',
+            //Windows MSIE Webview
+            'WebView',
         );
 
     /**

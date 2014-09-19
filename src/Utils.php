@@ -39,8 +39,12 @@ class Utils
      *
      * @return string
      */
-    public static function getUserAgent($request)
+    public static function getUserAgent($request, $override_sideloaded_browser_ua = true)
     {
+        if (!$override_sideloaded_browser_ua && isset($request['HTTP_USER_AGENT'])) {
+            return $request['HTTP_USER_AGENT'];
+        }
+
         if (isset($request[Constants::UA])) {
             return $request[Constants::UA];
         }

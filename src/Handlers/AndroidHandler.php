@@ -54,6 +54,7 @@ class AndroidHandler extends AbstractHandler
             'generic_android_ver4_2',
             'generic_android_ver4_3',
             'generic_android_ver4_4',
+            'generic_android_ver4_5',
             'generic_android_ver5_0',
 
             'generic_android_ver1_5_tablet',
@@ -71,6 +72,7 @@ class AndroidHandler extends AbstractHandler
             'generic_android_ver4_2_tablet',
             'generic_android_ver4_3_tablet',
             'generic_android_ver4_4_tablet',
+            'generic_android_ver4_5_tablet',
             'generic_android_ver5_0_tablet',
         );
 
@@ -81,7 +83,8 @@ class AndroidHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfContains($userAgent, 'Android');
+        return !Utils::checkIfContains($userAgent, 'like Android') 
+            && Utils::checkIfContains($userAgent, 'Android');
     }
 
     /**
@@ -156,7 +159,7 @@ class AndroidHandler extends AbstractHandler
      */
     public static $validAndroidVersions
         = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2',
-                '4.3', '4.4', '5.0');
+                '4.3', '4.4', '4.5', '5.0');
 
     /**
      * @var array
@@ -282,7 +285,7 @@ class AndroidHandler extends AbstractHandler
         $model = preg_replace('#ORANGE/.*$#', 'ORANGE', $model);
 
         // LG
-        $model = preg_replace('#(LG-[A-Za-z0-9\-]+).*$#', '$1', $model);
+        $model = preg_replace('#(LG-?[A-Za-z0-9\-]+).*$#', '$1', $model);
 
         // Serial Number
         $model = preg_replace('#\[[\d]{10}\]#', '', $model);

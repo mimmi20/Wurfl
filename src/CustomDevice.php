@@ -74,9 +74,10 @@ class CustomDevice
         }
         $this->modelDevices = $modelDevices;
         if ($request === null) {
-            // This might happen if a device is looked up by its ID directly, without providing a user agent
-            throw new \InvalidArgumentException('the mandatory second parameter $request is missing');
-        }
+			// This might happen if a device is looked up by its ID directly, without providing a user agent
+			$requestFactory = new \Wurfl\Request\GenericRequestFactory();
+			$request        = $requestFactory->createRequestForUserAgent($this->userAgent);
+		}
         $this->request                   = $request;
         $this->virtualCapabilityProvider = new VirtualCapability\VirtualCapabilityProvider($this, $request);
     }
@@ -110,6 +111,10 @@ class CustomDevice
                 return $this->modelDevices[0]->$name;
                 break;
             default:
+                if ($this->virtualCapabilityProvider->exists($name)) {
+					return $this->virtualCapabilityProvider->get($name);
+				}
+                
                 return $this->getCapability($name);
                 break;
         }

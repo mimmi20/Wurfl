@@ -37,7 +37,7 @@ class DeviceIterator extends AbstractIterator
 
     /**
      * @param string $inputFile        XML file to be processed
-     * @param array  $capabilityFilter Capabiities to process
+     * @param array  $capabilityFilter Capabilities to process
      */
     public function __construct($inputFile, $capabilityFilter = array())
     {
@@ -87,11 +87,18 @@ class DeviceIterator extends AbstractIterator
                             break;
 
                         case XmlInterface::GROUP:
-                            $groupId                          = $this->xmlReader->getAttribute(XmlInterface::GROUP_ID);
-                            $groupIDCapabilitiesMap[$groupId] = array();
+                            $groupId = $this->xmlReader->getAttribute(XmlInterface::GROUP_ID);
+                            
+                            if ($groupId !== 'virtual_capabilities') {
+								$groupIDCapabilitiesMap[$groupId] = array();
+							}
                             break;
 
                         case XmlInterface::CAPABILITY:
+                            if ($groupId === 'virtual_capabilities') {
+								break;
+							}
+                            
                             $capabilityName = $this->xmlReader->getAttribute(XmlInterface::CAPABILITY_NAME);
 
                             if ($this->needToReadCapability($capabilityName)) {

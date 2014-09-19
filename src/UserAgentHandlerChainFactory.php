@@ -97,6 +97,22 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU3Handler($context, $ucwebu3Normalizer));
 
         /**** Mobile platforms ****/
+        //Windows Phone must be above Android to resolve WP 8.1 and above UAs correctly
+        $userAgentHandlerChain->addUserAgentHandler(
+            new Handlers\WindowsPhoneDesktopHandler($context, $genericNormalizers)
+        );
+        $winPhoneNormalizer = clone $genericNormalizers;
+        $winPhoneNormalizer->add(
+            new Request\Normalizer\Specific\WindowsPhone()
+        );
+        $userAgentHandlerChain->addUserAgentHandler(
+            new Handlers\WindowsPhoneHandler($context, $winPhoneNormalizer)
+        );
+        
+        $userAgentHandlerChain->addUserAgentHandler(
+            new Handlers\NokiaOviBrowserHandler($context, $genericNormalizers)
+        );
+        
         // Android Matcher Chain
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\OperaMiniOnAndroidHandler($context, $genericNormalizers)
@@ -121,23 +137,13 @@ class UserAgentHandlerChainFactory
         $androidNormalizer->add(new Request\Normalizer\Specific\Android());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\AndroidHandler($context, $androidNormalizer));
 
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\UbuntuTouchOSHandler($context, $genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\TizenHandler($context, $genericNormalizers));
+        
         $appleNormalizer = clone $genericNormalizers;
         $appleNormalizer->add(new \Wurfl\Request\Normalizer\Specific\Apple());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($context, $appleNormalizer));
-        $userAgentHandlerChain->addUserAgentHandler(
-            new Handlers\WindowsPhoneDesktopHandler($context, $genericNormalizers)
-        );
-        $winPhoneNormalizer = clone $genericNormalizers;
-        $winPhoneNormalizer->add(
-            new Request\Normalizer\Specific\WindowsPhone()
-        );
-        $userAgentHandlerChain->addUserAgentHandler(
-            new Handlers\WindowsPhoneHandler($context, $winPhoneNormalizer)
-        );
-        $userAgentHandlerChain->addUserAgentHandler(
-            new Handlers\NokiaOviBrowserHandler($context, $genericNormalizers)
-        );
-
+        
         /**** High workload mobile matchers ****/
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\NokiaHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\SamsungHandler($context, $genericNormalizers));
@@ -228,6 +234,11 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new \Wurfl\Handlers\DesktopApplicationHandler($context, $desktopApplicationNormalizer));
 
         /**** Desktop Browsers ****/
+        
+        $operaNormalizer = clone $genericNormalizers;
+        $operaNormalizer->add(new Request\Normalizer\Specific\Opera());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($context, $operaNormalizer));
+
         $chromeNormalizer = clone $genericNormalizers;
         $chromeNormalizer->add(new Request\Normalizer\Specific\Chrome());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($context, $chromeNormalizer));
@@ -239,10 +250,6 @@ class UserAgentHandlerChainFactory
         $msieNormalizer = clone $genericNormalizers;
         $msieNormalizer->add(new Request\Normalizer\Specific\MSIE());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\MSIEHandler($context, $msieNormalizer));
-
-        $operaNormalizer = clone $genericNormalizers;
-        $operaNormalizer->add(new Request\Normalizer\Specific\Opera());
-        $userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($context, $operaNormalizer));
 
         $safariNormalizer = clone $genericNormalizers;
         $safariNormalizer->add(new Request\Normalizer\Specific\Safari());

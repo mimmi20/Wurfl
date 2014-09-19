@@ -38,9 +38,17 @@ class IsRobot extends VirtualCapability
      */
     protected function compute()
     {
-        // Control cap, "controlcap_is_robot" is checked before this function is called
+        $ua = $this->request->userAgent;
+
+		// Control cap, 'controlcap_is_robot' is checked before this function is called
+        if ($this->request->originalHeaderExists('HTTP_ACCEPT_ENCODING')
+            && Utils::checkIfContains($ua, 'Trident/')
+            && !Utils::checkIfContains($this->request->getOriginalHeader('HTTP_ACCEPT_ENCODING'), 'deflate')
+        ) {
+            return true;
+        }
 
         // Check against standard bot list
-        return Utils::isRobot($this->request->userAgent);
+        return Utils::isRobot($this->request->getOriginalHeader('HTTP_USER_AGENT'));
     }
 }

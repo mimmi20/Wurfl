@@ -37,17 +37,18 @@ class WindowsPhone implements NormalizerInterface
      */
     public function normalize($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client')) {
-            $model   = WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
-            $version = WindowsPhoneHandler::getWindowsPhoneAdClientVersion($userAgent);
-        } elseif (Utils::checkIfContains($userAgent, 'NativeHost')) {
-            return $userAgent;
-        } else {
-            $model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
-            $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
-        }
+        if (Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client') || Utils::checkIfStartsWith($userAgent, 'WindowsPhoneAdClient')) {
+			$model = WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
+			$version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+		} else if (Utils::checkIfContains($userAgent, 'NativeHost')) {
+			return $userAgent;
+		} else {
+			$model = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
+			$version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+		}
 
         if ($model !== null && $version !== null) {
+            // "WP" is for Windows Phone
             $prefix = 'WP' . $version . ' ' . $model . Constants::RIS_DELIMITER;
             return $prefix . $userAgent;
         }

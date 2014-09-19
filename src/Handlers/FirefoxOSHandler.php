@@ -43,6 +43,10 @@ class FirefoxOSHandler extends AbstractHandler
             'firefox_os_ver1_2',
             'firefox_os_ver1_3',
             'firefox_os_ver1_3_tablet',
+            'firefox_os_ver1_4',
+            'firefox_os_ver1_4_tablet',
+            'firefox_os_ver2_0',
+            'firefox_os_ver2_0_tablet',
         );
 
     public static $firefoxOSMap
@@ -51,6 +55,8 @@ class FirefoxOSHandler extends AbstractHandler
             '18.1' => '1.1',
             '26.0' => '1.2',
             '28.0' => '1.3',
+            '30.0' => '1.4',
+            '32.0' => '2.0',
         );
 
     public function canHandle($userAgent)
@@ -70,7 +76,7 @@ class FirefoxOSHandler extends AbstractHandler
             $tolerance = $matches[1][1] + 1;
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        return Constants::NO_MATCH;
+        return WURFL_Constants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent)

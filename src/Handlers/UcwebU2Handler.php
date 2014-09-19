@@ -18,6 +18,7 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
+
 use Wurfl\Constants;
 
 /**

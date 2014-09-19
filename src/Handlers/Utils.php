@@ -105,6 +105,7 @@ class Utils
             'konfabulator',
             'sony bravia',
             'crkey',
+            'sonycebrowser',
         );
 
     private static $desktopBrowsers
@@ -447,8 +448,13 @@ class Utils
             return true;
         }
 
-        // Internet Explorer 9
-        if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d/', $userAgent)) {
+        // Internet Explorer 11
+        if (preg_match('/^Mozilla\/5\.0 \(Windows NT.+?Trident.+?; rv:\d\d\.\d+\)/', $userAgent)) {
+            return true;
+        }
+        
+        // Internet Explorer 9 or 10
+        if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE (9|10)\.0; Windows NT \d\.\d/', $userAgent)) {
             return true;
         }
 
