@@ -1,8 +1,6 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2012 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -13,17 +11,17 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
 /**
  * UbuntuTouchOSUserAgentHandler
- * 
  *
  * @category   WURFL
  * @package    WURFL_Handlers
@@ -31,21 +29,36 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class UbuntuTouchOSHandler extends AbstractHandler
+class UbuntuTouchOSHandler
+    extends AbstractHandler
 {
-    
     protected $prefix = 'UbuntuTouchOS';
-    
+
     public static $constantIDs = array(
         'generic_ubuntu_touch_os',
         'generic_ubuntu_touch_os_tablet',
     );
-    
-    public function canHandle($userAgent) {
-        return (Utils::checkIfContains($userAgent, 'Ubuntu') && Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet')));
+
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
+    public function canHandle($userAgent)
+    {
+        return (Utils::checkIfContains($userAgent, 'Ubuntu') && Utils::checkIfContainsAnyOf(
+                $userAgent,
+                array('Mobile', 'Tablet')
+            ));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
+
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
+    public function applyConclusiveMatch($userAgent)
+    {
         // Mozilla/5.0 (Ubuntu; Mobile) WebKit/537.21
         // Mozilla/5.0 (Ubuntu; Tablet) WebKit/537.21
         //                      ^ RIS tolerance
@@ -60,17 +73,24 @@ class UbuntuTouchOSHandler extends AbstractHandler
         if ($idx !== false) {
             // Match to the end of the search string
             $tolerance = strlen($idx + strlen($search));
+
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
+
         return Constants::NO_MATCH;
     }
 
-    public function applyRecoveryMatch($userAgent) {
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
+    public function applyRecoveryMatch($userAgent)
+    {
         if (Utils::checkIfContains($userAgent, 'Tablet')) {
             return 'generic_ubuntu_touch_os_tablet';
-        }  else {
+        } else {
             return 'generic_ubuntu_touch_os';
         }
     }
-    
 }

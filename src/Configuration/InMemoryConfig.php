@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Configuration;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Configuration;
  *
  *
  * @category   WURFL
- * @package    WURFL_Configuration
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Configuration;
+
 use Wurfl\Exception;
 
 /**
@@ -25,7 +25,8 @@ use Wurfl\Exception;
  *
  * @package    WURFL_Configuration
  */
-class InMemoryConfig extends Config
+class InMemoryConfig
+    extends Config
 {
 
     /**
@@ -33,6 +34,7 @@ class InMemoryConfig extends Config
      */
     public function __construct()
     {
+        // nothing to do here
     }
 
     /**
@@ -43,6 +45,7 @@ class InMemoryConfig extends Config
     public function wurflFile($wurflFile)
     {
         $this->wurflFile = $wurflFile;
+
         return $this;
     }
 
@@ -54,6 +57,7 @@ class InMemoryConfig extends Config
     public function wurflPatch($wurflPatch)
     {
         $this->wurflPatches[] = $wurflPatch;
+
         return $this;
     }
 
@@ -65,6 +69,7 @@ class InMemoryConfig extends Config
     public function capabilityFilter(array $capabilityFilter)
     {
         $this->capabilityFilter = $capabilityFilter;
+
         return $this;
     }
 
@@ -79,6 +84,7 @@ class InMemoryConfig extends Config
     public function persistence($provider, $params = array())
     {
         $this->persistence = array_merge(array("provider" => $provider), array("params" => $params));
+
         return $this;
     }
 
@@ -93,6 +99,7 @@ class InMemoryConfig extends Config
     public function cache($provider, $params = array())
     {
         $this->cache = array_merge(array("provider" => $provider), array("params" => $params));
+
         return $this;
     }
 
@@ -106,6 +113,7 @@ class InMemoryConfig extends Config
     public function logDir($dir)
     {
         $this->logDir = $dir;
+
         return $this;
     }
 
@@ -119,6 +127,7 @@ class InMemoryConfig extends Config
     public function allowReload($reload = true)
     {
         $this->allowReload = $reload;
+
         return $this;
     }
 
@@ -136,10 +145,12 @@ class InMemoryConfig extends Config
             throw new Exception('Invalid Match Mode: ' . $mode);
         }
         $this->matchMode = $mode;
+
         return $this;
     }
 
     protected function initialize()
     {
+        // nothing to do here
     }
 }

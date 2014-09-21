@@ -1,20 +1,23 @@
 <?php
-namespace Wurfl;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
+ *
  * Refer to the COPYING.txt file distributed with this package.
+ *
  *
  * @category   WURFL
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl;
+
 use WurflCache\Adapter\AdapterInterface;
 
 /**
@@ -149,6 +152,7 @@ class Manager
     private function getState()
     {
         $wurflMtime = filemtime($this->wurflConfig->wurflFile);
+
         return Constants::API_VERSION . '::' . $wurflMtime;
     }
 
@@ -188,11 +192,7 @@ class Manager
         );
 
         $devicePatcher           = new Xml\DevicePatcher();
-        $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
-            $this->persistenceStorage,
-            $this->userAgentHandlerChain,
-            $devicePatcher
-        );
+        $deviceRepositoryBuilder = new DeviceRepositoryBuilder($this->persistenceStorage, $this->userAgentHandlerChain, $devicePatcher);
 
         $this->deviceRepository = $deviceRepositoryBuilder->build(
             $this->wurflConfig->wurflFile,
@@ -225,7 +225,7 @@ class Manager
      * Return a device for the given http request(user-agent..)
      *
      * @param array $httpRequest HTTP Request array (normally $_SERVER)
-     * @param bool $override_sideloaded_browser_ua
+     * @param bool  $override_sideloaded_browser_ua
      *
      * @return \Wurfl\CustomDevice device
      * @throws Exception if $httpRequest is not set
@@ -254,8 +254,9 @@ class Manager
     {
         Handlers\Utils::reset();
 
-        if ($this->wurflConfig->isHighPerformance()
-            && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
+        if ($this->wurflConfig->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis(
+                $request->userAgent
+            )
         ) {
             // This device has been identified as a web browser programatically, so no call to WURFL is necessary
             $device = $this->getWrappedDevice(Constants::GENERIC_WEB_BROWSER, $request);

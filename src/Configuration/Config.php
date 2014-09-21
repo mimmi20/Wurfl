@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Configuration;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Configuration;
  *
  *
  * @category   WURFL
- * @package    WURFL_Configuration
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Configuration;
+
 use Wurfl\Exception;
 
 /**
@@ -38,7 +38,6 @@ use Wurfl\Exception;
  */
 abstract class Config
 {
-
     const WURFL                  = "wurfl";
     const MAIN_FILE              = "main-file";
     const PATCHES                = "patches";
@@ -125,6 +124,7 @@ abstract class Config
         if (!file_exists($configFilePath)) {
             throw new \InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
         }
+
         $this->configFilePath       = $configFilePath;
         $this->configurationFileDir = dirname($this->configFilePath);
         $this->initialize();
@@ -157,11 +157,17 @@ abstract class Config
         return ($this->matchMode == self::MATCH_MODE_PERFORMANCE);
     }
 
+    /**
+     * @param $mode
+     *
+     * @return bool
+     */
     public static function validMatchMode($mode)
     {
         if ($mode == self::MATCH_MODE_PERFORMANCE || $mode == self::MATCH_MODE_ACCURACY) {
             return true;
         }
+
         return false;
     }
 
@@ -189,6 +195,7 @@ abstract class Config
     protected function fileExist($confLocation)
     {
         $fullFileLocation = $this->getFullPath($confLocation);
+
         return file_exists($fullFileLocation);
     }
 

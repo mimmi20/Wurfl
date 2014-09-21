@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,21 +30,30 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WindowsRTHandler extends AbstractHandler
+class WindowsRTHandler
+    extends AbstractHandler
 {
-
     protected $prefix = "WINDOWSRT";
 
-    public static $constantIDs
-        = array(
-            'generic_windows_8_rt',
-        );
+    public static $constantIDs = array(
+        'generic_windows_8_rt',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         return Utils::checkIfContainsAll($userAgent, array('Windows NT ', ' ARM;', 'Trident/'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         // Example Windows 8 RT MSIE 10 UA:
@@ -57,28 +66,34 @@ class WindowsRTHandler extends AbstractHandler
         if (Utils::checkIfContainsAll($userAgent, array('like Gecko'))) {
             //Use this logic for MSIE 11 and above
             $search = ' Gecko';
-            $idx = strpos($userAgent, $search);
+            $idx    = strpos($userAgent, $search);
             if ($idx !== false) {
                 // Match to the end of the search string
                 return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
             }
-        }  else {
+        } else {
             $search = ' ARM;';
-            $idx = strpos($userAgent, $search);
+            $idx    = strpos($userAgent, $search);
             if ($idx !== false) {
                 // Match to the end of the search string
                 return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
             }
         }
-        
+
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAll($userAgent, array('like Gecko'))) {
             return 'windows_8_rt_ver1_subos81';
+        } else {
+            return 'generic_windows_8_rt';
         }
-        else return 'generic_windows_8_rt';
     }
 }

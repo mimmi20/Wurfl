@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Request\Normalizer\Specific;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,14 @@ namespace Wurfl\Request\Normalizer\Specific;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
+
+namespace Wurfl\Request\Normalizer\Specific;
 
 use Wurfl\Constants;
 use Wurfl\Handlers\AndroidHandler;
@@ -30,19 +29,19 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Request\Normalizer\Specific
  */
-class Android implements NormalizerInterface
+class Android
+    implements NormalizerInterface
 {
     /**
      * @var array
      */
-    private $skip_normalization
-        = array(
-            'Opera Mini',
-            'Fennec',
-            'Firefox',
-            'UCWEB7',
-            'NetFrontLifeBrowser/2.2',
-        );
+    private $skip_normalization = array(
+        'Opera Mini',
+        'Fennec',
+        'Firefox',
+        'UCWEB7',
+        'NetFrontLifeBrowser/2.2',
+    );
 
     /**
      * @param string $userAgent
@@ -64,9 +63,8 @@ class Android implements NormalizerInterface
 
             if ($operaVersion !== null && $androidVersion !== null) {
                 $operaModel = $isOperaTablet ? 'Opera Tablet' : 'Opera Mobi';
-                $prefix
-                            =
-                    $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . Constants::RIS_DELIMITER;
+                $prefix     = $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         }
@@ -78,6 +76,7 @@ class Android implements NormalizerInterface
 
             if ($model !== null && $version !== null) {
                 $prefix = $version . ' ' . $model . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         }

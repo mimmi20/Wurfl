@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,15 @@ namespace Wurfl\Handlers;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -29,25 +30,30 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class MSIEHandler extends AbstractHandler
+class MSIEHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "MSIE";
 
-    public static $constantIDs
-        = array(
-            0     => 'msie',
-            4     => 'msie_4',
-            5     => 'msie_5',
-            '5.5' => 'msie_5_5',
-            6     => 'msie_6',
-            7     => 'msie_7',
-            8     => 'msie_8',
-            9     => 'msie_9',
-            10    => 'msie_10',
-            11    => 'msie_11',
-        );
+    public static $constantIDs = array(
+        0 => 'msie',
+        4 => 'msie_4',
+        5 => 'msie_5',
+        '5.5' => 'msie_5_5',
+        6 => 'msie_6',
+        7 => 'msie_7',
+        8 => 'msie_8',
+        9 => 'msie_9',
+        10 => 'msie_10',
+        11 => 'msie_11',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isMobileBrowser($userAgent)) {
@@ -66,15 +72,23 @@ class MSIEHandler extends AbstractHandler
         return ($hasMsie || $hasTridentRv);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $matches = array();
 
-        if (preg_match('/^Mozilla\/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)/', $userAgent, $matches)
-            || preg_match('/^Mozilla\/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);/', $userAgent, $matches)
+        if (preg_match('/^Mozilla\/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)/', $userAgent, $matches) || preg_match(
+                '/^Mozilla\/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);/',
+                $userAgent,
+                $matches
+            )
         ) {
-            $major = (int)$matches[1];
-            $minor = (int)$matches[2];
+            $major = (int) $matches[1];
+            $minor = (int) $matches[2];
 
             // MSIE 5.5 is handled specifically
             if ($major == 5 && $minor == 5) {
@@ -90,15 +104,20 @@ class MSIEHandler extends AbstractHandler
         return $this->getDeviceIDFromRIS($userAgent, Utils::indexOfOrLength($userAgent, 'Trident'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAnyOf(
             $userAgent,
             array(
-                 'SLCC1',
-                 'Media Center PC',
-                 '.NET CLR',
-                 'OfficeLiveConnector',
+                'SLCC1',
+                'Media Center PC',
+                '.NET CLR',
+                'OfficeLiveConnector',
             )
         )
         ) {

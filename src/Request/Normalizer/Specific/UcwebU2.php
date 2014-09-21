@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Request\Normalizer\Specific;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,15 @@ namespace Wurfl\Request\Normalizer\Specific;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
+
+namespace Wurfl\Request\Normalizer\Specific;
+
 use Wurfl\Constants;
 use Wurfl\Handlers\UcwebU3Handler;
 use Wurfl\Handlers\Utils;
@@ -28,7 +28,8 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Request\Normalizer\Specific
  */
-class UcwebU2 implements NormalizerInterface
+class UcwebU2
+    implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -50,6 +51,7 @@ class UcwebU2 implements NormalizerInterface
 
             if ($model !== null && $version !== null) {
                 $prefix = $version . ' U2Android ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         } elseif (Utils::checkIfContains($userAgent, 'iPh OS')) {
@@ -58,6 +60,7 @@ class UcwebU2 implements NormalizerInterface
                 $version = $matches[1] . '.' . $matches[2];
                 $model   = $matches[3] . '.' . $matches[4];
                 $prefix  = $version . ' U2iPhone ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         } elseif (Utils::checkIfContains($userAgent, 'wds')) {
@@ -76,6 +79,7 @@ class UcwebU2 implements NormalizerInterface
                 $model  = str_replace('_blocked', '', $model);
                 $model  = preg_replace('/(NOKIA.RM-.+?)_.*/', '$1', $model, 1);
                 $prefix = $version . ' U2WindowsPhone ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         } elseif (Utils::checkIfContains($userAgent, 'Symbian')) {
@@ -84,6 +88,7 @@ class UcwebU2 implements NormalizerInterface
                 $version = 'S60 V' . $matches[1];
                 $model   = $matches[2];
                 $prefix  = $version . ' U2Symbian ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         } elseif (Utils::checkIfContains($userAgent, 'Java')) {
@@ -92,6 +97,7 @@ class UcwebU2 implements NormalizerInterface
                 $version = 'Java';
                 $model   = $matches[1];
                 $prefix  = $version . ' U2JavaApp ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         }

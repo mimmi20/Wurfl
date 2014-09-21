@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -16,8 +14,10 @@ namespace Wurfl\VirtualCapability;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability;
+
 use Wurfl\CustomDevice;
 use Wurfl\Request\GenericRequest;
 
@@ -31,17 +31,17 @@ class VirtualCapabilityProvider
     /**
      * @var string
      */
-    const PREFIX_VIRTUAL        = '';
+    const PREFIX_VIRTUAL = '';
 
     /**
      * @var string
      */
-    const PREFIX_CONTROL        = 'controlcap_';
+    const PREFIX_CONTROL = 'controlcap_';
 
     /**
      * @var string
      */
-    const WURFL_CONTROL_GROUP   = 'virtual';
+    const WURFL_CONTROL_GROUP = 'virtual';
 
     /**
      * @var string
@@ -58,6 +58,10 @@ class VirtualCapabilityProvider
      */
     private $request = null;
 
+    /**
+     * @param CustomDevice   $device
+     * @param GenericRequest $request
+     */
     public function __construct(CustomDevice $device, GenericRequest $request)
     {
         $this->device  = $device;
@@ -69,28 +73,27 @@ class VirtualCapabilityProvider
      *
      * @var array
      */
-    public static $virtualCapabilities
-        = array(
-            'is_android'                   => 'IsAndroid',
-            'is_ios'                       => 'IsIos',
-            'is_windows_phone'             => 'IsWindowsPhone',
-            'is_app'                       => 'IsApp',
-            'is_full_desktop'              => 'IsFullDesktop',
-            'is_largescreen'               => 'IsLargescreen',
-            'is_mobile'                    => 'IsMobile',
-            'is_robot'                     => 'IsRobot',
-            'is_smartphone'                => 'IsSmartphone',
-            'is_touchscreen'               => 'IsTouchscreen',
-            'is_wml_preferred'             => 'IsWmlPreferred',
-            'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
-            'is_html_preferred'            => 'IsHtmlPreferred',
-            'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
-            'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
-            'advertised_browser'           => 'DeviceBrowser.Browser',
-            'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
-            'complete_device_name' => 'CompleteDeviceName',
-            'form_factor' => 'FormFactor',
-        );
+    public static $virtualCapabilities = array(
+        'is_android'                   => 'IsAndroid',
+        'is_ios'                       => 'IsIos',
+        'is_windows_phone'             => 'IsWindowsPhone',
+        'is_app'                       => 'IsApp',
+        'is_full_desktop'              => 'IsFullDesktop',
+        'is_largescreen'               => 'IsLargescreen',
+        'is_mobile'                    => 'IsMobile',
+        'is_robot'                     => 'IsRobot',
+        'is_smartphone'                => 'IsSmartphone',
+        'is_touchscreen'               => 'IsTouchscreen',
+        'is_wml_preferred'             => 'IsWmlPreferred',
+        'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
+        'is_html_preferred'            => 'IsHtmlPreferred',
+        'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
+        'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
+        'advertised_browser'           => 'DeviceBrowser.Browser',
+        'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
+        'complete_device_name'         => 'CompleteDeviceName',
+        'form_factor'                  => 'FormFactor',
+    );
 
     /**
      * Storage for the \Wurfl\VirtualCapability\VirtualCapability objects
@@ -180,7 +183,8 @@ class VirtualCapabilityProvider
             case self::WURFL_CONTROL_DEFAULT:
                 // The value is null if it is not in the loaded WURFL, it's default if it is loaded and not overridden
                 // The control capability was not used, use the \Wurfl\VirtualCapability\VirtualCapability provider
-                $value = $this->getObject($name)->getValue();
+                $value = $this->getObject($name)
+                    ->getValue();
                 break;
             case 'force_true':
                 $value = true;
@@ -258,14 +262,18 @@ class VirtualCapabilityProvider
     protected function getControlValue($name)
     {
         // Check if loaded WURFL contains control caps
-        if (!$this->device->getRootDevice()->isGroupDefined(self::WURFL_CONTROL_GROUP)) {
+        if (!$this->device->getRootDevice()
+            ->isGroupDefined(self::WURFL_CONTROL_GROUP)
+        ) {
             return null;
         }
 
         $controlCap = self::PREFIX_CONTROL . $this->cleanCapabilityName($name);
 
         // Check if loaded WURFL contains the requested control cap
-        if (!$this->device->getRootDevice()->isCapabilityDefined($controlCap)) {
+        if (!$this->device->getRootDevice()
+            ->isCapabilityDefined($controlCap)
+        ) {
             return null;
         }
 

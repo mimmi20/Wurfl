@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Xml;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,15 @@ namespace Wurfl\Xml;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Xml
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Xml;
+
 use Wurfl\Exception;
 use Wurfl\FileUtils;
 
@@ -68,9 +69,7 @@ class Utils
     private static function getZippedFile($filename)
     {
         if (!self::zipModuleLoaded()) {
-            throw new Exception(
-                "The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file"
-            );
+            throw new Exception("The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file");
         }
 
         $tmpDir = FileUtils::getTempDir();

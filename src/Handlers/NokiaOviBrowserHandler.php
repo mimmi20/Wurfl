@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,12 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
@@ -31,17 +30,22 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class NokiaOviBrowserHandler extends AbstractHandler
+class NokiaOviBrowserHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "NOKIAOVIBROWSER";
 
-    public static $constantIDs
-        = array(
-            'nokia_generic_series30plus',
-            'nokia_generic_series40_ovibrosr',
-        );
+    public static $constantIDs = array(
+        'nokia_generic_series30plus',
+        'nokia_generic_series40_ovibrosr',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
@@ -51,6 +55,11 @@ class NokiaOviBrowserHandler extends AbstractHandler
         return Utils::checkIfContains($userAgent, 'S40OviBrowser');
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $idx = strpos($userAgent, 'Nokia');
@@ -64,6 +73,11 @@ class NokiaOviBrowserHandler extends AbstractHandler
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, "Series30Plus")) {

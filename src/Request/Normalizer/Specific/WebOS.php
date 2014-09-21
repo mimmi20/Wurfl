@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Request\Normalizer\Specific;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,15 @@ namespace Wurfl\Request\Normalizer\Specific;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
+
+namespace Wurfl\Request\Normalizer\Specific;
+
 use Wurfl\Constants;
 use Wurfl\Handlers\WebOSHandler;
 use Wurfl\Request\Normalizer\NormalizerInterface;
@@ -27,7 +27,8 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Request\Normalizer\Specific
  */
-class WebOS implements NormalizerInterface
+class WebOS
+    implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -36,11 +37,12 @@ class WebOS implements NormalizerInterface
      */
     public function normalize($userAgent)
     {
-        $model  = WebOSHandler::getWebOSModelVersion($userAgent);
+        $model     = WebOSHandler::getWebOSModelVersion($userAgent);
         $osVersion = WebOSHandler::getWebOSVersion($userAgent);
 
         if ($model !== null && $osVersion !== null) {
             $prefix = $model . ' ' . $osVersion . Constants::RIS_DELIMITER;
+
             return $prefix . $userAgent;
         }
 

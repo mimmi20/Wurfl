@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,47 +30,55 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
+class OperaMobiOrTabletOnAndroidHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "OPERAMOBIORTABLETONANDROID";
 
-    public static $constantIDs
-        = array(
-            'generic_android_ver1_5_opera_mobi',
-            'generic_android_ver1_6_opera_mobi',
-            'generic_android_ver2_0_opera_mobi',
-            'generic_android_ver2_1_opera_mobi',
-            'generic_android_ver2_2_opera_mobi',
-            'generic_android_ver2_3_opera_mobi',
-            'generic_android_ver4_0_opera_mobi',
-            'generic_android_ver4_1_opera_mobi',
-            'generic_android_ver4_2_opera_mobi',
+    public static $constantIDs = array(
+        'generic_android_ver1_5_opera_mobi',
+        'generic_android_ver1_6_opera_mobi',
+        'generic_android_ver2_0_opera_mobi',
+        'generic_android_ver2_1_opera_mobi',
+        'generic_android_ver2_2_opera_mobi',
+        'generic_android_ver2_3_opera_mobi',
+        'generic_android_ver4_0_opera_mobi',
+        'generic_android_ver4_1_opera_mobi',
+        'generic_android_ver4_2_opera_mobi',
+        'generic_android_ver2_1_opera_tablet',
+        'generic_android_ver2_2_opera_tablet',
+        'generic_android_ver2_3_opera_tablet',
+        'generic_android_ver3_0_opera_tablet',
+        'generic_android_ver3_1_opera_tablet',
+        'generic_android_ver3_2_opera_tablet',
+        'generic_android_ver4_0_opera_tablet',
+        'generic_android_ver4_1_opera_tablet',
+        'generic_android_ver4_2_opera_tablet',
+    );
 
-            'generic_android_ver2_1_opera_tablet',
-            'generic_android_ver2_2_opera_tablet',
-            'generic_android_ver2_3_opera_tablet',
-            'generic_android_ver3_0_opera_tablet',
-            'generic_android_ver3_1_opera_tablet',
-            'generic_android_ver3_2_opera_tablet',
-            'generic_android_ver4_0_opera_tablet',
-            'generic_android_ver4_1_opera_tablet',
-            'generic_android_ver4_2_opera_tablet',
-        );
-
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android')
-            && Utils::checkIfContainsAnyOf(
+        return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
                 $userAgent,
                 array('Opera Mobi', 'Opera Tablet')
             ));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::toleranceToRisDelimeter($userAgent);
@@ -82,6 +90,11 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         $isOperaMobi   = Utils::checkIfContains($userAgent, 'Opera Mobi');

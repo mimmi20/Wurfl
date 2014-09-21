@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Group;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\VirtualCapability\Group;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Group;
+
 use Wurfl\CustomDevice;
 use Wurfl\Request\GenericRequest;
 use Wurfl\VirtualCapability\VirtualCapability;
@@ -27,8 +27,8 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-
-class ManualGroupChild extends VirtualCapability
+class ManualGroupChild
+    extends VirtualCapability
 {
     /**
      * @var bool

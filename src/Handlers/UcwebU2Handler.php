@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,12 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
@@ -31,24 +30,34 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class UcwebU2Handler extends AbstractHandler
+class UcwebU2Handler
+    extends AbstractHandler
 {
-
     protected $prefix = "UCWEBU2";
 
-    public static $constantIDs
-        = array(
-            'generic_ucweb',
-        );
+    public static $constantIDs = array(
+        'generic_ucweb',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return (Utils::checkIfStartsWith($userAgent, 'UCWEB') && Utils::checkIfContains($userAgent, 'UCBrowser'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::toleranceToRisDelimeter($userAgent);
@@ -59,6 +68,11 @@ class UcwebU2Handler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         return 'generic_ucweb';

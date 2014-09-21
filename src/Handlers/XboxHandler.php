@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,34 +30,48 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class XboxHandler extends AbstractHandler
+class XboxHandler
+    extends AbstractHandler
 {
-
     protected $prefix = "XBOX";
 
-    public static $constantIDs
-        = array(
-            'microsoft_xbox360_ver1',
-            'microsoft_xbox360_ver1_subie10',
-            'microsoft_xboxone_ver1',
-        );
+    public static $constantIDs = array(
+        'microsoft_xbox360_ver1',
+        'microsoft_xbox360_ver1_subie10',
+        'microsoft_xboxone_ver1',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         return Utils::checkIfContains($userAgent, 'Xbox');
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         // Exact and recovery matching only
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'MSIE 10.0')
-            && Utils::checkIfContains(
-                $userAgent, 'Xbox One'
+        if (Utils::checkIfContains($userAgent, 'MSIE 10.0') && Utils::checkIfContains(
+                $userAgent,
+                'Xbox One'
             )
         ) {
             return 'microsoft_xboxone_ver1';
@@ -65,6 +79,7 @@ class XboxHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'MSIE 10.0')) {
             return 'microsoft_xbox360_ver1_subie10';
         }
+
         return 'microsoft_xbox360_ver1';
     }
 }

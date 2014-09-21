@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Request\Normalizer\Specific;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,15 @@ namespace Wurfl\Request\Normalizer\Specific;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
+
+namespace Wurfl\Request\Normalizer\Specific;
+
 use Wurfl\Constants;
 use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\Utils;
@@ -28,7 +28,8 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Request\Normalizer\Specific
  */
-class Kindle implements NormalizerInterface
+class Kindle
+    implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -43,6 +44,7 @@ class Kindle implements NormalizerInterface
 
             if ($model !== null && $version !== null) {
                 $prefix = $version . ' ' . $model . Constants::RIS_DELIMITER;
+
                 return $prefix . $userAgent;
             }
         }

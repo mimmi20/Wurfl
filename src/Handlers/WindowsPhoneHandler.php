@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,7 +30,8 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WindowsPhoneHandler extends AbstractHandler
+class WindowsPhoneHandler
+    extends AbstractHandler
 {
     /**
      * @var string
@@ -40,15 +41,14 @@ class WindowsPhoneHandler extends AbstractHandler
     /**
      * @var array
      */
-    public static $constantIDs
-        = array(
-            'generic_ms_winmo6_5',
-            'generic_ms_phone_os7',
-            'generic_ms_phone_os7_5',
-            'generic_ms_phone_os7_8',
-            'generic_ms_phone_os8',
-            'generic_ms_phone_os8_1',
-        );
+    public static $constantIDs = array(
+        'generic_ms_winmo6_5',
+        'generic_ms_phone_os7',
+        'generic_ms_phone_os7_5',
+        'generic_ms_phone_os7_8',
+        'generic_ms_phone_os8',
+        'generic_ms_phone_os8_1',
+    );
 
     /**
      * @param string $userAgent
@@ -60,7 +60,7 @@ class WindowsPhoneHandler extends AbstractHandler
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
-        
+
         return Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'WindowsPhone', 'NativeHost'));
     }
 
@@ -78,6 +78,7 @@ class WindowsPhoneHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'NativeHost')) {
             return 'generic_ms_phone_os7';
         }
+
         return Constants::NO_MATCH;
     }
 
@@ -89,27 +90,27 @@ class WindowsPhoneHandler extends AbstractHandler
     public function applyRecoveryMatch($userAgent)
     {
         $version = self::getWindowsPhoneVersion($userAgent);
-        
+
         if ($version == '8.1') {
             return 'generic_ms_phone_os8_1';
         }
-        
+
         if ($version == '8.0') {
             return 'generic_ms_phone_os8';
         }
-        
+
         if ($version == '7.8') {
             return 'generic_ms_phone_os7_8';
         }
-        
+
         if ($version == '7.5') {
             return 'generic_ms_phone_os7_5';
         }
-        
+
         if ($version == '7.0') {
             return 'generic_ms_phone_os7';
         }
-        
+
         if ($version == '6.5') {
             return 'generic_ms_winmo6_5';
         }
@@ -118,11 +119,14 @@ class WindowsPhoneHandler extends AbstractHandler
     }
 
     /**
-     * @param $userAgent
+     * @param $ua
+     *
+     * @internal param $userAgent
      *
      * @return mixed|null
      */
-    public static function getWindowsPhoneModel($ua) {
+    public static function getWindowsPhoneModel($ua)
+    {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
         // This regex is relatively fast because there is not much backtracking, and almost all UAs will match
@@ -150,23 +154,42 @@ class WindowsPhoneHandler extends AbstractHandler
 
             return $model;
         }
+
         return null;
     }
 
-    public static function getWindowsPhoneAdClientModel($ua) {
+    /**
+     * @param $ua
+     *
+     * @return mixed|null
+     */
+    public static function getWindowsPhoneAdClientModel($ua)
+    {
         // Normalize spaces in UA before capturing parts
         $ua = preg_replace('|;(?! )|', '; ', $ua);
-        if (preg_match('|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches)) {
+        if (preg_match(
+            '|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|',
+            $ua,
+            $matches
+        )
+        ) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
+
             return $model;
         }
+
         return null;
     }
 
-
-    public static function getWindowsPhoneVersion($ua) {
+    /**
+     * @param $ua
+     *
+     * @return null|string
+     */
+    public static function getWindowsPhoneVersion($ua)
+    {
         if (preg_match('|Windows ?Phone(?: ?OS)? ?(\d+\.\d+)|', $ua, $matches)) {
             if (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
                 return '8.1';
@@ -182,6 +205,7 @@ class WindowsPhoneHandler extends AbstractHandler
                 return '7.0';
             }
         }
+
         return null;
     }
 }

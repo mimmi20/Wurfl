@@ -1,23 +1,22 @@
 <?php
-namespace Wurfl\Handlers;
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     *
-     * @category   WURFL
-     * @package    WURFL_Handlers
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+namespace Wurfl\Handlers;
 
 /**
  * SmartTVUserAgentHandler
@@ -29,31 +28,46 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class SmartTVHandler extends AbstractHandler
+class SmartTVHandler
+    extends AbstractHandler
 {
-
     protected $prefix = "SMARTTV";
 
-    public static $constantIDs
-        = array(
-            'generic_smarttv_browser',
-            'generic_smarttv_googletv_browser',
-            'generic_smarttv_appletv_browser',
-            'generic_smarttv_boxeebox_browser',
-        );
+    public static $constantIDs = array(
+        'generic_smarttv_browser',
+        'generic_smarttv_googletv_browser',
+        'generic_smarttv_appletv_browser',
+        'generic_smarttv_boxeebox_browser',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         return Utils::isSmartTV($userAgent);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         // TODO: Evaluate effectiveness of matching full-length in Conclusive matcher via RIS VS Exact match
         $tolerance = strlen($userAgent);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, 'SmartTV')) {

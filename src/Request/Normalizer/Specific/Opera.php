@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Request\Normalizer\Specific;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,15 @@ namespace Wurfl\Request\Normalizer\Specific;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
+
+namespace Wurfl\Request\Normalizer\Specific;
+
 use Wurfl\Handlers\Utils;
 use Wurfl\Request\Normalizer\NormalizerInterface;
 
@@ -32,7 +32,8 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Request\Normalizer\Specific
  */
-class Opera implements NormalizerInterface
+class Opera
+    implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -46,16 +47,18 @@ class Opera implements NormalizerInterface
         // Into: Opera/11.50 (X11; Linux x86_64; U; sv) Presto/2.9.168 Version/11.50
         if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80')) {
             if (preg_match('#Version/(\d+\.\d+)#', $userAgent, $matches)) {
-                $userAgent = str_replace('Opera/9.80', 'Opera/'.$matches[1], $userAgent);
+                $userAgent = str_replace('Opera/9.80', 'Opera/' . $matches[1], $userAgent);
             }
+
             //Match to the '.' in the Opera version number
             return $userAgent;
         }
         //Normalize Opera v15 and above UAs, that say OPR, into "Opera/version UA" format used above
         if (preg_match('#OPR/(\d+\.\d+)#', $userAgent, $matches)) {
-            $prefix = "Opera/".$matches[1]." ";
-            $userAgent = $prefix.$userAgent;
+            $prefix    = "Opera/" . $matches[1] . " ";
+            $userAgent = $prefix . $userAgent;
         }
+
         return $userAgent;
     }
 }

@@ -1,8 +1,6 @@
 <?php
-namespace Wurfl\VirtualCapability\Single;
-
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2012 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -13,18 +11,22 @@ namespace Wurfl\VirtualCapability\Single;
  *
  *
  * @category   WURFL
- * @package    WURFL_VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Single;
+
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
+ *
  * @package    WURFL_VirtualCapability
  */
-class CompleteDeviceName extends VirtualCapability
+class CompleteDeviceName
+    extends VirtualCapability
 {
     /**
      * @var array
@@ -35,12 +37,18 @@ class CompleteDeviceName extends VirtualCapability
         'marketing_name',
     );
 
-    protected function compute() {
+    /**
+     * @return mixed|string
+     */
+    protected function compute()
+    {
         $parts = array($this->device->brand_name);
-        if (strlen($this->device->model_name))
+        if (strlen($this->device->model_name)) {
             $parts[] = $this->device->model_name;
-        if (strlen($this->device->marketing_name))
+        }
+        if (strlen($this->device->marketing_name)) {
             $parts[] = "({$this->device->marketing_name})";
+        }
 
         return implode(' ', $parts);
     }

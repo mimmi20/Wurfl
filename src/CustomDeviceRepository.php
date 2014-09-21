@@ -1,31 +1,34 @@
 <?php
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
+
 namespace Wurfl;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     *
-     */
 /**
  * WURFL Device Repository
  *
  * @package    WURFL
  */
-class CustomDeviceRepository implements DeviceRepository
+class CustomDeviceRepository
+    implements DeviceRepository
 {
-
+    /**
+     * @var string
+     */
     const WURFL_USER_AGENTS_CLASSIFIED = "WURFL_USER_AGENTS_CLASSIFIED";
 
     /**
@@ -34,6 +37,7 @@ class CustomDeviceRepository implements DeviceRepository
      * @var Storage\Storage
      */
     private $persistenceStorage;
+
     /**
      * @var array
      */
@@ -45,10 +49,12 @@ class CustomDeviceRepository implements DeviceRepository
      * @var array
      */
     private $groupIDCapabilitiesMap = array();
+
     /**
      * @var array
      */
     private $capabilitiesName = array();
+
     /**
      * @var array
      */
@@ -87,22 +93,31 @@ class CustomDeviceRepository implements DeviceRepository
         }
     }
 
+    /**
+     * @return mixed|Xml\Info
+     */
     public function getWURFLInfo()
     {
         $wurflInfo = $this->persistenceStorage->load(Xml\Info::PERSISTENCE_KEY);
 
-        if ($wurflInfo != null) {
+        if ($wurflInfo !== null) {
             return $wurflInfo;
         }
 
         return Xml\Info::noInfo();
     }
 
+    /**
+     * @return string
+     */
     public function getVersion()
     {
         return $this->getWURFLInfo()->version;
     }
 
+    /**
+     * @return string
+     */
     public function getLastUpdated()
     {
         return $this->getWURFLInfo()->lastUpdated;

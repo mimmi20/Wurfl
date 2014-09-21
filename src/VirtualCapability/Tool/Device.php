@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Tool;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\VirtualCapability\Tool;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\UserAgentTool
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Tool;
+
 use Wurfl\Request\GenericRequest;
 
 /**
@@ -88,14 +88,17 @@ class Device
         '6.1' => '7',
         '6.2' => '8',
         '6.3' => '8.1',
+        '6.4' => '9',
     );
 
     /**
-     *
+     * @return Device
      */
     public function normalize()
     {
         $this->normalizeOS();
+
+        return $this;
     }
 
     /**
@@ -108,9 +111,9 @@ class Device
 
             if (preg_match('/Windows NT ([0-9]\.[0-9])/', $this->device_ua, $matches)) {
                 $this->os->name    = 'Windows';
-                $this->os->version = array_key_exists($matches[1], self::$windowsMap)
-                    ? self::$windowsMap[$matches[1]]
+                $this->os->version = array_key_exists($matches[1], self::$windowsMap) ? self::$windowsMap[$matches[1]]
                     : $matches[1];
+
                 return;
             }
 
@@ -121,6 +124,7 @@ class Device
 
         if ($this->os->setRegex($this->device_ua, '/PPC.+OS X ([0-9\._]+)/', 'Mac OS X')) {
             $this->os->version = str_replace('_', '.', $this->os->version);
+
             return;
         }
         if ($this->os->setRegex($this->device_ua, '/PPC.+OS X/', 'Mac OS X')) {
@@ -128,6 +132,7 @@ class Device
         }
         if ($this->os->setRegex($this->device_ua, '/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
             $this->os->version = str_replace('_', '.', $this->os->version);
+
             return;
         }
         if ($this->os->setContains($this->device_ua, 'Mac_PowerPC', 'Mac OS X')) {
@@ -141,11 +146,13 @@ class Device
         }
         if (strpos($this->device_ua, 'FreeBSD') !== false) {
             $this->os->name = 'FreeBSD';
+
             return;
         }
         // Last ditch efforts
         if (strpos($this->device_ua, 'Linux') !== false || strpos($this->device_ua, 'X11') !== false) {
             $this->os->name = 'Linux';
+
             return;
         }
     }

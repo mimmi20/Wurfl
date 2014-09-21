@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Xml;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,15 @@ namespace Wurfl\Xml;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Xml
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
- *
  */
+
+namespace Wurfl\Xml;
+
 use Wurfl\FileUtils;
 
 /**
@@ -25,9 +25,9 @@ use Wurfl\FileUtils;
  *
  * @package    WURFL_Xml
  */
-abstract class AbstractIterator implements \Iterator
+abstract class AbstractIterator
+    implements \Iterator
 {
-
     /**
      * @var string filename with path to wurfl.xml or patch file
      */
@@ -96,6 +96,7 @@ abstract class AbstractIterator implements \Iterator
         if ($this->currentElement === null) {
             $this->readNextElement();
         }
+
         return $this->currentElement != null;
     }
 
@@ -120,7 +121,8 @@ abstract class AbstractIterator implements \Iterator
     public function getTextValue()
     {
         $this->xmlReader->read();
-        return (string)$this->xmlReader->value;
+
+        return (string) $this->xmlReader->value;
     }
 
     /**

@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,12 +11,12 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
-use Wurfl\Constants;
+
+namespace Wurfl\Handlers;
 
 /**
  * AndroidUserAgentHandler
@@ -30,7 +28,8 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class AndroidHandler extends AbstractHandler
+class AndroidHandler
+    extends AbstractHandler
 {
     /**
      * @var string
@@ -40,41 +39,39 @@ class AndroidHandler extends AbstractHandler
     /**
      * @var array
      */
-    public static $constantIDs
-        = array(
-            'generic_android',
-            'generic_android_ver1_5',
-            'generic_android_ver1_6',
-            'generic_android_ver2',
-            'generic_android_ver2_1',
-            'generic_android_ver2_2',
-            'generic_android_ver2_3',
-            'generic_android_ver4',
-            'generic_android_ver4_1',
-            'generic_android_ver4_2',
-            'generic_android_ver4_3',
-            'generic_android_ver4_4',
-            'generic_android_ver4_5',
-            'generic_android_ver5_0',
-
-            'generic_android_ver1_5_tablet',
-            'generic_android_ver1_6_tablet',
-            'generic_android_ver2_tablet',
-            'generic_android_ver2_1_tablet',
-            'generic_android_ver2_2_tablet',
-            'generic_android_ver2_3_tablet',
-            'generic_android_ver3_0',
-            'generic_android_ver3_1',
-            'generic_android_ver3_2',
-            'generic_android_ver3_3',
-            'generic_android_ver4_tablet',
-            'generic_android_ver4_1_tablet',
-            'generic_android_ver4_2_tablet',
-            'generic_android_ver4_3_tablet',
-            'generic_android_ver4_4_tablet',
-            'generic_android_ver4_5_tablet',
-            'generic_android_ver5_0_tablet',
-        );
+    public static $constantIDs = array(
+        'generic_android',
+        'generic_android_ver1_5',
+        'generic_android_ver1_6',
+        'generic_android_ver2',
+        'generic_android_ver2_1',
+        'generic_android_ver2_2',
+        'generic_android_ver2_3',
+        'generic_android_ver4',
+        'generic_android_ver4_1',
+        'generic_android_ver4_2',
+        'generic_android_ver4_3',
+        'generic_android_ver4_4',
+        'generic_android_ver4_5',
+        'generic_android_ver5_0',
+        'generic_android_ver1_5_tablet',
+        'generic_android_ver1_6_tablet',
+        'generic_android_ver2_tablet',
+        'generic_android_ver2_1_tablet',
+        'generic_android_ver2_2_tablet',
+        'generic_android_ver2_3_tablet',
+        'generic_android_ver3_0',
+        'generic_android_ver3_1',
+        'generic_android_ver3_2',
+        'generic_android_ver3_3',
+        'generic_android_ver4_tablet',
+        'generic_android_ver4_1_tablet',
+        'generic_android_ver4_2_tablet',
+        'generic_android_ver4_3_tablet',
+        'generic_android_ver4_4_tablet',
+        'generic_android_ver4_5_tablet',
+        'generic_android_ver5_0_tablet',
+    );
 
     /**
      * @param string $userAgent
@@ -83,8 +80,7 @@ class AndroidHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return !Utils::checkIfContains($userAgent, 'like Android') 
-            && Utils::checkIfContains($userAgent, 'Android');
+        return !Utils::checkIfContains($userAgent, 'like Android') && Utils::checkIfContains($userAgent, 'Android');
     }
 
     /**
@@ -102,6 +98,7 @@ class AndroidHandler extends AbstractHandler
 
         // Standard RIS Matching
         $tolerance = Utils::indexOfAnyOrLength($userAgent, array(' Build/', ' AppleWebKit'));
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
@@ -128,9 +125,10 @@ class AndroidHandler extends AbstractHandler
             $deviceID = 'generic_android_ver4';
         }
 
-        if (($androidVersion < 3.0 || $androidVersion >= 4.0)
-            && Utils::checkIfContains($userAgent, 'Safari')
-            && !Utils::checkIfContains($userAgent, 'Mobile')
+        if (($androidVersion < 3.0 || $androidVersion >= 4.0) && Utils::checkIfContains(
+                $userAgent,
+                'Safari'
+            ) && !Utils::checkIfContains($userAgent, 'Mobile')
         ) {
             // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a "_tablet" ID)
             if (in_array($deviceID . '_tablet', self::$constantIDs)) {
@@ -157,30 +155,47 @@ class AndroidHandler extends AbstractHandler
     /**
      * @var array
      */
-    public static $validAndroidVersions
-        = array('1.0', '1.5', '1.6', '2.0', '2.1', '2.2', '2.3', '2.4', '3.0', '3.1', '3.2', '3.3', '4.0', '4.1', '4.2',
-                '4.3', '4.4', '4.5', '5.0');
+    public static $validAndroidVersions = array(
+        '1.0',
+        '1.5',
+        '1.6',
+        '2.0',
+        '2.1',
+        '2.2',
+        '2.3',
+        '2.4',
+        '3.0',
+        '3.1',
+        '3.2',
+        '3.3',
+        '4.0',
+        '4.1',
+        '4.2',
+        '4.3',
+        '4.4',
+        '4.5',
+        '5.0'
+    );
 
     /**
      * @var array
      */
-    public static $androidReleaseMap
-        = array(
-            'Cupcake'            => '1.5',
-            'Donut'              => '1.6',
-            'Eclair'             => '2.1',
-            'Froyo'              => '2.2',
-            'Gingerbread'        => '2.3',
-            'Honeycomb'          => '3.0',
-            'Ice Cream Sandwich' => '4.0',
-            'Jelly Bean'         => '4.1', // Note: 4.2/4.3 is also Jelly Bean
-            'KitKat'             => '4.4',
-        );
+    public static $androidReleaseMap = array(
+        'Cupcake'            => '1.5',
+        'Donut'              => '1.6',
+        'Eclair'             => '2.1',
+        'Froyo'              => '2.2',
+        'Gingerbread'        => '2.3',
+        'Honeycomb'          => '3.0',
+        'Ice Cream Sandwich' => '4.0',
+        'Jelly Bean'         => '4.1', // Note: 4.2/4.3 is also Jelly Bean
+        'KitKat'             => '4.4',
+    );
 
     /**
      * Get the Android version from the User Agent, or the default Android version is it cannot be determined
      *
-     * @param string  $userAgent         User Agent
+     * @param string  $userAgent  User Agent
      * @param boolean $useDefault Return the default version on fail, else return null
      *
      * @return string Android version
@@ -228,15 +243,18 @@ class AndroidHandler extends AbstractHandler
 
         // Different logic for Mozillite and non-Mozillite UAs to isolate model name
         // Non-Mozillite UAs get first preference
-        if (preg_match('#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#', $userAgent, $matches)) {
+        if (preg_match(
+            '#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#',
+            $userAgent,
+            $matches
+        )
+        ) {
             // Trim off spaces and semicolons
             $model = rtrim($matches[1], ' ;');
-
             // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
         } else if (preg_match('#Android [^;]+;(?>(?: xx-xx[ ;]+)?)(.+?)(?:Build/|\))#', $userAgent, $matches)) {
             // Trim off spaces and semicolons
             $model = rtrim($matches[1], ' ;');
-
         } else {
             return null;
         }
@@ -275,7 +293,6 @@ class AndroidHandler extends AbstractHandler
                 $model = substr($model, 0, $pos);
             }
             $model = preg_replace('#( V| )\d+?\.[\d\.]+$#', '', $model);
-
         }
 
         // Samsung
