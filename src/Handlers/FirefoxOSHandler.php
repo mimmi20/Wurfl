@@ -76,7 +76,7 @@ class FirefoxOSHandler extends AbstractHandler
             $tolerance = $matches[1][1] + 1;
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
-        return WURFL_Constants::NO_MATCH;
+        return Constants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent)

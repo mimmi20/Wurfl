@@ -262,7 +262,7 @@ class AppleHandler extends AbstractHandler
         // Normalize iOS {Ver} style UAs
         //Eg: Mozilla/5.0 (iPhone; U; CPU iOS 7.1.2 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Safari/528.16
         if (preg_match('#CPU iOS \d+?\.\d+?#', $userAgent)) {
-            $ua = WURFL_Handlers_Utils::checkIfContains($userAgent, 'iPad') ? str_replace('CPU iOS', 'CPU OS', $userAgent): str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
+            $ua = Utils::checkIfContains($userAgent, 'iPad') ? str_replace('CPU iOS', 'CPU OS', $userAgent): str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
             
             if (preg_match('#(CPU(?: iPhone)? OS [\d\.]+ like)#', $ua, $matches)) {
                 $versionUnderscore = str_replace('.', '_', $matches[1]);

@@ -96,9 +96,9 @@ class DeviceRepositoryBuilder
     /**
      * Iterates over XML files and pulls relevent data
      *
-     * @param Xml\VersionIterator $wurflInfoIterator
-     * @param Xml\DeviceIterator  $deviceIterator
-     * @param array               $patchDeviceIterators arrray of WURFL_Xml_DeviceIterator objects for patch files
+     * @param Xml\VersionIterator  $wurflInfoIterator
+     * @param Xml\DeviceIterator   $deviceIterator
+     * @param Xml\DeviceIterator[] $patchDeviceIterators Array of objects for patch files
      *
      * @throws Exception
      */
@@ -132,7 +132,7 @@ class DeviceRepositoryBuilder
      * @param array $wurflPatches     Array of (string)filenames
      * @param array $capabilityFilter Array of (string) WURFL capabilities
      *
-     * @return array Array of WURFL_Xml_DeviceIterator objects
+     * @return \Wurfl\Xml\DeviceIterator[]
      */
     private function toPatchIterators(array $wurflPatches = array(), array $capabilityFilter = array())
     {
@@ -148,12 +148,12 @@ class DeviceRepositoryBuilder
     }
 
     /**
-     * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
+     * Returns an array of \Wurfl\Xml\DeviceIterator for the given $wurflPatches and $capabilityFilter
      *
      * @param array $wurflPatches     Array of (string)filenames
      * @param array $capabilityFilter Array of (string) WURFL capabilities
      *
-     * @return array Array of WURFL_Xml_DeviceIterator objects
+     * @return \Wurfl\Xml\DeviceIterator[]
      */
 
     /**

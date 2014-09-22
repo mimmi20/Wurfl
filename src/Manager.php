@@ -117,7 +117,7 @@ class Manager
      *
      * @return bool
      */
-    public function hasToBeReloaded()
+    private function hasToBeReloaded()
     {
         if (!$this->wurflConfig->allowReload) {
             return false;
@@ -258,14 +258,12 @@ class Manager
             && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
         ) {
             // This device has been identified as a web browser programatically, so no call to WURFL is necessary
-            $device = $this->getWrappedDevice(Constants::GENERIC_WEB_BROWSER, $request);
+            $deviceId = Constants::GENERIC_WEB_BROWSER;
         } else {
             $deviceId = $this->deviceIdForRequest($request);
-
-            $device = $this->getWrappedDevice($deviceId, $request);
         }
 
-        return $device;
+        return $this->getWrappedDevice($deviceId, $request);
     }
 
     /**
@@ -278,7 +276,7 @@ class Manager
      */
     public function getDeviceForUserAgent($userAgent = '')
     {
-        if (!isset($userAgent)) {
+        if (!is_string($userAgent)) {
             $userAgent = '';
         }
 
