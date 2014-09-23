@@ -7,8 +7,8 @@ use Wurfl\Xml\ModelDevice;
 /**
  * test case
  */
-
-class DevicePatcherTest extends \PHPUnit_Framework_TestCase
+class DevicePatcherTest
+    extends \PHPUnit_Framework_TestCase
 {
     /** @var  DevicePatcher */
     private $devicePatcher;
@@ -29,11 +29,11 @@ class DevicePatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldOverrideTheCapabilities()
     {
-        $deviceToPatch                         = new ModelDevice("A", "A", "Z", true, false, array());
-        $groupIDMap                = array();
+        $deviceToPatch           = new ModelDevice("A", "A", "Z", true, false, array());
+        $groupIDMap              = array();
         $groupIDMap["A"]["cap1"] = "cap1";
-        $capabilities                          = array();
-        $capabilities["cap1"]                  = "cap1";
+        $capabilities            = array();
+        $capabilities["cap1"]    = "cap1";
 
         $patchingDevice = new ModelDevice("B", "B", "Z", true, false, $groupIDMap);
         $patchedDevice  = $this->devicePatcher->patch($deviceToPatch, $patchingDevice);
@@ -43,13 +43,13 @@ class DevicePatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldOnlyOverrideTheCapabilitiesSpecifiedByThePatcherDevices()
     {
-        $groupIDMap                = array();
+        $groupIDMap              = array();
         $groupIDMap["A"]["cap1"] = "cap1";
         $groupIDMap["A"]["cap2"] = "cap2";
 
         $deviceToPatch = new ModelDevice("A", "A", "Z", true, false, $groupIDMap);
 
-        $groupIDMap                = array();
+        $groupIDMap              = array();
         $groupIDMap["A"]["cap1"] = "cap1";
         $groupIDMap["A"]["cap3"] = "cap3";
 

@@ -18,6 +18,7 @@
 
 namespace Wurfl;
 
+use Psr\Log\NullLogger;
 use WurflCache\Adapter\AdapterInterface;
 
 /**
@@ -181,11 +182,9 @@ class Manager
      */
     private function init()
     {
-        $logger  = new \Psr\Log\NullLogger();
-        $context = new Context($this->persistenceStorage, $this->cacheStorage, $logger);
+        $logger  = new NullLogger();
 
         $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
-            $context,
             $this->persistenceStorage,
             $this->cacheStorage,
             $logger

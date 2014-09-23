@@ -6,7 +6,8 @@ use Wurfl\Request\Normalizer\Specific\Chrome;
 /**
  *  test case.
  */
-class ChromeTest extends BaseTest
+class ChromeTest
+    extends BaseTest
 {
 
     const CHROME_USERAGENTS_FILE = "chrome.txt";
@@ -30,8 +31,7 @@ class ChromeTest extends BaseTest
     {
         return array(
             array(
-                @"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13"
-            ,
+                @"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13",
                 "Chrome/0"
             ),
             array("Chrome/9.x", "Chrome/9"),

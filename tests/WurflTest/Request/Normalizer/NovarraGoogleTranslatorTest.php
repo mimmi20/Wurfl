@@ -6,7 +6,8 @@ use Wurfl\Request\Normalizer\Generic\NovarraGoogleTranslator;
 /**
  *  test case.
  */
-class NovarraGoogleTranslatorTest extends BaseTest
+class NovarraGoogleTranslatorTest
+    extends BaseTest
 {
 
     protected function setUp()

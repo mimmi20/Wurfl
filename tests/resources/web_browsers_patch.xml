@@ -60,7 +60,6 @@
             </group>
         </device>
 
-
         <!--  Opera -->
         <device user_agent="Opera" fall_back="generic_web_browser" id="opera">
             <group id="product_info">
@@ -81,7 +80,6 @@
             </group>
         </device>
         <device user_agent="Opera 8" fall_back="opera_8" id="opera_8_identify_as"/>
-
 
         <device user_agent="Opera/9" fall_back="opera" id="opera_9">
             <group id="product_info">
@@ -168,7 +166,6 @@
             </group>
         </device>
 
-
         <!-- Google Chrome -->
         <device user_agent="Chrome" fall_back="generic_web_browser"
                 id="google_chrome">
@@ -194,7 +191,6 @@
                 <capability name="model_name" value="2.0"/>
             </group>
         </device>
-
 
         <!-- Konqueror -->
         <device user_agent="Konqueror" fall_back="generic_web_browser"

@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Configuration;
 
-    /**
+/**
  * test case
  */
 use Wurfl\Configuration\Config;
@@ -10,7 +10,8 @@ use Wurfl\Configuration\InMemoryConfig;
 /**
  * test case.
  */
-class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
+class InMemoryConfigTest
+    extends \PHPUnit_Framework_TestCase
 {
 
     public function testShouldCreateFilePersistence()
@@ -41,7 +42,9 @@ class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
     {
         $config = new InMemoryConfig();
         $params = array("host" => "127.0.0.1");
-        $config->wurflFile("wurfl.xml")->wurflPatch("new_web_browsers_patch.xml")->wurflPatch("spv_patch.xml")
+        $config->wurflFile("wurfl.xml")
+            ->wurflPatch("new_web_browsers_patch.xml")
+            ->wurflPatch("spv_patch.xml")
             ->persistence("memcache", $params)
             ->cache(
                 "file",
@@ -74,7 +77,8 @@ class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
             "namespace" => "wurfl"
         );
         $config->wurflFile("wurfl.xml")
-            ->wurflPatch("new_web_browsers_patch.xml")->wurflPatch("spv_patch.xml")
+            ->wurflPatch("new_web_browsers_patch.xml")
+            ->wurflPatch("spv_patch.xml")
             ->persistence("memcache", $params);
     }
 }

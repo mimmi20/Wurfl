@@ -6,7 +6,8 @@ use Wurfl\Request\Normalizer\Specific\MSIE;
 /**
  *  test case.
  */
-class MSIETest extends BaseTest
+class MSIETest
+    extends BaseTest
 {
 
     /**

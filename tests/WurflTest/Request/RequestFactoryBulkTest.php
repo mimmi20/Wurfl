@@ -7,7 +7,8 @@ use WurflTest\NotNullCondition;
 /**
  * test case
  */
-class RequestFactoryBulkTest extends \PHPUnit_Framework_TestCase
+class RequestFactoryBulkTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var array
@@ -24,7 +25,7 @@ class RequestFactoryBulkTest extends \PHPUnit_Framework_TestCase
     {
         foreach ($this->testData as $testData) {
             $requestFactory = new GenericRequestFactory();
-            $request = $requestFactory->createRequest($testData['_SERVER']);
+            $request        = $requestFactory->createRequest($testData['_SERVER']);
 
             self::assertEquals($request->userAgent, $testData ['EXPECTED_USER_AGENT']);
         }

@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Configuration;
 
-    /**
+/**
  * test case
  */
 use Wurfl\Configuration\ArrayConfig;
@@ -9,7 +9,8 @@ use Wurfl\Configuration\ArrayConfig;
 /**
  *  test case.
  */
-class ArrayConfigTest extends \PHPUnit_Framework_TestCase
+class ArrayConfigTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ArrayConfig

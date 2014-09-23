@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Configuration;
 
-    /**
+/**
  * test case
  */
 use Wurfl\Configuration\Config;
@@ -10,7 +10,8 @@ use Wurfl\Configuration\XmlConfig;
 /**
  *  test case.
  */
-class XmlConfigTest extends \PHPUnit_Framework_TestCase
+class XmlConfigTest
+    extends \PHPUnit_Framework_TestCase
 {
 
     public function testShouldCreateAConfiguration()
@@ -58,8 +59,8 @@ class XmlConfigTest extends \PHPUnit_Framework_TestCase
         self::assertEquals("apc", $cache ["provider"]);
         self::assertEquals(
             array(
-                 "namespace"  => "wurfl",
-                 "expiration" => 86400
+                "namespace"  => "wurfl",
+                "expiration" => 86400
             ),
             $cache ["params"]
         );

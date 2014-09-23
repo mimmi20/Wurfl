@@ -6,7 +6,8 @@ use Wurfl\Request\Normalizer\Specific\LG;
 /**
  * test case.
  */
-class LGUPLUSTest extends BaseTest
+class LGUPLUSTest
+    extends BaseTest
 {
     protected function setUp()
     {

@@ -1,7 +1,6 @@
 <?php
 namespace WurflTest\TestUtils;
 
-
 class MockPersistenceProvider
 {
 

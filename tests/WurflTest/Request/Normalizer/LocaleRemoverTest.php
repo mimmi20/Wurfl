@@ -6,7 +6,8 @@ use Wurfl\Request\Normalizer\Generic\LocaleRemover;
 /**
  * test case.
  */
-class LocaleRemoverTest extends BaseTest
+class LocaleRemoverTest
+    extends BaseTest
 {
 
     protected function setUp()
