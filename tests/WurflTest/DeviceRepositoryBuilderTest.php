@@ -88,8 +88,7 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $persistenceProvider = new Storage(new Memory());
         $persistenceProvider->setWURFLLoaded(true);
-        $context               = new Context($persistenceProvider);
-        $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
+        $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($persistenceProvider, $persistenceProvider);
         $devicePatcher         = new DevicePatcher();
         $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $persistenceProvider,
