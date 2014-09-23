@@ -4,7 +4,6 @@ namespace WurflTest;
     /**
  * test case
  */
-use Wurfl\Context;
 use Wurfl\DeviceRepositoryBuilder;
 use Wurfl\Storage\Storage;
 use Wurfl\UserAgentHandlerChainFactory;
@@ -37,8 +36,7 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $persistenceProvider   = new Storage(new Memory());
-        $context               = new Context($persistenceProvider);
-        $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($context);
+        $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom($persistenceProvider, $persistenceProvider);
         $devicePatcher         = new DevicePatcher();
         $this->deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $persistenceProvider,
