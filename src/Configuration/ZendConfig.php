@@ -1,20 +1,23 @@
 <?php
-namespace Wurfl\Configuration;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
+ *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Configuration
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Configuration;
+
 use Zend\Config\Config as ZendConfigConfig;
 
 /**
@@ -61,7 +64,8 @@ use Zend\Config\Config as ZendConfigConfig;
  *
  * @package    \Wurfl\Configuration
  */
-class ZendConfig extends Config
+class ZendConfig
+    extends Config
 {
     /**
      * Creates a new WURFL Configuration object from $configFilePath
@@ -87,9 +91,11 @@ class ZendConfig extends Config
         //
     }
 
-    private function init($configuration)
+    /**
+     * @param array $configuration
+     */
+    private function init(array $configuration)
     {
-
         if (array_key_exists(Config::WURFL, $configuration)) {
             $this->setWurflConfiguration($configuration[Config::WURFL]);
         }
@@ -114,6 +120,9 @@ class ZendConfig extends Config
             ? $configuration[Config::ALLOW_RELOAD] : false;
     }
 
+    /**
+     * @param array $wurflConfig
+     */
     private function setWurflConfiguration(array $wurflConfig)
     {
         if (array_key_exists(Config::MAIN_FILE, $wurflConfig)) {
@@ -127,12 +136,14 @@ class ZendConfig extends Config
         }
     }
 
+    /**
+     * @param array $persistenceConfig
+     */
     private function setPersistenceConfiguration(array $persistenceConfig)
     {
         $this->persistence = $persistenceConfig;
 
-        if (array_key_exists('params', $this->persistence)
-            && array_key_exists(
+        if (array_key_exists('params', $this->persistence) && array_key_exists(
                 Config::DIR,
                 $this->persistence['params']
             )
@@ -141,11 +152,17 @@ class ZendConfig extends Config
         }
     }
 
+    /**
+     * @param array $cacheConfig
+     */
     private function setCacheConfiguration(array $cacheConfig)
     {
         $this->cache = $cacheConfig;
     }
 
+    /**
+     * @param array $logger
+     */
     private function setLoggerConfiguration(array $logger)
     {
         if (!empty($logger['logDir']) && !is_writable($logger['logDir'])) {
@@ -156,6 +173,9 @@ class ZendConfig extends Config
         $this->logger = $logger;
     }
 
+    /**
+     * @param string $mode
+     */
     private function setMatchMode($mode)
     {
         $this->matchMode = $mode;

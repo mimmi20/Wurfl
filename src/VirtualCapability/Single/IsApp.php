@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Single;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\VirtualCapability\Single;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Single;
+
 use Wurfl\Handlers\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
@@ -26,7 +26,8 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-class IsApp extends VirtualCapability
+class IsApp
+    extends VirtualCapability
 {
     /**
      * @var array
@@ -38,41 +39,40 @@ class IsApp extends VirtualCapability
      *
      * @var array
      */
-    protected $patterns
-        = array(
-            '^Dalvik',
-            'Darwin/',
-            'CFNetwork',
-            '^Windows Phone Ad Client',
-            '^NativeHost',
-            '^AndroidDownloadManager',
-            '-HttpClient',
-            '^AppCake',
-            'AppEngine-Google',
-            'AppleCoreMedia',
-            '^AppTrailers',
-            '^ChoiceFM',
-            '^ClassicFM',
-            '^Clipfish',
-            '^FaceFighter',
-            '^Flixster',
-            '^Gold/',
-            '^GoogleAnalytics/',
-            '^Heart/',
-            '^iBrowser/',
-            'iTunes-',
-            '^Java/',
-            '^LBC/3.',
-            'Twitter',
-            'Pinterest',
-            '^Instagram',
-            'FBAN',
-            '#iP(hone|od|ad)[\d],[\d]#',
-            // namespace notation (com.google.youtube)
-            '#[a-z]{3,}(?:\.[a-z]+){2,}#',
-            //Windows MSIE Webview
-            'WebView',
-        );
+    protected $patterns = array(
+        '^Dalvik',
+        'Darwin/',
+        'CFNetwork',
+        '^Windows Phone Ad Client',
+        '^NativeHost',
+        '^AndroidDownloadManager',
+        '-HttpClient',
+        '^AppCake',
+        'AppEngine-Google',
+        'AppleCoreMedia',
+        '^AppTrailers',
+        '^ChoiceFM',
+        '^ClassicFM',
+        '^Clipfish',
+        '^FaceFighter',
+        '^Flixster',
+        '^Gold/',
+        '^GoogleAnalytics/',
+        '^Heart/',
+        '^iBrowser/',
+        'iTunes-',
+        '^Java/',
+        '^LBC/3.',
+        'Twitter',
+        'Pinterest',
+        '^Instagram',
+        'FBAN',
+        '#iP(hone|od|ad)[\d],[\d]#',
+        // namespace notation (com.google.youtube)
+        '#[a-z]{3,}(?:\.[a-z]+){2,}#',
+        //Windows MSIE Webview
+        'WebView',
+    );
 
     /**
      * @return bool|mixed
@@ -82,7 +82,7 @@ class IsApp extends VirtualCapability
         $userAgent = $this->request->userAgent;
 
         // if (Utils::isRobot($userAgent)) {
-            // return false;
+        // return false;
         // }
 
         if ($this->device->device_os == 'iOS' && !Utils::checkIfContains($userAgent, 'Safari')) {

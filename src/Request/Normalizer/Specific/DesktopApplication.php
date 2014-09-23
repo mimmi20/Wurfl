@@ -1,8 +1,6 @@
 <?php
-namespace Wurfl\Request\Normalizer\Specific;
-
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2012 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -11,12 +9,14 @@ namespace Wurfl\Request\Normalizer\Specific;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Request\Normalizer\Specific;
 
 use Wurfl\Request\Normalizer\NormalizerInterface;
 
@@ -25,9 +25,14 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Request\Normalizer\Specific
  */
-class DesktopApplication implements NormalizerInterface
+class DesktopApplication
+    implements NormalizerInterface
 {
-
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function normalize($userAgent)
     {
         $idx = strpos($userAgent, 'Thunderbird');

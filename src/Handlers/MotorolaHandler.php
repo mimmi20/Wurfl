@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,26 +30,38 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class MotorolaHandler extends AbstractHandler
+class MotorolaHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "MOTOROLA";
 
-    public static $constantIDs
-        = array(
-            'mot_mib22_generic',
-        );
+    public static $constantIDs = array(
+        'mot_mib22_generic',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
 
-        return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto'))
-            || Utils::checkIfContains($userAgent, 'Motorola'));
+        return (Utils::checkIfStartsWithAnyOf(
+                $userAgent,
+                array('Mot-', 'MOT-', 'MOTO', 'moto')
+            ) || Utils::checkIfContains($userAgent, 'Motorola'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         if (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
@@ -59,6 +71,11 @@ class MotorolaHandler extends AbstractHandler
         return $this->getDeviceIDFromLD($userAgent, 5);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {

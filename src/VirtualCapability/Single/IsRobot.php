@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Single;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\VirtualCapability\Single;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Single;
+
 use Wurfl\Handlers\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
@@ -26,7 +26,8 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-class IsRobot extends VirtualCapability
+class IsRobot
+    extends VirtualCapability
 {
     /**
      * @var array
@@ -40,10 +41,11 @@ class IsRobot extends VirtualCapability
     {
         $ua = $this->request->userAgent;
 
-		// Control cap, 'controlcap_is_robot' is checked before this function is called
-        if ($this->request->originalHeaderExists('HTTP_ACCEPT_ENCODING')
-            && Utils::checkIfContains($ua, 'Trident/')
-            && !Utils::checkIfContains($this->request->getOriginalHeader('HTTP_ACCEPT_ENCODING'), 'deflate')
+        // Control cap, 'controlcap_is_robot' is checked before this function is called
+        if ($this->request->originalHeaderExists('HTTP_ACCEPT_ENCODING') && Utils::checkIfContains(
+                $ua,
+                'Trident/'
+            ) && !Utils::checkIfContains($this->request->getOriginalHeader('HTTP_ACCEPT_ENCODING'), 'deflate')
         ) {
             return true;
         }

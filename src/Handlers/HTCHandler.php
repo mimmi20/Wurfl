@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,12 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
@@ -31,24 +30,35 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class HTCHandler extends AbstractHandler
+class HTCHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "HTC";
 
-    public static $constantIDs
-        = array(
-            'generic_ms_mobile',
-        );
+    public static $constantIDs = array(
+        'generic_ms_mobile',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         if (preg_match('#^.*?HTC.+?[/ ;]#', $userAgent, $matches)) {
@@ -61,6 +71,11 @@ class HTCHandler extends AbstractHandler
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, 'Windows CE;')) {

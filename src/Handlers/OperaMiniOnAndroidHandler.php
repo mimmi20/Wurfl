@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,26 +30,37 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class OperaMiniOnAndroidHandler extends AbstractHandler
+class OperaMiniOnAndroidHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "OPERAMINIONANDROID";
 
-    public static $constantIDs
-        = array(
-            'uabait_opera_mini_android_v50',
-            'uabait_opera_mini_android_v51',
-            'generic_opera_mini_android_version5',
-        );
+    public static $constantIDs = array(
+        'uabait_opera_mini_android_v50',
+        'uabait_opera_mini_android_v51',
+        'generic_opera_mini_android_version5',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContainsAll($userAgent, array('Android', 'Opera Mini'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, ' Build/')) {
@@ -69,6 +80,7 @@ class OperaMiniOnAndroidHandler extends AbstractHandler
                 if ($deviceID == Constants::NO_MATCH) {
                     return $defaultID;
                 }
+
                 return $deviceID;
             }
         }
@@ -76,6 +88,11 @@ class OperaMiniOnAndroidHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         return 'generic_opera_mini_android_version5';

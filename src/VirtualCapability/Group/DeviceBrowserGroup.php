@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Group;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,18 +11,20 @@ namespace Wurfl\VirtualCapability\Group;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Group;
 
 use Wurfl\VirtualCapability\UserAgentTool;
 
 /**
  * @package \Wurfl\VirtualCapability\VirtualCapability
  */
-class DeviceBrowserGroup extends Group
+class DeviceBrowserGroup
+    extends Group
 {
     /**
      * @var array

@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Request;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,14 @@ namespace Wurfl\Request;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Request
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
+
+namespace Wurfl\Request;
 
 use Wurfl\Utils;
 
@@ -55,6 +54,7 @@ class GenericRequestFactory
     public function createRequestForUserAgent($userAgent)
     {
         $request = array('HTTP_USER_AGENT' => $userAgent);
+
         return new GenericRequest($request, $userAgent, null, false);
     }
 }

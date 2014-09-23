@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,14 @@ namespace Wurfl\Handlers;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
@@ -30,20 +30,33 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class SafariHandler extends AbstractHandler
+class SafariHandler
+    extends AbstractHandler
 {
-
     protected $prefix = "SAFARI";
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-        return Utils::checkIfContains($userAgent, 'Safari')
-        && Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows'));
+
+        return Utils::checkIfContains($userAgent, 'Safari') && Utils::checkIfStartsWithAnyOf(
+            $userAgent,
+            array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows')
+        );
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::toleranceToRisDelimeter($userAgent);
@@ -54,6 +67,11 @@ class SafariHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAnyOf(
@@ -63,9 +81,15 @@ class SafariHandler extends AbstractHandler
         ) {
             return Constants::GENERIC_WEB_BROWSER;
         }
+
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param $userAgent
+     *
+     * @return null|string
+     */
     public static function getSafariVersion($userAgent)
     {
         $search = 'Version/';

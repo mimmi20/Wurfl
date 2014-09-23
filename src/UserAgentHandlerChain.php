@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -16,10 +14,9 @@ namespace Wurfl;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 
-use Wurfl\Constants;
+namespace Wurfl;
 
 /**
  * Handles the chain of \Wurfl\Handlers\AbstractHandler objects
@@ -46,14 +43,15 @@ class UserAgentHandlerChain
         // $size = count($this->userAgentHandlers);
 
         // if ($size > 0) {
-            // /**
-             // * @var $lastHandler Handlers\AbstractHandler
-             // */
-            // $lastHandler = $this->userAgentHandlers[$size - 1];
-            // $lastHandler->setNextHandler($handler);
+        // /**
+        // * @var $lastHandler Handlers\AbstractHandler
+        // */
+        // $lastHandler = $this->userAgentHandlers[$size - 1];
+        // $lastHandler->setNextHandler($handler);
         // }
 
         $this->userAgentHandlers[] = $handler;
+
         return $this;
     }
 

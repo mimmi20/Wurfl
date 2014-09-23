@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Single;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\VirtualCapability\Single;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Single;
+
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
@@ -25,7 +25,8 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-class IsSmartphone extends VirtualCapability
+class IsSmartphone
+    extends VirtualCapability
 {
     /**
      * @var bool
@@ -35,32 +36,27 @@ class IsSmartphone extends VirtualCapability
     /**
      * @var array
      */
-    protected $requiredCapabilities
-        = array(
-            'is_wireless_device',
-            'is_tablet',
-            'pointing_method',
-            'resolution_width',
-            'device_os_version',
-            'device_os',
-            'can_assign_phone_number',
-        );
+    protected $requiredCapabilities = array(
+        'is_wireless_device',
+        'is_tablet',
+        'pointing_method',
+        'resolution_width',
+        'device_os_version',
+        'device_os',
+        'can_assign_phone_number',
+    );
 
     /**
      * @return bool|mixed
      */
     protected function compute()
     {
-        if ($this->device->is_wireless_device != 'true'
-            || $this->device->is_tablet == 'true'
-            || $this->device->pointing_method != 'touchscreen'
-            || $this->device->resolution_width < 320
-            || $this->device->can_assign_phone_number == 'false'
+        if ($this->device->is_wireless_device != 'true' || $this->device->is_tablet == 'true' || $this->device->pointing_method != 'touchscreen' || $this->device->resolution_width < 320 || $this->device->can_assign_phone_number == 'false'
         ) {
             return false;
         }
 
-        $osVersion = (float)$this->device->device_os_version;
+        $osVersion = (float) $this->device->device_os_version;
         switch ($this->device->device_os) {
             case 'iOS':
                 return ($osVersion >= 3.0);

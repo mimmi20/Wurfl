@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,15 +9,17 @@ namespace Wurfl;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 
-use WurflCache\Adapter\AdapterInterface;
+namespace Wurfl;
+
 use Psr\Log\LoggerInterface;
+use WurflCache\Adapter\AdapterInterface;
 
 /**
  * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating
@@ -41,21 +41,19 @@ class UserAgentHandlerChainFactory
      * @return UserAgentHandlerChain
      */
     public static function createFrom(
-        Context         $context, 
-        Storage\Storage $persistenceProvider, 
-        Storage\Storage $cacheProvider, 
-        LoggerInterface $logger = null)
-    {
+        Context $context,
+        Storage\Storage $persistenceProvider,
+        Storage\Storage $cacheProvider,
+        LoggerInterface $logger = null
+    ) {
         /** @var $userAgentHandlerChain \Wurfl\UserAgentHandlerChain */
         $userAgentHandlerChain = $cacheProvider->load('UserAgentHandlerChain');
 
         if ($userAgentHandlerChain instanceof UserAgentHandlerChain) {
             foreach ($userAgentHandlerChain->getHandlers() as $handler) {
                 /** @var $handler \Wurfl\Handlers\AbstractHandler */
-                $handler
-                    ->setLogger($logger)
-                    ->setPersistenceProvider($persistenceProvider)
-                ;
+                $handler->setLogger($logger)
+                    ->setPersistenceProvider($persistenceProvider);
             }
         } else {
             $userAgentHandlerChain = self::init($context);
@@ -108,11 +106,11 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\WindowsPhoneHandler($context, $winPhoneNormalizer)
         );
-        
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\NokiaOviBrowserHandler($context, $genericNormalizers)
         );
-        
+
         // Android Matcher Chain
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\OperaMiniOnAndroidHandler($context, $genericNormalizers)
@@ -139,11 +137,11 @@ class UserAgentHandlerChainFactory
 
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\UbuntuTouchOSHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\TizenHandler($context, $genericNormalizers));
-        
+
         $appleNormalizer = clone $genericNormalizers;
         $appleNormalizer->add(new \Wurfl\Request\Normalizer\Specific\Apple());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($context, $appleNormalizer));
-        
+
         /**** High workload mobile matchers ****/
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\NokiaHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\SamsungHandler($context, $genericNormalizers));
@@ -160,11 +158,11 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\BenQHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\DoCoMoHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\GrundigHandler($context, $genericNormalizers));
-        
+
         $htcMacNormalizer = clone $genericNormalizers;
         $htcMacNormalizer->add(new Request\Normalizer\Specific\HTCMac());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCMacHandler($context, $htcMacNormalizer));
-        
+
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\KDDIHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\KyoceraHandler($context, $genericNormalizers));
@@ -198,11 +196,11 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\SPVHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\ToshibaHandler($context, $genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\VodafoneHandler($context, $genericNormalizers));
-        
+
         $webOSNormalizer = clone $genericNormalizers;
         $webOSNormalizer->add(new Request\Normalizer\Specific\WebOS());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\WebOSHandler($context, $webOSNormalizer));
-        
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\FirefoxOSHandler($context, $genericNormalizers)
         );
@@ -231,10 +229,12 @@ class UserAgentHandlerChainFactory
         /**** DesktopApplications ****/
         $desktopApplicationNormalizer = clone $genericNormalizers;
         $desktopApplicationNormalizer->add(new \Wurfl\Request\Normalizer\Specific\DesktopApplication());
-        $userAgentHandlerChain->addUserAgentHandler(new \Wurfl\Handlers\DesktopApplicationHandler($context, $desktopApplicationNormalizer));
+        $userAgentHandlerChain->addUserAgentHandler(
+            new \Wurfl\Handlers\DesktopApplicationHandler($context, $desktopApplicationNormalizer)
+        );
 
         /**** Desktop Browsers ****/
-        
+
         $operaNormalizer = clone $genericNormalizers;
         $operaNormalizer->add(new Request\Normalizer\Specific\Opera());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($context, $operaNormalizer));
@@ -263,7 +263,7 @@ class UserAgentHandlerChainFactory
 
         /**** All other requests ****/
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\CatchAllHandler($context, $genericNormalizers));
-        
+
         return $userAgentHandlerChain;
     }
 
@@ -274,18 +274,16 @@ class UserAgentHandlerChainFactory
      */
     private static function createGenericNormalizers()
     {
-        return new Request\Normalizer\UserAgentNormalizer(
-            array(
-                 new Request\Normalizer\Generic\UCWEB(),
-                 new Request\Normalizer\Generic\UPLink(),
-                 new Request\Normalizer\Generic\SerialNumbers(),
-                 new Request\Normalizer\Generic\LocaleRemover(),
-                 new Request\Normalizer\Generic\BlackBerry(),
-                 new Request\Normalizer\Generic\YesWAP(),
-                 new Request\Normalizer\Generic\BabelFish(),
-                 new Request\Normalizer\Generic\NovarraGoogleTranslator(),
-                 new Request\Normalizer\Generic\TransferEncoding(),
-            )
-        );
+        return new Request\Normalizer\UserAgentNormalizer(array(
+                new Request\Normalizer\Generic\UCWEB(),
+                new Request\Normalizer\Generic\UPLink(),
+                new Request\Normalizer\Generic\SerialNumbers(),
+                new Request\Normalizer\Generic\LocaleRemover(),
+                new Request\Normalizer\Generic\BlackBerry(),
+                new Request\Normalizer\Generic\YesWAP(),
+                new Request\Normalizer\Generic\BabelFish(),
+                new Request\Normalizer\Generic\NovarraGoogleTranslator(),
+                new Request\Normalizer\Generic\TransferEncoding(),
+            ));
     }
 }

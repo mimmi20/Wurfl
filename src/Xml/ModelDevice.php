@@ -1,23 +1,23 @@
 <?php
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
+
 namespace Wurfl\Xml;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     *
-     * @category   WURFL
-     * @package    WURFL_Xml
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
 /**
  * Represents a device in the wurfl xml file
  *
@@ -137,6 +137,7 @@ class ModelDevice
         if ($this->isCapabilityDefined($capabilityName)) {
             return $this->capabilities[$capabilityName];
         }
+
         return null;
     }
 
@@ -173,6 +174,7 @@ class ModelDevice
                 $groupIdCapabilitiesMap[$groupId][$capabilityName] = $this->capabilities[$capabilityName];
             }
         }
+
         return $groupIdCapabilitiesMap;
     }
 

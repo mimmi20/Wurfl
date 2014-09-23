@@ -1,22 +1,22 @@
 <?php
-namespace Wurfl;
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+namespace Wurfl;
 
 /**
  * WURFL Custom Device - this is the core class that is used by developers to access the
@@ -74,10 +74,10 @@ class CustomDevice
         }
         $this->modelDevices = $modelDevices;
         if ($request === null) {
-			// This might happen if a device is looked up by its ID directly, without providing a user agent
-			$requestFactory = new \Wurfl\Request\GenericRequestFactory();
-			$request        = $requestFactory->createRequestForUserAgent($this->userAgent);
-		}
+            // This might happen if a device is looked up by its ID directly, without providing a user agent
+            $requestFactory = new \Wurfl\Request\GenericRequestFactory();
+            $request        = $requestFactory->createRequestForUserAgent($this->userAgent);
+        }
         $this->request                   = $request;
         $this->virtualCapabilityProvider = new VirtualCapability\VirtualCapabilityProvider($this, $request);
     }
@@ -112,9 +112,9 @@ class CustomDevice
                 break;
             default:
                 if ($this->virtualCapabilityProvider->exists($name)) {
-					return $this->virtualCapabilityProvider->get($name);
-				}
-                
+                    return $this->virtualCapabilityProvider->get($name);
+                }
+
                 return $this->getCapability($name);
                 break;
         }
@@ -132,6 +132,7 @@ class CustomDevice
                 return true;
             }
         }
+
         return false;
     }
 
@@ -150,10 +151,10 @@ class CustomDevice
         if (empty($capabilityName)) {
             throw new \InvalidArgumentException('capability name must not be empty');
         }
-        if (!$this->getRootDevice()->isCapabilityDefined($capabilityName)) {
-            throw new \InvalidArgumentException(
-                'no capability named [' . $capabilityName . '] is present in wurfl.'
-            );
+        if (!$this->getRootDevice()
+            ->isCapabilityDefined($capabilityName)
+        ) {
+            throw new \InvalidArgumentException('no capability named [' . $capabilityName . '] is present in wurfl.');
         }
         foreach ($this->modelDevices as $modelDevice) {
             /* @var \Wurfl\Xml\ModelDevice $modelDevice */
@@ -162,6 +163,7 @@ class CustomDevice
                 return $capabilityValue;
             }
         }
+
         return '';
     }
 
@@ -183,6 +185,7 @@ class CustomDevice
                 return $modelDevice;
             }
         }
+
         return null;
     }
 
@@ -229,14 +232,23 @@ class CustomDevice
             /** @var \Wurfl\Xml\ModelDevice $modelDevice */
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
+
         return $capabilities;
     }
 
+    /**
+     * @param $name
+     *
+     * @return bool|float|int|string
+     */
     public function getVirtualCapability($name)
     {
         return $this->virtualCapabilityProvider->get($name);
     }
 
+    /**
+     * @return array
+     */
     public function getAllVirtualCapabilities()
     {
         return $this->virtualCapabilityProvider->getAll();

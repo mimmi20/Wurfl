@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,15 @@ namespace Wurfl;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl;
+
 use Psr\Log\LoggerInterface;
 
 /**
@@ -44,6 +45,11 @@ class Context
      */
     private $logger;
 
+    /**
+     * @param Storage\Storage $persistenceProvider
+     * @param Storage\Storage $cacheProvider
+     * @param LoggerInterface $logger
+     */
     public function __construct(
         Storage\Storage $persistenceProvider,
         Storage\Storage $cacheProvider = null,
@@ -54,20 +60,37 @@ class Context
         $this->logger = is_null($logger) ? new Logger\NullLogger() : $logger;
     }
 
+    /**
+     * @param $cacheProvider
+     *
+     * @return $this
+     */
     public function setCacheProvider($cacheProvider)
     {
         $this->cacheProvider = is_null($cacheProvider) ? new Storage\Storage(Storage\Factory::create(
             array('provider' => 'null')
         )) : $cacheProvider;
+
         return $this;
     }
 
+    /**
+     * @param $logger
+     *
+     * @return $this
+     */
     public function setLogger($logger)
     {
         $this->logger = is_null($logger) ? new Logger\NullLogger() : $logger;
+
         return $this;
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     */
     public function __get($name)
     {
         return $this->$name;

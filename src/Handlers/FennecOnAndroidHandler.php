@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,17 +30,17 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class FennecOnAndroidHandler extends AbstractHandler
+class FennecOnAndroidHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "FENNECONANDROID";
 
-    public static $constantIDs
-        = array(
-            'generic_android_ver2_0_fennec',
-            'generic_android_ver2_0_fennec_tablet',
-            'generic_android_ver2_0_fennec_desktop',
-        );
+    public static $constantIDs = array(
+        'generic_android_ver2_0_fennec',
+        'generic_android_ver2_0_fennec_tablet',
+        'generic_android_ver2_0_fennec_desktop',
+    );
 
     public function canHandle($userAgent)
     {
@@ -48,13 +48,17 @@ class FennecOnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android')
-            && Utils::checkIfContainsAnyOf(
+        return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
                 $userAgent,
                 array('Fennec', 'Firefox')
             ));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         // Captures the index of the first decimal point in the Firefox verison "rv:nn.nn.nn"
@@ -68,6 +72,11 @@ class FennecOnAndroidHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         $isFennec  = Utils::checkIfContains($userAgent, 'Fennec');

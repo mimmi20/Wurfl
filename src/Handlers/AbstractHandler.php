@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,17 +9,20 @@ namespace Wurfl\Handlers;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
+use Psr\Log\LoggerInterface;
 use Wurfl\Constants;
 use Wurfl\Context;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\Normalizer\NullNormalizer;
-use Psr\Log\LoggerInterface;
 use Wurfl\Storage\Storage;
 
 /**
@@ -34,7 +35,8 @@ use Wurfl\Storage\Storage;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-abstract class AbstractHandler implements FilterInterface
+abstract class AbstractHandler
+    implements FilterInterface
 {
     /**
      * The next User Agent Handler
@@ -146,10 +148,8 @@ abstract class AbstractHandler implements FilterInterface
      */
     public function setupContext(Context $wurflContext)
     {
-        $this
-            ->setLogger($wurflContext->logger)
-            ->setPersistenceProvider($wurflContext->persistenceProvider)
-        ;
+        $this->setLogger($wurflContext->logger)
+            ->setPersistenceProvider($wurflContext->persistenceProvider);
 
         return $this;
     }
@@ -180,6 +180,7 @@ abstract class AbstractHandler implements FilterInterface
     {
         if ($this->canHandle($userAgent)) {
             $this->updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
+
             return null;
         }
 
@@ -280,23 +281,23 @@ abstract class AbstractHandler implements FilterInterface
         $this->getUserAgentsWithDeviceId();
 
         $matches = array(
-            'exact' => array(
+            'exact'             => array(
                 'history'  => '(exact),',
                 'function' => 'applyExactMatch',
                 'debug'    => 'Applying Exact Match',
             ),
-            'conclusive' => array(
+            'conclusive'        => array(
                 'history'  => '(conclusive),',
                 'function' => 'applyConclusiveMatch',
                 'debug'    => 'Applying Conclusive Match',
             ),
-            'recovery' => array(
-                'history' => '(recovery),',
+            'recovery'          => array(
+                'history'  => '(recovery),',
                 'function' => 'applyRecoveryMatch',
                 'debug'    => 'Applying Recovery Match',
             ),
             'recovery-catchall' => array(
-                'history' => '(recovery-catchall),',
+                'history'  => '(recovery-catchall),',
                 'function' => 'applyRecoveryCatchAllMatch',
                 'debug'    => 'Applying Catch All Recovery Match',
             )
@@ -308,8 +309,8 @@ abstract class AbstractHandler implements FilterInterface
             $matchProps = (object) $matchProps;
 
             $request->matchInfo->matcherHistory .= $className . $matchProps->history;
-            $request->matchInfo->matchType       = $matchType;
-            $request->userAgentsWithDeviceID     = $this->userAgentsWithDeviceID;
+            $request->matchInfo->matchType   = $matchType;
+            $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
 
             $this->logger->debug($this->prefix . ' :' . $matchProps->debug . ' for ua: ' . $userAgent);
 
@@ -347,7 +348,9 @@ abstract class AbstractHandler implements FilterInterface
      */
     private function isBlankOrGeneric($deviceID)
     {
-        return ($deviceID === Constants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(trim($deviceID)) == 0);
+        return ($deviceID === Constants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(
+                trim($deviceID)
+            ) == 0);
     }
 
     /**
@@ -486,6 +489,7 @@ abstract class AbstractHandler implements FilterInterface
 
         // \Wurfl\Handlers\AlcatelHandler
         preg_match('/^\Wurfl\Handlers\(.+)Handler$/', $className, $matches);
+
         return $matches[1];
     }
 

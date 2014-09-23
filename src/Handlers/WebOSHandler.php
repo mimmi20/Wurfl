@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,17 +30,21 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WebOSHandler extends AbstractHandler
+class WebOSHandler
+    extends AbstractHandler
 {
-
     protected $prefix = "WEBOS";
 
-    public static $constantIDs
-        = array(
-            'hp_tablet_webos_generic',
-            'hp_webos_generic',
-        );
+    public static $constantIDs = array(
+        'hp_tablet_webos_generic',
+        'hp_webos_generic',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
@@ -50,23 +54,39 @@ class WebOSHandler extends AbstractHandler
         return Utils::checkIfContainsAnyOf($userAgent, array('webOS', 'hpwOS'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $delimiterIndex = strpos($userAgent, Constants::RIS_DELIMITER);
 
         if ($delimiterIndex !== false) {
             $tolerance = $delimiterIndex + strlen(Constants::RIS_DELIMITER);
+
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         return Utils::checkIfContains($userAgent, 'hpwOS/3') ? 'hp_tablet_webos_generic' : 'hp_webos_generic';
     }
 
+    /**
+     * @param $userAgent
+     *
+     * @return null|string
+     */
     public static function getWebOSModelVersion($userAgent)
     {
         /* Formats:
@@ -81,6 +101,11 @@ class WebOSHandler extends AbstractHandler
         }
     }
 
+    /**
+     * @param $userAgent
+     *
+     * @return null|string
+     */
     public static function getWebOSVersion($userAgent)
     {
         if (preg_match('#(?:hpw|web)OS.(\d)\.#', $userAgent, $matches)) {

@@ -1,8 +1,6 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2012 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -13,11 +11,12 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
@@ -31,26 +30,27 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class DesktopApplicationHandler extends AbstractHandler
+class DesktopApplicationHandler
+    extends AbstractHandler
 {
-    public static $constantIDs
-        = array(
-            'generic_desktop_application',
-            'mozilla_thunderbird',
-            'ms_outlook',
-            'ms_outlook_subua14',
-            'ms_outlook_subua15',
-            'ms_office',
-            'ms_office_subua12',
-            'ms_office_subua14',
-            'ms_office_subua15',
-        );
+    public static $constantIDs = array(
+        'generic_desktop_application',
+        'mozilla_thunderbird',
+        'ms_outlook',
+        'ms_outlook_subua14',
+        'ms_outlook_subua15',
+        'ms_office',
+        'ms_office_subua12',
+        'ms_office_subua14',
+        'ms_office_subua15',
+    );
 
     public function canHandle($userAgent)
     {
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
         return (Utils::checkIfContainsAnyOf($userAgent, array('Thunderbird', 'Microsoft Outlook', 'MSOffice')));
     }
 
@@ -94,6 +94,7 @@ class DesktopApplicationHandler extends AbstractHandler
                 }
             }
         }
+
         return Constants::GENERIC_WEB_BROWSER;
     }
 }

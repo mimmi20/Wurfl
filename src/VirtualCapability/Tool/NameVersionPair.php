@@ -1,28 +1,28 @@
 <?php
-namespace Wurfl\VirtualCapability\Tool;
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     *
-     * @category   WURFL
-     * @package    \Wurfl\VirtualCapability\UserAgentTool
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+namespace Wurfl\VirtualCapability\Tool;
 
 /**
  * @package \Wurfl\VirtualCapability\UserAgentTool
  */
-class NameVersionPair extends PropertyList
+class NameVersionPair
+    extends PropertyList
 {
     /**
      * @var string|null
@@ -73,6 +73,7 @@ class NameVersionPair extends PropertyList
             if (preg_match($regex, $ua)) {
                 $this->name    = trim($name);
                 $this->version = trim($version);
+
                 return true;
             } else {
                 return false;

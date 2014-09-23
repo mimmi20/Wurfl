@@ -1,29 +1,30 @@
 <?php
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
+
 namespace Wurfl\Xml;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL_Xml
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     *
-     */
 /**
  * Extracts device capabilities from XML file
  *
  * @package    WURFL_Xml
  */
-class DeviceIterator extends AbstractIterator
+class DeviceIterator
+    extends AbstractIterator
 {
     /**
      * @var array
@@ -73,13 +74,7 @@ class DeviceIterator extends AbstractIterator
                             $currentCapabilityNameValue = array();
 
                             if ($this->xmlReader->isEmptyElement) {
-                                $this->currentElement = new ModelDevice(
-                                    $deviceId,
-                                    $userAgent,
-                                    $fallBack,
-                                    $actualDeviceRoot,
-                                    $specific
-                                );
+                                $this->currentElement = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific);
 
                                 break 3;
                             }
@@ -88,17 +83,17 @@ class DeviceIterator extends AbstractIterator
 
                         case XmlInterface::GROUP:
                             $groupId = $this->xmlReader->getAttribute(XmlInterface::GROUP_ID);
-                            
+
                             if ($groupId !== 'virtual_capabilities') {
-								$groupIDCapabilitiesMap[$groupId] = array();
-							}
+                                $groupIDCapabilitiesMap[$groupId] = array();
+                            }
                             break;
 
                         case XmlInterface::CAPABILITY:
                             if ($groupId === 'virtual_capabilities') {
-								break;
-							}
-                            
+                                break;
+                            }
+
                             $capabilityName = $this->xmlReader->getAttribute(XmlInterface::CAPABILITY_NAME);
 
                             if ($this->needToReadCapability($capabilityName)) {
@@ -117,14 +112,7 @@ class DeviceIterator extends AbstractIterator
                     break;
                 case \XMLReader::END_ELEMENT:
                     if ($nodeName == XmlInterface::DEVICE) {
-                        $this->currentElement = new ModelDevice(
-                            $deviceId,
-                            $userAgent,
-                            $fallBack,
-                            $actualDeviceRoot,
-                            $specific,
-                            $groupIDCapabilitiesMap
-                        );
+                        $this->currentElement = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific, $groupIDCapabilitiesMap);
                         break 2;
                     }
                     break;

@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,26 +30,36 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class KindleHandler extends AbstractHandler
+class KindleHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "KINDLE";
 
-    public static $constantIDs
-        = array(
-            'amazon_kindle_ver1',
-            'amazon_kindle2_ver1',
-            'amazon_kindle3_ver1',
-            'amazon_kindle_fire_ver1',
-            'generic_amazon_android_kindle',
-            'generic_amazon_kindle',
-        );
+    public static $constantIDs = array(
+        'amazon_kindle_ver1',
+        'amazon_kindle2_ver1',
+        'amazon_kindle3_ver1',
+        'amazon_kindle_fire_ver1',
+        'generic_amazon_android_kindle',
+        'generic_amazon_kindle',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         return Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         // Mobile-mode Kindle Fire
@@ -65,6 +75,7 @@ class KindleHandler extends AbstractHandler
 
                 if ($idx !== false) {
                     $tolerance = $idx + strlen($search) + 1;
+
                     return $this->getDeviceIDFromRIS($userAgent, $tolerance);
                 }
             }
@@ -104,6 +115,11 @@ class KindleHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         $map = array(

@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,23 +30,33 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class MaemoHandler extends AbstractHandler
+class MaemoHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "MAEMO";
 
-    public static $constantIDs
-        = array(
-            'generic_opera_mobi_maemo',
-            'nokia_generic_maemo_with_firefox',
-            'nokia_generic_maemo',
-        );
+    public static $constantIDs = array(
+        'generic_opera_mobi_maemo',
+        'nokia_generic_maemo_with_firefox',
+        'nokia_generic_maemo',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         return Utils::checkIfContains($userAgent, 'Maemo');
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::toleranceToRisDelimeter($userAgent);
@@ -57,6 +67,11 @@ class MaemoHandler extends AbstractHandler
         return $this->getDeviceIDFromLD($userAgent, 7);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
@@ -65,9 +80,15 @@ class MaemoHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'Firefox')) {
             return 'nokia_generic_maemo_with_firefox';
         }
+
         return 'nokia_generic_maemo';
     }
 
+    /**
+     * @param $userAgent
+     *
+     * @return null|string
+     */
     public static function getMaemoModel($userAgent)
     {
         if (preg_match('/Maemo [bB]rowser [\d\.]+ (.+)/', $userAgent, $matches)) {

@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -16,8 +14,10 @@ namespace Wurfl\Handlers;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -27,7 +27,6 @@ use Wurfl\Constants;
  */
 class Utils
 {
-
     /**
      * The worst allowed match tolerance
      *
@@ -38,162 +37,150 @@ class Utils
     /**
      * @var array Collection of mobile browser keywords
      */
-    private static $mobileBrowsers
-        = array(
-            'midp',
-            'mobile',
-            'android',
-            'samsung',
-            'nokia',
-            'up.browser',
-            'phone',
-            'opera mini',
-            'opera mobi',
-            'brew',
-            'sonyericsson',
-            'blackberry',
-            'netfront',
-            'uc browser',
-            'symbian',
-            'j2me',
-            'wap2.',
-            'up.link',
-            ' arm;',
-            'windows ce',
-            'vodafone',
-            'ucweb',
-            'zte-',
-            'ipad;',
-            'docomo',
-            'armv',
-            'maemo',
-            'palm',
-            'bolt',
-            'fennec',
-            'wireless',
-            'adr-',
-            // Required for HPM Safari
-            'htc',
-            // Used to keep Xbox away from the desktop matchers
-            '; xbox',
-            'nintendo',
-            // These keywords keep IE-like mobile UAs out of the MSIE bucket
-            // ex: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; XBLWP7;  ZuneWP7)
-            'zunewp7',
-            'skyfire',
-            'silk',
-            'untrusted',
-            'lgtelecom',
-            ' gt-',
-            'ventana',
-        );
+    private static $mobileBrowsers = array(
+        'midp',
+        'mobile',
+        'android',
+        'samsung',
+        'nokia',
+        'up.browser',
+        'phone',
+        'opera mini',
+        'opera mobi',
+        'brew',
+        'sonyericsson',
+        'blackberry',
+        'netfront',
+        'uc browser',
+        'symbian',
+        'j2me',
+        'wap2.',
+        'up.link',
+        ' arm;',
+        'windows ce',
+        'vodafone',
+        'ucweb',
+        'zte-',
+        'ipad;',
+        'docomo',
+        'armv',
+        'maemo',
+        'palm',
+        'bolt',
+        'fennec',
+        'wireless',
+        'adr-',
+        // Required for HPM Safari
+        'htc',
+        // Used to keep Xbox away from the desktop matchers
+        '; xbox',
+        'nintendo',
+        // These keywords keep IE-like mobile UAs out of the MSIE bucket
+        // ex: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; XBLWP7;  ZuneWP7)
+        'zunewp7',
+        'skyfire',
+        'silk',
+        'untrusted',
+        'lgtelecom',
+        ' gt-',
+        'ventana',
+    );
 
-    private static $smartTVBrowsers
-        = array(
-            'googletv',
-            'boxee',
-            'sonydtv',
-            'appletv',
-            'smarttv',
-            'smart-tv',
-            'dlna',
-            'netcast.tv',
-            'ce-html',
-            'inettvbrowser',
-            'opera tv',
-            'viera',
-            'konfabulator',
-            'sony bravia',
-            'crkey',
-            'sonycebrowser',
-        );
+    private static $smartTVBrowsers = array(
+        'googletv',
+        'boxee',
+        'sonydtv',
+        'appletv',
+        'smarttv',
+        'smart-tv',
+        'dlna',
+        'netcast.tv',
+        'ce-html',
+        'inettvbrowser',
+        'opera tv',
+        'viera',
+        'konfabulator',
+        'sony bravia',
+        'crkey',
+        'sonycebrowser',
+    );
 
-    private static $desktopBrowsers
-        = array(
-            'wow64',
-            '.net clr',
-            'gtb7',
-            'macintosh',
-            'slcc1',
-            'gtb6',
-            'funwebproducts',
-            'aol 9.',
-            'gtb8',
-            'iceweasel',
-            'epiphany',
-        );
+    private static $desktopBrowsers = array(
+        'wow64',
+        '.net clr',
+        'gtb7',
+        'macintosh',
+        'slcc1',
+        'gtb6',
+        'funwebproducts',
+        'aol 9.',
+        'gtb8',
+        'iceweasel',
+        'epiphany',
+    );
 
-    private static $robots
-        = array(
-            '+http',
-            'bot',
-            'crawler',
-            'spider',
-            'novarra',
-            'transcoder',
-            'yahoo! searchmonkey',
-            'yahoo! slurp',
-            'feedfetcher-google',
-            'mowser'
-        );
+    private static $robots = array(
+        '+http',
+        'bot',
+        'crawler',
+        'spider',
+        'novarra',
+        'transcoder',
+        'yahoo! searchmonkey',
+        'yahoo! slurp',
+        'feedfetcher-google',
+        'mowser'
+    );
 
     /**
      * Keyword => deviceID pair collection used for Catch-All matching
      *
      * @var array Array of (string)keyword => (string)deviceID
      */
-    private static $mobileCatchAllIds
-        = array(
-            // Openwave
-            'UP.Browser/7.2' => 'opwv_v72_generic',
-            'UP.Browser/7'   => 'opwv_v7_generic',
-            'UP.Browser/6.2' => 'opwv_v62_generic',
-            'UP.Browser/6'   => 'opwv_v6_generic',
-            'UP.Browser/5'   => 'upgui_generic',
-            'UP.Browser/4'   => 'uptext_generic',
-            'UP.Browser/3'   => 'uptext_generic',
-
-            // Series 60
-            'Series60'       => 'nokia_generic_series60',
-
-            // Access/Net Front
-            'NetFront/3.0'   => 'generic_netfront_ver3',
-            'ACS-NF/3.0'     => 'generic_netfront_ver3',
-            'NetFront/3.1'   => 'generic_netfront_ver3_1',
-            'ACS-NF/3.1'     => 'generic_netfront_ver3_1',
-            'NetFront/3.2'   => 'generic_netfront_ver3_2',
-            'ACS-NF/3.2'     => 'generic_netfront_ver3_2',
-            'NetFront/3.3'   => 'generic_netfront_ver3_3',
-            'ACS-NF/3.3'     => 'generic_netfront_ver3_3',
-            'NetFront/3.4'   => 'generic_netfront_ver3_4',
-            'NetFront/3.5'   => 'generic_netfront_ver3_5',
-            'NetFront/4.0'   => 'generic_netfront_ver4_0',
-            'NetFront/4.1'   => 'generic_netfront_ver4_1',
-
-            // CoreMedia
-            'CoreMedia'      => 'apple_iphone_coremedia_ver1',
-
-            // Windows CE
-            'Windows CE'     => 'generic_ms_mobile',
-
-            // Generic XHTML
-            'Obigo'          => Constants::GENERIC_XHTML,
-            'AU-MIC/2'       => Constants::GENERIC_XHTML,
-            'AU-MIC-'        => Constants::GENERIC_XHTML,
-            'AU-OBIGO/'      => Constants::GENERIC_XHTML,
-            'Teleca Q03B1'   => Constants::GENERIC_XHTML,
-
-            // Opera Mini
-            'Opera Mini/1'   => 'generic_opera_mini_version1',
-            'Opera Mini/2'   => 'generic_opera_mini_version2',
-            'Opera Mini/3'   => 'generic_opera_mini_version3',
-            'Opera Mini/4'   => 'generic_opera_mini_version4',
-            'Opera Mini/5'   => 'generic_opera_mini_version5',
-
-            // DoCoMo
-            'DoCoMo'         => 'docomo_generic_jap_ver1',
-            'KDDI'           => 'docomo_generic_jap_ver1',
-        );
+    private static $mobileCatchAllIds = array(
+        // Openwave
+        'UP.Browser/7.2' => 'opwv_v72_generic',
+        'UP.Browser/7'   => 'opwv_v7_generic',
+        'UP.Browser/6.2' => 'opwv_v62_generic',
+        'UP.Browser/6'   => 'opwv_v6_generic',
+        'UP.Browser/5'   => 'upgui_generic',
+        'UP.Browser/4'   => 'uptext_generic',
+        'UP.Browser/3'   => 'uptext_generic',
+        // Series 60
+        'Series60'       => 'nokia_generic_series60',
+        // Access/Net Front
+        'NetFront/3.0'   => 'generic_netfront_ver3',
+        'ACS-NF/3.0'     => 'generic_netfront_ver3',
+        'NetFront/3.1'   => 'generic_netfront_ver3_1',
+        'ACS-NF/3.1'     => 'generic_netfront_ver3_1',
+        'NetFront/3.2'   => 'generic_netfront_ver3_2',
+        'ACS-NF/3.2'     => 'generic_netfront_ver3_2',
+        'NetFront/3.3'   => 'generic_netfront_ver3_3',
+        'ACS-NF/3.3'     => 'generic_netfront_ver3_3',
+        'NetFront/3.4'   => 'generic_netfront_ver3_4',
+        'NetFront/3.5'   => 'generic_netfront_ver3_5',
+        'NetFront/4.0'   => 'generic_netfront_ver4_0',
+        'NetFront/4.1'   => 'generic_netfront_ver4_1',
+        // CoreMedia
+        'CoreMedia'      => 'apple_iphone_coremedia_ver1',
+        // Windows CE
+        'Windows CE'     => 'generic_ms_mobile',
+        // Generic XHTML
+        'Obigo'          => Constants::GENERIC_XHTML,
+        'AU-MIC/2'       => Constants::GENERIC_XHTML,
+        'AU-MIC-'        => Constants::GENERIC_XHTML,
+        'AU-OBIGO/'      => Constants::GENERIC_XHTML,
+        'Teleca Q03B1'   => Constants::GENERIC_XHTML,
+        // Opera Mini
+        'Opera Mini/1'   => 'generic_opera_mini_version1',
+        'Opera Mini/2'   => 'generic_opera_mini_version2',
+        'Opera Mini/3'   => 'generic_opera_mini_version3',
+        'Opera Mini/4'   => 'generic_opera_mini_version4',
+        'Opera Mini/5'   => 'generic_opera_mini_version5',
+        // DoCoMo
+        'DoCoMo'         => 'docomo_generic_jap_ver1',
+        'KDDI'           => 'docomo_generic_jap_ver1',
+    );
 
     /**
      * Alias of \Wurfl\Handlers\Matcher\RISMatcher::match()
@@ -207,7 +194,8 @@ class Utils
      */
     public static function risMatch($collection, $needle, $tolerance)
     {
-        return Matcher\RISMatcher::getInstance()->match($collection, $needle, $tolerance);
+        return Matcher\RISMatcher::getInstance()
+            ->match($collection, $needle, $tolerance);
     }
 
     /**
@@ -222,7 +210,8 @@ class Utils
      */
     public static function ldMatch($collection, $needle, $tolerance = 7)
     {
-        return Matcher\LDMatcher::getInstance()->match($collection, $needle, $tolerance);
+        return Matcher\LDMatcher::getInstance()
+            ->match($collection, $needle, $tolerance);
     }
 
     /**
@@ -243,6 +232,7 @@ class Utils
         }
 
         $pos = strpos($haystack, $needle, $startingIndex);
+
         return ($pos === false) ? $length : $pos;
     }
 
@@ -401,8 +391,7 @@ class Utils
         }
 
         // Chrome
-        if (Utils::checkIfContains($userAgent, 'Chrome')
-            && !Utils::checkIfContainsAnyOf(
+        if (Utils::checkIfContains($userAgent, 'Chrome') && !Utils::checkIfContainsAnyOf(
                 $userAgent,
                 array('Android', 'Ventana')
             )
@@ -430,8 +419,7 @@ class Utils
 
         // Safari
         if (preg_match(
-            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ '
-            . 'Safari/[\d\.]+$#',
+            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ ' . 'Safari/[\d\.]+$#',
             $userAgent
         )
         ) {
@@ -452,7 +440,7 @@ class Utils
         if (preg_match('/^Mozilla\/5\.0 \(Windows NT.+?Trident.+?; rv:\d\d\.\d+\)/', $userAgent)) {
             return true;
         }
-        
+
         // Internet Explorer 9 or 10
         if (preg_match('/^Mozilla\/5\.0 \(compatible; MSIE (9|10)\.0; Windows NT \d\.\d/', $userAgent)) {
             return true;
@@ -486,6 +474,7 @@ class Utils
                 break;
             }
         }
+
         return self::$isSmartTv;
     }
 
@@ -518,6 +507,7 @@ class Utils
         if ($thirdSemiColumnIndex < 0) {
             return strlen($haystack);
         }
+
         return $thirdSemiColumnIndex;
     }
 
@@ -565,6 +555,7 @@ class Utils
     public static function firstSlash($string)
     {
         $firstSlash = strpos($string, "/");
+
         return ($firstSlash !== false) ? $firstSlash : strlen($string);
     }
 
@@ -581,6 +572,7 @@ class Utils
         if ($firstSlash === false) {
             return strlen($string);
         }
+
         return strpos(substr($string, $firstSlash + 1), "/") + $firstSlash;
     }
 
@@ -594,6 +586,7 @@ class Utils
     public static function firstSpace($string)
     {
         $firstSpace = strpos($string, " ");
+
         return ($firstSpace === false) ? strlen($string) : $firstSpace;
     }
 
@@ -620,6 +613,7 @@ class Utils
     public static function firstMatchOrLength($string, $toMatch)
     {
         $firstMatch = strpos($string, $toMatch);
+
         return ($firstMatch === false) ? strlen($string) : $firstMatch;
     }
 
@@ -651,6 +645,7 @@ class Utils
                 return true;
             }
         }
+
         return false;
     }
 
@@ -669,6 +664,7 @@ class Utils
                 return false;
             }
         }
+
         return true;
     }
 
@@ -732,6 +728,7 @@ class Utils
         if ($tolerance === false) {
             return false;
         }
+
         // Push the tolerance to the *end* of the RIS Delimiter
         return $tolerance + strlen(Constants::RIS_DELIMITER);
     }

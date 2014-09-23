@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Configuration;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Configuration;
  *
  *
  * @category   WURFL
- * @package    WURFL_Configuration
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Configuration;
+
 use Wurfl\Exception;
 
 /**
@@ -79,7 +79,8 @@ use Wurfl\Exception;
  * @package    WURFL_Configuration
  * @deprecated
  */
-class ArrayConfig extends Config
+class ArrayConfig
+    extends Config
 {
 
     /**
@@ -97,7 +98,10 @@ class ArrayConfig extends Config
         $this->init($configuration);
     }
 
-    private function init($configuration)
+    /**
+     * @param array $configuration
+     */
+    private function init(array $configuration)
     {
 
         if (array_key_exists(Config::WURFL, $configuration)) {
@@ -128,6 +132,9 @@ class ArrayConfig extends Config
             ? $configuration[Config::ALLOW_RELOAD] : false;
     }
 
+    /**
+     * @param array $wurflConfig
+     */
     private function setWurflConfiguration(array $wurflConfig)
     {
 
@@ -142,11 +149,13 @@ class ArrayConfig extends Config
         }
     }
 
+    /**
+     * @param array $persistenceConfig
+     */
     private function setPersistenceConfiguration(array $persistenceConfig)
     {
         $this->persistence = $persistenceConfig;
-        if (array_key_exists('params', $this->persistence)
-            && array_key_exists(
+        if (array_key_exists('params', $this->persistence) && array_key_exists(
                 Config::DIR,
                 $this->persistence['params']
             )
@@ -155,11 +164,19 @@ class ArrayConfig extends Config
         }
     }
 
+    /**
+     * @param array $cacheConfig
+     */
     private function setCacheConfiguration(array $cacheConfig)
     {
         $this->cache = $cacheConfig;
     }
 
+    /**
+     * @param $logDir
+     *
+     * @throws \InvalidArgumentException
+     */
     private function setLogDirConfiguration($logDir)
     {
         if (!is_writable($logDir)) {
@@ -168,6 +185,9 @@ class ArrayConfig extends Config
         $this->logDir = $logDir;
     }
 
+    /**
+     * @param $mode
+     */
     private function setMatchMode($mode)
     {
         $this->matchMode = $mode;

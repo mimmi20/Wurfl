@@ -1,8 +1,6 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
- * Copyright (c) 2014 ScientiaMobile, Inc.
+ * Copyright (c) 2012 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -13,31 +11,30 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
- * @author Steve Kamerman <steve AT scientiamobile.com>
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
 /**
  * TizenUserAgentHandler
- * 
  *
  * @category   WURFL
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
- * @author Steve Kamerman <steve AT scientiamobile.com>
+ * @author     Steve Kamerman <steve AT scientiamobile.com>
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class TizenHandler extends AbstractHandler
+class TizenHandler
+    extends AbstractHandler
 {
-    
     protected $prefix = 'Tizen';
-    
+
     public static $constantIDs = array(
         'generic_tizen',
         'generic_tizen_ver1_0',
@@ -45,16 +42,28 @@ class TizenHandler extends AbstractHandler
         'generic_tizen_ver2_1',
         'generic_tizen_ver2_2',
     );
-    
-    public function canHandle($userAgent) {
+
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
+    public function canHandle($userAgent)
+    {
         return (Utils::checkIfStartsWith($userAgent, 'Mozilla') && Utils::checkIfContains($userAgent, 'Tizen'));
     }
-    
-    public function applyConclusiveMatch($userAgent) {
+
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
+    public function applyConclusiveMatch($userAgent)
+    {
         // Mozilla/5.0 (Linux; Tizen 2.2; SAMSUNG SM-Z910F) AppleWebKit/537.3 (KHTML, like Gecko) Version/2.2 Mobile Safari/537.3
         //                                                  ^ RIS tolerance
         $search = 'AppleWebKit/';
-        $idx = strpos($userAgent, $search);
+        $idx    = strpos($userAgent, $search);
         if ($idx !== false) {
             // Match to the end of the search string
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
@@ -63,20 +72,32 @@ class TizenHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
-    public function applyRecoveryMatch($userAgent) {
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
+    public function applyRecoveryMatch($userAgent)
+    {
 
         $version = self::getTizenVersion($userAgent);
-        $version = 'generic_tizen_ver'.str_replace('.', '_', $version);
+        $version = 'generic_tizen_ver' . str_replace('.', '_', $version);
         if (in_array($version, self::$constantIDs)) {
             return $version;
         }
+
         return 'generic_tizen';
     }
 
     public static $validTizenVersions = array('1.0', '2.0', '2.1', '2.2');
 
-    public static function getTizenVersion($ua) {
-
+    /**
+     * @param $ua
+     *
+     * @return string
+     */
+    public static function getTizenVersion($ua)
+    {
         // Find Tizen version
         if (preg_match('#Tizen (\d+?\.\d+?)#', $ua, $matches) && in_array($matches[1], self::$validTizenVersions)) {
             return $matches[1];
@@ -84,6 +105,5 @@ class TizenHandler extends AbstractHandler
 
         //Default
         return '1.0';
-
     }
 }

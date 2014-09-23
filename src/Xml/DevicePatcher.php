@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Xml;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,15 @@ namespace Wurfl\Xml;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Xml
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
- *
  */
+
+namespace Wurfl\Xml;
+
 use Wurfl\Utils;
 
 /**
@@ -45,14 +45,8 @@ class DevicePatcher
             $device->getGroupIdCapabilitiesMap(),
             $patchingDevice->getGroupIdCapabilitiesMap()
         );
-        return new ModelDevice(
-            $device->id,
-            $device->userAgent,
-            $device->fallBack,
-            $device->actualDeviceRoot,
-            $device->specific,
-            $groupIdCapabilitiesMap
-        );
+
+        return new ModelDevice($device->id, $device->userAgent, $device->fallBack, $device->actualDeviceRoot, $device->specific, $groupIdCapabilitiesMap);
     }
 
     /**

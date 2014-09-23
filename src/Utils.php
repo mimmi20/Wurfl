@@ -1,22 +1,23 @@
 <?php
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
+
 namespace Wurfl;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
 /**
  * WURFL related utilities
  *
@@ -24,18 +25,17 @@ namespace Wurfl;
  */
 class Utils
 {
-
-    private static $userAgentSearchOrder
-        = array(
-            'HTTP_DEVICE_STOCK_UA',
-            'HTTP_X_OPERAMINI_PHONE_UA',
-            'HTTP_USER_AGENT',
-        );
+    private static $userAgentSearchOrder = array(
+        'HTTP_DEVICE_STOCK_UA',
+        'HTTP_X_OPERAMINI_PHONE_UA',
+        'HTTP_USER_AGENT',
+    );
 
     /**
      * returns the User Agent From $request or empty string if not found
      *
      * @param array $request HTTP Request array (normally $_SERVER)
+     * @param bool  $override_sideloaded_browser_ua
      *
      * @return string
      */
@@ -104,9 +104,10 @@ class Utils
 
         $accept = $request['accept'];
         if (isset($accept)) {
-            if ((strpos($accept, Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0)
-                || (strpos($accept, Constants::ACCEPT_HEADER_XHTML_XML) !== 0)
-                || (strpos($accept, Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
+            if ((strpos($accept, Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0) || (strpos(
+                        $accept,
+                        Constants::ACCEPT_HEADER_XHTML_XML
+                    ) !== 0) || (strpos($accept, Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
             ) {
                 return true;
             }
@@ -127,6 +128,7 @@ class Utils
         if (strcmp($deviceID, Constants::GENERIC) === 0) {
             return true;
         }
+
         return false;
     }
 
