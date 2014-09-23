@@ -4,6 +4,7 @@ namespace WurflTest;
 use Wurfl\Configuration\Config;
 use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\Manager;
+use Wurfl\Request\GenericRequest;
 use WurflCache\Adapter\Memory;
 
 class ManagerTest
@@ -166,7 +167,7 @@ class ManagerTest
      */
     public function testDeviceIdForRequest($userAgent, $expectedDeviceId)
     {
-        $class  = new ReflectionClass('\\Wurfl\\Manager');
+        $class  = new \ReflectionClass('\\Wurfl\\Manager');
         $method = $class->getMethod('deviceIdForRequest');
         $method->setAccessible(true);
 
