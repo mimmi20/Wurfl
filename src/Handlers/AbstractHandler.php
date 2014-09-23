@@ -20,7 +20,6 @@ namespace Wurfl\Handlers;
 
 use Psr\Log\LoggerInterface;
 use Wurfl\Constants;
-use Wurfl\Context;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\Normalizer\NullNormalizer;
 use Wurfl\Storage\Storage;
@@ -76,28 +75,15 @@ abstract class AbstractHandler
     public static $constantIDs = array();
 
     /**
-     * @param \Wurfl\Context                                $wurflContext
      * @param \Wurfl\Request\Normalizer\NormalizerInterface $userAgentNormalizer
      */
-    public function __construct(Context $wurflContext, $userAgentNormalizer = null)
+    public function __construct($userAgentNormalizer = null)
     {
         if (is_null($userAgentNormalizer)) {
             $this->userAgentNormalizer = new NullNormalizer();
         } else {
             $this->userAgentNormalizer = $userAgentNormalizer;
         }
-
-        $this->setupContext($wurflContext);
-    }
-
-    /**
-     * Sets the next Handler
-     *
-     * @param \Wurfl\Handlers\AbstractHandler $handler
-     */
-    public function setNextHandler(AbstractHandler $handler)
-    {
-        $this->nextHandler = $handler;
     }
 
     /**
@@ -140,21 +126,6 @@ abstract class AbstractHandler
     }
 
     /**
-     * sets the logger and the storage from the context
-     *
-     * @param \Wurfl\Context $wurflContext
-     *
-     * @return \Wurfl\Handlers\AbstractHandler
-     */
-    public function setupContext(Context $wurflContext)
-    {
-        $this->setLogger($wurflContext->logger)
-            ->setPersistenceProvider($wurflContext->persistenceProvider);
-
-        return $this;
-    }
-
-    /**
      * Returns true if this handler can handle the given $userAgent
      *
      * @param string $userAgent
@@ -174,21 +145,17 @@ abstract class AbstractHandler
      * @param string $userAgent
      * @param string $deviceID
      *
-     * @return null
+     * @return boolean
      */
     public function filter($userAgent, $deviceID)
     {
         if ($this->canHandle($userAgent)) {
             $this->updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
 
-            return null;
+            return true;
         }
 
-        if (isset($this->nextHandler)) {
-            return $this->nextHandler->filter($userAgent, $deviceID);
-        }
-
-        return null;
+        return false;
     }
 
     /**
@@ -275,7 +242,7 @@ abstract class AbstractHandler
 
         $userAgent                               = $this->normalizeUserAgent($request->userAgent);
         $request->matchInfo->normalizedUserAgent = $userAgent;
-        $this->logger->debug('START: Matching For  ' . $userAgent);
+        $this->logger->debug('START: Matching For ' . $userAgent);
 
         // Get The data associated with this current handler
         $this->getUserAgentsWithDeviceId();
@@ -300,7 +267,7 @@ abstract class AbstractHandler
                 'history'  => '(recovery-catchall),',
                 'function' => 'applyRecoveryCatchAllMatch',
                 'debug'    => 'Applying Catch All Recovery Match',
-            )
+            ),
         );
 
         $deviceID = Constants::NO_MATCH;
@@ -333,7 +300,7 @@ abstract class AbstractHandler
             }
         }
 
-        $this->logger->debug('END: Matching For  ' . $userAgent);
+        $this->logger->debug('END: Matching For ' . $userAgent);
         $request->matchInfo->lookupTime = microtime(true) - $startTime;
 
         return $deviceID;

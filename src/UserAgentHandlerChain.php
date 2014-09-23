@@ -40,16 +40,6 @@ class UserAgentHandlerChain
      */
     public function addUserAgentHandler(Handlers\AbstractHandler $handler)
     {
-        // $size = count($this->userAgentHandlers);
-
-        // if ($size > 0) {
-        // /**
-        // * @var $lastHandler Handlers\AbstractHandler
-        // */
-        // $lastHandler = $this->userAgentHandlers[$size - 1];
-        // $lastHandler->setNextHandler($handler);
-        // }
-
         $this->userAgentHandlers[] = $handler;
 
         return $this;
@@ -79,8 +69,7 @@ class UserAgentHandlerChain
 
         foreach ($handlers as $handler) {
             /** @var $handler Handlers\AbstractHandler */
-            if ($handler->canHandle($userAgent)) {
-                $handler->updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
+            if ($handler->filter($userAgent, $deviceID)) {
                 break;
             }
         }

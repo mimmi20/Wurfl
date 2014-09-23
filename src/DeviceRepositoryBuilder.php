@@ -258,7 +258,7 @@ class DeviceRepositoryBuilder
      *
      * @param Xml\ModelDevice $device
      *
-     * @see WURFL_UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
+     * @see \Wurfl\UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
      */
     private function classifyAndPersistDevice(Xml\ModelDevice $device)
     {

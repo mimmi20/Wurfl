@@ -191,7 +191,7 @@ class CatchAllHandler
      * @param string $userAgent
      * @param string $deviceID
      *
-     * @return null|void
+     * @return boolean
      */
     public function filter($userAgent, $deviceID)
     {
@@ -203,7 +203,7 @@ class CatchAllHandler
             $this->mozilla5UserAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
         }
 
-        parent::filter($userAgent, $deviceID);
+        return parent::filter($userAgent, $deviceID);
     }
 
     /**

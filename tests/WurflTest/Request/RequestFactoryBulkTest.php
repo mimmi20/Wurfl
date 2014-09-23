@@ -1,12 +1,13 @@
 <?php
-namespace WurflTest;
+namespace WurflTest\Request;
 
 use Wurfl\Request\GenericRequestFactory;
+use WurflTest\NotNullCondition;
 
 /**
  * test case
  */
-class WURFLRequestFactoryTest extends \PHPUnit_Framework_TestCase
+class RequestFactoryBulkTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var array
@@ -15,15 +16,15 @@ class WURFLRequestFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $configurationFile = __DIR__ . DIRECTORY_SEPARATOR . '../resources/request.yml';
-        $this->testData   = self::loadData($configurationFile);
+        $configurationFile = __DIR__ . DIRECTORY_SEPARATOR . '../../resources/request.yml';
+        $this->testData    = self::loadData($configurationFile);
     }
 
     public function testCreateRequest()
     {
         foreach ($this->testData as $testData) {
             $requestFactory = new GenericRequestFactory();
-            $request = $requestFactory->createRequest($testData ['_SERVER']);
+            $request = $requestFactory->createRequest($testData['_SERVER']);
 
             self::assertEquals($request->userAgent, $testData ['EXPECTED_USER_AGENT']);
         }
