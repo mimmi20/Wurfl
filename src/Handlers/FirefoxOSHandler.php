@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class FirefoxOSHandler
     extends AbstractHandler
 {
-    protected $prefix = "FIREFOXOS";
+    protected $prefix = 'FIREFOXOS';
 
     public static $constantIDs = array(
         'generic_firefox_os',
@@ -82,7 +82,7 @@ class FirefoxOSHandler
 
         $version_string = str_replace('.', '_', self::getFirefoxOSVersion($userAgent));
 
-        // Replace X_0 to X because the WURFL IDs are of the type "firefox_os_verX" and not "firefox_os_verX_0"
+        // Replace X_0 to X because the WURFL IDs are of the type 'firefox_os_verX' and not 'firefox_os_verX_0'
         $version_string = str_replace('_0', '', $version_string);
 
         // Calculate WURFL ID
@@ -118,9 +118,9 @@ class FirefoxOSHandler
         // Set appropriate default values if not in OS mapping
         if (strpos($userAgent, 'Tablet') !== false) {
             // Firefox OS 1.3 is the lowest version of Firefox OS to have a tablet WURFL ID
-            return "1.3";
+            return '1.3';
         }
 
-        return "1.0";
+        return '1.0';
     }
 }

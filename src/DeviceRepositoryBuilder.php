@@ -330,7 +330,7 @@ class DeviceRepositoryBuilder
     }
 
     /**
-     * Returns an array of devices in the form "WURFL_Device::id => WURFL_Device"
+     * Returns an array of devices in the form 'WURFL_Device::id => WURFL_Device'
      *
      * @param Xml\DeviceIterator $deviceIterator
      *

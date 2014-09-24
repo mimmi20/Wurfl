@@ -38,13 +38,6 @@ abstract class AbstractHandler
     implements FilterInterface
 {
     /**
-     * The next User Agent Handler
-     *
-     * @var \Wurfl\Handlers\AbstractHandler
-     */
-    protected $nextHandler;
-
-    /**
      * @var \Wurfl\Request\Normalizer\UserAgentNormalizer
      */
     protected $userAgentNormalizer;
@@ -481,7 +474,6 @@ abstract class AbstractHandler
     public function __sleep()
     {
         return array(
-            'nextHandler',
             'userAgentNormalizer',
             'prefix',
         );

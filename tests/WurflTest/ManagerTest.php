@@ -6,6 +6,7 @@ use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\Manager;
 use Wurfl\Request\GenericRequest;
 use WurflCache\Adapter\Memory;
+use WurflCache\Adapter\File;
 
 class ManagerTest
     extends \PHPUnit_Framework_TestCase
@@ -15,9 +16,9 @@ class ManagerTest
      */
     private static $wurflManager;
 
-    const RESOURCES_DIR = "../resources";
-    const WURFL_CONFIG_FILE = "../resources/wurfl-config.xml";
-    const CACHE_DIR = "../resources/cache";
+    const RESOURCES_DIR     = 'resources';
+    const WURFL_CONFIG_FILE = 'resources/wurfl-config.xml';
+    const CACHE_DIR         = 'resources/cache';
 
     /**
      * @var \Wurfl\Manager
@@ -34,20 +35,25 @@ class ManagerTest
      */
     private static function initManager()
     {
-        $resourcesDir = __DIR__ . DIRECTORY_SEPARATOR . self::RESOURCES_DIR;
-        $cacheDir     = __DIR__ . DIRECTORY_SEPARATOR . self::CACHE_DIR;
+        $resourcesDir = self::RESOURCES_DIR;
+        $cacheDir     = self::CACHE_DIR;
         $config       = new InMemoryConfig();
 
-        $config->wurflFile($resourcesDir . "/wurfl.xml");
+        $config->wurflFile($resourcesDir . '/wurfl.xml');
 
         $params = array(
             Config::DIR        => $cacheDir,
             Config::EXPIRATION => 0
         );
         $config->persistence('file', $params);
-        $persistenceStorage = new Memory($params);
+        $config->cache('memory');
+        $cacheStorage       = new Memory();
+        $persistenceStorage = new File($params);
 
-        return new Manager($config, $persistenceStorage, $persistenceStorage);
+        $manager = new Manager($config, $persistenceStorage, $cacheStorage);
+        $manager->reload();
+        
+        return $manager;
     }
 
     public static function tearDownAfterClass()
@@ -76,27 +82,27 @@ class ManagerTest
     public function testShouldReturnAllDevicesId()
     {
         $devicesId = $this->object->getAllDevicesID();
-        self::assertContains("generic", $devicesId);
+        self::assertContains('generic', $devicesId);
     }
 
     public function testShouldReturnWurflVersionInfo()
     {
         $wurflInfo = $this->object->getWURFLInfo();
-        self::assertEquals("Wireless Universal Resource File v_2.1.0.1", $wurflInfo->version);
-        self::assertEquals("July 30, 2007", $wurflInfo->lastUpdated);
+        self::assertEquals('Wireless Universal Resource File v_2.1.0.1', $wurflInfo->version);
+        self::assertEquals('July 30, 2007', $wurflInfo->lastUpdated);
     }
 
     public function testGetListOfGroups()
     {
         $actualGroups = array(
-            "product_info",
-            "wml_ui",
-            "chtml_ui",
-            "xhtml_ui",
-            "markup",
-            "cache",
-            "display",
-            "image_format"
+            'product_info',
+            'wml_ui',
+            'chtml_ui',
+            'xhtml_ui',
+            'markup',
+            'cache',
+            'display',
+            'image_format'
         );
         $listOfGroups = $this->object->getListOfGroups();
         foreach ($actualGroups as $groupId) {
@@ -136,7 +142,7 @@ class ManagerTest
     public function fallBackDevicesIdProvider()
     {
         return array(
-            array("blackberry_generic_ver2", array("blackberry_generic", "generic_xhtml", "generic"))
+            array('blackberry_generic_ver2', array('blackberry_generic', 'generic_xhtml', 'generic'))
         );
     }
 
@@ -147,15 +153,15 @@ class ManagerTest
     {
         return array(
             array(
-                "chtml_ui",
+                'chtml_ui',
                 array(
-                    "chtml_display_accesskey",
-                    "emoji",
-                    "chtml_can_display_images_and_text_on_same_line",
-                    "chtml_displays_image_in_center",
-                    "imode_region",
-                    "chtml_make_phone_call_string",
-                    "chtml_table_support"
+                    'chtml_display_accesskey',
+                    'emoji',
+                    'chtml_can_display_images_and_text_on_same_line',
+                    'chtml_displays_image_in_center',
+                    'imode_region',
+                    'chtml_make_phone_call_string',
+                    'chtml_table_support'
                 )
             )
         );

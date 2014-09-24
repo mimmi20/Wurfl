@@ -217,7 +217,7 @@ abstract class Config
         $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
 
         if (file_exists($fullName)) {
-            return $fullName;
+            return realpath($fullName);
         }
         throw new Exception("The specified path '" . $fullName . "' does not exist");
     }

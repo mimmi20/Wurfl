@@ -81,9 +81,9 @@ class InMemoryConfig
      *
      * @return \Wurfl\Configuration\InMemoryConfig $this
      */
-    public function persistence($provider, $params = array())
+    public function persistence($provider, array $params = array())
     {
-        $this->persistence = array_merge(array("provider" => $provider), array("params" => $params));
+        $this->persistence = array_merge(array('provider' => $provider), array('params' => $params));
 
         return $this;
     }
@@ -96,9 +96,9 @@ class InMemoryConfig
      *
      * @return \Wurfl\Configuration\InMemoryConfig $this
      */
-    public function cache($provider, $params = array())
+    public function cache($provider, array $params = array())
     {
-        $this->cache = array_merge(array("provider" => $provider), array("params" => $params));
+        $this->cache = array_merge(array('provider' => $provider), array('params' => $params));
 
         return $this;
     }

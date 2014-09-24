@@ -67,6 +67,11 @@ class Manager
      * @var \Wurfl\UserAgentHandlerChain
      */
     private $userAgentHandlerChain = null;
+    
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger = null;
 
     /**
      * Creates a new Wurfl Manager object
@@ -107,7 +112,7 @@ class Manager
     /**
      * Reload the WURFL Data into the persistence provider
      */
-    private function reload()
+    public function reload()
     {
         $this->persistenceStorage->setWURFLLoaded(false);
         $this->remove();
