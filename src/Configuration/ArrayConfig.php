@@ -77,7 +77,6 @@ use Wurfl\Exception;
  * </code>
  *
  * @package    WURFL_Configuration
- * @deprecated
  */
 class ArrayConfig
     extends Config
