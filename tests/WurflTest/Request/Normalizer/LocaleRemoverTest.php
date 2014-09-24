@@ -23,7 +23,7 @@ class LocaleRemoverTest
     public function shouldNormalizeTheLocale($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
-        self::assertEquals($found, $expected);
+        self::assertEquals($expected, $found);
     }
 
     public function userAgentsDataProvider()

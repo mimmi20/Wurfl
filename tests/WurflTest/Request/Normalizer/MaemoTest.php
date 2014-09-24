@@ -24,7 +24,7 @@ class MaemoTest
     public function shoudReturnTheStringAfterMaemo($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
-        self::assertEquals($found, $expected);
+        self::assertEquals($expected, $found);
     }
 
     public function maemoUserAgentsDataProvider()

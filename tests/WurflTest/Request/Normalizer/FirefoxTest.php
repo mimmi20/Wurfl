@@ -23,7 +23,7 @@ class FirefoxTest
     public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
-        self::assertEquals($found, $expected);
+        self::assertEquals($expected, $found);
     }
 
     public function firefoxUserAgentsDataProvider()

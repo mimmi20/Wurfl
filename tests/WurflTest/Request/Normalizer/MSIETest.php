@@ -25,7 +25,7 @@ class MSIETest
      */
     public function shoudRemoveAllTheCharactersAfterTheMinorVersion($userAgent, $expected)
     {
-        $this->assertNormalizeEqualsExpected($userAgent, $expected);
+        $this->assertNormalizeEqualsExpected($expected, $userAgent);
     }
 
     public function msieUserAgentsDataProvider()

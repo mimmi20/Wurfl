@@ -16,9 +16,9 @@ class ManagerTest
      */
     private static $wurflManager;
 
-    const RESOURCES_DIR     = 'resources';
-    const WURFL_CONFIG_FILE = 'resources/wurfl-config.xml';
-    const CACHE_DIR         = 'resources/cache';
+    const RESOURCES_DIR     = 'tests/resources/';
+    const WURFL_CONFIG_FILE = 'tests/resources/wurfl-config.xml';
+    const CACHE_DIR         = 'tests/resources/cache/';
 
     /**
      * @var \Wurfl\Manager
@@ -39,7 +39,7 @@ class ManagerTest
         $cacheDir     = self::CACHE_DIR;
         $config       = new InMemoryConfig();
 
-        $config->wurflFile($resourcesDir . '/wurfl.xml');
+        $config->wurflFile($resourcesDir . 'wurfl.xml');
 
         $params = array(
             Config::DIR        => $cacheDir,
@@ -52,7 +52,7 @@ class ManagerTest
 
         $manager = new Manager($config, $persistenceStorage, $cacheStorage);
         $manager->reload();
-        
+
         return $manager;
     }
 
