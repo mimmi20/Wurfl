@@ -27,6 +27,9 @@ class Utils
 {
     private static $userAgentSearchOrder = array(
         'HTTP_DEVICE_STOCK_UA',
+        'HTTP_X_DEVICE_USER_AGENT',
+        'HTTP_X_SKYFIRE_VERSION',
+        'HTTP_X_BLUECOAT_VIA',
         'HTTP_X_OPERAMINI_PHONE_UA',
         'HTTP_USER_AGENT',
     );

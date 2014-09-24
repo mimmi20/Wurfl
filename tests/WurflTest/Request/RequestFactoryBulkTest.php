@@ -17,7 +17,7 @@ class RequestFactoryBulkTest
 
     protected function setUp()
     {
-        $configurationFile = __DIR__ . DIRECTORY_SEPARATOR . '../../resources/request.yml';
+        $configurationFile = 'tests/resources/request.yml';
         $this->testData    = self::loadData($configurationFile);
     }
 
@@ -27,7 +27,7 @@ class RequestFactoryBulkTest
             $requestFactory = new GenericRequestFactory();
             $request        = $requestFactory->createRequest($testData['_SERVER']);
 
-            self::assertEquals($request->userAgent, $testData ['EXPECTED_USER_AGENT']);
+            self::assertEquals($testData['EXPECTED_USER_AGENT'], $request->userAgent);
         }
     }
 

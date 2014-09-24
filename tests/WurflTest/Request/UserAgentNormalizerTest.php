@@ -14,12 +14,11 @@ class UserAgentNormalizerTest
     public function testShouldAddANormalizer()
     {
         $userAgentNormalizer = new UserAgentNormalizer();
-        $currentNormalizer   = $userAgentNormalizer->add(
+        $userAgentNormalizer->add(
             new Chrome()
         );
 
-        self::assertEquals(0, $userAgentNormalizer->count());
-        self::assertEquals(1, $currentNormalizer->count());
+        self::assertEquals(1, $userAgentNormalizer->count());
     }
 
     public function testShouldAddToAlreadyPresentNormalizers()

@@ -31,7 +31,7 @@ class GenericRequestFactoryTest
         $result = $this->object->createRequest($header, false);
 
         self::assertInstanceOf('\Wurfl\Request\GenericRequest', $result);
-        self::assertSame($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     public function testCreateRequestForUserAgent()
@@ -45,6 +45,6 @@ class GenericRequestFactoryTest
         $result = $this->object->createRequestForUserAgent($userAgent);
 
         self::assertInstanceOf('\Wurfl\Request\GenericRequest', $result);
-        self::assertSame($expected, $result);
+        self::assertEquals($expected, $result);
     }
 }
