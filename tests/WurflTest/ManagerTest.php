@@ -18,7 +18,7 @@ class ManagerTest
 
     const RESOURCES_DIR     = 'tests/resources/';
     const WURFL_CONFIG_FILE = 'tests/resources/wurfl-config.xml';
-    const CACHE_DIR         = 'tests/resources/cache/';
+    const CACHE_DIR         = 'tests/resources/cache';
 
     /**
      * @var \Wurfl\Manager

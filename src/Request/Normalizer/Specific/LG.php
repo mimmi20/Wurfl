@@ -35,6 +35,6 @@ class LG
      */
     public function normalize($userAgent)
     {
-        return substr($userAgent, strpos($userAgent, "LG"));
+        return substr($userAgent, strpos($userAgent, 'LG'));
     }
 }
