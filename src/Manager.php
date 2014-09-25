@@ -258,11 +258,11 @@ class Manager
     {
         Handlers\Utils::reset();
 
-        if ($this->wurflConfig->isHighPerformance() && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis(
-                $request->userAgent
-            )
+        if ($this->wurflConfig->isHighPerformance() 
+            && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
         ) {
-            // This device has been identified as a web browser programatically, so no call to WURFL is necessary
+            // This device has been identified as a web browser programatically, 
+            // so no call to WURFL is necessary
             $deviceId = Constants::GENERIC_WEB_BROWSER;
         } else {
             $deviceId = $this->deviceIdForRequest($request);
@@ -369,8 +369,8 @@ class Manager
         if (!$id) {
             // $request->id is not set
             // -> do not try to get info from cache nor try to save to the cache
-            $request->matchInfo->from_cache  = 'invalid id';
-            $request->matchInfo->lookup_time = 0.0;
+            $request->matchInfo->fromCache  = 'invalid id';
+            $request->matchInfo->lookupTime = 0.0;
 
             return $this->userAgentHandlerChain->match($request);
         }
