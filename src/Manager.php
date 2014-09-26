@@ -18,6 +18,7 @@
 
 namespace Wurfl;
 
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use WurflCache\Adapter\AdapterInterface;
 
@@ -50,11 +51,11 @@ class Manager
      */
     private $wurflConfig = null;
     /**
-     * @var \WurflCache\Adapter\AdapterInterface
+     * @var Storage\Storage
      */
     private $persistenceStorage = null;
     /**
-     * @var \WurflCache\Adapter\AdapterInterface
+     * @var Storage\Storage
      */
     private $cacheStorage = null;
 
@@ -67,7 +68,7 @@ class Manager
      * @var \Wurfl\UserAgentHandlerChain
      */
     private $userAgentHandlerChain = null;
-    
+
     /**
      * @var \Psr\Log\LoggerInterface
      */
@@ -85,28 +86,122 @@ class Manager
         AdapterInterface $persistenceStorage = null,
         AdapterInterface $cacheStorage = null
     ) {
-        $this->wurflConfig = $wurflConfig;
+        $this->setWurflConfig($wurflConfig);
 
         if (null === $persistenceStorage) {
-            $persistenceStorage = Storage\Factory::create($this->wurflConfig->persistence);
+            $persistenceStorage = Storage\Factory::create($this->getWurflConfig()->persistence);
         }
 
         if (null === $cacheStorage) {
-            $cacheStorage = Storage\Factory::create($this->wurflConfig->cache);
+            $cacheStorage = Storage\Factory::create($this->getWurflConfig()->cache);
         }
 
-        $this->persistenceStorage = new Storage\Storage($persistenceStorage);
-        $this->cacheStorage       = new Storage\Storage($cacheStorage);
+        $this->setPersistenceStorage(new Storage\Storage($persistenceStorage));
+        $this->setCacheStorage(new Storage\Storage($cacheStorage));
 
-        if ($this->persistenceStorage->validSecondaryCache($this->cacheStorage)) {
-            $this->persistenceStorage->setCacheStorage($this->cacheStorage);
+        if ($this->getPersistenceStorage()->validSecondaryCache($this->getCacheStorage())) {
+            $this->getPersistenceStorage()->setCacheStorage($this->getCacheStorage());
         }
 
         if ($this->hasToBeReloaded()) {
             $this->reload();
-        } else {
+        }
+    }
+
+    /**
+     * @return \Wurfl\Storage\Storage
+     */
+    private function getCacheStorage()
+    {
+        return $this->cacheStorage;
+    }
+
+    /**
+     * @param \Wurfl\Storage\Storage $cacheStorage
+     */
+    private function setCacheStorage(Storage\Storage $cacheStorage)
+    {
+        $this->cacheStorage = $cacheStorage;
+    }
+
+    /**
+     * @return DeviceRepository
+     */
+    private function getDeviceRepository()
+    {
+        if (null === $this->deviceRepository) {
             $this->init();
         }
+
+        return $this->deviceRepository;
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    public function getLogger()
+    {
+        if (null === $this->logger) {
+            $this->logger = new NullLogger();
+        }
+
+        return $this->logger;
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * @return \Wurfl\Storage\Storage
+     */
+    private function getPersistenceStorage()
+    {
+        return $this->persistenceStorage;
+    }
+
+    /**
+     * @param \Wurfl\Storage\Storage $persistenceStorage
+     */
+    private function setPersistenceStorage(Storage\Storage $persistenceStorage)
+    {
+        $this->persistenceStorage = $persistenceStorage;
+    }
+
+    /**
+     * @return UserAgentHandlerChain
+     */
+    private function getUserAgentHandlerChain()
+    {
+        if (null === $this->userAgentHandlerChain) {
+            $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
+                $this->getPersistenceStorage(),
+                $this->getCacheStorage(),
+                $this->getLogger()
+            );
+        }
+
+        return $this->userAgentHandlerChain;
+    }
+
+    /**
+     * @return \Wurfl\Configuration\Config
+     */
+    public function getWurflConfig()
+    {
+        return $this->wurflConfig;
+    }
+
+    /**
+     * @param \Wurfl\Configuration\Config $wurflConfig
+     */
+    public function setWurflConfig(Configuration\Config $wurflConfig)
+    {
+        $this->wurflConfig = $wurflConfig;
     }
 
     /**
@@ -114,11 +209,11 @@ class Manager
      */
     public function reload()
     {
-        $this->persistenceStorage->setWURFLLoaded(false);
+        $this->getPersistenceStorage()->setWURFLLoaded(false);
         $this->remove();
         $this->invalidateCache();
         $this->init();
-        $this->persistenceStorage->save(self::WURFL_API_STATE, $this->getState());
+        $this->getPersistenceStorage()->save(self::WURFL_API_STATE, $this->getState());
     }
 
     /**
@@ -128,11 +223,11 @@ class Manager
      */
     private function hasToBeReloaded()
     {
-        if (!$this->wurflConfig->allowReload) {
+        if (!$this->getWurflConfig()->allowReload) {
             return false;
         }
 
-        $state = $this->persistenceStorage->load(self::WURFL_API_STATE);
+        $state = $this->getPersistenceStorage()->load(self::WURFL_API_STATE);
 
         return !$this->isStateCurrent($state);
     }
@@ -157,7 +252,7 @@ class Manager
      */
     private function getState()
     {
-        $wurflMtime = filemtime($this->wurflConfig->wurflFile);
+        $wurflMtime = filemtime($this->getWurflConfig()->wurflFile);
 
         return Constants::API_VERSION . '::' . $wurflMtime;
     }
@@ -169,7 +264,7 @@ class Manager
      */
     private function invalidateCache()
     {
-        $this->cacheStorage->clear();
+        $this->getCacheStorage()->clear();
     }
 
     /**
@@ -179,7 +274,7 @@ class Manager
      */
     public function remove()
     {
-        $this->persistenceStorage->clear();
+        $this->getPersistenceStorage()->clear();
     }
 
     /**
@@ -187,21 +282,17 @@ class Manager
      */
     private function init()
     {
-        $logger  = new NullLogger();
-
-        $this->userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
-            $this->persistenceStorage,
-            $this->cacheStorage,
-            $logger
+        $devicePatcher           = new Xml\DevicePatcher();
+        $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
+            $this->getPersistenceStorage(),
+            $this->getUserAgentHandlerChain(),
+            $devicePatcher
         );
 
-        $devicePatcher           = new Xml\DevicePatcher();
-        $deviceRepositoryBuilder = new DeviceRepositoryBuilder($this->persistenceStorage, $this->userAgentHandlerChain, $devicePatcher);
-
         $this->deviceRepository = $deviceRepositoryBuilder->build(
-            $this->wurflConfig->wurflFile,
-            $this->wurflConfig->wurflPatches,
-            $this->wurflConfig->capabilityFilter
+            $this->getWurflConfig()->wurflFile,
+            $this->getWurflConfig()->wurflPatches,
+            $this->getWurflConfig()->capabilityFilter
         );
     }
 
@@ -222,7 +313,7 @@ class Manager
      */
     public function getWurflInfo()
     {
-        return $this->deviceRepository->getWurflInfo();
+        return $this->getDeviceRepository()->getWurflInfo();
     }
 
     /**
@@ -258,10 +349,10 @@ class Manager
     {
         Handlers\Utils::reset();
 
-        if ($this->wurflConfig->isHighPerformance() 
+        if ($this->getWurflConfig()->isHighPerformance()
             && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
         ) {
-            // This device has been identified as a web browser programatically, 
+            // This device has been identified as a web browser programatically,
             // so no call to WURFL is necessary
             $deviceId = Constants::GENERIC_WEB_BROWSER;
         } else {
@@ -315,7 +406,7 @@ class Manager
      */
     public function getListOfGroups()
     {
-        return $this->deviceRepository->getListOfGroups();
+        return $this->getDeviceRepository()->getListOfGroups();
     }
 
     /**
@@ -327,7 +418,7 @@ class Manager
      */
     public function getCapabilitiesNameForGroup($groupId)
     {
-        return $this->deviceRepository->getCapabilitiesNameForGroup($groupId);
+        return $this->getDeviceRepository()->getCapabilitiesNameForGroup($groupId);
     }
 
     /**
@@ -340,7 +431,7 @@ class Manager
      */
     public function getFallBackDevices($deviceId)
     {
-        return $this->deviceRepository->getDeviceHierarchy($deviceId);
+        return $this->getDeviceRepository()->getDeviceHierarchy($deviceId);
     }
 
     /**
@@ -350,7 +441,7 @@ class Manager
      */
     public function getAllDevicesID()
     {
-        return $this->deviceRepository->getAllDevicesID();
+        return $this->getDeviceRepository()->getAllDevicesID();
     }
 
     // ******************** private functions *****************************
@@ -372,15 +463,15 @@ class Manager
             $request->matchInfo->fromCache  = 'invalid id';
             $request->matchInfo->lookupTime = 0.0;
 
-            return $this->userAgentHandlerChain->match($request);
+            return $this->getUserAgentHandlerChain()->match($request);
         }
 
-        $deviceId = $this->cacheStorage->load($id);
+        $deviceId = $this->getCacheStorage()->load($id);
 
         if (empty($deviceId)) {
-            $deviceId = $this->userAgentHandlerChain->match($request);
+            $deviceId = $this->getUserAgentHandlerChain()->match($request);
             // save it in cache
-            $this->cacheStorage->save($id, $deviceId);
+            $this->getCacheStorage()->save($id, $deviceId);
         } else {
             $request->matchInfo->fromCache  = true;
             $request->matchInfo->lookupTime = 0.0;
@@ -400,12 +491,12 @@ class Manager
      */
     private function getWrappedDevice($deviceId, Request\GenericRequest $request = null)
     {
-        $device = $this->cacheStorage->load('DEV_' . $deviceId);
+        $device = $this->getCacheStorage()->load('DEV_' . $deviceId);
 
         if (empty($device)) {
-            $modelDevices = $this->deviceRepository->getDeviceHierarchy($deviceId);
+            $modelDevices = $this->getDeviceRepository()->getDeviceHierarchy($deviceId);
             $device       = new CustomDevice($modelDevices, $request);
-            $this->cacheStorage->save('DEV_' . $deviceId, $device);
+            $this->getCacheStorage()->save('DEV_' . $deviceId, $device);
         }
 
         return $device;
