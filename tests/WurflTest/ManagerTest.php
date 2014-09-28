@@ -131,18 +131,13 @@ class ManagerTest
         self::assertSame($expected, $fallBackDevices);
     }
 
-    private function deviceId($device)
-    {
-        return $device->id;
-    }
-
     /**
      *
      */
     public function fallBackDevicesIdProvider()
     {
         return array(
-            array('blackberry_generic_ver2', array('blackberry_generic', 'generic_xhtml', 'generic'))
+            array('blackberry_generic_ver2', array('blackberry_generic', 'generic_xhtml', 'generic_mobile', 'generic'))
         );
     }
 

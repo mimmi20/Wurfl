@@ -432,6 +432,9 @@ class Manager
     public function getFallBackDevices($deviceId)
     {
         $fallBackDevices = $this->getDeviceRepository()->getDeviceHierarchy($deviceId);
+
+        array_shift($fallBackDevices);
+
         return array_map(array($this, 'deviceId'), $fallBackDevices);
     }
 
