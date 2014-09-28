@@ -3,7 +3,7 @@ namespace WurflTest;
 
 use Wurfl\Configuration\Config;
 use Wurfl\Configuration\InMemoryConfig;
-use Wurfl\UserAgentHandlerChain;
+use Wurfl\Storage\Storage;
 use Wurfl\Request\GenericRequest;
 use Wurfl\UserAgentHandlerChainFactory;
 use WurflCache\Adapter\Memory;
@@ -49,8 +49,8 @@ class UserAgentHandlerChainTest
         );
         $config->persistence('file', $params);
         $config->cache('memory');
-        $cacheStorage       = new Memory();
-        $persistenceStorage = new File($params);
+        $cacheStorage       = new Storage(new Memory());
+        $persistenceStorage = new Storage(new File($params));
         $logger = new NullLogger();
 
         $UserAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
