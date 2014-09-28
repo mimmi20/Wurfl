@@ -51,7 +51,7 @@ class UserAgentHandlerChainFactory
             $userAgentHandlerChain = self::init();
             $cacheProvider->save('UserAgentHandlerChain', $userAgentHandlerChain, 3600);
         }
-        
+
         foreach ($userAgentHandlerChain->getHandlers() as $handler) {
             /** @var $handler \Wurfl\Handlers\AbstractHandler */
             $handler
@@ -136,7 +136,7 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\TizenHandler($genericNormalizers));
 
         $appleNormalizer = clone $genericNormalizers;
-        $appleNormalizer->add(new \Wurfl\Request\Normalizer\Specific\Apple());
+        $appleNormalizer->add(new Request\Normalizer\Specific\Apple());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\AppleHandler($appleNormalizer));
 
         /**** High workload mobile matchers ****/
@@ -223,15 +223,7 @@ class UserAgentHandlerChainFactory
         /**** Game Consoles ****/
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\XboxHandler($genericNormalizers));
 
-        /**** DesktopApplications ****/
-        $desktopApplicationNormalizer = clone $genericNormalizers;
-        $desktopApplicationNormalizer->add(new \Wurfl\Request\Normalizer\Specific\DesktopApplication());
-        $userAgentHandlerChain->addUserAgentHandler(
-            new \Wurfl\Handlers\DesktopApplicationHandler($desktopApplicationNormalizer)
-        );
-
-        /**** Desktop Browsers ****/
-
+        /**** Desktop Browsers - Opera and Chrome ****/
         $operaNormalizer = clone $genericNormalizers;
         $operaNormalizer->add(new Request\Normalizer\Specific\Opera());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($operaNormalizer));
@@ -240,6 +232,14 @@ class UserAgentHandlerChainFactory
         $chromeNormalizer->add(new Request\Normalizer\Specific\Chrome());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($chromeNormalizer));
 
+        /**** DesktopApplications ****/
+        $desktopApplicationNormalizer = clone $genericNormalizers;
+        $desktopApplicationNormalizer->add(new Request\Normalizer\Specific\DesktopApplication());
+        $userAgentHandlerChain->addUserAgentHandler(
+            new \Wurfl\Handlers\DesktopApplicationHandler($desktopApplicationNormalizer)
+        );
+
+        /**** Desktop Browsers ****/
         $firefoxNormalizer = clone $genericNormalizers;
         $firefoxNormalizer->add(new Request\Normalizer\Specific\Firefox());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\FirefoxHandler($firefoxNormalizer));
