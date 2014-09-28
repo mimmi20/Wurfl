@@ -89,7 +89,7 @@ class ManagerTest
     {
         $wurflInfo = $this->object->getWURFLInfo();
         self::assertEquals('db.scientiamobile.com - 2014-08-31 00:50:01', $wurflInfo->version);
-        self::assertEquals('July 30, 2007', $wurflInfo->lastUpdated);
+        self::assertEquals('Sun Aug 31 00:53:12 -0400 2014', $wurflInfo->lastUpdated);
     }
 
     public function testGetListOfGroups()
