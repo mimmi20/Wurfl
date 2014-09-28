@@ -392,7 +392,7 @@ class Manager
      * @param string                 $deviceId
      * @param Request\GenericRequest $request
      *
-     * @return \Wurfl\Xml\ModelDevice
+     * @return Xml\ModelDevice
      */
     public function getDevice($deviceId, Request\GenericRequest $request = null)
     {
@@ -431,7 +431,17 @@ class Manager
      */
     public function getFallBackDevices($deviceId)
     {
-        return $this->getDeviceRepository()->getDeviceHierarchy($deviceId);
+        $fallBackDevices = $this->getDeviceRepository()->getDeviceHierarchy($deviceId);
+        return array_map(array($this, 'deviceId'), $fallBackDevices);
+    }
+
+    /**
+     * @param \Wurfl\Xml\ModelDevice $device
+     *
+     * @return string
+     */
+    private function deviceId(Xml\ModelDevice $device) {
+        return $device->id;
     }
 
     /**

@@ -12,7 +12,7 @@ use Wurfl\Request\Normalizer\Specific\Android;
  * test case.
  */
 class AndroidTest
-    extends BaseTest
+    extends TestBase
 {
 
     protected function setUp()

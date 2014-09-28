@@ -4,7 +4,7 @@ namespace WurflTest\Request\Normalizer;
 /**
  * test case.
  */
-class BaseTest
+class TestBase
     extends \PHPUnit_Framework_TestCase
 {
     /** @var  \Wurfl\Request\Normalizer\NormalizerInterface */

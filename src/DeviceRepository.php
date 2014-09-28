@@ -101,7 +101,7 @@ interface DeviceRepository
      *
      * @param string $deviceId
      *
-     * @return array
+     * @return \Wurfl\Xml\ModelDevice[]
      */
     public function getDeviceHierarchy($deviceId);
 

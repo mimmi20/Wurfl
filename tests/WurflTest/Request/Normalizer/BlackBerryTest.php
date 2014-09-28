@@ -7,7 +7,7 @@ use Wurfl\Request\Normalizer\Generic\BlackBerry;
  * test case.
  */
 class BlackBerryTest
-    extends BaseTest
+    extends TestBase
 {
 
     protected function setUp()

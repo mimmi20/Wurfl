@@ -262,7 +262,7 @@ class CustomDeviceRepository
      *
      * @param string $deviceId
      *
-     * @return array All \Wurfl\Xml\ModelDevice objects in the fallback tree
+     * @return \Wurfl\Xml\ModelDevice[] All ModelDevice objects in the fallback tree
      */
     public function getDeviceHierarchy($deviceId)
     {

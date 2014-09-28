@@ -8,7 +8,7 @@ use Wurfl\Request\Normalizer\Specific\Maemo;
  *  test case.
  */
 class MaemoTest
-    extends BaseTest
+    extends TestBase
 {
 
     protected function setUp()
