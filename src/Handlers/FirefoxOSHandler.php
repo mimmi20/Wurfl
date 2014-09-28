@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use Wurfl\Constants;
+
 /**
  * FirefoxOSUserAgentHandler
  *
