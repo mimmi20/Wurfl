@@ -245,6 +245,86 @@ class ManagerTest
                 'Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.0.1; en-US) AppleWebKit/535.8+ (KHTML, like Gecko) Version/7.2.0.1 Safari/535.8+',
                 'rim_playbook_ver1_subos2'
             ),
+            array(
+                'Mozilla/5.0 (PLAYSTATION 3 4.31) AppleWebKit/531.22.8 (KHTML, like Gecko)',
+                'sony_playstation3_ver1_subua45'
+            ),
+            array(
+                'Mozilla/5.0 (Linux; U; de-de; GT-I9100 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Safari/533.1',
+                'samsung_gt_i9100_ver1_funnyua'
+            ),
+            array(
+                'Mozilla/5.0 (PLAYSTATION 3 4.46) AppleWebKit/531.22.8 (KHTML, like Gecko)',
+                'sony_playstation3_ver1_subua45'
+            ),
+            array(
+                'Mozilla/5.0 (PLAYSTATION 3 4.25) AppleWebKit/531.22.8 (KHTML, like Gecko)',
+                'sony_playstation3_ver1_subua45'
+            ),
+            array(
+                'Mozilla/5.0 (Windows NT 6.4; Trident/7.0; rv:11.0) like Gecko',
+                'msie_11'
+            ),
+            array(
+                'Mozilla/5.0 (Linux; U; de-de; GT-I9001 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Safari/533.1',
+                'samsung_gt_i9100_ver1_funnyua'
+            ),
+            array(
+                'Mozilla/5.0 (Linux; U; de-de; GT-N7000 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Safari/533.1',
+                'samsung_gt_i9100_ver1_funnyua'
+            ),
+            array(
+                'Mozilla/5.0 (Windows NT 6.4; Win64; x64; Trident/7.0; rv:11.0) like Gecko',
+                'msie_11'
+            ),
+            array(
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Vodafone/1.0/HTC_HD2/1.72.162.0 (82124); Windows Phone 6.5)',
+                'htc_hd2_ver1_subuavoda'
+            ),
+            array(
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Windows Phone 6.5 HTC_HD2/1.0)',
+                'htc_hd2_ver1_subie52'
+            ),
+            array(
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Windows Phone 6.5)',
+                'generic_ms_winmo6_5'
+            ),
+            array(
+                'Mozilla/5.0 (X11; FreeBSD amd64; rv:16.0) Gecko/20100101 Firefox/16.0',
+                'firefox_16_0'
+            ),
+            array(
+                'Mozilla/5.0 (X11; U; FreeBSD i386; de-DE; rv:1.9.0.5) Gecko/2009012218 Firefox/3.0.5',
+                'firefox_3_0'
+            ),
+            array(
+                'Mozilla/5.0 (Windows NT 6.4; Trident/8.0; rv:550) AppleWebKit/537.36 (KHTML, like Gecko) Version/7.0 Safari/550.1.3',
+                'generic_web_browser'
+            ),
+            array(
+                'Mozilla/5.0 (en)',
+                'mozilla_ver5'
+            ),
+            array(
+                'Opera/9.80 (X11; FreeBSD 9.0-RELEASE amd64; U; ru) Presto/2.10.289 Version/12.00',
+                'opera_12'
+            ),
+            array(
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Vodafone/1.0/HTC_HD2/3.14.162.5 (04666); Windows Phone 6.5)',
+                'generic_ms_winmo6_5'
+            ),
+            array(
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Vodafone/1.0/HTC_HD_mini/1.41.162.1 (10904); Windows Phone 6.5.3.5)',
+                'generic_ms_winmo6_5'
+            ),
+            array(
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Windows Phone 6.5.3.5; Windows Phone 6.5; SonyEricssonM1i/R1AA; Profile/MIDP-2.1; Configuration/CLDC-1.1)',
+                'sonyericsson_m1i_ver1_sub65phone'
+            ),
+            array(
+                'Mozilla/5.0 (X11; CrOS armv7l 2913.187.0) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.89 Safari/537.11',
+                'chrome_book_ver1'
+            ),
         );
     }
 }
