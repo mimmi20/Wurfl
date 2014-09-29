@@ -88,8 +88,8 @@ class ManagerTest
     public function testShouldReturnWurflVersionInfo()
     {
         $wurflInfo = $this->object->getWURFLInfo();
-        self::assertEquals('Wireless Universal Resource File v_2.1.0.1', $wurflInfo->version);
-        self::assertEquals('July 30, 2007', $wurflInfo->lastUpdated);
+        self::assertEquals('db.scientiamobile.com - 2014-08-31 00:50:01', $wurflInfo->version);
+        self::assertEquals('Sun Aug 31 00:53:12 -0400 2014', $wurflInfo->lastUpdated);
     }
 
     public function testGetListOfGroups()
@@ -131,18 +131,13 @@ class ManagerTest
         self::assertSame($expected, $fallBackDevices);
     }
 
-    private function deviceId($device)
-    {
-        return $device->id;
-    }
-
     /**
      *
      */
     public function fallBackDevicesIdProvider()
     {
         return array(
-            array('blackberry_generic_ver2', array('blackberry_generic', 'generic_xhtml', 'generic'))
+            array('blackberry_generic_ver2', array('blackberry_generic', 'generic_xhtml', 'generic_mobile', 'generic'))
         );
     }
 
@@ -155,13 +150,13 @@ class ManagerTest
             array(
                 'chtml_ui',
                 array(
-                    'chtml_display_accesskey',
-                    'emoji',
+                    'imode_region',
                     'chtml_can_display_images_and_text_on_same_line',
                     'chtml_displays_image_in_center',
-                    'imode_region',
                     'chtml_make_phone_call_string',
-                    'chtml_table_support'
+                    'chtml_table_support',
+                    'chtml_display_accesskey',
+                    'emoji'
                 )
             )
         );

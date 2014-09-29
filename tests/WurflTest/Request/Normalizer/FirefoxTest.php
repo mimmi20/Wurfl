@@ -7,7 +7,7 @@ use Wurfl\Request\Normalizer\Specific\Firefox;
  * test case.
  */
 class FirefoxTest
-    extends BaseTest
+    extends TestBase
 {
 
     protected function setUp()

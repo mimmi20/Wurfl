@@ -7,7 +7,7 @@ use Wurfl\Request\Normalizer\Specific\LG;
  * test case.
  */
 class LGUPLUSTest
-    extends BaseTest
+    extends TestBase
 {
     /** @var  \Wurfl\Request\Normalizer\Specific\LG */
     protected $normalizer;
