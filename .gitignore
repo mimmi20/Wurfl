@@ -5,3 +5,4 @@ build/
 composer.phar
 *.bak
 result.txt
+tests/resources/cache/
