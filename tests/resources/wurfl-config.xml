@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wurfl-config>
     <wurfl>
-        <main-file>wurfl.xml</main-file>
+        <main-file>wurfl-regression.xml</main-file>
         <patches>
+            <patch>web_browsers_patch.xml</patch>
+            <patch>spv_patch.xml</patch>
             <patch>browsers.xml</patch>
         </patches>
     </wurfl>
@@ -11,12 +13,12 @@
     -->
     <allow-reload>true</allow-reload>
     <persistence>
-        <provider>file</provider>
-        <params>dir=cache</params>
+        <provider>memory</provider>
+        <params>host=127.0.0.1,port=11211</params>
     </persistence>
 
     <cache>
-        <provider>file</provider>
-        <params>dir=cache, expiration=36000</params>
+        <provider>null</provider>
+        <params></params>
     </cache>
 </wurfl-config>
