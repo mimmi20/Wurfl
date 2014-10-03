@@ -48,7 +48,7 @@ class ManagerTest
         $config->persistence('file', $params);
         $config->cache('memory');
         $cacheStorage       = new Memory();
-        $persistenceStorage = new File($params);
+        $persistenceStorage = new Memory();
 
         $manager = new Manager($config, $persistenceStorage, $cacheStorage);
         $manager->reload();
