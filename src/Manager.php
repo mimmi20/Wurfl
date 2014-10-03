@@ -443,7 +443,8 @@ class Manager
      *
      * @return string
      */
-    private function deviceId(Xml\ModelDevice $device) {
+    private function deviceId(Xml\ModelDevice $device)
+    {
         return $device->id;
     }
 

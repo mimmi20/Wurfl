@@ -21,6 +21,9 @@ namespace Wurfl\Xml;
 /**
  * Represents a device in the wurfl xml file
  *
+ * @property-read bool   $actualDeviceRoot true if device is an actual root device
+ * @property-read bool   $specific
+ * @property-read string $id
  * @package    WURFL_Xml
  */
 class ModelDevice

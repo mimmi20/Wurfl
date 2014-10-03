@@ -29,6 +29,7 @@ namespace Wurfl\Request;
  * @property boolean                  $xhtmlDevice true if the device is known to be XHTML-MP compatible
  * @property string                   $id          Unique ID used for caching: MD5($userAgent)
  * @property \Wurfl\Request\MatchInfo $matchInfo   Information about the match (available after matching)
+ * @property array                    $userAgentsWithDeviceID
  */
 class GenericRequest
 {

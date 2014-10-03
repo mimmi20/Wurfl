@@ -51,12 +51,17 @@ class IsSmartphone
      */
     protected function compute()
     {
-        if ($this->device->is_wireless_device != 'true' || $this->device->is_tablet == 'true' || $this->device->pointing_method != 'touchscreen' || $this->device->resolution_width < 320 || $this->device->can_assign_phone_number == 'false'
+        if ($this->device->is_wireless_device != 'true'
+            || $this->device->is_tablet == 'true'
+            || $this->device->pointing_method != 'touchscreen'
+            || $this->device->resolution_width < 320
+            || $this->device->can_assign_phone_number == 'false'
         ) {
             return false;
         }
 
         $osVersion = (float) $this->device->device_os_version;
+
         switch ($this->device->device_os) {
             case 'iOS':
                 return ($osVersion >= 3.0);
@@ -80,8 +85,10 @@ class IsSmartphone
                 return ($osVersion >= 2.0);
                 break;
             default:
-                return false;
+                // nothing to do here
                 break;
         }
+
+        return false;
     }
 }

@@ -75,9 +75,9 @@ class NameVersionPair
                 $this->version = trim($version);
 
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
         }
 
         if (preg_match($regex, $ua, $this->regexMatches)) {

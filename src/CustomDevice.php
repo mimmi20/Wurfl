@@ -38,21 +38,23 @@ namespace Wurfl;
  * $wurflID = $device->id;
  * </code>
  *
- * @property-read string $id               WURFL Device ID
- * @property-read string $userAgent        User Agent
- * @property-read string $fallBack         Fallback Device ID
- * @property-read bool   $actualDeviceRoot true if device is an actual root device
+ * @property-read string                        $id               WURFL Device ID
+ * @property-read string                        $userAgent        User Agent
+ * @property-read string                        $fallBack         Fallback Device ID
+ * @property-read bool                          $actualDeviceRoot true if device is an actual root device
+ * @property-read \Wurfl\Request\GenericRequest $request
+ * @property-read \Wurfl\Xml\ModelDevice[]      $modelDevices
  * @package WURFL
  */
 class CustomDevice
 {
     /**
-     * @var array Array of \Wurfl\Xml\ModelDevice objects
+     * @var \Wurfl\Xml\ModelDevice[] Array of \Wurfl\Xml\ModelDevice objects
      */
     private $modelDevices;
 
     /**
-     * @var Request\GenericRequest
+     * @var \Wurfl\Request\GenericRequest
      */
     private $request;
 
@@ -62,8 +64,8 @@ class CustomDevice
     private $virtualCapabilityProvider;
 
     /**
-     * @param array                  $modelDevices Array of \Wurfl\Xml\ModelDevice objects
-     * @param Request\GenericRequest $request
+     * @param \Wurfl\Xml\ModelDevice[]      $modelDevices Array of \Wurfl\Xml\ModelDevice objects
+     * @param \Wurfl\Request\GenericRequest $request
      *
      * @throws \InvalidArgumentException if $modelDevices is not an array of at least one \Wurfl\Xml\ModelDevice
      */
@@ -72,14 +74,16 @@ class CustomDevice
         if (!is_array($modelDevices) || count($modelDevices) < 1) {
             throw new \InvalidArgumentException('modelDevices must be an array of at least one ModelDevice.');
         }
+
         $this->modelDevices = $modelDevices;
+
         if ($request === null) {
             // This might happen if a device is looked up by its ID directly, without providing a user agent
-            $requestFactory = new \Wurfl\Request\GenericRequestFactory();
+            $requestFactory = new Request\GenericRequestFactory();
             $request        = $requestFactory->createRequestForUserAgent($this->userAgent);
         }
-        $this->request                   = $request;
-        $this->virtualCapabilityProvider = new VirtualCapability\VirtualCapabilityProvider($this, $request);
+
+        $this->request = $request;
     }
 
     /**
@@ -111,8 +115,8 @@ class CustomDevice
                 return $this->modelDevices[0]->$name;
                 break;
             default:
-                if ($this->virtualCapabilityProvider->exists($name)) {
-                    return $this->virtualCapabilityProvider->get($name);
+                if ($this->getVirtualCapabilityProvider()->exists($name)) {
+                    return $this->getVirtualCapabilityProvider()->get($name);
                 }
 
                 return $this->getCapability($name);
@@ -151,11 +155,11 @@ class CustomDevice
         if (empty($capabilityName)) {
             throw new \InvalidArgumentException('capability name must not be empty');
         }
-        if (!$this->getRootDevice()
-            ->isCapabilityDefined($capabilityName)
-        ) {
+
+        if (!$this->getRootDevice()->isCapabilityDefined($capabilityName)) {
             throw new \InvalidArgumentException('no capability named [' . $capabilityName . '] is present in wurfl.');
         }
+
         foreach ($this->modelDevices as $modelDevice) {
             /* @var \Wurfl\Xml\ModelDevice $modelDevice */
             $capabilityValue = $modelDevice->getCapability($capabilityName);
@@ -192,7 +196,7 @@ class CustomDevice
     /**
      * Returns the match info for this device
      *
-     * @return Request\MatchInfo
+     * @return \Wurfl\Request\MatchInfo|null
      */
     public function getMatchInfo()
     {
@@ -202,7 +206,7 @@ class CustomDevice
     /**
      * Returns an array with all the fall back devices, from the matched device to the root device ('generic')
      *
-     * @return array
+     * @return \Wurfl\Xml\ModelDevice[]
      */
     public function getFallBackDevices()
     {
@@ -237,13 +241,37 @@ class CustomDevice
     }
 
     /**
+     * @return VirtualCapability\VirtualCapabilityProvider
+     */
+    public function getVirtualCapabilityProvider()
+    {
+        if (null === $this->virtualCapabilityProvider) {
+            $this->setVirtualCapabilityProvider(new VirtualCapability\VirtualCapabilityProvider($this, $this->request));
+        }
+
+        return $this->virtualCapabilityProvider;
+    }
+
+    /**
+     * @param VirtualCapability\VirtualCapabilityProvider $virtualCapabilityProvider
+     *
+     * @return \Wurfl\CustomDevice
+     */
+    public function setVirtualCapabilityProvider($virtualCapabilityProvider)
+    {
+        $this->virtualCapabilityProvider = $virtualCapabilityProvider;
+
+        return $this;
+    }
+
+    /**
      * @param $name
      *
      * @return bool|float|int|string
      */
     public function getVirtualCapability($name)
     {
-        return $this->virtualCapabilityProvider->get($name);
+        return $this->getVirtualCapabilityProvider()->get($name);
     }
 
     /**
@@ -251,6 +279,6 @@ class CustomDevice
      */
     public function getAllVirtualCapabilities()
     {
-        return $this->virtualCapabilityProvider->getAll();
+        return $this->getVirtualCapabilityProvider()->getAll();
     }
 }
