@@ -46,10 +46,7 @@ class XmlConfigTest
 
         $cache = $config->cache;
         self::assertEquals('null', $cache['provider']);
-        self::assertEquals(
-            array(Config::DIR => $cacheDir, 'expiration' => 36000),
-            $cache['params']
-        );
+        self::assertEquals(array(), $cache['params']);
     }
 
     public function testShouldCreateConfigurationWithAPCPersistence()
