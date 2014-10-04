@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Request\Normalizer\Specific;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,13 +9,15 @@ namespace Wurfl\Request\Normalizer\Specific;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @author     Fantayeneh Asres Gizaw
- * @version    $id$
  */
+
+namespace Wurfl\Request\Normalizer\Specific;
+
 use Wurfl\Constants;
 use Wurfl\Handlers\Utils;
 use Wurfl\Handlers\WindowsPhoneHandler;
@@ -28,7 +28,8 @@ use Wurfl\Request\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Request\Normalizer\Specific
  */
-class WindowsPhone implements NormalizerInterface
+class WindowsPhone
+    implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -37,10 +38,14 @@ class WindowsPhone implements NormalizerInterface
      */
     public function normalize($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client')) {
+        if (Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client') || Utils::checkIfStartsWith(
+                $userAgent,
+                'WindowsPhoneAdClient'
+            )
+        ) {
             $model   = WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
-            $version = WindowsPhoneHandler::getWindowsPhoneAdClientVersion($userAgent);
-        } elseif (Utils::checkIfContains($userAgent, 'NativeHost')) {
+            $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+        } else if (Utils::checkIfContains($userAgent, 'NativeHost')) {
             return $userAgent;
         } else {
             $model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
@@ -48,7 +53,9 @@ class WindowsPhone implements NormalizerInterface
         }
 
         if ($model !== null && $version !== null) {
+            // "WP" is for Windows Phone
             $prefix = 'WP' . $version . ' ' . $model . Constants::RIS_DELIMITER;
+
             return $prefix . $userAgent;
         }
 

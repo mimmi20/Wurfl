@@ -1,23 +1,22 @@
 <?php
-namespace Wurfl\Handlers;
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     *
-     * @category   WURFL
-     * @package    WURFL_Handlers
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
+namespace Wurfl\Handlers;
 
 /**
  * Ucweb7OnAndroidUserAgentHandler
@@ -29,20 +28,24 @@ namespace Wurfl\Handlers;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class Ucweb7OnAndroidHandler extends AbstractHandler
+class Ucweb7OnAndroidHandler
+    extends AbstractHandler
 {
-
     protected $prefix = "UCWEB7ONANDROID";
 
-    public static $constantIDs
-        = array(
-            'generic_android_ver1_6_ucweb',
-            'generic_android_ver2_0_ucweb',
-            'generic_android_ver2_1_ucweb',
-            'generic_android_ver2_2_ucweb',
-            'generic_android_ver2_3_ucweb',
-        );
+    public static $constantIDs = array(
+        'generic_android_ver1_6_ucweb',
+        'generic_android_ver2_0_ucweb',
+        'generic_android_ver2_1_ucweb',
+        'generic_android_ver2_2_ucweb',
+        'generic_android_ver2_3_ucweb',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
@@ -52,6 +55,11 @@ class Ucweb7OnAndroidHandler extends AbstractHandler
         return Utils::checkIfContainsAll($userAgent, array('Android', 'UCWEB7'));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string|void
+     */
     public function applyConclusiveMatch($userAgent)
     {
         // The tolerance is after UCWEB7, not before
@@ -65,10 +73,15 @@ class Ucweb7OnAndroidHandler extends AbstractHandler
         $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         $androidVersion = str_replace('.', '_', AndroidHandler::getAndroidVersion($userAgent));
-        $deviceID               = 'generic_android_ver' . $androidVersion . '_ucweb';
+        $deviceID       = 'generic_android_ver' . $androidVersion . '_ucweb';
 
         if (in_array($deviceID, self::$constantIDs)) {
             return $deviceID;

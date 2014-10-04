@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Storage;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,15 @@ namespace Wurfl\Storage;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Storage
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Storage;
+
 use WurflCache\Adapter\AdapterInterface;
 
 /**
@@ -41,7 +42,7 @@ class Storage
     /**
      * @var string
      */
-    const WURFL_LOADED       = 'WURFL_WURFL_LOADED';
+    const WURFL_LOADED = 'WURFL_WURFL_LOADED';
 
     /**
      * @var AdapterInterface

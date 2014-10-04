@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,14 @@ namespace Wurfl\Handlers;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
 
 use Wurfl\Constants;
 
@@ -30,8 +30,8 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-
-class CatchAllHandler extends AbstractHandler
+class CatchAllHandler
+    extends AbstractHandler
 {
 
     protected $prefix = 'CATCH_ALL';
@@ -76,6 +76,11 @@ class CatchAllHandler extends AbstractHandler
         return $deviceId;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyExactMatch($userAgent)
     {
         $this->ensureAuxDataLoaded();
@@ -95,17 +100,37 @@ class CatchAllHandler extends AbstractHandler
         return Constants::NO_MATCH;
     }
 
+    /**
+     *
+     */
     private function ensureAuxDataLoaded()
     {
         if (empty($this->mozilla4UserAgentsWithDeviceID)) {
-            $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA4);
+            $loaded = $this->persistenceProvider->load(self::MOZILLA4);
+
+            if (is_array($loaded)) {
+                $this->mozilla4UserAgentsWithDeviceID = $loaded;
+            } else {
+                $this->mozilla4UserAgentsWithDeviceID = array();
+            }
         }
 
         if (empty($this->mozilla5UserAgentsWithDeviceID)) {
-            $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA5);
+            $loaded = $this->persistenceProvider->load(self::MOZILLA5);
+
+            if (is_array($loaded)) {
+                $this->mozilla5UserAgentsWithDeviceID = $loaded;
+            } else {
+                $this->mozilla5UserAgentsWithDeviceID = array();
+            }
         }
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null
+     */
     private function applyMozillaConclusiveMatch($userAgent)
     {
         $this->ensureAuxDataLoaded();
@@ -124,11 +149,19 @@ class CatchAllHandler extends AbstractHandler
         return $this->userAgentsWithDeviceID [$match];
     }
 
+    /**
+     * @param $userAgent
+     *
+     * @return null
+     */
     private function applyMozilla5ConclusiveMatch($userAgent)
     {
         $this->logger->warning(
-            'Applying Catch All Conclusive Match Mozilla 5 (LD with threshold of )for ua: ' . $userAgent
+            'Applying Catch All Conclusive Match Mozilla 5 (LD with threshold of ' . self::MOZILLA_TOLERANCE
+            . ') for ua: ' . $userAgent
         );
+
+        $match = null;
 
         if (!array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
             $match = Utils::ldMatch(
@@ -138,16 +171,26 @@ class CatchAllHandler extends AbstractHandler
             );
         }
 
-        if (!empty($match)) {
+        if (null !== $match && !empty($this->mozilla5UserAgentsWithDeviceID[$match])) {
             return $this->mozilla5UserAgentsWithDeviceID[$match];
         }
 
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param $userAgent
+     *
+     * @return null
+     */
     private function applyMozilla4ConclusiveMatch($userAgent)
     {
-        $this->logger->warning('Applying Catch All Conclusive Match Mozilla 4 for ua: ' . $userAgent);
+        $this->logger->warning(
+            'Applying Catch All Conclusive Match Mozilla 4 (LD with threshold of ' . self::MOZILLA_TOLERANCE
+            . ') for ua: ' . $userAgent
+        );
+
+        $match = null;
 
         if (!array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
             $match = Utils::ldMatch(
@@ -157,12 +200,19 @@ class CatchAllHandler extends AbstractHandler
             );
         }
 
-        if (!empty($match)) {
+        if (null !== $match && !empty($this->mozilla4UserAgentsWithDeviceID[$match])) {
             return $this->mozilla4UserAgentsWithDeviceID[$match];
         }
+
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     * @param string $deviceID
+     *
+     * @return boolean
+     */
     public function filter($userAgent, $deviceID)
     {
         if ($this->isMozilla4($userAgent)) {
@@ -173,9 +223,12 @@ class CatchAllHandler extends AbstractHandler
             $this->mozilla5UserAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
         }
 
-        parent::filter($userAgent, $deviceID);
+        return parent::filter($userAgent, $deviceID);
     }
 
+    /**
+     *
+     */
     public function persistData()
     {
         ksort($this->mozilla4UserAgentsWithDeviceID);
@@ -187,11 +240,21 @@ class CatchAllHandler extends AbstractHandler
         parent::persistData();
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     private function isMozilla5($userAgent)
     {
         return Utils::checkIfStartsWith($userAgent, 'Mozilla/5');
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     private function isMozilla4($userAgent)
     {
         return Utils::checkIfStartsWith($userAgent, 'Mozilla/4');

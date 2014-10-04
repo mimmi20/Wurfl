@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -16,8 +14,10 @@ namespace Wurfl\Handlers;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Request\GenericRequest;
 
 /**
@@ -32,7 +32,6 @@ use Wurfl\Request\GenericRequest;
  */
 interface MatcherInterface
 {
-
     /**
      * Returns a matching device id for the given request,
      * if no matching device is found will return "generic"

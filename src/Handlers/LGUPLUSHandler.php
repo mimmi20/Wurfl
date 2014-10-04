@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,15 @@ namespace Wurfl\Handlers;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -29,32 +30,48 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class LGUPLUSHandler extends AbstractHandler
+class LGUPLUSHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "LGUPLUS";
 
-    public static $constantIDs
-        = array(
-            'generic_lguplus_rexos_facebook_browser',
-            'generic_lguplus_rexos_webviewer_browser',
-            'generic_lguplus_winmo_facebook_browser',
-            'generic_lguplus_android_webkit_browser',
-        );
+    public static $constantIDs = array(
+        'generic_lguplus_rexos_facebook_browser',
+        'generic_lguplus_rexos_webviewer_browser',
+        'generic_lguplus_winmo_facebook_browser',
+        'generic_lguplus_android_webkit_browser',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
         }
+
         return Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAll(

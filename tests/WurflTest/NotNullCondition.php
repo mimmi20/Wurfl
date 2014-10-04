@@ -2,9 +2,9 @@
 namespace WurflTest;
 
 /**
-* Utility Classes
-*
-*/
+ * Utility Classes
+ *
+ */
 class NotNullCondition
 {
     public function check($key, $value)

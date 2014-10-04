@@ -1,0 +1,9 @@
+<wurfl-config>
+    <wurfl>
+        <main-file>wurfl.xml</main-file>
+    </wurfl>
+    <persistence>
+        <provider>apc</provider>
+        <params>namespace=wurflpersist</params>
+    </persistence>
+</wurfl-config>

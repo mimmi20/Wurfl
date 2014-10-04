@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,45 +30,70 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class HTCMacHandler extends AbstractHandler
+class HTCMacHandler
+    extends AbstractHandler
 {
 
     protected $prefix = "HTCMAC";
 
-    public static $constantIDs
-        = array(
-            'generic_android_htc_disguised_as_mac',
-        );
+    public static $constantIDs = array(
+        'generic_android_htc_disguised_as_mac',
+    );
 
+    /**
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
-        return
-            Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh') && Utils::checkIfContains($userAgent, 'HTC');
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh') && Utils::checkIfContains(
+            $userAgent,
+            'HTC'
+        );
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return null|string
+     */
     public function applyConclusiveMatch($userAgent)
     {
         $delimiterIndex = strpos($userAgent, Constants::RIS_DELIMITER);
 
         if ($delimiterIndex !== false) {
             $tolerance = $delimiterIndex + strlen(Constants::RIS_DELIMITER);
+
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
         return Constants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     *
+     * @return string
+     */
     public function applyRecoveryMatch($userAgent)
     {
         return 'generic_android_htc_disguised_as_mac';
     }
 
+    /**
+     * @param $userAgent
+     *
+     * @return mixed|null
+     */
     public static function getHTCMacModel($userAgent)
     {
         if (preg_match('/(HTC[^;\)]+)/', $userAgent, $matches)) {
             $model = preg_replace('#[ _\-/]#', '~', $matches[1]);
+
             return $model;
         }
+
         return null;
     }
 }

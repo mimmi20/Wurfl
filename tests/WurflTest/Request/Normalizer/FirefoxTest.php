@@ -6,7 +6,8 @@ use Wurfl\Request\Normalizer\Specific\Firefox;
 /**
  * test case.
  */
-class FirefoxTest extends BaseTest
+class FirefoxTest
+    extends TestBase
 {
 
     protected function setUp()
@@ -22,7 +23,7 @@ class FirefoxTest extends BaseTest
     public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
-        self::assertEquals($found, $expected);
+        self::assertEquals($expected, $found);
     }
 
     public function firefoxUserAgentsDataProvider()

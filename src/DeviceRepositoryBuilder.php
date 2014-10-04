@@ -1,20 +1,23 @@
 <?php
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
+
 namespace Wurfl;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    WURFL
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
 /**
  * Builds a \Wurfl\DeviceRepository
  *
@@ -96,9 +99,9 @@ class DeviceRepositoryBuilder
     /**
      * Iterates over XML files and pulls relevent data
      *
-     * @param Xml\VersionIterator $wurflInfoIterator
-     * @param Xml\DeviceIterator  $deviceIterator
-     * @param array               $patchDeviceIterators arrray of WURFL_Xml_DeviceIterator objects for patch files
+     * @param Xml\VersionIterator  $wurflInfoIterator
+     * @param Xml\DeviceIterator   $deviceIterator
+     * @param Xml\DeviceIterator[] $patchDeviceIterators Array of objects for patch files
      *
      * @throws Exception
      */
@@ -116,11 +119,8 @@ class DeviceRepositoryBuilder
         } catch (Exception $exception) {
             $this->clean();
 
-            throw new Exception(
-                'Problem Building WURFL Repository: ' . $exception->getMessage(),
-                $exception->getCode(),
-                $exception
-            );
+            throw new Exception('Problem Building WURFL Repository: ' . $exception->getMessage(), $exception->getCode(
+                ), $exception);
         }
 
         $this->setRepositoryBuilt();
@@ -132,7 +132,7 @@ class DeviceRepositoryBuilder
      * @param array $wurflPatches     Array of (string)filenames
      * @param array $capabilityFilter Array of (string) WURFL capabilities
      *
-     * @return array Array of WURFL_Xml_DeviceIterator objects
+     * @return \Wurfl\Xml\DeviceIterator[]
      */
     private function toPatchIterators(array $wurflPatches = array(), array $capabilityFilter = array())
     {
@@ -148,12 +148,12 @@ class DeviceRepositoryBuilder
     }
 
     /**
-     * Returns an array of WURFL_Xml_DeviceIterator for the given $wurflPatches and $capabilityFilter
+     * Returns an array of \Wurfl\Xml\DeviceIterator for the given $wurflPatches and $capabilityFilter
      *
      * @param array $wurflPatches     Array of (string)filenames
      * @param array $capabilityFilter Array of (string) WURFL capabilities
      *
-     * @return array Array of WURFL_Xml_DeviceIterator objects
+     * @return \Wurfl\Xml\DeviceIterator[]
      */
 
     /**
@@ -209,6 +209,7 @@ class DeviceRepositoryBuilder
     {
         foreach ($wurflInfoIterator as $info) {
             $this->persistenceProvider->save(Xml\Info::PERSISTENCE_KEY, $info);
+
             return;
         }
     }
@@ -257,7 +258,7 @@ class DeviceRepositoryBuilder
      *
      * @param Xml\ModelDevice $device
      *
-     * @see WURFL_UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
+     * @see \Wurfl\UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
      */
     private function classifyAndPersistDevice(Xml\ModelDevice $device)
     {
@@ -276,6 +277,12 @@ class DeviceRepositoryBuilder
         $this->userAgentHandlerChain->persistData();
     }
 
+    /**
+     * @param Xml\ModelDevice $device
+     * @param Xml\ModelDevice $patchingDevice
+     *
+     * @return Xml\ModelDevice
+     */
     private function patchDevice(Xml\ModelDevice $device, Xml\ModelDevice $patchingDevice)
     {
         return $this->devicePatcher->patch($device, $patchingDevice);
@@ -323,7 +330,7 @@ class DeviceRepositoryBuilder
     }
 
     /**
-     * Returns an array of devices in the form "WURFL_Device::id => WURFL_Device"
+     * Returns an array of devices in the form 'WURFL_Device::id => WURFL_Device'
      *
      * @param Xml\DeviceIterator $deviceIterator
      *

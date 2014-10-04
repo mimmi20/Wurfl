@@ -6,12 +6,12 @@ use Wurfl\Xml\DeviceIterator;
 /**
  * test case
  */
-
-class DeviceIteratorTest extends \PHPUnit_Framework_TestCase
+class DeviceIteratorTest
+    extends \PHPUnit_Framework_TestCase
 {
 
     const RESOURCES_DIR = "../../resources/";
-    const WURFL_FILE    = "../../resources/wurfl_base.xml";
+    const WURFL_FILE = "../../resources/wurfl_base.xml";
 
     /**
      * @expectedException \InvalidArgumentException

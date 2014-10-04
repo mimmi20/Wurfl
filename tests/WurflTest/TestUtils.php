@@ -19,7 +19,7 @@ class TestUtils
             throw new \InvalidArgumentException("File path $filePath does not exist!!!");
         }
 
-        $testData    = array();
+        $testData   = array();
         $fileHandle = fopen($filePath, "r");
 
         while (!feof($fileHandle)) {
@@ -43,7 +43,7 @@ class TestUtils
             throw new \InvalidArgumentException("File path $filePath does not exist!!!");
         }
 
-        $testData    = array();
+        $testData   = array();
         $fileHandle = fopen($filePath, "r");
 
         while (!feof($fileHandle)) {
@@ -63,7 +63,7 @@ class TestUtils
 
     public static function loadTestData($fileName)
     {
-        $testData    = array();
+        $testData   = array();
         $fileHandle = fopen($fileName, "r");
 
         while (!feof($fileHandle)) {

@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Configuration;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -11,12 +9,15 @@ namespace Wurfl\Configuration;
  *
  * Refer to the COPYING.txt file distributed with this package.
  *
+ *
  * @category   WURFL
- * @package    WURFL_Configuration
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Configuration;
+
 use Wurfl\Exception;
 
 /**
@@ -24,9 +25,9 @@ use Wurfl\Exception;
  *
  * @package    WURFL_Configuration
  */
-class XmlConfig extends Config
+class XmlConfig
+    extends Config
 {
-
     /**
      * Initialize XML Configuration
      */
@@ -36,7 +37,7 @@ class XmlConfig extends Config
 
         $this->wurflFile        = $this->wurflFile($xmlConfig->{Config::WURFL}->{Config::MAIN_FILE});
         $this->wurflPatches     = $this->wurflPatches($xmlConfig->{Config::WURFL}->{Config::PATCHES}->{Config::PATCH});
-        $this->allowReload      = ('true' === (string)$xmlConfig->{Config::ALLOW_RELOAD});
+        $this->allowReload      = ('true' === (string) $xmlConfig->{Config::ALLOW_RELOAD});
         $this->capabilityFilter = $this->capabilityFilter($xmlConfig->{Config::CAPABILITY_FILTER}->{'capability'});
         $this->persistence      = $this->persistence($xmlConfig->{Config::PERSISTENCE});
         $this->cache            = $this->persistence($xmlConfig->{Config::CACHE});
@@ -53,7 +54,7 @@ class XmlConfig extends Config
      */
     private function wurflFile($mainFileElement)
     {
-        return parent::getFullPath((string)$mainFileElement[0]);
+        return parent::getFullPath((string) $mainFileElement[0]);
     }
 
     /**
@@ -68,9 +69,10 @@ class XmlConfig extends Config
         $patches = array();
         if ($patchElements) {
             foreach ($patchElements as $patchElement) {
-                $patches[] = parent::getFullPath((string)$patchElement);
+                $patches[] = parent::getFullPath((string) $patchElement);
             }
         }
+
         return $patches;
     }
 
@@ -86,9 +88,10 @@ class XmlConfig extends Config
         $filter = array();
         if ($capabilityFilter) {
             foreach ($capabilityFilter as $filterElement) {
-                $filter[] = (string)$filterElement;
+                $filter[] = (string) $filterElement;
             }
         }
+
         return $filter;
     }
 
@@ -112,6 +115,7 @@ class XmlConfig extends Config
             }
             $this->matchMode = $mode;
         }
+
         return $this->matchMode;
     }
 
@@ -125,8 +129,9 @@ class XmlConfig extends Config
     private function logDir($logDirElement)
     {
         if (!empty($logDirElement)) {
-            return parent::getFullPath((string)$logDirElement[0]);
+            return parent::getFullPath((string) $logDirElement[0]);
         }
+
         return null;
     }
 
@@ -141,9 +146,10 @@ class XmlConfig extends Config
     {
         $persistence = array();
         if ($persistenceElement) {
-            $persistence['provider'] = (string)$persistenceElement[0]->provider;
-            $persistence['params']   = $this->toArray((string)$persistenceElement[0]->params);
+            $persistence['provider'] = (string) $persistenceElement[0]->provider;
+            $persistence['params']   = $this->toArray((string) $persistenceElement[0]->params);
         }
+
         return $persistence;
     }
 
@@ -167,6 +173,7 @@ class XmlConfig extends Config
                 $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);
             }
         }
+
         return $paramsArray;
     }
 
@@ -175,8 +182,7 @@ class XmlConfig extends Config
      *
      * @var string
      */
-    const WURFL_CONF_SCHEMA
-        = '<?xml version="1.0" encoding="utf-8" ?>
+    const WURFL_CONF_SCHEMA = '<?xml version="1.0" encoding="utf-8" ?>
     <element name="wurfl-config" xmlns="http://relaxng.org/ns/structure/1.0">
         <element name="wurfl">
             <element name="main-file"><text/></element>

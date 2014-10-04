@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Handlers\Matcher;
 
-    /**
+/**
  * test case
  */
 use Wurfl\Handlers\Matcher\RISMatcher;
@@ -9,7 +9,8 @@ use Wurfl\Handlers\Matcher\RISMatcher;
 /**
  * WURFL_Handlers_Matcher_RISMatcher test case.
  */
-class RISMatcherTest extends \PHPUnit_Framework_TestCase
+class RISMatcherTest
+    extends \PHPUnit_Framework_TestCase
 {
     /** @var  RISMatcher */
     private $risMatcher;

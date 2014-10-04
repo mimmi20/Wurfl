@@ -1,15 +1,38 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2014.09.02] 1.5.2.0
+- Improved detection of:
+    - Android
+    - Apple
+    - Firefox OS
+    - Internet Explorer
+    - Opera
+    - Smart TVs
+    - Tizen
+    - Ubuntu OS
+    - Windows Phone
+    - Windows RT
+- Improved existing virtual capabilities
+- Added virtual capabilities:
+    - complete_device_name : The brand_name, model_name and marketing name (if applicable)
+    - form_factor : Tablet, Smartphone, Feature Phone, Robot, Desktop, Smart-TV, Other Non-Mobile
+- Added support for iOS 8
+- Added the ability to detect sideloaded browser instead of the device with its stock browser
+
+[2014.04.23] 1.5.1.1
+- Improved accuracy of is_robot
+- Bugfix: auto-reload is not thread safe when lockfile is on a filesystem without flock support
+
 [2014.01.07] 1.5.1.0
 - Added support in Virtual Capabilities for:
-	- Internet Explorer 11
-	- Windows 8.1
-	- OS extraction for Opera Mini User-Agents
+    - Internet Explorer 11
+    - Windows 8.1
+    - OS extraction for Opera Mini User-Agents
 - Improved detection of:
-	- Android
-	- Apple iOS
-	- Xbox One
-	- Pantech feature phones
+    - Android
+    - Apple iOS
+    - Xbox One
+    - Pantech feature phones
 - Added new matcher for Desktop Applications
 - Optimized matcher order
 
@@ -115,26 +138,26 @@ ScientiaMobile WURFL PHP API change log:
 
 [2009.06.01]
 - Configuration:
-	- Changed the "persistance" to "persistence" (N.B a to e) in wurfl-config.xml
-	- Added Possibilty to specify configuration from an array.(array-wurfl-config.php)
+    - Changed the "persistance" to "persistence" (N.B a to e) in wurfl-config.xml
+    - Added Possibilty to specify configuration from an array.(array-wurfl-config.php)
 - Normalizers
-	- Added
-		- Android
-		- Chrome
-		- Opera
-		- Safari
-		- MSIE	
+    - Added
+        - Android
+        - Chrome
+        - Opera
+        - Safari
+        - MSIE    
 - Handlers
-	- Added 
-		- AndroidHandler
-		- ChromeHandler
-		- BotCrawlerTranscoderHandler		
+    - Added 
+        - AndroidHandler
+        - ChromeHandler
+        - BotCrawlerTranscoderHandler        
 - Logger
-	- Removed dependency from the PEAR Log
-	- Added Custom Logger
+    - Removed dependency from the PEAR Log
+    - Added Custom Logger
 - WURFLLoader
-	- Added A WURFLReloader 
-- Created a new web_browsers_patch			
+    - Added A WURFLReloader 
+- Created a new web_browsers_patch            
 
 [2010-06-16]
 Added Caching expiration capability

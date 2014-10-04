@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -16,8 +14,10 @@ namespace Wurfl\VirtualCapability;
  * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability;
+
 use Wurfl\CustomDevice;
 use Wurfl\Request\GenericRequest;
 
@@ -31,17 +31,17 @@ class VirtualCapabilityProvider
     /**
      * @var string
      */
-    const PREFIX_VIRTUAL        = '';
+    const PREFIX_VIRTUAL = '';
 
     /**
      * @var string
      */
-    const PREFIX_CONTROL        = 'controlcap_';
+    const PREFIX_CONTROL = 'controlcap_';
 
     /**
      * @var string
      */
-    const WURFL_CONTROL_GROUP   = 'virtual';
+    const WURFL_CONTROL_GROUP = 'virtual';
 
     /**
      * @var string
@@ -49,60 +49,65 @@ class VirtualCapabilityProvider
     const WURFL_CONTROL_DEFAULT = 'default';
 
     /**
-     * @var CustomDevice
+     * @var \Wurfl\CustomDevice
      */
     private $device = null;
 
     /**
-     * @var GenericRequest
+     * @var \Wurfl\Request\GenericRequest
      */
     private $request = null;
-
-    public function __construct(CustomDevice $device, GenericRequest $request)
-    {
-        $this->device  = $device;
-        $this->request = $request;
-    }
 
     /**
      * Map of WURFL names to \Wurfl\VirtualCapability\VirtualCapability classes.
      *
      * @var array
      */
-    public static $virtualCapabilities
-        = array(
-            'is_android'                   => 'IsAndroid',
-            'is_ios'                       => 'IsIos',
-            'is_windows_phone'             => 'IsWindowsPhone',
-            'is_app'                       => 'IsApp',
-            'is_full_desktop'              => 'IsFullDesktop',
-            'is_largescreen'               => 'IsLargescreen',
-            'is_mobile'                    => 'IsMobile',
-            'is_robot'                     => 'IsRobot',
-            'is_smartphone'                => 'IsSmartphone',
-            'is_touchscreen'               => 'IsTouchscreen',
-            'is_wml_preferred'             => 'IsWmlPreferred',
-            'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
-            'is_html_preferred'            => 'IsHtmlPreferred',
-            'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
-            'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
-            'advertised_browser'           => 'DeviceBrowser.Browser',
-            'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
-        );
+    private static $virtualCapabilities = array(
+        'is_android'                   => 'IsAndroid',
+        'is_ios'                       => 'IsIos',
+        'is_windows_phone'             => 'IsWindowsPhone',
+        'is_app'                       => 'IsApp',
+        'is_full_desktop'              => 'IsFullDesktop',
+        'is_largescreen'               => 'IsLargescreen',
+        'is_mobile'                    => 'IsMobile',
+        'is_robot'                     => 'IsRobot',
+        'is_smartphone'                => 'IsSmartphone',
+        'is_touchscreen'               => 'IsTouchscreen',
+        'is_wml_preferred'             => 'IsWmlPreferred',
+        'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
+        'is_html_preferred'            => 'IsHtmlPreferred',
+        'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
+        'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
+        'advertised_browser'           => 'DeviceBrowser.Browser',
+        'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
+        'complete_device_name'         => 'CompleteDeviceName',
+        'form_factor'                  => 'FormFactor',
+    );
 
     /**
      * Storage for the \Wurfl\VirtualCapability\VirtualCapability objects
      *
      * @var array
      */
-    protected $cache = array();
+    private $cache = array();
 
     /**
      * Storage for the \Wurfl\VirtualCapability\VirtualCapabilityCache objects
      *
      * @var array
      */
-    protected $groupCache = array();
+    private $groupCache = array();
+
+    /**
+     * @param \Wurfl\CustomDevice           $device
+     * @param \Wurfl\Request\GenericRequest $request
+     */
+    public function __construct(CustomDevice $device, GenericRequest $request)
+    {
+        $this->device  = $device;
+        $this->request = $request;
+    }
 
     /**
      * Returns the names of all the available virtual capabilities
@@ -152,7 +157,7 @@ class VirtualCapabilityProvider
     {
         $all = array();
 
-        foreach (self::$virtualCapabilities as $name => $class) {
+        foreach ($this->getNames() as $name) {
             $all[self::PREFIX_VIRTUAL . $name] = $this->get($name);
         }
 
@@ -211,18 +216,20 @@ class VirtualCapabilityProvider
                 // Group of capabilities
                 list($group, $property) = explode('.', self::$virtualCapabilities[$name]);
 
-                $class = null;
-
                 if (!array_key_exists($group, $this->groupCache)) {
                     $class = '\\Wurfl\\VirtualCapability\\Group\\' . $group . 'Group';
                     // Cache the group
-                    $this->groupCache[$group] = new $class($this->device, $this->request);
-                    $this->groupCache[$group]->compute();
+
+                    /** @var \Wurfl\VirtualCapability\Group\Group $groupClass */
+                    $groupClass = new $class($this->device, $this->request);
+                    $groupClass->compute();
+                    $this->groupCache[$group] = $groupClass;
                 } else {
-                    $class = get_class($this->groupCache[$group]);
+                    /** @var \Wurfl\VirtualCapability\Group\Group $groupClass */
+                    $groupClass = $this->groupCache[$group];
                 }
 
-                $value = $this->groupCache[$group]->get($property);
+                $value = $groupClass->get($property);
 
                 // Cache the capability
                 $this->cache[$name] = $value;
@@ -253,7 +260,7 @@ class VirtualCapabilityProvider
      *
      * @return null|string
      */
-    protected function getControlValue($name)
+    private function getControlValue($name)
     {
         // Check if loaded WURFL contains control caps
         if (!$this->device->getRootDevice()->isGroupDefined(self::WURFL_CONTROL_GROUP)) {
@@ -275,7 +282,7 @@ class VirtualCapabilityProvider
      *
      * @return mixed
      */
-    protected function cleanCapabilityName($name)
+    private function cleanCapabilityName($name)
     {
         return str_replace(self::PREFIX_VIRTUAL, '', $name);
     }

@@ -1,17 +1,18 @@
 <?php
 namespace WurflTest\Handlers;
 
-use Wurfl\Context;
 use Wurfl\Handlers\BotCrawlerTranscoderHandler;
 use Wurfl\Request\Normalizer\NullNormalizer;
 
 /**
  * test case
  */
+
 /**
  *  test case.
  */
-class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
+class BotCrawlerTranscoderHandlerTest
+    extends \PHPUnit_Framework_TestCase
 {
 
     const BOT_CRAWLER_TRANSCODER_FILE_PATH = "bot_crawler_transcoder.txt";
@@ -22,8 +23,7 @@ class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $normalizer    = new NullNormalizer();
-        $context       = new Context(null);
-        $this->handler = new BotCrawlerTranscoderHandler($context, $normalizer);
+        $this->handler = new BotCrawlerTranscoderHandler($normalizer);
     }
 
     /**

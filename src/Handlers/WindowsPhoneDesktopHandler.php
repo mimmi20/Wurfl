@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\Handlers;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\Handlers;
+
 use Wurfl\Constants;
 
 /**
@@ -30,7 +30,8 @@ use Wurfl\Constants;
  * @license    GNU Affero General Public License
  * @version    $id$
  */
-class WindowsPhoneDesktopHandler extends AbstractHandler
+class WindowsPhoneDesktopHandler
+    extends AbstractHandler
 {
     /**
      * @var string
@@ -40,12 +41,11 @@ class WindowsPhoneDesktopHandler extends AbstractHandler
     /**
      * @var array
      */
-    public static $constantIDs
-        = array(
-            'generic_ms_phone_os7_desktopmode',
-            'generic_ms_phone_os7_5_desktopmode',
-            'generic_ms_phone_os8_desktopmode',
-        );
+    public static $constantIDs = array(
+        'generic_ms_phone_os7_desktopmode',
+        'generic_ms_phone_os7_5_desktopmode',
+        'generic_ms_phone_os8_desktopmode',
+    );
 
     /**
      * @param string $userAgent
@@ -81,6 +81,7 @@ class WindowsPhoneDesktopHandler extends AbstractHandler
         if (Utils::checkIfContains($userAgent, 'Trident/5.0')) {
             return 'generic_ms_phone_os7_5_desktopmode';
         }
+
         return 'generic_ms_phone_os7_desktopmode';
     }
 }

@@ -6,7 +6,8 @@ use Wurfl\Request\Normalizer\Generic\LocaleRemover;
 /**
  * test case.
  */
-class LocaleRemoverTest extends BaseTest
+class LocaleRemoverTest
+    extends TestBase
 {
 
     protected function setUp()
@@ -22,7 +23,7 @@ class LocaleRemoverTest extends BaseTest
     public function shouldNormalizeTheLocale($userAgent, $expected)
     {
         $found = $this->normalizer->normalize($userAgent);
-        self::assertEquals($found, $expected);
+        self::assertEquals($expected, $found);
     }
 
     public function userAgentsDataProvider()

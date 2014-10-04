@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Single;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\VirtualCapability\Single;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Single;
+
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
@@ -25,7 +25,8 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-class DeviceType extends VirtualCapability
+class DeviceType
+    extends VirtualCapability
 {
     /**
      * @var array
@@ -34,8 +35,8 @@ class DeviceType extends VirtualCapability
         'is_wireless_device',
         'is_tablet',
         'can_assign_phone_number',
-        'is_bot', 
-        'is_smarttv', 
+        'is_bot',
+        'is_smarttv',
         'ux_full_desktop'
     );
 
@@ -50,7 +51,7 @@ class DeviceType extends VirtualCapability
         $apiDesktop = ('true' === $this->device->ux_full_desktop);
         $apiTab     = ('true' === $this->device->is_tablet);
         $apiPhone   = ('true' === $this->device->can_assign_phone_number);
-        
+
         if ($apiBot) {
             $deviceType = 'Bot';
         } elseif (!$apiMob) {
@@ -72,7 +73,7 @@ class DeviceType extends VirtualCapability
                 $deviceType = 'Mobile Device';
             }
         }
-        
+
         return $deviceType;
     }
 }

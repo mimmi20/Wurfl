@@ -684,7 +684,6 @@ WMLProgramming mailing list
             </group>
         </device>
 
-
         <device user_agent="Mozilla/4.0" fall_back="generic" id="generic_web_browser">
             <group id="product_info">
                 <capability name="is_wireless_device" value="false"/>

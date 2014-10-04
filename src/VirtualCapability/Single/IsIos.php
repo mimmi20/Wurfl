@@ -1,6 +1,4 @@
 <?php
-namespace Wurfl\VirtualCapability\Single;
-
 /**
  * Copyright (c) 2012 ScientiaMobile, Inc.
  *
@@ -13,11 +11,13 @@ namespace Wurfl\VirtualCapability\Single;
  *
  *
  * @category   WURFL
- * @package    \Wurfl\VirtualCapability\VirtualCapability
+ * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
+
+namespace Wurfl\VirtualCapability\Single;
+
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
@@ -25,7 +25,8 @@ use Wurfl\VirtualCapability\VirtualCapability;
  *
  * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-class IsIos extends VirtualCapability
+class IsIos
+    extends VirtualCapability
 {
     /**
      * @var array

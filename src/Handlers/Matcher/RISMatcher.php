@@ -1,22 +1,23 @@
 <?php
+/**
+ * Copyright (c) 2012 ScientiaMobile, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Refer to the COPYING.txt file distributed with this package.
+ *
+ *
+ * @category   WURFL
+ * @package    WURFL
+ * @copyright  ScientiaMobile, Inc.
+ * @license    GNU Affero General Public License
+ */
+
 namespace Wurfl\Handlers\Matcher;
 
-    /**
-     * Copyright (c) 2012 ScientiaMobile, Inc.
-     *
-     * This program is free software: you can redistribute it and/or modify
-     * it under the terms of the GNU Affero General Public License as
-     * published by the Free Software Foundation, either version 3 of the
-     * License, or (at your option) any later version.
-     *
-     * Refer to the COPYING.txt file distributed with this package.
-     *
-     * @category   WURFL
-     * @package    \Wurfl\Handlers\MatcherInterface
-     * @copyright  ScientiaMobile, Inc.
-     * @license    GNU Affero General Public License
-     * @version    $id$
-     */
 /**
  * WURFL Reduction in String user agent matcher.
  * This User Agent Matcher uses its match() method to find a matching user agent by
@@ -26,9 +27,9 @@ namespace Wurfl\Handlers\Matcher;
  * @see        match()
  * @package    \Wurfl\Handlers\MatcherInterface
  */
-class RISMatcher implements MatcherInterface
+class RISMatcher
+    implements MatcherInterface
 {
-
     /**
      * Instance of \Wurfl\Handlers\Matcher\LDMatcher
      *
@@ -53,9 +54,9 @@ class RISMatcher implements MatcherInterface
     /**
      * Returns the closest match of $needle in $collection of user agents
      *
-     * @param $collection array Array of user agents
-     * @param $needle     string substring to look for in user agent
-     * @param $tolerance  integer Minimum required length of prefix match
+     * @param array &$collection array Array of user agents
+     * @param string $needle     string substring to look for in user agent
+     * @param integer $tolerance  integer Minimum required length of prefix match
      *
      * @return string Device ID that matches user agent or null if not found
      */
@@ -68,7 +69,7 @@ class RISMatcher implements MatcherInterface
         $bestIndex    = 0;
 
         while ($low <= $high) {
-            $mid      = (int)round(($low + $high) / 2);
+            $mid      = (int) round(($low + $high) / 2);
             $find     = $collection[$mid];
             $distance = $this->longestCommonPrefixLength($needle, $find);
 
@@ -113,9 +114,10 @@ class RISMatcher implements MatcherInterface
      */
     private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
     {
-        while ($bestIndex > 0
-            && $this->longestCommonPrefixLength($collection[$bestIndex - 1], $needle) == $bestDistance
-        ) {
+        while ($bestIndex > 0 && $this->longestCommonPrefixLength(
+                $collection[$bestIndex - 1],
+                $needle
+            ) == $bestDistance) {
             $bestIndex--;
         }
 

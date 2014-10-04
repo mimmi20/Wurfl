@@ -8,17 +8,17 @@ use Wurfl\Request\Normalizer\UserAgentNormalizer;
 /**
  * test case
  */
-class UserAgentNormalizerTest extends \PHPUnit_Framework_TestCase
+class UserAgentNormalizerTest
+    extends \PHPUnit_Framework_TestCase
 {
     public function testShouldAddANormalizer()
     {
         $userAgentNormalizer = new UserAgentNormalizer();
-        $currentNormalizer   = $userAgentNormalizer->add(
+        $userAgentNormalizer->add(
             new Chrome()
         );
 
-        self::assertEquals(0, $userAgentNormalizer->count());
-        self::assertEquals(1, $currentNormalizer->count());
+        self::assertEquals(1, $userAgentNormalizer->count());
     }
 
     public function testShouldAddToAlreadyPresentNormalizers()

@@ -1,26 +1,25 @@
 <?php
 namespace WurflTest\Handlers;
 
-    /**
+/**
  * test case
  */
-use Wurfl\Context;
 use Wurfl\Handlers\MotorolaHandler;
 use Wurfl\Request\Normalizer\NullNormalizer;
 
 /**
  *
  */
-class MotorolaHandlerTest extends \PHPUnit_Framework_TestCase
+class MotorolaHandlerTest
+    extends \PHPUnit_Framework_TestCase
 {
     /** @var  MotorolaHandler */
     private $motorolaHandler;
 
     protected function setUp()
     {
-        $context               = new Context(null);
         $userAgentNormalizer   = new NullNormalizer();
-        $this->motorolaHandler = new MotorolaHandler($context, $userAgentNormalizer);
+        $this->motorolaHandler = new MotorolaHandler($userAgentNormalizer);
     }
 
     public function testShouldNotHandle()
