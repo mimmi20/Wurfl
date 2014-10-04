@@ -22,7 +22,14 @@ class XmlConfigTest
         self::assertNotNull($config->persistence);
 
         self::assertEquals(realpath('tests/resources/wurfl-regression.xml'), $config->wurflFile);
-        self::assertEquals(array(realpath('tests/resources/browsers.xml')), $config->wurflPatches);
+        self::assertEquals(
+            array(
+                realpath('tests/resources/web_browsers_patch.xml'),
+                realpath('tests/resources/spv_patch.xml'),
+                realpath('tests/resources/browsers.xml'),
+            ),
+            $config->wurflPatches
+        );
 
         self::assertEquals(true, $config->allowReload);
 
