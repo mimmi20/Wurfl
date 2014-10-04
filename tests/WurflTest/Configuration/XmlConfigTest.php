@@ -36,7 +36,13 @@ class XmlConfigTest
         $cacheDir    = realpath('tests/resources/cache/');
         $persistence = $config->persistence;
         self::assertEquals('memory', $persistence['provider']);
-        self::assertEquals(array(Config::DIR => $cacheDir), $persistence['params']);
+        self::assertEquals(
+            array(
+                'host' => '127.0.0.1',
+                'port' => '11211',
+            ),
+            $persistence['params']
+        );
 
         $cache = $config->cache;
         self::assertEquals('null', $cache['provider']);
