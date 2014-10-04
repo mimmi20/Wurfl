@@ -64,6 +64,8 @@ class UserAgentHandlerChainTest
 
     public function setUp()
     {
+        $this->markTestSkipped('not implemented yet');
+        
         $this->object = self::initUserAgentHandlerChain();
     }
 

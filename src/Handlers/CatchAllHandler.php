@@ -106,11 +106,23 @@ class CatchAllHandler
     private function ensureAuxDataLoaded()
     {
         if (empty($this->mozilla4UserAgentsWithDeviceID)) {
-            $this->mozilla4UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA4);
+            $loaded = $this->persistenceProvider->load(self::MOZILLA4);
+
+            if (is_array($loaded)) {
+                $this->mozilla4UserAgentsWithDeviceID = $loaded;
+            } else {
+                $this->mozilla4UserAgentsWithDeviceID = array();
+            }
         }
 
         if (empty($this->mozilla5UserAgentsWithDeviceID)) {
-            $this->mozilla5UserAgentsWithDeviceID = $this->persistenceProvider->load(self::MOZILLA5);
+            $loaded = $this->persistenceProvider->load(self::MOZILLA5);
+
+            if (is_array($loaded)) {
+                $this->mozilla5UserAgentsWithDeviceID = $loaded;
+            } else {
+                $this->mozilla5UserAgentsWithDeviceID = array();
+            }
         }
     }
 
@@ -145,8 +157,11 @@ class CatchAllHandler
     private function applyMozilla5ConclusiveMatch($userAgent)
     {
         $this->logger->warning(
-            'Applying Catch All Conclusive Match Mozilla 5 (LD with threshold of )for ua: ' . $userAgent
+            'Applying Catch All Conclusive Match Mozilla 5 (LD with threshold of ' . self::MOZILLA_TOLERANCE
+            . ') for ua: ' . $userAgent
         );
+
+        $match = null;
 
         if (!array_key_exists($userAgent, $this->mozilla5UserAgentsWithDeviceID)) {
             $match = Utils::ldMatch(
@@ -156,7 +171,7 @@ class CatchAllHandler
             );
         }
 
-        if (!empty($match)) {
+        if (null !== $match && !empty($this->mozilla5UserAgentsWithDeviceID[$match])) {
             return $this->mozilla5UserAgentsWithDeviceID[$match];
         }
 
@@ -170,7 +185,12 @@ class CatchAllHandler
      */
     private function applyMozilla4ConclusiveMatch($userAgent)
     {
-        $this->logger->warning('Applying Catch All Conclusive Match Mozilla 4 for ua: ' . $userAgent);
+        $this->logger->warning(
+            'Applying Catch All Conclusive Match Mozilla 4 (LD with threshold of ' . self::MOZILLA_TOLERANCE
+            . ') for ua: ' . $userAgent
+        );
+
+        $match = null;
 
         if (!array_key_exists($userAgent, $this->mozilla4UserAgentsWithDeviceID)) {
             $match = Utils::ldMatch(
@@ -180,7 +200,7 @@ class CatchAllHandler
             );
         }
 
-        if (!empty($match)) {
+        if (null !== $match && !empty($this->mozilla4UserAgentsWithDeviceID[$match])) {
             return $this->mozilla4UserAgentsWithDeviceID[$match];
         }
 
