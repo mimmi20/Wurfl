@@ -35,14 +35,14 @@ class XmlConfigTest
 
         $cacheDir    = realpath('tests/resources/cache/');
         $persistence = $config->persistence;
-        self::assertEquals('file', $persistence ['provider']);
-        self::assertEquals(array(Config::DIR => $cacheDir), $persistence ['params']);
+        self::assertEquals('memory', $persistence['provider']);
+        self::assertEquals(array(Config::DIR => $cacheDir), $persistence['params']);
 
         $cache = $config->cache;
-        self::assertEquals('file', $cache ['provider']);
+        self::assertEquals('null', $cache['provider']);
         self::assertEquals(
             array(Config::DIR => $cacheDir, 'expiration' => 36000),
-            $cache ['params']
+            $cache['params']
         );
     }
 
@@ -59,17 +59,17 @@ class XmlConfigTest
 
         $persistence = $config->persistence;
 
-        self::assertEquals('apc', $persistence ['provider']);
-        self::assertEquals(array('namespace' => 'wurflpersist'), $persistence ['params']);
+        self::assertEquals('apc', $persistence['provider']);
+        self::assertEquals(array('namespace' => 'wurflpersist'), $persistence['params']);
 
         $cache = $config->cache;
-        self::assertEquals('apc', $cache ['provider']);
+        self::assertEquals('apc', $cache['provider']);
         self::assertEquals(
             array(
                 'namespace'  => 'wurfl',
                 'expiration' => 86400
             ),
-            $cache ['params']
+            $cache['params']
         );
     }
 
@@ -83,8 +83,8 @@ class XmlConfigTest
         self::assertEquals(false, $config->allowReload);
 
         $persistence = $config->persistence;
-        self::assertEquals('apc', $persistence ['provider']);
-        self::assertEquals(array('namespace' => 'wurflpersist'), $persistence ['params']);
+        self::assertEquals('apc', $persistence['provider']);
+        self::assertEquals(array('namespace' => 'wurflpersist'), $persistence['params']);
 
         $cache = $config->cache;
         self::assertTrue(empty($cache));
