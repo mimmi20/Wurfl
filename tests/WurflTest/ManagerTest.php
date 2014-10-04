@@ -39,7 +39,7 @@ class ManagerTest
         $cacheDir     = self::CACHE_DIR;
         $config       = new InMemoryConfig();
 
-        $config->wurflFile($resourcesDir . 'wurfl.xml');
+        $config->wurflFile($resourcesDir . 'wurfl-regression.xml');
 
         $params = array(
             Config::DIR        => $cacheDir,

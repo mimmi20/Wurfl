@@ -53,7 +53,7 @@ class VirtualCapabilityProviderTest
         );
         $request      = new GenericRequest($header, $userAgent, null, false);
 
-        $deviceRepository = $this->deviceRepositoryBuilder->build(self::RESOURCES_DIR . 'wurfl.xml');
+        $deviceRepository = $this->deviceRepositoryBuilder->build(self::RESOURCES_DIR . 'wurfl-regression.xml');
         self::assertNotNull($deviceRepository);
 
         $modelDevices = $deviceRepository->getDeviceHierarchy($expectedDeviceId);
