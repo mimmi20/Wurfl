@@ -27,7 +27,7 @@ class ManagerTest
 
     public static function setUpBeforeClass()
     {
-        self::$wurflManager = self::initManager();
+        //self::$wurflManager = self::initManager();
     }
 
     /**
@@ -64,6 +64,8 @@ class ManagerTest
 
     public function setUp()
     {
+        $this->markTestSkipped('not implemented yet');
+
         $this->object = self::initManager();
     }
 
