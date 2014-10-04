@@ -16,10 +16,14 @@ before_script:
   - if [ "`phpenv version-name`" == "5.5" ] || [ "`phpenv version-name`" == "5.6" ]; then echo 'opcache.enable_cli=1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
   - composer self-update
   - composer install --dev --prefer-source
+  - mkdir tests/resources/cache/
+  - chmod -R 777 tests/resources/cache/
 
 script:
   - phpunit --configuration travis.phpunit.xml.dist --coverage-text --coverage-clover=coverage.clover --colors --verbose
 
 after_script:
+  - rm -R -f -d tests/resources/cache/
+  - rmdir tests/resources/cache/
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
