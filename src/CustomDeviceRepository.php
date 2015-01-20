@@ -81,6 +81,8 @@ class CustomDeviceRepository
 
     /**
      * Initializes this device repository by loading the base generic device capabilities names and group ID map
+     *
+     * @throws \Wurfl\Exception
      */
     private function init()
     {
@@ -128,7 +130,7 @@ class CustomDeviceRepository
      *
      * @param string $deviceId
      *
-     * @throws Exception
+     * @throws \Wurfl\Exception
      * @return \Wurfl\Xml\ModelDevice
      */
     public function getDevice($deviceId)
@@ -149,7 +151,8 @@ class CustomDeviceRepository
     /**
      * Returns all devices in the repository
      *
-     * @return array
+     * @throws \Wurfl\Exception
+     * @return \Wurfl\Xml\ModelDevice[]
      */
     public function getAllDevices()
     {
@@ -211,6 +214,7 @@ class CustomDeviceRepository
             if (!$device) {
                 throw new Exception('the device with ' . $deviceId . ' is not found.');
             }
+            
             if (isset($device->capabilities[$capabilityName])) {
                 $capabilityValue = $device->capabilities[$capabilityName];
                 break;
@@ -262,6 +266,7 @@ class CustomDeviceRepository
      *
      * @param string $deviceId
      *
+     * @throws \Wurfl\Exception
      * @return \Wurfl\Xml\ModelDevice[] All ModelDevice objects in the fallback tree
      */
     public function getDeviceHierarchy($deviceId)
@@ -270,7 +275,12 @@ class CustomDeviceRepository
 
         while (strcmp($deviceId, 'root')) {
             /** @var $device \Wurfl\Xml\ModelDevice */
-            $device    = $this->getDevice($deviceId);
+            $device = $this->getDevice($deviceId);
+            
+            if (!($device instanceof Xml\ModelDevice)) {
+                throw new Exception('one of the parent devices is missing for deviceId ' . $deviceId);
+            }
+            
             $devices[] = $device;
             $deviceId  = $device->fallBack;
         }
