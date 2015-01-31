@@ -25,7 +25,7 @@ namespace Wurfl;
  */
 class Constants
 {
-    const API_VERSION = '1.5.2.0';
+    const API_VERSION = '1.5.3.0';
 
     const GENERIC             = 'generic';
     const GENERIC_XHTML       = 'generic_xhtml';

@@ -1,5 +1,15 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2014.12.02] 1.5.3.0
+- Added Opera for Android UA support in VC tool
+- Added iOS 8.1 WURFL hardware IDs
+- LD Algorithm Enhancement
+- Added UC browser on Windows Phone support
+
+[2014.09.22] 1.5.2.1
+- Improved form_factor capability
+- Improved support for Apple devices
+
 [2014.09.02] 1.5.2.0
 - Improved detection of:
     - Android
@@ -146,18 +156,18 @@ ScientiaMobile WURFL PHP API change log:
         - Chrome
         - Opera
         - Safari
-        - MSIE    
+        - MSIE
 - Handlers
-    - Added 
+    - Added
         - AndroidHandler
         - ChromeHandler
-        - BotCrawlerTranscoderHandler        
+        - BotCrawlerTranscoderHandler
 - Logger
     - Removed dependency from the PEAR Log
     - Added Custom Logger
 - WURFLLoader
-    - Added A WURFLReloader 
-- Created a new web_browsers_patch            
+    - Added A WURFLReloader
+- Created a new web_browsers_patch
 
 [2010-06-16]
 Added Caching expiration capability

@@ -133,56 +133,6 @@ class Utils
     );
 
     /**
-     * Keyword => deviceID pair collection used for Catch-All matching
-     *
-     * @var array Array of (string)keyword => (string)deviceID
-     */
-    private static $mobileCatchAllIds = array(
-        // Openwave
-        'UP.Browser/7.2' => 'opwv_v72_generic',
-        'UP.Browser/7'   => 'opwv_v7_generic',
-        'UP.Browser/6.2' => 'opwv_v62_generic',
-        'UP.Browser/6'   => 'opwv_v6_generic',
-        'UP.Browser/5'   => 'upgui_generic',
-        'UP.Browser/4'   => 'uptext_generic',
-        'UP.Browser/3'   => 'uptext_generic',
-        // Series 60
-        'Series60'       => 'nokia_generic_series60',
-        // Access/Net Front
-        'NetFront/3.0'   => 'generic_netfront_ver3',
-        'ACS-NF/3.0'     => 'generic_netfront_ver3',
-        'NetFront/3.1'   => 'generic_netfront_ver3_1',
-        'ACS-NF/3.1'     => 'generic_netfront_ver3_1',
-        'NetFront/3.2'   => 'generic_netfront_ver3_2',
-        'ACS-NF/3.2'     => 'generic_netfront_ver3_2',
-        'NetFront/3.3'   => 'generic_netfront_ver3_3',
-        'ACS-NF/3.3'     => 'generic_netfront_ver3_3',
-        'NetFront/3.4'   => 'generic_netfront_ver3_4',
-        'NetFront/3.5'   => 'generic_netfront_ver3_5',
-        'NetFront/4.0'   => 'generic_netfront_ver4_0',
-        'NetFront/4.1'   => 'generic_netfront_ver4_1',
-        // CoreMedia
-        'CoreMedia'      => 'apple_iphone_coremedia_ver1',
-        // Windows CE
-        'Windows CE'     => 'generic_ms_mobile',
-        // Generic XHTML
-        'Obigo'          => Constants::GENERIC_XHTML,
-        'AU-MIC/2'       => Constants::GENERIC_XHTML,
-        'AU-MIC-'        => Constants::GENERIC_XHTML,
-        'AU-OBIGO/'      => Constants::GENERIC_XHTML,
-        'Teleca Q03B1'   => Constants::GENERIC_XHTML,
-        // Opera Mini
-        'Opera Mini/1'   => 'generic_opera_mini_version1',
-        'Opera Mini/2'   => 'generic_opera_mini_version2',
-        'Opera Mini/3'   => 'generic_opera_mini_version3',
-        'Opera Mini/4'   => 'generic_opera_mini_version4',
-        'Opera Mini/5'   => 'generic_opera_mini_version5',
-        // DoCoMo
-        'DoCoMo'         => 'docomo_generic_jap_ver1',
-        'KDDI'           => 'docomo_generic_jap_ver1',
-    );
-
-    /**
      * Alias of \Wurfl\Handlers\Matcher\RISMatcher::match()
      *
      * @param array  $collection
@@ -357,24 +307,6 @@ class Utils
     }
 
     private static $isRobot;
-
-    /**
-     * Returns true if the give $userAgent is from a mobile device
-     *
-     * @param string $userAgent
-     *
-     * @return string|null
-     */
-    public static function getMobileCatchAllId($userAgent)
-    {
-        foreach (self::$mobileCatchAllIds as $key => $deviceId) {
-            if (strpos($userAgent, $key) !== false) {
-                return $deviceId;
-            }
-        }
-
-        return Constants::NO_MATCH;
-    }
 
     /**
      * Is the given user agent very likely to be a desktop browser

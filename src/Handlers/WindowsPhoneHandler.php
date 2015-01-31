@@ -119,18 +119,16 @@ class WindowsPhoneHandler
     }
 
     /**
-     * @param $ua
-     *
-     * @internal param $userAgent
+     * @param string $userAgent
      *
      * @return mixed|null
      */
-    public static function getWindowsPhoneModel($ua)
+    public static function getWindowsPhoneModel($userAgent)
     {
         // Normalize spaces in UA before capturing parts
-        $ua = preg_replace('|;(?! )|', '; ', $ua);
+        $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
         // This regex is relatively fast because there is not much backtracking, and almost all UAs will match
-        if (preg_match('|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|', $ua, $matches)) {
+        if (preg_match('|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|', $userAgent, $matches)) {
             $model = $matches[1];
             // Some UAs contain '_blocked' and that string causes matching errors:
             //   Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.5; Trident/3.1; IEMobile/7.0; LG_blocked; LG-E900)

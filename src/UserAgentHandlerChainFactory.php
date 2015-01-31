@@ -259,7 +259,8 @@ class UserAgentHandlerChainFactory
         );
 
         /**** All other requests ****/
-        $userAgentHandlerChain->addUserAgentHandler(new Handlers\CatchAllHandler($genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\CatchAllMozillaHandler($genericNormalizers));
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\CatchAllRisHandler($genericNormalizers));
 
         return $userAgentHandlerChain;
     }

@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use Wurfl\Constants;
+
 /**
  * AndroidUserAgentHandler
  *
@@ -94,6 +96,11 @@ class AndroidHandler
 
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+        }
+
+        //Return no match for UAs with no extractable Android version, model and that do not start with either Mozilla or Dalvik
+        if (!Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla', 'Dalvik'))) {
+            return Constants::NO_MATCH;
         }
 
         // Standard RIS Matching

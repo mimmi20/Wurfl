@@ -60,6 +60,6 @@ class FormFactor
             }
         }
 
-        return 'Feature Phone';
+        return 'Other Mobile';
     }
 }

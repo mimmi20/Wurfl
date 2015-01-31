@@ -63,13 +63,26 @@ class LDMatcher
      */
     public function match(&$collection, $needle, $tolerance)
     {
-        $best  = $tolerance;
-        $match = '';
+        $best        = $tolerance;
+        $match       = '';
+        $needleChars = count_chars($needle);
 
         foreach ($collection as $userAgent) {
-            if (abs(strlen($needle) - strlen($userAgent)) <= $tolerance) {
-                $current = levenshtein($needle, $userAgent);
+            $uaChars    = count_chars($userAgent);
+            $sum        = 0;
+            $canApplyLd = true;
 
+            //Check from 32 (space) to 122 ('z')
+            for ($i = 32; $i < 122; $i++) {
+                $sum += abs($needleChars[$i] - $uaChars[$i]);
+                if ($sum > 2 * $tolerance) {
+                    $canApplyLd = false;
+                    break;
+                }
+            }
+
+            if ($canApplyLd === true) {
+                $current = levenshtein($needle, $userAgent);
                 if ($current <= $best) {
                     $best  = $current - 1;
                     $match = $userAgent;

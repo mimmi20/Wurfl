@@ -59,7 +59,6 @@ class MSIEHandler
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
-
         if (Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
             return false;
         }

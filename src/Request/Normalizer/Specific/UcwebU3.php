@@ -22,6 +22,7 @@ use Wurfl\Constants;
 use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\UcwebU3Handler;
 use Wurfl\Handlers\Utils;
+use Wurfl\Handlers\WindowsPhoneHandler;
 use Wurfl\Request\Normalizer\NormalizerInterface;
 
 /**
@@ -45,8 +46,19 @@ class UcwebU3
             return $userAgent;
         }
 
-        //Android U3K Mobile + Tablet
-        if (Utils::checkIfContains($userAgent, 'Android')) {
+        // Windows Phone goes before Android
+        if (Utils::checkIfContains($userAgent, 'Windows Phone')) {
+            // Apply Version+Model--- matching normalization
+            $model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);
+            $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+
+            if ($model !== null && $version !== null) {
+                $prefix = "$version U3WP $ucbVersion $model" . Constants::RIS_DELIMITER;
+
+                return $prefix . $userAgent;
+            }
+        } elseif (Utils::checkIfContains($userAgent, 'Android')) {
+            // Android U3K Mobile + Tablet
             // Apply Version+Model--- matching normalization
 
             $model   = AndroidHandler::getAndroidModel($userAgent, false);

@@ -54,6 +54,8 @@ class UcwebU3Handler
         'apple_ipad_ver1_sub5_subuaucweb',
         'apple_ipad_ver1_sub6_subuaucweb',
         'apple_ipad_ver1_sub7_subuaucweb',
+        'generic_ms_phone_os8_subuaucweb',
+        'generic_ms_phone_os8_1_subuaucweb',
     );
 
     /**
@@ -92,8 +94,27 @@ class UcwebU3Handler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        //Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
+        // Windows Phone
+        if (Utils::checkIfContains($userAgent, 'Windows Phone')) {
+            $version             = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+            $significant_version = explode('.', $version);
+            if ($significant_version[0] !== null) {
+                if ($significant_version[1] === 0) {
+                    $deviceID = 'generic_ms_phone_os' . $significant_version[0] . '_subuaucweb';
+                } else {
+                    $deviceID = 'generic_ms_phone_os' . $significant_version[0] . '_' . $significant_version[1] . '_subuaucweb';
+                }
+
+                if (in_array($deviceID, self::$constantIDs)) {
+                    return $deviceID;
+                }
+            }
+
+            return 'generic_ms_phone_os8_subuaucweb';
+        }
+
         if (Utils::checkIfContains($userAgent, 'Android')) {
+            // Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
             // Apply Version+Model--- matching normalization
             $version            = AndroidHandler::getAndroidVersion($userAgent, false);
             $significantVersion = explode('.', $version);
@@ -107,7 +128,9 @@ class UcwebU3Handler
             }
 
             return 'generic_ucweb_android_ver1';
-        } elseif (Utils::checkIfContains($userAgent, 'iPhone;')) {
+        }
+
+        if (Utils::checkIfContains($userAgent, 'iPhone;')) {
             //iPhone U3K
             if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
                 $significantVersion = $matches[1];
@@ -119,7 +142,9 @@ class UcwebU3Handler
             }
 
             return 'apple_iphone_ver1_subuaucweb';
-        } elseif (Utils::checkIfContains($userAgent, 'iPad')) {
+        }
+
+        if (Utils::checkIfContains($userAgent, 'iPad')) {
             //iPad U3K
 
             if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
@@ -160,10 +185,10 @@ class UcwebU3Handler
     public static function getUcAndroidVersion($userAgent, $useDefault = true)
     {
         if (preg_match('/; Adr (\d+\.\d+)\.?/', $userAgent, $matches)) {
-            $u2kAndroidVersion = $matches[1];
+            $u2k_an_version = $matches[1];
 
-            if (in_array($u2kAndroidVersion, AndroidHandler::$validAndroidVersions)) {
-                return $u2kAndroidVersion;
+            if (in_array($u2k_an_version, AndroidHandler::$validAndroidVersions)) {
+                return $u2k_an_version;
             }
         }
 
