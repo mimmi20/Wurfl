@@ -1,8 +1,6 @@
+vendor/
 .idea/
-phpdoc/
-vendor
-build/
+.buildpath
+.settings
+.project
 composer.phar
-*.bak
-result.txt
-tests/resources/cache/

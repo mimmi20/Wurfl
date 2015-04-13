@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -214,7 +214,7 @@ class CustomDeviceRepository
             if (!$device) {
                 throw new Exception('the device with ' . $deviceId . ' is not found.');
             }
-            
+
             if (isset($device->capabilities[$capabilityName])) {
                 $capabilityValue = $device->capabilities[$capabilityName];
                 break;
@@ -276,11 +276,11 @@ class CustomDeviceRepository
         while (strcmp($deviceId, 'root')) {
             /** @var $device \Wurfl\Xml\ModelDevice */
             $device = $this->getDevice($deviceId);
-            
+
             if (!($device instanceof Xml\ModelDevice)) {
                 throw new Exception('one of the parent devices is missing for deviceId ' . $deviceId);
             }
-            
+
             $devices[] = $device;
             $deviceId  = $device->fallBack;
         }

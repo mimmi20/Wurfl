@@ -1,5 +1,28 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2015.04.01] ScientiaMobile Database API 1.6.0.0
+- Added
+    - Android 5.1 support
+    - MSIE 12/Edge 12.0 support
+    - Tizen 2.3 support
+    - Trove Bot detection
+    - Windows Phone 10 support
+- Improved detection performance
+- Improved detection of:
+    - Android
+    - CFNetwork
+    - Chromium
+    - Firefox OS
+    - MSIE 12/Edge support
+    - Opera
+    - SmartBrowser
+    - SmartTV
+    - UCWebBrowser
+    - Wii
+- Added virtual capabilities:
+    - is_phone
+    - is_app_webview
+
 [2014.12.02] 1.5.3.0
 - Added Opera for Android UA support in VC tool
 - Added iOS 8.1 WURFL hardware IDs

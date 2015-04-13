@@ -1,14 +1,11 @@
 <?php
 /**
  * Copyright (c) 2015 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
- *
  *
  * @category   WURFL
  * @package    WURFL
@@ -16,30 +13,28 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\Request\Normalizer\Generic;
+namespace Wurfl\VirtualCapability\Single;
 
-use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
- * User Agent Normalizer - removes BabelFish garbage from user agent
+ * Virtual capability helper
  *
- * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
+ * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-class BabelFish
-    implements NormalizerInterface
+class IsPhone
+    extends VirtualCapability
 {
     /**
-     * @var string
+     * @var array
      */
-    const BABEL_FISH_REGEX = "/\\s*\\(via babelfish.yahoo.com\\)\\s*/";
+    protected $required_capabilities = array('can_assign_phone_number', 'is_tablet');
 
     /**
-     * @param string $userAgent
-     *
-     * @return mixed|string
+     * @return bool|mixed
      */
-    public function normalize($userAgent)
+    protected function compute()
     {
-        return preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);
+        return ($this->device->can_assign_phone_number && $this->device->is_tablet === 'false');
     }
 }

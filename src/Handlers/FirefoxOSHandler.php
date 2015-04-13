@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -46,6 +46,8 @@ class FirefoxOSHandler
         'firefox_os_ver1_4_tablet',
         'firefox_os_ver2_0',
         'firefox_os_ver2_0_tablet',
+        'firefox_os_ver2_1',
+        'firefox_os_ver2_1_tablet',
     );
 
     public static $firefoxOSMap = array(
@@ -55,6 +57,8 @@ class FirefoxOSHandler
         '28.0' => '1.3',
         '30.0' => '1.4',
         '32.0' => '2.0',
+        '33.0' => '2.1',
+        '34.0' => '2.1',
     );
 
     public function canHandle($userAgent)
