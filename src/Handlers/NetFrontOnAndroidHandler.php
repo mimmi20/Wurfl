@@ -31,8 +31,7 @@ namespace Wurfl\Handlers;
 class NetFrontOnAndroidHandler
     extends AbstractHandler
 {
-
-    protected $prefix = "NETFRONTONANDROID";
+    protected $prefix = 'NETFRONTONANDROID';
 
     public static $constantIDs = array(
         'generic_android_ver2_0_netfrontlifebrowser',

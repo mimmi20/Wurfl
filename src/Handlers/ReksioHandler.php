@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class ReksioHandler
     extends AbstractHandler
 {
-    protected $prefix = "REKSIO";
+    protected $prefix = 'REKSIO';
 
     public static $constantIDs = array(
         'generic_reksio',

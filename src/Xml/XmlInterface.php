@@ -25,18 +25,18 @@ namespace Wurfl\Xml;
  */
 interface XmlInterface
 {
-    const ID                 = "id";
-    const USER_AGENT         = "user_agent";
-    const FALL_BACK          = "fall_back";
-    const ACTUAL_DEVICE_ROOT = "actual_device_root";
-    const SPECIFIC           = "specific";
+    const ID                 = 'id';
+    const USER_AGENT         = 'user_agent';
+    const FALL_BACK          = 'fall_back';
+    const ACTUAL_DEVICE_ROOT = 'actual_device_root';
+    const SPECIFIC           = 'specific';
 
-    const DEVICE = "device";
+    const DEVICE = 'device';
 
-    const GROUP    = "group";
-    const GROUP_ID = "id";
+    const GROUP    = 'group';
+    const GROUP_ID = 'id';
 
-    const CAPABILITY       = "capability";
-    const CAPABILITY_NAME  = "name";
-    const CAPABILITY_VALUE = "value";
+    const CAPABILITY       = 'capability';
+    const CAPABILITY_NAME  = 'name';
+    const CAPABILITY_VALUE = 'value';
 }

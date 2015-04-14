@@ -33,7 +33,7 @@ class Konqueror
     /**
      * @var string
      */
-    const KONQUEROR = "Konqueror";
+    const KONQUEROR = 'Konqueror';
 
     /**
      * @param string $userAgent

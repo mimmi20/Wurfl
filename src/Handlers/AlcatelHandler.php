@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class AlcatelHandler
     extends AbstractHandler
 {
-    protected $prefix = "ALCATEL";
+    protected $prefix = 'ALCATEL';
 
     public function canHandle($userAgent)
     {
@@ -39,7 +39,7 @@ class AlcatelHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, "Alcatel") || Utils::checkIfStartsWith($userAgent, "ALCATEL");
+        return Utils::checkIfStartsWith($userAgent, 'Alcatel') || Utils::checkIfStartsWith($userAgent, 'ALCATEL');
     }
 
     public function applyConclusiveMatch($userAgent)

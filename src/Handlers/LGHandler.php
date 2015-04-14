@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class LGHandler
     extends AbstractHandler
 {
-    protected $prefix = "LG";
+    protected $prefix = 'LG';
 
     /**
      * @param string $userAgent

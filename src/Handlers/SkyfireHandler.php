@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SkyfireHandler
     extends AbstractHandler
 {
-    protected $prefix = "SKYFIRE";
+    protected $prefix = 'SKYFIRE';
 
     public static $constantIDs = array(
         'generic_skyfire_version1',

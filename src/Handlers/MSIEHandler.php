@@ -34,7 +34,7 @@ class MSIEHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "MSIE";
+    protected $prefix = 'MSIE';
 
     public static $constantIDs = array(
         0 => 'msie',
@@ -47,6 +47,7 @@ class MSIEHandler
         9 => 'msie_9',
         10 => 'msie_10',
         11 => 'msie_11',
+        12 => 'msie_12',
     );
 
     /**
@@ -62,13 +63,16 @@ class MSIEHandler
         if (Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
             return false;
         }
+        // Edge 12 signature
+        $hasEdgeMode = Utils::checkIfContains($userAgent, ' Edge/');
 
         // IE 11 signature
         $hasTridentRv = (Utils::checkIfContains($userAgent, 'Trident') && Utils::checkIfContains($userAgent, 'rv:'));
+
         // IE < 11 signature
         $hasMsie = Utils::checkIfContains($userAgent, 'MSIE');
 
-        return ($hasMsie || $hasTridentRv);
+        return ($hasMsie || $hasTridentRv || $hasEdgeMode);
     }
 
     /**
@@ -80,11 +84,11 @@ class MSIEHandler
     {
         $matches = array();
 
-        if (preg_match('/^Mozilla\/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)/', $userAgent, $matches) || preg_match(
-                '/^Mozilla\/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);/',
+        if (preg_match('#^Mozilla/5\.0 \(Windows NT.+? Edge/(\d+)\.(\d+)#', $userAgent, $matches) || preg_match(
+                '#^Mozilla/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)#',
                 $userAgent,
                 $matches
-            )
+            ) || preg_match('#^Mozilla/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);#', $userAgent, $matches)
         ) {
             $major = (int) $matches[1];
             $minor = (int) $matches[2];

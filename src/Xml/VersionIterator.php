@@ -36,9 +36,9 @@ class VersionIterator
      */
     public function readNextElement()
     {
-        $version     = "";
-        $lastUpdated = "";
-        $officialURL = "";
+        $version     = '';
+        $lastUpdated = '';
+        $officialURL = '';
 
         while ($this->xmlReader->read()) {
             $nodeName = $this->xmlReader->name;

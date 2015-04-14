@@ -31,7 +31,7 @@ class NovarraGoogleTranslator
     /**
      * @var string
      */
-    const NOVARRA_GOOGLE_TRANSLATOR_PATTERN = "/(\sNovarra-Vision.*)|(,gzip\(gfe\)\s+\(via translate.google.com\))/";
+    const NOVARRA_GOOGLE_TRANSLATOR_PATTERN = '/(\sNovarra-Vision.*)|(,gzip\(gfe\)\s+\(via translate.google.com\))/';
 
     /**
      * @param string $userAgent
@@ -40,6 +40,6 @@ class NovarraGoogleTranslator
      */
     public function normalize($userAgent)
     {
-        return preg_replace(self::NOVARRA_GOOGLE_TRANSLATOR_PATTERN, "", $userAgent);
+        return preg_replace(self::NOVARRA_GOOGLE_TRANSLATOR_PATTERN, '', $userAgent);
     }
 }

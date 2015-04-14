@@ -35,7 +35,7 @@ class LoggerFactory
     public static function create($wurflConfig = null)
     {
         if (self::isLoggingConfigured($wurflConfig)) {
-            return self::createFileLogger($wurflConfig, "wurfl.log");
+            return self::createFileLogger($wurflConfig, 'wurfl.log');
         }
 
         return new NullLogger();

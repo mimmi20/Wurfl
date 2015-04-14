@@ -10,7 +10,7 @@ class ChromeTest
     extends TestBase
 {
 
-    const CHROME_USERAGENTS_FILE = "chrome.txt";
+    const CHROME_USERAGENTS_FILE = 'chrome.txt';
 
     protected function setUp()
     {
@@ -31,12 +31,12 @@ class ChromeTest
     {
         return array(
             array(
-                @"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13",
-                "Chrome/0"
+                @'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
+                'Chrome/0'
             ),
-            array("Chrome/9.x", "Chrome/9"),
-            array("Mozilla", "Mozilla"),
-            array("Chrome", "Chrome")
+            array('Chrome/9.x', 'Chrome/9'),
+            array('Mozilla', 'Mozilla'),
+            array('Chrome', 'Chrome')
 
         );
     }

@@ -55,7 +55,7 @@ class FormFactor
         );
 
         foreach ($map as $type => $condition) {
-            if ($condition == "true") {
+            if ($condition == 'true') {
                 return $type;
             }
         }

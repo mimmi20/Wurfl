@@ -94,7 +94,6 @@ class Utils
         'smarttv',
         'smart-tv',
         'dlna',
-        'netcast.tv',
         'ce-html',
         'inettvbrowser',
         'opera tv',
@@ -103,6 +102,10 @@ class Utils
         'sony bravia',
         'crkey',
         'sonycebrowser',
+        'hbbtv',
+        'large screen',
+        'netcast',
+        'philipstv',
     );
 
     private static $desktopBrowsers = array(
@@ -129,7 +132,8 @@ class Utils
         'yahoo! searchmonkey',
         'yahoo! slurp',
         'feedfetcher-google',
-        'mowser'
+        'mowser',
+        'trove',
     );
 
     /**
@@ -165,7 +169,8 @@ class Utils
     }
 
     /**
-     * Returns the character position (index) of the $target in $string, starting from a given index.  If target is not found, returns length of user agent.
+     * Returns the character position (index) of the $target in $string, starting from a given index.
+     * If target is not found, returns length of user agent.
      *
      * @param string $haystack      Haystack to be searched in
      * @param string $needle        Target string to search for
@@ -421,7 +426,7 @@ class Utils
      */
     public static function isSpamOrCrawler($userAgent)
     {
-        return self::checkIfContains($userAgent, "Spam") || self::checkIfContains($userAgent, "FunWebProducts");
+        return self::checkIfContains($userAgent, 'Spam') || self::checkIfContains($userAgent, 'FunWebProducts');
     }
 
     /**
@@ -435,7 +440,7 @@ class Utils
      */
     public static function thirdSemiColumn($haystack)
     {
-        $thirdSemiColumnIndex = self::ordinalIndexOf($haystack, ";", 3);
+        $thirdSemiColumnIndex = self::ordinalIndexOf($haystack, ';', 3);
         if ($thirdSemiColumnIndex < 0) {
             return strlen($haystack);
         }
@@ -456,11 +461,11 @@ class Utils
     public static function ordinalIndexOf($haystack, $needle, $ordinal)
     {
         if (is_null($haystack) || empty ($haystack)) {
-            throw new \InvalidArgumentException("haystack must not be null or empty");
+            throw new \InvalidArgumentException('haystack must not be null or empty');
         }
 
         if (!is_integer($ordinal)) {
-            throw new \InvalidArgumentException("ordinal must be a positive ineger");
+            throw new \InvalidArgumentException('ordinal must be a positive ineger');
         }
 
         $found = 0;
@@ -486,7 +491,7 @@ class Utils
      */
     public static function firstSlash($string)
     {
-        $firstSlash = strpos($string, "/");
+        $firstSlash = strpos($string, '/');
 
         return ($firstSlash !== false) ? $firstSlash : strlen($string);
     }
@@ -500,12 +505,12 @@ class Utils
      */
     public static function secondSlash($string)
     {
-        $firstSlash = strpos($string, "/");
+        $firstSlash = strpos($string, '/');
         if ($firstSlash === false) {
             return strlen($string);
         }
 
-        return strpos(substr($string, $firstSlash + 1), "/") + $firstSlash;
+        return strpos(substr($string, $firstSlash + 1), '/') + $firstSlash;
     }
 
     /**
@@ -517,7 +522,7 @@ class Utils
      */
     public static function firstSpace($string)
     {
-        $firstSpace = strpos($string, " ");
+        $firstSpace = strpos($string, ' ');
 
         return ($firstSpace === false) ? strlen($string) : $firstSpace;
     }
@@ -531,7 +536,7 @@ class Utils
      */
     public static function firstSemiColonOrLength($string)
     {
-        return self::firstMatchOrLength($string, ";");
+        return self::firstMatchOrLength($string, ';');
     }
 
     /**

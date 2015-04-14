@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SagemHandler
     extends AbstractHandler
 {
-    protected $prefix = "SAGEM";
+    protected $prefix = 'SAGEM';
 
     /**
      * @param string $userAgent

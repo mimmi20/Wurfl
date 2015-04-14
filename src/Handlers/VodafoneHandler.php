@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class VodafoneHandler
     extends AbstractHandler
 {
-    protected $prefix = "VODAFONE";
+    protected $prefix = 'VODAFONE';
 
     /**
      * @param string $userAgent
@@ -54,8 +54,6 @@ class VodafoneHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $tolerance = Utils::firstSlash($userAgent);
-
-        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
     }
 }

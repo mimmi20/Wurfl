@@ -34,7 +34,7 @@ class PortalmmmHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "PORTALMMM";
+    protected $prefix = 'PORTALMMM';
 
     /**
      * @param string $userAgent
@@ -47,7 +47,7 @@ class PortalmmmHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, "portalmmm");
+        return Utils::checkIfStartsWith($userAgent, 'portalmmm');
     }
 
     /**

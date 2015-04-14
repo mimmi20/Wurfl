@@ -32,7 +32,7 @@ class MitsubishiHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "MITSUBISHI";
+    protected $prefix = 'MITSUBISHI';
 
     /**
      * @param string $userAgent
@@ -45,7 +45,7 @@ class MitsubishiHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, "Mitsu");
+        return Utils::checkIfStartsWith($userAgent, 'Mitsu');
     }
 
     /**

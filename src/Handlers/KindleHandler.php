@@ -34,7 +34,7 @@ class KindleHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "KINDLE";
+    protected $prefix = 'KINDLE';
 
     public static $constantIDs = array(
         'amazon_kindle_ver1',

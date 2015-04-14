@@ -16,11 +16,11 @@ class TestUtils
     public static function loadUserAgentsWithIdFromFile($filePath)
     {
         if (!file_exists($filePath)) {
-            throw new \InvalidArgumentException("File path $filePath does not exist!!!");
+            throw new \InvalidArgumentException('File path $filePath does not exist!!!');
         }
 
         $testData   = array();
-        $fileHandle = fopen($filePath, "r");
+        $fileHandle = fopen($filePath, 'r');
 
         while (!feof($fileHandle)) {
             $line = fgets($fileHandle);
@@ -40,15 +40,15 @@ class TestUtils
     public static function loadUserAgentsAsArray($filePath)
     {
         if (!file_exists($filePath)) {
-            throw new \InvalidArgumentException("File path $filePath does not exist!!!");
+            throw new \InvalidArgumentException('File path $filePath does not exist!!!');
         }
 
         $testData   = array();
-        $fileHandle = fopen($filePath, "r");
+        $fileHandle = fopen($filePath, 'r');
 
         while (!feof($fileHandle)) {
             $line       = fgets($fileHandle);
-            $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
+            $isTestData = ((strpos($line, '#') === false) && strcmp($line, '\n') != 0);
 
             if ($isTestData) {
                 $userAgentArray   = array();
@@ -64,13 +64,13 @@ class TestUtils
     public static function loadTestData($fileName)
     {
         $testData   = array();
-        $fileHandle = fopen($fileName, "r");
+        $fileHandle = fopen($fileName, 'r');
 
         while (!feof($fileHandle)) {
             $line = fgets($fileHandle);
 
-            if (strpos($line, "#") === false && strcmp($line, "\n") != 0) {
-                $testData[] = explode("=", trim($line));
+            if (strpos($line, '#') === false && strcmp($line, '\n') != 0) {
+                $testData[] = explode('=', trim($line));
             }
         }
 
@@ -81,10 +81,10 @@ class TestUtils
 
     private static function updateTestData(&$testData, $line)
     {
-        $isTestData = ((strpos($line, "#") === false) && strcmp($line, "\n") != 0);
+        $isTestData = ((strpos($line, '#') === false) && strcmp($line, '\n') != 0);
 
         if ($isTestData) {
-            $testData[] = explode("=", trim($line));
+            $testData[] = explode('=', trim($line));
         }
     }
 }

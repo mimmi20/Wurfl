@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class PhilipsHandler
     extends AbstractHandler
 {
-    protected $prefix = "PHILIPS";
+    protected $prefix = 'PHILIPS';
 
     /**
      * @param string $userAgent
@@ -44,6 +44,6 @@ class PhilipsHandler
             return false;
         }
 
-        return (Utils::checkIfStartsWith($userAgent, "Philips") || Utils::checkIfStartsWith($userAgent, "PHILIPS"));
+        return (Utils::checkIfStartsWith($userAgent, 'Philips') || Utils::checkIfStartsWith($userAgent, 'PHILIPS'));
     }
 }

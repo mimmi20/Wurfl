@@ -32,7 +32,7 @@ class AndroidHandler
     /**
      * @var string
      */
-    protected $prefix = "ANDROID";
+    protected $prefix = 'ANDROID';
 
     /**
      * @var array
@@ -141,7 +141,7 @@ class AndroidHandler
                 'Safari'
             ) && !Utils::checkIfContains($userAgent, 'Mobile')
         ) {
-            // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a "_tablet" ID)
+            // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a '_tablet' ID)
             if (in_array($deviceID . '_tablet', self::$constantIDs)) {
                 return $deviceID . '_tablet';
             }
@@ -229,7 +229,7 @@ class AndroidHandler
         // Initializing $version
         $version = null;
 
-        // Look for "Android <Version>" first and then for "Android/<Version>"
+        // Look for 'Android <Version>' first and then for 'Android/<Version>'
         if (preg_match('#Android (\d\.\d)#', $userAgent, $matches)) {
             $version = $matches[1];
         } else if (preg_match('#Android/(\d\.\d)#', $userAgent, $matches)) {
@@ -280,7 +280,7 @@ class AndroidHandler
             return null;
         }
 
-        // The previous RegEx may return just "Build/.*" for UAs like:
+        // The previous RegEx may return just 'Build/.*' for UAs like:
         // HTC_Dream Mozilla/5.0 (Linux; U; Android 1.5; xx-xx; Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
         if (strpos($model, 'Build/') === 0) {
             return null;
@@ -306,7 +306,7 @@ class AndroidHandler
 
         // HTC
         if (strpos($model, 'HTC') !== false) {
-            // Normalize "HTC/"
+            // Normalize 'HTC/'
             $model = preg_replace('#HTC[ _\-/]#', 'HTC~', $model);
 
             // Remove the version

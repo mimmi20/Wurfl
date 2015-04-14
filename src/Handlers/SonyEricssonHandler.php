@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SonyEricssonHandler
     extends AbstractHandler
 {
-    protected $prefix = "SONY_ERICSSON";
+    protected $prefix = 'SONY_ERICSSON';
 
     /**
      * @param string $userAgent

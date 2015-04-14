@@ -34,7 +34,7 @@ class BlackBerryHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "BLACKBERRY";
+    protected $prefix = 'BLACKBERRY';
 
     public static $constantIDs = array(
         '2.' => 'blackberry_generic_ver2',

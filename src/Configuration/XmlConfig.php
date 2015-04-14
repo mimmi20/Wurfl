@@ -182,36 +182,36 @@ class XmlConfig
      *
      * @var string
      */
-    const WURFL_CONF_SCHEMA = '<?xml version="1.0" encoding="utf-8" ?>
-    <element name="wurfl-config" xmlns="http://relaxng.org/ns/structure/1.0">
-        <element name="wurfl">
-            <element name="main-file"><text/></element>
-            <element name="patches">
+    const WURFL_CONF_SCHEMA = "<?xml version='1.0' encoding='utf-8' ?>
+    <element name='wurfl-config' xmlns='http://relaxng.org/ns/structure/1.0'>
+        <element name='wurfl'>
+            <element name='main-file'><text/></element>
+            <element name='patches'>
                 <zeroOrMore>
-                      <element name="patch"><text/></element>
+                      <element name='patch'><text/></element>
                 </zeroOrMore>
               </element>
           </element>
         <optional>
-              <element name="allow-reload"><text/></element>
+              <element name='allow-reload'><text/></element>
         </optional>
         <optional>
-              <element name="match-mode"><text/></element>
+              <element name='match-mode'><text/></element>
         </optional>
         <optional>
-              <element name="logDir"><text/></element>
+              <element name='logDir'><text/></element>
         </optional>
-          <element name="persistence">
-              <element name="provider"><text/></element>
+          <element name='persistence'>
+              <element name='provider'><text/></element>
               <optional>
-                  <element name="params"><text/></element>
+                  <element name='params'><text/></element>
               </optional>
           </element>
-          <element name="cache">
-              <element name="provider"><text/></element>
+          <element name='cache'>
+              <element name='provider'><text/></element>
               <optional>
-                  <element name="params"><text/></element>
+                  <element name='params'><text/></element>
               </optional>
           </element>
-    </element>';
+    </element>";
 }

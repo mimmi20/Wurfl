@@ -34,7 +34,7 @@ class HTCHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "HTC";
+    protected $prefix = 'HTC';
 
     public static $constantIDs = array(
         'generic_ms_mobile',

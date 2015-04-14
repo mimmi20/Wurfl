@@ -32,7 +32,7 @@ class OperaMiniHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "OPERA_MINI";
+    protected $prefix = 'OPERA_MINI';
 
     public static $constantIDs = array(
         'Opera Mini/1' => 'generic_opera_mini_version1',

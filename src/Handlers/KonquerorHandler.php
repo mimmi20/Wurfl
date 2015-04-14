@@ -32,7 +32,7 @@ class KonquerorHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "KONQUEROR";
+    protected $prefix = 'KONQUEROR';
 
     /**
      * @param string $userAgent

@@ -30,19 +30,19 @@ use Zend\Config\Config as ZendConfigConfig;
  * // config.php
  * $configuration = array(
  *   'wurfl' => array(
- *     'main-file' => "wurfl.xml",
- *     'patches' => array("web_browsers_patch.xml"),
+ *     'main-file' => 'wurfl.xml',
+ *     'patches' => array('web_browsers_patch.xml'),
  *   ),
  *   'match-mode' => 'accuracy',
  *   'allow-reload' => true,
  *   'persistence' => array(
- *     'provider' => "file",
+ *     'provider' => 'file',
  *     'params' => array(
- *       'dir' => "storage/persistence",
+ *       'dir' => 'storage/persistence',
  *     ),
  *   ),
  *   'cache' => array(
- *     'provider' => "null",
+ *     'provider' => 'null',
  *   ),
  * );
  * ?>
@@ -54,7 +54,7 @@ use Zend\Config\Config as ZendConfigConfig;
  * $wurflManagerFactory = new \WURFL\WURFLManagerFactory($wurflConfig);
  * $wurflManager = $wurflManagerFactory->create();
  * $info = $wurflManager->getWurflInfo();
- * printf("Version: %s\nUpdated: %s\nOfficialURL: %s\n\n",
+ * printf('Version: %s\nUpdated: %s\nOfficialURL: %s\n\n',
  *   $info->version,
  *   $info->lastUpdated,
  *   $info->officialURL

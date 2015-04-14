@@ -69,14 +69,14 @@ class Utils
     private static function getZippedFile($filename)
     {
         if (!self::zipModuleLoaded()) {
-            throw new Exception("The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file");
+            throw new Exception('The ZipArchive extension is not loaded. Load the extension or use the flat wurfl.xml file');
         }
 
         $tmpDir = FileUtils::getTempDir();
         $zip    = new \ZipArchive();
 
         if ($zip->open($filename) !== true) {
-            throw new Exception("The Zip file <$filename> could not be opened");
+            throw new Exception('The Zip file <$filename> could not be opened');
         }
 
         $zippedFile = $zip->statIndex(0);
@@ -97,7 +97,7 @@ class Utils
      */
     private static function isZipFile($fileName)
     {
-        return strcmp("zip", substr($fileName, -3)) === 0 ? true : false;
+        return strcmp('zip', substr($fileName, -3)) === 0 ? true : false;
     }
 
     /**

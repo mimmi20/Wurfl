@@ -33,7 +33,7 @@ use Wurfl\Constants;
 class WebOSHandler
     extends AbstractHandler
 {
-    protected $prefix = "WEBOS";
+    protected $prefix = 'WEBOS';
 
     public static $constantIDs = array(
         'hp_tablet_webos_generic',

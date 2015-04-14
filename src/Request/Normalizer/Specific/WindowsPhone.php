@@ -53,7 +53,7 @@ class WindowsPhone
         }
 
         if ($model !== null && $version !== null) {
-            // "WP" is for Windows Phone
+            // 'WP' is for Windows Phone
             $prefix = 'WP' . $version . ' ' . $model . Constants::RIS_DELIMITER;
 
             return $prefix . $userAgent;

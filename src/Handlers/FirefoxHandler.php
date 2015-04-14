@@ -32,7 +32,7 @@ class FirefoxHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "FIREFOX";
+    protected $prefix = 'FIREFOX';
 
     public static $constantIDs = array(
         'firefox',

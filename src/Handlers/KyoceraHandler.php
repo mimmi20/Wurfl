@@ -32,7 +32,7 @@ class KyoceraHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "KYOCERA";
+    protected $prefix = 'KYOCERA';
 
     /**
      * @param string $userAgent

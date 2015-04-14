@@ -87,6 +87,7 @@ class UserAgentHandlerChainFactory
         $ucwebu2Normalizer = clone $genericNormalizers;
         $ucwebu2Normalizer->add(new Request\Normalizer\Specific\UcwebU2());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU2Handler($ucwebu2Normalizer));
+
         $ucwebu3Normalizer = clone $genericNormalizers;
         $ucwebu3Normalizer->add(new Request\Normalizer\Specific\UcwebU3());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\UcwebU3Handler($ucwebu3Normalizer));
@@ -119,15 +120,19 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\OperaMobiOrTabletOnAndroidHandler($operaMobiNormalizer)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\FennecOnAndroidHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\Ucweb7OnAndroidHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\NetFrontOnAndroidHandler($genericNormalizers)
         );
+
         $androidNormalizer = clone $genericNormalizers;
         $androidNormalizer->add(new Request\Normalizer\Specific\Android());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\AndroidHandler($androidNormalizer));
@@ -141,13 +146,17 @@ class UserAgentHandlerChainFactory
 
         /**** High workload mobile matchers ****/
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\NokiaHandler($genericNormalizers));
+
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\SamsungHandler($genericNormalizers));
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\BlackBerryHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\SonyEricssonHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\MotorolaHandler($genericNormalizers));
 
         /**** Other mobile matchers ****/
@@ -163,26 +172,35 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\HTCHandler($genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\KDDIHandler($genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\KyoceraHandler($genericNormalizers));
+
         $lgNormalizer = clone $genericNormalizers;
         $lgNormalizer->add(new Request\Normalizer\Specific\LG());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\LGHandler($lgNormalizer));
+
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\LGUPLUSHandler($genericNormalizers));
+
         $maemoNormalizer = clone $genericNormalizers;
         $maemoNormalizer->add(new Request\Normalizer\Specific\Maemo());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\MaemoHandler($maemoNormalizer));
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\MitsubishiHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\NecHandler($genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\NintendoHandler($genericNormalizers));
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\PanasonicHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\PantechHandler($genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\PhilipsHandler($genericNormalizers));
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\PortalmmmHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\QtekHandler($genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\ReksioHandler($genericNormalizers));
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\SagemHandler($genericNormalizers));
@@ -201,6 +219,7 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\FirefoxOSHandler($genericNormalizers)
         );
+
         $userAgentHandlerChain->addUserAgentHandler(
             new Handlers\OperaMiniHandler($genericNormalizers)
         );
@@ -223,7 +242,19 @@ class UserAgentHandlerChainFactory
         /**** Game Consoles ****/
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\XboxHandler($genericNormalizers));
 
-        /**** Desktop Browsers - Opera and Chrome ****/
+        /**** DesktopApplications ****/
+        $desktopApplicationNormalizer = clone $genericNormalizers;
+        $desktopApplicationNormalizer->add(new Request\Normalizer\Specific\DesktopApplication());
+        $userAgentHandlerChain->addUserAgentHandler(
+            new Handlers\DesktopApplicationHandler($desktopApplicationNormalizer)
+        );
+
+        /**** Desktop Browsers ****/
+        //MSIE above Chrome/Opera after MSIE 12+ say Chrome
+        $msieNormalizer = clone $genericNormalizers;
+        $msieNormalizer->add(new Request\Normalizer\Specific\MSIE());
+        $userAgentHandlerChain->addUserAgentHandler(new Handlers\MSIEHandler($msieNormalizer));
+
         $operaNormalizer = clone $genericNormalizers;
         $operaNormalizer->add(new Request\Normalizer\Specific\Opera());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\OperaHandler($operaNormalizer));
@@ -232,21 +263,9 @@ class UserAgentHandlerChainFactory
         $chromeNormalizer->add(new Request\Normalizer\Specific\Chrome());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\ChromeHandler($chromeNormalizer));
 
-        /**** DesktopApplications ****/
-        $desktopApplicationNormalizer = clone $genericNormalizers;
-        $desktopApplicationNormalizer->add(new Request\Normalizer\Specific\DesktopApplication());
-        $userAgentHandlerChain->addUserAgentHandler(
-            new \Wurfl\Handlers\DesktopApplicationHandler($desktopApplicationNormalizer)
-        );
-
-        /**** Desktop Browsers ****/
         $firefoxNormalizer = clone $genericNormalizers;
         $firefoxNormalizer->add(new Request\Normalizer\Specific\Firefox());
         $userAgentHandlerChain->addUserAgentHandler(new Handlers\FirefoxHandler($firefoxNormalizer));
-
-        $msieNormalizer = clone $genericNormalizers;
-        $msieNormalizer->add(new Request\Normalizer\Specific\MSIE());
-        $userAgentHandlerChain->addUserAgentHandler(new Handlers\MSIEHandler($msieNormalizer));
 
         $safariNormalizer = clone $genericNormalizers;
         $safariNormalizer->add(new Request\Normalizer\Specific\Safari());
@@ -270,18 +289,21 @@ class UserAgentHandlerChainFactory
      *
      * @return Request\Normalizer\UserAgentNormalizer
      */
-    private static function createGenericNormalizers()
+    public static function createGenericNormalizers()
     {
-        return new Request\Normalizer\UserAgentNormalizer(array(
+        return new Request\Normalizer\UserAgentNormalizer(
+            array(
                 new Request\Normalizer\Generic\UCWEB(),
                 new Request\Normalizer\Generic\UPLink(),
                 new Request\Normalizer\Generic\SerialNumbers(),
                 new Request\Normalizer\Generic\LocaleRemover(),
+                new Request\Normalizer\Generic\CFNetwork(),
                 new Request\Normalizer\Generic\BlackBerry(),
                 new Request\Normalizer\Generic\YesWAP(),
                 new Request\Normalizer\Generic\BabelFish(),
                 new Request\Normalizer\Generic\NovarraGoogleTranslator(),
                 new Request\Normalizer\Generic\TransferEncoding(),
-            ));
+            )
+        );
     }
 }

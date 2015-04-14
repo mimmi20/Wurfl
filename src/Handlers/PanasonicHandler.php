@@ -32,7 +32,7 @@ class PanasonicHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "PANASONIC";
+    protected $prefix = 'PANASONIC';
 
     /**
      * @param string $userAgent
@@ -45,6 +45,6 @@ class PanasonicHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, "Panasonic");
+        return Utils::checkIfStartsWith($userAgent, 'Panasonic');
     }
 }

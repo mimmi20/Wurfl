@@ -53,7 +53,7 @@ class UcwebU3
             $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
 
             if ($model !== null && $version !== null) {
-                $prefix = "$version U3WP $ucbVersion $model" . Constants::RIS_DELIMITER;
+                $prefix = '$version U3WP $ucbVersion $model' . Constants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -65,7 +65,7 @@ class UcwebU3
             $version = AndroidHandler::getAndroidVersion($userAgent, false);
 
             if ($model !== null && $version !== null) {
-                $prefix = "$version U3Android $ucbVersion $model" . Constants::RIS_DELIMITER;
+                $prefix = '$version U3Android $ucbVersion $model' . Constants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -73,7 +73,7 @@ class UcwebU3
             //iPhone U3K
             if (preg_match('/iPhone OS (\d+)(?:_(\d+))?(?:_\d+)* like/', $userAgent, $matches)) {
                 $version = $matches[1] . '.' . $matches[2];
-                $prefix  = "$version U3iPhone $ucbVersion" . Constants::RIS_DELIMITER;
+                $prefix  = '$version U3iPhone $ucbVersion' . Constants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -87,7 +87,7 @@ class UcwebU3
             ) {
                 $version = $matches[1] . '.' . $matches[2];
                 $model   = $matches[3];
-                $prefix  = "$version U3iPad $ucbVersion $model" . Constants::RIS_DELIMITER;
+                $prefix  = '$version U3iPad $ucbVersion $model' . Constants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }

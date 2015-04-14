@@ -34,7 +34,7 @@ class HTCMacHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "HTCMAC";
+    protected $prefix = 'HTCMAC';
 
     public static $constantIDs = array(
         'generic_android_htc_disguised_as_mac',

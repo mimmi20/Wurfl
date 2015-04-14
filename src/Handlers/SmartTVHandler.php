@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SmartTVHandler
     extends AbstractHandler
 {
-    protected $prefix = "SMARTTV";
+    protected $prefix = 'SMARTTV';
 
     public static $constantIDs = array(
         'generic_smarttv_browser',

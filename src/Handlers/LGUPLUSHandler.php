@@ -34,7 +34,7 @@ class LGUPLUSHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "LGUPLUS";
+    protected $prefix = 'LGUPLUS';
 
     public static $constantIDs = array(
         'generic_lguplus_rexos_facebook_browser',
@@ -54,7 +54,7 @@ class LGUPLUSHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array("LGUPLUS", "lgtelecom"));
+        return Utils::checkIfContainsAnyOf($userAgent, array('LGUPLUS', 'lgtelecom'));
     }
 
     /**

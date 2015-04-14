@@ -33,7 +33,7 @@ use Wurfl\Constants;
 class WindowsRTHandler
     extends AbstractHandler
 {
-    protected $prefix = "WINDOWSRT";
+    protected $prefix = 'WINDOWSRT';
 
     public static $constantIDs = array(
         'generic_windows_8_rt',

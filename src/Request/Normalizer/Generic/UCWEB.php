@@ -29,7 +29,7 @@ class UCWEB
     implements NormalizerInterface
 {
     /**
-     * This method remove the "UP.Link" substring from user agent string.
+     * This method remove the 'UP.Link' substring from user agent string.
      *
      * @param string $userAgent
      *

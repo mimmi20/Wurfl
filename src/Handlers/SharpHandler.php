@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SharpHandler
     extends AbstractHandler
 {
-    protected $prefix = "SHARP";
+    protected $prefix = 'SHARP';
 
     /**
      * @param string $userAgent

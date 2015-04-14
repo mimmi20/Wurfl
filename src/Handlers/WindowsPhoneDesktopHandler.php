@@ -36,7 +36,7 @@ class WindowsPhoneDesktopHandler
     /**
      * @var string
      */
-    protected $prefix = "WINDOWSPHONEDESKTOP";
+    protected $prefix = 'WINDOWSPHONEDESKTOP';
 
     /**
      * @var array

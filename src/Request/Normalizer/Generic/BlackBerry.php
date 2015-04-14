@@ -21,7 +21,7 @@ namespace Wurfl\Request\Normalizer\Generic;
 use Wurfl\Request\Normalizer\NormalizerInterface;
 
 /**
- * User Agent Normalizer - returns the substring starting from "BlackBerry"
+ * User Agent Normalizer - returns the substring starting from 'BlackBerry'
  *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */

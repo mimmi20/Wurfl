@@ -32,7 +32,7 @@ class KDDIHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "KDDI";
+    protected $prefix = 'KDDI';
 
     public static $constantIDs = array(
         'opwv_v62_generic'
@@ -75,6 +75,6 @@ class KDDIHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        return "opwv_v62_generic";
+        return 'opwv_v62_generic';
     }
 }

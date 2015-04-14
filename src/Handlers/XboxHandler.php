@@ -33,7 +33,7 @@ use Wurfl\Constants;
 class XboxHandler
     extends AbstractHandler
 {
-    protected $prefix = "XBOX";
+    protected $prefix = 'XBOX';
 
     public static $constantIDs = array(
         'microsoft_xbox360_ver1',

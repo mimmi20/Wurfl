@@ -34,7 +34,7 @@ class NokiaHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "NOKIA";
+    protected $prefix = 'NOKIA';
 
     public static $constantIDs = array(
         'nokia_generic_series60',

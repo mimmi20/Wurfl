@@ -33,7 +33,7 @@ class Info
      *
      * @var string
      */
-    const PERSISTENCE_KEY = "\\Wurfl\\Xml\\Info";
+    const PERSISTENCE_KEY = '\\Wurfl\\Xml\\Info';
 
     /**
      * @var string
@@ -88,6 +88,6 @@ class Info
      */
     public static function noInfo()
     {
-        return new Info("", "", "");
+        return new Info('', '', '');
     }
 }

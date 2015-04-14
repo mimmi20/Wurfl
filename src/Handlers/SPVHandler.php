@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SPVHandler
     extends AbstractHandler
 {
-    protected $prefix = "SPV";
+    protected $prefix = 'SPV';
 
     /**
      * @param string $userAgent

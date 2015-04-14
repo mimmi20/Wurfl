@@ -32,7 +32,7 @@ class QtekHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "QTEK";
+    protected $prefix = 'QTEK';
 
     /**
      * @param string $userAgent

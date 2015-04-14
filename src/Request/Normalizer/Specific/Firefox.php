@@ -47,6 +47,6 @@ class Firefox
      */
     private function firefoxWithMajorAndMinorVersion($userAgent)
     {
-        return substr($userAgent, strpos($userAgent, "Firefox"));
+        return substr($userAgent, strpos($userAgent, 'Firefox'));
     }
 }

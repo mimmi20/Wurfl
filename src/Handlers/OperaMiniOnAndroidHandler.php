@@ -34,7 +34,7 @@ class OperaMiniOnAndroidHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "OPERAMINIONANDROID";
+    protected $prefix = 'OPERAMINIONANDROID';
 
     public static $constantIDs = array(
         'uabait_opera_mini_android_v50',

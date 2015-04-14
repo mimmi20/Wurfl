@@ -53,9 +53,9 @@ class Opera
             //Match to the '.' in the Opera version number
             return $userAgent;
         }
-        //Normalize Opera v15 and above UAs, that say OPR, into "Opera/version UA" format used above
+        //Normalize Opera v15 and above UAs, that say OPR, into 'Opera/version UA' format used above
         if (preg_match('#OPR/(\d+\.\d+)#', $userAgent, $matches)) {
-            $prefix    = "Opera/" . $matches[1] . " ";
+            $prefix    = 'Opera/' . $matches[1] . ' ';
             $userAgent = $prefix . $userAgent;
         }
 

@@ -33,7 +33,7 @@ use Wurfl\Constants;
 class SafariHandler
     extends AbstractHandler
 {
-    protected $prefix = "SAFARI";
+    protected $prefix = 'SAFARI';
 
     /**
      * @param string $userAgent

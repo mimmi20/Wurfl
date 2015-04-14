@@ -32,7 +32,7 @@ class GrundigHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "GRUNDIG";
+    protected $prefix = 'GRUNDIG';
 
     public function canHandle($userAgent)
     {

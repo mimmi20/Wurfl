@@ -83,6 +83,8 @@ class VirtualCapabilityProvider
         'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
         'complete_device_name'         => 'CompleteDeviceName',
         'form_factor'                  => 'FormFactor',
+        'is_phone'                     => 'IsPhone',
+        'is_app_webview'               => 'IsAppWebview',
     );
 
     /**

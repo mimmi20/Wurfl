@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SiemensHandler
     extends AbstractHandler
 {
-    protected $prefix = "SIEMENS";
+    protected $prefix = 'SIEMENS';
 
     /**
      * @param string $userAgent

@@ -34,7 +34,7 @@ class NokiaOviBrowserHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "NOKIAOVIBROWSER";
+    protected $prefix = 'NOKIAOVIBROWSER';
 
     public static $constantIDs = array(
         'nokia_generic_series30plus',
@@ -80,7 +80,7 @@ class NokiaOviBrowserHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, "Series30Plus")) {
+        if (Utils::checkIfContains($userAgent, 'Series30Plus')) {
             return 'nokia_generic_series30plus';
         } else {
             return 'nokia_generic_series40_ovibrosr';

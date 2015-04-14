@@ -25,6 +25,7 @@ namespace Wurfl\Request;
  * @package    WURFL_Request
  *
  * @property string                   $userAgent
+ * @property string                   $userAgentNormalized
  * @property string                   $userAgentProfile
  * @property boolean                  $xhtmlDevice true if the device is known to be XHTML-MP compatible
  * @property string                   $id          Unique ID used for caching: MD5($userAgent)
@@ -33,6 +34,8 @@ namespace Wurfl\Request;
  */
 class GenericRequest
 {
+    const MAX_HTTP_HEADER_LENGTH = 512;
+
     /**
      * @var array
      */
@@ -76,13 +79,45 @@ class GenericRequest
      */
     public function __construct(array $request, $userAgent, $userAgentProfile = null, $xhtmlDevice = null)
     {
-        $this->request                = $request;
-        $this->userAgent              = $userAgent;
-        $this->userAgentProfile       = $userAgentProfile;
+        $this->request                = $this->sanitizeHeaders($request);
+        $this->userAgent              = $this->sanitizeHeaders($userAgent);
+        $this->userAgentProfile       = $this->sanitizeHeaders($userAgentProfile);
         $this->xhtmlDevice            = $xhtmlDevice;
         $this->id                     = md5($userAgent);
         $this->matchInfo              = new MatchInfo();
         $this->userAgentsWithDeviceID = null;
+    }
+
+    /**
+     * @param array|string $headers
+     *
+     * @return array|string
+     */
+    protected function sanitizeHeaders($headers)
+    {
+        if (!is_array($headers)) {
+            return $this->truncateHeader($headers);
+        }
+
+        foreach ($headers as $header => $value) {
+            $headers[$header] = $this->truncateHeader($value);
+        }
+
+        return $headers;
+    }
+
+    /**
+     * @param string $header
+     *
+     * @return string
+     */
+    private function truncateHeader($header)
+    {
+        if (strpos($header, 'HTTP_') !== 0 || strlen($header) <= self::MAX_HTTP_HEADER_LENGTH) {
+            return $header;
+        }
+
+        return substr($header, 0, self::MAX_HTTP_HEADER_LENGTH);
     }
 
     /**

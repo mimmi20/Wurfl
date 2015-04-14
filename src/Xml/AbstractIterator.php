@@ -53,7 +53,7 @@ abstract class AbstractIterator
     {
         $inputFile = FileUtils::cleanFilename($inputFile);
         if (!file_exists($inputFile)) {
-            throw new \InvalidArgumentException("cannot locate [$inputFile] file!");
+            throw new \InvalidArgumentException('cannot locate [$inputFile] file!');
         }
         $this->inputFile = Utils::getXMLFile($inputFile);
     }

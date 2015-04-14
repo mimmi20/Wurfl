@@ -34,7 +34,7 @@ class OperaMobiOrTabletOnAndroidHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "OPERAMOBIORTABLETONANDROID";
+    protected $prefix = 'OPERAMOBIORTABLETONANDROID';
 
     public static $constantIDs = array(
         'generic_android_ver1_5_opera_mobi',

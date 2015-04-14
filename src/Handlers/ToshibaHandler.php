@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class ToshibaHandler
     extends AbstractHandler
 {
-    protected $prefix = "TOSHIBA";
+    protected $prefix = 'TOSHIBA';
 
     /**
      * @param string $userAgent

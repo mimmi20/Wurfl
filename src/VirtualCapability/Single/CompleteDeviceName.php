@@ -47,7 +47,7 @@ class CompleteDeviceName
             $parts[] = $this->device->model_name;
         }
         if (strlen($this->device->marketing_name)) {
-            $parts[] = "({$this->device->marketing_name})";
+            $parts[] = '({$this->device->marketing_name})';
         }
 
         return implode(' ', $parts);

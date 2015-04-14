@@ -56,5 +56,5 @@ class JavaMidletHandler
         return 'generic_midp_midlet';
     }
 
-    protected $prefix = "JAVAMIDLET";
+    protected $prefix = 'JAVAMIDLET';
 }

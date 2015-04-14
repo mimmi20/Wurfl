@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class Ucweb7OnAndroidHandler
     extends AbstractHandler
 {
-    protected $prefix = "UCWEB7ONANDROID";
+    protected $prefix = 'UCWEB7ONANDROID';
 
     public static $constantIDs = array(
         'generic_android_ver1_6_ucweb',

@@ -32,7 +32,7 @@ class ChromeHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "CHROME";
+    protected $prefix = 'CHROME';
 
     public static $constantIDs = array(
         'google_chrome'

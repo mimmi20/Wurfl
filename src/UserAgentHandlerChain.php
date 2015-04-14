@@ -65,6 +65,9 @@ class UserAgentHandlerChain
     {
         Handlers\Utils::reset();
 
+        $genericNormalizer = UserAgentHandlerChainFactory::createGenericNormalizers();
+        $userAgent         = $genericNormalizer->normalize($userAgent);
+
         $handlers = $this->getHandlers();
 
         foreach ($handlers as $handler) {
@@ -91,7 +94,7 @@ class UserAgentHandlerChain
 
         foreach ($handlers as $handler) {
             /** @var $handler Handlers\AbstractHandler */
-            if ($handler->canHandle($request->userAgent)) {
+            if ($handler->canHandle($request->userAgentNormalized)) {
                 $matchResult = $handler->applyMatch($request);
                 break;
             }

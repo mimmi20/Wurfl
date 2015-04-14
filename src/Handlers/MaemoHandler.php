@@ -34,7 +34,7 @@ class MaemoHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "MAEMO";
+    protected $prefix = 'MAEMO';
 
     public static $constantIDs = array(
         'generic_opera_mobi_maemo',
@@ -64,7 +64,8 @@ class MaemoHandler
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        return $this->getDeviceIDFromLD($userAgent, 7);
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromLD($userAgent, $tolerance);
     }
 
     /**
