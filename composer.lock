@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f92f50a83042930279c131abe7b087f",
+    "hash": "7be2685dfbe202bd12d14f79f03e0197",
     "packages": [
         {
             "name": "mimmi20/wurflcache",
-            "version": "1.2.5",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/WurflCache.git",
-                "reference": "2d7366cb36b1a85da63e862ef806b190538be590"
+                "reference": "36468806f216fc4342e4718b257074f9f49e2cdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/WurflCache/zipball/2d7366cb36b1a85da63e862ef806b190538be590",
-                "reference": "2d7366cb36b1a85da63e862ef806b190538be590",
+                "url": "https://api.github.com/repos/mimmi20/WurflCache/zipball/36468806f216fc4342e4718b257074f9f49e2cdb",
+                "reference": "36468806f216fc4342e4718b257074f9f49e2cdb",
                 "shasum": ""
             },
             "require": {
@@ -65,7 +65,7 @@
                 "Wurfl",
                 "cache"
             ],
-            "time": "2014-11-22 20:59:23"
+            "time": "2015-04-14 21:19:12"
         },
         {
             "name": "psr/log",
@@ -255,12 +255,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a54d460500aeaf653cabc1059cc33d07e7b544ad"
+                "reference": "03fc68ca1419c7e16050e96c15c7f7e1f2fc26ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a54d460500aeaf653cabc1059cc33d07e7b544ad",
-                "reference": "a54d460500aeaf653cabc1059cc33d07e7b544ad",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/03fc68ca1419c7e16050e96c15c7f7e1f2fc26ff",
+                "reference": "03fc68ca1419c7e16050e96c15c7f7e1f2fc26ff",
                 "shasum": ""
             },
             "require": {
@@ -320,7 +320,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-04-04 10:50:52"
+            "time": "2015-04-15 18:23:25"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
