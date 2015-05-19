@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ class FennecOnAndroidHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "FENNECONANDROID";
+    protected $prefix = 'FENNECONANDROID';
 
     public static $constantIDs = array(
         'generic_android_ver2_0_fennec',
@@ -61,7 +61,7 @@ class FennecOnAndroidHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        // Captures the index of the first decimal point in the Firefox verison "rv:nn.nn.nn"
+        // Captures the index of the first decimal point in the Firefox verison 'rv:nn.nn.nn'
         // Example:
         //   Mozilla/5.0 (Android; Tablet; rv:17.0) Gecko/17.0 Firefox/17.0
         //   Mozilla/5.0 (Android; Tablet; rv:17.

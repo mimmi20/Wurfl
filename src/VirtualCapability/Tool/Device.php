@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -55,6 +55,18 @@ class Device
     public $browser_ua;
 
     /**
+     * Device user agent string normalized
+     * @var string
+     */
+    public $device_ua_normalized;
+
+    /**
+     * Browser user agent string normalized
+     * @var string
+     */
+    public $browser_ua_normalized;
+
+    /**
      * @param \Wurfl\Request\GenericRequest $request
      */
     public function __construct(GenericRequest $request)
@@ -63,12 +75,17 @@ class Device
 
         // Use the original headers for OperaMini
         if ($this->http_request->originalHeaderExists('HTTP_DEVICE_STOCK_UA')) {
-            $this->device_ua  = $this->http_request->getOriginalHeader('HTTP_DEVICE_STOCK_UA');
-            $this->browser_ua = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
+            $this->device_ua            = $this->http_request->getOriginalHeader('HTTP_DEVICE_STOCK_UA');
+            $this->browser_ua           = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
+            $this->device_ua_normalized = $this->http_request->userAgentNormalized;
         } else {
-            $this->device_ua  = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
-            $this->browser_ua = $this->device_ua;
+            $this->device_ua            = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
+            $this->browser_ua           = $this->device_ua;
+            $this->device_ua_normalized = isset($this->http_request->userAgentNormalized)
+                ? $this->http_request->userAgentNormalized : null;
         }
+
+        $this->browser_ua_normalized = $this->device_ua_normalized;
 
         $this->browser = new NameVersionPair($this);
         $this->os      = new NameVersionPair($this);
@@ -92,12 +109,26 @@ class Device
         '10.0' => '10',
     );
 
+    protected static $trident_map = array(
+        '7' => '11',
+        '6' => '10',
+        '5' => '9',
+        '4' => '8',
+    );
+
+    protected static $wds_map = array(
+        '7.10' => '7.5',
+        '8.10' => '8.1',
+        '8.15' => '10',
+    );
+
     /**
      * @return Device
      */
     public function normalize()
     {
         $this->normalizeOS();
+        $this->normalizeBrowser();
 
         return $this;
     }
@@ -108,8 +139,6 @@ class Device
     protected function normalizeOS()
     {
         if (strpos($this->device_ua, 'Windows') !== false) {
-            $matches = array();
-
             if (preg_match('/Windows NT ([0-9]+?\.[0-9])/', $this->os->name, $matches)) {
                 $this->os->name    = 'Windows';
                 $this->os->version = array_key_exists($matches[1], self::$windowsMap) ? self::$windowsMap[$matches[1]]
@@ -123,43 +152,82 @@ class Device
             }
         }
 
+        if (strpos($this->os->name, 'Windows Phone') !== false) {
+            if (array_key_exists($this->os->version, self::$wds_map)) {
+                $this->os->version = self::$wds_map[$this->os->version];
+
+                return;
+            }
+        }
+
         if ($this->os->setRegex($this->device_ua, '/PPC.+OS X ([0-9\._]+)/', 'Mac OS X')) {
             $this->os->version = str_replace('_', '.', $this->os->version);
 
             return;
         }
+
         if ($this->os->setRegex($this->device_ua, '/PPC.+OS X/', 'Mac OS X')) {
             return;
         }
+
+        if (strpos($this->device_ua, 'CFNetwork') !== false) {
+            if ($this->os->setRegex($this->device_ua_normalized, '/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
+                $this->os->version = str_replace('_', '.', $this->os->version);
+
+                return;
+            }
+        }
+
         if ($this->os->setRegex($this->device_ua, '/Intel Mac OS X ([0-9\._]+)/', 'Mac OS X', 1)) {
             $this->os->version = str_replace('_', '.', $this->os->version);
 
             return;
         }
+
         if ($this->os->setContains($this->device_ua, 'Mac_PowerPC', 'Mac OS X')) {
             return;
         }
+
         if ($this->os->setContains($this->device_ua, 'CrOS', 'Chrome OS')) {
             return;
         }
+
         if ($this->os->name != '') {
             return;
         }
+
         if (strpos($this->device_ua, 'FreeBSD') !== false) {
             $this->os->name = 'FreeBSD';
 
             return;
         }
+
         if (strpos($this->device_ua, 'NetBSD') !== false) {
             $this->os->name = 'NetBSD';
 
             return;
         }
+
         // Last ditch efforts
         if (strpos($this->device_ua, 'Linux') !== false || strpos($this->device_ua, 'X11') !== false) {
             $this->os->name = 'Linux';
 
             return;
+        }
+    }
+
+    protected function normalizeBrowser()
+    {
+        if ($this->browser->name === 'IE' && preg_match('#Trident/(\d+)#', $this->device_ua, $matches)) {
+            if (array_key_exists($matches[1], self::$trident_map)) {
+                $compatibilityViewCheck = self::$trident_map[$matches[1]];
+
+                if ($this->browser->version !== $compatibilityViewCheck) {
+                    $this->browser->version = $compatibilityViewCheck . '(Compatibility View)';
+                }
+
+                return;
+            }
         }
     }
 }

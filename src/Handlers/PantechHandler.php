@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,9 +31,7 @@ namespace Wurfl\Handlers;
 class PantechHandler
     extends AbstractHandler
 {
-
-    const PANTECH_TOLERANCE = 5;
-    protected $prefix = "PANTECH";
+    protected $prefix = 'PANTECH';
 
     /**
      * @param string $userAgent
@@ -56,12 +54,6 @@ class PantechHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, "Pantech")) {
-            $tolerance = self::PANTECH_TOLERANCE;
-        } else {
-            $tolerance = Utils::firstSlash($userAgent);
-        }
-
-        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
     }
 }

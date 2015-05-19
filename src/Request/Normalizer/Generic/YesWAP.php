@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,7 +31,7 @@ class YesWAP
     /**
      * @var string
      */
-    const YES_WAP_REGEX = "/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)/";
+    const YES_WAP_REGEX = '/\\s*Mozilla\\/4\\.0 \\(YesWAP mobile phone proxy\\)/';
 
     /**
      * @param string $userAgent
@@ -40,6 +40,6 @@ class YesWAP
      */
     public function normalize($userAgent)
     {
-        return preg_replace(self::YES_WAP_REGEX, "", $userAgent);
+        return preg_replace(self::YES_WAP_REGEX, '', $userAgent);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ class ConfigFactory
     public static function create($configFilePath)
     {
         if (!isset($configFilePath)) {
-            throw new \InvalidArgumentException("The configuration file path $configFilePath is not set");
+            throw new \InvalidArgumentException('The configuration file path $configFilePath is not set');
         }
         if (self::isXmlConfiguration($configFilePath)) {
             return new XmlConfig($configFilePath);
@@ -52,6 +52,6 @@ class ConfigFactory
      */
     private static function isXmlConfiguration($fileName)
     {
-        return (strcmp("xml", substr($fileName, -3)) === 0) ? true : false;
+        return (strcmp('xml', substr($fileName, -3)) === 0) ? true : false;
     }
 }

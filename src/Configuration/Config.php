@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -38,22 +38,22 @@ use Wurfl\Exception;
  */
 abstract class Config
 {
-    const WURFL                  = "wurfl";
-    const MAIN_FILE              = "main-file";
-    const PATCHES                = "patches";
-    const PATCH                  = "patch";
-    const CACHE                  = "cache";
-    const PERSISTENCE            = "persistence";
-    const PROVIDER               = "provider";
-    const PARAMS                 = "params";
-    const LOG_DIR                = "logDir";
-    const ALLOW_RELOAD           = "allow-reload";
-    const CAPABILITY_FILTER      = "capability-filter";
-    const DIR                    = "dir";
-    const EXPIRATION             = "expiration";
-    const MATCH_MODE             = "match-mode";
-    const MATCH_MODE_PERFORMANCE = "performance";
-    const MATCH_MODE_ACCURACY    = "accuracy";
+    const WURFL                  = 'wurfl';
+    const MAIN_FILE              = 'main-file';
+    const PATCHES                = 'patches';
+    const PATCH                  = 'patch';
+    const CACHE                  = 'cache';
+    const PERSISTENCE            = 'persistence';
+    const PROVIDER               = 'provider';
+    const PARAMS                 = 'params';
+    const LOG_DIR                = 'logDir';
+    const ALLOW_RELOAD           = 'allow-reload';
+    const CAPABILITY_FILTER      = 'capability-filter';
+    const DIR                    = 'dir';
+    const EXPIRATION             = 'expiration';
+    const MATCH_MODE             = 'match-mode';
+    const MATCH_MODE_PERFORMANCE = 'performance';
+    const MATCH_MODE_ACCURACY    = 'accuracy';
 
     /**
      * @var string Path to the configuration file
@@ -122,7 +122,7 @@ abstract class Config
     public function __construct($configFilePath)
     {
         if (!file_exists($configFilePath)) {
-            throw new \InvalidArgumentException("The configuration file " . $configFilePath . " does not exist.");
+            throw new \InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
         }
 
         $this->configFilePath       = $configFilePath;
@@ -219,6 +219,6 @@ abstract class Config
         if (file_exists($fullName)) {
             return realpath($fullName);
         }
-        throw new Exception("The specified path '" . $fullName . "' does not exist");
+        throw new Exception('The specified path \'' . $fullName . '\' does not exist');
     }
 }

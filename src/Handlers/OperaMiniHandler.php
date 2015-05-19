@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,7 +32,7 @@ class OperaMiniHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "OPERA_MINI";
+    protected $prefix = 'OPERA_MINI';
 
     public static $constantIDs = array(
         'Opera Mini/1' => 'generic_opera_mini_version1',

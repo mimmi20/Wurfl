@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,9 +31,7 @@ namespace Wurfl\Handlers;
 class NecHandler
     extends AbstractHandler
 {
-
-    const NEC_KGT_TOLERANCE = 2;
-    protected $prefix = "NEC";
+    protected $prefix = 'NEC';
 
     /**
      * @param string $userAgent
@@ -56,12 +54,6 @@ class NecHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, "NEC-")) {
-            $tolerance = Utils::firstSlash($userAgent);
-
-            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-        }
-
-        return $this->getDeviceIDFromLD($userAgent, self::NEC_KGT_TOLERANCE);
+        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
     }
 }

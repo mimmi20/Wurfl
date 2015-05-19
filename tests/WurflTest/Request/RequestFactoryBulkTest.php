@@ -39,7 +39,7 @@ class RequestFactoryBulkTest
         if ($handle) {
             while (!feof($handle)) {
                 $line = fgets($handle, 4096);
-                if (strpos($line, '#') === false && strcmp($line, "\n") != 0) {
+                if (strpos($line, '#') === false && strcmp($line, '\n') != 0) {
                     $values     = explode(':', trim($line));
                     $keys       = array(
                         'HTTP_USER_AGENT',

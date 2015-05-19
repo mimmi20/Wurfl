@@ -20,8 +20,8 @@ class DevicePatcherTest
 
     public function testShouldReturnThePatchingDeviceIfForDifferentDevices()
     {
-        $deviceToPatch  = new ModelDevice("A", "A", "Z");
-        $patchingDevice = new ModelDevice("B", "B", "Z");
+        $deviceToPatch  = new ModelDevice('A', 'A', 'Z');
+        $patchingDevice = new ModelDevice('B', 'B', 'Z');
 
         $patchedDevice = $this->devicePatcher->patch($deviceToPatch, $patchingDevice);
         self::assertEquals($patchingDevice, $patchedDevice);
@@ -29,13 +29,13 @@ class DevicePatcherTest
 
     public function testShouldOverrideTheCapabilities()
     {
-        $deviceToPatch           = new ModelDevice("A", "A", "Z", true, false, array());
+        $deviceToPatch           = new ModelDevice('A', 'A', 'Z', true, false, array());
         $groupIDMap              = array();
-        $groupIDMap["A"]["cap1"] = "cap1";
+        $groupIDMap['A']['cap1'] = 'cap1';
         $capabilities            = array();
-        $capabilities["cap1"]    = "cap1";
+        $capabilities['cap1']    = 'cap1';
 
-        $patchingDevice = new ModelDevice("B", "B", "Z", true, false, $groupIDMap);
+        $patchingDevice = new ModelDevice('B', 'B', 'Z', true, false, $groupIDMap);
         $patchedDevice  = $this->devicePatcher->patch($deviceToPatch, $patchingDevice);
 
         self::assertEquals($capabilities, $patchedDevice->capabilities);
@@ -44,21 +44,21 @@ class DevicePatcherTest
     public function testShouldOnlyOverrideTheCapabilitiesSpecifiedByThePatcherDevices()
     {
         $groupIDMap              = array();
-        $groupIDMap["A"]["cap1"] = "cap1";
-        $groupIDMap["A"]["cap2"] = "cap2";
+        $groupIDMap['A']['cap1'] = 'cap1';
+        $groupIDMap['A']['cap2'] = 'cap2';
 
-        $deviceToPatch = new ModelDevice("A", "A", "Z", true, false, $groupIDMap);
+        $deviceToPatch = new ModelDevice('A', 'A', 'Z', true, false, $groupIDMap);
 
         $groupIDMap              = array();
-        $groupIDMap["A"]["cap1"] = "cap1";
-        $groupIDMap["A"]["cap3"] = "cap3";
+        $groupIDMap['A']['cap1'] = 'cap1';
+        $groupIDMap['A']['cap3'] = 'cap3';
 
         $capabilities         = array();
-        $capabilities["cap1"] = "cap1";
-        $capabilities["cap2"] = "cap2";
-        $capabilities["cap3"] = "cap3";
+        $capabilities['cap1'] = 'cap1';
+        $capabilities['cap2'] = 'cap2';
+        $capabilities['cap3'] = 'cap3';
 
-        $patchingDevice = new ModelDevice("A", "A", "Z", true, false, $groupIDMap);
+        $patchingDevice = new ModelDevice('A', 'A', 'Z', true, false, $groupIDMap);
         $patchedDevice  = $this->devicePatcher->patch($deviceToPatch, $patchingDevice);
         self::assertEquals($capabilities, $patchedDevice->capabilities);
     }

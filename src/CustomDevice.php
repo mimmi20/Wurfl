@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,7 +32,7 @@ namespace Wurfl;
  * // Example 1: Get display resolution from device
  * $width = $device->getCapability('resolution_width');
  * $height = $device->getCapability('resolution_height');
- * echo "Resolution: $width x $height <br/>";
+ * echo 'Resolution: $width x $height <br/>';
  *
  * // Example 2: Get the WURFL ID of the device
  * $wurflID = $device->id;
@@ -44,6 +44,9 @@ namespace Wurfl;
  * @property-read bool                          $actualDeviceRoot true if device is an actual root device
  * @property-read \Wurfl\Request\GenericRequest $request
  * @property-read \Wurfl\Xml\ModelDevice[]      $modelDevices
+ * @property-read string                        $pointing_method
+ * @property-read string                        $is_tablet
+ * @property-read bool                          $can_assign_phone_number
  * @package WURFL
  */
 class CustomDevice
@@ -214,7 +217,7 @@ class CustomDevice
     }
 
     /**
-     * Returns the top-most device.  This is the "generic" device.
+     * Returns the top-most device.  This is the 'generic' device.
      *
      * @return \Wurfl\Xml\ModelDevice
      */

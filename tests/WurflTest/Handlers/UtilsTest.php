@@ -18,7 +18,7 @@ class UtilsTest
      */
     public function testShouldThrowExceptionForNullString()
     {
-        Utils::ordinalIndexOf(null, "", 0);
+        Utils::ordinalIndexOf(null, '', 0);
     }
 
     /**
@@ -26,7 +26,7 @@ class UtilsTest
      */
     public function testShouldThrowExceptionForEmptyString()
     {
-        Utils::ordinalIndexOf("", "", 0);
+        Utils::ordinalIndexOf('', '', 0);
     }
 
     /**
@@ -34,7 +34,7 @@ class UtilsTest
      */
     public function testShouldThrowExceptionForNonNumericOrdinalVlaue()
     {
-        Utils::ordinalIndexOf("useranget", "", "");
+        Utils::ordinalIndexOf('useranget', '', '');
     }
 
     /**
@@ -48,8 +48,8 @@ class UtilsTest
 
     public function testShouldReturnNegativeOneForInexistantChar()
     {
-        $haystack = "Mozilla/4.0 (compatible; MSIE 4.0; Windows 95; .NET CLR 1.1.4322; .NET CLR 2.0.50727)";
-        $needle   = ":";
+        $haystack = 'Mozilla/4.0 (compatible; MSIE 4.0; Windows 95; .NET CLR 1.1.4322; .NET CLR 2.0.50727)';
+        $needle   = ':';
         $expected = Utils::ordinalIndexOf($haystack, $needle, 1);
         self::assertEquals(-1, $expected);
     }
@@ -66,9 +66,9 @@ class UtilsTest
     public static function containsAllDataProvider()
     {
         return array(
-            array("aab aac aad", array("aab", "aad"), true),
-            array("aab / ", array("aab", "aac"), false),
-            array("abcdef ", array("ab", "ef"), true),
+            array('aab aac aad', array('aab', 'aad'), true),
+            array('aab / ', array('aab', 'aac'), false),
+            array('abcdef ', array('ab', 'ef'), true),
         );
     }
 
@@ -77,82 +77,82 @@ class UtilsTest
      */
     public function testIndexOfAnyOrLength($haystack, $expected)
     {
-        $found = Utils::indexOfAnyOrLength($haystack, array(" ", "/"), 0);
+        $found = Utils::indexOfAnyOrLength($haystack, array(' ', '/'), 0);
         self::assertEquals($expected, $found);
     }
 
     public static function indexOfAnyOrLengthDataProvider()
     {
         return array(
-            array("aab/ ", 3),
-            array("aab / ", 3),
-            array("aab", 3),
+            array('aab/ ', 3),
+            array('aab / ', 3),
+            array('aab', 3),
         );
     }
 
     public static function ordinalIndexOfOrLengthDataProvider()
     {
         return array(
-            array("Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 6.9) VZW:SCH-i760 PPC 240x320", "/", 1, 7),
+            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 6.9) VZW:SCH-i760 PPC 240x320', '/', 1, 7),
             array(
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)",
-                ";",
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
+                ';',
                 1,
                 23
             ),
             array(
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)",
-                ";",
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
+                ';',
                 2,
                 33
             ),
             array(
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)",
-                ";",
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
+                ';',
                 3,
                 49
             ),
-            array("Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)", "/", 1, 7),
-            array("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))", ";", 4, -1)
+            array('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)', '/', 1, 7),
+            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))', ';', 4, -1)
         );
     }
 
     public static function ordinalIndexOfDataProvider()
     {
         return array(
-            array("Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 6.9) VZW:SCH-i760 PPC 240x320", "/", 1, 7),
+            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 6.9) VZW:SCH-i760 PPC 240x320', '/', 1, 7),
             array(
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)",
-                ";",
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
+                ';',
                 1,
                 23
             ),
             array(
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)",
-                ";",
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
+                ';',
                 2,
                 33
             ),
             array(
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)",
-                ";",
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
+                ';',
                 3,
                 49
             ),
-            array("Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)", "/", 1, 7),
-            array("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))", ";", 4, -1)
+            array('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)', '/', 1, 7),
+            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))', ';', 4, -1)
         );
     }
 
     public static function userAgentsWithThirdSemiColumn()
     {
         return array(
-            array("Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 6.9) VZW:SCH-i760 PPC 240x320", 38),
+            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 6.9) VZW:SCH-i760 PPC 240x320', 38),
             array(
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)",
+                'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
                 42
             ),
-            array("Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)", 42)
+            array('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)', 42)
         );
     }
 }

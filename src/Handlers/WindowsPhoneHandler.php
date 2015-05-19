@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -48,6 +48,7 @@ class WindowsPhoneHandler
         'generic_ms_phone_os7_8',
         'generic_ms_phone_os8',
         'generic_ms_phone_os8_1',
+        'generic_ms_phone_os10',
     );
 
     /**
@@ -91,6 +92,10 @@ class WindowsPhoneHandler
     {
         $version = self::getWindowsPhoneVersion($userAgent);
 
+        if ($version == '10.0') {
+            return 'generic_ms_phone_os10';
+        }
+
         if ($version == '8.1') {
             return 'generic_ms_phone_os8_1';
         }
@@ -128,7 +133,9 @@ class WindowsPhoneHandler
         // Normalize spaces in UA before capturing parts
         $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
         // This regex is relatively fast because there is not much backtracking, and almost all UAs will match
-        if (preg_match('|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|', $userAgent, $matches)) {
+        if (preg_match('|IEMobile/\d+\.\d+;(?: ARM;)?(?: Touch;)? ?([^;\)]+(; ?[^;\)]+)?)|', $userAgent, $matches)
+            || preg_match('|Android [\d\.]+?; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $userAgent, $matches)
+        ) {
             $model = $matches[1];
             // Some UAs contain '_blocked' and that string causes matching errors:
             //   Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.5; Trident/3.1; IEMobile/7.0; LG_blocked; LG-E900)
@@ -189,7 +196,9 @@ class WindowsPhoneHandler
     public static function getWindowsPhoneVersion($ua)
     {
         if (preg_match('|Windows ?Phone(?: ?OS)? ?(\d+\.\d+)|', $ua, $matches)) {
-            if (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
+            if (strpos($matches[1], '10.0') !== false) {
+                return '10.0';
+            } elseif (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
                 return '8.1';
             } else if (strpos($matches[1], '8.') !== false) {
                 return '8.0';

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,7 +21,7 @@ namespace Wurfl\Request\Normalizer\Generic;
 use Wurfl\Request\Normalizer\NormalizerInterface;
 
 /**
- * User Agent Normalizer - returns the substring starting from "BlackBerry"
+ * User Agent Normalizer - returns the substring starting from 'BlackBerry'
  *
  * @package    \Wurfl\Request\Normalizer\UserAgentNormalizer_Generic
  */

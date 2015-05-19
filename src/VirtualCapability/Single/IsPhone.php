@@ -1,14 +1,11 @@
 <?php
 /**
  * Copyright (c) 2015 ScientiaMobile, Inc.
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
- *
  *
  * @category   WURFL
  * @package    WURFL
@@ -16,25 +13,28 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\Request\Normalizer\Specific;
+namespace Wurfl\VirtualCapability\Single;
 
-use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
- * User Agent Normalizer
+ * Virtual capability helper
  *
- * @package    \Wurfl\Request\Normalizer\Specific
+ * @package    \Wurfl\VirtualCapability\VirtualCapability
  */
-class LG
-    implements NormalizerInterface
+class IsPhone
+    extends VirtualCapability
 {
     /**
-     * @param string $userAgent
-     *
-     * @return string
+     * @var array
      */
-    public function normalize($userAgent)
+    protected $required_capabilities = array('can_assign_phone_number', 'is_tablet');
+
+    /**
+     * @return bool|mixed
+     */
+    protected function compute()
     {
-        return substr($userAgent, strpos($userAgent, 'LG'));
+        return ($this->device->can_assign_phone_number && $this->device->is_tablet === 'false');
     }
 }

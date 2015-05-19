@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,7 +31,7 @@ class BabelFish
     /**
      * @var string
      */
-    const BABEL_FISH_REGEX = "/\\s*\\(via babelfish.yahoo.com\\)\\s*/";
+    const BABEL_FISH_REGEX = '/\\s*\\(via babelfish.yahoo.com\\)\\s*/';
 
     /**
      * @param string $userAgent
@@ -40,6 +40,6 @@ class BabelFish
      */
     public function normalize($userAgent)
     {
-        return preg_replace(self::BABEL_FISH_REGEX, "", $userAgent);
+        return preg_replace(self::BABEL_FISH_REGEX, '', $userAgent);
     }
 }

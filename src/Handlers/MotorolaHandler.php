@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ class MotorolaHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "MOTOROLA";
+    protected $prefix = 'MOTOROLA';
 
     public static $constantIDs = array(
         'mot_mib22_generic',
@@ -64,11 +64,7 @@ class MotorolaHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'Motorola'))) {
-            return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
-        }
-
-        return $this->getDeviceIDFromLD($userAgent, 5);
+        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
     }
 
     /**
@@ -79,7 +75,7 @@ class MotorolaHandler
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
-            return "mot_mib22_generic";
+            return 'mot_mib22_generic';
         }
 
         return Constants::NO_MATCH;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -53,7 +53,7 @@ class WindowsPhone
         }
 
         if ($model !== null && $version !== null) {
-            // "WP" is for Windows Phone
+            // 'WP' is for Windows Phone
             $prefix = 'WP' . $version . ' ' . $model . Constants::RIS_DELIMITER;
 
             return $prefix . $userAgent;

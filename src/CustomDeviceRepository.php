@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -29,7 +29,7 @@ class CustomDeviceRepository
     /**
      * @var string
      */
-    const WURFL_USER_AGENTS_CLASSIFIED = "WURFL_USER_AGENTS_CLASSIFIED";
+    const WURFL_USER_AGENTS_CLASSIFIED = 'WURFL_USER_AGENTS_CLASSIFIED';
 
     /**
      * The persistence provider for this device repository
@@ -71,7 +71,7 @@ class CustomDeviceRepository
     public function __construct(Storage\Storage $persistenceStorage, array $deviceClassificationNames)
     {
         if (is_null($persistenceStorage)) {
-            throw new \InvalidArgumentException("Persistence Provider cannot be null");
+            throw new \InvalidArgumentException('Persistence Provider cannot be null');
         }
 
         $this->persistenceStorage        = $persistenceStorage;
@@ -202,7 +202,7 @@ class CustomDeviceRepository
     public function getCapabilityForDevice($deviceId, $capabilityName)
     {
         if (!$this->isCapabilityDefined($capabilityName)) {
-            throw new Exception("capability name: " . $capabilityName . " not found");
+            throw new Exception('capability name: ' . $capabilityName . ' not found');
         }
 
         $capabilityValue = null;
@@ -214,7 +214,7 @@ class CustomDeviceRepository
             if (!$device) {
                 throw new Exception('the device with ' . $deviceId . ' is not found.');
             }
-            
+
             if (isset($device->capabilities[$capabilityName])) {
                 $capabilityValue = $device->capabilities[$capabilityName];
                 break;
@@ -276,11 +276,11 @@ class CustomDeviceRepository
         while (strcmp($deviceId, 'root')) {
             /** @var $device \Wurfl\Xml\ModelDevice */
             $device = $this->getDevice($deviceId);
-            
+
             if (!($device instanceof Xml\ModelDevice)) {
                 throw new Exception('one of the parent devices is missing for deviceId ' . $deviceId);
             }
-            
+
             $devices[] = $device;
             $deviceId  = $device->fallBack;
         }
@@ -310,7 +310,7 @@ class CustomDeviceRepository
     public function getCapabilitiesNameForGroup($groupID)
     {
         if (!array_key_exists($groupID, $this->groupIDCapabilitiesMap)) {
-            throw new Exception("The Group ID " . $groupID . " supplied does not exist");
+            throw new Exception('The Group ID ' . $groupID . ' supplied does not exist');
         }
 
         return $this->groupIDCapabilitiesMap[$groupID];
@@ -327,7 +327,7 @@ class CustomDeviceRepository
     public function getGroupIDForCapability($capability)
     {
         if (!isset($capability) || !array_key_exists($capability, $this->groupIDCapabilitiesMap)) {
-            throw new \InvalidArgumentException("an invalid capability was specified.");
+            throw new \InvalidArgumentException('an invalid capability was specified.');
         }
 
         return $this->groupIDCapabilitiesMap[$capability];

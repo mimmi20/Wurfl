@@ -1,14 +1,11 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
- *
  *
  * @category   WURFL
  * @package    WURFL
@@ -18,6 +15,7 @@
 
 namespace Wurfl\VirtualCapability\Single;
 
+use Wurfl\Handlers\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
@@ -38,6 +36,9 @@ class IsTouchscreen
      */
     protected function compute()
     {
-        return ('touchscreen' === $this->device->pointing_method);
+        $userAgent = $this->request->userAgent;
+
+        return ($this->device->pointing_method == 'touchscreen')
+            || (Utils::checkIfContains($userAgent, 'Trident') && Utils::checkIfContains($userAgent, 'Touch'));
     }
 }

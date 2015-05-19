@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -70,18 +70,18 @@ class LDMatcher
         foreach ($collection as $userAgent) {
             $uaChars    = count_chars($userAgent);
             $sum        = 0;
-            $canApplyLd = true;
+            $canApplyId = true;
 
             //Check from 32 (space) to 122 ('z')
             for ($i = 32; $i < 122; $i++) {
                 $sum += abs($needleChars[$i] - $uaChars[$i]);
                 if ($sum > 2 * $tolerance) {
-                    $canApplyLd = false;
+                    $canApplyId = false;
                     break;
                 }
             }
 
-            if ($canApplyLd === true) {
+            if ($canApplyId === true) {
                 $current = levenshtein($needle, $userAgent);
                 if ($current <= $best) {
                     $best  = $current - 1;

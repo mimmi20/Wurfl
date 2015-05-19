@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ class KindleHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "KINDLE";
+    protected $prefix = 'KINDLE';
 
     public static $constantIDs = array(
         'amazon_kindle_ver1',

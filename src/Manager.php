@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -349,15 +349,7 @@ class Manager
     {
         Handlers\Utils::reset();
 
-        if ($this->getWurflConfig()->isHighPerformance()
-            && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
-        ) {
-            // This device has been identified as a web browser programatically,
-            // so no call to WURFL is necessary
-            $deviceId = Constants::GENERIC_WEB_BROWSER;
-        } else {
-            $deviceId = $this->deviceIdForRequest($request);
-        }
+        $deviceId = $this->deviceIdForRequest($request);
 
         return $this->getWrappedDevice($deviceId, $request);
     }
@@ -483,6 +475,17 @@ class Manager
         $deviceId = $this->getCacheStorage()->load($id);
 
         if (empty($deviceId)) {
+            $genericNormalizer            = UserAgentHandlerChainFactory::createGenericNormalizers();
+            $request->userAgentNormalized = $genericNormalizer->normalize($request->userAgent);
+
+            if ($this->getWurflConfig()->isHighPerformance()
+                && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
+            ) {
+                // This device has been identified as a web browser programatically,
+                // so no call to WURFL is necessary
+                return Constants::GENERIC_WEB_BROWSER;
+            }
+
             $deviceId = $this->getUserAgentHandlerChain()->match($request);
             // save it in cache
             $this->getCacheStorage()->save($id, $deviceId);

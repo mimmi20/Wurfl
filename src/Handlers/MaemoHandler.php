@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ class MaemoHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "MAEMO";
+    protected $prefix = 'MAEMO';
 
     public static $constantIDs = array(
         'generic_opera_mobi_maemo',
@@ -64,7 +64,8 @@ class MaemoHandler
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        return $this->getDeviceIDFromLD($userAgent, 7);
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromLD($userAgent, $tolerance);
     }
 
     /**

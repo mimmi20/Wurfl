@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,8 +31,7 @@ namespace Wurfl\Handlers;
 class OperaHandler
     extends AbstractHandler
 {
-
-    protected $prefix = "OPERA";
+    protected $prefix = 'OPERA';
 
     public static $constantIDs = array(
         'opera',
@@ -53,6 +52,9 @@ class OperaHandler
         'opera_23',
         'opera_24',
         'opera_25',
+        'opera_26',
+        'opera_27',
+        'opera_28',
     );
 
     /**

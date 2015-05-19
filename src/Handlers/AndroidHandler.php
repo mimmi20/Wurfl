@@ -1,14 +1,11 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
- *
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
  * Refer to the COPYING.txt file distributed with this package.
- *
  *
  * @category   WURFL
  * @package    WURFL
@@ -23,7 +20,6 @@ use Wurfl\Constants;
 /**
  * AndroidUserAgentHandler
  *
- *
  * @category   WURFL
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
@@ -36,7 +32,7 @@ class AndroidHandler
     /**
      * @var string
      */
-    protected $prefix = "ANDROID";
+    protected $prefix = 'ANDROID';
 
     /**
      * @var array
@@ -56,6 +52,10 @@ class AndroidHandler
         'generic_android_ver4_4',
         'generic_android_ver4_5',
         'generic_android_ver5_0',
+        'generic_android_ver5_1',
+        'generic_android_ver5_2',
+        'generic_android_ver5_3',
+        'generic_android_ver6_0',
         'generic_android_ver1_5_tablet',
         'generic_android_ver1_6_tablet',
         'generic_android_ver2_tablet',
@@ -73,6 +73,10 @@ class AndroidHandler
         'generic_android_ver4_4_tablet',
         'generic_android_ver4_5_tablet',
         'generic_android_ver5_0_tablet',
+        'generic_android_ver5_1_tablet',
+        'generic_android_ver5_2_tablet',
+        'generic_android_ver5_3_tablet',
+        'generic_android_ver6_0_tablet',
     );
 
     /**
@@ -137,7 +141,7 @@ class AndroidHandler
                 'Safari'
             ) && !Utils::checkIfContains($userAgent, 'Mobile')
         ) {
-            // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a "_tablet" ID)
+            // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a '_tablet' ID)
             if (in_array($deviceID . '_tablet', self::$constantIDs)) {
                 return $deviceID . '_tablet';
             }
@@ -181,7 +185,11 @@ class AndroidHandler
         '4.3',
         '4.4',
         '4.5',
-        '5.0'
+        '5.0',
+        '5.1',
+        '5.2',
+        '5.3',
+        '6.0'
     );
 
     /**
@@ -221,7 +229,7 @@ class AndroidHandler
         // Initializing $version
         $version = null;
 
-        // Look for "Android <Version>" first and then for "Android/<Version>"
+        // Look for 'Android <Version>' first and then for 'Android/<Version>'
         if (preg_match('#Android (\d\.\d)#', $userAgent, $matches)) {
             $version = $matches[1];
         } else if (preg_match('#Android/(\d\.\d)#', $userAgent, $matches)) {
@@ -254,19 +262,25 @@ class AndroidHandler
             '#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#',
             $userAgent,
             $matches
-        )
-        ) {
+        )) {
             // Trim off spaces and semicolons
             $model = rtrim($matches[1], ' ;');
             // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
-        } else if (preg_match('#Android [^;]+;(?>(?: xx-xx[ ;]+)?)(.+?)(?:Build/|\))#', $userAgent, $matches)) {
+        } elseif (preg_match('#Android [^;]+;(?>(?: xx-xx[ ;]+)?)(.+?)(?:Build/|\))#', $userAgent, $matches)) {
             // Trim off spaces and semicolons
             $model = rtrim($matches[1], ' ;');
+            // Additional logic to capture model names in Amazon webview/appstore UAs
+        } elseif (preg_match(
+            '#^(?:AmazonWebView|Appstore|Amazon\.com)/.+Android[/ ][\d\.]+/(?:[\d]+/)?([A-Za-z0-9_\- ]+)\b#',
+            $userAgent,
+            $matches
+        )) {
+            $model = $matches[1];
         } else {
             return null;
         }
 
-        // The previous RegEx may return just "Build/.*" for UAs like:
+        // The previous RegEx may return just 'Build/.*' for UAs like:
         // HTC_Dream Mozilla/5.0 (Linux; U; Android 1.5; xx-xx; Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
         if (strpos($model, 'Build/') === 0) {
             return null;
@@ -292,7 +306,7 @@ class AndroidHandler
 
         // HTC
         if (strpos($model, 'HTC') !== false) {
-            // Normalize "HTC/"
+            // Normalize 'HTC/'
             $model = preg_replace('#HTC[ _\-/]#', 'HTC~', $model);
 
             // Remove the version

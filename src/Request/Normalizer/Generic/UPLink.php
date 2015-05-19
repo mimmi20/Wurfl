@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -29,7 +29,7 @@ class UPLink
     implements NormalizerInterface
 {
     /**
-     * This method remove the "UP.Link" substring from user agent string.
+     * This method remove the 'UP.Link' substring from user agent string.
      *
      * @param string $userAgent
      *
@@ -37,7 +37,7 @@ class UPLink
      */
     public function normalize($userAgent)
     {
-        $index = strpos($userAgent, " UP.Link");
+        $index = strpos($userAgent, ' UP.Link');
 
         if ($index > 0) {
             return substr($userAgent, 0, $index);

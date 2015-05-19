@@ -22,7 +22,7 @@ class TestBase
         $useragents       = file($fullTestFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $map              = array();
         foreach ($useragents as $useragent) {
-            $map [] = explode("=", $useragent);
+            $map [] = explode('=', $useragent);
         }
 
         return $map;

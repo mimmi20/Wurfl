@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -53,7 +53,7 @@ abstract class AbstractIterator
     {
         $inputFile = FileUtils::cleanFilename($inputFile);
         if (!file_exists($inputFile)) {
-            throw new \InvalidArgumentException("cannot locate [$inputFile] file!");
+            throw new \InvalidArgumentException('cannot locate [$inputFile] file!');
         }
         $this->inputFile = Utils::getXMLFile($inputFile);
     }

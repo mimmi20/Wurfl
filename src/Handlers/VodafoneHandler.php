@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class VodafoneHandler
     extends AbstractHandler
 {
-    protected $prefix = "VODAFONE";
+    protected $prefix = 'VODAFONE';
 
     /**
      * @param string $userAgent
@@ -54,8 +54,6 @@ class VodafoneHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $tolerance = Utils::firstSlash($userAgent);
-
-        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
     }
 }

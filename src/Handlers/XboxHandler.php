@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -33,7 +33,7 @@ use Wurfl\Constants;
 class XboxHandler
     extends AbstractHandler
 {
-    protected $prefix = "XBOX";
+    protected $prefix = 'XBOX';
 
     public static $constantIDs = array(
         'microsoft_xbox360_ver1',

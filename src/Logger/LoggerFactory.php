@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -35,7 +35,7 @@ class LoggerFactory
     public static function create($wurflConfig = null)
     {
         if (self::isLoggingConfigured($wurflConfig)) {
-            return self::createFileLogger($wurflConfig, "wurfl.log");
+            return self::createFileLogger($wurflConfig, 'wurfl.log');
         }
 
         return new NullLogger();

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ interface MatcherInterface
 {
     /**
      * Returns a matching device id for the given request,
-     * if no matching device is found will return "generic"
+     * if no matching device is found will return 'generic'
      *
      * @param GenericRequest $request
      *

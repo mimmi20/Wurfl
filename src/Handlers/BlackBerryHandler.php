@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -34,7 +34,7 @@ class BlackBerryHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "BLACKBERRY";
+    protected $prefix = 'BLACKBERRY';
 
     public static $constantIDs = array(
         '2.' => 'blackberry_generic_ver2',

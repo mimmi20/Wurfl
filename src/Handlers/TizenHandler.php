@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -41,6 +41,7 @@ class TizenHandler
         'generic_tizen_ver2_0',
         'generic_tizen_ver2_1',
         'generic_tizen_ver2_2',
+        'generic_tizen_ver2_3',
     );
 
     /**
@@ -89,7 +90,7 @@ class TizenHandler
         return 'generic_tizen';
     }
 
-    public static $validTizenVersions = array('1.0', '2.0', '2.1', '2.2');
+    public static $validTizenVersions = array('1.0', '2.0', '2.1', '2.2', '2.3');
 
     /**
      * @param $ua

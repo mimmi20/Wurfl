@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,7 +31,7 @@ namespace Wurfl\Handlers;
 class SamsungHandler
     extends AbstractHandler
 {
-    protected $prefix = "SAMSUNG";
+    protected $prefix = 'SAMSUNG';
 
     /**
      * @param string $userAgent
@@ -57,10 +57,10 @@ class SamsungHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfStartsWithAnyOf($userAgent, array("SEC-", "SAMSUNG-", "SCH"))) {
+        if (Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SAMSUNG-', 'SCH'))) {
             $tolerance = Utils::firstSlash($userAgent);
         } else {
-            if (Utils::checkIfStartsWithAnyOf($userAgent, array("Samsung", "SPH", "SGH"))) {
+            if (Utils::checkIfStartsWithAnyOf($userAgent, array('Samsung', 'SPH', 'SGH'))) {
                 $tolerance = Utils::firstSpace($userAgent);
             } else {
                 $tolerance = Utils::secondSlash($userAgent);
@@ -77,14 +77,7 @@ class SamsungHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, 'SAMSUNG')) {
-            $tolerance = 8;
-
-            return $this->getDeviceIDFromLD($userAgent, $tolerance);
-        } else {
-            $tolerance = Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
-
-            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-        }
+        $tolerance = Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

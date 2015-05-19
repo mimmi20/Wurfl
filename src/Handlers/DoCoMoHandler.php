@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,7 +32,7 @@ class DoCoMoHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "DOCOMO";
+    protected $prefix = 'DOCOMO';
 
     public static $constantIDs = array(
         'docomo_generic_jap_ver1',
@@ -45,7 +45,7 @@ class DoCoMoHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, "DoCoMo");
+        return Utils::checkIfStartsWith($userAgent, 'DoCoMo');
     }
 
     public function applyConclusiveMatch($userAgent)

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -42,13 +42,13 @@ class FileLogger
     public function __construct($fileName)
     {
         if (!is_writable($fileName)) {
-            throw new \InvalidArgumentException("Log file specified is not writable");
+            throw new \InvalidArgumentException('Log file specified is not writable');
         }
 
-        $this->filePointer = @fopen($fileName, "a");
+        $this->filePointer = @fopen($fileName, 'a');
 
         if (!$this->filePointer) {
-            throw new Exception("Unable to open log file: ");
+            throw new Exception('Unable to open log file: ');
         }
     }
 
@@ -71,8 +71,8 @@ class FileLogger
      */
     public function log($level, $message, array $context = array())
     {
-        $time        = date("F jS Y, h:iA");
+        $time        = date('F jS Y, h:iA');
         $fullMessage = '[' . $time . '] [' . $level . '] ' . $message;
-        fwrite($this->filePointer, $fullMessage . "\n");
+        fwrite($this->filePointer, $fullMessage . '\n');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,8 +31,8 @@ use Wurfl\Exception;
  * // config.php
  * $configuration = array(
  *   'wurfl' => array(
- *       'main-file' => "wurfl.xml",
- *       'patches' => array("web_browsers_patch.xml"),
+ *       'main-file' => 'wurfl.xml',
+ *       'patches' => array('web_browsers_patch.xml'),
  *   ),
  *   'match-mode' => 'high-accuracy',
  *   'allow-reload' => true,
@@ -50,13 +50,13 @@ use Wurfl\Exception;
  *     'resolution_width',
  *   ),
  *   'persistence' => array(
- *       'provider' => "file",
+ *       'provider' => 'file',
  *       'params' => array(
- *         'dir' => "storage/persistence",
+ *         'dir' => 'storage/persistence',
  *       ),
  *   ),
  *   'cache' => array(
- *       'provider' => "null",
+ *       'provider' => 'null',
  *   ),
  * );
  * ?>
@@ -68,7 +68,7 @@ use Wurfl\Exception;
  * $wurflManagerFactory = new \Wurfl\ManagerFactory($wurflConfig);
  * $wurflManager = $wurflManagerFactory->create();
  * $info = $wurflManager->getWURFLInfo();
- * printf("Version: %s\nUpdated: %s\nOfficialURL: %s\n\n",
+ * printf('Version: %s\nUpdated: %s\nOfficialURL: %s\n\n',
  *   $info->version,
  *   $info->lastUpdated,
  *   $info->officialURL
@@ -91,7 +91,7 @@ class ArrayConfig
     {
         include parent::getConfigFilePath();
         if (!isset($configuration) || !is_array($configuration)) {
-            throw new Exception("Configuration array must be defined in the configuraiton file");
+            throw new Exception('Configuration array must be defined in the configuraiton file');
         }
 
         $this->init($configuration);
@@ -179,7 +179,7 @@ class ArrayConfig
     private function setLogDirConfiguration($logDir)
     {
         if (!is_writable($logDir)) {
-            throw new \InvalidArgumentException("log dir $logDir  must exist and be writable");
+            throw new \InvalidArgumentException('log dir $logDir  must exist and be writable');
         }
         $this->logDir = $logDir;
     }

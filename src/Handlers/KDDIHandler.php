@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,7 +32,7 @@ class KDDIHandler
     extends AbstractHandler
 {
 
-    protected $prefix = "KDDI";
+    protected $prefix = 'KDDI';
 
     public static $constantIDs = array(
         'opwv_v62_generic'
@@ -75,6 +75,6 @@ class KDDIHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        return "opwv_v62_generic";
+        return 'opwv_v62_generic';
     }
 }

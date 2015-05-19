@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 ScientiaMobile, Inc.
+ * Copyright (c) 2015 ScientiaMobile, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -53,9 +53,9 @@ class Opera
             //Match to the '.' in the Opera version number
             return $userAgent;
         }
-        //Normalize Opera v15 and above UAs, that say OPR, into "Opera/version UA" format used above
+        //Normalize Opera v15 and above UAs, that say OPR, into 'Opera/version UA' format used above
         if (preg_match('#OPR/(\d+\.\d+)#', $userAgent, $matches)) {
-            $prefix    = "Opera/" . $matches[1] . " ";
+            $prefix    = 'Opera/' . $matches[1] . ' ';
             $userAgent = $prefix . $userAgent;
         }
 
