@@ -73,18 +73,9 @@ class Device
     {
         $this->http_request = $request;
 
-        // Use the original headers for OperaMini
-        if ($this->http_request->originalHeaderExists('HTTP_DEVICE_STOCK_UA')) {
-            $this->device_ua            = $this->http_request->getOriginalHeader('HTTP_DEVICE_STOCK_UA');
-            $this->browser_ua           = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
-            $this->device_ua_normalized = $this->http_request->userAgentNormalized;
-        } else {
-            $this->device_ua            = $this->http_request->getOriginalHeader('HTTP_USER_AGENT');
-            $this->browser_ua           = $this->device_ua;
-            $this->device_ua_normalized = isset($this->http_request->userAgentNormalized)
-                ? $this->http_request->userAgentNormalized : null;
-        }
-
+        $this->device_ua             = $this->http_request->getDeviceUserAgent();
+        $this->browser_ua            = $this->http_request->getBrowserUserAgent();
+        $this->device_ua_normalized  = $this->http_request->getUserAgentNormalized();
         $this->browser_ua_normalized = $this->device_ua_normalized;
 
         $this->browser = new NameVersionPair($this);

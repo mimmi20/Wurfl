@@ -225,11 +225,11 @@ abstract class AbstractHandler
     final public function applyMatch(GenericRequest $request)
     {
         $className                   = get_class($this);
-        $request->matchInfo->matcher = $className;
+        $request->getMatchInfo()->matcher = $className;
         $startTime                   = microtime(true);
 
-        $userAgent                               = $this->normalizeUserAgent($request->userAgentNormalized);
-        $request->matchInfo->normalizedUserAgent = $userAgent;
+        $userAgent                               = $this->normalizeUserAgent($request->getUserAgentNormalized());
+        $request->getMatchInfo()->normalizedUserAgent = $userAgent;
         $this->logger->debug('START: Matching For ' . $userAgent);
 
         // Get The data associated with this current handler
@@ -263,9 +263,9 @@ abstract class AbstractHandler
         foreach ($matches as $matchType => $matchProps) {
             $matchProps = (object) $matchProps;
 
-            $request->matchInfo->matcherHistory .= $className . $matchProps->history;
-            $request->matchInfo->matchType   = $matchType;
-            $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
+            $request->getMatchInfo()->matcherHistory .= $className . $matchProps->history;
+            $request->getMatchInfo()->matchType   = $matchType;
+            $request->setUserAgentsWithDeviceID($this->userAgentsWithDeviceID);
 
             $this->logger->debug($this->prefix . ' :' . $matchProps->debug . ' for ua: ' . $userAgent);
 
@@ -279,9 +279,9 @@ abstract class AbstractHandler
 
         // All attempts to match have failed
         if ($this->isBlankOrGeneric($deviceID)) {
-            $request->matchInfo->matchType = 'none';
+            $request->getMatchInfo()->matchType = 'none';
 
-            if ($request->userAgentProfile) {
+            if ($request->getUserAgentProfile()) {
                 $deviceID = Constants::GENERIC_MOBILE;
             } else {
                 $deviceID = Constants::GENERIC;
@@ -289,7 +289,7 @@ abstract class AbstractHandler
         }
 
         $this->logger->debug('END: Matching For ' . $userAgent);
-        $request->matchInfo->lookupTime = microtime(true) - $startTime;
+        $request->getMatchInfo()->lookupTime = microtime(true) - $startTime;
 
         return $deviceID;
     }

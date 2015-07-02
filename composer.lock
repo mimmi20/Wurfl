@@ -1,11 +1,53 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "38a242cc86ed983e5199d204f852c06b",
+    "hash": "305e3693bdb264812308db9cc6ea95ef",
     "packages": [
+        {
+            "name": "mimmi20/wurfl-generic-request",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mimmi20/wurfl-generic-request.git",
+                "reference": "2de9fc887899a9560cad2e70e04f4719542e5765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mimmi20/wurfl-generic-request/zipball/2de9fc887899a9560cad2e70e04f4719542e5765",
+                "reference": "2de9fc887899a9560cad2e70e04f4719542e5765",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wurfl\\Request\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "the Generic Request Object extracted from Wurfl for PHP 5.3",
+            "homepage": "https://github.com/mimmi20/Wurfl",
+            "keywords": [
+                "Wurfl",
+                "browser",
+                "http",
+                "parser",
+                "user agent",
+                "user-agent"
+            ],
+            "time": "2015-07-02 19:10:47"
+        },
         {
             "name": "mimmi20/wurflcache",
             "version": "1.3.1",
@@ -254,12 +296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "983392dbcbc5fbd0dc43bb930f3031fd55c7119f"
+                "reference": "ceeb33f5213d8ef383bb8f1d46a5922b4666c8aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/983392dbcbc5fbd0dc43bb930f3031fd55c7119f",
-                "reference": "983392dbcbc5fbd0dc43bb930f3031fd55c7119f",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ceeb33f5213d8ef383bb8f1d46a5922b4666c8aa",
+                "reference": "ceeb33f5213d8ef383bb8f1d46a5922b4666c8aa",
                 "shasum": ""
             },
             "require": {
@@ -322,7 +364,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-06-30 11:34:34"
+            "time": "2015-06-30 22:26:19"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1337,6 +1379,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "mimmi20/wurfl-generic-request": 20,
         "monolog/monolog": 20,
         "mikey179/vfsstream": 20
     },

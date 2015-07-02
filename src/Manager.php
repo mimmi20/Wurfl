@@ -373,8 +373,6 @@ class Manager
         $request = $requestFactory->createRequestForUserAgent($userAgent);
         $device  = $this->getDeviceForRequest($request);
 
-        $device->request->userAgent = $userAgent;
-
         return $device;
     }
 
@@ -461,13 +459,13 @@ class Manager
      */
     private function deviceIdForRequest(Request\GenericRequest $request)
     {
-        $id = $request->id;
+        $id = $request->getId();
 
         if (!$id) {
             // $request->id is not set
             // -> do not try to get info from cache nor try to save to the cache
-            $request->matchInfo->fromCache  = 'invalid id';
-            $request->matchInfo->lookupTime = 0.0;
+            $request->getMatchInfo()->fromCache  = 'invalid id';
+            $request->getMatchInfo()->lookupTime = 0.0;
 
             return $this->getUserAgentHandlerChain()->match($request);
         }
@@ -476,10 +474,10 @@ class Manager
 
         if (empty($deviceId)) {
             $genericNormalizer            = UserAgentHandlerChainFactory::createGenericNormalizers();
-            $request->userAgentNormalized = $genericNormalizer->normalize($request->userAgent);
+            $request->setUserAgentNormalized($genericNormalizer->normalize($request->getUserAgent()));
 
             if ($this->getWurflConfig()->isHighPerformance()
-                && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->userAgent)
+                && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->getUserAgent())
             ) {
                 // This device has been identified as a web browser programatically,
                 // so no call to WURFL is necessary
@@ -490,8 +488,8 @@ class Manager
             // save it in cache
             $this->getCacheStorage()->save($id, $deviceId);
         } else {
-            $request->matchInfo->fromCache  = true;
-            $request->matchInfo->lookupTime = 0.0;
+            $request->getMatchInfo()->fromCache  = true;
+            $request->getMatchInfo()->lookupTime = 0.0;
         }
 
         return $deviceId;

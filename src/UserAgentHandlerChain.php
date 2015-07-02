@@ -94,7 +94,7 @@ class UserAgentHandlerChain
 
         foreach ($handlers as $handler) {
             /** @var $handler Handlers\AbstractHandler */
-            if ($handler->canHandle($request->userAgentNormalized)) {
+            if ($handler->canHandle($request->getUserAgentNormalized())) {
                 $matchResult = $handler->applyMatch($request);
                 break;
             }

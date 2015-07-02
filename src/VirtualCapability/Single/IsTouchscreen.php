@@ -36,7 +36,7 @@ class IsTouchscreen
      */
     protected function compute()
     {
-        $userAgent = $this->request->userAgent;
+        $userAgent = $this->request->getUserAgent();
 
         return ($this->device->pointing_method == 'touchscreen')
             || (Utils::checkIfContains($userAgent, 'Trident') && Utils::checkIfContains($userAgent, 'Touch'));

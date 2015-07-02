@@ -103,13 +103,13 @@ class CustomDevice
                 return $this->request;
                 break;
             case 'matchInfo':
-                return $this->request->matchInfo;
+                return $this->request->getMatchInfo();
                 break;
             case 'modelDevices':
                 return $this->modelDevices;
                 break;
             case 'userAgentsWithDeviceID':
-                return $this->request->userAgentsWithDeviceID;
+                return $this->request->getUserAgentsWithDeviceID();
                 break;
             case 'id':
             case 'userAgent':
@@ -203,7 +203,7 @@ class CustomDevice
      */
     public function getMatchInfo()
     {
-        return ($this->request instanceof Request\GenericRequest) ? $this->request->matchInfo : null;
+        return ($this->request instanceof Request\GenericRequest) ? $this->request->getMatchInfo() : null;
     }
 
     /**

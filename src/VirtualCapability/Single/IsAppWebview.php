@@ -82,8 +82,8 @@ class IsAppWebview
      */
     protected function compute()
     {
-        $ua = $this->request->userAgentNormalized;
-        $ua_original = $this->request->userAgent;
+        $ua = $this->request->getUserAgentNormalized();
+        $ua_original = $this->request->getUserAgent();
 
         // ->contains() can take an array
         if (Utils::checkIfContainsAnyOf($ua, $this->third_party_browsers)) {

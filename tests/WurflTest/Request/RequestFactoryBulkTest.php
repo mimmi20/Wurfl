@@ -27,7 +27,7 @@ class RequestFactoryBulkTest
             $requestFactory = new GenericRequestFactory();
             $request        = $requestFactory->createRequest($testData['_SERVER']);
 
-            self::assertEquals($testData['EXPECTED_USER_AGENT'], $request->userAgent);
+            self::assertEquals($testData['EXPECTED_USER_AGENT'], $request->getUserAgent());
         }
     }
 

@@ -39,7 +39,7 @@ class IsRobot
      */
     protected function compute()
     {
-        $ua = $this->request->userAgent;
+        $ua = $this->request->getUserAgent();
 
         // Control cap, 'controlcap_is_robot' is checked before this function is called
         if ($this->request->originalHeaderExists('HTTP_ACCEPT_ENCODING') && Utils::checkIfContains(

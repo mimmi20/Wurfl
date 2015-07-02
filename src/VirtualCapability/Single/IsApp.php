@@ -79,7 +79,7 @@ class IsApp
      */
     protected function compute()
     {
-        $userAgent = $this->request->userAgent;
+        $userAgent = $this->request->getUserAgent();
 
         // if (Utils::isRobot($userAgent)) {
         // return false;
