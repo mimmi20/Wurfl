@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7067a0c981f54bde50357b91fa9402c6",
+    "hash": "8daeb6a97bb393a641f9f3fdb29df725",
     "packages": [
         {
             "name": "mimmi20/wurfl-constants",
@@ -1307,30 +1307,30 @@
         },
         {
             "name": "zendframework/zend-config",
-            "version": "2.5.1",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-config.git",
-                "reference": "ec49b1df1bdd9772df09dc2f612fbfc279bf4c27"
+                "reference": "fc715d787e13ee2bf6b2107a7d9a00c6784e4e08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-config/zipball/ec49b1df1bdd9772df09dc2f612fbfc279bf4c27",
-                "reference": "ec49b1df1bdd9772df09dc2f612fbfc279bf4c27",
+                "url": "https://api.github.com/repos/zendframework/zend-config/zipball/fc715d787e13ee2bf6b2107a7d9a00c6784e4e08",
+                "reference": "fc715d787e13ee2bf6b2107a7d9a00c6784e4e08",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.23",
-                "zendframework/zend-stdlib": "~2.5"
+                "zendframework/zend-stdlib": "~2.5.0"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "~4.0",
-                "zendframework/zend-filter": "~2.5",
-                "zendframework/zend-i18n": "~2.5",
-                "zendframework/zend-json": "~2.5",
-                "zendframework/zend-mvc": "~2.5",
-                "zendframework/zend-servicemanager": "~2.5"
+                "zendframework/zend-filter": "~2.5.0",
+                "zendframework/zend-i18n": "~2.5.0",
+                "zendframework/zend-json": "~2.5.0",
+                "zendframework/zend-mvc": "~2.5.0",
+                "zendframework/zend-servicemanager": "~2.5.0"
             },
             "suggest": {
                 "zendframework/zend-filter": "Zend\\Filter component",
@@ -1360,20 +1360,20 @@
                 "config",
                 "zf2"
             ],
-            "time": "2015-06-03 15:32:00"
+            "time": "2015-06-03 14:05:32"
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "2.6.0",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "a35758803fc9051ec1aff43989e679b6b451b1b4"
+                "reference": "2e50c4e8f8d0ab928aa5beeb21644f30bf2cc8bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/a35758803fc9051ec1aff43989e679b6b451b1b4",
-                "reference": "a35758803fc9051ec1aff43989e679b6b451b1b4",
+                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/2e50c4e8f8d0ab928aa5beeb21644f30bf2cc8bf",
+                "reference": "2e50c4e8f8d0ab928aa5beeb21644f30bf2cc8bf",
                 "shasum": ""
             },
             "require": {
@@ -1398,8 +1398,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "2.5-dev",
+                    "dev-develop": "2.6-dev"
                 }
             },
             "autoload": {
@@ -1416,7 +1416,7 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2015-07-21 17:08:05"
+            "time": "2015-07-21 14:59:49"
         }
     ],
     "aliases": [],
