@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8daeb6a97bb393a641f9f3fdb29df725",
+    "hash": "50afce0313e43bfb444e6df3f4471cc3",
     "packages": [
         {
             "name": "mimmi20/wurfl-constants",
@@ -1364,30 +1364,30 @@
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "2.5.2",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "2e50c4e8f8d0ab928aa5beeb21644f30bf2cc8bf"
+                "reference": "06054e30e60f2907a8963fbd090f338ada0c7263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/2e50c4e8f8d0ab928aa5beeb21644f30bf2cc8bf",
-                "reference": "2e50c4e8f8d0ab928aa5beeb21644f30bf2cc8bf",
+                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/06054e30e60f2907a8963fbd090f338ada0c7263",
+                "reference": "06054e30e60f2907a8963fbd090f338ada0c7263",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "php": ">=5.3.23"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "~4.0",
-                "zendframework/zend-config": "~2.5",
-                "zendframework/zend-eventmanager": "~2.5",
-                "zendframework/zend-filter": "~2.5",
-                "zendframework/zend-inputfilter": "~2.5",
-                "zendframework/zend-serializer": "~2.5",
-                "zendframework/zend-servicemanager": "~2.5"
+                "zendframework/zend-config": "~2.5.0",
+                "zendframework/zend-eventmanager": "~2.5.0",
+                "zendframework/zend-filter": "~2.5.0",
+                "zendframework/zend-inputfilter": "~2.5.0",
+                "zendframework/zend-serializer": "~2.5.0",
+                "zendframework/zend-servicemanager": "~2.5.0"
             },
             "suggest": {
                 "zendframework/zend-eventmanager": "To support aggregate hydrator usage",
@@ -1416,7 +1416,7 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2015-07-21 14:59:49"
+            "time": "2015-06-03 14:05:58"
         }
     ],
     "aliases": [],
