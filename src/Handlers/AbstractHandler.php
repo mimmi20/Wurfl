@@ -16,7 +16,9 @@
 namespace Wurfl\Handlers;
 
 use Psr\Log\LoggerInterface;
+use Wurfl\Handlers\MatcherInterface\MatcherCanHandleInterface;
 use Wurfl\Request\GenericRequest;
+use Wurfl\Request\Normalizer\NormalizerInterface;
 use Wurfl\Request\Normalizer\NullNormalizer;
 use Wurfl\Storage\Storage;
 use Wurfl\WurflConstants;
@@ -29,10 +31,9 @@ use Wurfl\WurflConstants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 abstract class AbstractHandler
-    implements FilterInterface
+    implements FilterInterface, HandlerInterface, MatcherCanHandleInterface
 {
     /**
      * @var \Wurfl\Request\Normalizer\UserAgentNormalizer
@@ -67,7 +68,7 @@ abstract class AbstractHandler
     /**
      * @param \Wurfl\Request\Normalizer\NormalizerInterface $userAgentNormalizer
      */
-    public function __construct($userAgentNormalizer = null)
+    public function __construct(NormalizerInterface $userAgentNormalizer = null)
     {
         if (is_null($userAgentNormalizer)) {
             $this->userAgentNormalizer = new NullNormalizer();
@@ -112,15 +113,6 @@ abstract class AbstractHandler
     {
         return $this->getPrefix();
     }
-
-    /**
-     * Returns true if this handler can handle the given $userAgent
-     *
-     * @param string $userAgent
-     *
-     * @return bool
-     */
-    abstract public function canHandle($userAgent);
 
     //********************************************************
     //
@@ -224,11 +216,11 @@ abstract class AbstractHandler
      */
     final public function applyMatch(GenericRequest $request)
     {
-        $className                   = get_class($this);
+        $className                        = get_class($this);
         $request->getMatchInfo()->matcher = $className;
-        $startTime                   = microtime(true);
+        $startTime                        = microtime(true);
 
-        $userAgent                               = $this->normalizeUserAgent($request->getUserAgentNormalized());
+        $userAgent                                    = $this->normalizeUserAgent($request->getUserAgentNormalized());
         $request->getMatchInfo()->normalizedUserAgent = $userAgent;
         $this->logger->debug('START: Matching For ' . $userAgent);
 

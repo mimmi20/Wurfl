@@ -382,7 +382,7 @@ class Manager
      * @param string                 $deviceId
      * @param Request\GenericRequest $request
      *
-     * @return Xml\ModelDevice
+     * @return \Wurfl\Device\ModelDeviceInterface
      */
     public function getDevice($deviceId, Request\GenericRequest $request = null)
     {
@@ -429,11 +429,11 @@ class Manager
     }
 
     /**
-     * @param \Wurfl\Xml\ModelDevice $device
+     * @param \Wurfl\Device\ModelDeviceInterface $device
      *
      * @return string
      */
-    private function deviceId(Xml\ModelDevice $device)
+    private function deviceId(Device\ModelDeviceInterface $device)
     {
         return $device->id;
     }
@@ -496,7 +496,7 @@ class Manager
     }
 
     /**
-     * Wraps the model device with \Wurfl\Xml_ModelDevice.  This function takes the
+     * Wraps the model device with \Wurfl\Xml\ModelDeviceInterface. This function takes the
      * Device ID and returns the \Wurfl\CustomDevice with all capabilities.
      *
      * @param string                 $deviceId

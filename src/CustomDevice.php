@@ -18,6 +18,9 @@
 
 namespace Wurfl;
 
+use Wurfl\Device\CustomDeviceInterface;
+use Wurfl\VirtualCapability\VirtualCapabilityProvider;
+
 /**
  * WURFL Custom Device - this is the core class that is used by developers to access the
  * properties and capabilities of a mobile device
@@ -38,21 +41,22 @@ namespace Wurfl;
  * $wurflID = $device->id;
  * </code>
  *
- * @property-read string                        $id               WURFL Device ID
- * @property-read string                        $userAgent        User Agent
- * @property-read string                        $fallBack         Fallback Device ID
- * @property-read bool                          $actualDeviceRoot true if device is an actual root device
- * @property-read \Wurfl\Request\GenericRequest $request
- * @property-read \Wurfl\Xml\ModelDevice[]      $modelDevices
- * @property-read string                        $pointing_method
- * @property-read string                        $is_tablet
- * @property-read bool                          $can_assign_phone_number
+ * @property-read string                               $id               WURFL Device ID
+ * @property-read string                               $userAgent        User Agent
+ * @property-read string                               $fallBack         Fallback Device ID
+ * @property-read bool                                 $actualDeviceRoot true if device is an actual root device
+ * @property-read \Wurfl\Request\GenericRequest        $request
+ * @property-read \Wurfl\Device\ModelDeviceInterface[] $modelDevices
+ * @property-read string                               $pointing_method
+ * @property-read string                               $is_tablet
+ * @property-read bool                                 $can_assign_phone_number
  * @package WURFL
  */
 class CustomDevice
+    implements CustomDeviceInterface
 {
     /**
-     * @var \Wurfl\Xml\ModelDevice[] Array of \Wurfl\Xml\ModelDevice objects
+     * @var \Wurfl\Device\ModelDeviceInterface[] Array of \Wurfl\Xml\ModelDevice objects
      */
     private $modelDevices;
 
@@ -62,13 +66,13 @@ class CustomDevice
     private $request;
 
     /**
-     * @var VirtualCapability\VirtualCapabilityProvider
+     * @var \Wurfl\VirtualCapability\VirtualCapabilityProvider
      */
     private $virtualCapabilityProvider;
 
     /**
-     * @param \Wurfl\Xml\ModelDevice[]      $modelDevices Array of \Wurfl\Xml\ModelDevice objects
-     * @param \Wurfl\Request\GenericRequest $request
+     * @param \Wurfl\Device\ModelDeviceInterface[] $modelDevices Array of \Wurfl\Xml\ModelDevice objects
+     * @param \Wurfl\Request\GenericRequest        $request
      *
      * @throws \InvalidArgumentException if $modelDevices is not an array of at least one \Wurfl\Xml\ModelDevice
      */
@@ -151,7 +155,7 @@ class CustomDevice
      *
      * @return string Capability value
      * @throws \InvalidArgumentException The $capabilityName is is not defined in the loaded WURFL.
-     * @see \Wurfl\Xml\ModelDevice::getCapability()
+     * @see \Wurfl\Xml\ModelDeviceInterface::getCapability()
      */
     public function getCapability($capabilityName)
     {
@@ -164,9 +168,9 @@ class CustomDevice
         }
 
         foreach ($this->modelDevices as $modelDevice) {
-            /* @var \Wurfl\Xml\ModelDevice $modelDevice */
+            /* @var \Wurfl\Device\ModelDeviceInterface $modelDevice */
             $capabilityValue = $modelDevice->getCapability($capabilityName);
-            if ($capabilityValue != null) {
+            if ($capabilityValue !== null) {
                 return $capabilityValue;
             }
         }
@@ -179,7 +183,7 @@ class CustomDevice
      * it is returned.  Some devices have no device roots in their fall back tree, like generic_android, since
      * no devices above it (itself included) are real devices (actual device roots).
      *
-     * @return \Wurfl\Xml\ModelDevice
+     * @return \Wurfl\Device\ModelDeviceInterface
      */
     public function getActualDeviceRootAncestor()
     {
@@ -187,7 +191,7 @@ class CustomDevice
             return $this;
         }
         foreach ($this->modelDevices as $modelDevice) {
-            /* @var \Wurfl\Xml\ModelDevice $modelDevice */
+            /* @var \Wurfl\Device\ModelDeviceInterface $modelDevice */
             if ($modelDevice->actualDeviceRoot) {
                 return $modelDevice;
             }
@@ -209,7 +213,7 @@ class CustomDevice
     /**
      * Returns an array with all the fall back devices, from the matched device to the root device ('generic')
      *
-     * @return \Wurfl\Xml\ModelDevice[]
+     * @return \Wurfl\Device\ModelDeviceInterface[]
      */
     public function getFallBackDevices()
     {
@@ -219,7 +223,7 @@ class CustomDevice
     /**
      * Returns the top-most device.  This is the 'generic' device.
      *
-     * @return \Wurfl\Xml\ModelDevice
+     * @return \Wurfl\Device\ModelDeviceInterface
      */
     public function getRootDevice()
     {
@@ -230,13 +234,13 @@ class CustomDevice
      * Returns capabilities and their values for the current device
      *
      * @return array Device capabilities array
-     * @see \Wurfl\Xml\ModelDevice::getCapabilities()
+     * @see \Wurfl\Device\ModelDeviceInterface::getCapabilities()
      */
     public function getAllCapabilities()
     {
         $capabilities = array();
         foreach (array_reverse($this->modelDevices) as $modelDevice) {
-            /** @var \Wurfl\Xml\ModelDevice $modelDevice */
+            /** @var \Wurfl\Device\ModelDeviceInterface $modelDevice */
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
 
@@ -244,7 +248,7 @@ class CustomDevice
     }
 
     /**
-     * @return VirtualCapability\VirtualCapabilityProvider
+     * @return \Wurfl\VirtualCapability\VirtualCapabilityProvider
      */
     public function getVirtualCapabilityProvider()
     {
@@ -256,11 +260,11 @@ class CustomDevice
     }
 
     /**
-     * @param VirtualCapability\VirtualCapabilityProvider $virtualCapabilityProvider
+     * @param \Wurfl\VirtualCapability\VirtualCapabilityProvider $virtualCapabilityProvider
      *
      * @return \Wurfl\CustomDevice
      */
-    public function setVirtualCapabilityProvider($virtualCapabilityProvider)
+    public function setVirtualCapabilityProvider(VirtualCapabilityProvider $virtualCapabilityProvider)
     {
         $this->virtualCapabilityProvider = $virtualCapabilityProvider;
 

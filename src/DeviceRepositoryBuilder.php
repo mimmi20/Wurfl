@@ -225,7 +225,7 @@ class DeviceRepositoryBuilder
         $usedPatches = array();
 
         foreach ($deviceIterator as $device) {
-            /* @var $device Xml\ModelDevice */
+            /* @var $device \Wurfl\Device\ModelDeviceInterface */
             $toPatch = isset($patchingDevices[$device->id]);
 
             if ($toPatch) {
@@ -256,11 +256,11 @@ class DeviceRepositoryBuilder
      * Save given $device in the persistence provider.  This is called when loading the WURFL XML
      * data, directly after reading the complete device node.
      *
-     * @param Xml\ModelDevice $device
+     * @param \Wurfl\Device\ModelDeviceInterface $device
      *
      * @see \Wurfl\UserAgentHandlerChain::filter(), WURFL_Storage_Base::save()
      */
-    private function classifyAndPersistDevice(Xml\ModelDevice $device)
+    private function classifyAndPersistDevice(Device\ModelDeviceInterface $device)
     {
         $this->userAgentHandlerChain->filter($device->userAgent, $device->id);
 
@@ -278,12 +278,12 @@ class DeviceRepositoryBuilder
     }
 
     /**
-     * @param Xml\ModelDevice $device
-     * @param Xml\ModelDevice $patchingDevice
+     * @param \Wurfl\Device\ModelDeviceInterface $device
+     * @param \Wurfl\Device\ModelDeviceInterface $patchingDevice
      *
-     * @return Xml\ModelDevice
+     * @return \Wurfl\Device\ModelDeviceInterface
      */
-    private function patchDevice(Xml\ModelDevice $device, Xml\ModelDevice $patchingDevice)
+    private function patchDevice(Device\ModelDeviceInterface $device, Device\ModelDeviceInterface $patchingDevice)
     {
         return $this->devicePatcher->patch($device, $patchingDevice);
     }
@@ -341,7 +341,7 @@ class DeviceRepositoryBuilder
         $patchingDevices = array();
 
         foreach ($deviceIterator as $device) {
-            /* @var $device Xml\ModelDevice */
+            /* @var $device Device\ModelDeviceInterface */
             $patchingDevices[$device->id] = $device;
         }
 

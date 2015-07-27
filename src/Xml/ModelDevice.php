@@ -18,6 +18,8 @@
 
 namespace Wurfl\Xml;
 
+use Wurfl\Device\ModelDeviceInterface;
+
 /**
  * Represents a device in the wurfl xml file
  *
@@ -30,6 +32,7 @@ namespace Wurfl\Xml;
  * @package    WURFL_Xml
  */
 class ModelDevice
+    implements ModelDeviceInterface
 {
     /**
      * @var string WURFL device ID

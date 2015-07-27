@@ -18,6 +18,7 @@
 
 namespace Wurfl\Xml;
 
+use Wurfl\Device\ModelDeviceInterface;
 use Wurfl\Utils;
 
 /**
@@ -30,12 +31,12 @@ class DevicePatcher
     /**
      * Patch an existing $device with a $patchingDevice
      *
-     * @param ModelDevice $device
-     * @param ModelDevice $patchingDevice
+     * @param \Wurfl\Device\ModelDeviceInterface $device
+     * @param \Wurfl\Device\ModelDeviceInterface $patchingDevice
      *
-     * @return ModelDevice Patched device
+     * @return \Wurfl\Device\ModelDeviceInterface Patched device
      */
-    public function patch(ModelDevice $device, ModelDevice $patchingDevice)
+    public function patch(ModelDeviceInterface $device, ModelDeviceInterface $patchingDevice)
     {
         if (!$this->haveSameId($device, $patchingDevice)) {
             return $patchingDevice;
@@ -52,12 +53,12 @@ class DevicePatcher
     /**
      * Returns true if $device and $patchingDevice have the same device id
      *
-     * @param ModelDevice $device
-     * @param ModelDevice $patchingDevice
+     * @param \Wurfl\Device\ModelDeviceInterface $device
+     * @param \Wurfl\Device\ModelDeviceInterface $patchingDevice
      *
      * @return bool
      */
-    private function haveSameId(ModelDevice $device, ModelDevice $patchingDevice)
+    private function haveSameId(ModelDeviceInterface $device, ModelDeviceInterface $patchingDevice)
     {
         return (strcmp($patchingDevice->id, $device->id) === 0);
     }

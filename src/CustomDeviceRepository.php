@@ -86,7 +86,7 @@ class CustomDeviceRepository
      */
     private function init()
     {
-        /** @var $genericDevice \Wurfl\Xml\ModelDevice */
+        /** @var $genericDevice \Wurfl\Device\ModelDeviceInterface */
         $genericDevice = $this->getDevice(WurflConstants::GENERIC);
 
         if (!is_null($genericDevice)) {
@@ -131,7 +131,7 @@ class CustomDeviceRepository
      * @param string $deviceId
      *
      * @throws \Wurfl\Exception
-     * @return \Wurfl\Xml\ModelDevice
+     * @return \Wurfl\Device\ModelDeviceInterface
      */
     public function getDevice($deviceId)
     {
@@ -152,7 +152,7 @@ class CustomDeviceRepository
      * Returns all devices in the repository
      *
      * @throws \Wurfl\Exception
-     * @return \Wurfl\Xml\ModelDevice[]
+     * @return \Wurfl\Device\ModelDeviceInterface[]
      */
     public function getAllDevices()
     {
@@ -160,7 +160,7 @@ class CustomDeviceRepository
         $devicesId = $this->getAllDevicesID();
 
         foreach ($devicesId as $deviceId) {
-            /** @var $device \Wurfl\Xml\ModelDevice */
+            /** @var $device \Wurfl\Device\ModelDeviceInterface */
             $device    = $this->getDevice($deviceId);
             $devices[] = $device;
         }
@@ -251,7 +251,7 @@ class CustomDeviceRepository
         $capabilities = array();
 
         foreach ($devices as $device) {
-            /** @var $device \Wurfl\Xml\ModelDevice */
+            /** @var $device \Wurfl\Device\ModelDeviceInterface */
             if (is_array($device->capabilities)) {
                 $capabilities = array_merge($capabilities, $device->capabilities);
             }
@@ -267,17 +267,17 @@ class CustomDeviceRepository
      * @param string $deviceId
      *
      * @throws \Wurfl\Exception
-     * @return \Wurfl\Xml\ModelDevice[] All ModelDevice objects in the fallback tree
+     * @return \Wurfl\Device\ModelDeviceInterface[] All ModelDevice objects in the fallback tree
      */
     public function getDeviceHierarchy($deviceId)
     {
         $devices = array();
 
         while (strcmp($deviceId, 'root')) {
-            /** @var $device \Wurfl\Xml\ModelDevice */
+            /** @var $device \Wurfl\Device\ModelDeviceInterface */
             $device = $this->getDevice($deviceId);
 
-            if (!($device instanceof Xml\ModelDevice)) {
+            if (!($device instanceof Device\ModelDeviceInterface)) {
                 throw new Exception('one of the parent devices is missing for deviceId ' . $deviceId);
             }
 

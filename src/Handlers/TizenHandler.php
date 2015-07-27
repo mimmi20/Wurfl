@@ -28,7 +28,6 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @author     Steve Kamerman <steve AT scientiamobile.com>
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class TizenHandler
     extends AbstractHandler

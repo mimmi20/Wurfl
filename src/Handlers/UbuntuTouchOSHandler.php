@@ -27,7 +27,6 @@ use Wurfl\WurflConstants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class UbuntuTouchOSHandler
     extends AbstractHandler

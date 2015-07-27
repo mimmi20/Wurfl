@@ -224,10 +224,10 @@ $allVCaps = $device->getAllVirtualCapabilities();
 The root WURFL device object has some useful functions:
 
 ```php
-/* @var $device \Wurfl\CustomDevice */
+/* @var $device \Wurfl\CustomDeviceInterface */
 $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
 
-/* @var $root \Wurfl\Xml\ModelDevice */
+/* @var $root \Wurfl\Xml\ModelDeviceInterface */
 $root = $device->getRootDevice();
 
 $group_names = $root->getGroupNames();

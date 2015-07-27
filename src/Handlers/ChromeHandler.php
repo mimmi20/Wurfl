@@ -26,7 +26,6 @@ namespace Wurfl\Handlers;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class ChromeHandler
     extends AbstractHandler
