@@ -6,16 +6,10 @@ use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\Manager;
 use Wurfl\Request\GenericRequest;
 use WurflCache\Adapter\Memory;
-use WurflCache\Adapter\File;
 
 class ManagerTest
     extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \Wurfl\Manager
-     */
-    private static $wurflManager;
-
     const RESOURCES_DIR     = 'tests/resources/';
     const WURFL_CONFIG_FILE = 'tests/resources/wurfl-config.xml';
     const CACHE_DIR         = 'tests/resources/cache';
@@ -115,6 +109,9 @@ class ManagerTest
     /**
      *
      * @dataProvider groupIdCapabilitiesNameProvider
+     *
+     * @param string $groupId
+     * @param string $capabilitiesName
      */
     public function testGetCapabilitiesNameForGroup($groupId, $capabilitiesName)
     {
@@ -123,8 +120,10 @@ class ManagerTest
     }
 
     /**
-     *
      * @dataProvider fallBackDevicesIdProvider
+     *
+     * @param string $deviceId
+     * @param string $expected
      */
     public function testGetFallBackDevices($deviceId, $expected)
     {
@@ -167,6 +166,9 @@ class ManagerTest
     /**
      *
      * @dataProvider deviceIdAgentProvider
+     *
+     * @param string $userAgent
+     * @param string $expectedDeviceId
      */
     public function testDeviceIdForRequest($userAgent, $expectedDeviceId)
     {

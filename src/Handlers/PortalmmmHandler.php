@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * PortalmmmUserAgentHandler
@@ -57,6 +57,6 @@ class PortalmmmHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

@@ -19,6 +19,8 @@ class LocaleRemoverTest
      * @test
      * @dataProvider userAgentsDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function shouldNormalizeTheLocale($userAgent, $expected)
     {

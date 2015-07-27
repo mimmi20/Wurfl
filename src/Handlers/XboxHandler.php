@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * XboxUserAgentHandler
@@ -59,7 +59,7 @@ class XboxHandler
     public function applyConclusiveMatch($userAgent)
     {
         // Exact and recovery matching only
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

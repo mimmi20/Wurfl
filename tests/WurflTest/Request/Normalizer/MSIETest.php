@@ -22,6 +22,8 @@ class MSIETest
      * @test
      * @dataProvider msieUserAgentsDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function shoudRemoveAllTheCharactersAfterTheMinorVersion($userAgent, $expected)
     {

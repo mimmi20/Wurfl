@@ -19,6 +19,8 @@ class SerialNumbersTest
      * @test
      * @dataProvider serialNumbersDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function testRemoveSerialNumber($userAgent, $expected)
     {

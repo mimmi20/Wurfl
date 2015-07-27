@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * HTCUserAgentHandler
@@ -82,6 +82,6 @@ class HTCHandler
             return 'generic_ms_mobile';
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

@@ -19,7 +19,6 @@
 namespace Wurfl;
 
 use Psr\Log\LoggerInterface;
-use WurflCache\Adapter\AdapterInterface;
 
 /**
  * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating

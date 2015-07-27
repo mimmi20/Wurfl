@@ -18,10 +18,10 @@
 
 namespace Wurfl\Request\Normalizer\Specific;
 
-use Wurfl\Constants;
 use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\Utils;
 use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
@@ -43,7 +43,7 @@ class Kindle
             $version = AndroidHandler::getAndroidVersion($userAgent, false);
 
             if ($model !== null && $version !== null) {
-                $prefix = $version . ' ' . $model . Constants::RIS_DELIMITER;
+                $prefix = $version . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }

@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * KindleUserAgentHandler
@@ -112,7 +112,7 @@ class KindleHandler
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search) + 1);
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

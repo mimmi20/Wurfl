@@ -18,11 +18,11 @@
 
 namespace Wurfl\Request\Normalizer\Specific;
 
-use Wurfl\Constants;
 use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\OperaMobiOrTabletOnAndroidHandler;
 use Wurfl\Handlers\Utils;
 use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
@@ -63,7 +63,7 @@ class Android
 
             if ($operaVersion !== null && $androidVersion !== null) {
                 $operaModel = $isOperaTablet ? 'Opera Tablet' : 'Opera Mobi';
-                $prefix     = $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . Constants::RIS_DELIMITER;
+                $prefix     = $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -75,7 +75,7 @@ class Android
             $version = AndroidHandler::getAndroidVersion($userAgent, false);
 
             if ($model !== null && $version !== null) {
-                $prefix = $version . ' ' . $model . Constants::RIS_DELIMITER;
+                $prefix = $version . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }

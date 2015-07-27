@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * CatchAllUserAgentHandler
@@ -97,7 +97,7 @@ class CatchAllHandler
             return $this->mozilla5UserAgentsWithDeviceID[$userAgent];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -175,7 +175,7 @@ class CatchAllHandler
             return $this->mozilla5UserAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -204,7 +204,7 @@ class CatchAllHandler
             return $this->mozilla4UserAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

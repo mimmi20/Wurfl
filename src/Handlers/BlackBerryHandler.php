@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * BlackBerryUserAgentHandler
@@ -106,6 +106,6 @@ class BlackBerryHandler
             }
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

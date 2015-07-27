@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * MaemoUserAgentHandler
@@ -103,6 +103,6 @@ class MaemoHandler
             return $model;
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

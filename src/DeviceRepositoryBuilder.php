@@ -341,6 +341,7 @@ class DeviceRepositoryBuilder
         $patchingDevices = array();
 
         foreach ($deviceIterator as $device) {
+            /* @var $device Xml\ModelDevice */
             $patchingDevices[$device->id] = $device;
         }
 

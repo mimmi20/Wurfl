@@ -34,7 +34,7 @@ class Utils
      */
     public static function isGeneric($deviceID)
     {
-        if (strcmp($deviceID, Constants::GENERIC) === 0) {
+        if (strcmp($deviceID, WurflConstants::GENERIC) === 0) {
             return true;
         }
 

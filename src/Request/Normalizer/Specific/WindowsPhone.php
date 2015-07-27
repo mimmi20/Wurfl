@@ -18,10 +18,10 @@
 
 namespace Wurfl\Request\Normalizer\Specific;
 
-use Wurfl\Constants;
 use Wurfl\Handlers\Utils;
 use Wurfl\Handlers\WindowsPhoneHandler;
 use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
@@ -54,7 +54,7 @@ class WindowsPhone
 
         if ($model !== null && $version !== null) {
             // 'WP' is for Windows Phone
-            $prefix = 'WP' . $version . ' ' . $model . Constants::RIS_DELIMITER;
+            $prefix = 'WP' . $version . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
             return $prefix . $userAgent;
         }

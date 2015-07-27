@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * MotorolaUserAgentHandler
@@ -78,6 +78,6 @@ class MotorolaHandler
             return 'mot_mib22_generic';
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

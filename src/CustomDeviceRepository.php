@@ -87,7 +87,7 @@ class CustomDeviceRepository
     private function init()
     {
         /** @var $genericDevice \Wurfl\Xml\ModelDevice */
-        $genericDevice = $this->getDevice(Constants::GENERIC);
+        $genericDevice = $this->getDevice(WurflConstants::GENERIC);
 
         if (!is_null($genericDevice)) {
             $this->capabilitiesName       = array_keys($genericDevice->getCapabilities());

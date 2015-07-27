@@ -19,6 +19,8 @@ class BlackBerryTest
      * @test
      * @dataProvider blackberryUserAgentsDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function shouldRemoveAllCharactersBeforeTheLastBlackberryString($userAgent, $expected)
     {

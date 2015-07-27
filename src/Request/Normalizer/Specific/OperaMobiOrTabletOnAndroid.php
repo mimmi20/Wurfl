@@ -18,11 +18,11 @@
 
 namespace Wurfl\Request\Normalizer\Specific;
 
-use Wurfl\Constants;
 use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\OperaMobiOrTabletOnAndroidHandler;
 use Wurfl\Handlers\Utils;
 use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
@@ -48,7 +48,7 @@ class OperaMobiOrTabletOnAndroid
 
             if ($operaVersion !== null && $androidVersion !== null) {
                 $operaModel = $isOperaTablet ? 'Opera Tablet' : 'Opera Mobi';
-                $prefix     = $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . Constants::RIS_DELIMITER;
+                $prefix     = $operaModel . ' ' . $operaVersion . ' Android ' . $androidVersion . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }

@@ -39,6 +39,11 @@ class UtilsTest
 
     /**
      * @dataProvider ordinalIndexOfDataProvider
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @param int    $ordinal
+     * @param int    $expectedIndex
      */
     public function testOrdinalIndexOf($haystack, $needle, $ordinal, $expectedIndex)
     {
@@ -56,6 +61,10 @@ class UtilsTest
 
     /**
      * @dataProvider containsAllDataProvider
+     *
+     * @param string $haystack
+     * @param array  $needles
+     * @param bool   $contains
      */
     public function testContainsAll($haystack, $needles, $contains)
     {
@@ -74,6 +83,9 @@ class UtilsTest
 
     /**
      * @dataProvider indexOfAnyOrLengthDataProvider
+     *
+     * @param string $haystack
+     * @param string $expected
      */
     public function testIndexOfAnyOrLength($haystack, $expected)
     {

@@ -19,6 +19,8 @@ class NovarraGoogleTranslatorTest
      * @test
      * @dataProvider novarraGoogleTranslatorDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function testNovarraAndGoogleTranslator($userAgent, $expected)
     {

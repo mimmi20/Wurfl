@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * LGPLUSUserAgentHandler
@@ -64,7 +64,7 @@ class LGUPLUSHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -102,6 +102,6 @@ class LGUPLUSHandler
             return 'generic_lguplus_android_webkit_browser';
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

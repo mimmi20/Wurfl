@@ -1,8 +1,8 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Constants;
 use Wurfl\Request\Normalizer\Specific\Maemo;
+use Wurfl\WurflConstants;
 
 /**
  *  test case.
@@ -20,6 +20,8 @@ class MaemoTest
      * @test
      * @dataProvider maemoUserAgentsDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function shoudReturnTheStringAfterMaemo($userAgent, $expected)
     {
@@ -32,12 +34,12 @@ class MaemoTest
         return array(
             array(
                 'Mozilla/5.0 (X11; U; Linux armv7l; en-GB; rv:1.9.2.3pre) Gecko/20100624 Firefox/3.5 Maemo Browser 1.7.4.8 RX-51 N900',
-                'Maemo RX-51 N900' . Constants::RIS_DELIMITER . 'Mozilla/5.0 (X11; U; Linux armv7l; en-GB; rv:1.9.2.3pre) Gecko/20100624 Firefox/3.5 Maemo Browser 1.7.4.8 RX-51 N900'
+                'Maemo RX-51 N900' . WurflConstants::RIS_DELIMITER . 'Mozilla/5.0 (X11; U; Linux armv7l; en-GB; rv:1.9.2.3pre) Gecko/20100624 Firefox/3.5 Maemo Browser 1.7.4.8 RX-51 N900'
             ),
             array('Mozilla', 'Mozilla'),
             array(
                 'Maemo Browser 1.7.4.8 RX-51 N900',
-                'Maemo RX-51 N900' . Constants::RIS_DELIMITER . 'Maemo Browser 1.7.4.8 RX-51 N900'
+                'Maemo RX-51 N900' . WurflConstants::RIS_DELIMITER . 'Maemo Browser 1.7.4.8 RX-51 N900'
             )
 
         );

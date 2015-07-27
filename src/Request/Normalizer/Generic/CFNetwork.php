@@ -100,8 +100,8 @@ class CFNetwork
             } else if ($version[0] === "OSX") {
                 return "Mozilla/5.0 (Macintosh; Intel Mac OS X {$version[1]}) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/{$version[2]} Safari/537.75.14 CFNetwork";
             }
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

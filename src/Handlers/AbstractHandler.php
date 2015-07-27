@@ -16,10 +16,10 @@
 namespace Wurfl\Handlers;
 
 use Psr\Log\LoggerInterface;
-use Wurfl\Constants;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\Normalizer\NullNormalizer;
 use Wurfl\Storage\Storage;
+use Wurfl\WurflConstants;
 
 /**
  * \Wurfl\Handlers\AbstractHandler is the base class that combines the classification of
@@ -258,7 +258,7 @@ abstract class AbstractHandler
             ),
         );
 
-        $deviceID = Constants::NO_MATCH;
+        $deviceID = WurflConstants::NO_MATCH;
 
         foreach ($matches as $matchType => $matchProps) {
             $matchProps = (object) $matchProps;
@@ -282,9 +282,9 @@ abstract class AbstractHandler
             $request->getMatchInfo()->matchType = 'none';
 
             if ($request->getUserAgentProfile()) {
-                $deviceID = Constants::GENERIC_MOBILE;
+                $deviceID = WurflConstants::GENERIC_MOBILE;
             } else {
-                $deviceID = Constants::GENERIC;
+                $deviceID = WurflConstants::GENERIC;
             }
         }
 
@@ -303,7 +303,7 @@ abstract class AbstractHandler
      */
     private function isBlankOrGeneric($deviceID)
     {
-        return ($deviceID === Constants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(
+        return ($deviceID === WurflConstants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(
                 trim($deviceID)
             ) == 0);
     }
@@ -321,7 +321,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$userAgent];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -339,7 +339,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -365,7 +365,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     public function getDeviceIDFromLD($userAgent, $tolerance = null)
@@ -376,7 +376,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -388,7 +388,7 @@ abstract class AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -401,7 +401,7 @@ abstract class AbstractHandler
     public function applyRecoveryCatchAllMatch($userAgent)
     {
         if (Utils::isDesktopBrowserHeavyDutyAnalysis($userAgent)) {
-            return Constants::GENERIC_WEB_BROWSER;
+            return WurflConstants::GENERIC_WEB_BROWSER;
         }
 
         if (Utils::checkIfContains($userAgent, 'CoreMedia')) {
@@ -477,7 +477,7 @@ abstract class AbstractHandler
         // Contains Mozilla/, but not at the beginning of the UA
         // ie: MOTORAZR V8/R601_G_80.41.17R Mozilla/4.0 (compatible; MSIE 6.0 Linux; MOTORAZR V88.50) Profile/MIDP-2.0 Configuration/CLDC-1.1 Opera 8.50[zh]
         if (strpos($userAgent, 'Mozilla/') > 0) {
-            return Constants::GENERIC_XHTML;
+            return WurflConstants::GENERIC_XHTML;
         }
 
         if (Utils::checkIfContainsAnyOf(
@@ -485,7 +485,7 @@ abstract class AbstractHandler
             array('Obigo', 'AU-MIC/2', 'AU-MIC-', 'AU-OBIGO/', 'Teleca Q03B1')
         )
         ) {
-            return Constants::GENERIC_XHTML;
+            return WurflConstants::GENERIC_XHTML;
         }
 
         // DoCoMo
@@ -494,10 +494,10 @@ abstract class AbstractHandler
         }
 
         if (Utils::isMobileBrowser($userAgent)) {
-            return Constants::GENERIC_MOBILE;
+            return WurflConstants::GENERIC_MOBILE;
         }
 
-        return Constants::GENERIC;
+        return WurflConstants::GENERIC;
     }
 
     /**

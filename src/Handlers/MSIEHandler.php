@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * MSIEAgentHandler
@@ -124,9 +124,9 @@ class MSIEHandler
             )
         )
         ) {
-            return Constants::GENERIC_WEB_BROWSER;
+            return WurflConstants::GENERIC_WEB_BROWSER;
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

@@ -21,6 +21,8 @@ class ChromeTest
      * @test
      * @dataProvider chromeUserAgentsDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
     {

@@ -1,14 +1,11 @@
 <?php
 namespace WurflTest\VirtualCapability;
 
-use Wurfl\Configuration\Config;
-use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\CustomDevice;
 use Wurfl\DeviceRepositoryBuilder;
 use Wurfl\VirtualCapability\VirtualCapabilityProvider;
 use Wurfl\Request\GenericRequest;
 use WurflCache\Adapter\Memory;
-use WurflCache\Adapter\File;
 use Wurfl\Storage\Storage;
 use Wurfl\UserAgentHandlerChainFactory;
 use Wurfl\Xml\DevicePatcher;

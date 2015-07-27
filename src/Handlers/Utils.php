@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * WURFL user agent hander utilities
@@ -661,13 +661,13 @@ class Utils
      */
     public static function toleranceToRisDelimeter($userAgent)
     {
-        $tolerance = strpos($userAgent, Constants::RIS_DELIMITER);
+        $tolerance = strpos($userAgent, WurflConstants::RIS_DELIMITER);
         if ($tolerance === false) {
             return false;
         }
 
         // Push the tolerance to the *end* of the RIS Delimiter
-        return $tolerance + strlen(Constants::RIS_DELIMITER);
+        return $tolerance + strlen(WurflConstants::RIS_DELIMITER);
     }
 
     /**

@@ -24,6 +24,9 @@ namespace Wurfl\Xml;
  * @property-read bool   $actualDeviceRoot true if device is an actual root device
  * @property-read bool   $specific
  * @property-read string $id
+ * @property-read array  $capabilities
+ * @property-read string $fallBack
+ * @property-read string $userAgent
  * @package    WURFL_Xml
  */
 class ModelDevice

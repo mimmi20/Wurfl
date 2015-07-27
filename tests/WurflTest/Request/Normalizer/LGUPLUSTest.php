@@ -21,6 +21,8 @@ class LGUPLUSTest
      * @test
      * @dataProvider lguplusUserAgentsDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function should($userAgent, $expected)
     {

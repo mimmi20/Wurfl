@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * TizenUserAgentHandler
@@ -70,7 +70,7 @@ class TizenHandler
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * WebOSUserAgentHandler
@@ -61,15 +61,15 @@ class WebOSHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $delimiterIndex = strpos($userAgent, Constants::RIS_DELIMITER);
+        $delimiterIndex = strpos($userAgent, WurflConstants::RIS_DELIMITER);
 
         if ($delimiterIndex !== false) {
-            $tolerance = $delimiterIndex + strlen(Constants::RIS_DELIMITER);
+            $tolerance = $delimiterIndex + strlen(WurflConstants::RIS_DELIMITER);
 
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

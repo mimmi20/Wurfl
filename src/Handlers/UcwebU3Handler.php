@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * UcwebU3UserAgentHandler
@@ -92,7 +92,7 @@ class UcwebU3Handler
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

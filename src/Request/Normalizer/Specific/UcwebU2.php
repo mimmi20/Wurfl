@@ -18,10 +18,10 @@
 
 namespace Wurfl\Request\Normalizer\Specific;
 
-use Wurfl\Constants;
 use Wurfl\Handlers\UcwebU3Handler;
 use Wurfl\Handlers\Utils;
 use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
@@ -50,7 +50,7 @@ class UcwebU2
             $version = UcwebU3Handler::getUcAndroidVersion($userAgent, false);
 
             if ($model !== null && $version !== null) {
-                $prefix = $version . ' U2Android ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+                $prefix = $version . ' U2Android ' . $ucbVersion . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -59,7 +59,7 @@ class UcwebU2
             if (preg_match('/iPh OS (\d)_?(\d)?[ _\d]?.+; iPh(\d), ?(\d)\) U2/', $userAgent, $matches)) {
                 $version = $matches[1] . '.' . $matches[2];
                 $model   = $matches[3] . '.' . $matches[4];
-                $prefix  = $version . ' U2iPhone ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+                $prefix  = $version . ' U2iPhone ' . $ucbVersion . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -78,7 +78,7 @@ class UcwebU2
                 //Standard normalization stuff from WP matcher
                 $model  = str_replace('_blocked', '', $model);
                 $model  = preg_replace('/(NOKIA.RM-.+?)_.*/', '$1', $model, 1);
-                $prefix = $version . ' U2WindowsPhone ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+                $prefix = $version . ' U2WindowsPhone ' . $ucbVersion . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -87,7 +87,7 @@ class UcwebU2
             if (preg_match('/^UCWEB.+; S60 V(\d); .+; (.+)\) U2/', $userAgent, $matches)) {
                 $version = 'S60 V' . $matches[1];
                 $model   = $matches[2];
-                $prefix  = $version . ' U2Symbian ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+                $prefix  = $version . ' U2Symbian ' . $ucbVersion . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }
@@ -96,7 +96,7 @@ class UcwebU2
             if (preg_match('/^UCWEB[^\(]+\(Java; .+; (.+)\) U2/', $userAgent, $matches)) {
                 $version = 'Java';
                 $model   = $matches[1];
-                $prefix  = $version . ' U2JavaApp ' . $ucbVersion . ' ' . $model . Constants::RIS_DELIMITER;
+                $prefix  = $version . ' U2JavaApp ' . $ucbVersion . ' ' . $model . WurflConstants::RIS_DELIMITER;
 
                 return $prefix . $userAgent;
             }

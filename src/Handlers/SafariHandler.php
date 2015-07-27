@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * SafariHandler
@@ -64,7 +64,7 @@ class SafariHandler
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -79,10 +79,10 @@ class SafariHandler
             array('Macintosh', 'Windows')
         )
         ) {
-            return Constants::GENERIC_WEB_BROWSER;
+            return WurflConstants::GENERIC_WEB_BROWSER;
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

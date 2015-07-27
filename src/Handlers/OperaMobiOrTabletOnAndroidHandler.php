@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * OperaMobiOrTabletOnAndroidUserAgentHandler
@@ -87,7 +87,7 @@ class OperaMobiOrTabletOnAndroidHandler
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -113,7 +113,7 @@ class OperaMobiOrTabletOnAndroidHandler
             }
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     const OPERA_DEFAULT_VERSION = '10';

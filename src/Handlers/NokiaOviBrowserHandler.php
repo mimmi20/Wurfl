@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * NokiaOviBrowserUserAgentHandler
@@ -65,7 +65,7 @@ class NokiaOviBrowserHandler
         $idx = strpos($userAgent, 'Nokia');
 
         if ($idx === false) {
-            return Constants::NO_MATCH;
+            return WurflConstants::NO_MATCH;
         }
 
         $tolerance = Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);

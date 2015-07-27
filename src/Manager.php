@@ -481,7 +481,7 @@ class Manager
             ) {
                 // This device has been identified as a web browser programatically,
                 // so no call to WURFL is necessary
-                return Constants::GENERIC_WEB_BROWSER;
+                return WurflConstants::GENERIC_WEB_BROWSER;
             }
 
             $deviceId = $this->getUserAgentHandlerChain()->match($request);

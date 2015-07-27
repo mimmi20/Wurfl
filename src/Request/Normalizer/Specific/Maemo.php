@@ -18,9 +18,9 @@
 
 namespace Wurfl\Request\Normalizer\Specific;
 
-use Wurfl\Constants;
 use Wurfl\Handlers\MaemoHandler;
 use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
@@ -40,7 +40,7 @@ class Maemo
         $model = MaemoHandler::getMaemoModel($userAgent);
 
         if ($model !== null) {
-            $prefix = 'Maemo ' . $model . Constants::RIS_DELIMITER;
+            $prefix = 'Maemo ' . $model . WurflConstants::RIS_DELIMITER;
 
             return $prefix . $userAgent;
         }

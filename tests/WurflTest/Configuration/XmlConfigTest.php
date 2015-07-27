@@ -4,7 +4,6 @@ namespace WurflTest\Configuration;
 /**
  * test case
  */
-use Wurfl\Configuration\Config;
 use Wurfl\Configuration\XmlConfig;
 
 /**
@@ -33,7 +32,6 @@ class XmlConfigTest
 
         self::assertEquals(true, $config->allowReload);
 
-        $cacheDir    = realpath('tests/resources/cache/');
         $persistence = $config->persistence;
         self::assertEquals('memory', $persistence['provider']);
         self::assertEquals(

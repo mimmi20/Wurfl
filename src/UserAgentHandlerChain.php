@@ -90,7 +90,7 @@ class UserAgentHandlerChain
         Handlers\Utils::reset();
 
         $handlers    = $this->getHandlers();
-        $matchResult = Constants::NO_MATCH;
+        $matchResult = WurflConstants::NO_MATCH;
 
         foreach ($handlers as $handler) {
             /** @var $handler Handlers\AbstractHandler */

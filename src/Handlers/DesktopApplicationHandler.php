@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * DesktopApplicationHandler
@@ -78,7 +78,7 @@ class DesktopApplicationHandler
             }
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent)
@@ -95,6 +95,6 @@ class DesktopApplicationHandler
             }
         }
 
-        return Constants::GENERIC_WEB_BROWSER;
+        return WurflConstants::GENERIC_WEB_BROWSER;
     }
 }

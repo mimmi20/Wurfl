@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * NokiaUserAgentHandler
@@ -87,6 +87,6 @@ class NokiaHandler
             return 'nokia_generic_meego';
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

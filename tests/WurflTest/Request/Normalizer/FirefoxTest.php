@@ -19,6 +19,8 @@ class FirefoxTest
      * @test
      * @dataProvider firefoxUserAgentsDataProvider
      *
+     * @param string $userAgent
+     * @param string $expected
      */
     public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
     {

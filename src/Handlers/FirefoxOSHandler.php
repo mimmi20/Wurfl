@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * FirefoxOSUserAgentHandler
@@ -80,7 +80,7 @@ class FirefoxOSHandler
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent)

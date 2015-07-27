@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * OperaMiniOnAndroidUserAgentHandler
@@ -77,7 +77,7 @@ class OperaMiniOnAndroidHandler
                 $tolerance = strlen($prefix);
                 $deviceID  = $this->getDeviceIDFromRIS($userAgent, $tolerance);
 
-                if ($deviceID == Constants::NO_MATCH) {
+                if ($deviceID == WurflConstants::NO_MATCH) {
                     return $defaultID;
                 }
 
@@ -85,7 +85,7 @@ class OperaMiniOnAndroidHandler
             }
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

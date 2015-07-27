@@ -72,6 +72,9 @@ class UserAgentHandlerChainTest
     /**
      *
      * @dataProvider deviceIdAgentProvider
+     *
+     * @param string $userAgent
+     * @param string $expectedDeviceId
      */
     public function testMatch($userAgent, $expectedDeviceId)
     {
