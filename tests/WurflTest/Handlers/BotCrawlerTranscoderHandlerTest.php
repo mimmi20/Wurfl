@@ -2,7 +2,7 @@
 namespace WurflTest\Handlers;
 
 use Wurfl\Handlers\BotCrawlerTranscoderHandler;
-use Wurfl\Request\Normalizer\NullNormalizer;
+use Wurfl\Handlers\Normalizer\NullNormalizer;
 
 /**
  * test case

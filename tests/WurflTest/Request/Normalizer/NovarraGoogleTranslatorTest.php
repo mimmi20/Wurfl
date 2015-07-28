@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Generic\NovarraGoogleTranslator;
+use Wurfl\Handlers\Normalizer\Generic\NovarraGoogleTranslator;
 
 /**
  *  test case.

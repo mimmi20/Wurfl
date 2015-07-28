@@ -4,8 +4,8 @@ namespace WurflTest\Request\Normalizer;
 /**
  * test case
  */
-use Wurfl\Request\Normalizer\Generic\LocaleRemover;
-use Wurfl\Request\Normalizer\Specific\Android;
+use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
+use Wurfl\Handlers\Normalizer\Specific\Android;
 use Wurfl\WurflConstants;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Generic\BlackBerry;
+use Wurfl\Handlers\Normalizer\Generic\BlackBerry;
 
 /**
  * test case.

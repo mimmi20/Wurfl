@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Generic\SerialNumbers;
+use Wurfl\Handlers\Normalizer\Generic\SerialNumbers;
 
 /**
  *  test case.

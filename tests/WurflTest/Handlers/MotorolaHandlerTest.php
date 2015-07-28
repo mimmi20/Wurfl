@@ -5,7 +5,7 @@ namespace WurflTest\Handlers;
  * test case
  */
 use Wurfl\Handlers\MotorolaHandler;
-use Wurfl\Request\Normalizer\NullNormalizer;
+use Wurfl\Handlers\Normalizer\NullNormalizer;
 
 /**
  *

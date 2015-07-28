@@ -18,8 +18,8 @@ namespace Wurfl\Handlers;
 use Psr\Log\LoggerInterface;
 use Wurfl\Handlers\MatcherInterface\MatcherCanHandleInterface;
 use Wurfl\Request\GenericRequest;
-use Wurfl\Request\Normalizer\NormalizerInterface;
-use Wurfl\Request\Normalizer\NullNormalizer;
+use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\Normalizer\NullNormalizer;
 use Wurfl\Storage\Storage;
 use Wurfl\WurflConstants;
 
@@ -36,7 +36,7 @@ abstract class AbstractHandler
     implements FilterInterface, HandlerInterface, MatcherCanHandleInterface
 {
     /**
-     * @var \Wurfl\Request\Normalizer\UserAgentNormalizer
+     * @var \Wurfl\Handlers\Normalizer\UserAgentNormalizer
      */
     protected $userAgentNormalizer;
 
@@ -66,7 +66,7 @@ abstract class AbstractHandler
     public static $constantIDs = array();
 
     /**
-     * @param \Wurfl\Request\Normalizer\NormalizerInterface $userAgentNormalizer
+     * @param \Wurfl\Handlers\Normalizer\NormalizerInterface $userAgentNormalizer
      */
     public function __construct(NormalizerInterface $userAgentNormalizer = null)
     {
@@ -160,7 +160,7 @@ abstract class AbstractHandler
      * If you need to normalize the user agent you need to override the function in
      * the specific user agent handler.
      *
-     * @see $userAgentNormalizer, \Wurfl\Request\Normalizer\UserAgentNormalizer
+     * @see $userAgentNormalizer, \Wurfl\Handlers\Normalizer\UserAgentNormalizer
      *
      * @param string $userAgent
      *

@@ -20,6 +20,7 @@ namespace Wurfl;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
 use WurflCache\Adapter\AdapterInterface;
 
 /**
@@ -60,12 +61,12 @@ class Manager
     private $cacheStorage = null;
 
     /**
-     * @var \Wurfl\DeviceRepository
+     * @var \Wurfl\Device\DeviceRepositoryInterface
      */
     private $deviceRepository = null;
 
     /**
-     * @var \Wurfl\UserAgentHandlerChain
+     * @var \Wurfl\Handlers\Chain\UserAgentHandlerChain
      */
     private $userAgentHandlerChain = null;
 
@@ -125,7 +126,7 @@ class Manager
     }
 
     /**
-     * @return DeviceRepository
+     * @return \Wurfl\Device\DeviceRepositoryInterface
      */
     private function getDeviceRepository()
     {
@@ -173,7 +174,7 @@ class Manager
     }
 
     /**
-     * @return UserAgentHandlerChain
+     * @return \Wurfl\Handlers\Chain\UserAgentHandlerChain
      */
     private function getUserAgentHandlerChain()
     {
@@ -282,8 +283,8 @@ class Manager
      */
     private function init()
     {
-        $devicePatcher           = new Xml\DevicePatcher();
-        $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
+        $devicePatcher           = new Device\Xml\DevicePatcher();
+        $deviceRepositoryBuilder = new Device\DeviceRepositoryBuilder(
             $this->getPersistenceStorage(),
             $this->getUserAgentHandlerChain(),
             $devicePatcher
@@ -308,7 +309,7 @@ class Manager
      * );
      * </code>
      *
-     * @return \Wurfl\Xml\Info WURFL Version info
+     * @return \Wurfl\Device\Xml\Info WURFL Version info
      * @see \Wurfl\DeviceRepository::getWurflInfo()
      */
     public function getWurflInfo()

@@ -2,13 +2,13 @@
 namespace WurflTest\VirtualCapability;
 
 use Wurfl\CustomDevice;
-use Wurfl\DeviceRepositoryBuilder;
+use Wurfl\Device\DeviceRepositoryBuilder;
 use Wurfl\VirtualCapability\VirtualCapabilityProvider;
 use Wurfl\Request\GenericRequest;
 use WurflCache\Adapter\Memory;
 use Wurfl\Storage\Storage;
-use Wurfl\UserAgentHandlerChainFactory;
-use Wurfl\Xml\DevicePatcher;
+use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
+use Wurfl\Device\Xml\DevicePatcher;
 
 class VirtualCapabilityProviderTest
     extends \PHPUnit_Framework_TestCase
@@ -17,7 +17,7 @@ class VirtualCapabilityProviderTest
     const WURFL_CONFIG_FILE = 'tests/resources/wurfl-config.xml';
     const CACHE_DIR         = 'tests/resources/cache';
 
-    /** @var \Wurfl\DeviceRepositoryBuilder */
+    /** @var DeviceRepositoryBuilder */
     private $deviceRepositoryBuilder;
 
     protected function setUp()

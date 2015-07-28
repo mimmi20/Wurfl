@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Xml;
 
-use Wurfl\Xml\DeviceIterator;
+use Wurfl\Device\Xml\DeviceIterator;
 
 /**
  * test case

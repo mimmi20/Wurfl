@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Specific\Firefox;
+use Wurfl\Handlers\Normalizer\Specific\Firefox;
 
 /**
  * test case.

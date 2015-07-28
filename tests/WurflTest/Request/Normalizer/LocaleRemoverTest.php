@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Generic\LocaleRemover;
+use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
 
 /**
  * test case.

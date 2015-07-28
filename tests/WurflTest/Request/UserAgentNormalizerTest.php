@@ -1,9 +1,9 @@
 <?php
 namespace WurflTest\Request;
 
-use Wurfl\Request\Normalizer\Generic\BabelFish;
-use Wurfl\Request\Normalizer\Specific\Chrome;
-use Wurfl\Request\Normalizer\UserAgentNormalizer;
+use Wurfl\Handlers\Normalizer\Generic\BabelFish;
+use Wurfl\Handlers\Normalizer\Specific\Chrome;
+use Wurfl\Handlers\Normalizer\UserAgentNormalizer;
 
 /**
  * test case

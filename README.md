@@ -227,7 +227,7 @@ The root WURFL device object has some useful functions:
 /* @var $device \Wurfl\CustomDeviceInterface */
 $device = $wurflManager->getDeviceForHttpRequest($_SERVER);
 
-/* @var $root \Wurfl\Xml\ModelDeviceInterface */
+/* @var $root \Wurfl\Device\ModelDeviceInterface */
 $root = $device->getRootDevice();
 
 $group_names = $root->getGroupNames();

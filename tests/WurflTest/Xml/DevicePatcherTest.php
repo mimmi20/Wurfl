@@ -1,8 +1,8 @@
 <?php
 namespace WurflTest\Xml;
 
-use Wurfl\Xml\DevicePatcher;
-use Wurfl\Xml\ModelDevice;
+use Wurfl\Device\Xml\DevicePatcher;
+use Wurfl\Device\ModelDevice;
 
 /**
  * test case

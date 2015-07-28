@@ -17,7 +17,7 @@ namespace Wurfl\Handlers;
 
 use Psr\Log\LoggerInterface;
 use Wurfl\Request\GenericRequest;
-use Wurfl\Request\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\Storage\Storage;
 
 /**
@@ -32,7 +32,7 @@ use Wurfl\Storage\Storage;
 interface HandlerInterface
 {
     /**
-     * @param \Wurfl\Request\Normalizer\NormalizerInterface $userAgentNormalizer
+     * @param \Wurfl\Handlers\Normalizer\NormalizerInterface $userAgentNormalizer
      */
     public function __construct(NormalizerInterface $userAgentNormalizer = null);
 
@@ -79,7 +79,7 @@ interface HandlerInterface
      * If you need to normalize the user agent you need to override the function in
      * the specific user agent handler.
      *
-     * @see $userAgentNormalizer, \Wurfl\Request\Normalizer\UserAgentNormalizer
+     * @see $userAgentNormalizer, \Wurfl\Handlers\Normalizer\UserAgentNormalizer
      *
      * @param string $userAgent
      *

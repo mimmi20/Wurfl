@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Specific\LG;
+use Wurfl\Handlers\Normalizer\Specific\LG;
 
 /**
  * test case.
@@ -9,7 +9,7 @@ use Wurfl\Request\Normalizer\Specific\LG;
 class LGUPLUSTest
     extends TestBase
 {
-    /** @var  \Wurfl\Request\Normalizer\Specific\LG */
+    /** @var  \Wurfl\Handlers\Normalizer\Specific\LG */
     protected $normalizer;
 
     protected function setUp()

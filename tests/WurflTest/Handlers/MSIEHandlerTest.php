@@ -2,7 +2,7 @@
 namespace WurflTest\Handlers;
 
 use Wurfl\Handlers\MSIEHandler;
-use Wurfl\Request\Normalizer\Specific\MSIE;
+use Wurfl\Handlers\Normalizer\Specific\MSIE;
 
 /**
  * test case

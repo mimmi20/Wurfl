@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Specific\MSIE;
+use Wurfl\Handlers\Normalizer\Specific\MSIE;
 
 /**
  *  test case.

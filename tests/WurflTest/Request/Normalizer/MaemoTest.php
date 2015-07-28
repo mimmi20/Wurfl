@@ -1,7 +1,7 @@
 <?php
 namespace WurflTest\Request\Normalizer;
 
-use Wurfl\Request\Normalizer\Specific\Maemo;
+use Wurfl\Handlers\Normalizer\Specific\Maemo;
 use Wurfl\WurflConstants;
 
 /**
