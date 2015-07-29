@@ -18,8 +18,6 @@
 
 namespace Wurfl\Configuration;
 
-use Wurfl\Exception;
-
 /**
  * In-memory WURFL Configuration
  *
@@ -136,13 +134,13 @@ class InMemoryConfig
      *
      * @param string $mode
      *
-     * @throws \Wurfl\Exception
+     * @throws \InvalidArgumentException
      * @return \Wurfl\Configuration\InMemoryConfig
      */
     public function matchMode($mode)
     {
         if (!self::validMatchMode($mode)) {
-            throw new Exception('Invalid Match Mode: ' . $mode);
+            throw new \InvalidArgumentException('Invalid Match Mode: ' . $mode);
         }
         $this->matchMode = $mode;
 

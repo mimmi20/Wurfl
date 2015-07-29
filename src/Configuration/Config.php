@@ -18,8 +18,6 @@
 
 namespace Wurfl\Configuration;
 
-use Wurfl\Exception;
-
 /**
  * Abstract base class for WURFL Configuration
  *
@@ -204,21 +202,23 @@ abstract class Config
      *
      * @param string $fileName
      *
-     * @throws Exception The configuration file does not exist
+     * @throws \InvalidArgumentException The configuration file does not exist
      * @return string File name including full path
      */
     protected function getFullPath($fileName)
     {
-        ;
         $fileName = trim($fileName);
+
         if (realpath($fileName) && !(basename($fileName) === $fileName)) {
             return realpath($fileName);
         }
+
         $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
 
         if (file_exists($fullName)) {
             return realpath($fullName);
         }
-        throw new Exception('The specified path \'' . $fullName . '\' does not exist');
+
+        throw new \InvalidArgumentException('The specified path \'' . $fullName . '\' does not exist');
     }
 }

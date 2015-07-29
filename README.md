@@ -18,6 +18,7 @@ Important changes
 These changes are made:
 - added Wurfl namespace, removed the part "WURFL" from the filenames
 - merged the \Wurfl\Service and \Wurfl\ManagerFactory into \Wurl\Manager
+- Parts of the original Wurfl Package were extracted to their own repositories, these are installed via composer
 
 # the official WURFL PHP API #
 ==============================
@@ -97,8 +98,14 @@ $wurflConfig->cache(
     )
 );
 
+// Create the cache instance from the configuration
+$cacheStorage = Storage\Factory::create($wurflConfig->cache);
+
+// Create the persistent cache instance from the configuration
+$persistenceStorage = Storage\Factory::create($wurflConfig->persistence);
+
 // Create a WURFL Manager from the WURFL Configuration
-$wurflManager = new \Wurfl\Manager($wurflConfig);
+$wurflManager = new \Wurfl\Manager($wurflConfig, $persistenceStorage, $cacheStorage);
 ```
 
 Now you can use some of the `\Wurfl\Manager` class methods;

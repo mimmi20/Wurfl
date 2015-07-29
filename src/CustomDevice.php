@@ -153,9 +153,9 @@ class CustomDevice
      *
      * @param string $capabilityName must be a valid capability name
      *
-     * @return string Capability value
+     * @return string|null Capability value
      * @throws \InvalidArgumentException The $capabilityName is is not defined in the loaded WURFL.
-     * @see \Wurfl\Xml\ModelDeviceInterface::getCapability()
+     * @see \Wurfl\Device\ModelDeviceInterface::getCapability()
      */
     public function getCapability($capabilityName)
     {
@@ -175,7 +175,7 @@ class CustomDevice
             }
         }
 
-        return '';
+        return null;
     }
 
     /**
@@ -253,7 +253,7 @@ class CustomDevice
     public function getVirtualCapabilityProvider()
     {
         if (null === $this->virtualCapabilityProvider) {
-            $this->setVirtualCapabilityProvider(new VirtualCapability\VirtualCapabilityProvider($this, $this->request));
+            $this->setVirtualCapabilityProvider(new VirtualCapabilityProvider($this, $this->request));
         }
 
         return $this->virtualCapabilityProvider;

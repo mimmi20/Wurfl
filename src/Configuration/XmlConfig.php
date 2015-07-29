@@ -18,8 +18,6 @@
 
 namespace Wurfl\Configuration;
 
-use Wurfl\Exception;
-
 /**
  * XML Configuration
  *
@@ -100,7 +98,7 @@ class XmlConfig
      *
      * @param array $modeElement array of SimpleXMLElement objects
      *
-     * @throws \Wurfl\Exception
+     * @throws \InvalidArgumentException
      * @return boolean
      */
     private function matchMode($modeElement)
@@ -111,7 +109,7 @@ class XmlConfig
                 return $this->matchMode;
             }
             if (!self::validMatchMode($mode)) {
-                throw new Exception('Invalid Match Mode: ' . $mode);
+                throw new \InvalidArgumentException('Invalid Match Mode: ' . $mode);
             }
             $this->matchMode = $mode;
         }

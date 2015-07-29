@@ -18,8 +18,6 @@
 
 namespace Wurfl\Configuration;
 
-use Wurfl\Exception;
-
 /**
  * Array-style WURFL configuration.  To use this method you must create a php file that contains
  * an array called $configuration with all of the required settings.  NOTE: every path that you
@@ -85,13 +83,14 @@ class ArrayConfig
     /**
      * Initialize class - gets called from the parent constructor
      *
-     * @throws Exception configuration not present
+     * @throws \InvalidArgumentException configuration not present
      */
     protected function initialize()
     {
-        include parent::getConfigFilePath();
+        include $this->getConfigFilePath();
+
         if (!isset($configuration) || !is_array($configuration)) {
-            throw new Exception('Configuration array must be defined in the configuraiton file');
+            throw new \InvalidArgumentException('Configuration array must be defined in the configuraiton file');
         }
 
         $this->init($configuration);

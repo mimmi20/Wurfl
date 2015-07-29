@@ -18,7 +18,6 @@
 
 namespace Wurfl\Device;
 
-use Wurfl\Exception;
 use Wurfl\Storage\Storage;
 use Wurfl\WurflConstants;
 use Wurfl\Device\Xml\Info;
@@ -87,7 +86,7 @@ class CustomDeviceRepository
     /**
      * Initializes this device repository by loading the base generic device capabilities names and group ID map
      *
-     * @throws Exception
+     * @throws \InvalidArgumentException
      */
     private function init()
     {
@@ -135,7 +134,7 @@ class CustomDeviceRepository
      *
      * @param string $deviceId
      *
-     * @throws \Wurfl\Exception
+     * @throws \InvalidArgumentException
      * @return \Wurfl\Device\ModelDeviceInterface
      */
     public function getDevice($deviceId)
@@ -144,7 +143,9 @@ class CustomDeviceRepository
             $device = $this->persistenceStorage->load($deviceId);
 
             if (!$device) {
-                throw new Exception('There is no device with ID [' . $deviceId . '] in the loaded WURFL Data');
+                throw new \InvalidArgumentException(
+                    'There is no device with ID [' . $deviceId . '] in the loaded WURFL Data'
+                );
             }
 
             $this->deviceCache[$deviceId] = $device;
@@ -201,13 +202,13 @@ class CustomDeviceRepository
      * @param string $deviceId
      * @param string $capabilityName
      *
-     * @throws Exception device ID or capability was not found
+     * @throws \InvalidArgumentException device ID or capability was not found
      * @return string value
      */
     public function getCapabilityForDevice($deviceId, $capabilityName)
     {
         if (!$this->isCapabilityDefined($capabilityName)) {
-            throw new Exception('capability name: ' . $capabilityName . ' not found');
+            throw new \InvalidArgumentException('capability name: ' . $capabilityName . ' not found');
         }
 
         $capabilityValue = null;
@@ -217,7 +218,7 @@ class CustomDeviceRepository
             $device = $this->persistenceStorage->load($deviceId);
 
             if (!$device) {
-                throw new Exception('the device with ' . $deviceId . ' is not found.');
+                throw new \InvalidArgumentException('the device with ' . $deviceId . ' is not found.');
             }
 
             if (isset($device->capabilities[$capabilityName])) {
@@ -271,7 +272,7 @@ class CustomDeviceRepository
      *
      * @param string $deviceId
      *
-     * @throws Exception
+     * @throws \InvalidArgumentException
      * @return \Wurfl\Device\ModelDeviceInterface[] All ModelDevice objects in the fallback tree
      */
     public function getDeviceHierarchy($deviceId)
@@ -283,7 +284,7 @@ class CustomDeviceRepository
             $device = $this->getDevice($deviceId);
 
             if (!($device instanceof ModelDeviceInterface)) {
-                throw new Exception('one of the parent devices is missing for deviceId ' . $deviceId);
+                throw new \InvalidArgumentException('one of the parent devices is missing for deviceId ' . $deviceId);
             }
 
             $devices[] = $device;
@@ -309,13 +310,13 @@ class CustomDeviceRepository
      *
      * @param string $groupID
      *
-     * @throws Exception The given $groupID does not exist
+     * @throws \InvalidArgumentException The given $groupID does not exist
      * @return array of capability names
      */
     public function getCapabilitiesNameForGroup($groupID)
     {
         if (!array_key_exists($groupID, $this->groupIDCapabilitiesMap)) {
-            throw new Exception('The Group ID ' . $groupID . ' supplied does not exist');
+            throw new \InvalidArgumentException('The Group ID ' . $groupID . ' supplied does not exist');
         }
 
         return $this->groupIDCapabilitiesMap[$groupID];

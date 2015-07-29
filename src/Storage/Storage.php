@@ -49,11 +49,6 @@ class Storage
     private $adapter;
 
     /**
-     * @var \Wurfl\Storage\Storage
-     */
-    private $cache;
-
-    /**
      * Creates a new WURFL_Storage_Base
      *
      * @param \WurflCache\Adapter\AdapterInterface $adapter
@@ -117,96 +112,6 @@ class Storage
     }
 
     /**
-     * This storage provider can be used as a secondary cache
-     *
-     * @param \Wurfl\Storage\Storage $cache
-     *
-     * @return boolean
-     */
-    public function validSecondaryCache(Storage $cache)
-    {
-        /**
-         * True if $this supports secondary caching and the cache provider is not the
-         * same class type since this would always decrease performance
-         */
-        return (get_class($this) != get_class($cache));
-    }
-
-    /**
-     * Sets the cache provider for the persistence provider; this is used to
-     * cache data in a volatile storage system like APC in front of a slow
-     * persistence provider like the filesystem.
-     *
-     * @param \Wurfl\Storage\Storage $cache
-     *
-     * @return Storage
-     * @throws Exception
-     */
-    public function setCacheStorage(Storage $cache)
-    {
-        $this->cache = $cache;
-
-        return $this;
-    }
-
-    /**
-     * saves an entry to the cache
-     *
-     * @param $objectId
-     * @param $object
-     */
-    protected function cacheSave($objectId, $object)
-    {
-        if ($this->cache === null) {
-            return;
-        }
-
-        $this->cache->save('FCACHE_' . $objectId, $object);
-    }
-
-    /**
-     * loads an entry from the cache
-     *
-     * @param $objectId
-     *
-     * @return mixed|null
-     */
-    protected function cacheLoad($objectId)
-    {
-        if ($this->cache === null) {
-            return null;
-        }
-
-        return $this->cache->load('FCACHE_' . $objectId);
-    }
-
-    /**
-     * removes an entry from the cache
-     *
-     * @param $objectId
-     */
-    protected function cacheRemove($objectId)
-    {
-        if ($this->cache === null) {
-            return;
-        }
-
-        $this->cache->remove('FCACHE_' . $objectId);
-    }
-
-    /**
-     * clears the cache
-     */
-    protected function cacheClear()
-    {
-        if ($this->cache === null) {
-            return;
-        }
-
-        $this->cache->clear();
-    }
-
-    /**
      * Checks if WURFL is Loaded
      *
      * @return bool
@@ -224,6 +129,5 @@ class Storage
     public function setWURFLLoaded($loaded = true)
     {
         $this->save(self::WURFL_LOADED, $loaded);
-        $this->cacheSave(self::WURFL_LOADED, $loaded);
     }
 }

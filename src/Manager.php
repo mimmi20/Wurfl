@@ -21,7 +21,6 @@ namespace Wurfl;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
-use WurflCache\Adapter\AdapterInterface;
 
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
@@ -78,31 +77,27 @@ class Manager
     /**
      * Creates a new Wurfl Manager object
      *
-     * @param Configuration\Config                 $wurflConfig
-     * @param \WurflCache\Adapter\AdapterInterface $persistenceStorage
-     * @param \WurflCache\Adapter\AdapterInterface $cacheStorage
+     * @param Configuration\Config   $wurflConfig
+     * @param \Wurfl\Storage\Storage $persistenceStorage
+     * @param \Wurfl\Storage\Storage $cacheStorage
      */
     public function __construct(
         Configuration\Config $wurflConfig,
-        AdapterInterface $persistenceStorage = null,
-        AdapterInterface $cacheStorage = null
+        Storage\Storage $persistenceStorage,
+        Storage\Storage $cacheStorage
     ) {
         $this->setWurflConfig($wurflConfig);
 
         if (null === $persistenceStorage) {
-            $persistenceStorage = Storage\Factory::create($this->getWurflConfig()->persistence);
+            throw new \InvalidArgumentException('the persistence storage is missing');
         }
 
         if (null === $cacheStorage) {
-            $cacheStorage = Storage\Factory::create($this->getWurflConfig()->cache);
+            throw new \InvalidArgumentException('the cache storage is missing');
         }
 
-        $this->setPersistenceStorage(new Storage\Storage($persistenceStorage));
-        $this->setCacheStorage(new Storage\Storage($cacheStorage));
-
-        if ($this->getPersistenceStorage()->validSecondaryCache($this->getCacheStorage())) {
-            $this->getPersistenceStorage()->setCacheStorage($this->getCacheStorage());
-        }
+        $this->setPersistenceStorage($persistenceStorage);
+        $this->setCacheStorage($cacheStorage);
 
         if ($this->hasToBeReloaded()) {
             $this->reload();

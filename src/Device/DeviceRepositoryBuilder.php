@@ -18,7 +18,6 @@
 
 namespace Wurfl\Device;
 
-use Wurfl\Exception;
 use Wurfl\FileUtils;
 use Wurfl\Handlers\Chain\UserAgentHandlerChain;
 use Wurfl\Storage\Storage;
@@ -112,7 +111,7 @@ class DeviceRepositoryBuilder
      * @param \Wurfl\Device\Xml\DeviceIterator   $deviceIterator
      * @param \Wurfl\Device\Xml\DeviceIterator[] $patchDeviceIterators Array of objects for patch files
      *
-     * @throws Exception
+     * @throws \Wurfl\Device\Exception
      */
     private function buildRepository(
         VersionIterator $wurflInfoIterator,
