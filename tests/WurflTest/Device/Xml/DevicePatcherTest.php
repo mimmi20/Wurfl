@@ -1,5 +1,5 @@
 <?php
-namespace WurflTest\Xml;
+namespace WurflTest\Device\Xml;
 
 use Wurfl\Device\Xml\DevicePatcher;
 use Wurfl\Device\ModelDevice;
