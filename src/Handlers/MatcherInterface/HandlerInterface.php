@@ -13,7 +13,7 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\Handlers;
+namespace Wurfl\Handlers\MatcherInterface;
 
 use Psr\Log\LoggerInterface;
 use Wurfl\Request\GenericRequest;

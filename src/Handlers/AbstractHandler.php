@@ -16,6 +16,8 @@
 namespace Wurfl\Handlers;
 
 use Psr\Log\LoggerInterface;
+use Wurfl\Handlers\MatcherInterface\FilterInterface;
+use Wurfl\Handlers\MatcherInterface\HandlerInterface;
 use Wurfl\Handlers\MatcherInterface\MatcherCanHandleInterface;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;

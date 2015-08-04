@@ -16,7 +16,7 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\Handlers;
+namespace Wurfl\Handlers\MatcherInterface;
 
 /**
  * \Wurfl\Handlers\FilterInterface is the base interface that concrete classes
