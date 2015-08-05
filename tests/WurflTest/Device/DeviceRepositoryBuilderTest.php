@@ -19,17 +19,17 @@ class DeviceRepositoryBuilderTest
     /**
      * @var string
      */
-    const WURFL_FILE = '../resources/wurfl_base.xml';
+    const WURFL_FILE = 'tests/resources/wurfl_base.xml';
 
     /**
      * @var string
      */
-    const PATCH_FILE_ONE = '../resources/patch1.xml';
+    const PATCH_FILE_ONE = 'tests/resources/patch1.xml';
 
     /**
      * @var string
      */
-    const PATCH_FILE_TWO = '../resources/patch2.xml';
+    const PATCH_FILE_TWO = 'tests/resources/patch2.xml';
 
     /** @var  \Wurfl\Device\DeviceRepositoryBuilder */
     private $deviceRepositoryBuilder;
@@ -49,8 +49,7 @@ class DeviceRepositoryBuilderTest
 
     public function testShouldBuildARepositoryOfAllDevicesFromTheXmlFile()
     {
-        $wurflFile        = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
-        $deviceRepository = $this->deviceRepositoryBuilder->build($wurflFile);
+        $deviceRepository = $this->deviceRepositoryBuilder->build(self::WURFL_FILE);
         self::assertNotNull($deviceRepository);
         self::assertEquals('Thu Jun 03 12:01:14 -0500 2010', $deviceRepository->getLastUpdated());
         $genericDevice = $deviceRepository->getDevice('generic');
@@ -59,10 +58,7 @@ class DeviceRepositoryBuilderTest
 
     public function testShouldAddNewDevice()
     {
-        $wurflFile  = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
-        $patchFile1 = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::PATCH_FILE_ONE;
-
-        $deviceRepository = $this->deviceRepositoryBuilder->build($wurflFile, array($patchFile1));
+        $deviceRepository = $this->deviceRepositoryBuilder->build(self::WURFL_FILE, array(self::PATCH_FILE_ONE));
         self::assertNotNull($deviceRepository);
         $newDevice1 = $deviceRepository->getDevice('generic_web_browser');
         self::assertNotNull($newDevice1, 'generic web browser device is null');
@@ -71,11 +67,10 @@ class DeviceRepositoryBuilderTest
 
     public function testShouldApplyMoreThanOnePatches()
     {
-        $wurflFile  = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
-        $patchFile1 = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::PATCH_FILE_ONE;
-        $patchFile2 = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::PATCH_FILE_TWO;
-
-        $deviceRepository = $this->deviceRepositoryBuilder->build($wurflFile, array($patchFile1, $patchFile2));
+        $deviceRepository = $this->deviceRepositoryBuilder->build(
+            self::WURFL_FILE,
+            array(self::PATCH_FILE_ONE, self::PATCH_FILE_TWO)
+        );
         self::assertNotNull($deviceRepository);
         $newDevice1 = $deviceRepository->getDevice('generic_web_browser');
         self::assertNotNull($newDevice1, 'generic web browser device is null');

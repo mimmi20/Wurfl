@@ -5,7 +5,7 @@ use Wurfl\Configuration\Config;
 use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\Manager;
 use Wurfl\Request\GenericRequest;
-use WurflCache\Adapter\Memory;
+use Wurfl\Storage\Factory;
 
 class ManagerTest
     extends \PHPUnit_Framework_TestCase
@@ -19,48 +19,51 @@ class ManagerTest
      */
     private $object = null;
 
-    public static function setUpBeforeClass()
-    {
-        //self::$wurflManager = self::initManager();
-    }
+    /**
+     * @var \Wurfl\Storage\Storage
+     */
+    private static $cacheStorage = null;
 
     /**
-     * return \Wurfl\Manager
+     * @var \Wurfl\Storage\Storage
      */
-    private static function initManager()
+    private static $persistenceStorage = null;
+
+    /**
+     * @var \Wurfl\Configuration\Config
+     */
+    private static $config = null;
+
+    public static function setUpBeforeClass()
     {
         $resourcesDir = self::RESOURCES_DIR;
         $cacheDir     = self::CACHE_DIR;
-        $config       = new InMemoryConfig();
+        self::$config = new InMemoryConfig();
 
-        $config->wurflFile($resourcesDir . 'wurfl-regression.xml');
+        self::$config->wurflFile($resourcesDir . 'wurfl-regression.xml');
 
         $params = array(
             Config::DIR        => $cacheDir,
             Config::EXPIRATION => 0
         );
-        $config->persistence('file', $params);
-        $config->cache('memory');
-        $cacheStorage       = new Memory();
-        $persistenceStorage = new Memory();
+        self::$config->persistence('file', $params);
+        self::$config->cache('memory');
 
-        $manager = new Manager($config, $persistenceStorage, $cacheStorage);
-        $manager->reload();
-
-        return $manager;
+        self::$cacheStorage       = Factory::create(self::$config->cache);
+        self::$persistenceStorage = Factory::create(self::$config->persistence);
     }
 
     public static function tearDownAfterClass()
     {
-        // FIXME: tear down is happening before tests are finished
-        //self::$persistenceStorage->clear();
+        self::$persistenceStorage->clear();
     }
 
     public function setUp()
     {
-        $this->markTestSkipped('not implemented yet');
+        //$this->markTestSkipped('not implemented yet');
 
-        $this->object = self::initManager();
+        $this->object = new Manager(self::$config, self::$persistenceStorage, self::$cacheStorage);
+        //$this->object->reload();
     }
 
     public function testShouldReturnGenericForEmptyUserAgent()
@@ -175,6 +178,26 @@ class ManagerTest
         $class  = new \ReflectionClass('\\Wurfl\\Manager');
         $method = $class->getMethod('deviceIdForRequest');
         $method->setAccessible(true);
+
+        $cacheMock = $this->getMockBuilder('Wurfl\Storage\Storage')
+            ->disableOriginalConstructor()
+            ->setMethods(array('load', 'save'))
+            ->getMock()
+        ;
+        $cacheMock
+            ->expects(self::any())
+            ->method('load')
+            ->will(self::returnValue(null))
+        ;
+        $cacheMock
+            ->expects(self::any())
+            ->method('save')
+            ->will(self::returnValue(null))
+        ;
+
+        $variable = $class->getProperty('cacheStorage');
+        $variable->setAccessible(true);
+        $variable->setValue($this->object, $cacheMock);
 
         $header  = array(
             'HTTP_USER_AGENT' => $userAgent

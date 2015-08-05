@@ -9,10 +9,6 @@ use Wurfl\Device\Xml\DeviceIterator;
 class DeviceIteratorTest
     extends \PHPUnit_Framework_TestCase
 {
-
-    const RESOURCES_DIR = '../../resources/';
-    const WURFL_FILE = '../../resources/wurfl_base.xml';
-
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -24,9 +20,7 @@ class DeviceIteratorTest
 
     public function testShouldReadTheSpecificAttribute()
     {
-        $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RESOURCES_DIR . 'wurfl-specific-attribute.xml';
-
-        $deviceIterator = new DeviceIterator($wurflFile);
+        $deviceIterator = new DeviceIterator('tests/resources/wurfl-specific-attribute.xml');
         $devices        = $this->toList($deviceIterator);
 
         self::assertEquals('foo', $devices[0]->id);

@@ -16,10 +16,10 @@
     "php": ">=5.3.3",
     "psr/log": "~1.0",
     "mimmi20/wurflcache": "~1.3",
-    "mimmi20/wurfl-generic-request": "~1",
+    "mimmi20/wurfl-generic-request": "*",
     "mimmi20/wurfl-virtual-capability": "*",
-    "mimmi20/wurfl-config": "~1",
-    "mimmi20/wurfl-storage": "~1"
+    "mimmi20/wurfl-config": "*",
+    "mimmi20/wurfl-storage": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "*",

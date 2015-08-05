@@ -1,5 +1,5 @@
 <?php
-namespace WurflTest\Request\Normalizer;
+namespace WurflTest\Handlers\Normalizer;
 
 /**
  * test case
