@@ -19,7 +19,8 @@
     "mimmi20/wurfl-generic-request": "*",
     "mimmi20/wurfl-virtual-capability": "*",
     "mimmi20/wurfl-config": "*",
-    "mimmi20/wurfl-storage": "*"
+    "mimmi20/wurfl-storage": "*",
+    "mimmi20/wurfl-custom-device": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "*",
