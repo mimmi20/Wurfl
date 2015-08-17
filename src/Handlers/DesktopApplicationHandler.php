@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * DesktopApplicationHandler
@@ -28,7 +28,6 @@ use Wurfl\Constants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class DesktopApplicationHandler
     extends AbstractHandler
@@ -78,7 +77,7 @@ class DesktopApplicationHandler
             }
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     public function applyRecoveryMatch($userAgent)
@@ -95,6 +94,6 @@ class DesktopApplicationHandler
             }
         }
 
-        return Constants::GENERIC_WEB_BROWSER;
+        return WurflConstants::GENERIC_WEB_BROWSER;
     }
 }

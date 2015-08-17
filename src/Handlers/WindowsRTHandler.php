@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * WindowsRTUserAgentHandler
@@ -28,7 +28,6 @@ use Wurfl\Constants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class WindowsRTHandler
     extends AbstractHandler
@@ -80,7 +79,7 @@ class WindowsRTHandler
             }
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

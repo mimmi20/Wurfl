@@ -16,10 +16,14 @@
 namespace Wurfl\Handlers;
 
 use Psr\Log\LoggerInterface;
-use Wurfl\Constants;
+use Wurfl\Handlers\MatcherInterface\FilterInterface;
+use Wurfl\Handlers\MatcherInterface\HandlerInterface;
+use Wurfl\Handlers\MatcherInterface\MatcherCanHandleInterface;
 use Wurfl\Request\GenericRequest;
-use Wurfl\Request\Normalizer\NullNormalizer;
+use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\Normalizer\NullNormalizer;
 use Wurfl\Storage\Storage;
+use Wurfl\WurflConstants;
 
 /**
  * \Wurfl\Handlers\AbstractHandler is the base class that combines the classification of
@@ -29,13 +33,12 @@ use Wurfl\Storage\Storage;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 abstract class AbstractHandler
-    implements FilterInterface
+    implements FilterInterface, HandlerInterface, MatcherCanHandleInterface
 {
     /**
-     * @var \Wurfl\Request\Normalizer\UserAgentNormalizer
+     * @var \Wurfl\Handlers\Normalizer\UserAgentNormalizer
      */
     protected $userAgentNormalizer;
 
@@ -65,9 +68,9 @@ abstract class AbstractHandler
     public static $constantIDs = array();
 
     /**
-     * @param \Wurfl\Request\Normalizer\NormalizerInterface $userAgentNormalizer
+     * @param \Wurfl\Handlers\Normalizer\NormalizerInterface $userAgentNormalizer
      */
-    public function __construct($userAgentNormalizer = null)
+    public function __construct(NormalizerInterface $userAgentNormalizer = null)
     {
         if (is_null($userAgentNormalizer)) {
             $this->userAgentNormalizer = new NullNormalizer();
@@ -112,15 +115,6 @@ abstract class AbstractHandler
     {
         return $this->getPrefix();
     }
-
-    /**
-     * Returns true if this handler can handle the given $userAgent
-     *
-     * @param string $userAgent
-     *
-     * @return bool
-     */
-    abstract public function canHandle($userAgent);
 
     //********************************************************
     //
@@ -168,7 +162,7 @@ abstract class AbstractHandler
      * If you need to normalize the user agent you need to override the function in
      * the specific user agent handler.
      *
-     * @see $userAgentNormalizer, \Wurfl\Request\Normalizer\UserAgentNormalizer
+     * @see $userAgentNormalizer, \Wurfl\Handlers\Normalizer\UserAgentNormalizer
      *
      * @param string $userAgent
      *
@@ -224,12 +218,12 @@ abstract class AbstractHandler
      */
     final public function applyMatch(GenericRequest $request)
     {
-        $className                   = get_class($this);
-        $request->matchInfo->matcher = $className;
-        $startTime                   = microtime(true);
+        $className                        = get_class($this);
+        $request->getMatchInfo()->matcher = $className;
+        $startTime                        = microtime(true);
 
-        $userAgent                               = $this->normalizeUserAgent($request->userAgentNormalized);
-        $request->matchInfo->normalizedUserAgent = $userAgent;
+        $userAgent                                    = $this->normalizeUserAgent($request->getUserAgentNormalized());
+        $request->getMatchInfo()->normalizedUserAgent = $userAgent;
         $this->logger->debug('START: Matching For ' . $userAgent);
 
         // Get The data associated with this current handler
@@ -258,14 +252,14 @@ abstract class AbstractHandler
             ),
         );
 
-        $deviceID = Constants::NO_MATCH;
+        $deviceID = WurflConstants::NO_MATCH;
 
         foreach ($matches as $matchType => $matchProps) {
             $matchProps = (object) $matchProps;
 
-            $request->matchInfo->matcherHistory .= $className . $matchProps->history;
-            $request->matchInfo->matchType   = $matchType;
-            $request->userAgentsWithDeviceID = $this->userAgentsWithDeviceID;
+            $request->getMatchInfo()->matcherHistory .= $className . $matchProps->history;
+            $request->getMatchInfo()->matchType   = $matchType;
+            $request->setUserAgentsWithDeviceID($this->userAgentsWithDeviceID);
 
             $this->logger->debug($this->prefix . ' :' . $matchProps->debug . ' for ua: ' . $userAgent);
 
@@ -279,17 +273,17 @@ abstract class AbstractHandler
 
         // All attempts to match have failed
         if ($this->isBlankOrGeneric($deviceID)) {
-            $request->matchInfo->matchType = 'none';
+            $request->getMatchInfo()->matchType = 'none';
 
-            if ($request->userAgentProfile) {
-                $deviceID = Constants::GENERIC_MOBILE;
+            if ($request->getUserAgentProfile()) {
+                $deviceID = WurflConstants::GENERIC_MOBILE;
             } else {
-                $deviceID = Constants::GENERIC;
+                $deviceID = WurflConstants::GENERIC;
             }
         }
 
         $this->logger->debug('END: Matching For ' . $userAgent);
-        $request->matchInfo->lookupTime = microtime(true) - $startTime;
+        $request->getMatchInfo()->lookupTime = microtime(true) - $startTime;
 
         return $deviceID;
     }
@@ -303,7 +297,7 @@ abstract class AbstractHandler
      */
     private function isBlankOrGeneric($deviceID)
     {
-        return ($deviceID === Constants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(
+        return ($deviceID === WurflConstants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(
                 trim($deviceID)
             ) == 0);
     }
@@ -321,7 +315,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$userAgent];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -339,7 +333,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -365,7 +359,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     public function getDeviceIDFromLD($userAgent, $tolerance = null)
@@ -376,7 +370,7 @@ abstract class AbstractHandler
             return $this->userAgentsWithDeviceID[$match];
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -388,7 +382,7 @@ abstract class AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -401,7 +395,7 @@ abstract class AbstractHandler
     public function applyRecoveryCatchAllMatch($userAgent)
     {
         if (Utils::isDesktopBrowserHeavyDutyAnalysis($userAgent)) {
-            return Constants::GENERIC_WEB_BROWSER;
+            return WurflConstants::GENERIC_WEB_BROWSER;
         }
 
         if (Utils::checkIfContains($userAgent, 'CoreMedia')) {
@@ -477,7 +471,7 @@ abstract class AbstractHandler
         // Contains Mozilla/, but not at the beginning of the UA
         // ie: MOTORAZR V8/R601_G_80.41.17R Mozilla/4.0 (compatible; MSIE 6.0 Linux; MOTORAZR V88.50) Profile/MIDP-2.0 Configuration/CLDC-1.1 Opera 8.50[zh]
         if (strpos($userAgent, 'Mozilla/') > 0) {
-            return Constants::GENERIC_XHTML;
+            return WurflConstants::GENERIC_XHTML;
         }
 
         if (Utils::checkIfContainsAnyOf(
@@ -485,7 +479,7 @@ abstract class AbstractHandler
             array('Obigo', 'AU-MIC/2', 'AU-MIC-', 'AU-OBIGO/', 'Teleca Q03B1')
         )
         ) {
-            return Constants::GENERIC_XHTML;
+            return WurflConstants::GENERIC_XHTML;
         }
 
         // DoCoMo
@@ -494,10 +488,10 @@ abstract class AbstractHandler
         }
 
         if (Utils::isMobileBrowser($userAgent)) {
-            return Constants::GENERIC_MOBILE;
+            return WurflConstants::GENERIC_MOBILE;
         }
 
-        return Constants::GENERIC;
+        return WurflConstants::GENERIC;
     }
 
     /**

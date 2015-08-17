@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * WindowsPhoneUserAgentHandler
@@ -28,7 +28,6 @@ use Wurfl\Constants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class WindowsPhoneHandler
     extends AbstractHandler
@@ -80,7 +79,7 @@ class WindowsPhoneHandler
             return 'generic_ms_phone_os7';
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -120,7 +119,7 @@ class WindowsPhoneHandler
             return 'generic_ms_winmo6_5';
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * FennecOnAndroidUserAgentHandler
@@ -28,7 +28,6 @@ use Wurfl\Constants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class FennecOnAndroidHandler
     extends AbstractHandler
@@ -69,7 +68,7 @@ class FennecOnAndroidHandler
             return $this->getDeviceIDFromRIS($userAgent, $matches[1][1] + 1);
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**
@@ -96,6 +95,6 @@ class FennecOnAndroidHandler
             }
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

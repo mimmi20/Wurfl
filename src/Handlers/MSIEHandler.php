@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * MSIEAgentHandler
@@ -28,7 +28,6 @@ use Wurfl\Constants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class MSIEHandler
     extends AbstractHandler
@@ -124,9 +123,9 @@ class MSIEHandler
             )
         )
         ) {
-            return Constants::GENERIC_WEB_BROWSER;
+            return WurflConstants::GENERIC_WEB_BROWSER;
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 }

@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * TizenUserAgentHandler
@@ -28,7 +28,6 @@ use Wurfl\Constants;
  * @copyright  ScientiaMobile, Inc.
  * @author     Steve Kamerman <steve AT scientiamobile.com>
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class TizenHandler
     extends AbstractHandler
@@ -70,7 +69,7 @@ class TizenHandler
             return $this->getDeviceIDFromRIS($userAgent, $idx + strlen($search));
         }
 
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

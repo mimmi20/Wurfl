@@ -18,7 +18,7 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\Constants;
+use Wurfl\WurflConstants;
 
 /**
  * WindowsPhoneDesktopUserAgentHandler
@@ -28,7 +28,6 @@ use Wurfl\Constants;
  * @package    WURFL_Handlers
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
- * @version    $id$
  */
 class WindowsPhoneDesktopHandler
     extends AbstractHandler
@@ -65,7 +64,7 @@ class WindowsPhoneDesktopHandler
     public function applyConclusiveMatch($userAgent)
     {
         // Exact and Recovery match only
-        return Constants::NO_MATCH;
+        return WurflConstants::NO_MATCH;
     }
 
     /**

@@ -22,6 +22,11 @@ class RISMatcherTest
 
     /**
      * @dataProvider risData
+     *
+     * @param array  $candidates
+     * @param string $needle
+     * @param int    $tolerance
+     * @param string $expected
      */
     public function testMatch($candidates, $needle, $tolerance, $expected)
     {

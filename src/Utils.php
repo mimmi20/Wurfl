@@ -25,100 +25,6 @@ namespace Wurfl;
  */
 class Utils
 {
-    private static $userAgentSearchOrder = array(
-        'HTTP_DEVICE_STOCK_UA',
-        'HTTP_X_DEVICE_USER_AGENT',
-        'HTTP_X_SKYFIRE_VERSION',
-        'HTTP_X_BLUECOAT_VIA',
-        'HTTP_X_OPERAMINI_PHONE_UA',
-        'HTTP_USER_AGENT',
-    );
-
-    /**
-     * returns the User Agent From $request or empty string if not found
-     *
-     * @param array $request HTTP Request array (normally $_SERVER)
-     * @param bool  $override_sideloaded_browser_ua
-     *
-     * @return string
-     */
-    public static function getUserAgent($request, $override_sideloaded_browser_ua = true)
-    {
-        if (!$override_sideloaded_browser_ua && isset($request['HTTP_USER_AGENT'])) {
-            return $request['HTTP_USER_AGENT'];
-        }
-
-        if (isset($request[Constants::UA])) {
-            return $request[Constants::UA];
-        }
-
-        foreach (self::$userAgentSearchOrder as $header) {
-            if (isset($request[$header])) {
-                return $request[$header];
-            }
-        }
-
-        return '';
-    }
-
-    /**
-     * Returns the UA Profile from the $request
-     *
-     * @param array $request HTTP Request array (normally $_SERVER)
-     *
-     * @return string UAProf URL
-     */
-    public static function getUserAgentProfile($request)
-    {
-        if (isset($request['HTTP_X_WAP_PROFILE'])) {
-            return $request['HTTP_X_WAP_PROFILE'];
-        }
-        if (isset($request['HTTP_PROFILE'])) {
-            return $request['HTTP_PROFILE'];
-        }
-        if (isset($request['Opt'])) {
-            $opt              = $request['Opt'];
-            $regex            = '/ns=\\d+/';
-            $matches          = array();
-            $namespaceProfile = null;
-            if (preg_match($regex, $opt, $matches)) {
-                $namespaceProfile = substr($matches[0], 2) . '-Profile';
-            }
-            if ($namespaceProfile !== null && isset($request[$namespaceProfile])) {
-                return $request[$namespaceProfile];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Checks if the requester device is xhtml enabled
-     *
-     * @param array $request HTTP Request array (normally $_SERVER)
-     *
-     * @return bool
-     */
-    public static function isXhtmlRequester($request)
-    {
-        if (!isset($request['accept'])) {
-            return false;
-        }
-
-        $accept = $request['accept'];
-        if (isset($accept)) {
-            if ((strpos($accept, Constants::ACCEPT_HEADER_VND_WAP_XHTML_XML) !== 0) || (strpos(
-                        $accept,
-                        Constants::ACCEPT_HEADER_XHTML_XML
-                    ) !== 0) || (strpos($accept, Constants::ACCEPT_HEADER_TEXT_HTML) !== 0)
-            ) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
      * Returns true if given $deviceID is the 'generic' WURFL device
      *
@@ -128,7 +34,7 @@ class Utils
      */
     public static function isGeneric($deviceID)
     {
-        if (strcmp($deviceID, Constants::GENERIC) === 0) {
+        if (strcmp($deviceID, WurflConstants::GENERIC) === 0) {
             return true;
         }
 

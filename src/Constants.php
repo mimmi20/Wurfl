@@ -26,26 +26,4 @@ namespace Wurfl;
 class Constants
 {
     const API_VERSION = '1.6.0.0';
-
-    const GENERIC             = 'generic';
-    const GENERIC_XHTML       = 'generic_xhtml';
-    const GENERIC_WEB_BROWSER = 'generic_web_browser';
-    const GENERIC_MOBILE      = 'generic_mobile';
-
-    const ACCEPT_HEADER_VND_WAP_XHTML_XML = 'application/vnd.wap.xhtml+xml';
-    const ACCEPT_HEADER_XHTML_XML         = 'application/xhtml+xml';
-    const ACCEPT_HEADER_TEXT_HTML         = 'application/text+html';
-
-    const UA = 'UA';
-
-    const MEMCACHE     = 'memcache';
-    const APC          = 'apc';
-    const FILE         = 'file';
-    const NULL_CACHE   = 'null';
-    const EACCELERATOR = 'eaccelerator';
-    const SQLITE       = 'sqlite';
-    const MYSQL        = 'mysql';
-
-    const NO_MATCH      = null;
-    const RIS_DELIMITER = '---';
 }
