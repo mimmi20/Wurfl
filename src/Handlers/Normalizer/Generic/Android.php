@@ -16,34 +16,26 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\Handlers;
+namespace Wurfl\Handlers\Normalizer\Generic;
+
+use Wurfl\Handlers\Normalizer\NormalizerInterface;
 
 /**
- * QtekUserAgentHandler
+ * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  *
- *
- * @category   WURFL
- * @package    WURFL_Handlers
- * @copyright  ScientiaMobile, Inc.
- * @license    GNU Affero General Public License
+ * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class QtekHandler
-    extends AbstractHandler
+class Android
+    implements NormalizerInterface
 {
-
-    protected $prefix = 'QTEK';
-
     /**
      * @param string $userAgent
      *
-     * @return bool
+     * @return string
      */
-    public function canHandle($userAgent)
+    public function normalize($userAgent)
     {
-        if (Utils::isDesktopBrowser($userAgent)) {
-            return false;
-        }
-
-        return Utils::checkIfStartsWith($userAgent, 'Qtek');
+        // Normalize Android version
+        return preg_replace('/(Android)[ \-\/](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
     }
 }

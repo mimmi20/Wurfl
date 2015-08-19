@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -91,6 +91,8 @@ class CFNetwork
             '711.00' => array('iPhone', '8_0'),
             '711.10' => array('iPhone', '8_1'),
             '711.20' => array('iPhone', '8_2'),
+            '711.30' => array('iPhone', '8_3'),
+            '711.40' => array('iPhone', '8_4'),
         );
 
         if (array_key_exists($cfVersion, $cfnetworkMap)) {

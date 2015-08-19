@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -327,11 +327,14 @@ class Utils
             return false;
         }
 
+        //WP Desktop - Edge Mode
+        if (Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ',' ARM;',' Edge/'))) {
+            return false;
+        }
+
         // Chrome
-        if (Utils::checkIfContains($userAgent, 'Chrome') && !Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('Android', 'Ventana')
-            )
+        if (Utils::checkIfContains($userAgent, 'Chrome')
+            && !Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))
         ) {
             return true;
         }
