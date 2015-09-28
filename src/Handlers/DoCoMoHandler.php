@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class DoCoMoHandler
-    extends AbstractHandler
+class DoCoMoHandler extends AbstractHandler
 {
 
     protected $prefix = 'DOCOMO';

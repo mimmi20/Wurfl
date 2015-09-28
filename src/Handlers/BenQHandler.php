@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class BenQHandler
-    extends AbstractHandler
+class BenQHandler extends AbstractHandler
 {
 
     protected $prefix = 'BENQ';

@@ -26,8 +26,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class LocaleRemover
-    implements NormalizerInterface
+class LocaleRemover implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -39,6 +38,3 @@ class LocaleRemover
         return Utils::removeLocale($userAgent);
     }
 }
-
-
-

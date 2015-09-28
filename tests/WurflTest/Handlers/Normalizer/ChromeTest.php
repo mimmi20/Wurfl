@@ -6,8 +6,7 @@ use Wurfl\Handlers\Normalizer\Specific\Chrome;
 /**
  *  test case.
  */
-class ChromeTest
-    extends TestBase
+class ChromeTest extends TestBase
 {
 
     const CHROME_USERAGENTS_FILE = 'chrome.txt';

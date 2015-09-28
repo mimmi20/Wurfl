@@ -23,8 +23,7 @@ namespace Wurfl\Logger;
  *
  * @package    WURFL_Logger
  */
-class NullLogger
-    extends AbstractLogger
+class NullLogger extends AbstractLogger
 {
     /**
      * Logs with an arbitrary level.

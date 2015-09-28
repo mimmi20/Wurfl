@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SkyfireHandler
-    extends AbstractHandler
+class SkyfireHandler extends AbstractHandler
 {
     protected $prefix = 'SKYFIRE';
 

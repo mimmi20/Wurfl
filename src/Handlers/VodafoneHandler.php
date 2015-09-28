@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class VodafoneHandler
-    extends AbstractHandler
+class VodafoneHandler extends AbstractHandler
 {
     protected $prefix = 'VODAFONE';
 

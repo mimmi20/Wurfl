@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class BlackBerry
-    implements NormalizerInterface
+class BlackBerry implements NormalizerInterface
 {
     /**
      * @param string $userAgent

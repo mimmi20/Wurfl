@@ -32,8 +32,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Opera
-    implements NormalizerInterface
+class Opera implements NormalizerInterface
 {
     /**
      * @param string $userAgent

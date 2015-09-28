@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class NokiaHandler
-    extends AbstractHandler
+class NokiaHandler extends AbstractHandler
 {
 
     protected $prefix = 'NOKIA';

@@ -23,8 +23,7 @@ namespace Wurfl\Device\Xml;
  *
  * @package    WURFL_Xml
  */
-class VersionIterator
-    extends AbstractIterator
+class VersionIterator extends AbstractIterator
 {
     /**
      * @var bool

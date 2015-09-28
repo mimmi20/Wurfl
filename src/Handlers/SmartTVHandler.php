@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SmartTVHandler
-    extends AbstractHandler
+class SmartTVHandler extends AbstractHandler
 {
     protected $prefix = 'SMARTTV';
 

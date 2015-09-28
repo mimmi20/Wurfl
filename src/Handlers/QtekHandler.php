@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class QtekHandler
-    extends AbstractHandler
+class QtekHandler extends AbstractHandler
 {
 
     protected $prefix = 'QTEK';

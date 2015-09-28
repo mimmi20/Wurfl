@@ -329,9 +329,9 @@ class Utils
 
         // Chrome
         if (Utils::checkIfContains($userAgent, 'Chrome') && !Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('Android', 'Ventana')
-            )
+            $userAgent,
+            array('Android', 'Ventana')
+        )
         ) {
             return true;
         }
@@ -460,7 +460,7 @@ class Utils
      */
     public static function ordinalIndexOf($haystack, $needle, $ordinal)
     {
-        if (is_null($haystack) || empty ($haystack)) {
+        if (is_null($haystack) || empty($haystack)) {
             throw new \InvalidArgumentException('haystack must not be null or empty');
         }
 

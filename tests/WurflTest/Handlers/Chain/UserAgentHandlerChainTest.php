@@ -10,8 +10,7 @@ use WurflCache\Adapter\Memory;
 use WurflCache\Adapter\File;
 use Psr\Log\NullLogger;
 
-class UserAgentHandlerChainTest
-    extends \PHPUnit_Framework_TestCase
+class UserAgentHandlerChainTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Wurfl\Handlers\Chain\UserAgentHandlerChain

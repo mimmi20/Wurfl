@@ -33,8 +33,7 @@ use Wurfl\WurflConstants;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Safari
-    implements NormalizerInterface
+class Safari implements NormalizerInterface
 {
     /**
      * @param string $userAgent

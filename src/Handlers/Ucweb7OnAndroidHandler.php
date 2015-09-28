@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class Ucweb7OnAndroidHandler
-    extends AbstractHandler
+class Ucweb7OnAndroidHandler extends AbstractHandler
 {
     protected $prefix = 'UCWEB7ONANDROID';
 

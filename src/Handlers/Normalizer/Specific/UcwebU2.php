@@ -28,8 +28,7 @@ use Wurfl\WurflConstants;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class UcwebU2
-    implements NormalizerInterface
+class UcwebU2 implements NormalizerInterface
 {
     /**
      * @param string $userAgent

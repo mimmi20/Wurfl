@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Chrome
-    implements NormalizerInterface
+class Chrome implements NormalizerInterface
 {
     /**
      * @param string $userAgent

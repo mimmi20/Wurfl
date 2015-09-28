@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class AlcatelHandler
-    extends AbstractHandler
+class AlcatelHandler extends AbstractHandler
 {
     protected $prefix = 'ALCATEL';
 

@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class YesWAP
-    implements NormalizerInterface
+class YesWAP implements NormalizerInterface
 {
     /**
      * @var string

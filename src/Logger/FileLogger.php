@@ -23,8 +23,7 @@ namespace Wurfl\Logger;
  *
  * @package    WURFL_Logger
  */
-class FileLogger
-    extends AbstractLogger
+class FileLogger extends AbstractLogger
 {
     /**
      * @var int File pointer

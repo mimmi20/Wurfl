@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SonyEricssonHandler
-    extends AbstractHandler
+class SonyEricssonHandler extends AbstractHandler
 {
     protected $prefix = 'SONY_ERICSSON';
 

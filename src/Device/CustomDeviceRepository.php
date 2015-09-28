@@ -27,8 +27,7 @@ use Wurfl\Device\Xml\Info;
  *
  * @package    WURFL
  */
-class CustomDeviceRepository
-    implements DeviceRepositoryInterface
+class CustomDeviceRepository implements DeviceRepositoryInterface
 {
     /**
      * @var string

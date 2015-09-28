@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Android
-    implements NormalizerInterface
+class Android implements NormalizerInterface
 {
     /**
      * @var array

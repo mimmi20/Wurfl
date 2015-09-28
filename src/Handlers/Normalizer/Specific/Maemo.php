@@ -27,8 +27,7 @@ use Wurfl\WurflConstants;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Maemo
-    implements NormalizerInterface
+class Maemo implements NormalizerInterface
 {
     /**
      * @param string $userAgent

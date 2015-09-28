@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class KindleHandler
-    extends AbstractHandler
+class KindleHandler extends AbstractHandler
 {
 
     protected $prefix = 'KINDLE';

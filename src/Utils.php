@@ -53,7 +53,6 @@ class Utils
     {
         // LOOP THROUGH $array2
         foreach ($array2 as $k => $v) {
-
             // CHECK IF VALUE EXISTS IN $array1
             if (!empty($array1[$k])) {
                 // IF VALUE EXISTS CHECK IF IT'S AN ARRAY OR A STRING

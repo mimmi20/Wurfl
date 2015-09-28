@@ -6,8 +6,7 @@ use Wurfl\Device\Xml\DeviceIterator;
 /**
  * test case
  */
-class DeviceIteratorTest
-    extends \PHPUnit_Framework_TestCase
+class DeviceIteratorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \InvalidArgumentException

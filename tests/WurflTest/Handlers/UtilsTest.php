@@ -9,8 +9,7 @@ use Wurfl\Handlers\Utils;
 /**
  * WURFL_Handlers_Utils test case.
  */
-class UtilsTest
-    extends \PHPUnit_Framework_TestCase
+class UtilsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

@@ -27,8 +27,7 @@ use Wurfl\WurflConstants;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class HTCMac
-    implements NormalizerInterface
+class HTCMac implements NormalizerInterface
 {
     /**
      * @param string $userAgent

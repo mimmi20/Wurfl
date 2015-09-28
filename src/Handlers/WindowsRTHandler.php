@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class WindowsRTHandler
-    extends AbstractHandler
+class WindowsRTHandler extends AbstractHandler
 {
     protected $prefix = 'WINDOWSRT';
 

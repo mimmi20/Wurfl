@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @author     Steve Kamerman <steve AT scientiamobile.com>
  * @license    GNU Affero General Public License
  */
-class TizenHandler
-    extends AbstractHandler
+class TizenHandler extends AbstractHandler
 {
     protected $prefix = 'Tizen';
 

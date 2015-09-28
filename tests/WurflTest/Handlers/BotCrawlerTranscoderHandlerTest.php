@@ -11,8 +11,7 @@ use Wurfl\Handlers\Normalizer\NullNormalizer;
 /**
  *  test case.
  */
-class BotCrawlerTranscoderHandlerTest
-    extends \PHPUnit_Framework_TestCase
+class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
 {
 
     const BOT_CRAWLER_TRANSCODER_FILE_PATH = 'bot_crawler_transcoder.txt';

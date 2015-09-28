@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class NetFrontOnAndroidHandler
-    extends AbstractHandler
+class NetFrontOnAndroidHandler extends AbstractHandler
 {
     protected $prefix = 'NETFRONTONANDROID';
 
@@ -51,9 +50,9 @@ class NetFrontOnAndroidHandler
         }
 
         return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContains(
-                $userAgent,
-                'NetFrontLifeBrowser/2.2'
-            ));
+            $userAgent,
+            'NetFrontLifeBrowser/2.2'
+        ));
     }
 
     /**

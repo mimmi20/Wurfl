@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class MaemoHandler
-    extends AbstractHandler
+class MaemoHandler extends AbstractHandler
 {
 
     protected $prefix = 'MAEMO';

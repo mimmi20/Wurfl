@@ -27,8 +27,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Konqueror
-    implements NormalizerInterface
+class Konqueror implements NormalizerInterface
 {
     /**
      * @var string

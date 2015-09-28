@@ -27,8 +27,7 @@ namespace Wurfl\Handlers\Matcher;
  * @see        match()
  * @package    \Wurfl\Handlers\MatcherInterface
  */
-class RISMatcher
-    implements MatcherInterface
+class RISMatcher implements MatcherInterface
 {
     /**
      * Instance of \Wurfl\Handlers\Matcher\LDMatcher
@@ -115,9 +114,9 @@ class RISMatcher
     private function firstOfTheBests($collection, $needle, $bestIndex, $bestDistance)
     {
         while ($bestIndex > 0 && $this->longestCommonPrefixLength(
-                $collection[$bestIndex - 1],
-                $needle
-            ) == $bestDistance) {
+            $collection[$bestIndex - 1],
+            $needle
+        ) == $bestDistance) {
             $bestIndex--;
         }
 

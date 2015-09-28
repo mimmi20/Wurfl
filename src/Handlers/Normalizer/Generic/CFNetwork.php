@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
-class CFNetwork
-    implements NormalizerInterface
+class CFNetwork implements NormalizerInterface
 {
     /**
      * @param string $userAgent

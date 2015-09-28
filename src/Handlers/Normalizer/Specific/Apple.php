@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Apple
-    implements NormalizerInterface
+class Apple implements NormalizerInterface
 {
     /**
      * @param string $userAgent

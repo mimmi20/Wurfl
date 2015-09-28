@@ -6,8 +6,7 @@ use Wurfl\Handlers\Normalizer\Generic\BlackBerry;
 /**
  * test case.
  */
-class BlackBerryTest
-    extends TestBase
+class BlackBerryTest extends TestBase
 {
 
     protected function setUp()

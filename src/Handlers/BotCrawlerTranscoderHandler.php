@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class BotCrawlerTranscoderHandler
-    extends AbstractHandler
+class BotCrawlerTranscoderHandler extends AbstractHandler
 {
 
     protected $prefix = 'BOT_CRAWLER_TRANSCODER';

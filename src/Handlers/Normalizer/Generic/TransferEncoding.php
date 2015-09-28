@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class TransferEncoding
-    implements NormalizerInterface
+class TransferEncoding implements NormalizerInterface
 {
     /**
      * @param string $userAgent

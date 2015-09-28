@@ -25,8 +25,7 @@ use Wurfl\Device\ModelDevice;
  *
  * @package    WURFL_Xml
  */
-class DeviceIterator
-    extends AbstractIterator
+class DeviceIterator extends AbstractIterator
 {
     /**
      * @var array

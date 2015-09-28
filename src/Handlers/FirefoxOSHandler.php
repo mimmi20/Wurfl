@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class FirefoxOSHandler
-    extends AbstractHandler
+class FirefoxOSHandler extends AbstractHandler
 {
     protected $prefix = 'FIREFOXOS';
 
@@ -63,9 +62,9 @@ class FirefoxOSHandler
     public function canHandle($userAgent)
     {
         return (Utils::checkIfContains($userAgent, 'Firefox/') && Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('Mobile', 'Tablet')
-            ));
+            $userAgent,
+            array('Mobile', 'Tablet')
+        ));
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -114,9 +113,9 @@ class FirefoxOSHandler
     {
         // Find Firefox Browser/Gecko version
         if (preg_match('#\brv:(\d+\.\d+)#', $userAgent, $matches) && array_key_exists(
-                $matches[1],
-                self::$firefoxOSMap
-            )
+            $matches[1],
+            self::$firefoxOSMap
+        )
         ) {
             return self::$firefoxOSMap[$matches[1]];
         }

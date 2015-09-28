@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class OperaMobiOrTabletOnAndroidHandler
-    extends AbstractHandler
+class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
 {
 
     protected $prefix = 'OPERAMOBIORTABLETONANDROID';
@@ -68,9 +67,9 @@ class OperaMobiOrTabletOnAndroidHandler
         }
 
         return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('Opera Mobi', 'Opera Tablet')
-            ));
+            $userAgent,
+            array('Opera Mobi', 'Opera Tablet')
+        ));
     }
 
     /**

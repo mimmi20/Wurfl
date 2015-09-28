@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class DesktopApplicationHandler
-    extends AbstractHandler
+class DesktopApplicationHandler extends AbstractHandler
 {
     public static $constantIDs = array(
         'generic_desktop_application',

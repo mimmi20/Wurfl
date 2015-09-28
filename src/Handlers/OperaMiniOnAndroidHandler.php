@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class OperaMiniOnAndroidHandler
-    extends AbstractHandler
+class OperaMiniOnAndroidHandler extends AbstractHandler
 {
 
     protected $prefix = 'OPERAMINIONANDROID';

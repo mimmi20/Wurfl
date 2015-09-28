@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class PortalmmmHandler
-    extends AbstractHandler
+class PortalmmmHandler extends AbstractHandler
 {
 
     protected $prefix = 'PORTALMMM';

@@ -29,8 +29,7 @@ namespace Wurfl\Device;
  * @property-read string $userAgent
  * @package    WURFL_Device
  */
-class ModelDevice
-    implements ModelDeviceInterface
+class ModelDevice implements ModelDeviceInterface
 {
     /**
      * @var string WURFL device ID

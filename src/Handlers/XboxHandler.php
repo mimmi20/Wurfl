@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class XboxHandler
-    extends AbstractHandler
+class XboxHandler extends AbstractHandler
 {
     protected $prefix = 'XBOX';
 
@@ -69,9 +68,9 @@ class XboxHandler
     public function applyRecoveryMatch($userAgent)
     {
         if (Utils::checkIfContains($userAgent, 'MSIE 10.0') && Utils::checkIfContains(
-                $userAgent,
-                'Xbox One'
-            )
+            $userAgent,
+            'Xbox One'
+        )
         ) {
             return 'microsoft_xboxone_ver1';
         }

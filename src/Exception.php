@@ -23,8 +23,7 @@ namespace Wurfl;
  *
  * @package    WURFL
  */
-class Exception
-    extends \Exception
+class Exception extends \Exception
 {
     // nothing to do here
 }

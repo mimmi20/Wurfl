@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class MSIE
-    implements NormalizerInterface
+class MSIE implements NormalizerInterface
 {
     /**
      * @param string $userAgent

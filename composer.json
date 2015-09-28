@@ -25,7 +25,9 @@
   "require-dev": {
     "phpunit/phpunit": "*",
     "monolog/monolog": "1.*@dev",
-    "mikey179/vfsStream": "1.3.*"
+    "mikey179/vfsStream": "1.3.*",
+    "squizlabs/php_codesniffer": "2.*",
+    "fabpot/php-cs-fixer": "*"
   },
   "suggest": {
     "monolog/monolog": "if you want to log to more than a file"

@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class KyoceraHandler
-    extends AbstractHandler
+class KyoceraHandler extends AbstractHandler
 {
 
     protected $prefix = 'KYOCERA';

@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class UPLink
-    implements NormalizerInterface
+class UPLink implements NormalizerInterface
 {
     /**
      * This method remove the 'UP.Link' substring from user agent string.

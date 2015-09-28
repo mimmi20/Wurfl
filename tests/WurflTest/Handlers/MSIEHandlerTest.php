@@ -11,8 +11,7 @@ use Wurfl\Handlers\Normalizer\Specific\MSIE;
 /**
  * test case.
  */
-class MSIEHandlerTest
-    extends \PHPUnit_Framework_TestCase
+class MSIEHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  MSIEHandler */
     private $msieHandler;

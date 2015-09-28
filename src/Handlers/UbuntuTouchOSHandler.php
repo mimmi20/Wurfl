@@ -28,8 +28,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class UbuntuTouchOSHandler
-    extends AbstractHandler
+class UbuntuTouchOSHandler extends AbstractHandler
 {
     protected $prefix = 'UbuntuTouchOS';
 
@@ -46,9 +45,9 @@ class UbuntuTouchOSHandler
     public function canHandle($userAgent)
     {
         return (Utils::checkIfContains($userAgent, 'Ubuntu') && Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('Mobile', 'Tablet')
-            ));
+            $userAgent,
+            array('Mobile', 'Tablet')
+        ));
     }
 
     /**

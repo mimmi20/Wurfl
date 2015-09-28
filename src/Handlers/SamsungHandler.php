@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SamsungHandler
-    extends AbstractHandler
+class SamsungHandler extends AbstractHandler
 {
     protected $prefix = 'SAMSUNG';
 

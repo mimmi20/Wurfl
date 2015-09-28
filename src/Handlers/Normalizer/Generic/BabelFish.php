@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class BabelFish
-    implements NormalizerInterface
+class BabelFish implements NormalizerInterface
 {
     /**
      * @var string

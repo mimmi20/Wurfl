@@ -23,8 +23,7 @@ namespace Wurfl\Handlers\Normalizer;
  *
  * @package    WURFL_Request
  */
-class UserAgentNormalizer
-    implements NormalizerInterface
+class UserAgentNormalizer implements NormalizerInterface
 {
     /**
      * UserAgentNormalizer chain - array of \Wurfl\Handlers\Normalizer\UserAgentNormalizer objects

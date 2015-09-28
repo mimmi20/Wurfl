@@ -34,8 +34,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-abstract class AbstractHandler
-    implements FilterInterface, HandlerInterface, MatcherCanHandleInterface
+abstract class AbstractHandler implements FilterInterface, HandlerInterface, MatcherCanHandleInterface
 {
     /**
      * @var \Wurfl\Handlers\Normalizer\UserAgentNormalizer
@@ -298,8 +297,8 @@ abstract class AbstractHandler
     private function isBlankOrGeneric($deviceID)
     {
         return ($deviceID === WurflConstants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(
-                trim($deviceID)
-            ) == 0);
+            trim($deviceID)
+        ) == 0);
     }
 
     /**

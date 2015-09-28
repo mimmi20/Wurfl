@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Firefox
-    implements NormalizerInterface
+class Firefox implements NormalizerInterface
 {
     /**
      * @param string $userAgent

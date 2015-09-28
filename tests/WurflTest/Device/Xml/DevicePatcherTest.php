@@ -7,8 +7,7 @@ use Wurfl\Device\ModelDevice;
 /**
  * test case
  */
-class DevicePatcherTest
-    extends \PHPUnit_Framework_TestCase
+class DevicePatcherTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  DevicePatcher */
     private $devicePatcher;

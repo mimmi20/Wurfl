@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class SerialNumbers
-    implements NormalizerInterface
+class SerialNumbers implements NormalizerInterface
 {
     /**
      * @param string $userAgent

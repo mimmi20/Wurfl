@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class MitsubishiHandler
-    extends AbstractHandler
+class MitsubishiHandler extends AbstractHandler
 {
 
     protected $prefix = 'MITSUBISHI';

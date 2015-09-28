@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
-class NovarraGoogleTranslator
-    implements NormalizerInterface
+class NovarraGoogleTranslator implements NormalizerInterface
 {
     /**
      * @var string

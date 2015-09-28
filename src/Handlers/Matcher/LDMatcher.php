@@ -30,8 +30,7 @@ namespace Wurfl\Handlers\Matcher;
  * @see        match()
  * @package    \Wurfl\Handlers\MatcherInterface
  */
-class LDMatcher
-    implements MatcherInterface
+class LDMatcher implements MatcherInterface
 {
     /**
      * Instance of \Wurfl\Handlers\Matcher\LDMatcher
