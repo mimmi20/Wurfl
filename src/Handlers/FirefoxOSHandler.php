@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -46,6 +46,8 @@ class FirefoxOSHandler extends AbstractHandler
         'firefox_os_ver2_0_tablet',
         'firefox_os_ver2_1',
         'firefox_os_ver2_1_tablet',
+        'firefox_os_ver2_2',
+        'firefox_os_ver2_2_tablet',
     );
 
     public static $firefoxOSMap = array(
@@ -57,6 +59,7 @@ class FirefoxOSHandler extends AbstractHandler
         '32.0' => '2.0',
         '33.0' => '2.1',
         '34.0' => '2.1',
+        '37.0' => '2.2',
     );
 
     public function canHandle($userAgent)

@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -70,8 +70,7 @@ class UcwebU2 implements NormalizerInterface
                 '/^UCWEB.+; wds (\d+)\.([\d]+);.+; ([ A-Za-z0-9_-]+); ([ A-Za-z0-9_-]+)\) U2/',
                 $userAgent,
                 $matches
-            )
-            ) {
+            )) {
                 $version = $matches[1] . '.' . $matches[2];
                 $model   = $matches[3] . '.' . $matches[4];
                 //Standard normalization stuff from WP matcher

@@ -21,27 +21,21 @@ namespace Wurfl\Handlers\Normalizer\Generic;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
 
 /**
- * User Agent Normalizer - removes UP.Link garbage from user agent
+ * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  *
- * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
+ * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class UPLink implements NormalizerInterface
+class Android
+    implements NormalizerInterface
 {
     /**
-     * This method remove the 'UP.Link' substring from user agent string.
-     *
      * @param string $userAgent
      *
-     * @return string Normalized user agent
+     * @return string
      */
     public function normalize($userAgent)
     {
-        $index = strpos($userAgent, ' UP.Link');
-
-        if ($index > 0) {
-            return substr($userAgent, 0, $index);
-        }
-
-        return $userAgent;
+        // Normalize Android version
+        return preg_replace('/(Android)[ \-\/](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
     }
 }

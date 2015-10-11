@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -31,7 +31,6 @@ use Wurfl\WurflConstants;
  */
 class KindleHandler extends AbstractHandler
 {
-
     protected $prefix = 'KINDLE';
 
     public static $constantIDs = array(
@@ -50,6 +49,10 @@ class KindleHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
+        if (Utils::checkIfContainsAll($userAgent, array('Android', '/Kindle'))) {
+            return false;
+        }
+
         return Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
     }
 

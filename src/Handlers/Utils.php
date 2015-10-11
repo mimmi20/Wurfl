@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -137,6 +137,37 @@ class Utils
     );
 
     /**
+     * @var bool
+     */
+    private static $isSmartTv;
+
+    /**
+     * @var bool
+     */
+    private static $isMobileBrowser;
+
+    /**
+     * @var bool
+     */
+    private static $isDesktopBrowser;
+
+    /**
+     * @var bool
+     */
+    private static $isRobot;
+
+    /**
+     * Resets cached detection variables for performance
+     */
+    public static function reset()
+    {
+        self::$isDesktopBrowser = null;
+        self::$isMobileBrowser  = null;
+        self::$isSmartTv        = null;
+        self::$isRobot          = null;
+    }
+
+    /**
      * Alias of \Wurfl\Handlers\Matcher\RISMatcher::match()
      *
      * @param array  $collection
@@ -219,17 +250,6 @@ class Utils
     }
 
     /**
-     * Resets cached detection variables for performance
-     */
-    public static function reset()
-    {
-        self::$isDesktopBrowser = null;
-        self::$isMobileBrowser  = null;
-        self::$isSmartTv        = null;
-        self::$isRobot          = null;
-    }
-
-    /**
      * Returns true if the give $userAgent is from a mobile device
      *
      * @param string $userAgent
@@ -254,8 +274,6 @@ class Utils
 
         return self::$isMobileBrowser;
     }
-
-    private static $isMobileBrowser;
 
     /**
      * Returns true if the give $userAgent is from a desktop device
@@ -283,8 +301,6 @@ class Utils
         return self::$isDesktopBrowser;
     }
 
-    private static $isDesktopBrowser;
-
     /**
      * Returns true if the give $userAgent is from a robot
      *
@@ -311,8 +327,6 @@ class Utils
         return self::$isRobot;
     }
 
-    private static $isRobot;
-
     /**
      * Is the given user agent very likely to be a desktop browser
      *
@@ -327,11 +341,14 @@ class Utils
             return false;
         }
 
+        //WP Desktop - Edge Mode
+        if (Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ',' ARM;',' Edge/'))) {
+            return false;
+        }
+
         // Chrome
-        if (Utils::checkIfContains($userAgent, 'Chrome') && !Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Android', 'Ventana')
-        )
+        if (Utils::checkIfContains($userAgent, 'Chrome')
+            && !Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))
         ) {
             return true;
         }
@@ -356,7 +373,8 @@ class Utils
 
         // Safari
         if (preg_match(
-            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ ' . 'Safari/[\d\.]+$#',
+            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ '
+            . 'Safari/[\d\.]+$#',
             $userAgent
         )
         ) {
@@ -364,12 +382,14 @@ class Utils
         }
 
         // Opera Desktop
-        if (Utils::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) {
+        if (self::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT')
+            || self::checkIfStartsWith($userAgent, 'Opera/9.80 (Macintosh')
+        ) {
             return true;
         }
 
         // Check desktop keywords
-        if (Utils::isDesktopBrowser($userAgent)) {
+        if (self::isDesktopBrowser($userAgent)) {
             return true;
         }
 
@@ -414,8 +434,6 @@ class Utils
 
         return self::$isSmartTv;
     }
-
-    private static $isSmartTv;
 
     /**
      * Returns true if the give $userAgent is from a spam bot or crawler

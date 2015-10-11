@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -47,6 +47,10 @@ class WindowsPhoneHandler extends AbstractHandler
         'generic_ms_phone_os8',
         'generic_ms_phone_os8_1',
         'generic_ms_phone_os10',
+        'generic_ms_phone_os7_desktopmode',
+        'generic_ms_phone_os7_5_desktopmode',
+        'generic_ms_phone_os8_desktopmode',
+        'generic_ms_phone_os10_desktopmode',
     );
 
     /**
@@ -58,6 +62,13 @@ class WindowsPhoneHandler extends AbstractHandler
     {
         if (Utils::isDesktopBrowser($userAgent)) {
             return false;
+        }
+
+        // Capturing WP desktop mode UAs but not Windows RT UAs
+        if (Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
+            || Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))
+        ) {
+            return true;
         }
 
         return Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'WindowsPhone', 'NativeHost'));
@@ -88,6 +99,24 @@ class WindowsPhoneHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
+        if (Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
+            || Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))
+        ) {
+            if (Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
+                return 'generic_ms_phone_os10_desktopmode';
+            }
+
+            if (Utils::checkIfContains($userAgent, 'WPDesktop')) {
+                return 'generic_ms_phone_os8_desktopmode';
+            }
+
+            if (Utils::checkIfContains($userAgent, 'Trident/5.0')) {
+                return 'generic_ms_phone_os7_5_desktopmode';
+            }
+
+            return 'generic_ms_phone_os7_desktopmode';
+        }
+
         $version = self::getWindowsPhoneVersion($userAgent);
 
         if ($version == '10.0') {
@@ -116,6 +145,11 @@ class WindowsPhoneHandler extends AbstractHandler
 
         if ($version == '6.5') {
             return 'generic_ms_winmo6_5';
+        }
+
+        //These are probably UAs of the type "Windows Phone Ad Client (Xna)/5.1.0.0 BMID/E67970D969"
+        if (Utils::checkIfStartsWithAnyOf($userAgent, array('Windows Phone Ad Client', 'WindowsPhoneAdClient'))) {
+            return 'generic_ms_phone_os7';
         }
 
         return WurflConstants::NO_MATCH;
@@ -208,6 +242,51 @@ class WindowsPhoneHandler extends AbstractHandler
                 return '6.5';
             } else {
                 return '7.0';
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $ua
+     *
+     * @return mixed|null
+     */
+    public static function getWindowsPhoneDesktopModel($ua)
+    {
+        // Normalize spaces in UA before capturing parts
+        $ua = preg_replace('|;(?! )|', '; ', $ua);
+        if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches) || preg_match(
+                '|\(Windows NT [\d\.]+?; ARM;.+?; WPDesktop; ([^;\)]+(; ?[^;\)]+)?)\) like Gecko|',
+                $ua,
+                $matches
+            )
+        ) {
+            $model = $matches[1];
+            $model = str_replace('_blocked', '', $model);
+            $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
+
+            return $model;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $ua
+     *
+     * @return null|string
+     */
+    public static function getWindowsPhoneDesktopVersion($ua)
+    {
+        if (preg_match('|Windows NT (\d+\.\d+)|', $ua, $matches)) {
+            if (strpos($matches[1], '10.0') !== false) {
+                return '10.0';
+            } else if (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
+                return '8.1';
+            } else {
+                return '8.0';
             }
         }
 
