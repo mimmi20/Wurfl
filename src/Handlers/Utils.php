@@ -382,9 +382,7 @@ class Utils
         }
 
         // Opera Desktop
-        if (self::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT')
-            || self::checkIfStartsWith($userAgent, 'Opera/9.80 (Macintosh')
-        ) {
+        if (self::checkIfStartsWithAnyOf($userAgent, array('Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh'))) {
             return true;
         }
 
@@ -444,7 +442,7 @@ class Utils
      */
     public static function isSpamOrCrawler($userAgent)
     {
-        return self::checkIfContains($userAgent, 'Spam') || self::checkIfContains($userAgent, 'FunWebProducts');
+        return self::checkIfContainsAnyOf($userAgent, array('Spam', 'FunWebProducts'));
     }
 
     /**
