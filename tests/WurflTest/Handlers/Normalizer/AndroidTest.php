@@ -34,6 +34,9 @@ class AndroidTest extends TestBase
         self::assertEquals($expected, $found);
     }
 
+    /**
+     * @return array[]
+     */
     public function normalizerDataProvider()
     {
         return array(
