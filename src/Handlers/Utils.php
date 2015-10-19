@@ -697,4 +697,15 @@ class Utils
     {
         return preg_replace('/; ?[a-z]{2}(?:-r?[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?(?!:)/', '; xx-xx', $userAgent);
     }
+
+    /**
+     * The character position of the first close parenthesis.  If there are no close parenthesis, returns string length
+     * @param string $string Haystack
+     * @return int Character position
+     */
+    public static function firstCloseParen($string)
+    {
+        $position = strpos($string, ')');
+        return ($position !== false) ? $position : strlen($string);
+    }
 }

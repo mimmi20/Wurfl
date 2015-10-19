@@ -21,6 +21,8 @@ namespace Wurfl;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
+use Wurfl\Request\GenericRequest;
+use Wurfl\Request\GenericRequestFactory;
 
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
@@ -379,9 +381,24 @@ class Manager
      * @param Request\GenericRequest $request
      *
      * @return \Wurfl\Device\ModelDeviceInterface
+     * @throws \InvalidArgumentException
      */
     public function getDevice($deviceId, Request\GenericRequest $request = null)
     {
+        if ($request !== null) {
+
+            if (!($request instanceof GenericRequest)) {
+                throw new \InvalidArgumentException(
+                    'Error: Request parameter must be null or instance of WURFL_Request_GenericRequest'
+                );
+            }
+
+            // Normalization must be performed if request is passed so virtual capabilities can be
+            // resolved correctly.  This is normally handled in self::deviceIdForRequest()
+            $generic_normalizer = UserAgentHandlerChainFactory::createGenericNormalizers();
+            $request->setUserAgentNormalized($generic_normalizer->normalize($request->getUserAgent()));
+        }
+
         return $this->getWrappedDevice($deviceId, $request);
     }
 
@@ -502,14 +519,26 @@ class Manager
      */
     private function getWrappedDevice($deviceId, Request\GenericRequest $request = null)
     {
-        $device = $this->getCacheStorage()->load('DEV_' . $deviceId);
+        $modelDevices = $this->getCacheStorage()->load('DEVS_' . $deviceId);
 
-        if (empty($device)) {
+        if (empty($modelDevices)) {
             $modelDevices = $this->getDeviceRepository()->getDeviceHierarchy($deviceId);
-            $device       = new CustomDevice($modelDevices, $request);
-            $this->getCacheStorage()->save('DEV_' . $deviceId, $device);
         }
 
-        return $device;
+        $this->getCacheStorage()->save('DEVS_' . $deviceId, $modelDevices);
+
+        if ($request === null) {
+            // If a request was not provided, we generate one from the WURFL entry itself
+            // to help resolve the virtual capabilities
+            $requestFactory    = new GenericRequestFactory();
+            $request           = $requestFactory->createRequestForUserAgent($modelDevices[0]->userAgent);
+            $genericNormalizer = UserAgentHandlerChainFactory::createGenericNormalizers();
+
+            $request->setUserAgentNormalized($genericNormalizer->normalize($request->getUserAgent()));
+        }
+
+        // The CustomDevice is not cached since virtual capabilities must be recalculated
+        // for every different request.
+        return new CustomDevice($modelDevices, $request);
     }
 }

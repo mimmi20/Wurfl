@@ -189,6 +189,9 @@ class WindowsPhoneHandler extends AbstractHandler
             //   Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; RM-821_eu_sweden_235)
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
 
+            //Doing the same normalization as above for Microsoft branded devices (RIP Nokia!)
+            $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
+
             return $model;
         }
 
@@ -196,23 +199,24 @@ class WindowsPhoneHandler extends AbstractHandler
     }
 
     /**
-     * @param $ua
+     * @param string $userAgent
      *
      * @return mixed|null
      */
-    public static function getWindowsPhoneAdClientModel($ua)
+    public static function getWindowsPhoneAdClientModel($userAgent)
     {
         // Normalize spaces in UA before capturing parts
-        $ua = preg_replace('|;(?! )|', '; ', $ua);
+        $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
         if (preg_match(
             '|Windows ?Phone ?Ad ?Client/[0-9\.]+ ?\(.+; ?Windows ?Phone(?: ?OS)? ?[0-9\.]+; ?([^;\)]+(; ?[^;\)]+)?)|',
-            $ua,
+            $userAgent,
             $matches
         )
         ) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
+            $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
 
             return $model;
         }
@@ -221,13 +225,13 @@ class WindowsPhoneHandler extends AbstractHandler
     }
 
     /**
-     * @param $ua
+     * @param string $userAgent
      *
      * @return null|string
      */
-    public static function getWindowsPhoneVersion($ua)
+    public static function getWindowsPhoneVersion($userAgent)
     {
-        if (preg_match('|Windows ?Phone(?: ?OS)? ?(\d+\.\d+)|', $ua, $matches)) {
+        if (preg_match('|Windows ?Phone(?: ?OS)? ?(\d+\.\d+)|', $userAgent, $matches)) {
             if (strpos($matches[1], '10.0') !== false) {
                 return '10.0';
             } elseif (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
@@ -249,23 +253,25 @@ class WindowsPhoneHandler extends AbstractHandler
     }
 
     /**
-     * @param string $ua
+     * @param string $userAgent
      *
      * @return mixed|null
      */
-    public static function getWindowsPhoneDesktopModel($ua)
+    public static function getWindowsPhoneDesktopModel($userAgent)
     {
         // Normalize spaces in UA before capturing parts
-        $ua = preg_replace('|;(?! )|', '; ', $ua);
-        if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $ua, $matches) || preg_match(
+        $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
+        if (preg_match('|\(Windows NT [\d\.]+?; ARM; ([^;\)]+(; ?[^;\)]+)?).+?Edge/\d|', $userAgent, $matches)
+            || preg_match(
                 '|\(Windows NT [\d\.]+?; ARM;.+?; WPDesktop; ([^;\)]+(; ?[^;\)]+)?)\) like Gecko|',
-                $ua,
+                $userAgent,
                 $matches
             )
         ) {
             $model = $matches[1];
             $model = str_replace('_blocked', '', $model);
             $model = preg_replace('/(NOKIA; RM-.+?)_.*/', '$1', $model, 1);
+            $model = preg_replace('/(Microsoft; RM-.+?)_.*/', '$1', $model, 1);
 
             return $model;
         }
@@ -274,13 +280,13 @@ class WindowsPhoneHandler extends AbstractHandler
     }
 
     /**
-     * @param string $ua
+     * @param string $userAgent
      *
      * @return null|string
      */
-    public static function getWindowsPhoneDesktopVersion($ua)
+    public static function getWindowsPhoneDesktopVersion($userAgent)
     {
-        if (preg_match('|Windows NT (\d+\.\d+)|', $ua, $matches)) {
+        if (preg_match('|Windows NT (\d+\.\d+)|', $userAgent, $matches)) {
             if (strpos($matches[1], '10.0') !== false) {
                 return '10.0';
             } else if (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
