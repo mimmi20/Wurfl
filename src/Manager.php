@@ -386,7 +386,6 @@ class Manager
     public function getDevice($deviceId, Request\GenericRequest $request = null)
     {
         if ($request !== null) {
-
             if (!($request instanceof GenericRequest)) {
                 throw new \InvalidArgumentException(
                     'Error: Request parameter must be null or instance of WURFL_Request_GenericRequest'

@@ -17,6 +17,7 @@
  */
 
 namespace Wurfl\Handlers;
+
 use Wurfl\WurflConstants;
 
 /**
@@ -54,7 +55,8 @@ class BotCrawlerTranscoderHandler extends AbstractHandler
      *
      * @return string Matching WURFL deviceID
      */
-    public function applyConclusiveMatch($userAgent) {
+    public function applyConclusiveMatch($userAgent)
+    {
 
         if (Utils::checkIfStartsWith($userAgent, "Mozilla")) {
             $tolerance = Utils::firstCloseParen($userAgent);
@@ -72,7 +74,8 @@ class BotCrawlerTranscoderHandler extends AbstractHandler
      *
      * @return string $deviceID
      */
-    public function applyRecoveryMatch($userAgent) {
+    public function applyRecoveryMatch($userAgent)
+    {
         return WurflConstants::GENERIC_WEB_BROWSER;
     }
 }

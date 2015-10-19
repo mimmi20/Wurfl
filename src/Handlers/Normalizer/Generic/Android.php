@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *
  * @package    \Wurfl\Handlers\Normalizer\Specific
  */
-class Android
-    implements NormalizerInterface
+class Android implements NormalizerInterface
 {
     /**
      * @param string $userAgent

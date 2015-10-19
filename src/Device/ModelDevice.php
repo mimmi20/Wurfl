@@ -116,7 +116,7 @@ class ModelDevice implements ModelDeviceInterface
      *
      * @return array Capabilities
      */
-    function getCapabilities()
+    public function getCapabilities()
     {
         return $this->capabilities;
     }
@@ -126,7 +126,7 @@ class ModelDevice implements ModelDeviceInterface
      *
      * @return array Group ID to capability name map
      */
-    function getGroupIdCapabilitiesNameMap()
+    public function getGroupIdCapabilitiesNameMap()
     {
         return $this->groupIdCapabilitiesNameMap;
     }

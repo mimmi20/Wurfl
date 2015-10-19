@@ -339,14 +339,14 @@ class AppleHandler extends AbstractHandler
         // server-bag [iPhone OS,8.2,12D508,iPhone4,1]
         // iPhone4,1/8.2 (12D508)
         if (preg_match(
-                '#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#',
-                $userAgent,
-                $matches
-            ) || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches) || preg_match(
-                '#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#',
-                $userAgent,
-                $matches
-            )
+            '#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#',
+            $userAgent,
+            $matches
+        ) || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches) || preg_match(
+            '#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#',
+            $userAgent,
+            $matches
+        )
         ) {
             $matches[1] = str_replace('.', '_', $matches[1]);
             if (Utils::checkIfContains($userAgent, 'iPad')) {
