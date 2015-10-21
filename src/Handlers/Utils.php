@@ -339,10 +339,6 @@ class Utils
      */
     public static function isRobot($userAgent)
     {
-        if (self::$isRobot !== null) {
-            return self::$isRobot;
-        }
-
         self::$isRobot = false;
         $userAgent     = strtolower($userAgent);
 
