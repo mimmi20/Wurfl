@@ -74,7 +74,6 @@ class DeviceRepositoryBuilder
      */
     public function build($wurflFile, array $wurflPatches = array(), array $capabilityFilter = array())
     {
-        // TODO: Create a better locking solution
         if (!$this->isRepositoryBuilt()) {
             // Determine Lockfile location
             $lockFile  = FileUtils::getTempDir() . '/wurfl.lock';

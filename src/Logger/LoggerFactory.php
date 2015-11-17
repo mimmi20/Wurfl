@@ -18,10 +18,12 @@
 
 namespace Wurfl\Logger;
 
+use Wurfl\Configuration\Config;
+
 /**
  * Logging factory
  *
- * @package    WURFL_Logger
+ * @package WURFL_Logger
  */
 class LoggerFactory
 {
@@ -32,7 +34,7 @@ class LoggerFactory
      *
      * @return \Psr\Log\LoggerInterface Logger object
      */
-    public static function create($wurflConfig = null)
+    public static function create(Config $wurflConfig = null)
     {
         if (self::isLoggingConfigured($wurflConfig)) {
             return self::createFileLogger($wurflConfig, 'wurfl.log');
@@ -49,7 +51,7 @@ class LoggerFactory
      *
      * @return FileLogger File logger
      */
-    private static function createFileLogger($wurflConfig, $fileName)
+    private static function createFileLogger(Config $wurflConfig, $fileName)
     {
         $logFileName = self::createLogFile($wurflConfig->logDir, $fileName);
 
@@ -63,7 +65,7 @@ class LoggerFactory
      *
      * @return bool
      */
-    private static function isLoggingConfigured($wurflConfig)
+    private static function isLoggingConfigured(Config $wurflConfig)
     {
         if (is_null($wurflConfig)) {
             return false;

@@ -84,7 +84,6 @@ class ModelDevice implements ModelDeviceInterface
         $specific = false,
         $groupIdCapabilitiesMap = null
     ) {
-
         $this->id               = $id;
         $this->userAgent        = $userAgent;
         $this->fallBack         = $fallBack;

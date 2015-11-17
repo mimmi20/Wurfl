@@ -56,7 +56,6 @@ class SmartTVHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        // TODO: Evaluate effectiveness of matching full-length in Conclusive matcher via RIS VS Exact match
         $tolerance = strlen($userAgent);
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);

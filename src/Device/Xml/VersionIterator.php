@@ -92,6 +92,6 @@ class VersionIterator extends AbstractIterator
             $this->readNextElement();
         }
 
-        return $this->currentElement != null;
+        return $this->currentElement !== null;
     }
 }

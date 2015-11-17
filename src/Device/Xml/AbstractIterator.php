@@ -51,6 +51,7 @@ abstract class AbstractIterator implements \Iterator
     public function __construct($inputFile)
     {
         $inputFile = FileUtils::cleanFilename($inputFile);
+
         if (!file_exists($inputFile)) {
             throw new \InvalidArgumentException('cannot locate [$inputFile] file!');
         }
@@ -96,7 +97,7 @@ abstract class AbstractIterator implements \Iterator
             $this->readNextElement();
         }
 
-        return $this->currentElement != null;
+        return $this->currentElement !== null;
     }
 
     /**

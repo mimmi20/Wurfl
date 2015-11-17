@@ -212,7 +212,6 @@ class CustomDeviceRepository implements DeviceRepositoryInterface
 
         $capabilityValue = null;
 
-        // TODO: Prevent infinite recursion
         while (strcmp($deviceId, 'root')) {
             $device = $this->persistenceStorage->load($deviceId);
 
