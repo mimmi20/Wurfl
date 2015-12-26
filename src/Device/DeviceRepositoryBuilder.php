@@ -344,7 +344,7 @@ class DeviceRepositoryBuilder
      *
      * @param \Wurfl\Device\Xml\DeviceIterator $deviceIterator
      *
-     * @return array
+     * @return ModelDeviceInterface[]
      */
     private function toArray(DeviceIterator $deviceIterator)
     {

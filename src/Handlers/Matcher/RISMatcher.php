@@ -105,9 +105,9 @@ class RISMatcher implements MatcherInterface
      * Returns the most accurate match of $needle in $collection
      *
      * @param $collection   array Array of user agents
-     * @param $needle       string String to search for in user agents
-     * @param $bestIndex    integer
-     * @param $bestDistance integer
+     * @param string $needle       string String to search for in user agents
+     * @param integer $bestIndex    integer
+     * @param integer $bestDistance integer
      *
      * @return string Device ID
      */
