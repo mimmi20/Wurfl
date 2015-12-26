@@ -33,6 +33,7 @@ interface HandlerInterface
 {
     /**
      * @param \Wurfl\Handlers\Normalizer\NormalizerInterface $userAgentNormalizer
+     * @return void
      */
     public function __construct(NormalizerInterface $userAgentNormalizer = null);
 
@@ -71,6 +72,7 @@ interface HandlerInterface
      *
      * @param string $userAgent
      * @param string $deviceID
+     * @return void
      */
     public function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID);
 
@@ -165,7 +167,13 @@ interface HandlerInterface
      */
     public function getPrefix();
 
+    /**
+     * @return string
+     */
     public function getNiceName();
 
+    /**
+     * @return string[]
+     */
     public function __sleep();
 }

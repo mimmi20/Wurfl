@@ -350,6 +350,10 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
         return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
     }
 
+    /**
+     * @param string $userAgent
+     * @param integer $tolerance
+     */
     public function getDeviceIDFromRIS($userAgent, $tolerance)
     {
         $match = Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
@@ -361,6 +365,10 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
         return WurflConstants::NO_MATCH;
     }
 
+    /**
+     * @param string $userAgent
+     * @param integer $tolerance
+     */
     public function getDeviceIDFromLD($userAgent, $tolerance = null)
     {
         $match = Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);

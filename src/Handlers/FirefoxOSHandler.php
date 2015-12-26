@@ -112,6 +112,10 @@ class FirefoxOSHandler extends AbstractHandler
     }
 
     // Function to extract Firefox OS version from Gecko/Firefox Browser version in the User-Agent
+
+    /**
+     * @param string $userAgent
+     */
     public static function getFirefoxOSVersion($userAgent)
     {
         // Find Firefox Browser/Gecko version

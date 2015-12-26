@@ -80,9 +80,9 @@ class HTCMacHandler extends AbstractHandler
     }
 
     /**
-     * @param $userAgent
+     * @param string $userAgent
      *
-     * @return mixed|null
+     * @return string|null
      */
     public static function getHTCMacModel($userAgent)
     {

@@ -62,7 +62,7 @@ class NintendoHandler extends AbstractHandler
     /**
      * @param string $userAgent
      *
-     * @return null|string
+     * @return string
      */
     public function applyConclusiveMatch($userAgent)
     {
