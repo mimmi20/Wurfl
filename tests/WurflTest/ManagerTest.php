@@ -4,7 +4,6 @@ namespace WurflTest;
 use Wurfl\Configuration\Config;
 use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\Manager;
-use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\Factory;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
@@ -84,7 +83,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     {
         $wurflInfo = $this->object->getWURFLInfo();
         self::assertEquals('Wireless Universal Resource File v_2.1.0.1', $wurflInfo->version);
-        self::assertEquals('Sun Aug 31 00:53:12 -0400 2014', $wurflInfo->lastUpdated);
+        self::assertEquals('July 30, 2007', $wurflInfo->lastUpdated);
     }
 
     public function testGetListOfGroups()
