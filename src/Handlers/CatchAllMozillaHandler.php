@@ -37,7 +37,7 @@ class CatchAllMozillaHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return (Utils::checkIfStartsWith($userAgent, 'Mozilla/4') || Utils::checkIfStartsWith($userAgent, 'Mozilla/5'));
+        return Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/4', 'Mozilla/5'));
     }
 
     /**
@@ -49,6 +49,7 @@ class CatchAllMozillaHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
+        //High accuracy mode
         return $this->getDeviceIDFromLD($userAgent, 5);
     }
 }

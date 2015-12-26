@@ -58,8 +58,12 @@ class BotCrawlerTranscoderHandler extends AbstractHandler
     public function applyConclusiveMatch($userAgent)
     {
 
-        if (Utils::checkIfStartsWith($userAgent, "Mozilla")) {
-            $tolerance = Utils::firstCloseParen($userAgent);
+        if (Utils::checkIfContains($userAgent, 'GoogleImageProxy')) {
+            return 'google_image_proxy';
+        }
+
+        if (Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
+            $tolerance = Utils::firstCloseParen($userAgent) + 1;
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 

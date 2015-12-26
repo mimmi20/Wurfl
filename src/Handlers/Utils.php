@@ -134,6 +134,8 @@ class Utils
         'feedfetcher-google',
         'mowser',
         'trove',
+        'google web preview',
+        'googleimageproxy',
         'mediapartners-google',
         'azureus',
         'inquisitor',

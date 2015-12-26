@@ -46,6 +46,7 @@ class MSIEHandler extends AbstractHandler
         10 => 'msie_10',
         11 => 'msie_11',
         12 => 'msie_12',
+        13 => 'edge_13',
     );
 
     /**

@@ -1,6 +1,40 @@
 ScientiaMobile WURFL PHP API change log:
 
-[2015.04.01] ScientiaMobile Database API 1.6.0.0
+[2015.10.19] 1.6.3.0
+- Improved detection of:
+    - CFNetwork
+    - Android webview
+    - Google Web Preview and Google Image Proxy bots
+    - New iPhone/iPad devices
+    - Certain third party Android browsers
+    
+[2015.08.04] 1.6.2.0
+- Improved detection in VC tool for:
+    - MSIE 12/Edge
+- Improved detection of:
+    - Windows Phone
+    - Bots
+    - CFNetwork
+
+[2015.07.01] 1.6.1.0
+- Improved detection in VC tool for:
+    - MSIE 12/Edge
+    - Baidu browser
+    - Apple
+- Improved detection of:
+    - Windows Phone
+    - Kindle
+    - SmartTV
+    - Apple
+    - CFNetwork
+    - FirefoxOS
+    - Opera
+
+[2015.04.20] 1.6.0.1
+- Fixed
+    - Header sanitize error when Header value is an array (i.e. argv)
+
+[2015.04.01] 1.6.0.0
 - Added
     - Android 5.1 support
     - MSIE 12/Edge 12.0 support
@@ -163,11 +197,9 @@ ScientiaMobile WURFL PHP API change log:
     - MaemoHandler
 - Added Support For Multiple Memcache backend
 
-
 [2010.05.06]
 - Replaced WURFLManagerProvider with WURFLManagerFactory
 - Autoreloading Added
-
 
 [2009.06.01]
 - Configuration:

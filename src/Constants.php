@@ -25,5 +25,5 @@ namespace Wurfl;
  */
 class Constants
 {
-    const API_VERSION = '1.6.1.0';
+    const API_VERSION = '1.6.3.0';
 }

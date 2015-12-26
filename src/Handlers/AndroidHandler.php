@@ -54,6 +54,7 @@ class AndroidHandler extends AbstractHandler
         'generic_android_ver5_2',
         'generic_android_ver5_3',
         'generic_android_ver6_0',
+        'generic_android_ver6_1',
         'generic_android_ver1_5_tablet',
         'generic_android_ver1_6_tablet',
         'generic_android_ver2_tablet',
@@ -75,6 +76,7 @@ class AndroidHandler extends AbstractHandler
         'generic_android_ver5_2_tablet',
         'generic_android_ver5_3_tablet',
         'generic_android_ver6_0_tablet',
+        'generic_android_ver6_1_tablet',
     );
 
     /**
@@ -187,7 +189,8 @@ class AndroidHandler extends AbstractHandler
         '5.1',
         '5.2',
         '5.3',
-        '6.0'
+        '6.0',
+        '6.1',
     );
 
     /**

@@ -49,7 +49,11 @@ class CatchAllRisHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $tolerance = Utils::firstSlash($userAgent);
+        if (Utils::checkIfStartsWith($userAgent, 'CFNetwork/')) {
+            $tolerance = Utils::firstSpace($userAgent);
+        } else {
+            $tolerance = Utils::firstSlash($userAgent);
+        }
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

@@ -138,6 +138,17 @@ class AppleHandler extends AbstractHandler
         'apple_ipad_ver1_sub9_subhwmini1',
         'apple_ipad_ver1_sub9_subhwmini2',
         'apple_ipad_ver1_sub9_subhwmini3',
+        'apple_ipad_ver1_sub9_subhwmini4',
+        'apple_ipad_ver1_sub9_1_subhw2',
+        'apple_ipad_ver1_sub9_1_subhw3',
+        'apple_ipad_ver1_sub9_1_subhw4',
+        'apple_ipad_ver1_sub9_1_subhwair',
+        'apple_ipad_ver1_sub9_1_subhwair2',
+        'apple_ipad_ver1_sub9_1_subhwmini1',
+        'apple_ipad_ver1_sub9_1_subhwmini2',
+        'apple_ipad_ver1_sub9_1_subhwmini3',
+        'apple_ipad_ver1_sub9_1_subhwmini4',
+        'apple_ipad_ver1_sub9_1_subhwpro',
         'apple_iphone_ver1_subhw2g',
         'apple_iphone_ver2_subhw2g',
         'apple_iphone_ver2_subhw3g',
@@ -228,6 +239,16 @@ class AppleHandler extends AbstractHandler
         'apple_iphone_ver9_subhw5s',
         'apple_iphone_ver9_subhw6',
         'apple_iphone_ver9_subhw6plus',
+        'apple_iphone_ver9_subhw6s',
+        'apple_iphone_ver9_subhw6splus',
+        'apple_iphone_ver9_1_subhw4s',
+        'apple_iphone_ver9_1_subhw5',
+        'apple_iphone_ver9_1_subhw5c',
+        'apple_iphone_ver9_1_subhw5s',
+        'apple_iphone_ver9_1_subhw6',
+        'apple_iphone_ver9_1_subhw6plus',
+        'apple_iphone_ver9_1_subhw6s',
+        'apple_iphone_ver9_1_subhw6splus',
         'apple_ipod_touch_ver1_subhw1',
         'apple_ipod_touch_ver2_subhw1',
         'apple_ipod_touch_ver2_1_subhw1',
@@ -266,6 +287,9 @@ class AppleHandler extends AbstractHandler
         'apple_ipod_touch_ver8_3_subhw5',
         'apple_ipod_touch_ver8_4_subhw5',
         'apple_ipod_touch_ver9_subhw5',
+        'apple_ipod_touch_ver9_subhw6',
+        'apple_ipod_touch_ver9_1_subhw5',
+        'apple_ipod_touch_ver9_1_subhw6',
     );
 
     // iOS hardware mappings
@@ -285,6 +309,8 @@ class AppleHandler extends AbstractHandler
         '6,2' => '5s',
         '7,1' => '6plus',
         '7,2' => '6',
+        '8,1' => '6s',
+        '8,2' => '6splus',
     );
 
     public static $ipadDeviceMap = array(
@@ -311,6 +337,8 @@ class AppleHandler extends AbstractHandler
         '4,7' => 'mini3',
         '4,8' => 'mini3',
         '4,9' => 'mini3',
+        '5,1' => 'mini4',
+        '5,2' => 'mini4',
         '5,3' => 'air2',
         '5,4' => 'air2',
     );
@@ -321,6 +349,7 @@ class AppleHandler extends AbstractHandler
         '3,1' => '3',
         '4,1' => '4',
         '5,1' => '5',
+        '7,1' => '6',
     );
 
     public function canHandle($userAgent)
