@@ -40,4 +40,10 @@ class BenQHandler extends AbstractHandler
 
         return Utils::checkIfStartsWith($userAgent, 'BenQ') || Utils::checkIfStartsWith($userAgent, 'BENQ');
     }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

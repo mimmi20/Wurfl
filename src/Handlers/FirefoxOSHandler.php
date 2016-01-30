@@ -48,6 +48,8 @@ class FirefoxOSHandler extends AbstractHandler
         'firefox_os_ver2_1_tablet',
         'firefox_os_ver2_2',
         'firefox_os_ver2_2_tablet',
+        'firefox_os_ver2_5',
+        'firefox_os_ver2_5_tablet',
     );
 
     public static $firefoxOSMap = array(
@@ -60,6 +62,7 @@ class FirefoxOSHandler extends AbstractHandler
         '33.0' => '2.1',
         '34.0' => '2.1',
         '37.0' => '2.2',
+        '43.0' => '2.5',
     );
 
     public function canHandle($userAgent)

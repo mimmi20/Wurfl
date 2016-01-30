@@ -44,4 +44,10 @@ class SharpHandler extends AbstractHandler
 
         return Utils::checkIfStartsWithAnyOf($userAgent, array('Sharp', 'SHARP'));
     }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

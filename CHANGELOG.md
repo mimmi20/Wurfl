@@ -1,5 +1,23 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2015.12.16] 1.6.4.2
+- Added mandatory capabilities for advertised capabilities
+
+[2015.12.09] 1.6.4.1
+- Fixed is_phone virtual capability logic
+
+[2015.12.04] 1.6.4.0
+- Improved detection of:
+    - Nokia devices
+    - Android User-Agents (UAs) without model names
+    - Certain feature phones running Opera Mini
+    - SmartTVs
+    - UAs from Android apps
+    - Blackberry Playbook
+    - Bot UAs
+    - Firefox on iOS
+- Improved internal UA matching methods
+
 [2015.10.19] 1.6.3.0
 - Improved detection of:
     - CFNetwork

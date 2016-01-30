@@ -44,4 +44,10 @@ class ToshibaHandler extends AbstractHandler
 
         return Utils::checkIfStartsWith($userAgent, 'Toshiba');
     }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

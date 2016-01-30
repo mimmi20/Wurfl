@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use Wurfl\WurflConstants;
+
 /**
  * OperaHandlder
  *
@@ -53,7 +55,7 @@ class OperaMiniHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('Opera Mini', 'Opera Mobi'));
+        return Utils::checkIfContainsAnyOf($userAgent, array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi'));
     }
 
     /**
@@ -63,7 +65,16 @@ class OperaMiniHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $operaMiniIndex = strpos($userAgent, 'Opera Mini');
+        $model = self::getOperaModel($userAgent);
+
+        if ($model !== null) {
+            $prefix    = $model . WurflConstants::RIS_DELIMITER;
+            $userAgent = $prefix . $userAgent;
+
+            return $this->getDeviceIDFromRIS($userAgent, strlen($prefix));
+        }
+
+        $operaMiniIndex = Utils::indexOfOrLength($userAgent, 'Opera Mini');
 
         if ($operaMiniIndex !== false) {
             // Match up to the first '.' after 'Opera Mini'
@@ -75,7 +86,8 @@ class OperaMiniHandler extends AbstractHandler
             }
         }
 
-        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
     /**
@@ -96,5 +108,21 @@ class OperaMiniHandler extends AbstractHandler
         }
 
         return 'generic_opera_mini_version1';
+    }
+
+    /**
+     * Get the model name from the provided user agent or null if it cannot be determined
+     *
+     * @param string $ua
+     *
+     * @return false|string
+     */
+    public static function getOperaModel($ua)
+    {
+        if (preg_match('#^Opera/[\d\.]+ .+?\d{3}X\d{3} (.+)$#', $ua, $matches)) {
+            return $matches[1];
+        }
+
+        return false;
     }
 }

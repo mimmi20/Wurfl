@@ -25,20 +25,14 @@ class ChromeTest extends TestBase
      */
     public function shoudReturnOnlyFirefoxStringWithTheMajorVersion($userAgent, $expected)
     {
-        $this->assertNormalizeEqualsExpected($userAgent, $expected);
+        $found = $this->normalizer->normalize($userAgent);
+        $this->assertEquals($found, $expected);
     }
 
     public function chromeUserAgentsDataProvider()
     {
         return array(
-            array(
-                @'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
-                'Chrome/0'
-            ),
-            array('Chrome/9.x', 'Chrome/9'),
-            array('Mozilla', 'Mozilla'),
-            array('Chrome', 'Chrome')
-
+            array("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/1838444932.621444948.1409104071.2120334063 Safari/537.36", 'Chrome/1838444932.621444948.1409104071.2120334063 Safari/537.36'),
         );
     }
 }

@@ -29,7 +29,6 @@ namespace Wurfl\Handlers;
  */
 class KonquerorHandler extends AbstractHandler
 {
-
     protected $prefix = 'KONQUEROR';
 
     /**
@@ -44,5 +43,11 @@ class KonquerorHandler extends AbstractHandler
         }
 
         return Utils::checkIfContains($userAgent, 'Konqueror');
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

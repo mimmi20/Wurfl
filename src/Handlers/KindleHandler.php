@@ -49,7 +49,9 @@ class KindleHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        if (Utils::checkIfContainsAll($userAgent, array('Android', '/Kindle'))) {
+        if (Utils::checkIfContains($userAgent, 'Android')
+            && Utils::checkIfContainsAnyOf($userAgent, array('/Kindle', 'Silk'))
+        ) {
             return false;
         }
 
@@ -63,26 +65,9 @@ class KindleHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        // Mobile-mode Kindle Fire
-        if (Utils::checkIfContains($userAgent, 'Android')) {
-            // UA was already restructured by the specific normalizer
-            $tolerance = Utils::toleranceToRisDelimeter($userAgent);
-
-            if ($tolerance) {
-                return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-            } else {
-                $search = 'Silk/';
-                $idx    = strpos($userAgent, $search);
-
-                if ($idx !== false) {
-                    $tolerance = $idx + strlen($search) + 1;
-
-                    return $this->getDeviceIDFromRIS($userAgent, $tolerance);
-                }
-            }
-        }
-
         // Desktop-mode Kindle Fire
+        // Kindle Fire 2nd Gen Desktop Mode has no android version (even though "Build/I...." tells us it's ICS):
+        // Mozilla/5.0 (Linux; U; en-us; KFOT Build/IML74K) AppleWebKit/535.19 (KHTML, like Gecko) Silk/2.0 Safari/535.19 Silk-Accelerated=false
         $idx = strpos($userAgent, 'Build/');
 
         if ($idx !== false) {

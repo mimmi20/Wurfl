@@ -52,6 +52,7 @@ class NecHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

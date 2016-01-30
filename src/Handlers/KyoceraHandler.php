@@ -29,7 +29,6 @@ namespace Wurfl\Handlers;
  */
 class KyoceraHandler extends AbstractHandler
 {
-
     protected $prefix = 'KYOCERA';
 
     /**
@@ -44,5 +43,11 @@ class KyoceraHandler extends AbstractHandler
         }
 
         return Utils::checkIfStartsWithAnyOf($userAgent, array('kyocera', 'QC-', 'KWC-'));
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

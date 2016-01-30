@@ -44,4 +44,10 @@ class PhilipsHandler extends AbstractHandler
 
         return (Utils::checkIfStartsWith($userAgent, 'Philips') || Utils::checkIfStartsWith($userAgent, 'PHILIPS'));
     }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
 }

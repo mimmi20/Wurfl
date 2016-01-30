@@ -106,6 +106,11 @@ class Utils
         'large screen',
         'netcast',
         'philipstv',
+        'digital-tv',
+        ' mb90/',
+        ' mb91/',
+        ' mb95/',
+        'vizio-dtv',
     );
 
     private static $desktopBrowsers = array(
@@ -530,13 +535,11 @@ class Utils
      *
      * @param string $string Haystack
      *
-     * @return int Char index
+     * @return null|int Character position
      */
     public static function firstSlash($string)
     {
-        $firstSlash = strpos($string, '/');
-
-        return ($firstSlash !== false) ? $firstSlash : strlen($string);
+        return self::findCharPosition($string, '/');
     }
 
     /**
@@ -544,16 +547,21 @@ class Utils
      *
      * @param string $string Haystack
      *
-     * @return int Char index
+     * @return null|int Character position
      */
     public static function secondSlash($string)
     {
-        $firstSlash = strpos($string, '/');
-        if ($firstSlash === false) {
-            return strlen($string);
-        }
+        return self::findCharPosition($string, '/', self::findCharPosition($string, '/'));
+    }
 
-        return strpos(substr($string, $firstSlash + 1), '/') + $firstSlash;
+    /**
+     * Number of slashes ('/')
+     * @param $string
+     * @return int Count
+     */
+    public static function numSlashes($string)
+    {
+        return substr_count($string, '/');
     }
 
     /**
@@ -561,13 +569,23 @@ class Utils
      *
      * @param string $string Haystack
      *
-     * @return int Char index
+     * @return null|int Character position
      */
     public static function firstSpace($string)
     {
-        $firstSpace = strpos($string, ' ');
+        return self::findCharPosition($string, ' ');
+    }
 
-        return ($firstSpace === false) ? strlen($string) : $firstSpace;
+    /**
+     * The character position of the first open parenthesis.  If there are no open parenthesis, returns null
+     *
+     * @param string $string Haystack
+     *
+     * @return null|int Character position
+     */
+    public static function firstOpenParen($string)
+    {
+        return self::findCharPosition($string, '(');
     }
 
     /**
@@ -726,13 +744,30 @@ class Utils
     }
 
     /**
-     * The character position of the first close parenthesis.  If there are no close parenthesis, returns string length
+     * The character position of the first close parenthesis.  If there are no close parenthesis, returns null
+     *
      * @param string $string Haystack
-     * @return int Character position
+     *
+     * @return null|int Character position
      */
     public static function firstCloseParen($string)
     {
-        $position = strpos($string, ')');
-        return ($position !== false) ? $position : strlen($string);
+        return self::findCharPosition($string, ')');
+    }
+
+    /**
+     * The character position in a string.  If not present, returns null
+     *
+     * @param string $string
+     * @param string $char
+     * @param int    $startAt
+     *
+     * @return null|int Character position
+     */
+    public static function findCharPosition($string, $char, $startAt = 0)
+    {
+        $position = strpos($string, $char, $startAt);
+
+        return ($position !== false) ? $position + 1 : null;
     }
 }

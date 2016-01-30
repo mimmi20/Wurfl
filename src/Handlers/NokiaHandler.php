@@ -31,7 +31,6 @@ use Wurfl\WurflConstants;
  */
 class NokiaHandler extends AbstractHandler
 {
-
     protected $prefix = 'NOKIA';
 
     public static $constantIDs = array(
@@ -51,7 +50,8 @@ class NokiaHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Nokia');
+        return Utils::checkIfContains($userAgent, 'Nokia')
+            && !Utils::checkIfContainsAnyOf($userAgent, array('Android', 'iPhone'));
     }
 
     /**
@@ -62,6 +62,10 @@ class NokiaHandler extends AbstractHandler
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+
+        if (Utils::checkIfStartsWithAnyOf($userAgent, array('Nokia/', 'Nokia '))) {
+            $tolerance = strlen($userAgent);
+        }
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

@@ -29,7 +29,6 @@ namespace Wurfl\Handlers;
  */
 class QtekHandler extends AbstractHandler
 {
-
     protected $prefix = 'QTEK';
 
     /**
@@ -44,5 +43,11 @@ class QtekHandler extends AbstractHandler
         }
 
         return Utils::checkIfStartsWith($userAgent, 'Qtek');
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

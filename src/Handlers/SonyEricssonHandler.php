@@ -53,7 +53,7 @@ class SonyEricssonHandler extends AbstractHandler
     public function applyConclusiveMatch($userAgent)
     {
         if (Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
-            $tolerance = Utils::firstSlash($userAgent) - 1;
+            $tolerance = Utils::firstSlash($userAgent) - 2;
 
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }

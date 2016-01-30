@@ -1,6 +1,7 @@
 #Ensure every file expect zip archives uses lf
 *.markdown text eol=lf diff
 *.js text eol=lf diff
+*.css text eol=lf diff
 *.json text eol=lf diff
 *.lock text eol=lf diff
 *.md text eol=lf diff

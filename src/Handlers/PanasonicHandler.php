@@ -29,7 +29,6 @@ namespace Wurfl\Handlers;
  */
 class PanasonicHandler extends AbstractHandler
 {
-
     protected $prefix = 'PANASONIC';
 
     /**
@@ -44,5 +43,11 @@ class PanasonicHandler extends AbstractHandler
         }
 
         return Utils::checkIfStartsWith($userAgent, 'Panasonic');
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

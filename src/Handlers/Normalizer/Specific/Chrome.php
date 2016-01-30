@@ -34,25 +34,6 @@ class Chrome implements NormalizerInterface
      */
     public function normalize($userAgent)
     {
-        return $this->chromeWithMajorVersion($userAgent);
-    }
-
-    /**
-     * Returns Google Chrome's Major version number
-     *
-     * @param string $userAgent
-     *
-     * @return string Version number
-     */
-    private function chromeWithMajorVersion($userAgent)
-    {
-        $startIndex = strpos($userAgent, 'Chrome');
-        $endIndex   = strpos($userAgent, '.', $startIndex);
-
-        if ($endIndex === false) {
-            return substr($userAgent, $startIndex);
-        } else {
-            return substr($userAgent, $startIndex, ($endIndex - $startIndex));
-        }
+        return substr($userAgent, strpos($userAgent, 'Chrome'));
     }
 }

@@ -47,7 +47,7 @@ class ChromeHandler extends AbstractHandler
 
     public function applyConclusiveMatch($userAgent)
     {
-        $tolerance = Utils::indexOfOrLength('.', $userAgent, strpos($userAgent, 'Chrome'));
+        $tolerance = Utils::indexOfOrLength($userAgent, '.');
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

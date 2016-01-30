@@ -31,7 +31,6 @@ use Wurfl\WurflConstants;
  */
 class MotorolaHandler extends AbstractHandler
 {
-
     protected $prefix = 'MOTOROLA';
 
     public static $constantIDs = array(
@@ -62,7 +61,8 @@ class MotorolaHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
     /**

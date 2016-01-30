@@ -149,6 +149,16 @@ class AppleHandler extends AbstractHandler
         'apple_ipad_ver1_sub9_1_subhwmini3',
         'apple_ipad_ver1_sub9_1_subhwmini4',
         'apple_ipad_ver1_sub9_1_subhwpro',
+        'apple_ipad_ver1_sub9_2_subhw2',
+        'apple_ipad_ver1_sub9_2_subhw3',
+        'apple_ipad_ver1_sub9_2_subhw4',
+        'apple_ipad_ver1_sub9_2_subhwair',
+        'apple_ipad_ver1_sub9_2_subhwair2',
+        'apple_ipad_ver1_sub9_2_subhwmini1',
+        'apple_ipad_ver1_sub9_2_subhwmini2',
+        'apple_ipad_ver1_sub9_2_subhwmini3',
+        'apple_ipad_ver1_sub9_2_subhwmini4',
+        'apple_ipad_ver1_sub9_2_subhwpro',
         'apple_iphone_ver1_subhw2g',
         'apple_iphone_ver2_subhw2g',
         'apple_iphone_ver2_subhw3g',
@@ -249,6 +259,14 @@ class AppleHandler extends AbstractHandler
         'apple_iphone_ver9_1_subhw6plus',
         'apple_iphone_ver9_1_subhw6s',
         'apple_iphone_ver9_1_subhw6splus',
+        'apple_iphone_ver9_2_subhw4s',
+        'apple_iphone_ver9_2_subhw5',
+        'apple_iphone_ver9_2_subhw5c',
+        'apple_iphone_ver9_2_subhw5s',
+        'apple_iphone_ver9_2_subhw6',
+        'apple_iphone_ver9_2_subhw6plus',
+        'apple_iphone_ver9_2_subhw6s',
+        'apple_iphone_ver9_2_subhw6splus',
         'apple_ipod_touch_ver1_subhw1',
         'apple_ipod_touch_ver2_subhw1',
         'apple_ipod_touch_ver2_1_subhw1',
@@ -290,6 +308,8 @@ class AppleHandler extends AbstractHandler
         'apple_ipod_touch_ver9_subhw6',
         'apple_ipod_touch_ver9_1_subhw5',
         'apple_ipod_touch_ver9_1_subhw6',
+        'apple_ipod_touch_ver9_2_subhw5',
+        'apple_ipod_touch_ver9_2_subhw6',
     );
 
     // iOS hardware mappings
@@ -341,6 +361,8 @@ class AppleHandler extends AbstractHandler
         '5,2' => 'mini4',
         '5,3' => 'air2',
         '5,4' => 'air2',
+        '6,7' => 'pro',
+        '6,8' => 'pro',
     );
 
     public static $ipodDeviceMap = array(
@@ -358,7 +380,8 @@ class AppleHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')));
+        return (Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')))
+            && !Utils::checkIfContains($userAgent, 'Symbian');
     }
 
     public function applyConclusiveMatch($userAgent)

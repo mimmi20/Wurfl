@@ -48,10 +48,11 @@ class DoCoMoHandler extends AbstractHandler
 
     public function applyConclusiveMatch($userAgent)
     {
-        $tolerance = Utils::ordinalIndexOf($userAgent, '/', 2);
-        if ($tolerance === -1) {
+        if (Utils::numSlashes($userAgent) >= 2) {
+            $tolerance = Utils::secondSlash($userAgent);
+        } else {
             //  DoCoMo/2.0 F01A(c100;TB;W24H17)
-            $tolerance = Utils::indexOfOrLength('(', $userAgent);
+            $tolerance = Utils::firstOpenParen($userAgent);
         }
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);

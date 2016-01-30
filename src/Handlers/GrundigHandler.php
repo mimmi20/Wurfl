@@ -29,7 +29,6 @@ namespace Wurfl\Handlers;
  */
 class GrundigHandler extends AbstractHandler
 {
-
     protected $prefix = 'GRUNDIG';
 
     public function canHandle($userAgent)
@@ -39,5 +38,11 @@ class GrundigHandler extends AbstractHandler
         }
 
         return Utils::checkIfStartsWithAnyOf($userAgent, array('Grundig', 'GRUNDIG'));
+    }
+
+    public function applyConclusiveMatch($userAgent)
+    {
+        $tolerance = Utils::firstSlash($userAgent);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

@@ -37,7 +37,7 @@ class CatchAllMozillaHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/4', 'Mozilla/5'));
+        return Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/3', 'Mozilla/4', 'Mozilla/5'));
     }
 
     /**

@@ -86,7 +86,8 @@ class AndroidHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return !Utils::checkIfContains($userAgent, 'like Android') && Utils::checkIfContains($userAgent, 'Android');
+        return !Utils::checkIfContainsAnyOf($userAgent, array('like Android', 'Symbian'))
+            && Utils::checkIfContains($userAgent, 'Android');
     }
 
     /**
@@ -286,6 +287,9 @@ class AndroidHandler extends AbstractHandler
         if (strpos($model, 'Build/') === 0) {
             return null;
         }
+
+        // Replace xx-xx (locale) in the model name with ''
+        $model = str_replace('xx-xx', '', $model);
 
         // Normalize Chinese UAs
         $model = preg_replace('#(?:_CMCC_TD|_CMCC|_TD)\b#', '', $model);

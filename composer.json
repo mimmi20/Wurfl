@@ -15,12 +15,13 @@
   "require": {
     "php": ">=5.3.3",
     "psr/log": "~1.0",
-    "mimmi20/wurflcache": "~1.3",
+    "mimmi20/wurflcache": ">=1.3.4",
     "mimmi20/wurfl-generic-request": "*",
-    "mimmi20/wurfl-virtual-capability": "~1.6.3.0",
-    "mimmi20/wurfl-config": "~1.0.3",
+    "mimmi20/wurfl-virtual-capability": ">=1.6.4.3",
+    "mimmi20/wurfl-config": ">=1.0.3",
     "mimmi20/wurfl-storage": "*",
-    "mimmi20/wurfl-custom-device": "~1.0.4"
+    "mimmi20/wurfl-custom-device": ">=1.0.5",
+    "mimmi20/wurfl-constants": ">=1.6.4.2"
   },
   "require-dev": {
     "phpunit/phpunit": "*",

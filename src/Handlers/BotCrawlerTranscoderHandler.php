@@ -63,11 +63,11 @@ class BotCrawlerTranscoderHandler extends AbstractHandler
         }
 
         if (Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
-            $tolerance = Utils::firstCloseParen($userAgent) + 1;
-            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+            $tolerance = Utils::firstCloseParen($userAgent);
+        } else {
+            $tolerance = Utils::firstSlash($userAgent);
         }
 
-        $tolerance = Utils::firstSlash($userAgent);
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
@@ -80,6 +80,6 @@ class BotCrawlerTranscoderHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        return WurflConstants::GENERIC_WEB_BROWSER;
+        return WurflConstants::GENERIC_WEB_CRAWLER;
     }
 }
