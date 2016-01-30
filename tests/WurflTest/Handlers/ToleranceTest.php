@@ -38,5 +38,4 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(9, Utils::firstCloseParen('Value(12)'));
         $this->assertNull(Utils::firstCloseParen('Value'));
     }
-
 }
