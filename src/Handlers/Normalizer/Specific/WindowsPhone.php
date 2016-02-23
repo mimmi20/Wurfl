@@ -11,22 +11,20 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Handlers\Normalizer\Specific;
 
+use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\Handlers\Utils;
 use Wurfl\Handlers\WindowsPhoneHandler;
-use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class WindowsPhone
     implements NormalizerInterface
@@ -45,7 +43,7 @@ class WindowsPhone
         ) {
             $model   = WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
             $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
-        } else if (Utils::checkIfContains($userAgent, 'NativeHost')) {
+        } elseif (Utils::checkIfContains($userAgent, 'NativeHost')) {
             return $userAgent;
         } else {
             $model   = WindowsPhoneHandler::getWindowsPhoneModel($userAgent);

@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -19,14 +19,12 @@
 namespace Wurfl\Handlers\Normalizer\Specific;
 
 use Wurfl\Handlers\AndroidHandler;
-use Wurfl\Handlers\Utils;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\Utils;
 use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class Kindle
     implements NormalizerInterface

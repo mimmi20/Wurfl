@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,8 +20,6 @@ namespace Wurfl\Logger;
 
 /**
  * WURFL File Logger
- *
- * @package    WURFL_Logger
  */
 class FileLogger
     extends AbstractLogger
@@ -37,7 +35,7 @@ class FileLogger
      * @param string $fileName
      *
      * @throws \InvalidArgumentException Log file specified is not writable
-     * @throws \Wurfl\Exception Unable to open log file
+     * @throws \Wurfl\Exception          Unable to open log file
      */
     public function __construct($fileName)
     {
@@ -66,8 +64,6 @@ class FileLogger
      * @param mixed  $level
      * @param string $message
      * @param array  $context
-     *
-     * @return null
      */
     public function log($level, $message, array $context = array())
     {

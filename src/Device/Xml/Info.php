@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -21,7 +21,6 @@ namespace Wurfl\Device\Xml;
 /**
  * Stores version and other info about the loaded WURFL
  *
- * @package WURFL_Xml
  * @property-read string $version     Loaded WURFL Version
  * @property-read string $lastUpdated Loaded WURFL Last Updated Date
  * @property-read string $officialURL Loaded WURFL Official URL
@@ -88,6 +87,6 @@ class Info
      */
     public static function noInfo()
     {
-        return new Info('', '', '');
+        return new self('', '', '');
     }
 }

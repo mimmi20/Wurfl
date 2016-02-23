@@ -1,9 +1,9 @@
 <?php
+
 namespace WurflTest;
 
 /**
  * Utility Classes
- *
  */
 class NotNullCondition
 {

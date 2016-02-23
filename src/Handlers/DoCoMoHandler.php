@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -23,14 +23,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class DoCoMoHandler
     extends AbstractHandler
 {
-
     protected $prefix = 'DOCOMO';
 
     public static $constantIDs = array(
@@ -63,6 +62,6 @@ class DoCoMoHandler
         $versionIndex = 7;
         $version      = $userAgent[$versionIndex];
 
-        return ($version == '2') ? 'docomo_generic_jap_ver2' : 'docomo_generic_jap_ver1';
+        return ($version === '2') ? 'docomo_generic_jap_ver2' : 'docomo_generic_jap_ver1';
     }
 }

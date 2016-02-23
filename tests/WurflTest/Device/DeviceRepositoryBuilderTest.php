@@ -1,13 +1,14 @@
 <?php
+
 namespace WurflTest\Device;
 
-/**
+/*
  * test case
  */
 use Wurfl\Device\DeviceRepositoryBuilder;
-use Wurfl\Storage\Storage;
-use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
 use Wurfl\Device\Xml\DevicePatcher;
+use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
+use Wurfl\Storage\Storage;
 use WurflCache\Adapter\Memory;
 
 /**

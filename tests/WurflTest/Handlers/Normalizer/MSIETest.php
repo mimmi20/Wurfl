@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest\Handlers\Normalizer;
 
 use Wurfl\Handlers\Normalizer\Specific\MSIE;
@@ -9,7 +10,6 @@ use Wurfl\Handlers\Normalizer\Specific\MSIE;
 class MSIETest
     extends TestBase
 {
-
     /**
      * Prepares the environment before running a test.
      */
@@ -37,7 +37,7 @@ class MSIETest
             array('Mozilla/4.0 (compatible; MSIE 4.01; Windows CE; Smartphone; 176x220)', 'Mozilla/4.0 (compatible; MSIE 4.01; Windows CE; Smartphone; 176x220)'),
             array('MSIE 3.x', 'MSIE 3.x'),
             array('Mozilla', 'Mozilla'),
-            array('Firefox', 'Firefox')
+            array('Firefox', 'Firefox'),
 
         );
     }

@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -37,7 +37,6 @@ use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
  * $device = $wurflManager->getDeviceForUserAgent($userAgent);
  * </code>
  *
- * @package WURFL
  * @see     getWurflInfo(), getDeviceForHttpRequest(), getDeviceForUserAgent(), \Wurfl\WURFLManagerFactory::create()
  */
 class Manager
@@ -233,7 +232,7 @@ class Manager
      *
      * @param string $state
      *
-     * @return boolean
+     * @return bool
      */
     private function isStateCurrent($state)
     {
@@ -305,6 +304,7 @@ class Manager
      * </code>
      *
      * @return \Wurfl\Device\Xml\Info WURFL Version info
+     *
      * @see \Wurfl\DeviceRepository::getWurflInfo()
      */
     public function getWurflInfo()
@@ -315,11 +315,12 @@ class Manager
     /**
      * Return a device for the given http request(user-agent..)
      *
-     * @param array $httpRequest HTTP Request array (normally $_SERVER)
+     * @param array $httpRequest                    HTTP Request array (normally $_SERVER)
      * @param bool  $override_sideloaded_browser_ua
      *
-     * @return \Wurfl\CustomDevice device
      * @throws Exception if $httpRequest is not set
+     *
+     * @return \Wurfl\CustomDevice device
      */
     public function getDeviceForHttpRequest(array $httpRequest = array(), $override_sideloaded_browser_ua = true)
     {
@@ -355,8 +356,9 @@ class Manager
      *
      * @param string $userAgent
      *
-     * @return \Wurfl\CustomDevice device
      * @throws Exception if $userAgent is not set
+     *
+     * @return \Wurfl\CustomDevice device
      */
     public function getDeviceForUserAgent($userAgent = '')
     {

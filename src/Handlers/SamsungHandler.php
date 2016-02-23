@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -23,7 +23,7 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -77,6 +77,7 @@ class SamsungHandler
     public function applyRecoveryMatch($userAgent)
     {
         $tolerance = Utils::indexOfOrLength($userAgent, '/', strpos($userAgent, 'Samsung'));
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

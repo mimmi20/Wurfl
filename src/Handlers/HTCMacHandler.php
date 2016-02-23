@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,14 +25,13 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class HTCMacHandler
     extends AbstractHandler
 {
-
     protected $prefix = 'HTCMAC';
 
     public static $constantIDs = array(
@@ -93,6 +92,6 @@ class HTCMacHandler
             return $model;
         }
 
-        return null;
+        return;
     }
 }

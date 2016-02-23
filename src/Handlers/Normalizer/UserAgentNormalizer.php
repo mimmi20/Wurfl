@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,8 +20,6 @@ namespace Wurfl\Handlers\Normalizer;
 
 /**
  * User Agent Normalizer
- *
- * @package    WURFL_Request
  */
 class UserAgentNormalizer
     implements NormalizerInterface
@@ -80,14 +78,14 @@ class UserAgentNormalizer
     public function normalize($userAgent)
     {
         // Don't normalize generic user agents
-        if (substr($userAgent, 0, 12) == 'DO_NOT_MATCH') {
+        if (substr($userAgent, 0, 12) === 'DO_NOT_MATCH') {
             return $userAgent;
         }
 
         $normalizedUserAgent = $userAgent;
 
         foreach ($this->normalizers as $normalizer) {
-            /** @var $normalizer \Wurfl\Handlers\Normalizer\NormalizerInterface */
+            /* @var $normalizer \Wurfl\Handlers\Normalizer\NormalizerInterface */
             $normalizedUserAgent = $normalizer->normalize($normalizedUserAgent);
         }
 

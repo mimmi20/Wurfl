@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -27,7 +27,6 @@ namespace Wurfl\Device;
  * @property-read array  $capabilities
  * @property-read string $fallBack
  * @property-read string $userAgent
- * @package    WURFL_Device
  */
 class ModelDevice
     implements ModelDeviceInterface
@@ -70,7 +69,7 @@ class ModelDevice
     /**
      * Creates a WURFL Device based on the provided parameters
      *
-     * @param string $id WURFL device ID
+     * @param string $id                     WURFL device ID
      * @param string $userAgent
      * @param string $fallBack
      * @param bool   $actualDeviceRoot
@@ -85,12 +84,11 @@ class ModelDevice
         $specific = false,
         $groupIdCapabilitiesMap = null
     ) {
-
         $this->id               = $id;
         $this->userAgent        = $userAgent;
         $this->fallBack         = $fallBack;
-        $this->actualDeviceRoot = $actualDeviceRoot == true ? true : false;
-        $this->specific         = $specific == true ? true : false;
+        $this->actualDeviceRoot = $actualDeviceRoot === true ? true : false;
+        $this->specific         = $specific === true ? true : false;
 
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
@@ -117,7 +115,7 @@ class ModelDevice
      *
      * @return array Capabilities
      */
-    function getCapabilities()
+    public function getCapabilities()
     {
         return $this->capabilities;
     }
@@ -127,7 +125,7 @@ class ModelDevice
      *
      * @return array Group ID to capability name map
      */
-    function getGroupIdCapabilitiesNameMap()
+    public function getGroupIdCapabilitiesNameMap()
     {
         return $this->groupIdCapabilitiesNameMap;
     }
@@ -145,7 +143,7 @@ class ModelDevice
             return $this->capabilities[$capabilityName];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -198,7 +196,7 @@ class ModelDevice
      *
      * @param string $groupId
      *
-     * @return boolean
+     * @return bool
      */
     public function isGroupDefined($groupId)
     {

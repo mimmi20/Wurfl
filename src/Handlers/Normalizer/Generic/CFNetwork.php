@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -22,8 +22,6 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer - CFNetwork UA Resolution
- *
- * @package    WURFL_Request_UserAgentNormalizer_Generic
  */
 class CFNetwork
     implements NormalizerInterface
@@ -52,7 +50,6 @@ class CFNetwork
 
     private function cfnetworkLookup($cfVersion)
     {
-
         $cfnetworkMap = array(
             //CFNetwork Version (2 decimal places with leading zeros) => array(Mac OS X version','Safari Version
             '1.20'   => array('OSX', '10_3', '1.3'),
@@ -95,9 +92,9 @@ class CFNetwork
 
         if (array_key_exists($cfVersion, $cfnetworkMap)) {
             $version = $cfnetworkMap[$cfVersion];
-            if ($version[0] === "iPhone") {
+            if ($version[0] === 'iPhone') {
                 return "Mozilla/5.0 (iPhone; CPU iPhone OS {$version[1]} like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/0000 Safari/600.1.4 CFNetwork";
-            } else if ($version[0] === "OSX") {
+            } elseif ($version[0] === 'OSX') {
                 return "Mozilla/5.0 (Macintosh; Intel Mac OS X {$version[1]}) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/{$version[2]} Safari/537.75.14 CFNetwork";
             }
         }

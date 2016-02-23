@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,15 +25,14 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class CatchAllHandler
     extends AbstractHandler
 {
-
-    protected $prefix = 'CATCH_ALL';
+    protected $prefix       = 'CATCH_ALL';
     const MOZILLA_TOLERANCE = 5;
 
     const MOZILLA5 = 'CATCH_ALL_MOZILLA5';
@@ -48,7 +47,7 @@ class CatchAllHandler
      *
      * @param string $userAgent
      *
-     * @return boolean always true
+     * @return bool always true
      */
     public function canHandle($userAgent)
     {
@@ -127,8 +126,6 @@ class CatchAllHandler
 
     /**
      * @param string $userAgent
-     *
-     * @return null
      */
     private function applyMozillaConclusiveMatch($userAgent)
     {
@@ -150,8 +147,6 @@ class CatchAllHandler
 
     /**
      * @param $userAgent
-     *
-     * @return null
      */
     private function applyMozilla5ConclusiveMatch($userAgent)
     {
@@ -179,8 +174,6 @@ class CatchAllHandler
 
     /**
      * @param $userAgent
-     *
-     * @return null
      */
     private function applyMozilla4ConclusiveMatch($userAgent)
     {
@@ -210,7 +203,7 @@ class CatchAllHandler
      * @param string $userAgent
      * @param string $deviceID
      *
-     * @return boolean
+     * @return bool
      */
     public function filter($userAgent, $deviceID)
     {

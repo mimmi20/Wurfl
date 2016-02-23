@@ -5,7 +5,7 @@ $wurfl['patches']   = array('web_browsers_patch.xml', 'spv_patch.xml');
 
 $persistence['provider'] = 'memcache';
 $persistence['params']   = array(
-    'dir' => 'cache/'
+    'dir' => 'cache/',
 );
 
 $cache['provider'] = 'null';

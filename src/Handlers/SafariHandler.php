@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,7 +25,7 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -95,14 +95,14 @@ class SafariHandler
         $idx    = strpos($userAgent, $search);
 
         if ($idx === false) {
-            return null;
+            return;
         }
 
         $idx += strlen($search);
         $endIdx = strpos($userAgent, '.', $idx);
 
         if ($endIdx === false) {
-            return null;
+            return;
         }
 
         return substr($userAgent, $idx, $endIdx - $idx);

@@ -1,7 +1,8 @@
 <?php
+
 namespace WurflTest\Device;
 
-/**
+/*
  * test case
  */
 use Wurfl\CustomDevice;
@@ -133,7 +134,7 @@ class CustomDeviceTest
         $modelDevices = array(
             new ModelDevice('3', '', '', '', false),
             new ModelDevice('2', '', '', '', false),
-            new ModelDevice('generic', '', '', '', false)
+            new ModelDevice('generic', '', '', '', false),
         );
 
         $device = new CustomDevice($modelDevices);

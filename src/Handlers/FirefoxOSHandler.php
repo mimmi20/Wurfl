@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,7 +25,7 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -84,7 +84,6 @@ class FirefoxOSHandler
 
     public function applyRecoveryMatch($userAgent)
     {
-
         $version_string = str_replace('.', '_', self::getFirefoxOSVersion($userAgent));
 
         // Replace X_0 to X because the WURFL IDs are of the type 'firefox_os_verX' and not 'firefox_os_verX_0'

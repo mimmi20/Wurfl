@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -23,8 +23,6 @@ use Wurfl\FileUtils;
 
 /**
  * WURFL XML Utilities Static Class
- *
- * @package    WURFL_Xml
  */
 class Utils
 {
@@ -64,6 +62,7 @@ class Utils
      * @param string $filename of zipped XML data
      *
      * @throws Exception ZipArchive extension is not loaded or the ZIP file is corrupt
+     *
      * @return string Full filename and path of extracted XML file
      */
     private static function getZippedFile($filename)

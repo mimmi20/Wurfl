@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,8 +20,6 @@ namespace Wurfl\Logger;
 
 /**
  * Class that is used to supress logging
- *
- * @package    WURFL_Logger
  */
 class NullLogger
     extends AbstractLogger
@@ -32,8 +30,6 @@ class NullLogger
      * @param mixed  $level
      * @param string $message
      * @param array  $context
-     *
-     * @return null
      */
     public function log($level, $message, array $context = array())
     {

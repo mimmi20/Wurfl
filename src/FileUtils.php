@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,8 +20,6 @@ namespace Wurfl;
 
 /**
  * WURFL File Utilities
- *
- * @package    WURFL
  */
 class FileUtils
 {
@@ -81,15 +79,15 @@ class FileUtils
     public static function read($file)
     {
         if (!is_readable($file)) {
-            return null;
+            return;
         }
         $data = @file_get_contents($file);
         if ($data === false) {
-            return null;
+            return;
         }
         $value = @unserialize($data);
         if ($value === false) {
-            return null;
+            return;
         }
 
         return $value;
@@ -98,9 +96,9 @@ class FileUtils
     /**
      * Serializes and saves $data in the file $path and sets the last modified time to $mtime
      *
-     * @param string  $path  filename to save data in
-     * @param mixed   $data  data to be serialized and saved
-     * @param integer $mtime Last modified date in epoch time
+     * @param string $path  filename to save data in
+     * @param mixed  $data  data to be serialized and saved
+     * @param int    $mtime Last modified date in epoch time
      */
     public static function write($path, $data, $mtime = 0)
     {

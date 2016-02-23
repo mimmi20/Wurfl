@@ -11,21 +11,19 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Handlers\Normalizer\Specific;
 
-use Wurfl\Handlers\WebOSHandler;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\WebOSHandler;
 use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class WebOS
     implements NormalizerInterface

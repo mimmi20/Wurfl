@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -23,14 +23,13 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class BotCrawlerTranscoderHandler
     extends AbstractHandler
 {
-
     protected $prefix = 'BOT_CRAWLER_TRANSCODER';
 
     public function canHandle($userAgent)
@@ -82,6 +81,6 @@ class BotCrawlerTranscoderHandler
         'servicemonitor',
         'httpunit',
         'hatena',
-        'ichiro'
+        'ichiro',
     );
 }

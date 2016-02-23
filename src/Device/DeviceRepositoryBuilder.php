@@ -11,25 +11,23 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Device;
 
-use Wurfl\FileUtils;
-use Wurfl\Handlers\Chain\UserAgentHandlerChain;
-use Wurfl\Storage\Storage;
 use Wurfl\Device\Xml\DeviceIterator;
 use Wurfl\Device\Xml\DevicePatcher;
 use Wurfl\Device\Xml\Info;
 use Wurfl\Device\Xml\VersionIterator;
+use Wurfl\FileUtils;
+use Wurfl\Handlers\Chain\UserAgentHandlerChain;
+use Wurfl\Storage\Storage;
 
 /**
  * Builds a \Wurfl\DeviceRepositoryInterface
- *
- * @package    WURFL
  */
 class DeviceRepositoryBuilder
 {
@@ -187,6 +185,7 @@ class DeviceRepositoryBuilder
 
     /**
      * @return array Array of (string)User Agent Handler prefixes
+     *
      * @see WURFL_Handlers_Handler::getPrefix()
      */
     private function deviceClassificationNames()
@@ -194,7 +193,7 @@ class DeviceRepositoryBuilder
         $deviceClusterNames = array();
 
         foreach ($this->userAgentHandlerChain->getHandlers() as $userAgentHandler) {
-            /** @var $userAgentHandler \Wurfl\Handlers\AbstractHandler */
+            /* @var $userAgentHandler \Wurfl\Handlers\AbstractHandler */
             $deviceClusterNames[] = $userAgentHandler->getPrefix();
         }
 
@@ -229,7 +228,7 @@ class DeviceRepositoryBuilder
      * Process device iterator
      *
      * @param \Wurfl\Device\Xml\DeviceIterator $deviceIterator
-     * @param array              $patchingDevices
+     * @param array                            $patchingDevices
      */
     private function process(DeviceIterator $deviceIterator, array $patchingDevices = array())
     {

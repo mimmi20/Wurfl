@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -119,7 +119,6 @@ use Wurfl\Storage\Storage;
  * Manages the creation and instatiation of all User Agent Handlers and Normalizers and provides a factory for creating
  * User Agent Handler Chains
  *
- * @package    WURFL
  * @see        \Wurfl\Handlers\Chain\UserAgentHandlerChain
  */
 class UserAgentHandlerChainFactory
@@ -147,11 +146,10 @@ class UserAgentHandlerChainFactory
         }
 
         foreach ($userAgentHandlerChain->getHandlers() as $handler) {
-            /** @var $handler \Wurfl\Handlers\AbstractHandler */
+            /* @var $handler \Wurfl\Handlers\AbstractHandler */
             $handler
                 ->setLogger($logger)
-                ->setPersistenceProvider($persistenceProvider)
-            ;
+                ->setPersistenceProvider($persistenceProvider);
         }
 
         return $userAgentHandlerChain;

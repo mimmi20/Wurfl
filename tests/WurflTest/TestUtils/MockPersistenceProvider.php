@@ -1,9 +1,9 @@
 <?php
+
 namespace WurflTest\TestUtils;
 
 class MockPersistenceProvider
 {
-
     private $datas;
 
     public function __construct($datas)

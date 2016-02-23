@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,14 +25,13 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class AppleHandler
     extends AbstractHandler
 {
-
     protected $prefix = 'APPLE';
 
     public static $constantIDs = array(
@@ -316,7 +315,7 @@ class AppleHandler
         // Normalize iOS {Ver} style UAs
         //Eg: Mozilla/5.0 (iPhone; U; CPU iOS 7.1.2 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Safari/528.16
         if (preg_match('#CPU iOS \d+?\.\d+?#', $userAgent)) {
-            $ua = Utils::checkIfContains($userAgent, 'iPad') ? str_replace('CPU iOS', 'CPU OS', $userAgent): str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
+            $ua = Utils::checkIfContains($userAgent, 'iPad') ? str_replace('CPU iOS', 'CPU OS', $userAgent) : str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
 
             if (preg_match('#(CPU(?: iPhone)? OS [\d\.]+ like)#', $ua, $matches)) {
                 $versionUnderscore = str_replace('.', '_', $matches[1]);
@@ -364,7 +363,7 @@ class AppleHandler
 
         if ($tolerance !== false) {
             // The first char after the first underscore
-            $tolerance++;
+            ++$tolerance;
         } else {
             $index = strpos($userAgent, 'like Mac OS X;');
 
@@ -411,10 +410,10 @@ class AppleHandler
             if (Utils::checkIfContains($userAgent, 'iPad')) {
                 $deviceID = 'apple_ipad_ver1_sub' . $majorVersion;
 
-                if ($majorVersion == 3) {
+                if ($majorVersion === 3) {
                     return 'apple_ipad_ver1_subua32';
                 } else {
-                    if ($majorVersion == 4) {
+                    if ($majorVersion === 4) {
                         return 'apple_ipad_ver1_sub42';
                     }
                 }

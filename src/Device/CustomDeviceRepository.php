@@ -11,21 +11,19 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Device;
 
+use Wurfl\Device\Xml\Info;
 use Wurfl\Storage\Storage;
 use Wurfl\WurflConstants;
-use Wurfl\Device\Xml\Info;
 
 /**
  * WURFL Device Repository
- *
- * @package    WURFL
  */
 class CustomDeviceRepository
     implements DeviceRepositoryInterface
@@ -68,7 +66,7 @@ class CustomDeviceRepository
      * Creates a new Device Repository from the given $persistenceStorage and $deviceClassificationNames
      *
      * @param \Wurfl\Storage\Storage $persistenceStorage
-     * @param array           $deviceClassificationNames
+     * @param array                  $deviceClassificationNames
      *
      * @throws \InvalidArgumentException
      */
@@ -135,6 +133,7 @@ class CustomDeviceRepository
      * @param string $deviceId
      *
      * @throws \InvalidArgumentException
+     *
      * @return \Wurfl\Device\ModelDeviceInterface
      */
     public function getDevice($deviceId)
@@ -158,6 +157,7 @@ class CustomDeviceRepository
      * Returns all devices in the repository
      *
      * @throws \Wurfl\Exception
+     *
      * @return \Wurfl\Device\ModelDeviceInterface[]
      */
     public function getAllDevices()
@@ -203,6 +203,7 @@ class CustomDeviceRepository
      * @param string $capabilityName
      *
      * @throws \InvalidArgumentException device ID or capability was not found
+     *
      * @return string value
      */
     public function getCapabilityForDevice($deviceId, $capabilityName)
@@ -273,6 +274,7 @@ class CustomDeviceRepository
      * @param string $deviceId
      *
      * @throws \InvalidArgumentException
+     *
      * @return \Wurfl\Device\ModelDeviceInterface[] All ModelDevice objects in the fallback tree
      */
     public function getDeviceHierarchy($deviceId)
@@ -311,6 +313,7 @@ class CustomDeviceRepository
      * @param string $groupID
      *
      * @throws \InvalidArgumentException The given $groupID does not exist
+     *
      * @return array of capability names
      */
     public function getCapabilitiesNameForGroup($groupID)
@@ -328,6 +331,7 @@ class CustomDeviceRepository
      * @param string $capability
      *
      * @throws \InvalidArgumentException an invalid $capability was specified
+     *
      * @return string
      */
     public function getGroupIDForCapability($capability)

@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,7 +25,7 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -96,7 +96,7 @@ class WebOSHandler
         if (preg_match('# ([^/]+)/([\d\.]+)$#', $userAgent, $matches)) {
             return $matches[1] . ' ' . $matches[2];
         } else {
-            return null;
+            return;
         }
     }
 
@@ -110,7 +110,7 @@ class WebOSHandler
         if (preg_match('#(?:hpw|web)OS.(\d)\.#', $userAgent, $matches)) {
             return 'webOS' . $matches[1];
         } else {
-            return null;
+            return;
         }
     }
 }

@@ -11,15 +11,15 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Handlers\Normalizer\Specific;
 
-use Wurfl\Handlers\SafariHandler;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\SafariHandler;
 use Wurfl\WurflConstants;
 
 /**
@@ -30,8 +30,6 @@ use Wurfl\WurflConstants;
  *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) ... Version/3.1.1 Safari/525.18
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class Safari
     implements NormalizerInterface

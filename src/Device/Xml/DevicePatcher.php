@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -24,8 +24,6 @@ use Wurfl\Utils;
 
 /**
  * Device Patcher patches an existing device with a new device
- *
- * @package    WURFL_Xml
  */
 class DevicePatcher
 {

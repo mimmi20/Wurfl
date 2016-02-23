@@ -11,20 +11,18 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Handlers\Normalizer\Generic;
 
-use Wurfl\Handlers\Utils;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\Utils;
 
 /**
  * User Agent Normalizer - removes locale information from user agent
- *
- * @package    \Wurfl\Handlers\Normalizer\UserAgentNormalizer_Generic
  */
 class LocaleRemover
     implements NormalizerInterface
@@ -39,6 +37,3 @@ class LocaleRemover
         return Utils::removeLocale($userAgent);
     }
 }
-
-
-

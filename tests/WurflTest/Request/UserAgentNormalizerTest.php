@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest\Request;
 
 use Wurfl\Handlers\Normalizer\Generic\BabelFish;

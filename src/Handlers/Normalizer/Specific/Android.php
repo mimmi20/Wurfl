@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -19,15 +19,13 @@
 namespace Wurfl\Handlers\Normalizer\Specific;
 
 use Wurfl\Handlers\AndroidHandler;
+use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\Handlers\OperaMobiOrTabletOnAndroidHandler;
 use Wurfl\Handlers\Utils;
-use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class Android
     implements NormalizerInterface

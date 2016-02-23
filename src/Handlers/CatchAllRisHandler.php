@@ -8,7 +8,7 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -19,7 +19,7 @@ namespace Wurfl\Handlers;
  * CatchAllUserAgentHandler
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -34,7 +34,7 @@ class CatchAllRisHandler
      *
      * @param string $userAgent
      *
-     * @return boolean always true
+     * @return bool always true
      */
     public function canHandle($userAgent)
     {

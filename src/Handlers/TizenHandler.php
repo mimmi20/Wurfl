@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -24,7 +24,7 @@ use Wurfl\WurflConstants;
  * TizenUserAgentHandler
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @author     Steve Kamerman <steve AT scientiamobile.com>
  * @license    GNU Affero General Public License
@@ -79,7 +79,6 @@ class TizenHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-
         $version = self::getTizenVersion($userAgent);
         $version = 'generic_tizen_ver' . str_replace('.', '_', $version);
         if (in_array($version, self::$constantIDs)) {

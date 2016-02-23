@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -22,8 +22,6 @@ use Wurfl\Device\ModelDevice;
 
 /**
  * Extracts device capabilities from XML file
- *
- * @package    WURFL_Xml
  */
 class DeviceIterator
     extends AbstractIterator
@@ -113,7 +111,7 @@ class DeviceIterator
 
                     break;
                 case \XMLReader::END_ELEMENT:
-                    if ($nodeName == XmlInterface::DEVICE) {
+                    if ($nodeName === XmlInterface::DEVICE) {
                         $this->currentElement = new ModelDevice($deviceId, $userAgent, $fallBack, $actualDeviceRoot, $specific, $groupIDCapabilitiesMap);
                         break 2;
                     }

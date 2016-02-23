@@ -1,7 +1,8 @@
 <?php
+
 namespace WurflTest\Handlers;
 
-/**
+/*
  * test case
  */
 use Wurfl\Handlers\MotorolaHandler;

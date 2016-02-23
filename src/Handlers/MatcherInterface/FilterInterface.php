@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -24,7 +24,7 @@ namespace Wurfl\Handlers\MatcherInterface;
  * the resulting datastructures.
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -37,14 +37,12 @@ interface FilterInterface
      *
      * @param string $userAgent User Agent of the device
      * @param string $deviceID  id of the the device
-     *
      */
     public function filter($userAgent, $deviceID);
 
     /**
      * The persistData() method is resposible to
      * saving the classification output(associative arrays that holds <userAgent, deviceID> pair))
-     *
      */
     public function persistData();
 }

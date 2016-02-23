@@ -8,7 +8,7 @@
  * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -16,8 +16,8 @@
 namespace Wurfl\Handlers\MatcherInterface;
 
 use Psr\Log\LoggerInterface;
-use Wurfl\Request\GenericRequest;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\Storage;
 
 /**
@@ -25,7 +25,7 @@ use Wurfl\Storage\Storage;
  * the user agents and the matching process.
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -39,7 +39,8 @@ interface HandlerInterface
     /**
      * sets the logger
      *
-     * @var \Psr\Log\LoggerInterface $logger
+     * @var \Psr\Log\LoggerInterface
+     *
      * @return \Wurfl\Handlers\AbstractHandler
      */
     public function setLogger(LoggerInterface $logger = null);
@@ -47,7 +48,8 @@ interface HandlerInterface
     /**
      * sets the Persitence Cache
      *
-     * @var \Wurfl\Storage\Storage $persistenceProvider
+     * @var \Wurfl\Storage\Storage
+     *
      * @return \Wurfl\Handlers\AbstractHandler
      */
     public function setPersistenceProvider(Storage $persistenceProvider);
@@ -56,6 +58,7 @@ interface HandlerInterface
      * Alias for getPrefix()
      *
      * @return string Prefix
+     *
      * @see getPrefix()
      */
     public function getName();
