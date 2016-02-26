@@ -14,20 +14,20 @@
   "homepage": "https://github.com/mimmi20/Wurfl",
   "require": {
     "php": ">=5.3.3",
-    "psr/log": "~1.0",
-    "mimmi20/wurflcache": "~1.3",
-    "mimmi20/wurfl-generic-request": "1.0.*",
-    "mimmi20/wurfl-virtual-capability": "*",
-    "mimmi20/wurfl-config": "*",
-    "mimmi20/wurfl-storage": "*",
-    "mimmi20/wurfl-custom-device": "*"
+    "psr/log": "^1.0",
+    "mimmi20/wurflcache": "^1.3",
+    "mimmi20/wurfl-generic-request": "^1.0",
+    "mimmi20/wurfl-virtual-capability": "^1.6",
+    "mimmi20/wurfl-config": "^1.0",
+    "mimmi20/wurfl-storage": "^1.0",
+    "mimmi20/wurfl-custom-device": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "monolog/monolog": "~1",
-    "mikey179/vfsStream": "1.3.*",
-    "squizlabs/php_codesniffer": "2.*",
-    "fabpot/php-cs-fixer": "~1.11"
+    "phpunit/phpunit": "^4.8|^5.0",
+    "monolog/monolog": "^1.0",
+    "mikey179/vfsStream": "^1.3",
+    "squizlabs/php_codesniffer": "^2.0",
+    "fabpot/php-cs-fixer": "^1.11"
   },
   "suggest": {
     "monolog/monolog": "if you want to log to more than a file"
