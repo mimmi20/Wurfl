@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class MSIEHandler
-    extends AbstractHandler
+class MSIEHandler extends AbstractHandler
 {
     protected $prefix = 'MSIE';
 
@@ -83,10 +82,10 @@ class MSIEHandler
         $matches = array();
 
         if (preg_match('#^Mozilla/5\.0 \(Windows NT.+? Edge/(\d+)\.(\d+)#', $userAgent, $matches) || preg_match(
-                '#^Mozilla/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)#',
-                $userAgent,
-                $matches
-            ) || preg_match('#^Mozilla/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);#', $userAgent, $matches)
+            '#^Mozilla/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)#',
+            $userAgent,
+            $matches
+        ) || preg_match('#^Mozilla/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);#', $userAgent, $matches)
         ) {
             $major = (int) $matches[1];
             $minor = (int) $matches[2];

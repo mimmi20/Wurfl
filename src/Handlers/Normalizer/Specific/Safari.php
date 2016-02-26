@@ -31,8 +31,7 @@ use Wurfl\WurflConstants;
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
  */
-class Safari
-    implements NormalizerInterface
+class Safari implements NormalizerInterface
 {
     /**
      * @param string $userAgent

@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class FirefoxHandler
-    extends AbstractHandler
+class FirefoxHandler extends AbstractHandler
 {
     protected $prefix = 'FIREFOX';
 

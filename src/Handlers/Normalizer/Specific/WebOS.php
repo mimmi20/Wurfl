@@ -25,8 +25,7 @@ use Wurfl\WurflConstants;
 /**
  * User Agent Normalizer
  */
-class WebOS
-    implements NormalizerInterface
+class WebOS implements NormalizerInterface
 {
     /**
      * @param string $userAgent

@@ -23,8 +23,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class CatchAllMozillaHandler
-    extends AbstractHandler
+class CatchAllMozillaHandler extends AbstractHandler
 {
     protected $prefix = 'CATCH_ALL_MOZILLA';
 

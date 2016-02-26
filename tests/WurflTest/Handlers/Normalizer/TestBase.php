@@ -5,8 +5,7 @@ namespace WurflTest\Handlers\Normalizer;
 /**
  * test case.
  */
-class TestBase
-    extends \PHPUnit_Framework_TestCase
+class TestBase extends \PHPUnit_Framework_TestCase
 {
     /** @var  \Wurfl\Handlers\Normalizer\NormalizerInterface */
     protected $normalizer;

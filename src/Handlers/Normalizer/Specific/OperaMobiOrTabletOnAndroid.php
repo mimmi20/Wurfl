@@ -27,8 +27,7 @@ use Wurfl\WurflConstants;
 /**
  * User Agent Normalizer
  */
-class OperaMobiOrTabletOnAndroid
-    implements NormalizerInterface
+class OperaMobiOrTabletOnAndroid implements NormalizerInterface
 {
     /**
      * @param string $userAgent

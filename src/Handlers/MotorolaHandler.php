@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class MotorolaHandler
-    extends AbstractHandler
+class MotorolaHandler extends AbstractHandler
 {
     protected $prefix = 'MOTOROLA';
 
@@ -50,9 +49,9 @@ class MotorolaHandler
         }
 
         return (Utils::checkIfStartsWithAnyOf(
-                $userAgent,
-                array('Mot-', 'MOT-', 'MOTO', 'moto')
-            ) || Utils::checkIfContains($userAgent, 'Motorola'));
+            $userAgent,
+            array('Mot-', 'MOT-', 'MOTO', 'moto')
+        ) || Utils::checkIfContains($userAgent, 'Motorola'));
     }
 
     /**

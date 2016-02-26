@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SafariHandler
-    extends AbstractHandler
+class SafariHandler extends AbstractHandler
 {
     protected $prefix = 'SAFARI';
 

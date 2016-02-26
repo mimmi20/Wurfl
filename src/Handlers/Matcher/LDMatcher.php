@@ -29,8 +29,7 @@ namespace Wurfl\Handlers\Matcher;
  * @link       http://www.php.net/manual/en/function.levenshtein.php
  * @see        match()
  */
-class LDMatcher
-    implements MatcherInterface
+class LDMatcher implements MatcherInterface
 {
     /**
      * Instance of \Wurfl\Handlers\Matcher\LDMatcher

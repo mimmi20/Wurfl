@@ -11,8 +11,7 @@ use Wurfl\Storage\Storage;
 use WurflCache\Adapter\File;
 use WurflCache\Adapter\Memory;
 
-class UserAgentHandlerChainTest
-    extends \PHPUnit_Framework_TestCase
+class UserAgentHandlerChainTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Wurfl\Handlers\Chain\UserAgentHandlerChain

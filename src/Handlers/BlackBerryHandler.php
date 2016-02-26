@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class BlackBerryHandler
-    extends AbstractHandler
+class BlackBerryHandler extends AbstractHandler
 {
     protected $prefix = 'BLACKBERRY';
 
@@ -61,9 +60,9 @@ class BlackBerryHandler
         }
 
         return (Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry') || Utils::checkIfContains(
-                $userAgent,
-                '(BB10;'
-            ));
+            $userAgent,
+            '(BB10;'
+        ));
     }
 
     public function applyConclusiveMatch($userAgent)

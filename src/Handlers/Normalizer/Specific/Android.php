@@ -27,8 +27,7 @@ use Wurfl\WurflConstants;
 /**
  * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  */
-class Android
-    implements NormalizerInterface
+class Android implements NormalizerInterface
 {
     /**
      * @var array

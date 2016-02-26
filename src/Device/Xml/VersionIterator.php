@@ -21,8 +21,7 @@ namespace Wurfl\Device\Xml;
 /**
  * Extracts version information from XML file
  */
-class VersionIterator
-    extends AbstractIterator
+class VersionIterator extends AbstractIterator
 {
     /**
      * @var bool

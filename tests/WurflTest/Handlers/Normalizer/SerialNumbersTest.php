@@ -7,8 +7,7 @@ use Wurfl\Handlers\Normalizer\Generic\SerialNumbers;
 /**
  *  test case.
  */
-class SerialNumbersTest
-    extends TestBase
+class SerialNumbersTest extends TestBase
 {
     protected function setUp()
     {

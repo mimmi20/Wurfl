@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - removes YesWAP garbage from user agent
  */
-class YesWAP
-    implements NormalizerInterface
+class YesWAP implements NormalizerInterface
 {
     /**
      * @var string

@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - Return the firefox string with the major and minor version only
  */
-class Firefox
-    implements NormalizerInterface
+class Firefox implements NormalizerInterface
 {
     /**
      * @param string $userAgent

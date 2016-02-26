@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class ChromeHandler
-    extends AbstractHandler
+class ChromeHandler extends AbstractHandler
 {
     protected $prefix = 'CHROME';
 

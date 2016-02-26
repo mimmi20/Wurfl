@@ -21,8 +21,7 @@ namespace Wurfl\Logger;
 /**
  * Base class for WURFL Exceptions
  */
-class Exception
-    extends \Wurfl\Exception
+class Exception extends \Wurfl\Exception
 {
     // nothing to do here
 }

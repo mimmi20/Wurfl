@@ -23,8 +23,7 @@ use Wurfl\Device\ModelDevice;
 /**
  * Extracts device capabilities from XML file
  */
-class DeviceIterator
-    extends AbstractIterator
+class DeviceIterator extends AbstractIterator
 {
     /**
      * @var array

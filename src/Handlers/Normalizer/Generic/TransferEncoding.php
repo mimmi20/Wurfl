@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - removes locale information from user agent
  */
-class TransferEncoding
-    implements NormalizerInterface
+class TransferEncoding implements NormalizerInterface
 {
     /**
      * @param string $userAgent

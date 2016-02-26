@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - returns the substring starting from 'BlackBerry'
  */
-class BlackBerry
-    implements NormalizerInterface
+class BlackBerry implements NormalizerInterface
 {
     /**
      * @param string $userAgent

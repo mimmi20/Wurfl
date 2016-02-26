@@ -28,8 +28,7 @@ namespace Wurfl\Device;
  * @property-read string $fallBack
  * @property-read string $userAgent
  */
-class ModelDevice
-    implements ModelDeviceInterface
+class ModelDevice implements ModelDeviceInterface
 {
     /**
      * @var string WURFL device ID

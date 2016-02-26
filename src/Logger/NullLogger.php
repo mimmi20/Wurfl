@@ -21,8 +21,7 @@ namespace Wurfl\Logger;
 /**
  * Class that is used to supress logging
  */
-class NullLogger
-    extends AbstractLogger
+class NullLogger extends AbstractLogger
 {
     /**
      * Logs with an arbitrary level.

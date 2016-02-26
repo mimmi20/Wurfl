@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class CatchAllHandler
-    extends AbstractHandler
+class CatchAllHandler extends AbstractHandler
 {
     protected $prefix       = 'CATCH_ALL';
     const MOZILLA_TOLERANCE = 5;

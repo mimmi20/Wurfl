@@ -26,8 +26,7 @@ use Wurfl\WurflConstants;
 /**
  * User Agent Normalizer
  */
-class UcwebU2
-    implements NormalizerInterface
+class UcwebU2 implements NormalizerInterface
 {
     /**
      * @param string $userAgent

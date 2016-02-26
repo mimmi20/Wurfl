@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class NecHandler
-    extends AbstractHandler
+class NecHandler extends AbstractHandler
 {
     protected $prefix = 'NEC';
 

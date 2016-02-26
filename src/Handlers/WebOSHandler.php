@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class WebOSHandler
-    extends AbstractHandler
+class WebOSHandler extends AbstractHandler
 {
     protected $prefix = 'WEBOS';
 

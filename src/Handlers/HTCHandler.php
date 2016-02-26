@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class HTCHandler
-    extends AbstractHandler
+class HTCHandler extends AbstractHandler
 {
     protected $prefix = 'HTC';
 

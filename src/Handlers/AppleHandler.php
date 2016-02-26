@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class AppleHandler
-    extends AbstractHandler
+class AppleHandler extends AbstractHandler
 {
     protected $prefix = 'APPLE';
 
@@ -300,9 +299,9 @@ class AppleHandler
         }
 
         return (Utils::checkIfContains($userAgent, 'Mozilla/5') && Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('iPhone', 'iPod', 'iPad')
-            ));
+            $userAgent,
+            array('iPhone', 'iPod', 'iPad')
+        ));
     }
 
     public function applyConclusiveMatch($userAgent)

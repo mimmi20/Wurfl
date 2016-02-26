@@ -24,8 +24,7 @@ use Wurfl\Handlers\Utils;
 /**
  * User Agent Normalizer - removes locale information from user agent
  */
-class LocaleRemover
-    implements NormalizerInterface
+class LocaleRemover implements NormalizerInterface
 {
     /**
      * @param string $userAgent

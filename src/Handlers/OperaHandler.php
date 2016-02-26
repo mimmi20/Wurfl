@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class OperaHandler
-    extends AbstractHandler
+class OperaHandler extends AbstractHandler
 {
     protected $prefix = 'OPERA';
 

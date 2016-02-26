@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class PanasonicHandler
-    extends AbstractHandler
+class PanasonicHandler extends AbstractHandler
 {
     protected $prefix = 'PANASONIC';
 

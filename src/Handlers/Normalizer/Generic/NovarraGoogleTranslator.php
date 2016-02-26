@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - removes Novarra garbage from user agent
  */
-class NovarraGoogleTranslator
-    implements NormalizerInterface
+class NovarraGoogleTranslator implements NormalizerInterface
 {
     /**
      * @var string

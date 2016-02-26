@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class UcwebU3Handler
-    extends AbstractHandler
+class UcwebU3Handler extends AbstractHandler
 {
     protected $prefix = 'UCWEBU3';
 

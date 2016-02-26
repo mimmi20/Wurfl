@@ -23,8 +23,7 @@ use Wurfl\FileUtils;
 /**
  * Iterates over a WURFL/Patch XML file
  */
-abstract class AbstractIterator
-    implements \Iterator
+abstract class AbstractIterator implements \Iterator
 {
     /**
      * @var string filename with path to wurfl.xml or patch file

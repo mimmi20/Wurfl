@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class KonquerorHandler
-    extends AbstractHandler
+class KonquerorHandler extends AbstractHandler
 {
     protected $prefix = 'KONQUEROR';
 

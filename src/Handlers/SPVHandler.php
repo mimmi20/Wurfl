@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SPVHandler
-    extends AbstractHandler
+class SPVHandler extends AbstractHandler
 {
     protected $prefix = 'SPV';
 

@@ -26,8 +26,7 @@ use Wurfl\WurflConstants;
 /**
  * User Agent Normalizer
  */
-class Kindle
-    implements NormalizerInterface
+class Kindle implements NormalizerInterface
 {
     /**
      * @param string $userAgent

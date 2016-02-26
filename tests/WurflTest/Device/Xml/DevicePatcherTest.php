@@ -8,8 +8,7 @@ use Wurfl\Device\Xml\DevicePatcher;
 /**
  * test case
  */
-class DevicePatcherTest
-    extends \PHPUnit_Framework_TestCase
+class DevicePatcherTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  DevicePatcher */
     private $devicePatcher;

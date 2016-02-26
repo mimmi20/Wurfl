@@ -8,8 +8,7 @@ use Wurfl\WurflConstants;
 /**
  *  test case.
  */
-class MaemoTest
-    extends TestBase
+class MaemoTest extends TestBase
 {
     protected function setUp()
     {

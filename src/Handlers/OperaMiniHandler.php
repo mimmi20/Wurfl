@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class OperaMiniHandler
-    extends AbstractHandler
+class OperaMiniHandler extends AbstractHandler
 {
     protected $prefix = 'OPERA_MINI';
 

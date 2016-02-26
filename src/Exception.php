@@ -21,8 +21,7 @@ namespace Wurfl;
 /**
  * Base class for WURFL Exceptions
  */
-class Exception
-    extends \Exception
+class Exception extends \Exception
 {
     // nothing to do here
 }

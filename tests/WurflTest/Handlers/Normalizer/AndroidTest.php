@@ -12,8 +12,7 @@ use Wurfl\WurflConstants;
 /**
  * test case.
  */
-class AndroidTest
-    extends TestBase
+class AndroidTest extends TestBase
 {
     protected function setUp()
     {

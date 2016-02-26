@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class PhilipsHandler
-    extends AbstractHandler
+class PhilipsHandler extends AbstractHandler
 {
     protected $prefix = 'PHILIPS';
 

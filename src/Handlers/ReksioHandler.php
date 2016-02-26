@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class ReksioHandler
-    extends AbstractHandler
+class ReksioHandler extends AbstractHandler
 {
     protected $prefix = 'REKSIO';
 

@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - CFNetwork UA Resolution
  */
-class CFNetwork
-    implements NormalizerInterface
+class CFNetwork implements NormalizerInterface
 {
     /**
      * @param string $userAgent

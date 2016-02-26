@@ -25,8 +25,7 @@ use Wurfl\WurflConstants;
 /**
  * WURFL Device Repository
  */
-class CustomDeviceRepository
-    implements DeviceRepositoryInterface
+class CustomDeviceRepository implements DeviceRepositoryInterface
 {
     /**
      * @var string

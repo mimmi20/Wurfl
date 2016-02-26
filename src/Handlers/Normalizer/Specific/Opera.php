@@ -30,8 +30,7 @@ use Wurfl\Handlers\Utils;
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
  */
-class Opera
-    implements NormalizerInterface
+class Opera implements NormalizerInterface
 {
     /**
      * @param string $userAgent

@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SharpHandler
-    extends AbstractHandler
+class SharpHandler extends AbstractHandler
 {
     protected $prefix = 'SHARP';
 

@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer
  */
-class Apple
-    implements NormalizerInterface
+class Apple implements NormalizerInterface
 {
     /**
      * @param string $userAgent

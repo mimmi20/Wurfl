@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class ToshibaHandler
-    extends AbstractHandler
+class ToshibaHandler extends AbstractHandler
 {
     protected $prefix = 'TOSHIBA';
 

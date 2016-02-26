@@ -11,8 +11,7 @@ use Wurfl\Handlers\Normalizer\NullNormalizer;
 /**
  *
  */
-class MotorolaHandlerTest
-    extends \PHPUnit_Framework_TestCase
+class MotorolaHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  MotorolaHandler */
     private $motorolaHandler;

@@ -14,8 +14,7 @@ use WurflCache\Adapter\Memory;
 /**
  * \Wurfl\DeviceRepositoryBuilder test case.
  */
-class DeviceRepositoryBuilderTest
-    extends \PHPUnit_Framework_TestCase
+class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var string
@@ -44,7 +43,9 @@ class DeviceRepositoryBuilderTest
         );
         $devicePatcher                 = new DevicePatcher();
         $this->deviceRepositoryBuilder = new DeviceRepositoryBuilder(
-            $persistenceProvider, $userAgentHandlerChain, $devicePatcher
+            $persistenceProvider,
+            $userAgentHandlerChain,
+            $devicePatcher
         );
     }
 
@@ -89,7 +90,9 @@ class DeviceRepositoryBuilderTest
         $userAgentHandlerChain   = UserAgentHandlerChainFactory::createFrom($persistenceProvider, $persistenceProvider);
         $devicePatcher           = new DevicePatcher();
         $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
-            $persistenceProvider, $userAgentHandlerChain, $devicePatcher
+            $persistenceProvider,
+            $userAgentHandlerChain,
+            $devicePatcher
         );
         self::assertNotNull($deviceRepositoryBuilder);
         $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;

@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class NokiaOviBrowserHandler
-    extends AbstractHandler
+class NokiaOviBrowserHandler extends AbstractHandler
 {
     protected $prefix = 'NOKIAOVIBROWSER';
 

@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - removes BabelFish garbage from user agent
  */
-class BabelFish
-    implements NormalizerInterface
+class BabelFish implements NormalizerInterface
 {
     /**
      * @var string

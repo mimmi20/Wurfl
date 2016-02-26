@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class NintendoHandler
-    extends AbstractHandler
+class NintendoHandler extends AbstractHandler
 {
     protected $prefix = 'NINTENDO';
 
@@ -80,9 +79,9 @@ class NintendoHandler
         }
 
         if ((Utils::checkIfStartsWith($userAgent, 'Mozilla/') && Utils::checkIfContainsAll(
-                $userAgent,
-                array('Nitro', 'Opera')
-            ))
+            $userAgent,
+            array('Nitro', 'Opera')
+        ))
         ) {
             return 'nintendo_ds_ver1';
         }

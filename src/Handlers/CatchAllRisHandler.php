@@ -23,8 +23,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class CatchAllRisHandler
-    extends AbstractHandler
+class CatchAllRisHandler extends AbstractHandler
 {
     protected $prefix = 'CATCH_ALL_RIS';
 

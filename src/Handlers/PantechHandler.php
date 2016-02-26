@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class PantechHandler
-    extends AbstractHandler
+class PantechHandler extends AbstractHandler
 {
     protected $prefix = 'PANTECH';
 

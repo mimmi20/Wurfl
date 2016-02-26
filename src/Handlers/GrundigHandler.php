@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class GrundigHandler
-    extends AbstractHandler
+class GrundigHandler extends AbstractHandler
 {
     protected $prefix = 'GRUNDIG';
 

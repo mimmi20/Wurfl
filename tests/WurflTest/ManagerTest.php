@@ -8,8 +8,7 @@ use Wurfl\Manager;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\Factory;
 
-class ManagerTest
-    extends \PHPUnit_Framework_TestCase
+class ManagerTest extends \PHPUnit_Framework_TestCase
 {
     const RESOURCES_DIR     = 'tests/resources/';
     const WURFL_CONFIG_FILE = 'tests/resources/wurfl-config.xml';

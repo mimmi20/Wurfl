@@ -26,8 +26,7 @@ use Wurfl\WurflConstants;
 /**
  * User Agent Normalizer
  */
-class WindowsPhone
-    implements NormalizerInterface
+class WindowsPhone implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -37,9 +36,9 @@ class WindowsPhone
     public function normalize($userAgent)
     {
         if (Utils::checkIfStartsWith($userAgent, 'Windows Phone Ad Client') || Utils::checkIfStartsWith(
-                $userAgent,
-                'WindowsPhoneAdClient'
-            )
+            $userAgent,
+            'WindowsPhoneAdClient'
+        )
         ) {
             $model   = WindowsPhoneHandler::getWindowsPhoneAdClientModel($userAgent);
             $version = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);

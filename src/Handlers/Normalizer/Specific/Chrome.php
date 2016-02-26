@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - Return the Chrome string with the major version
  */
-class Chrome
-    implements NormalizerInterface
+class Chrome implements NormalizerInterface
 {
     /**
      * @param string $userAgent

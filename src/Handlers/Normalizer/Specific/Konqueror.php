@@ -25,8 +25,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  * e.g
  *     Mozilla/5.0 (compatible; Konqueror/4.1; Linux) KHTML/4.1.2 (like Gecko) -> Konqueror/4
  */
-class Konqueror
-    implements NormalizerInterface
+class Konqueror implements NormalizerInterface
 {
     /**
      * @var string

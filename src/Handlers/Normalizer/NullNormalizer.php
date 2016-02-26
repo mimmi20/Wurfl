@@ -21,8 +21,7 @@ namespace Wurfl\Handlers\Normalizer;
 /**
  * Null User Agent Normalizer - does not normalize anything
  */
-class NullNormalizer
-    implements NormalizerInterface
+class NullNormalizer implements NormalizerInterface
 {
     /**
      * @param string $userAgent

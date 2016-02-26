@@ -7,8 +7,7 @@ use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
 /**
  * test case.
  */
-class LocaleRemoverTest
-    extends TestBase
+class LocaleRemoverTest extends TestBase
 {
     protected function setUp()
     {

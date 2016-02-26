@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SagemHandler
-    extends AbstractHandler
+class SagemHandler extends AbstractHandler
 {
     protected $prefix = 'SAGEM';
 

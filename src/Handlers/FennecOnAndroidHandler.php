@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class FennecOnAndroidHandler
-    extends AbstractHandler
+class FennecOnAndroidHandler extends AbstractHandler
 {
     protected $prefix = 'FENNECONANDROID';
 
@@ -47,9 +46,9 @@ class FennecOnAndroidHandler
         }
 
         return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
-                $userAgent,
-                array('Fennec', 'Firefox')
-            ));
+            $userAgent,
+            array('Fennec', 'Firefox')
+        ));
     }
 
     /**

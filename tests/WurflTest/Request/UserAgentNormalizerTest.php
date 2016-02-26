@@ -9,8 +9,7 @@ use Wurfl\Handlers\Normalizer\UserAgentNormalizer;
 /**
  * test case
  */
-class UserAgentNormalizerTest
-    extends \PHPUnit_Framework_TestCase
+class UserAgentNormalizerTest extends \PHPUnit_Framework_TestCase
 {
     public function testShouldAddANormalizer()
     {

@@ -11,8 +11,7 @@ use Wurfl\Device\ModelDevice;
 /**
  * \Wurfl\CustomDevice test case.
  */
-class CustomDeviceTest
-    extends \PHPUnit_Framework_TestCase
+class CustomDeviceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \InvalidArgumentException
@@ -25,7 +24,12 @@ class CustomDeviceTest
     public function testShouldTreatNullCapablityValuesAsValidValue()
     {
         $modelDevice = new ModelDevice(
-            'parent', 'ua', 'root', true, false, array('product_info' => array('claims_web_support' => null))
+            'parent',
+            'ua',
+            'root',
+            true,
+            false,
+            array('product_info' => array('claims_web_support' => null))
         );
 
         $device          = new CustomDevice(array($modelDevice));
@@ -36,10 +40,20 @@ class CustomDeviceTest
     public function testShouldLaunchExceptionIfCapabilityNameIsNotDefined()
     {
         $modelDevice      = new ModelDevice(
-            'parent', 'ua', 'root', true, false, array('product_info' => array('claims_web_support' => 'true'))
+            'parent',
+            'ua',
+            'root',
+            true,
+            false,
+            array('product_info' => array('claims_web_support' => 'true'))
         );
         $childModelDevice = new ModelDevice(
-            'id', 'ua', 'parent', true, false, array('product_info' => array('is_wireless_device' => 'true'))
+            'id',
+            'ua',
+            'parent',
+            true,
+            false,
+            array('product_info' => array('is_wireless_device' => 'true'))
         );
 
         try {
@@ -85,7 +99,12 @@ class CustomDeviceTest
     public function testShouldReturnCapabilityDefinedInModelDevice()
     {
         $modelDevice = new ModelDevice(
-            'id', 'ua', 'root', true, false, array('product_info' => array('is_wireless_device' => 'true'))
+            'id',
+            'ua',
+            'root',
+            true,
+            false,
+            array('product_info' => array('is_wireless_device' => 'true'))
         );
         $device      = new CustomDevice(array($modelDevice));
 
@@ -96,11 +115,21 @@ class CustomDeviceTest
     public function testShouldRetrunCapabilityDefinedInParentModelDevices()
     {
         $modelDevice = new ModelDevice(
-            'parent', 'ua', 'root', true, false, array('product_info' => array('claims_web_support' => 'false'))
+            'parent',
+            'ua',
+            'root',
+            true,
+            false,
+            array('product_info' => array('claims_web_support' => 'false'))
         );
 
         $childModelDevice = new ModelDevice(
-            'id', 'ua', 'parent', true, false, array('product_info' => array('is_wireless_device' => 'true'))
+            'id',
+            'ua',
+            'parent',
+            true,
+            false,
+            array('product_info' => array('is_wireless_device' => 'true'))
         );
 
         $device          = new CustomDevice(array($childModelDevice, $modelDevice));
@@ -111,10 +140,20 @@ class CustomDeviceTest
     public function testShouldReturnAllCapabilities()
     {
         $modelDevice      = new ModelDevice(
-            'parent', 'ua', 'root', true, false, array('product_info' => array('claims_web_support' => 'false'))
+            'parent',
+            'ua',
+            'root',
+            true,
+            false,
+            array('product_info' => array('claims_web_support' => 'false'))
         );
         $childModelDevice = new ModelDevice(
-            'id', 'ua', 'parent', true, false, array('product_info' => array('is_wireless_device' => 'true'))
+            'id',
+            'ua',
+            'parent',
+            true,
+            false,
+            array('product_info' => array('is_wireless_device' => 'true'))
         );
 
         $device          = new CustomDevice(array($childModelDevice, $modelDevice));
@@ -125,7 +164,12 @@ class CustomDeviceTest
     private function mockModelDevice()
     {
         return new ModelDevice(
-            'parent', 'ua', 'root', true, false, array('product_info' => array('claims_web_support' => 'false'))
+            'parent',
+            'ua',
+            'root',
+            true,
+            false,
+            array('product_info' => array('claims_web_support' => 'false'))
         );
     }
 

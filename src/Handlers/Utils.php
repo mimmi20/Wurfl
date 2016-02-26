@@ -329,9 +329,9 @@ class Utils
 
         // Chrome
         if (self::checkIfContains($userAgent, 'Chrome') && !self::checkIfContainsAnyOf(
-                $userAgent,
-                array('Android', 'Ventana')
-            )
+            $userAgent,
+            array('Android', 'Ventana')
+        )
         ) {
             return true;
         }

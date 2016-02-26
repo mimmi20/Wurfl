@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - Returns the Thunderbird/{Version} sub-string
  */
-class DesktopApplication
-    implements NormalizerInterface
+class DesktopApplication implements NormalizerInterface
 {
     /**
      * @param string $userAgent

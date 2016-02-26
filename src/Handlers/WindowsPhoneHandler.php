@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class WindowsPhoneHandler
-    extends AbstractHandler
+class WindowsPhoneHandler extends AbstractHandler
 {
     /**
      * @var string

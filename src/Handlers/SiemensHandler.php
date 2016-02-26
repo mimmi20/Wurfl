@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class SiemensHandler
-    extends AbstractHandler
+class SiemensHandler extends AbstractHandler
 {
     protected $prefix = 'SIEMENS';
 

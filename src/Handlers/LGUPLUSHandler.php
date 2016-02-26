@@ -29,8 +29,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class LGUPLUSHandler
-    extends AbstractHandler
+class LGUPLUSHandler extends AbstractHandler
 {
     protected $prefix = 'LGUPLUS';
 

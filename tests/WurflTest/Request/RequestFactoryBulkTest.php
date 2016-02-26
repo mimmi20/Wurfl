@@ -8,8 +8,7 @@ use WurflTest\NotNullCondition;
 /**
  * test case
  */
-class RequestFactoryBulkTest
-    extends \PHPUnit_Framework_TestCase
+class RequestFactoryBulkTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var array

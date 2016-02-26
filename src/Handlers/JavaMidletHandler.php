@@ -27,8 +27,7 @@ namespace Wurfl\Handlers;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class JavaMidletHandler
-    extends AbstractHandler
+class JavaMidletHandler extends AbstractHandler
 {
     public static $constantIDs = array(
         'generic_midp_midlet',

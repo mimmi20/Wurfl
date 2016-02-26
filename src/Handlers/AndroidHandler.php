@@ -25,8 +25,7 @@ use Wurfl\WurflConstants;
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
-class AndroidHandler
-    extends AbstractHandler
+class AndroidHandler extends AbstractHandler
 {
     /**
      * @var string
@@ -136,9 +135,9 @@ class AndroidHandler
         }
 
         if (($androidVersion < 3.0 || $androidVersion >= 4.0) && Utils::checkIfContains(
-                $userAgent,
-                'Safari'
-            ) && !Utils::checkIfContains($userAgent, 'Mobile')
+            $userAgent,
+            'Safari'
+        ) && !Utils::checkIfContains($userAgent, 'Mobile')
         ) {
             // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a '_tablet' ID)
             if (in_array($deviceID . '_tablet', self::$constantIDs)) {

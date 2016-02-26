@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - MSIE String with the Major and Minor Version Only.
  */
-class MSIE
-    implements NormalizerInterface
+class MSIE implements NormalizerInterface
 {
     /**
      * @param string $userAgent

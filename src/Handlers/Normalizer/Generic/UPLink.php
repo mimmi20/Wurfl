@@ -23,8 +23,7 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 /**
  * User Agent Normalizer - removes UP.Link garbage from user agent
  */
-class UPLink
-    implements NormalizerInterface
+class UPLink implements NormalizerInterface
 {
     /**
      * This method remove the 'UP.Link' substring from user agent string.

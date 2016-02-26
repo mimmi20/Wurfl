@@ -28,8 +28,7 @@ use Wurfl\WurflConstants;
 /**
  * User Agent Normalizer
  */
-class UcwebU3
-    implements NormalizerInterface
+class UcwebU3 implements NormalizerInterface
 {
     /**
      * @param string $userAgent

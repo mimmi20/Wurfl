@@ -7,8 +7,7 @@ use Wurfl\Handlers\Normalizer\Specific\MSIE;
 /**
  *  test case.
  */
-class MSIETest
-    extends TestBase
+class MSIETest extends TestBase
 {
     /**
      * Prepares the environment before running a test.
