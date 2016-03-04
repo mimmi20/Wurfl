@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -24,8 +24,6 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  * User Agent Normalizer - Return the Konqueror user agent with the major version
  * e.g
  *     Mozilla/5.0 (compatible; Konqueror/4.1; Linux) KHTML/4.1.2 (like Gecko) -> Konqueror/4
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class Konqueror implements NormalizerInterface
 {

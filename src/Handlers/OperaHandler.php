@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -23,7 +23,7 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -109,8 +109,6 @@ class OperaHandler extends AbstractHandler
 
     /**
      * @param $userAgent
-     *
-     * @return null
      */
     public static function getOperaVersion($userAgent)
     {
@@ -118,6 +116,6 @@ class OperaHandler extends AbstractHandler
             return ($matches[1]);
         }
 
-        return null;
+        return;
     }
 }

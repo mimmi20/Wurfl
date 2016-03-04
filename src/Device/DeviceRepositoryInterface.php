@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,8 +20,6 @@ namespace Wurfl\Device;
 
 /**
  * Provides methods for accessing a repository of WURFL Devices
- *
- * @package    WURFL
  */
 interface DeviceRepositoryInterface
 {
@@ -54,8 +52,9 @@ interface DeviceRepositoryInterface
      *
      * @param string $deviceId
      *
-     * @return \Wurfl\CustomDevice
      * @throws \Wurfl\Exception if $deviceID is not defined in device repository
+     *
+     * @return \Wurfl\CustomDevice
      */
     public function getDevice($deviceId);
 

@@ -1,7 +1,8 @@
 <?php
+
 namespace WurflTest\Handlers\Normalizer;
 
-/**
+/*
  * test case
  */
 use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
@@ -13,7 +14,6 @@ use Wurfl\WurflConstants;
  */
 class AndroidTest extends TestBase
 {
-
     protected function setUp()
     {
         $this->normalizer = new Android();

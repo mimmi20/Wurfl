@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest\Handlers\Normalizer;
 
 use Wurfl\Handlers\Normalizer\Specific\Firefox;
@@ -8,7 +9,6 @@ use Wurfl\Handlers\Normalizer\Specific\Firefox;
  */
 class FirefoxTest extends TestBase
 {
-
     protected function setUp()
     {
         $this->normalizer = new Firefox();
@@ -32,11 +32,11 @@ class FirefoxTest extends TestBase
         return array(
             array(
                 'Mozilla/5.0 (X11; U; Linux armv6l; en-US; rv:1.9a6pre) Gecko/20070810 Firefox/3.0a1',
-                'Firefox/3.0a1'
+                'Firefox/3.0a1',
             ),
             array('Firefox/3.x', 'Firefox/3.x'),
             array('Mozilla', 'Mozilla'),
-            array('Firefox', 'Firefox')
+            array('Firefox', 'Firefox'),
         );
     }
 }

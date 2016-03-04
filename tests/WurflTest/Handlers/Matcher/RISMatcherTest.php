@@ -1,7 +1,8 @@
 <?php
+
 namespace WurflTest\Handlers\Matcher;
 
-/**
+/*
  * test case
  */
 use Wurfl\Handlers\Matcher\RISMatcher;
@@ -35,7 +36,6 @@ class RISMatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchMustReturnFirstMatch()
     {
-
         $expected = 'aaa bbb 1';
         $needle   = 'aaa bbb 4';
 
@@ -48,7 +48,6 @@ class RISMatcherTest extends \PHPUnit_Framework_TestCase
 
     public function risData()
     {
-
         $candidates = array('aaa bbb ccc ddd', 'aaa bbb ccc', 'aaa bbb', 'aaa', 'aaa xxx');
         sort($candidates);
 
@@ -56,7 +55,7 @@ class RISMatcherTest extends \PHPUnit_Framework_TestCase
             array($candidates, 'aaa bbb ccc ddd', 15, 'aaa bbb ccc ddd'),
             array($candidates, 'aaa bbb ccc xxx', 15, null), //
             array($candidates, 'aaa bbb ccc', 11, 'aaa bbb ccc'),
-            array($candidates, 'aaa bbb ccc ddd', 3, 'aaa bbb ccc ddd')
+            array($candidates, 'aaa bbb ccc ddd', 3, 'aaa bbb ccc ddd'),
         );
     }
 }

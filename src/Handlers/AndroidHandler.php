@@ -8,7 +8,7 @@
  * Refer to the LICENSE file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -21,7 +21,7 @@ use Wurfl\WurflConstants;
  * AndroidUserAgentHandler
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -129,11 +129,11 @@ class AndroidHandler extends AbstractHandler
         $versionString  = str_replace('.', '_', $androidVersion);
         $deviceID       = 'generic_android_ver' . $versionString;
 
-        if ($deviceID == 'generic_android_ver2_0') {
+        if ($deviceID === 'generic_android_ver2_0') {
             $deviceID = 'generic_android_ver2';
         }
 
-        if ($deviceID == 'generic_android_ver4_0') {
+        if ($deviceID === 'generic_android_ver4_0') {
             $deviceID = 'generic_android_ver4';
         }
 
@@ -212,8 +212,8 @@ class AndroidHandler extends AbstractHandler
     /**
      * Get the Android version from the User Agent, or the default Android version is it cannot be determined
      *
-     * @param string  $userAgent  User Agent
-     * @param boolean $useDefault Return the default version on fail, else return null
+     * @param string $userAgent  User Agent
+     * @param bool   $useDefault Return the default version on fail, else return null
      *
      * @return string Android version
      * @see self::ANDROID_DEFAULT_VERSION
@@ -234,7 +234,7 @@ class AndroidHandler extends AbstractHandler
         // Look for 'Android <Version>' first and then for 'Android/<Version>'
         if (preg_match('#Android (\d\.\d)#', $userAgent, $matches)) {
             $version = $matches[1];
-        } else if (preg_match('#Android/(\d\.\d)#', $userAgent, $matches)) {
+        } elseif (preg_match('#Android/(\d\.\d)#', $userAgent, $matches)) {
             $version = $matches[1];
         }
 
@@ -251,7 +251,7 @@ class AndroidHandler extends AbstractHandler
      *
      * @param string $userAgent
      *
-     * @return NULL|string
+     * @return null|string
      */
     public static function getAndroidModel($userAgent)
     {
@@ -279,13 +279,13 @@ class AndroidHandler extends AbstractHandler
         )) {
             $model = $matches[1];
         } else {
-            return null;
+            return;
         }
 
         // The previous RegEx may return just 'Build/.*' for UAs like:
         // HTC_Dream Mozilla/5.0 (Linux; U; Android 1.5; xx-xx; Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
         if (strpos($model, 'Build/') === 0) {
-            return null;
+            return;
         }
 
         // Replace xx-xx (locale) in the model name with ''

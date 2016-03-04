@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -23,17 +23,16 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class KDDIHandler extends AbstractHandler
 {
-
     protected $prefix = 'KDDI';
 
     public static $constantIDs = array(
-        'opwv_v62_generic'
+        'opwv_v62_generic',
     );
 
     /**

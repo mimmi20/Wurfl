@@ -11,9 +11,10 @@
  *
  *
  * @category   WURFL
- * @package    WURFL_Xml
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
+ *
  * @version    $id$
  */
 
@@ -21,8 +22,6 @@ namespace Wurfl\Device\Xml;
 
 /**
  * WURFL XML Parsing interface
- *
- * @package    WURFL_Xml
  */
 interface XmlInterface
 {

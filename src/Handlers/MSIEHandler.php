@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,19 +25,18 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class MSIEHandler extends AbstractHandler
 {
-
     protected $prefix = 'MSIE';
 
     public static $constantIDs = array(
-        0 => 'msie',
-        4 => 'msie_4',
-        5 => 'msie_5',
+        0     => 'msie',
+        4     => 'msie_4',
+        5     => 'msie_5',
         '5.5' => 'msie_5_5',
         6 => 'msie_6',
         7 => 'msie_7',
@@ -93,7 +92,7 @@ class MSIEHandler extends AbstractHandler
             $minor = (int) $matches[2];
 
             // MSIE 5.5 is handled specifically
-            if ($major == 5 && $minor == 5) {
+            if ($major === 5 && $minor === 5) {
                 return 'msie_5_5';
             }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest\Device\Xml;
 
 use Wurfl\Device\Xml\DeviceIterator;

@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest\Handlers\Normalizer;
 
 use Wurfl\Handlers\Normalizer\Specific\Chrome;
@@ -8,7 +9,6 @@ use Wurfl\Handlers\Normalizer\Specific\Chrome;
  */
 class ChromeTest extends TestBase
 {
-
     const CHROME_USERAGENTS_FILE = 'chrome.txt';
 
     protected function setUp()

@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,7 +25,7 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -119,31 +119,31 @@ class WindowsPhoneHandler extends AbstractHandler
 
         $version = self::getWindowsPhoneVersion($userAgent);
 
-        if ($version == '10.0') {
+        if ($version === '10.0') {
             return 'generic_ms_phone_os10';
         }
 
-        if ($version == '8.1') {
+        if ($version === '8.1') {
             return 'generic_ms_phone_os8_1';
         }
 
-        if ($version == '8.0') {
+        if ($version === '8.0') {
             return 'generic_ms_phone_os8';
         }
 
-        if ($version == '7.8') {
+        if ($version === '7.8') {
             return 'generic_ms_phone_os7_8';
         }
 
-        if ($version == '7.5') {
+        if ($version === '7.5') {
             return 'generic_ms_phone_os7_5';
         }
 
-        if ($version == '7.0') {
+        if ($version === '7.0') {
             return 'generic_ms_phone_os7';
         }
 
-        if ($version == '6.5') {
+        if ($version === '6.5') {
             return 'generic_ms_winmo6_5';
         }
 
@@ -195,7 +195,7 @@ class WindowsPhoneHandler extends AbstractHandler
             return $model;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -221,7 +221,7 @@ class WindowsPhoneHandler extends AbstractHandler
             return $model;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -236,20 +236,20 @@ class WindowsPhoneHandler extends AbstractHandler
                 return '10.0';
             } elseif (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
                 return '8.1';
-            } else if (strpos($matches[1], '8.') !== false) {
+            } elseif (strpos($matches[1], '8.') !== false) {
                 return '8.0';
-            } else if (strpos($matches[1], '7.8') !== false) {
+            } elseif (strpos($matches[1], '7.8') !== false) {
                 return '7.8';
-            } else if (strpos($matches[1], '7.10') !== false || strpos($matches[1], '7.5') !== false) {
+            } elseif (strpos($matches[1], '7.10') !== false || strpos($matches[1], '7.5') !== false) {
                 return '7.5';
-            } else if (strpos($matches[1], '6.5') !== false) {
+            } elseif (strpos($matches[1], '6.5') !== false) {
                 return '6.5';
             } else {
                 return '7.0';
             }
         }
 
-        return null;
+        return;
     }
 
     /**

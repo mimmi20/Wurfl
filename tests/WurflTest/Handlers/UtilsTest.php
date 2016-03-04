@@ -1,7 +1,8 @@
 <?php
+
 namespace WurflTest\Handlers;
 
-/**
+/*
  * test case
  */
 use Wurfl\Handlers\Utils;
@@ -11,7 +12,6 @@ use Wurfl\Handlers\Utils;
  */
 class UtilsTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -109,22 +109,22 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
                 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
                 ';',
                 1,
-                23
+                23,
             ),
             array(
                 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
                 ';',
                 2,
-                33
+                33,
             ),
             array(
                 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
                 ';',
                 3,
-                49
+                49,
             ),
             array('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)', '/', 1, 7),
-            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))', ';', 4, -1)
+            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))', ';', 4, -1),
         );
     }
 
@@ -136,22 +136,22 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
                 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
                 ';',
                 1,
-                23
+                23,
             ),
             array(
                 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
                 ';',
                 2,
-                33
+                33,
             ),
             array(
                 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
                 ';',
                 3,
-                49
+                49,
             ),
             array('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)', '/', 1, 7),
-            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))', ';', 4, -1)
+            array('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; GoodAccess 3.7.0.9 (PalmOS 5.1))', ';', 4, -1),
         );
     }
 
@@ -161,9 +161,9 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
             array('Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 6.9) VZW:SCH-i760 PPC 240x320', 38),
             array(
                 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 1.1.4322)',
-                42
+                42,
             ),
-            array('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)', 42)
+            array('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)', 42),
         );
     }
 }

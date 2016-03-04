@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest;
 
 use Wurfl\Configuration\Config;
@@ -42,7 +43,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
         $params = array(
             Config::DIR        => $cacheDir,
-            Config::EXPIRATION => 0
+            Config::EXPIRATION => 0,
         );
         self::$config->persistence('file', $params);
         self::$config->cache('memory');
@@ -96,7 +97,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             'markup',
             'cache',
             'display',
-            'image_format'
+            'image_format',
         );
         $listOfGroups = $this->object->getListOfGroups();
         foreach ($actualGroups as $groupId) {
@@ -105,7 +106,6 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @dataProvider groupIdCapabilitiesNameProvider
      *
      * @param string $groupId

@@ -11,15 +11,15 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Handlers\Normalizer\Specific;
 
-use Wurfl\Handlers\Utils;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
+use Wurfl\Handlers\Utils;
 
 /**
  * User Agent Normalizer
@@ -29,8 +29,6 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
  *  e.g Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_4_11; fr) ... Version/3.1.1 Safari/525.18
  *         becomes
  *         Mozilla/5.0 (Macintosh Safari/525
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class Opera implements NormalizerInterface
 {

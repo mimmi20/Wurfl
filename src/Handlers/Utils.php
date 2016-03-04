@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -22,15 +22,13 @@ use Wurfl\WurflConstants;
 
 /**
  * WURFL user agent hander utilities
- *
- * @package    WURFL
  */
 class Utils
 {
     /**
      * The worst allowed match tolerance
      *
-     * @var integer
+     * @var int
      */
     const WORST_MATCH = 7;
 
@@ -369,7 +367,7 @@ class Utils
     public static function isDesktopBrowserHeavyDutyAnalysis($userAgent)
     {
         // Check Smart TV keywords
-        if (Utils::isSmartTV($userAgent)) {
+        if (self::isSmartTV($userAgent)) {
             return false;
         }
 
@@ -386,11 +384,11 @@ class Utils
         }
 
         // Check mobile keywords
-        if (Utils::isMobileBrowser($userAgent)) {
+        if (self::isMobileBrowser($userAgent)) {
             return false;
         }
 
-        if (Utils::checkIfContains(
+        if (self::checkIfContains(
             $userAgent,
             'PPC'
         )
@@ -399,7 +397,7 @@ class Utils
         } // PowerPC; not always mobile, but we'll kick it out
 
         // Firefox;  fennec is already handled in the \Wurfl\Constants::$MOBILE_BROWSERS keywords
-        if (Utils::checkIfContains($userAgent, 'Firefox') && !Utils::checkIfContains($userAgent, 'Tablet')) {
+        if (self::checkIfContains($userAgent, 'Firefox') && !self::checkIfContains($userAgent, 'Tablet')) {
             return true;
         }
 
@@ -478,7 +476,6 @@ class Utils
     }
 
     /**
-     *
      * Returns the position of third occurrence of a ;(semi-column) if it exists
      * or the string length if no match is found
      *
@@ -524,7 +521,7 @@ class Utils
             if ($index < 0) {
                 return $index;
             }
-            $found++;
+            ++$found;
         } while ($found < $ordinal);
 
         return $index;

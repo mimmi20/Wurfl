@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -23,17 +23,16 @@ namespace Wurfl\Handlers;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class ChromeHandler extends AbstractHandler
 {
-
     protected $prefix = 'CHROME';
 
     public static $constantIDs = array(
-        'google_chrome'
+        'google_chrome',
     );
 
     public function canHandle($userAgent)

@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,8 +20,6 @@ namespace Wurfl\Request;
 
 /**
  * Base class for WURFL Exceptions
- *
- * @package    WURFL
  */
 class Exception extends \Wurfl\Exception
 {

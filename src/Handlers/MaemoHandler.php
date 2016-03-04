@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,13 +25,12 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class MaemoHandler extends AbstractHandler
 {
-
     protected $prefix = 'MAEMO';
 
     public static $constantIDs = array(
@@ -63,6 +62,7 @@ class MaemoHandler extends AbstractHandler
         }
 
         $tolerance = Utils::firstSlash($userAgent);
+
         return $this->getDeviceIDFromLD($userAgent, $tolerance);
     }
 

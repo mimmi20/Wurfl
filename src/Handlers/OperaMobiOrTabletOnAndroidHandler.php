@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,13 +25,12 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
 {
-
     protected $prefix = 'OPERAMOBIORTABLETONANDROID';
 
     public static $constantIDs = array(
@@ -121,10 +120,11 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
     /**
      * Get the Opera browser version from an Opera Android user agent
      *
-     * @param string  $userAgent  User Agent
-     * @param boolean $useDefault Return the default version on fail, else return null
+     * @param string $userAgent  User Agent
+     * @param bool   $useDefault Return the default version on fail, else return null
      *
      * @return string Opera version
+     *
      * @see self::$defaultOperaVersion
      */
     public static function getOperaOnAndroidVersion($userAgent, $useDefault = true)

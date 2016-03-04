@@ -11,22 +11,20 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
 namespace Wurfl\Handlers\Normalizer\Specific;
 
+use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\Handlers\Utils;
 use Wurfl\Handlers\WindowsPhoneHandler;
-use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class WindowsPhone implements NormalizerInterface
 {

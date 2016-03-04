@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -26,7 +26,6 @@ use Wurfl\WurflConstants;
 /**
  * Handles the chain of \Wurfl\Handlers\AbstractHandler objects
  *
- * @package    WURFL
  * @see        \Wurfl\Handlers\AbstractHandler
  */
 class UserAgentHandlerChain
@@ -61,8 +60,8 @@ class UserAgentHandlerChain
     /**
      * Adds the pair $userAgent, $deviceID to the clusters they belong to.
      *
-     * @param String $userAgent
-     * @param String $deviceID
+     * @param string $userAgent
+     * @param string $deviceID
      *
      * @see \Wurfl\Handlers\AbstractHandler::filter()
      */
@@ -88,7 +87,7 @@ class UserAgentHandlerChain
      *
      * @param \Wurfl\Request\GenericRequest $request
      *
-     * @return String deviceID
+     * @return string deviceID
      */
     public function match(GenericRequest $request)
     {
@@ -118,7 +117,7 @@ class UserAgentHandlerChain
         $handlers = $this->getHandlers();
 
         foreach ($handlers as $handler) {
-            /** @var $handler \Wurfl\Handlers\AbstractHandler */
+            /* @var $handler \Wurfl\Handlers\AbstractHandler */
             $handler->persistData();
         }
     }
@@ -134,7 +133,7 @@ class UserAgentHandlerChain
         $handlers   = $this->getHandlers();
 
         foreach ($handlers as $handler) {
-            /** @var $handler \Wurfl\Handlers\AbstractHandler */
+            /* @var $handler \Wurfl\Handlers\AbstractHandler */
             $current = $handler->getUserAgentsWithDeviceId();
 
             if (!empty($current)) {

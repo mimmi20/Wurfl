@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,7 +25,7 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -170,10 +170,11 @@ class UcwebU3Handler extends AbstractHandler
     {
         if (preg_match('/UCBrowser\/(\d+)\.\d/', $userAgent, $matches)) {
             $ucVersion = $matches[1];
+
             return $ucVersion;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -205,7 +206,7 @@ class UcwebU3Handler extends AbstractHandler
     {
         // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
         if (!preg_match('#Adr [\d\.]+; [a-zA-Z]+-[a-zA-Z]+; (.*)\) U2#', $userAgent, $matches)) {
-            return null;
+            return;
         }
 
         $model = $matches[1];
@@ -230,6 +231,6 @@ class UcwebU3Handler extends AbstractHandler
 
         $model = trim($model);
 
-        return (strlen($model) == 0) ? null : $model;
+        return (strlen($model) === 0) ? null : $model;
     }
 }

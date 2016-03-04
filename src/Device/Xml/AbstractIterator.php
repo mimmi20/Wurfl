@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -22,8 +22,6 @@ use Wurfl\FileUtils;
 
 /**
  * Iterates over a WURFL/Patch XML file
- *
- * @package    WURFL_Xml
  */
 abstract class AbstractIterator implements \Iterator
 {

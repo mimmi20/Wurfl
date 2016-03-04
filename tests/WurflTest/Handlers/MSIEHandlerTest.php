@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest\Handlers;
 
 use Wurfl\Handlers\MSIEHandler;

@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,8 +20,6 @@ namespace Wurfl\Device\Xml;
 
 /**
  * Extracts version information from XML file
- *
- * @package    WURFL_Xml
  */
 class VersionIterator extends AbstractIterator
 {

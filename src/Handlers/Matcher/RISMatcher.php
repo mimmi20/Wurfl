@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,7 +25,6 @@ namespace Wurfl\Handlers\Matcher;
  * a match is found, or the string length is lower than the specified tolerance.
  *
  * @see        match()
- * @package    \Wurfl\Handlers\MatcherInterface
  */
 class RISMatcher implements MatcherInterface
 {
@@ -53,9 +52,9 @@ class RISMatcher implements MatcherInterface
     /**
      * Returns the closest match of $needle in $collection of user agents
      *
-     * @param array &$collection array Array of user agents
-     * @param string $needle     string substring to look for in user agent
-     * @param integer $tolerance  integer Minimum required length of prefix match
+     * @param array  &$collection array Array of user agents
+     * @param string $needle      string substring to look for in user agent
+     * @param int    $tolerance   integer Minimum required length of prefix match
      *
      * @return string Device ID that matches user agent or null if not found
      */
@@ -91,10 +90,10 @@ class RISMatcher implements MatcherInterface
         }
 
         if ($bestDistance < $tolerance) {
-            return null;
+            return;
         }
 
-        if ($bestIndex == 0) {
+        if ($bestIndex === 0) {
             return $match;
         }
 
@@ -129,7 +128,7 @@ class RISMatcher implements MatcherInterface
      * @param $string1 string String 1
      * @param $string2 string String 2
      *
-     * @return integer Longest prefix length
+     * @return int Longest prefix length
      */
     private function longestCommonPrefixLength($string1, $string2)
     {
@@ -141,7 +140,7 @@ class RISMatcher implements MatcherInterface
                 break;
             }
 
-            $index++;
+            ++$index;
         }
 
         return $index;

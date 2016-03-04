@@ -5,10 +5,10 @@
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * Refer to the LICENSE file distributed with this package.
+ * Refer to the COPYING.txt file distributed with this package.
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -19,9 +19,9 @@ use Psr\Log\LoggerInterface;
 use Wurfl\Handlers\MatcherInterface\FilterInterface;
 use Wurfl\Handlers\MatcherInterface\HandlerInterface;
 use Wurfl\Handlers\MatcherInterface\MatcherCanHandleInterface;
-use Wurfl\Request\GenericRequest;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
 use Wurfl\Handlers\Normalizer\NullNormalizer;
+use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\Storage;
 use Wurfl\WurflConstants;
 
@@ -30,7 +30,7 @@ use Wurfl\WurflConstants;
  * the user agents and the matching process.
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -81,7 +81,8 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     /**
      * sets the logger
      *
-     * @var \Psr\Log\LoggerInterface $logger
+     * @var \Psr\Log\LoggerInterface
+     *
      * @return \Wurfl\Handlers\AbstractHandler
      */
     public function setLogger(LoggerInterface $logger = null)
@@ -94,7 +95,8 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     /**
      * sets the Persitence Cache
      *
-     * @var \Wurfl\Storage\Storage $persistenceProvider
+     * @var \Wurfl\Storage\Storage
+     *
      * @return \Wurfl\Handlers\AbstractHandler
      */
     public function setPersistenceProvider(Storage $persistenceProvider)
@@ -126,7 +128,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
      * @param string $userAgent
      * @param string $deviceID
      *
-     * @return boolean
+     * @return bool
      */
     public function filter($userAgent, $deviceID)
     {
@@ -298,7 +300,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     {
         return ($deviceID === WurflConstants::NO_MATCH || strcmp($deviceID, 'generic') === 0 || strlen(
             trim($deviceID)
-        ) == 0);
+        ) === 0);
     }
 
     /**

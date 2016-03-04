@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -22,8 +22,6 @@ use Wurfl\Handlers\Normalizer\NormalizerInterface;
 
 /**
  * User Agent Normalizer
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class Apple implements NormalizerInterface
 {

@@ -1,6 +1,6 @@
 {
   "name": "mimmi20/wurfl",
-  "description": "the Wurfl PHP Library for PHP 5.3",
+  "description": "the Wurfl PHP Library for PHP 5.3+",
   "type": "library",
   "license": "AGPLv3",
   "keywords": [
@@ -14,21 +14,21 @@
   "homepage": "https://github.com/mimmi20/Wurfl",
   "require": {
     "php": ">=5.3.3",
-    "psr/log": "~1.0",
-    "mimmi20/wurflcache": ">=1.3.4",
-    "mimmi20/wurfl-generic-request": "*",
-    "mimmi20/wurfl-virtual-capability": ">=1.6.4.3",
-    "mimmi20/wurfl-config": ">=1.0.3",
-    "mimmi20/wurfl-storage": "*",
-    "mimmi20/wurfl-custom-device": ">=1.0.5",
+    "psr/log": "^1.0",
+    "mimmi20/wurflcache": "^1.3",
+    "mimmi20/wurfl-generic-request": "^1.0",
+    "mimmi20/wurfl-virtual-capability": "^1.6",
+    "mimmi20/wurfl-config": "^1.0",
+    "mimmi20/wurfl-storage": "^1.0",
+    "mimmi20/wurfl-custom-device": "^1.0",
     "mimmi20/wurfl-constants": ">=1.6.4.2"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "monolog/monolog": "~1.13",
-    "mikey179/vfsStream": "1.3.*",
-    "squizlabs/php_codesniffer": "2.*",
-    "fabpot/php-cs-fixer": "*"
+    "phpunit/phpunit": "^4.8|^5.0",
+    "monolog/monolog": "^1.0",
+    "mikey179/vfsStream": "^1.3",
+    "squizlabs/php_codesniffer": "^2.0",
+    "fabpot/php-cs-fixer": "^1.11"
   },
   "suggest": {
     "monolog/monolog": "if you want to log to more than a file"
@@ -41,11 +41,6 @@
   "autoload-dev": {
     "psr-4": {
       "WurflTest\\": "tests/WurflTest/"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.6.3.0-dev"
     }
   }
 }

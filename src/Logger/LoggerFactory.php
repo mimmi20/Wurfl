@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -22,8 +22,6 @@ use Wurfl\Configuration\Config;
 
 /**
  * Logging factory
- *
- * @package WURFL_Logger
  */
 class LoggerFactory
 {

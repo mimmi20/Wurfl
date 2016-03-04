@@ -11,7 +11,7 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -25,13 +25,12 @@ use Wurfl\WurflConstants;
  *
  *
  * @category   WURFL
- * @package    WURFL_Handlers
+ *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 class OperaMiniOnAndroidHandler extends AbstractHandler
 {
-
     protected $prefix = 'OPERAMINIONANDROID';
 
     public static $constantIDs = array(
@@ -75,7 +74,7 @@ class OperaMiniOnAndroidHandler extends AbstractHandler
                 $tolerance = strlen($prefix);
                 $deviceID  = $this->getDeviceIDFromRIS($userAgent, $tolerance);
 
-                if ($deviceID == WurflConstants::NO_MATCH) {
+                if ($deviceID === WurflConstants::NO_MATCH) {
                     return $defaultID;
                 }
 
