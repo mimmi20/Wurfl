@@ -136,7 +136,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function fallBackDevicesIdProvider()
     {
         return array(
-            array('blackberry_generic_ver2', array('blackberry_generic', 'generic'))
+            array('blackberry_generic_ver2', array('blackberry_generic', 'generic')),
         );
     }
 
@@ -155,9 +155,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
                     'chtml_displays_image_in_center',
                     'imode_region',
                     'chtml_make_phone_call_string',
-                    'chtml_table_support'
-                )
-            )
+                    'chtml_table_support',
+                ),
+            ),
         );
     }
 }

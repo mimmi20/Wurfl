@@ -353,8 +353,8 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     }
 
     /**
-     * @param string  $userAgent
-     * @param integer $tolerance
+     * @param string $userAgent
+     * @param int    $tolerance
      *
      * @return null|string
      */
@@ -374,8 +374,8 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     }
 
     /**
-     * @param string  $userAgent
-     * @param integer $tolerance
+     * @param string $userAgent
+     * @param int    $tolerance
      *
      * @return null|string
      */

@@ -382,8 +382,8 @@ class Manager
      * @param string                 $deviceId
      * @param Request\GenericRequest $request
      *
-     * @return \Wurfl\Device\ModelDeviceInterface
      * @throws \InvalidArgumentException
+     * @return \Wurfl\Device\ModelDeviceInterface
      */
     public function getDevice($deviceId, Request\GenericRequest $request = null)
     {

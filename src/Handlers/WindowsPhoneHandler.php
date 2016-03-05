@@ -276,7 +276,7 @@ class WindowsPhoneHandler extends AbstractHandler
             return $model;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -289,13 +289,13 @@ class WindowsPhoneHandler extends AbstractHandler
         if (preg_match('|Windows NT (\d+\.\d+)|', $userAgent, $matches)) {
             if (strpos($matches[1], '10.0') !== false) {
                 return '10.0';
-            } else if (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
+            } elseif (strpos($matches[1], '6.3') !== false || strpos($matches[1], '8.1') !== false) {
                 return '8.1';
             } else {
                 return '8.0';
             }
         }
 
-        return null;
+        return;
     }
 }

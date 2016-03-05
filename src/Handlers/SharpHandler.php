@@ -48,6 +48,7 @@ class SharpHandler extends AbstractHandler
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::firstSlash($userAgent);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

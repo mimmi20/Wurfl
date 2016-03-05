@@ -86,6 +86,7 @@ class OperaMiniHandler extends AbstractHandler
         }
 
         $tolerance = Utils::firstSlash($userAgent);
+
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 

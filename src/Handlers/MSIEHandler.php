@@ -38,14 +38,14 @@ class MSIEHandler extends AbstractHandler
         4     => 'msie_4',
         5     => 'msie_5',
         '5.5' => 'msie_5_5',
-        6 => 'msie_6',
-        7 => 'msie_7',
-        8 => 'msie_8',
-        9 => 'msie_9',
-        10 => 'msie_10',
-        11 => 'msie_11',
-        12 => 'msie_12',
-        13 => 'edge_13',
+        6     => 'msie_6',
+        7     => 'msie_7',
+        8     => 'msie_8',
+        9     => 'msie_9',
+        10    => 'msie_10',
+        11    => 'msie_11',
+        12    => 'msie_12',
+        13    => 'edge_13',
     );
 
     /**

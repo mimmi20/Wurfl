@@ -167,7 +167,7 @@ class Utils
         'servicemonitor',
         'httpunit',
         'hatena',
-        'ichiro'
+        'ichiro',
     );
 
     /**
@@ -372,13 +372,13 @@ class Utils
         }
 
         //WP Desktop - Edge Mode
-        if (Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ',' ARM;',' Edge/'))) {
+        if (self::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
             return false;
         }
 
         // Chrome
-        if (Utils::checkIfContains($userAgent, 'Chrome')
-            && !Utils::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))
+        if (self::checkIfContains($userAgent, 'Chrome')
+            && !self::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))
         ) {
             return true;
         }
@@ -501,7 +501,7 @@ class Utils
      * @param int    $ordinal
      *
      * @throws \InvalidArgumentException
-     * @return int Char index of occurance
+     * @return int                       Char index of occurance
      */
     public static function ordinalIndexOf($haystack, $needle, $ordinal)
     {

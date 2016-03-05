@@ -105,8 +105,8 @@ class RISMatcher implements MatcherInterface
      *
      * @param $collection   array Array of user agents
      * @param string $needle       string String to search for in user agents
-     * @param integer $bestIndex    integer
-     * @param integer $bestDistance integer
+     * @param int    $bestIndex    integer
+     * @param int    $bestDistance integer
      *
      * @return string Device ID
      */
@@ -115,8 +115,8 @@ class RISMatcher implements MatcherInterface
         while ($bestIndex > 0 && $this->longestCommonPrefixLength(
             $collection[$bestIndex - 1],
             $needle
-        ) == $bestDistance) {
-            $bestIndex--;
+        ) === $bestDistance) {
+            --$bestIndex;
         }
 
         return $collection[$bestIndex];

@@ -24,8 +24,6 @@ use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
- *
- * @package    \Wurfl\Handlers\Normalizer\Specific
  */
 class Android implements NormalizerInterface
 {

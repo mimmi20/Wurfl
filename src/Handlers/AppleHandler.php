@@ -402,9 +402,9 @@ class AppleHandler extends AbstractHandler
             $matches[1] = str_replace('.', '_', $matches[1]);
             if (Utils::checkIfContains($userAgent, 'iPad')) {
                 $userAgent = 'Mozilla/5.0 (iPad; CPU OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/538.39.2 (KHTML, like Gecko) Version/7.0 Mobile/12A4297e Safari/9537.53 ' . $userAgent;
-            } else if (Utils::checkIfContains($userAgent, 'iPod touch')) {
+            } elseif (Utils::checkIfContains($userAgent, 'iPod touch')) {
                 $userAgent = 'Mozilla/5.0 (iPod touch; CPU iPhone OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 ' . $userAgent;
-            } else if (Utils::checkIfContains($userAgent, 'iPod')) {
+            } elseif (Utils::checkIfContains($userAgent, 'iPod')) {
                 $userAgent = 'Mozilla/5.0 (iPod; CPU iPhone OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 ' . $userAgent;
             } else {
                 $userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/601.1.10 (KHTML, like Gecko) Version/8.0 Mobile/12E155 Safari/600.1.4 ' . $userAgent;

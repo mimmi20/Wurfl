@@ -57,7 +57,6 @@ class BotCrawlerTranscoderHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-
         if (Utils::checkIfContains($userAgent, 'GoogleImageProxy')) {
             return 'google_image_proxy';
         }

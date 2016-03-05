@@ -38,15 +38,13 @@ interface FilterInterface
      * @param string $userAgent User Agent of the device
      * @param string $deviceID  id of the the device
      *
-     * @return boolean
+     * @return bool
      */
     public function filter($userAgent, $deviceID);
 
     /**
      * The persistData() method is resposible to
      * saving the classification output(associative arrays that holds <userAgent, deviceID> pair))
-     *
-     * @return void
      */
     public function persistData();
 }
