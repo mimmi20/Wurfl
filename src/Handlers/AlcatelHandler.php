@@ -37,7 +37,7 @@ class AlcatelHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Alcatel') || Utils::checkIfStartsWith($userAgent, 'ALCATEL');
+        return Utils::checkIfStartsWithCaseInsensitive($userAgent, 'alcatel');
     }
 
     public function applyConclusiveMatch($userAgent)

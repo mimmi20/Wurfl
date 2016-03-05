@@ -31,6 +31,8 @@ use Wurfl\WurflConstants;
  */
 class DesktopApplicationHandler extends AbstractHandler
 {
+    protected $prefix = 'DESKTOPAPPLICATION';
+
     public static $constantIDs = array(
         'generic_desktop_application',
         'mozilla_thunderbird',

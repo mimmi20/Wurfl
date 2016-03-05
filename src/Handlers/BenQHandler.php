@@ -37,7 +37,7 @@ class BenQHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'BenQ') || Utils::checkIfStartsWith($userAgent, 'BENQ');
+        return Utils::checkIfStartsWithCaseInsensitive($userAgent, 'benq');
     }
 
     public function applyConclusiveMatch($userAgent)

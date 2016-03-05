@@ -65,10 +65,9 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Opera Mobi', 'Opera Tablet')
-        ));
+        return (Utils::checkIfContains($userAgent, 'Android')
+            && Utils::checkIfContainsAnyOf($userAgent, array('Opera Mobi', 'Opera Tablet'))
+        );
     }
 
     /**
