@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -59,10 +59,10 @@ class BlackBerryHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry') || Utils::checkIfContains(
-            $userAgent,
-            '(BB10;'
-        ));
+        return (Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
+            || Utils::checkIfContains($userAgent, '(BB10;')
+            || Utils::checkIfContains($userAgent, '(PlayBook')
+        );
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -75,6 +75,8 @@ class BlackBerryHandler extends AbstractHandler
             } else {
                 if (Utils::checkIfStartsWith($userAgent, 'Mozilla/5')) {
                     $tolerance = Utils::ordinalIndexOf($userAgent, ';', 3);
+                } elseif (Utils::checkIfStartsWith($userAgent, 'PlayBook')) {
+                    $tolerance = Utils::firstCloseParen($userAgent);
                 } else {
                     $tolerance = Utils::firstSlash($userAgent);
                 }
@@ -93,6 +95,8 @@ class BlackBerryHandler extends AbstractHandler
             } else {
                 return 'blackberry_generic_ver10_tablet';
             }
+        } elseif (Utils::checkIfContains($userAgent, 'PlayBook')) {
+            return 'rim_playbook_ver1';
         } elseif (preg_match('#Black[Bb]erry[^/\s]+/(\d.\d)#', $userAgent, $matches)) {
             $version = $matches[1];
 

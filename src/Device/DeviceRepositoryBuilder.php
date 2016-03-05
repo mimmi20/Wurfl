@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -72,7 +72,6 @@ class DeviceRepositoryBuilder
      */
     public function build($wurflFile, array $wurflPatches = array(), array $capabilityFilter = array())
     {
-        // TODO: Create a better locking solution
         if (!$this->isRepositoryBuilt()) {
             // Determine Lockfile location
             $lockFile  = FileUtils::getTempDir() . '/wurfl.lock';
@@ -344,7 +343,7 @@ class DeviceRepositoryBuilder
      *
      * @param \Wurfl\Device\Xml\DeviceIterator $deviceIterator
      *
-     * @return array
+     * @return ModelDeviceInterface[]
      */
     private function toArray(DeviceIterator $deviceIterator)
     {

@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -104,6 +104,11 @@ class Utils
         'large screen',
         'netcast',
         'philipstv',
+        'digital-tv',
+        ' mb90/',
+        ' mb91/',
+        ' mb95/',
+        'vizio-dtv',
     );
 
     private static $desktopBrowsers = array(
@@ -132,7 +137,69 @@ class Utils
         'feedfetcher-google',
         'mowser',
         'trove',
+        'google web preview',
+        'googleimageproxy',
+        'mediapartners-google',
+        'azureus',
+        'inquisitor',
+        'baiduspider',
+        'baidumobaider',
+        'holmes/',
+        'libwww-perl',
+        'netSprint',
+        'yandex',
+        'ineturl',
+        'jakarta',
+        'lorkyll',
+        'microsoft url control',
+        'indy library',
+        'slurp',
+        'crawl',
+        'wget',
+        'ucweblient',
+        'snoopy',
+        'untrursted',
+        'mozfdsilla',
+        'ask jeeves',
+        'jeeves/teoma',
+        'mechanize',
+        'http client',
+        'servicemonitor',
+        'httpunit',
+        'hatena',
+        'ichiro',
     );
+
+    /**
+     * @var bool
+     */
+    private static $isSmartTv;
+
+    /**
+     * @var bool
+     */
+    private static $isMobileBrowser;
+
+    /**
+     * @var bool
+     */
+    private static $isDesktopBrowser;
+
+    /**
+     * @var bool
+     */
+    private static $isRobot;
+
+    /**
+     * Resets cached detection variables for performance
+     */
+    public static function reset()
+    {
+        self::$isDesktopBrowser = null;
+        self::$isMobileBrowser  = null;
+        self::$isSmartTv        = null;
+        self::$isRobot          = null;
+    }
 
     /**
      * Alias of \Wurfl\Handlers\Matcher\RISMatcher::match()
@@ -142,7 +209,6 @@ class Utils
      * @param int    $tolerance
      *
      * @return string Matched user agent
-     *
      * @see \Wurfl\Handlers\Matcher\RISMatcher::match()
      */
     public static function risMatch($collection, $needle, $tolerance)
@@ -159,7 +225,6 @@ class Utils
      * @param int    $tolerance
      *
      * @return string Matched user agent
-     *
      * @see \Wurfl\Handlers\Matcher\LDMatcher::match()
      */
     public static function ldMatch($collection, $needle, $tolerance = 7)
@@ -219,17 +284,6 @@ class Utils
     }
 
     /**
-     * Resets cached detection variables for performance
-     */
-    public static function reset()
-    {
-        self::$isDesktopBrowser = null;
-        self::$isMobileBrowser  = null;
-        self::$isSmartTv        = null;
-        self::$isRobot          = null;
-    }
-
-    /**
      * Returns true if the give $userAgent is from a mobile device
      *
      * @param string $userAgent
@@ -254,8 +308,6 @@ class Utils
 
         return self::$isMobileBrowser;
     }
-
-    private static $isMobileBrowser;
 
     /**
      * Returns true if the give $userAgent is from a desktop device
@@ -283,8 +335,6 @@ class Utils
         return self::$isDesktopBrowser;
     }
 
-    private static $isDesktopBrowser;
-
     /**
      * Returns true if the give $userAgent is from a robot
      *
@@ -294,10 +344,6 @@ class Utils
      */
     public static function isRobot($userAgent)
     {
-        if (self::$isRobot !== null) {
-            return self::$isRobot;
-        }
-
         self::$isRobot = false;
         $userAgent     = strtolower($userAgent);
 
@@ -310,8 +356,6 @@ class Utils
 
         return self::$isRobot;
     }
-
-    private static $isRobot;
 
     /**
      * Is the given user agent very likely to be a desktop browser
@@ -327,11 +371,14 @@ class Utils
             return false;
         }
 
+        //WP Desktop - Edge Mode
+        if (self::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
+            return false;
+        }
+
         // Chrome
-        if (self::checkIfContains($userAgent, 'Chrome') && !self::checkIfContainsAnyOf(
-            $userAgent,
-            array('Android', 'Ventana')
-        )
+        if (self::checkIfContains($userAgent, 'Chrome')
+            && !self::checkIfContainsAnyOf($userAgent, array('Android', 'Ventana'))
         ) {
             return true;
         }
@@ -356,7 +403,8 @@ class Utils
 
         // Safari
         if (preg_match(
-            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ ' . 'Safari/[\d\.]+$#',
+            '#^Mozilla/5\.0 \((?:Macintosh|Windows)[^\)]+\) AppleWebKit/[\d\.]+ \(KHTML, like Gecko\) Version/[\d\.]+ '
+            . 'Safari/[\d\.]+$#',
             $userAgent
         )
         ) {
@@ -364,7 +412,7 @@ class Utils
         }
 
         // Opera Desktop
-        if (self::checkIfStartsWith($userAgent, 'Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh')) {
+        if (self::checkIfStartsWithAnyOf($userAgent, array('Opera/9.80 (Windows NT', 'Opera/9.80 (Macintosh'))) {
             return true;
         }
 
@@ -415,8 +463,6 @@ class Utils
         return self::$isSmartTv;
     }
 
-    private static $isSmartTv;
-
     /**
      * Returns true if the give $userAgent is from a spam bot or crawler
      *
@@ -426,7 +472,7 @@ class Utils
      */
     public static function isSpamOrCrawler($userAgent)
     {
-        return self::checkIfContains($userAgent, 'Spam') || self::checkIfContains($userAgent, 'FunWebProducts');
+        return self::checkIfContainsAnyOf($userAgent, array('Spam', 'FunWebProducts'));
     }
 
     /**
@@ -455,8 +501,7 @@ class Utils
      * @param int    $ordinal
      *
      * @throws \InvalidArgumentException
-     *
-     * @return int Char index of occurance
+     * @return int                       Char index of occurance
      */
     public static function ordinalIndexOf($haystack, $needle, $ordinal)
     {
@@ -487,13 +532,11 @@ class Utils
      *
      * @param string $string Haystack
      *
-     * @return int Char index
+     * @return null|int Character position
      */
     public static function firstSlash($string)
     {
-        $firstSlash = strpos($string, '/');
-
-        return ($firstSlash !== false) ? $firstSlash : strlen($string);
+        return self::findCharPosition($string, '/');
     }
 
     /**
@@ -501,16 +544,21 @@ class Utils
      *
      * @param string $string Haystack
      *
-     * @return int Char index
+     * @return null|int Character position
      */
     public static function secondSlash($string)
     {
-        $firstSlash = strpos($string, '/');
-        if ($firstSlash === false) {
-            return strlen($string);
-        }
+        return self::findCharPosition($string, '/', self::findCharPosition($string, '/'));
+    }
 
-        return strpos(substr($string, $firstSlash + 1), '/') + $firstSlash;
+    /**
+     * Number of slashes ('/')
+     * @param $string
+     * @return int Count
+     */
+    public static function numSlashes($string)
+    {
+        return substr_count($string, '/');
     }
 
     /**
@@ -518,13 +566,23 @@ class Utils
      *
      * @param string $string Haystack
      *
-     * @return int Char index
+     * @return null|int Character position
      */
     public static function firstSpace($string)
     {
-        $firstSpace = strpos($string, ' ');
+        return self::findCharPosition($string, ' ');
+    }
 
-        return ($firstSpace === false) ? strlen($string) : $firstSpace;
+    /**
+     * The character position of the first open parenthesis.  If there are no open parenthesis, returns null
+     *
+     * @param string $string Haystack
+     *
+     * @return null|int Character position
+     */
+    public static function firstOpenParen($string)
+    {
+        return self::findCharPosition($string, '(');
     }
 
     /**
@@ -680,5 +738,33 @@ class Utils
     public static function removeLocale($userAgent)
     {
         return preg_replace('/; ?[a-z]{2}(?:-r?[a-zA-Z]{2})?(?:\.utf8|\.big5)?\b-?(?!:)/', '; xx-xx', $userAgent);
+    }
+
+    /**
+     * The character position of the first close parenthesis.  If there are no close parenthesis, returns null
+     *
+     * @param string $string Haystack
+     *
+     * @return null|int Character position
+     */
+    public static function firstCloseParen($string)
+    {
+        return self::findCharPosition($string, ')');
+    }
+
+    /**
+     * The character position in a string.  If not present, returns null
+     *
+     * @param string $string
+     * @param string $char
+     * @param int    $startAt
+     *
+     * @return null|int Character position
+     */
+    public static function findCharPosition($string, $char, $startAt = 0)
+    {
+        $position = strpos($string, $char, $startAt);
+
+        return ($position !== false) ? $position + 1 : null;
     }
 }

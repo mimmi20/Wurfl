@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -52,16 +52,14 @@ use Wurfl\Handlers\NetFrontOnAndroidHandler;
 use Wurfl\Handlers\NintendoHandler;
 use Wurfl\Handlers\NokiaHandler;
 use Wurfl\Handlers\NokiaOviBrowserHandler;
-use Wurfl\Handlers\Normalizer\Generic\BabelFish;
+use Wurfl\Handlers\Normalizer\Generic\Android as GenericAndroid;
 use Wurfl\Handlers\Normalizer\Generic\BlackBerry;
 use Wurfl\Handlers\Normalizer\Generic\CFNetwork;
 use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
-use Wurfl\Handlers\Normalizer\Generic\NovarraGoogleTranslator;
 use Wurfl\Handlers\Normalizer\Generic\SerialNumbers;
 use Wurfl\Handlers\Normalizer\Generic\TransferEncoding;
 use Wurfl\Handlers\Normalizer\Generic\UCWEB;
 use Wurfl\Handlers\Normalizer\Generic\UPLink;
-use Wurfl\Handlers\Normalizer\Generic\YesWAP;
 use Wurfl\Handlers\Normalizer\Specific\Android;
 use Wurfl\Handlers\Normalizer\Specific\Apple;
 use Wurfl\Handlers\Normalizer\Specific\Chrome;
@@ -109,7 +107,6 @@ use Wurfl\Handlers\UcwebU2Handler;
 use Wurfl\Handlers\UcwebU3Handler;
 use Wurfl\Handlers\VodafoneHandler;
 use Wurfl\Handlers\WebOSHandler;
-use Wurfl\Handlers\WindowsPhoneDesktopHandler;
 use Wurfl\Handlers\WindowsPhoneHandler;
 use Wurfl\Handlers\WindowsRTHandler;
 use Wurfl\Handlers\XboxHandler;
@@ -176,29 +173,22 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new KindleHandler($kindleNormalizer));
 
         /**** UCWEB ****/
-        $ucwebu2Normalizer = clone $genericNormalizers;
-        $ucwebu2Normalizer->add(new UcwebU2());
-        $userAgentHandlerChain->addUserAgentHandler(new UcwebU2Handler($ucwebu2Normalizer));
-
         $ucwebu3Normalizer = clone $genericNormalizers;
         $ucwebu3Normalizer->add(new UcwebU3());
         $userAgentHandlerChain->addUserAgentHandler(new UcwebU3Handler($ucwebu3Normalizer));
 
+        $ucwebu2Normalizer = clone $genericNormalizers;
+        $ucwebu2Normalizer->add(new UcwebU2());
+        $userAgentHandlerChain->addUserAgentHandler(new UcwebU2Handler($ucwebu2Normalizer));
+
         /**** Mobile platforms ****/
         //Windows Phone must be above Android to resolve WP 8.1 and above UAs correctly
-        $userAgentHandlerChain->addUserAgentHandler(
-            new WindowsPhoneDesktopHandler($genericNormalizers)
-        );
         $winPhoneNormalizer = clone $genericNormalizers;
         $winPhoneNormalizer->add(
             new WindowsPhone()
         );
         $userAgentHandlerChain->addUserAgentHandler(
             new WindowsPhoneHandler($winPhoneNormalizer)
-        );
-
-        $userAgentHandlerChain->addUserAgentHandler(
-            new NokiaOviBrowserHandler($genericNormalizers)
         );
 
         // Android Matcher Chain
@@ -235,6 +225,10 @@ class UserAgentHandlerChainFactory
         $appleNormalizer = clone $genericNormalizers;
         $appleNormalizer->add(new Apple());
         $userAgentHandlerChain->addUserAgentHandler(new AppleHandler($appleNormalizer));
+
+        $userAgentHandlerChain->addUserAgentHandler(
+            new NokiaOviBrowserHandler($genericNormalizers)
+        );
 
         /**** High workload mobile matchers ****/
         $userAgentHandlerChain->addUserAgentHandler(new NokiaHandler($genericNormalizers));
@@ -391,9 +385,7 @@ class UserAgentHandlerChainFactory
                 new LocaleRemover(),
                 new CFNetwork(),
                 new BlackBerry(),
-                new YesWAP(),
-                new BabelFish(),
-                new NovarraGoogleTranslator(),
+                new GenericAndroid(),
                 new TransferEncoding(),
             )
         );

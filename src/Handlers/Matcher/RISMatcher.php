@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -104,9 +104,9 @@ class RISMatcher implements MatcherInterface
      * Returns the most accurate match of $needle in $collection
      *
      * @param $collection   array Array of user agents
-     * @param $needle       string String to search for in user agents
-     * @param $bestIndex    integer
-     * @param $bestDistance integer
+     * @param string $needle       string String to search for in user agents
+     * @param int    $bestIndex    integer
+     * @param int    $bestDistance integer
      *
      * @return string Device ID
      */

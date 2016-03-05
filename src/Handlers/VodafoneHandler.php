@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -52,6 +52,8 @@ class VodafoneHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        return $this->getDeviceIDFromRIS($userAgent, Utils::firstSlash($userAgent));
+        $tolerance = Utils::firstSlash($userAgent);
+
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -79,9 +79,9 @@ class HTCMacHandler extends AbstractHandler
     }
 
     /**
-     * @param $userAgent
+     * @param string $userAgent
      *
-     * @return mixed|null
+     * @return string|null
      */
     public static function getHTCMacModel($userAgent)
     {

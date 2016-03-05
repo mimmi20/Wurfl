@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -49,6 +49,7 @@ abstract class AbstractIterator implements \Iterator
     public function __construct($inputFile)
     {
         $inputFile = FileUtils::cleanFilename($inputFile);
+
         if (!file_exists($inputFile)) {
             throw new \InvalidArgumentException('cannot locate [$inputFile] file!');
         }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./bootstrap.php">
+<phpunit bootstrap="./tests/bootstrap.php">
     <testsuites>
         <testsuite name="Wurfl Tests">
-            <directory>./WurflTest/</directory>
+            <directory suffix="Test.php">./tests/WurflTest/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">../src/</directory>
+            <directory suffix=".php">./src/</directory>
         </whitelist>
     </filter>
 </phpunit>

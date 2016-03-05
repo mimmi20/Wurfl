@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -32,25 +32,6 @@ class Chrome implements NormalizerInterface
      */
     public function normalize($userAgent)
     {
-        return $this->chromeWithMajorVersion($userAgent);
-    }
-
-    /**
-     * Returns Google Chrome's Major version number
-     *
-     * @param string $userAgent
-     *
-     * @return string Version number
-     */
-    private function chromeWithMajorVersion($userAgent)
-    {
-        $startIndex = strpos($userAgent, 'Chrome');
-        $endIndex   = strpos($userAgent, '.', $startIndex);
-
-        if ($endIndex === false) {
-            return substr($userAgent, $startIndex);
-        } else {
-            return substr($userAgent, $startIndex, ($endIndex - $startIndex));
-        }
+        return substr($userAgent, strpos($userAgent, 'Chrome'));
     }
 }

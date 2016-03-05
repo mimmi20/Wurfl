@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -51,7 +51,6 @@ class Utils
     {
         // LOOP THROUGH $array2
         foreach ($array2 as $k => $v) {
-
             // CHECK IF VALUE EXISTS IN $array1
             if (!empty($array1[$k])) {
                 // IF VALUE EXISTS CHECK IF IT'S AN ARRAY OR A STRING

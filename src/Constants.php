@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -23,5 +23,5 @@ namespace Wurfl;
  */
 class Constants
 {
-    const API_VERSION = '1.6.0.0';
+    const API_VERSION = '1.6.4.2';
 }

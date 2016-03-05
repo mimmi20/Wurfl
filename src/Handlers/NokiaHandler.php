@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -50,7 +50,8 @@ class NokiaHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Nokia');
+        return Utils::checkIfContains($userAgent, 'Nokia')
+            && !Utils::checkIfContainsAnyOf($userAgent, array('Android', 'iPhone'));
     }
 
     /**
@@ -61,6 +62,10 @@ class NokiaHandler extends AbstractHandler
     public function applyConclusiveMatch($userAgent)
     {
         $tolerance = Utils::indexOfAnyOrLength($userAgent, array('/', ' '), strpos($userAgent, 'Nokia'));
+
+        if (Utils::checkIfStartsWithAnyOf($userAgent, array('Nokia/', 'Nokia '))) {
+            $tolerance = strlen($userAgent);
+        }
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }

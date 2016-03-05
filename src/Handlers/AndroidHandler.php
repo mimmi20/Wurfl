@@ -5,7 +5,7 @@
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  * @category   WURFL
  *
@@ -54,6 +54,7 @@ class AndroidHandler extends AbstractHandler
         'generic_android_ver5_2',
         'generic_android_ver5_3',
         'generic_android_ver6_0',
+        'generic_android_ver6_1',
         'generic_android_ver1_5_tablet',
         'generic_android_ver1_6_tablet',
         'generic_android_ver2_tablet',
@@ -75,6 +76,7 @@ class AndroidHandler extends AbstractHandler
         'generic_android_ver5_2_tablet',
         'generic_android_ver5_3_tablet',
         'generic_android_ver6_0_tablet',
+        'generic_android_ver6_1_tablet',
     );
 
     /**
@@ -84,7 +86,8 @@ class AndroidHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return !Utils::checkIfContains($userAgent, 'like Android') && Utils::checkIfContains($userAgent, 'Android');
+        return !Utils::checkIfContainsAnyOf($userAgent, array('like Android', 'Symbian'))
+            && Utils::checkIfContains($userAgent, 'Android');
     }
 
     /**
@@ -188,6 +191,7 @@ class AndroidHandler extends AbstractHandler
         '5.2',
         '5.3',
         '6.0',
+        '6.1',
     );
 
     /**
@@ -212,7 +216,6 @@ class AndroidHandler extends AbstractHandler
      * @param bool   $useDefault Return the default version on fail, else return null
      *
      * @return string Android version
-     *
      * @see self::ANDROID_DEFAULT_VERSION
      */
     public static function getAndroidVersion($userAgent, $useDefault = true)
@@ -284,6 +287,9 @@ class AndroidHandler extends AbstractHandler
         if (strpos($model, 'Build/') === 0) {
             return;
         }
+
+        // Replace xx-xx (locale) in the model name with ''
+        $model = str_replace('xx-xx', '', $model);
 
         // Normalize Chinese UAs
         $model = preg_replace('#(?:_CMCC_TD|_CMCC|_TD)\b#', '', $model);

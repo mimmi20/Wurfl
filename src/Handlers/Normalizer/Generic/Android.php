@@ -11,22 +11,18 @@
  *
  *
  * @category   WURFL
- *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\Handlers\Normalizer\Specific;
+namespace Wurfl\Handlers\Normalizer\Generic;
 
-use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
-use Wurfl\Handlers\Utils;
-use Wurfl\WurflConstants;
 
 /**
- * User Agent Normalizer
+ * User Agent Normalizer - Trims the version number to two digits (e.g. 2.1.1 -> 2.1)
  */
-class Kindle implements NormalizerInterface
+class Android implements NormalizerInterface
 {
     /**
      * @param string $userAgent
@@ -35,17 +31,7 @@ class Kindle implements NormalizerInterface
      */
     public function normalize($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Android')) {
-            $model   = AndroidHandler::getAndroidModel($userAgent);
-            $version = AndroidHandler::getAndroidVersion($userAgent, false);
-
-            if ($model !== null && $version !== null) {
-                $prefix = $version . ' ' . $model . WurflConstants::RIS_DELIMITER;
-
-                return $prefix . $userAgent;
-            }
-        }
-
-        return $userAgent;
+        // Normalize Android version
+        return preg_replace('/(Android)[ \-\/](\d\.\d)([^; \/\)]+)/', '$1 $2', $userAgent);
     }
 }

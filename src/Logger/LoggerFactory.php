@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -17,6 +17,8 @@
  */
 
 namespace Wurfl\Logger;
+
+use Wurfl\Configuration\Config;
 
 /**
  * Logging factory
@@ -30,7 +32,7 @@ class LoggerFactory
      *
      * @return \Psr\Log\LoggerInterface Logger object
      */
-    public static function create($wurflConfig = null)
+    public static function create(Config $wurflConfig = null)
     {
         if (self::isLoggingConfigured($wurflConfig)) {
             return self::createFileLogger($wurflConfig, 'wurfl.log');
@@ -47,7 +49,7 @@ class LoggerFactory
      *
      * @return FileLogger File logger
      */
-    private static function createFileLogger($wurflConfig, $fileName)
+    private static function createFileLogger(Config $wurflConfig, $fileName)
     {
         $logFileName = self::createLogFile($wurflConfig->logDir, $fileName);
 
@@ -61,7 +63,7 @@ class LoggerFactory
      *
      * @return bool
      */
-    private static function isLoggingConfigured($wurflConfig)
+    private static function isLoggingConfigured(Config $wurflConfig)
     {
         if (is_null($wurflConfig)) {
             return false;

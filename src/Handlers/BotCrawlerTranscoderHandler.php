@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -17,6 +17,8 @@
  */
 
 namespace Wurfl\Handlers;
+
+use Wurfl\WurflConstants;
 
 /**
  * BotCrawlerTranscoderUserAgentHandler
@@ -29,57 +31,54 @@ namespace Wurfl\Handlers;
  */
 class BotCrawlerTranscoderHandler extends AbstractHandler
 {
+    /**
+     * @var string Prefix for this User Agent Handler
+     */
     protected $prefix = 'BOT_CRAWLER_TRANSCODER';
 
+    /**
+     * Returns true if this handler can handle the given $userAgent
+     *
+     * @param string $userAgent
+     *
+     * @return bool
+     */
     public function canHandle($userAgent)
     {
-        foreach ($this->botCrawlerTranscoder as $key) {
-            if (Utils::checkIfContainsCaseInsensitive($userAgent, $key)) {
-                return true;
-            }
-        }
-
-        return false;
+        return Utils::isRobot($userAgent);
     }
 
-    private $botCrawlerTranscoder = array(
-        'bot',
-        'crawler',
-        'spider',
-        'novarra',
-        'transcoder',
-        'yahoo! searchmonkey',
-        'yahoo! slurp',
-        'feedfetcher-google',
-        'mowser',
-        'mediapartners-google',
-        'azureus',
-        'inquisitor',
-        'baiduspider',
-        'baidumobaider',
-        'holmes/',
-        'libwww-perl',
-        'netSprint',
-        'yandex',
-        'ineturl',
-        'jakarta',
-        'lorkyll',
-        'microsoft url control',
-        'indy library',
-        'slurp',
-        'crawl',
-        'wget',
-        'ucweblient',
-        'snoopy',
-        'untrursted',
-        'mozfdsilla',
-        'ask jeeves',
-        'jeeves/teoma',
-        'mechanize',
-        'http client',
-        'servicemonitor',
-        'httpunit',
-        'hatena',
-        'ichiro',
-    );
+    /**
+     * Attempt to find a conclusive match for the given $userAgent
+     *
+     * @param string $userAgent
+     *
+     * @return string Matching WURFL deviceID
+     */
+    public function applyConclusiveMatch($userAgent)
+    {
+        if (Utils::checkIfContains($userAgent, 'GoogleImageProxy')) {
+            return 'google_image_proxy';
+        }
+
+        if (Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
+            $tolerance = Utils::firstCloseParen($userAgent);
+        } else {
+            $tolerance = Utils::firstSlash($userAgent);
+        }
+
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
+    }
+
+    /**
+     * Applies Recovery Match
+     *
+     * @param string $userAgent
+     *
+     * @return string $deviceID
+     */
+    public function applyRecoveryMatch($userAgent)
+    {
+        return WurflConstants::GENERIC_WEB_CRAWLER;
+    }
 }

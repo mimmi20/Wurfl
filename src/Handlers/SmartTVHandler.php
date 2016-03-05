@@ -7,7 +7,7 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the COPYING.txt file distributed with this package.
+ * Refer to the LICENSE file distributed with this package.
  *
  *
  * @category   WURFL
@@ -36,6 +36,7 @@ class SmartTVHandler extends AbstractHandler
         'generic_smarttv_googletv_browser',
         'generic_smarttv_appletv_browser',
         'generic_smarttv_boxeebox_browser',
+        'generic_smarttv_chromecast',
     );
 
     /**
@@ -55,7 +56,6 @@ class SmartTVHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        // TODO: Evaluate effectiveness of matching full-length in Conclusive matcher via RIS VS Exact match
         $tolerance = strlen($userAgent);
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);
@@ -82,6 +82,10 @@ class SmartTVHandler extends AbstractHandler
 
         if (Utils::checkIfContains($userAgent, 'Boxee')) {
             return 'generic_smarttv_boxeebox_browser';
+        }
+
+        if (Utils::checkIfContains($userAgent, 'CrKey')) {
+            return 'generic_smarttv_chromecast';
         }
 
         return 'generic_smarttv_browser';
