@@ -690,6 +690,19 @@ class Utils
     }
 
     /**
+     * Returns true if $haystack starts with $needle
+     *
+     * @param string $haystack Haystack
+     * @param string $needle   Needle
+     *
+     * @return bool
+     */
+    public static function checkIfStartsWithCaseInsensitive($haystack, $needle)
+    {
+        return stripos($haystack, $needle) === 0;
+    }
+
+    /**
      * Returns true if $haystack starts with any of the $needles
      *
      * @param string $haystack Haystack

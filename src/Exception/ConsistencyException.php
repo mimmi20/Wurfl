@@ -7,21 +7,24 @@
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * Refer to the LICENSE file distributed with this package.
+ * Refer to the COPYING.txt file distributed with this package.
  *
  *
  * @category   WURFL
- *
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
+ * @version    $id$
  */
 
-namespace Wurfl;
+namespace Wurfl\Exception;
+
+use Wurfl\Exception;
 
 /**
- * WURFL PHP API Constants
+ * WURFL generic consistency exception.
+ *
+ * This exception is thrown when the WURFL model contains inconsistent data.
  */
-class Constants
+class ConsistencyException extends Exception
 {
-    const API_VERSION = '1.7.0.0';
 }
