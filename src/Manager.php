@@ -51,10 +51,12 @@ class Manager
      * @var Configuration\Config
      */
     private $wurflConfig = null;
+
     /**
      * @var Storage\Storage
      */
     private $persistenceStorage = null;
+
     /**
      * @var Storage\Storage
      */
@@ -283,7 +285,8 @@ class Manager
         $deviceRepositoryBuilder = new Device\DeviceRepositoryBuilder(
             $this->getPersistenceStorage(),
             $this->getUserAgentHandlerChain(),
-            $devicePatcher
+            $devicePatcher,
+            $this->getLogger()
         );
 
         $this->deviceRepository = $deviceRepositoryBuilder->build(

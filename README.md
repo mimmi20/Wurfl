@@ -126,11 +126,10 @@ $device->getVirtualCapability('is_smartphone');
     The API supports the following mechanisms:
     - Memcache (http://uk2.php.net/memcache)
     - APC (Alternative PHP Cache http://www.php.net/apc)
-    - MySQL
     - Memory
     - File
 
-    Additional to the official providers the following connectots are added:
+    Additional to the official providers the following connectors are added:
     - Zend Cache
 
 3. Configure the Cache provider by specifying the provider
@@ -141,7 +140,7 @@ $device->getVirtualCapability('is_smartphone');
     - File
     - Null (no caching)
 
-    Additional to the official providers the following connectots are added:
+    Additional to the official providers the following connectors are added:
     - Zend Cache
 
 ### Example Configuration ###

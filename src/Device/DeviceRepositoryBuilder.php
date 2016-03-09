@@ -26,8 +26,10 @@ use Wurfl\Device\Xml\VersionIterator;
 use Wurfl\Exception\ConsistencyException;
 use Wurfl\FileUtils;
 use Wurfl\Handlers\Chain\UserAgentHandlerChain;
+use Wurfl\Logger\LogLevel;
 use Wurfl\Storage\Storage;
 use Wurfl\VirtualCapability\VirtualCapabilityProvider;
+use Psr\Log\LoggerInterface;
 
 /**
  * Builds a \Wurfl\DeviceRepositoryInterface
@@ -50,25 +52,16 @@ class DeviceRepositoryBuilder
     private $devicePatcher;
 
     /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger = null;
+
+    /**
      * Filename of lockfile to prevent concurrent DeviceRepository builds
      *
      * @var string
      */
     private $lockFile;
-
-    /**
-     * True if the repository builder is currently locked
-     *
-     * @var string
-     */
-    private $isLocked = false;
-
-    /**
-     * If a lock is in place for this long it is assumed to be orphaned and the lock is released
-     *
-     * @var int
-     */
-    private $maxLockAge = 86400;
 
     private $devices   = array();
     private $fallbacks = array();
@@ -77,19 +70,25 @@ class DeviceRepositoryBuilder
      * @param \Wurfl\Storage\Storage                      $persistenceProvider
      * @param \Wurfl\Handlers\Chain\UserAgentHandlerChain $chain
      * @param \Wurfl\Device\Xml\DevicePatcher             $devicePatcher
+     * @param \Psr\Log\LoggerInterface                    $logger
      */
     public function __construct(
         Storage $persistenceProvider,
         UserAgentHandlerChain $chain,
-        DevicePatcher $devicePatcher
+        DevicePatcher $devicePatcher,
+        LoggerInterface $logger
     ) {
         $this->persistenceProvider   = $persistenceProvider;
         $this->userAgentHandlerChain = $chain;
         $this->devicePatcher         = $devicePatcher;
+        $this->logger                = $logger;
 
         $this->lockFile = FileUtils::getTempDir() . '/wurfl_builder.lock';
     }
 
+    /**
+     * release the lock if this class is destroyed
+     */
     public function __destruct()
     {
         $this->releaseLock();
@@ -102,6 +101,9 @@ class DeviceRepositoryBuilder
      * @param array  $wurflPatches     Array of WURFL patch files
      * @param array  $capabilityFilter Array of capabilities to be included in the DeviceRepositoryInterface
      *
+     * @throws \Exception
+     * @throws \Wurfl\Device\Exception
+     * @throws \Wurfl\Exception\ConsistencyException
      * @return CustomDeviceRepository
      */
     public function build($wurflFile, array $wurflPatches = array(), array $capabilityFilter = array())
@@ -109,19 +111,60 @@ class DeviceRepositoryBuilder
         if (!$this->isRepositoryBuilt()) {
             // If acquireLock() is false, the WURFL is being reloaded in another thread
             if ($this->acquireLock()) {
-                $infoIterator   = new VersionIterator($wurflFile);
-                $deviceIterator = new DeviceIterator($wurflFile, $capabilityFilter);
+                try {
+                    $infoIterator = new VersionIterator($wurflFile);
+                } catch (\InvalidArgumentException $e) {
+                    $this->releaseLock();
+
+                    $this->logger->log(LogLevel::ERROR, $e);
+
+                    throw $e;
+                }
+
+                try {
+                    $deviceIterator = new DeviceIterator($wurflFile, $capabilityFilter);
+                } catch (\InvalidArgumentException $e) {
+                    $this->releaseLock();
+
+                    $this->logger->log(LogLevel::ERROR, $e);
+
+                    throw $e;
+                }
+
                 $patchIterators = $this->toPatchIterators($wurflPatches, $capabilityFilter);
 
-                $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
-                $this->verifyRepository();
+                try {
+                    $this->buildRepository($infoIterator, $deviceIterator, $patchIterators);
+                } catch (Exception $e) {
+                    $this->releaseLock();
+
+                    $this->logger->log(LogLevel::ERROR, $e);
+
+                    throw $e;
+                }
+
+                try {
+                    $this->verifyRepository();
+                } catch (ConsistencyException $e) {
+                    $this->releaseLock();
+
+                    $this->logger->log(LogLevel::ERROR, $e);
+
+                    throw $e;
+                }
                 $this->setRepositoryBuilt();
 
                 $this->releaseLock();
             }
         }
 
-        return new CustomDeviceRepository($this->persistenceProvider, $this->deviceClassificationNames());
+        try {
+            return new CustomDeviceRepository($this->persistenceProvider, $this->deviceClassificationNames());
+        } catch (\Exception $e) {
+            var_dump('isRepositoryBuilt', $this->isRepositoryBuilt(), 'acquireLock', $this->acquireLock(), '$wurflFile', $wurflFile, $e);
+
+            throw $e;
+        }
     }
 
     /**
@@ -153,8 +196,6 @@ class DeviceRepositoryBuilder
                 $exception
             );
         }
-
-        $this->setRepositoryBuilt();
     }
 
     /**
@@ -171,21 +212,16 @@ class DeviceRepositoryBuilder
 
         if (is_array($wurflPatches)) {
             foreach ($wurflPatches as $wurflPatch) {
-                $patchIterators[] = new DeviceIterator($wurflPatch, $capabilityFilter);
+                try {
+                    $patchIterators[] = new DeviceIterator($wurflPatch, $capabilityFilter);
+                } catch (\InvalidArgumentException $e) {
+                    $this->logger->log(LogLevel::ERROR, $e);
+                }
             }
         }
 
         return $patchIterators;
     }
-
-    /**
-     * Returns an array of \Wurfl\Xml\DeviceIterator for the given $wurflPatches and $capabilityFilter
-     *
-     * @param array $wurflPatches     Array of (string)filenames
-     * @param array $capabilityFilter Array of (string) WURFL capabilities
-     *
-     * @return \Wurfl\Device\Xml\DeviceIterator[]
-     */
 
     /**
      * @return bool true if device repository is already built (WURFL is loaded in persistence proivder)
@@ -408,6 +444,7 @@ class DeviceRepositoryBuilder
 
         return $patchingDevices;
     }
+
     private function verifyRepository()
     {
         /**
@@ -417,11 +454,15 @@ class DeviceRepositoryBuilder
             /**
              * @var \Wurfl\Handlers\AbstractHandler
              */
-            foreach ($handler::$constantIDs as $require_device_id) {
-                $device = $this->persistenceProvider->load($require_device_id);
+            foreach ($handler::$constantIDs as $requireDeviceId) {
+                $device = $this->persistenceProvider->load($requireDeviceId);
+
                 if ($device === null) {
+                    var_dump("id $requireDeviceId not found");
+                    continue;
                     throw new ConsistencyException(
-                        'wurfl.xml load error - you may need to update the wurfl.xml file to a more recent version'
+                        'wurfl.xml load error - device id [' . $requireDeviceId . '] is missing - '
+                        . 'you may need to update the wurfl.xml file to a more recent version'
                     );
                 }
             }
@@ -454,6 +495,7 @@ class DeviceRepositoryBuilder
         unset($this->fallbacks);
         unset($this->devices);
     }
+
     /**
      * Acquires a lock so only this thread reloads the WURFL data, returns false if it cannot be acquired
      *
@@ -461,29 +503,14 @@ class DeviceRepositoryBuilder
      */
     private function acquireLock()
     {
-        if (file_exists($this->lockFile)) {
-            $stale_after = filemtime($this->lockFile) + $this->maxLockAge;
-            if (time() > $stale_after) {
-                // The lockfile is stale, delete it and reacquire a lock
-                @rmdir($this->lockFile);
-            } else {
-                // The lockfile is valid, WURFL is probably being reloaded in another thread
-                return false;
-            }
-        }
-        // Using mkdir instead of touch since mkdir is atomic
-        $this->isLocked = @mkdir($this->lockFile, 0775);
-        return $this->isLocked;
+        return $this->persistenceProvider->acquireLock();
     }
+
     /**
      * Releases the lock if one was acquired
      */
     private function releaseLock()
     {
-        if (!$this->isLocked) {
-            return;
-        }
-        @rmdir($this->lockFile);
-        $this->isLocked = false;
+        return $this->persistenceProvider->releaseLock();
     }
 }

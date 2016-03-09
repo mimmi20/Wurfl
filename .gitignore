@@ -5,3 +5,4 @@ vendor/
 .project
 composer.phar
 composer.lock
+tests/resources/cache

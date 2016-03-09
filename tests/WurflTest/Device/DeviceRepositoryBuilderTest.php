@@ -19,7 +19,7 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    const WURFL_FILE = 'tests/resources/wurfl_base.xml';
+    const WURFL_FILE = 'tests/resources/wurfl.xml';
 
     /**
      * @var string
@@ -95,12 +95,12 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
             $devicePatcher
         );
         self::assertNotNull($deviceRepositoryBuilder);
-        $wurflFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::WURFL_FILE;
 
         try {
-            $deviceRepository = $deviceRepositoryBuilder->build($wurflFile);
+            $deviceRepository = $deviceRepositoryBuilder->build(self::WURFL_FILE);
             $deviceRepository->getDevice('generic');
         } catch (\Exception $ex) {
+            var_dump($ex);
         }
     }
 }

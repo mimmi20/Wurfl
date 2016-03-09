@@ -18,7 +18,8 @@
     "mimmi20/wurflcache": "^1.3",
     "mimmi20/wurfl-generic-request": "^1.7",
     "mimmi20/wurfl-config": "^1.0",
-    "mimmi20/wurfl-constants": "^1.6"
+    "mimmi20/wurfl-constants": "^1.6",
+    "hassankhan/config": "^0.10"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8|^5.0",

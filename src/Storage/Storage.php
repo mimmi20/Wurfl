@@ -44,6 +44,11 @@ class Storage
     const WURFL_LOADED = 'WURFL_WURFL_LOADED';
 
     /**
+     * @var string
+     */
+    const WURFL_LOCKED = 'WURFL_LOCKED';
+
+    /**
      * @var AdapterInterface
      */
     private $adapter;
@@ -64,6 +69,8 @@ class Storage
      * @param string $objectId
      * @param mixed  $object
      * @param int    $expiration If supported by the provider, this is used to specify the expiration
+     *
+     * @return bool
      */
     public function save($objectId, $object, $expiration = null)
     {
@@ -71,7 +78,7 @@ class Storage
             $this->adapter->setExpiration($expiration);
         }
 
-        $this->adapter->setItem($objectId, $object);
+        return $this->adapter->setItem($objectId, $object);
     }
 
     /**
@@ -97,18 +104,22 @@ class Storage
      * Removes the object identified by $objectId from the persistence provider
      *
      * @param string $objectId
+     *
+     * @return bool
      */
     public function remove($objectId)
     {
-        $this->adapter->removeItem($objectId);
+        return $this->adapter->removeItem($objectId);
     }
 
     /**
      * Removes all entries from the Persistence Provider
+     *
+     * @return bool
      */
     public function clear()
     {
-        $this->adapter->flush();
+        return $this->adapter->flush();
     }
 
     /**
@@ -129,6 +140,30 @@ class Storage
     public function setWURFLLoaded($loaded = true)
     {
         $this->save(self::WURFL_LOADED, $loaded);
+    }
+
+    /**
+     * Acquires a lock so only this thread reloads the WURFL data, returns false if it cannot be acquired
+     *
+     * @return bool
+     */
+    public function acquireLock()
+    {
+        if ($this->adapter->hasItem(self::WURFL_LOCKED)) {
+            return false;
+        }
+
+        return $this->save(self::WURFL_LOCKED, true);
+    }
+
+    /**
+     * Releases the lock if one was acquired
+     *
+     * @return bool
+     */
+    public function releaseLock()
+    {
+        return $this->remove(self::WURFL_LOCKED);
     }
 
     /**
