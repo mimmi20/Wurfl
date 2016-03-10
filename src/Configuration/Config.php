@@ -23,16 +23,15 @@ namespace Wurfl\Configuration;
  *
  * @package    WURFL_Configuration
  *
- * @property string  $configFilePath
- * @property string  $configurationFileDir
- * @property boolean $allowReload
- * @property array   $capabilityFilter
- * @property string  $wurflFile
- * @property array   $wurflPatches
- * @property array   $persistence
- * @property array   $cache
- * @property string  $logDir
- * @property string  $matchMode
+ * @property-read string  $configFilePath
+ * @property-read string  $configurationFileDir
+ * @property-read boolean $allowReload
+ * @property-read array   $capabilityFilter
+ * @property-read string  $wurflFile
+ * @property-read array   $wurflPatches
+ * @property-read array   $persistence
+ * @property-read array   $cache
+ * @property-read string  $matchMode
  */
 abstract class Config
 {
@@ -44,9 +43,9 @@ abstract class Config
     const PERSISTENCE            = 'persistence';
     const PROVIDER               = 'provider';
     const PARAMS                 = 'params';
-    const LOG_DIR                = 'logDir';
     const ALLOW_RELOAD           = 'allow-reload';
     const CAPABILITY_FILTER      = 'capability-filter';
+    const CAPABILITY             = 'capability';
     const DIR                    = 'dir';
     const EXPIRATION             = 'expiration';
     const MATCH_MODE             = 'match-mode';
@@ -94,16 +93,6 @@ abstract class Config
     protected $cache = array();
 
     /**
-     * @var string
-     */
-    protected $logDir;
-
-    /**
-     * @var array
-     */
-    protected $logger;
-
-    /**
      * Mode of operation (performance or accuracy)
      *
      * @var string
@@ -111,27 +100,95 @@ abstract class Config
     protected $matchMode = self::MATCH_MODE_ACCURACY;
 
     /**
-     * Creates a new WURFL Configuration object from $configFilePath
+     * Initialize Configuration
      *
-     * @param string $configFilePath Complete filename of configuration file
-     *
-     * @throws \InvalidArgumentException
+     * @param array $configuration
      */
-    public function __construct($configFilePath)
+    protected function initialize(array $configuration)
     {
-        if (!file_exists($configFilePath)) {
-            throw new \InvalidArgumentException('The configuration file ' . $configFilePath . ' does not exist.');
+        if (array_key_exists(self::WURFL, $configuration)) {
+            $this->setWurflConfiguration($configuration[self::WURFL]);
         }
 
-        $this->configFilePath       = $configFilePath;
-        $this->configurationFileDir = dirname($this->configFilePath);
-        $this->initialize();
+        if (array_key_exists(self::PERSISTENCE, $configuration)) {
+            $this->persistence = $this->buildPersistenceConfiguration($configuration[self::PERSISTENCE]);
+        }
+
+        if (array_key_exists(self::CACHE, $configuration)) {
+            $this->cache = $this->buildPersistenceConfiguration($configuration[self::CACHE]);
+        }
+
+        if (array_key_exists(self::CAPABILITY_FILTER, $configuration)) {
+            $this->capabilityFilter = $configuration[self::CAPABILITY_FILTER];
+        }
+
+        if (array_key_exists(self::MATCH_MODE, $configuration)) {
+            $this->setMatchMode($configuration[self::MATCH_MODE]);
+        }
+
+        $this->allowReload = array_key_exists(self::ALLOW_RELOAD, $configuration)
+            ? (boolean) $configuration[self::ALLOW_RELOAD] : false;
     }
 
     /**
-     * Initialize the Configuration object
+     * @param array $wurflConfig
      */
-    abstract protected function initialize();
+    protected function setWurflConfiguration(array $wurflConfig)
+    {
+        if (array_key_exists(self::MAIN_FILE, $wurflConfig)) {
+            $this->wurflFile = $this->getFullPath($wurflConfig[self::MAIN_FILE]);
+        }
+
+        if (array_key_exists(self::PATCHES, $wurflConfig)) {
+            if (array_key_exists(self::PATCH, $wurflConfig[self::PATCHES])) {
+                foreach ($wurflConfig[self::PATCHES][self::PATCH] as $wurflPatch) {
+                    $this->wurflPatches[] = $this->getFullPath($wurflPatch);
+                }
+            } else {
+                foreach ($wurflConfig[self::PATCHES] as $wurflPatch) {
+                    $this->wurflPatches[] = $this->getFullPath($wurflPatch);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param array $persistenceConfig
+     *
+     * @return array
+     */
+    protected function buildPersistenceConfiguration(array $persistenceConfig)
+    {
+        $persistence = array();
+
+        if (!array_key_exists(self::PROVIDER, $persistenceConfig)) {
+            $persistence[self::PROVIDER] = 'null';
+        } else {
+            $persistence[self::PROVIDER] = $persistenceConfig[self::PROVIDER];
+        }
+
+        if (array_key_exists(self::PARAMS, $persistenceConfig) && is_array($persistenceConfig[self::PARAMS])) {
+            $persistence[self::PARAMS] = $persistenceConfig[self::PARAMS];
+
+            if (array_key_exists(self::DIR, $persistence[self::PARAMS])) {
+                $persistence[self::PARAMS][self::DIR] = $this->getFullPath($persistence[self::PARAMS][self::DIR]);
+            }
+        }
+
+        return $persistence;
+    }
+
+    /**
+     * @param string $mode
+     */
+    protected function setMatchMode($mode)
+    {
+        if (!self::validMatchMode($mode)) {
+            throw new \InvalidArgumentException('Invalid Match Mode: ' . $mode);
+        }
+
+        $this->matchMode = $mode;
+    }
 
     /**
      * Magic Method
@@ -152,7 +209,7 @@ abstract class Config
      */
     public function isHighPerformance()
     {
-        return ($this->matchMode == self::MATCH_MODE_PERFORMANCE);
+        return ($this->matchMode === self::MATCH_MODE_PERFORMANCE);
     }
 
     /**
@@ -207,6 +264,10 @@ abstract class Config
      */
     protected function getFullPath($fileName)
     {
+        if (!is_string($fileName)) {
+            throw new \InvalidArgumentException('the given path is invalid');
+        }
+
         $fileName = trim($fileName);
 
         if (realpath($fileName) && !(basename($fileName) === $fileName)) {

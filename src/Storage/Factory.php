@@ -18,6 +18,8 @@
 
 namespace Wurfl\Storage;
 
+use Wurfl\Configuration\Config;
+
 /**
  * WURFL Storage factory
  */
@@ -45,7 +47,7 @@ class Factory
 
         $class = self::className($currentConfiguration);
 
-        $adapter = new $class($currentConfiguration['params']);
+        $adapter = new $class($currentConfiguration[Config::PARAMS]);
 
         return new Storage($adapter);
     }
@@ -59,7 +61,7 @@ class Factory
      */
     private static function className($configuration)
     {
-        $provider = (empty($configuration['provider']) ? 'null' : $configuration['provider']);
+        $provider = (empty($configuration[Config::PROVIDER]) ? 'null' : $configuration[Config::PROVIDER]);
 
         if ('null' === $provider) {
             $provider = 'NullStorage';

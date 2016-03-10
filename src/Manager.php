@@ -20,6 +20,8 @@ namespace Wurfl;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Wurfl\Configuration\Config;
+use Wurfl\Configuration\FileConfig;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\GenericRequestFactory;
@@ -105,6 +107,38 @@ class Manager
         if ($this->hasToBeReloaded()) {
             $this->reload();
         }
+    }
+
+    /**
+     * @param string|\Noodlehaus\Config $config
+     *
+     * @return \Wurfl\Manager
+     */
+    public static function factory($config)
+    {
+        static $instance = null;
+
+        if (is_string($config)) {
+            $config = new FileConfig($config);
+        }
+
+        if (! $config instanceof Config) {
+            throw new \InvalidArgumentException(
+                'the parameter $xmlConfig has to be a path to a config file or an instance of \Wurfl\Configuration\Config'
+            );
+        }
+
+        if (null === $instance) {
+            // Create the cache instance from the configuration
+            $cacheStorage = Storage\Factory::create($config->cache);
+
+            // Create the persistent cache instance from the configuration
+            $persistenceStorage = Storage\Factory::create($config->persistence);
+
+            $instance = new self($config, $persistenceStorage, $cacheStorage);
+        }
+
+        return $instance;
     }
 
     /**

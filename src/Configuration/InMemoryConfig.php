@@ -26,14 +26,6 @@ namespace Wurfl\Configuration;
 class InMemoryConfig extends Config
 {
     /**
-     * Instantiate an In-Memory Configuration
-     */
-    public function __construct()
-    {
-        // nothing to do here
-    }
-
-    /**
      * @param string $wurflFile
      *
      * @return \Wurfl\Configuration\InMemoryConfig $this
@@ -79,7 +71,7 @@ class InMemoryConfig extends Config
      */
     public function persistence($provider, array $params = array())
     {
-        $this->persistence = array_merge(array('provider' => $provider), array('params' => $params));
+        $this->persistence = array_merge(array(Config::PROVIDER => $provider), array(Config::PARAMS => $params));
 
         return $this;
     }
@@ -94,7 +86,7 @@ class InMemoryConfig extends Config
      */
     public function cache($provider, array $params = array())
     {
-        $this->cache = array_merge(array('provider' => $provider), array('params' => $params));
+        $this->cache = array_merge(array(config::PROVIDER => $provider), array(Config::PARAMS => $params));
 
         return $this;
     }

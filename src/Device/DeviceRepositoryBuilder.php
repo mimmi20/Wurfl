@@ -158,13 +158,7 @@ class DeviceRepositoryBuilder
             }
         }
 
-        try {
-            return new CustomDeviceRepository($this->persistenceProvider, $this->deviceClassificationNames());
-        } catch (\Exception $e) {
-            var_dump('isRepositoryBuilt', $this->isRepositoryBuilt(), 'acquireLock', $this->acquireLock(), '$wurflFile', $wurflFile, $e);
-
-            throw $e;
-        }
+        return new CustomDeviceRepository($this->persistenceProvider, $this->deviceClassificationNames());
     }
 
     /**
@@ -471,29 +465,32 @@ class DeviceRepositoryBuilder
         /**
          * verify required capabilities
          */
-        $required_caps  = VirtualCapabilityProvider::getRequiredCapabilities();
-        $generic_device = new CustomDevice(array($this->persistenceProvider->load('generic')));
-        $loaded_caps = array_keys($generic_device->getAllCapabilities());
-        $missing_caps = array_diff($required_caps, $loaded_caps);
-        if (count($missing_caps) > 0) {
+        $requiredCaps  = VirtualCapabilityProvider::getRequiredCapabilities();
+        $genericDevice = new CustomDevice(array($this->persistenceProvider->load('generic')));
+        $loadedCaps    = array_keys($genericDevice->getAllCapabilities());
+        $missingCaps   = array_diff($requiredCaps, $loadedCaps);
+
+        if (count($missingCaps) > 0) {
             throw new ConsistencyException(
-                'Missing required WURFL Capabilities: ' . implode(', ', $missing_caps)
+                'Missing required WURFL Capabilities: ' . implode(', ', $missingCaps)
             );
         }
-        $invalid_fallbacks = array_diff(array_keys($this->fallbacks), $this->devices);
-        if (count($invalid_fallbacks) > 0) {
-            foreach ($invalid_fallbacks as $invalid_fallback) {
+
+        $invalidFallbacks = array_diff(array_keys($this->fallbacks), $this->devices);
+
+        if (count($invalidFallbacks) > 0) {
+            foreach ($invalidFallbacks as $invalidFallback) {
                 $device = new CustomDevice(
-                    array($this->persistenceProvider->load($this->fallbacks[$invalid_fallback]))
+                    array($this->persistenceProvider->load($this->fallbacks[$invalidFallback]))
                 );
                 throw new ConsistencyException(
-                    sprintf('Invalid Fallback %s for the device %s', $invalid_fallback, $device->id)
+                    sprintf('Invalid Fallback %s for the device %s', $invalidFallback, $device->id)
                 );
             }
         }
 
-        unset($this->fallbacks);
-        unset($this->devices);
+        $this->fallbacks = array();
+        $this->devices   = array();
     }
 
     /**

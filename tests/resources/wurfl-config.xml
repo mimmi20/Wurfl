@@ -2,11 +2,14 @@
 <wurfl-config>
     <wurfl>
         <main-file>wurfl.xml</main-file>
+        <!--
         <patches>
             <patch>web_browsers_patch.xml</patch>
             <patch>spv_patch.xml</patch>
             <patch>browsers.xml</patch>
         </patches>
+        -->
+        <patches/>
     </wurfl>
     <!--
         <persistence> <provider>memcache</provider> </persistence>
@@ -19,6 +22,6 @@
 
     <cache>
         <provider>null</provider>
-        <params></params>
+        <params/>
     </cache>
 </wurfl-config>

@@ -19,6 +19,7 @@ These changes are made:
 - added Wurfl namespace, removed the part "WURFL" from the filenames
 - merged the \Wurfl\Service and \Wurfl\ManagerFactory into \Wurl\Manager
 - Parts of the original Wurfl Package were extracted to their own repositories, these are installed via composer
+- the Xml Configuration class is replaced with FileConfig class, who is also able to read config files in ini/yaml format
 
 # the official WURFL PHP API #
 ==============================
@@ -46,7 +47,7 @@ suitable for your application.
 
 To start using the API you need to set some configuration options.
 
-> __IMPORTANT__: The WURFL API is closely tied to the WURFL.XML file.  New versions of the WURFL.XML are compatible with old versions of the API by nature, but the reverse is NOT true.  Old versions of the WURFL.XML are NOT guarenteed to be compatible with new versions of the API.  Let's restate that: This API is NOT compatible with old versions of the WURFL.XML.  The oldest copy of WURFL that can be used with this API is included in this distribution.
+> __IMPORTANT__: The WURFL API is closely tied to the WURFL.XML file.  New versions of the WURFL.XML may be compatible with old versions of the API by nature, but the reverse is NOT true.  Old versions of the WURFL.XML are NOT guarenteed to be compatible with new versions of the API.  Let's restate that: This API is NOT compatible with old versions of the WURFL.XML.  The oldest copy of WURFL that can be used with this API is included in this distribution.
 
 ```php
 /**
@@ -106,6 +107,12 @@ $persistenceStorage = Storage\Factory::create($wurflConfig->persistence);
 
 // Create a WURFL Manager from the WURFL Configuration
 $wurflManager = new \Wurfl\Manager($wurflConfig, $persistenceStorage, $cacheStorage);
+```
+
+If you dont want to build these three objects by yourself, you may use the factory method.
+
+```php
+$wurflManager = \Wurfl\Manager::factory($wurflConfig);
 ```
 
 Now you can use some of the `\Wurfl\Manager` class methods;

@@ -4,7 +4,7 @@ namespace WurflTest\Configuration;
 /**
  * test case
  */
-use Wurfl\Configuration\XmlConfig;
+use Wurfl\Configuration\FileConfig;
 
 /**
  *  test case.
@@ -16,7 +16,7 @@ class XmlConfigTest
     public function testShouldCreateAConfiguration()
     {
         $configPath = 'tests/resources/wurfl-config.xml';
-        $config     = new XmlConfig($configPath);
+        $config     = new FileConfig($configPath);
 
         self::assertNotNull($config->persistence);
 
@@ -50,7 +50,7 @@ class XmlConfigTest
     public function testShouldCreateConfigurationWithAPCPersistence()
     {
         $configPath = 'tests/resources/wurfl-config-apc-persistence.xml';
-        $config     = new XmlConfig($configPath);
+        $config     = new FileConfig($configPath);
         self::assertNotNull($config->persistence);
 
         self::assertEquals(realpath('tests/resources/wurfl.xml'), $config->wurflFile);
@@ -77,7 +77,7 @@ class XmlConfigTest
     public function testShouldAcceptEmptyOptionalElements()
     {
         $configPath = 'tests/resources/wurfl-config-no-optional.xml';
-        $config     = new XmlConfig($configPath);
+        $config     = new FileConfig($configPath);
 
         self::assertEquals(realpath('tests/resources/wurfl.xml'), $config->wurflFile);
         self::assertEquals(array(), $config->wurflPatches);
