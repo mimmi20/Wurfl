@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wurfl-config>
     <wurfl>
-        <main-file>wurfl-regression.xml</main-file>
+        <main-file>wurfl.xml</main-file>
         <patches>
             <patch>web_browsers_patch.xml</patch>
             <patch>spv_patch.xml</patch>

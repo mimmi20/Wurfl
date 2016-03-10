@@ -5,6 +5,7 @@ namespace WurflTest\Device;
 /*
  * test case
  */
+use Psr\Log\NullLogger;
 use Wurfl\Device\DeviceRepositoryBuilder;
 use Wurfl\Device\Xml\DevicePatcher;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
@@ -45,7 +46,8 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $persistenceProvider,
             $userAgentHandlerChain,
-            $devicePatcher
+            $devicePatcher,
+            new NullLogger()
         );
     }
 
@@ -92,7 +94,8 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
         $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $persistenceProvider,
             $userAgentHandlerChain,
-            $devicePatcher
+            $devicePatcher,
+            new NullLogger()
         );
         self::assertNotNull($deviceRepositoryBuilder);
 

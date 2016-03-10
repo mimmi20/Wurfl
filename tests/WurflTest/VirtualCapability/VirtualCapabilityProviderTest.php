@@ -2,6 +2,7 @@
 
 namespace WurflTest\VirtualCapability;
 
+use Psr\Log\NullLogger;
 use Wurfl\CustomDevice;
 use Wurfl\Device\DeviceRepositoryBuilder;
 use Wurfl\Device\Xml\DevicePatcher;
@@ -17,9 +18,10 @@ use WurflCache\Adapter\Memory;
  */
 class VirtualCapabilityProviderTest extends \PHPUnit_Framework_TestCase
 {
-    const RESOURCES_DIR     = 'tests/resources/';
-    const WURFL_CONFIG_FILE = 'tests/resources/wurfl-config.xml';
-    const CACHE_DIR         = 'tests/resources/cache';
+    /**
+     * @var string
+     */
+    const WURFL_FILE = 'tests/resources/wurfl.xml';
 
     /**
      * @var \Wurfl\Device\DeviceRepositoryBuilder
@@ -48,11 +50,12 @@ class VirtualCapabilityProviderTest extends \PHPUnit_Framework_TestCase
         self::$deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $persistenceProvider,
             $userAgentHandlerChain,
-            $devicePatcher
+            $devicePatcher,
+            new NullLogger()
         );
 
         try {
-            self::$deviceRepository = self::$deviceRepositoryBuilder->build(self::RESOURCES_DIR . 'wurfl.xml');
+            self::$deviceRepository = self::$deviceRepositoryBuilder->build(self::WURFL_FILE);
         } catch (Exception $e) {
             echo $e;
         }
