@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Specific\Chrome;
 
 /**
- *  test case.
+ * Class ChromeTest
+ *
+ * @group Handlers
  */
 class ChromeTest extends TestBase
 {

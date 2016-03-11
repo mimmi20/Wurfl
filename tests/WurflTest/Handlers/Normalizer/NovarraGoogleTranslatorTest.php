@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Generic\NovarraGoogleTranslator;
 
 /**
- *  test case.
+ * Class NovarraGoogleTranslatorTest
+ *
+ * @group Handlers
  */
 class NovarraGoogleTranslatorTest extends TestBase
 {

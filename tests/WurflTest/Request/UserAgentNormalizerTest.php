@@ -7,7 +7,9 @@ use Wurfl\Handlers\Normalizer\Specific\Chrome;
 use Wurfl\Handlers\Normalizer\UserAgentNormalizer;
 
 /**
- * test case
+ * Class UserAgentNormalizerTest
+ *
+ * @group Request
  */
 class UserAgentNormalizerTest extends \PHPUnit_Framework_TestCase
 {

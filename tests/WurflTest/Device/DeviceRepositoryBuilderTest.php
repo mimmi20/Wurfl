@@ -14,6 +14,8 @@ use WurflCache\Adapter\Memory;
 
 /**
  * \Wurfl\DeviceRepositoryBuilder test case.
+ *
+ * @group Device
  */
 class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,7 +57,7 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $deviceRepository = $this->deviceRepositoryBuilder->build(self::WURFL_FILE);
         self::assertNotNull($deviceRepository);
-        self::assertEquals('Thu Jun 03 12:01:14 -0500 2010', $deviceRepository->getLastUpdated());
+        self::assertEquals('2016-01-28 00:30:29 -0500', $deviceRepository->getLastUpdated());
         $genericDevice = $deviceRepository->getDevice('generic');
         self::assertNotNull($genericDevice, 'generic device is null');
     }

@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -75,8 +74,6 @@ use Zend\Config\Config as ZendConfigConfig;
  * );
  * ?>
  * </code>
- *
- * @package    \Wurfl\Configuration
  */
 class ZendConfig extends Config
 {

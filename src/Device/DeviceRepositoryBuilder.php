@@ -18,6 +18,7 @@
 
 namespace Wurfl\Device;
 
+use Psr\Log\LoggerInterface;
 use Wurfl\CustomDevice;
 use Wurfl\Device\Xml\DeviceIterator;
 use Wurfl\Device\Xml\DevicePatcher;
@@ -29,7 +30,6 @@ use Wurfl\Handlers\Chain\UserAgentHandlerChain;
 use Wurfl\Logger\LogLevel;
 use Wurfl\Storage\Storage;
 use Wurfl\VirtualCapability\VirtualCapabilityProvider;
-use Psr\Log\LoggerInterface;
 
 /**
  * Builds a \Wurfl\DeviceRepositoryInterface

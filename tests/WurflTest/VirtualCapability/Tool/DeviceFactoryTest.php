@@ -9,6 +9,8 @@ use Wurfl\VirtualCapability\Tool\DeviceFactory;
 
 /**
  * Class DeviceFactoryTest
+ *
+ * @group VirtualCapability
  */
 class DeviceFactoryTest extends \PHPUnit_Framework_TestCase
 {

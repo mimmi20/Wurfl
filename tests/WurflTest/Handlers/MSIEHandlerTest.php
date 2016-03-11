@@ -6,11 +6,9 @@ use Wurfl\Handlers\MSIEHandler;
 use Wurfl\Handlers\Normalizer\Specific\MSIE;
 
 /**
- * test case
- */
-
-/**
- * test case.
+ * Class MSIEHandlerTest
+ *
+ * @group Handlers
  */
 class MSIEHandlerTest extends \PHPUnit_Framework_TestCase
 {

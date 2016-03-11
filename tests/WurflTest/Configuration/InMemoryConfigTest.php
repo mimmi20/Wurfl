@@ -1,4 +1,5 @@
 <?php
+
 namespace WurflTest\Configuration;
 
 /**
@@ -9,11 +10,11 @@ use Wurfl\Configuration\InMemoryConfig;
 
 /**
  * test case.
+ *
+ * @group Configuration
  */
-class InMemoryConfigTest
-    extends \PHPUnit_Framework_TestCase
+class InMemoryConfigTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testShouldCreateFilePersistence()
     {
         $config = new InMemoryConfig();
@@ -74,7 +75,7 @@ class InMemoryConfigTest
         $params = array(
             'host'      => '10.211.55.10;10.211.55.2',
             'port'      => '11211',
-            'namespace' => 'wurfl'
+            'namespace' => 'wurfl',
         );
         $config->wurflFile('wurfl.xml')
             ->wurflPatch('new_web_browsers_patch.xml')

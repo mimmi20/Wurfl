@@ -6,62 +6,65 @@ use Wurfl\Request\GenericRequestFactory;
 use WurflTest\NotNullCondition;
 
 /**
- * test case
+ * Class RequestFactoryBulkTest
+ *
+ * @group Request
  */
 class RequestFactoryBulkTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var array
+     * @dataProvider loadData
+     *
+     * @param string $expected
+     * @param array  $serverData
      */
-    private $testData = array();
+    public function testCreateRequest($expected, array $serverData)
+    {
+        $requestFactory = new GenericRequestFactory();
+        $request        = $requestFactory->createRequest($serverData);
 
-    protected function setUp()
+        self::assertEquals($expected, $request->getUserAgent());
+    }
+
+    /**
+     * @return array[]
+     */
+    public function loadData()
     {
         $configurationFile = 'tests/resources/request.yml';
-        $this->testData    = self::loadData($configurationFile);
-    }
+        $handle            = fopen($configurationFile, 'r');
 
-    public function testCreateRequest()
-    {
-        foreach ($this->testData as $testData) {
-            $requestFactory = new GenericRequestFactory();
-            $request        = $requestFactory->createRequest($testData['_SERVER']);
-
-            self::assertEquals($testData['EXPECTED_USER_AGENT'], $request->getUserAgent());
+        if (!$handle) {
+            return array();
         }
-    }
 
-    private static function loadData($fileName)
-    {
-        $handle           = fopen($fileName, 'r');
         $testData         = array();
         $notNullCondition = new NotNullCondition();
-        if ($handle) {
-            while (!feof($handle)) {
-                $line = fgets($handle, 4096);
-                if (strpos($line, '#') === false && strcmp($line, '\n') !== 0) {
-                    $values     = explode(':', trim($line));
-                    $keys       = array(
-                        'HTTP_USER_AGENT',
-                        'HTTP_X_DEVICE_USER_AGENT',
-                        'HTTP_X_SKYFIRE_VERSION',
-                        'HTTP_X_BLUECOAT_VIA',
-                        'EXPECTED_USER_AGENT',
-                    );
-                    $serverData = self::arrayCombine($keys, $values, $notNullCondition);
-                    $testData[] = array(
-                        '_SERVER'             => $serverData,
-                        'EXPECTED_USER_AGENT' => $serverData['EXPECTED_USER_AGENT'],
-                    );
-                }
+
+        while (!feof($handle)) {
+            $line = fgets($handle, 4096);
+            if (strpos($line, '#') === false && strcmp($line, '\n') !== 0) {
+                $values     = explode(':', trim($line));
+                $keys       = array(
+                    'HTTP_USER_AGENT',
+                    'HTTP_X_DEVICE_USER_AGENT',
+                    'HTTP_X_SKYFIRE_VERSION',
+                    'HTTP_X_BLUECOAT_VIA',
+                    'EXPECTED_USER_AGENT',
+                );
+                $serverData = $this->arrayCombine($keys, $values, $notNullCondition);
+                $testData[] = array(
+                    'EXPECTED_USER_AGENT' => $serverData['EXPECTED_USER_AGENT'],
+                    '_SERVER'             => $serverData,
+                );
             }
-            fclose($handle);
         }
+        fclose($handle);
 
         return $testData;
     }
 
-    private static function arrayCombine(array $keys, array $values, NotNullCondition $condition = null)
+    private function arrayCombine(array $keys, array $values, NotNullCondition $condition = null)
     {
         if (is_null($condition)) {
             return array_combine($keys, $values);

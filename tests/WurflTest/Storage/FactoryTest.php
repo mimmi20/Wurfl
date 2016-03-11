@@ -4,6 +4,11 @@ namespace WurflTest\Storage;
 
 use Wurfl\Storage\Factory;
 
+/**
+ * Class FactoryTest
+ *
+ * @group Storage
+ */
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**

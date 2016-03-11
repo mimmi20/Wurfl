@@ -219,9 +219,9 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
      */
     final public function applyMatch(GenericRequest $request)
     {
-        $className                        = get_class($this);
-        $request->getMatchInfo()->matcher = $className;
-        $startTime                        = microtime(true);
+        $className                                 = get_class($this);
+        $request->getMatchInfo()->matcher          = $className;
+        $startTime                                 = microtime(true);
         $request->getMatchInfo()->cleanedUserAgent = $request->getUserAgentNormalized();
 
         $userAgent                                    = $this->normalizeUserAgent($request->getUserAgentNormalized());

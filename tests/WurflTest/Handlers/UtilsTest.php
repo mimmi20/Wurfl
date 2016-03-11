@@ -2,13 +2,12 @@
 
 namespace WurflTest\Handlers;
 
-/*
- * test case
- */
 use Wurfl\Handlers\Utils;
 
 /**
- * WURFL_Handlers_Utils test case.
+ * Class UtilsTest
+ *
+ * @group Handlers
  */
 class UtilsTest extends \PHPUnit_Framework_TestCase
 {

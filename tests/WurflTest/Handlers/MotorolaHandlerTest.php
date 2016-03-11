@@ -2,14 +2,13 @@
 
 namespace WurflTest\Handlers;
 
-/*
- * test case
- */
 use Wurfl\Handlers\MotorolaHandler;
 use Wurfl\Handlers\Normalizer\NullNormalizer;
 
 /**
+ * Class MotorolaHandlerTest
  *
+ * @group Handlers
  */
 class MotorolaHandlerTest extends \PHPUnit_Framework_TestCase
 {

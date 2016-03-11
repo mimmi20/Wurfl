@@ -2,14 +2,13 @@
 
 namespace WurflTest\Storage;
 
-/*
- * test case
- */
 use Wurfl\Storage\Storage;
 use WurflCache\Adapter\Memory;
 
 /**
- * test case.
+ * Class StorageTest
+ *
+ * @group Storage
  */
 class StorageTest extends \PHPUnit_Framework_TestCase
 {

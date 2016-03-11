@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -22,8 +21,6 @@ use Noodlehaus\Config as ConfigLoader;
 
 /**
  * XML Configuration
- *
- * @package    WURFL_Configuration
  */
 class FileConfig extends Config
 {

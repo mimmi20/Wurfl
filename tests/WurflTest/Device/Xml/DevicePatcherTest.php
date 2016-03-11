@@ -7,6 +7,8 @@ use Wurfl\Device\Xml\DevicePatcher;
 
 /**
  * test case
+ *
+ * @group Device
  */
 class DevicePatcherTest extends \PHPUnit_Framework_TestCase
 {

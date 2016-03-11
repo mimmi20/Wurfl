@@ -6,7 +6,9 @@ use Wurfl\Handlers\Normalizer\Specific\Maemo;
 use Wurfl\WurflConstants;
 
 /**
- *  test case.
+ * Class MaemoTest
+ *
+ * @group Handlers
  */
 class MaemoTest extends TestBase
 {

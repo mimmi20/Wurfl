@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Specific\LG;
 
 /**
- * test case.
+ * Class LGUPLUSTest
+ *
+ * @group Handlers
  */
 class LGUPLUSTest extends TestBase
 {

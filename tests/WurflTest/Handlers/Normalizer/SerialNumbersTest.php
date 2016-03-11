@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Generic\SerialNumbers;
 
 /**
- *  test case.
+ * Class SerialNumbersTest
+ *
+ * @group Handlers
  */
 class SerialNumbersTest extends TestBase
 {

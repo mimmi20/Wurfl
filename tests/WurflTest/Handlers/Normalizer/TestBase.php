@@ -3,7 +3,9 @@
 namespace WurflTest\Handlers\Normalizer;
 
 /**
- * test case.
+ * Class TestBase
+ *
+ * @group Handlers
  */
 class TestBase extends \PHPUnit_Framework_TestCase
 {

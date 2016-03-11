@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Specific\Firefox;
 
 /**
- * test case.
+ * Class FirefoxTest
+ *
+ * @group Handlers
  */
 class FirefoxTest extends TestBase
 {

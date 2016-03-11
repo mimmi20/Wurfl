@@ -7,6 +7,8 @@ use Wurfl\VirtualCapability\Tool\Device;
 
 /**
  * Class DeviceTest
+ *
+ * @group VirtualCapability
  */
 class DeviceTest extends \PHPUnit_Framework_TestCase
 {

@@ -6,6 +6,8 @@ use Wurfl\Device\Xml\DeviceIterator;
 
 /**
  * test case
+ *
+ * @group Device
  */
 class DeviceIteratorTest extends \PHPUnit_Framework_TestCase
 {

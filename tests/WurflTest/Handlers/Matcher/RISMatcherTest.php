@@ -8,7 +8,9 @@ namespace WurflTest\Handlers\Matcher;
 use Wurfl\Handlers\Matcher\RISMatcher;
 
 /**
- * WURFL_Handlers_Matcher_RISMatcher test case.
+ * Class RISMatcherTest
+ *
+ * @group Handlers
  */
 class RISMatcherTest extends \PHPUnit_Framework_TestCase
 {

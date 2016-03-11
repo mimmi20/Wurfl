@@ -10,6 +10,8 @@ use Wurfl\Device\ModelDevice;
 
 /**
  * \Wurfl\CustomDevice test case.
+ *
+ * @group Device
  */
 class CustomDeviceTest extends \PHPUnit_Framework_TestCase
 {

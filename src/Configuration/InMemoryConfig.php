@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -20,11 +19,19 @@ namespace Wurfl\Configuration;
 
 /**
  * In-memory WURFL Configuration
- *
- * @package    WURFL_Configuration
  */
 class InMemoryConfig extends Config
 {
+    /**
+     * Initialize Configuration
+     *
+     * @param array $configuration
+     */
+    protected function initialize(array $configuration)
+    {
+        // nothing to do here
+    }
+
     /**
      * @param string $wurflFile
      *
@@ -135,10 +142,5 @@ class InMemoryConfig extends Config
         $this->matchMode = $mode;
 
         return $this;
-    }
-
-    protected function initialize()
-    {
-        // nothing to do here
     }
 }

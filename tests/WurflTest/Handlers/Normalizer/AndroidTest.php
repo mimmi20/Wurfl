@@ -2,15 +2,14 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-/*
- * test case
- */
 use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
 use Wurfl\Handlers\Normalizer\Specific\Android;
 use Wurfl\WurflConstants;
 
 /**
- * test case.
+ * Class AndroidTest
+ *
+ * @group Handlers
  */
 class AndroidTest extends TestBase
 {

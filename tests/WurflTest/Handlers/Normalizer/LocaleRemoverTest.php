@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
 
 /**
- * test case.
+ * Class LocaleRemoverTest
+ *
+ * @group Handlers
  */
 class LocaleRemoverTest extends TestBase
 {

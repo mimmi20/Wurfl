@@ -6,11 +6,9 @@ use Wurfl\Handlers\BotCrawlerTranscoderHandler;
 use Wurfl\Handlers\Normalizer\NullNormalizer;
 
 /**
- * test case
- */
-
-/**
- *  test case.
+ * Class BotCrawlerTranscoderHandlerTest
+ *
+ * @group Handlers
  */
 class BotCrawlerTranscoderHandlerTest extends \PHPUnit_Framework_TestCase
 {

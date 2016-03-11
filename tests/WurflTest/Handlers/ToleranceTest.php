@@ -2,11 +2,13 @@
 
 namespace WurflTest\Handlers;
 
-/**
- * test case
- */
 use Wurfl\Handlers\Utils;
 
+/**
+ * Class ToleranceTest
+ *
+ * @group Handlers
+ */
 class ToleranceTest extends \PHPUnit_Framework_TestCase
 {
     public function testFirstSlash()

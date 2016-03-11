@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Generic\BlackBerry;
 
 /**
- * test case.
+ * Class BlackBerryTest
+ *
+ * @group Handlers
  */
 class BlackBerryTest extends TestBase
 {

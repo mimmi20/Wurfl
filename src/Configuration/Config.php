@@ -11,7 +11,6 @@
  *
  *
  * @category   WURFL
- * @package    WURFL
  * @copyright  ScientiaMobile, Inc.
  * @license    GNU Affero General Public License
  */
@@ -21,11 +20,9 @@ namespace Wurfl\Configuration;
 /**
  * Abstract base class for WURFL Configuration
  *
- * @package    WURFL_Configuration
- *
  * @property-read string  $configFilePath
  * @property-read string  $configurationFileDir
- * @property-read boolean $allowReload
+ * @property-read bool    $allowReload
  * @property-read array   $capabilityFilter
  * @property-read string  $wurflFile
  * @property-read array   $wurflPatches
@@ -141,6 +138,10 @@ abstract class Config
 
         if (array_key_exists(self::PATCHES, $wurflConfig)) {
             if (array_key_exists(self::PATCH, $wurflConfig[self::PATCHES])) {
+                if (!is_array($wurflConfig[self::PATCHES][self::PATCH])) {
+                    $wurflConfig[self::PATCHES][self::PATCH] = array($wurflConfig[self::PATCHES][self::PATCH]);
+                }
+
                 foreach ($wurflConfig[self::PATCHES][self::PATCH] as $wurflPatch) {
                     $this->wurflPatches[] = $this->getFullPath($wurflPatch);
                 }
@@ -167,7 +168,11 @@ abstract class Config
             $persistence[self::PROVIDER] = $persistenceConfig[self::PROVIDER];
         }
 
-        if (array_key_exists(self::PARAMS, $persistenceConfig) && is_array($persistenceConfig[self::PARAMS])) {
+        if (array_key_exists(self::PARAMS, $persistenceConfig)) {
+            if (!is_array($persistenceConfig[self::PARAMS])) {
+                $persistenceConfig[self::PARAMS] = $this->toArray($persistenceConfig[self::PARAMS]);
+            }
+
             $persistence[self::PARAMS] = $persistenceConfig[self::PARAMS];
 
             if (array_key_exists(self::DIR, $persistence[self::PARAMS])) {
@@ -176,6 +181,30 @@ abstract class Config
         }
 
         return $persistence;
+    }
+
+    /**
+     * Converts given CSV $params to array of parameters
+     *
+     * @param string $params Comma-seperated list of parameters
+     *
+     * @return array Parameters
+     */
+    private function toArray($params)
+    {
+        $paramsArray = array();
+
+        foreach (explode(',', $params) as $param) {
+            $paramNameValue = explode('=', $param);
+            if (count($paramNameValue) > 1) {
+                if (strcmp(self::DIR, $paramNameValue[0]) === 0) {
+                    $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
+                }
+                $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);
+            }
+        }
+
+        return $paramsArray;
     }
 
     /**
@@ -205,7 +234,7 @@ abstract class Config
     /**
      * True if the engine is in High Performance mode
      *
-     * @return boolean
+     * @return bool
      */
     public function isHighPerformance()
     {
@@ -219,7 +248,7 @@ abstract class Config
      */
     public static function validMatchMode($mode)
     {
-        if ($mode == self::MATCH_MODE_PERFORMANCE || $mode == self::MATCH_MODE_ACCURACY) {
+        if ($mode === self::MATCH_MODE_PERFORMANCE || $mode === self::MATCH_MODE_ACCURACY) {
             return true;
         }
 
@@ -260,7 +289,7 @@ abstract class Config
      * @param string $fileName
      *
      * @throws \InvalidArgumentException The configuration file does not exist
-     * @return string File name including full path
+     * @return string                    File name including full path
      */
     protected function getFullPath($fileName)
     {
@@ -274,7 +303,7 @@ abstract class Config
             return realpath($fileName);
         }
 
-        $fullName = join(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
+        $fullName = implode(DIRECTORY_SEPARATOR, array($this->configurationFileDir, $fileName));
 
         if (file_exists($fullName)) {
             return realpath($fullName);

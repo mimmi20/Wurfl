@@ -7,6 +7,11 @@ use Wurfl\Configuration\InMemoryConfig;
 use Wurfl\Manager;
 use Wurfl\Storage\Factory;
 
+/**
+ * Class ManagerTest
+ *
+ * @group Wurfl
+ */
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {
     const RESOURCES_DIR     = 'tests/resources/';

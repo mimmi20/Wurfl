@@ -2,14 +2,13 @@
 
 namespace WurflTest;
 
-/*
- * test case
- */
 use Wurfl\CustomDevice;
 use Wurfl\Device\ModelDevice;
 
 /**
- * \Wurfl\CustomDevice test case.
+ * Class CustomDeviceTest
+ *
+ * @group Wurfl
  */
 class CustomDeviceTest extends \PHPUnit_Framework_TestCase
 {

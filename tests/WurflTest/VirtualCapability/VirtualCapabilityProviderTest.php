@@ -15,6 +15,8 @@ use WurflCache\Adapter\Memory;
 
 /**
  * Class VirtualCapabilityProviderTest
+ *
+ * @group VirtualCapability
  */
 class VirtualCapabilityProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -269,7 +271,7 @@ class VirtualCapabilityProviderTest extends \PHPUnit_Framework_TestCase
                 'sony_prst1_ver1',
                 'Safari',
                 'Linux',
-                'Sony PRST1 (Sony Reader Wi-Fi)',
+                'Sony PRST1 (Reader Wi-Fi)',
             ),
             'rim_playbook_ver1_subos2' => array(
                 'Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.0.1; en-US) AppleWebKit/535.8+ (KHTML, like Gecko) Version/7.2.0.1 Safari/535.8+',
@@ -374,7 +376,7 @@ class VirtualCapabilityProviderTest extends \PHPUnit_Framework_TestCase
                 'sonyericsson_m1i_ver1_sub65phone',
                 'Java Applet',
                 'Windows Phone',
-                'SonyEricsson M1i (Sony Ericsson Aspen)',
+                'SonyEricsson M1i (Aspen)',
             ),
         );
     }

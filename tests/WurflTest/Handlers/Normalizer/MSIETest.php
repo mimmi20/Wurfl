@@ -5,7 +5,9 @@ namespace WurflTest\Handlers\Normalizer;
 use Wurfl\Handlers\Normalizer\Specific\MSIE;
 
 /**
- *  test case.
+ * Class MSIETest
+ *
+ * @group Handlers
  */
 class MSIETest extends TestBase
 {
