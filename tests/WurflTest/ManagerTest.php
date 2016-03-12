@@ -44,7 +44,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $cacheDir     = self::CACHE_DIR;
         self::$config = new InMemoryConfig();
 
-        self::$config->wurflFile($resourcesDir . 'wurfl-regression.xml');
+        self::$config->wurflFile($resourcesDir . 'wurfl.xml');
 
         $params = array(
             Config::DIR        => $cacheDir,
@@ -150,7 +150,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $deviceId
      * @param string $expected
-     * 
+     *
      * @expectedException \Wurfl\Exception\ConsistencyException
      * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
      */
