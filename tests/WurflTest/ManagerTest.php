@@ -67,24 +67,40 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->object = new Manager(self::$config, self::$persistenceStorage, self::$cacheStorage);
     }
 
+    /**
+     * @expectedException \Wurfl\Exception\ConsistencyException
+     * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
+     */
     public function testShouldReturnGenericForEmptyUserAgent()
     {
         $deviceFound = $this->object->getDeviceForUserAgent('');
         self::assertEquals('generic', $deviceFound->id);
     }
 
+    /**
+     * @expectedException \Wurfl\Exception\ConsistencyException
+     * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
+     */
     public function testShouldReturnGenericForNullUserAgent()
     {
         $deviceFound = $this->object->getDeviceForUserAgent(null);
         self::assertEquals('generic', $deviceFound->id);
     }
 
+    /**
+     * @expectedException \Wurfl\Exception\ConsistencyException
+     * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
+     */
     public function testShouldReturnAllDevicesId()
     {
         $devicesId = $this->object->getAllDevicesID();
         self::assertContains('generic', $devicesId);
     }
 
+    /**
+     * @expectedException \Wurfl\Exception\ConsistencyException
+     * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
+     */
     public function testShouldReturnWurflVersionInfo()
     {
         $wurflInfo = $this->object->getWURFLInfo();
@@ -92,6 +108,10 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('July 30, 2007', $wurflInfo->lastUpdated);
     }
 
+    /**
+     * @expectedException \Wurfl\Exception\ConsistencyException
+     * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
+     */
     public function testGetListOfGroups()
     {
         $actualGroups = array(
@@ -115,6 +135,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $groupId
      * @param string $capabilitiesName
+     *
+     * @expectedException \Wurfl\Exception\ConsistencyException
+     * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
      */
     public function testGetCapabilitiesNameForGroup($groupId, $capabilitiesName)
     {
@@ -127,6 +150,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $deviceId
      * @param string $expected
+     * 
+     * @expectedException \Wurfl\Exception\ConsistencyException
+     * @expectedExceptionMessage wurfl.xml load error - device id [generic_smarttv_browser] is missing - you may need to update the wurfl.xml file to a more recent version
      */
     public function testGetFallBackDevices($deviceId, $expected)
     {
