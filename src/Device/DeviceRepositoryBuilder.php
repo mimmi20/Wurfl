@@ -452,8 +452,6 @@ class DeviceRepositoryBuilder
                 $device = $this->persistenceProvider->load($requireDeviceId);
 
                 if ($device === null) {
-                    var_dump("id $requireDeviceId not found");
-                    continue;
                     throw new ConsistencyException(
                         'wurfl.xml load error - device id [' . $requireDeviceId . '] is missing - '
                         . 'you may need to update the wurfl.xml file to a more recent version'

@@ -10,6 +10,7 @@ use Wurfl\Device\DeviceRepositoryBuilder;
 use Wurfl\Device\Xml\DevicePatcher;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
 use Wurfl\Storage\Storage;
+use Wurfl\WurflConstants;
 use WurflCache\Adapter\Memory;
 
 /**
@@ -87,9 +88,13 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('7', $newDevice2->getCapability('columns'));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage There is no device with ID [generic] in the loaded WURFL Data
+     */
     public function testShouldNotRebuildTheRepositoryIfAlreadyBuild()
     {
-        $persistenceProvider = new Storage(new Memory());
+        $persistenceProvider     = new Storage(new Memory());
         $persistenceProvider->setWURFLLoaded(true);
         $userAgentHandlerChain   = UserAgentHandlerChainFactory::createFrom($persistenceProvider, $persistenceProvider);
         $devicePatcher           = new DevicePatcher();
@@ -101,11 +106,7 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
         );
         self::assertNotNull($deviceRepositoryBuilder);
 
-        try {
-            $deviceRepository = $deviceRepositoryBuilder->build(self::WURFL_FILE);
-            $deviceRepository->getDevice('generic');
-        } catch (\Exception $ex) {
-            var_dump($ex);
-        }
+        $deviceRepository = $deviceRepositoryBuilder->build(self::WURFL_FILE);
+        $deviceRepository->getDevice(WurflConstants::GENERIC);
     }
 }
