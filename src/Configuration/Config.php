@@ -198,7 +198,7 @@ abstract class Config
             $paramNameValue = explode('=', $param);
             if (count($paramNameValue) > 1) {
                 if (strcmp(self::DIR, $paramNameValue[0]) === 0) {
-                    $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
+                    $paramNameValue[1] = $this->getFullPath($paramNameValue[1]);
                 }
                 $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);
             }
