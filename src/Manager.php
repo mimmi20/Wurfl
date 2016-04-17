@@ -23,6 +23,7 @@ use Psr\Log\NullLogger;
 use Wurfl\Configuration\Config;
 use Wurfl\Configuration\FileConfig;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
+use Wurfl\Logger\LoggerFactory;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\GenericRequestFactory;
 
@@ -175,7 +176,7 @@ class Manager
     public function getLogger()
     {
         if (null === $this->logger) {
-            $this->logger = new NullLogger();
+            $this->logger = LoggerFactory::create($this->wurflConfig);
         }
 
         return $this->logger;
@@ -287,7 +288,7 @@ class Manager
     {
         $wurflMtime = filemtime($this->getWurflConfig()->wurflFile);
 
-        return Constants::API_VERSION . '::' . $wurflMtime;
+        return WurflConstants::API_VERSION . '::' . $wurflMtime;
     }
 
     /**
@@ -510,9 +511,9 @@ class Manager
      */
     private function deviceIdForRequest(Request\GenericRequest $request)
     {
-        $id = $request->getId();
+        $userAgent = $request->getUserAgent();
 
-        if (!$id) {
+        if (!$userAgent) {
             // $request->id is not set
             // -> do not try to get info from cache nor try to save to the cache
             $request->getMatchInfo()->fromCache  = 'invalid id';
@@ -521,23 +522,24 @@ class Manager
             return $this->getUserAgentHandlerChain()->match($request);
         }
 
-        $deviceId = $this->getCacheStorage()->load($id);
+        $deviceId = $this->getCacheStorage()->load($userAgent);
 
         if (empty($deviceId)) {
             $genericNormalizer            = UserAgentHandlerChainFactory::createGenericNormalizers();
-            $request->setUserAgentNormalized($genericNormalizer->normalize($request->getUserAgent()));
+            $request->setUserAgentNormalized($genericNormalizer->normalize($userAgent));
 
             if ($this->getWurflConfig()->isHighPerformance()
-                && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->getUserAgent())
+                && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->getUserAgentNormalized())
             ) {
                 // This device has been identified as a web browser programatically,
                 // so no call to WURFL is necessary
-                return WurflConstants::GENERIC_WEB_BROWSER;
+                $deviceId = WurflConstants::GENERIC_WEB_BROWSER;
+            } else {
+                $deviceId = $this->getUserAgentHandlerChain()->match($request);
             }
 
-            $deviceId = $this->getUserAgentHandlerChain()->match($request);
             // save it in cache
-            $this->getCacheStorage()->save($id, $deviceId);
+            $this->getCacheStorage()->save($userAgent, $deviceId);
         } else {
             $request->getMatchInfo()->fromCache  = true;
             $request->getMatchInfo()->lookupTime = 0.0;

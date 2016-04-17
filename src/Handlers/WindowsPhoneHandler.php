@@ -85,6 +85,7 @@ class WindowsPhoneHandler extends AbstractHandler
         if ($tolerance !== false) {
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
+
         if (Utils::checkIfContains($userAgent, 'NativeHost')) {
             return 'generic_ms_phone_os7';
         }
@@ -195,7 +196,7 @@ class WindowsPhoneHandler extends AbstractHandler
             return $model;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -221,7 +222,7 @@ class WindowsPhoneHandler extends AbstractHandler
             return $model;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -249,7 +250,7 @@ class WindowsPhoneHandler extends AbstractHandler
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -276,7 +277,7 @@ class WindowsPhoneHandler extends AbstractHandler
             return $model;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -296,6 +297,6 @@ class WindowsPhoneHandler extends AbstractHandler
             }
         }
 
-        return;
+        return null;
     }
 }

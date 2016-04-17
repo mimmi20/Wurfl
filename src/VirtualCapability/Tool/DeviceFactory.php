@@ -105,7 +105,12 @@ class DeviceFactory
                 if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/UCBrowser\/([\d\.]+)\./', 'UC Browser', 1)) {
                     return;
                 }
+
                 if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/IEMobile\/([\d\.]+)/', 'IE Mobile', 1)) {
+                    return;
+                }
+
+                if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/Edge\/([\d\.]+)/', 'Edge Mobile', 1)) {
                     return;
                 }
             }
@@ -142,40 +147,11 @@ class DeviceFactory
             }
 
             //Is 360Browser?
-            if (strpos($device->getBrowserUa(), 'Aphone Browser') !== false || strpos(
-                $device->getBrowserUa(),
-                '360browser'
-            ) !== false
+            if (strpos($device->getBrowserUa(), 'Aphone Browser') !== false
+                || strpos($device->getBrowserUa(), '360browser') !== false
             ) {
                 $device->getBrowser()->set('360 Browser', null);
 
-                return;
-            }
-
-            //Is UA Samsung Browser?
-            if ($device->getBrowser()->setRegex(
-                $device->getBrowserUa(),
-                '#SamsungBrowser/([\d\.]+) Chrome/[\d\.]+#',
-                'Samsung Browser',
-                1
-            )
-            ) {
-                return;
-            }
-
-            //Is UA Chromium?
-            if ($device->getBrowser()->setRegex(
-                $device->getBrowserUa(),
-                '/Version\/.+?Chrome\/([\d\.]+)\.?/',
-                'Chromium',
-                1
-            )
-            ) {
-                return;
-            }
-
-            //Is UA Chrome Mobile?
-            if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/Chrome\/([\d\.]+)\.?/', 'Chrome Mobile', 1)) {
                 return;
             }
 
@@ -190,6 +166,11 @@ class DeviceFactory
                 return;
             }
 
+            //Is UA Opera Mini?
+            if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/Opera Mini\/([\d\.]+)/', 'Opera Mini', 1)) {
+                return;
+            }
+
             //Is UA Opera Mobi?
             if ($device->getBrowser()->setRegex(
                 $device->getBrowserUa(),
@@ -198,11 +179,6 @@ class DeviceFactory
                 1
             )
             ) {
-                return;
-            }
-
-            //Is UA Opera Mini?
-            if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/Opera Mini\/([\d\.]+)/', 'Opera Mini', 1)) {
                 return;
             }
 
@@ -218,7 +194,7 @@ class DeviceFactory
             }
 
             //Is UA UC Browser with UCBrowser tag?
-            if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/UCBrowser\/([\d\.]+)\./', 'UC Browser', 1)) {
+            if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/UC?Browser\/([\d\.]+)\./', 'UC Browser', 1)) {
                 return;
             }
 
@@ -237,6 +213,39 @@ class DeviceFactory
             ) {
                 return;
             }
+
+            //Is UA Baidu browser?
+            if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/bdbrowser(?:_i18n)?\/(\d+)/', 'Baidu Browser', 1)) {
+                return;
+            }
+
+            //Is UA Samsung Browser?
+            if ($device->getBrowser()->setRegex(
+                $device->getBrowserUa(),
+                '#SamsungBrowser/([\d\.]+) Chrome/[\d\.]+#',
+                'Samsung Browser',
+                1
+            )
+            ) {
+                return;
+            }
+
+            //Is UA WebView?
+            if ($device->getBrowser()->setRegex(
+                $device->getBrowserUa(),
+                '/Version\/.+?Chrome\/([\d\.]+)\.?/',
+                'Android WebView',
+                1
+            )
+            ) {
+                return;
+            }
+
+            //Is UA Chrome Mobile?
+            if ($device->getBrowser()->setRegex($device->getBrowserUa(), '/Chrome\/([\d\.]+)\.?/', 'Chrome', 1)) {
+                return;
+            }
+
             //Is UA Android Webkit UA
             if ($device->getBrowser()->setRegex(
                 $device->getBrowserUa(),
@@ -265,22 +274,17 @@ class DeviceFactory
         }
 
         //Is UA iOS?
-        if (strpos($device->getDeviceUaNormalized(), 'iPhone') !== false || strpos(
-            $device->getDeviceUaNormalized(),
-            'iPad'
-        ) !== false || strpos($device->getDeviceUaNormalized(), 'iPod') !== false || strpos(
-            $device->getDeviceUaNormalized(),
-            '(iOS;'
-        ) !== false
+        if (strpos($device->getDeviceUaNormalized(), 'iPhone') !== false
+            || strpos($device->getDeviceUaNormalized(), 'iPad') !== false
+            || strpos($device->getDeviceUaNormalized(), 'iPod') !== false
+            || strpos($device->getDeviceUaNormalized(), '(iOS;') !== false
         ) {
             $device->getOs()->name = 'iOS';
 
-            if ($device->getOs()->setRegex(
-                $device->getDeviceUaNormalized(),
-                '/Mozilla\/[45]\.[0-9] \((iPhone|iPod|iPad);(?: U;)? CPU(?: iPhone|) OS ([0-9]_[0-9](?:_[0-9])?) like Mac OS X/',
-                'iOS',
-                2
-            )
+            if ($device->getOs()->setRegex($device->getDeviceUaNormalized(), '/Mozilla\/[45]\.0 \((iPhone|iPod|iPad);(?: U;)? CPU(?: iPhone|) OS ([\d_]+) like Mac OS X/', 'iOS', 2)
+                || $device->getOs()->setRegex($device->getDeviceUaNormalized(), '#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#', 'iOS', 1)
+                || $device->getOs()->setRegex($device->getDeviceUaNormalized(), '#^server-bag \[iPhone OS,([\d\.]+),#', 'iOS', 1)
+                || $device->getOs()->setRegex($device->getDeviceUaNormalized(), '#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#', 'iOS', 1)
             ) {
                 $device->getOs()->version = str_replace('_', '.', $device->getOs()->version);
             }
@@ -333,7 +337,7 @@ class DeviceFactory
             if ($device->getBrowser()->setRegex(
                 $device->getBrowserUa(),
                 '/^Mozilla\/[45]\.0.+?OS \d_\d.+?like Mac OS X.+?AppleWebKit.+?.+UCBrowser\/?([\d\.]+)\./',
-                'UC Web Browser on iOS',
+                'UC Browser on iOS',
                 1
             )
             ) {
@@ -344,7 +348,7 @@ class DeviceFactory
             if ($device->getBrowser()->setRegex(
                 $device->getBrowserUa(),
                 '#UCWEB/\d\.\d \(iOS;.+?OS [\d_]+;.+UCBrowser/([\d\.]+)#',
-                'UC Web Browser on iOS',
+                'UC Browser on iOS',
                 1
             )
             ) {
@@ -572,6 +576,11 @@ class DeviceFactory
         }
 
         if (strpos($device->getDeviceUa(), 'Opera') !== false) {
+            //Is UA Opera Mini?
+            if ($device->getBrowser()->setRegex($device->getDeviceUa(), '/Opera Mini\/([\d\.]+)/', 'Opera Mini', 1)) {
+                return;
+            }
+
             //Is UA Opera Mobi?
             if ($device->getBrowser()->setContains($device->getDeviceUa(), 'Opera Mobi', 'Opera Mobile')) {
                 if ($device->getBrowser()->setRegex(
@@ -584,11 +593,6 @@ class DeviceFactory
                     return;
                 }
 
-                return;
-            }
-
-            //Is UA Opera Mini?
-            if ($device->getBrowser()->setRegex($device->getDeviceUa(), '/Opera Mini\/([\d\.]+)/', 'Opera Mini', 1)) {
                 return;
             }
 
@@ -611,6 +615,7 @@ class DeviceFactory
                 return;
             }
         }
+
         //UCBrowser on Java devices
         if (strpos($device->getDeviceUa(), 'Java') !== false && strpos($device->getDeviceUa(), 'UCBrowser/') !== false) {
             if ($device->getBrowser()->setRegex(
@@ -633,7 +638,41 @@ class DeviceFactory
             return;
         }
 
+        // Desktop Apps
+        /*
+         * Windows:
+         * Mozilla/5.0 (Windows NT <NT OS version>; <Platform - x86 or x64 - Optional>) AppleWebKit/537.36 (KHTML, like Gecko) DesktopApp <Brand>/<App Version> Safari/537.36
+         * Linux:
+         * Mozilla/5.0 (X11; Linux <Platform - x86_64 or x64 - Optional>) AppleWebKit/537.36 (KHTML, like Gecko) DesktopApp <Brand>/<App Version> Safari/537.36
+         * Mac OS X:
+         * Mozilla/5.0 (Macintosh; Intel Mac OS X <OS version>) AppleWebKit/537.36 (KHTML, like Gecko) DesktopApp <Brand>/<App Version> Safari/537.36
+         *
+         */
+        if (strpos($device->getDeviceUa(), 'DesktopApp') !== false) {
+            // Mac
+            if ($device->getOs()->setRegex($device->getDeviceUa(), '#^Mozilla/[0-9]\.0 \(Macintosh;(?: U;)?([a-zA-Z_ \.0-9]+)(?:;)?.+? DesktopApp ([A-Za-z0-9]+)/([\d\.]+)\.?#', 1)) {
+                $device->getBrowser()->set($device->getOs()->getLastRegexMatch(2) . ' Desktop Application', $device->getOs()->getLastRegexMatch(3));
+
+                return;
+            }
+
+            // Windows and Linux
+            if ($device->getOs()->setRegex($device->getDeviceUa(), '#^Mozilla/[0-9]\.0 \((?:Windows;|X11;)?(?: U; )?([a-zA-Z_ \.0-9]+)(?:;)?.+? DesktopApp ([A-Za-z0-9]+)/([\d\.]+)\.?#', 1)) {
+                $device->getBrowser()->set($device->getOs()->getLastRegexMatch(2) . ' Desktop Application', $device->getOs()->getLastRegexMatch(3));
+
+                return;
+            }
+        }
+
         // Desktop Browsers
+
+        //Baidu browser?
+        if ($device->getOs()->setRegex($device->getDeviceUa(), '/^Mozilla\/[0-9]\.0 .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+).+bdbrowser(?:_i18n)?\/([\d\.]+)/', 1)) {
+            $device->getBrowser()->set('Baidu Browser', $device->getOs()->getLastRegexMatch(2));
+
+            return;
+        }
+
         //360 Browser
         if ((strpos($device->getDeviceUa(), '360Browser') !== false || strpos(
             $device->getDeviceUa(),
@@ -688,6 +727,7 @@ class DeviceFactory
 
             return;
         }
+
         //Opera - OPR
         if (strpos($device->getDeviceUa(), 'OPR') !== false
             && $device->getOs()->setRegex($device->getDeviceUa(), '/^Mozilla\/[0-9]\.0 .+?((?:Windows|Linux|PPC|Intel) [a-zA-Z0-9 _\.\-]+).+Chrome\/.+OPR\/([\d\.]+)/', 1)
@@ -696,6 +736,7 @@ class DeviceFactory
 
             return;
         }
+
         //Opera - Old UA
         if (strpos($device->getDeviceUa(), 'Opera') !== false && $device->getOs()->setRegex(
             $device->getDeviceUa(),
@@ -737,6 +778,23 @@ class DeviceFactory
             $device->getBrowser()->set('Safari', $device->getOs()->getLastRegexMatch(2));
 
             return;
+        }
+
+        //PaleMoon - Must be above FireFox
+        if (strpos($device->getDeviceUa(), 'PaleMoon') !== false) {
+            //PaleMoon - Windows
+            if ($device->getOs()->setRegex($device->getDeviceUa(), '/^Mozilla\/[0-9]\.0 .+(Windows [0-9A-Za-z \.]+;).+?rv:.+?PaleMoon\/([\d\.]+)/', 1)) {
+                $device->getBrowser()->set('PaleMoon', $device->getOs()->getLastRegexMatch(2));
+
+                return;
+            }
+
+            //PaleMoon
+            if ($device->getOs()->setRegex($device->getDeviceUa(), '/^Mozilla\/[0-9]\.0 \((?:X11|Macintosh); (?:U; |Ubuntu; |)((?:Intel|PPC|Linux) [a-zA-Z0-9\- \._\(\)]+);.+?rv:.+?PaleMoon\/([\d\.]+)/', 1)) {
+                $device->getBrowser()->set('PaleMoon', $device->getOs()->getLastRegexMatch(2));
+
+                return;
+            }
         }
 
         if (strpos($device->getDeviceUa(), 'Firefox') !== false) {

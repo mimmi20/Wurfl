@@ -67,10 +67,9 @@ class FirefoxOSHandler extends AbstractHandler
 
     public function canHandle($userAgent)
     {
-        return (Utils::checkIfContains($userAgent, 'Firefox/') && Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Mobile', 'Tablet')
-        ));
+        return (Utils::checkIfContains($userAgent, 'Firefox/')
+            && Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet'))
+        );
     }
 
     public function applyConclusiveMatch($userAgent)

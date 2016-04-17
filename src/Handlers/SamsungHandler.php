@@ -42,10 +42,8 @@ class SamsungHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('Samsung', 'SAMSUNG')) || Utils::checkIfStartsWithAnyOf(
-            $userAgent,
-            array('SEC-', 'SPH', 'SGH', 'SCH')
-        );
+        return Utils::checkIfContainsCaseInsensitive($userAgent, 'samsung')
+            || Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
     }
 
     /**

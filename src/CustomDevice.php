@@ -67,7 +67,7 @@ class CustomDevice implements CustomDeviceInterface
     private $request = null;
 
     /**
-     * @var \Wurfl\VirtualCapability\VirtualCapabilityProvider
+     * @var VirtualCapabilityProvider
      */
     private $virtualCapabilityProvider = null;
 
@@ -186,7 +186,7 @@ class CustomDevice implements CustomDeviceInterface
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -205,7 +205,7 @@ class CustomDevice implements CustomDeviceInterface
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -253,11 +253,13 @@ class CustomDevice implements CustomDeviceInterface
             $capabilities = array_merge($capabilities, $modelDevice->getCapabilities());
         }
 
+        $capabilities = array_diff_key($capabilities, array_flip(VirtualCapabilityProvider::getControlCapabilities()));
+
         return $capabilities;
     }
 
     /**
-     * @return \Wurfl\VirtualCapability\VirtualCapabilityProvider
+     * @return VirtualCapabilityProvider
      */
     public function getVirtualCapabilityProvider()
     {
@@ -272,7 +274,7 @@ class CustomDevice implements CustomDeviceInterface
     }
 
     /**
-     * @param \Wurfl\VirtualCapability\VirtualCapabilityProvider $virtualCapabilityProvider
+     * @param VirtualCapabilityProvider $virtualCapabilityProvider
      *
      * @return \Wurfl\CustomDevice
      */

@@ -109,6 +109,8 @@ class OperaHandler extends AbstractHandler
 
     /**
      * @param $userAgent
+     *
+     * @return string|null
      */
     public static function getOperaVersion($userAgent)
     {
@@ -116,6 +118,6 @@ class OperaHandler extends AbstractHandler
             return ($matches[1]);
         }
 
-        return;
+        return null;
     }
 }

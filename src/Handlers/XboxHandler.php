@@ -74,6 +74,7 @@ class XboxHandler extends AbstractHandler
         ) {
             return 'microsoft_xboxone_ver1';
         }
+
         if (Utils::checkIfContains($userAgent, 'MSIE 10.0')) {
             return 'microsoft_xbox360_ver1_subie10';
         }

@@ -18,32 +18,24 @@
 
 namespace Wurfl\Handlers\Normalizer\Specific;
 
-use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
-use Wurfl\Handlers\Utils;
+use Wurfl\Handlers\OperaMiniHandler;
 use Wurfl\WurflConstants;
 
 /**
  * User Agent Normalizer
  */
-class Kindle implements NormalizerInterface
+class OperaMini implements NormalizerInterface
 {
-    /**
-     * @param string $userAgent
-     *
-     * @return string
-     */
     public function normalize($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Android')) {
-            $model   = AndroidHandler::getAndroidModel($userAgent);
-            $version = AndroidHandler::getAndroidVersion($userAgent, false);
+        $model = OperaMiniHandler::getOperaModel($userAgent, false);
 
-            if ($model !== null && $version !== null) {
-                $prefix = $version . ' ' . $model . WurflConstants::RIS_DELIMITER;
+        if ($model !== null) {
+            $prefix    = $model . WurflConstants::RIS_DELIMITER;
+            $userAgent = $prefix . $userAgent;
 
-                return $prefix . $userAgent;
-            }
+            return $userAgent;
         }
 
         return $userAgent;

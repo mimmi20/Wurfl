@@ -100,65 +100,102 @@ class UcwebU3Handler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        // Windows Phone
-        if (Utils::checkIfContains($userAgent, 'Windows Phone')) {
-            $version             = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
-            $significant_version = explode('.', $version);
+        // Windows Phone U3K
+        if ($deviceID = $this->applyRecoveryWindowsPhone($userAgent)) {
+            return $deviceID;
+        }
 
-            if ($significant_version[0] !== null) {
-                if ($significant_version[1] === 0) {
-                    $deviceID = 'generic_ms_phone_os' . $significant_version[0] . '_subuaucweb';
-                } else {
-                    $deviceID = 'generic_ms_phone_os' . $significant_version[0] . '_' . $significant_version[1] . '_subuaucweb';
-                }
+        // Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
+        if ($deviceID = $this->applyRecoveryAndroid($userAgent)) {
+            return $deviceID;
+        }
 
-                if (in_array($deviceID, self::$constantIDs)) {
-                    return $deviceID;
-                }
-            }
+        // iPhone U3K
+        if ($deviceID = $this->applyRecoveryiPhone($userAgent)) {
+            return $deviceID;
+        }
 
-            return 'generic_ms_phone_os8_subuaucweb';
-        } elseif (Utils::checkIfContains($userAgent, 'Android')) {
-            // Android U3K Mobile + Tablet. This will also handle UCWEB7 recovery and point it to the UCWEB generic IDs.
-            $version             = AndroidHandler::getAndroidVersion($userAgent, false);
-            $significant_version = explode('.', $version);
-
-            if ($significant_version[0] !== null) {
-                $deviceID = 'generic_ucweb_android_ver' . $significant_version[0];
-
-                if (in_array($deviceID, self::$constantIDs)) {
-                    return $deviceID;
-                }
-            }
-
-            return 'generic_ucweb_android_ver1';
-        } elseif (Utils::checkIfContains($userAgent, 'iPhone;')) {
-            // iPhone U3K
-            if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
-                $significant_version = $matches[1];
-                $deviceID            = 'apple_iphone_ver' . $significant_version . '_subuaucweb';
-
-                if (in_array($deviceID, self::$constantIDs)) {
-                    return $deviceID;
-                }
-            }
-
-            return 'apple_iphone_ver1_subuaucweb';
-        } elseif (Utils::checkIfContains($userAgent, 'iPad')) {
-            // iPad U3K
-            if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
-                $significant_version = $matches[1];
-                $deviceID            = 'apple_ipad_ver1_sub' . $significant_version . '_subuaucweb';
-
-                if (in_array($deviceID, self::$constantIDs)) {
-                    return $deviceID;
-                }
-            }
-
-            return 'apple_ipad_ver1_subuaucweb';
+        // iPad U3K
+        if ($deviceID = $this->applyRecoveryiPad($userAgent)) {
+            return $deviceID;
         }
 
         return 'generic_ucweb';
+    }
+
+    private function applyRecoveryWindowsPhone($userAgent)
+    {
+        if (!Utils::checkIfContains($userAgent, 'Windows Phone')) {
+            return null;
+        }
+        $version             = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
+        $significant_version = explode('.', $version);
+        //Make sure major and minor versions are both present
+        if (count($significant_version) >= 2) {
+            $major = $significant_version[0];
+            $minor = $significant_version[1];
+            //If there is no minor version
+            if ($minor === 0) {
+                $deviceID = 'generic_ms_phone_os' . $major . '_subuaucweb';
+            } else {
+                $deviceID = 'generic_ms_phone_os' . $major . '_' . $minor . '_subuaucweb';
+            }
+            if (in_array($deviceID, self::$constantIDs)) {
+                return $deviceID;
+            }
+        }
+
+        return 'generic_ms_phone_os8_subuaucweb';
+    }
+
+    private function applyRecoveryAndroid($userAgent)
+    {
+        if (!Utils::checkIfContains($userAgent, 'Android')) {
+            return null;
+        }
+        $version             = AndroidHandler::getAndroidVersion($userAgent, false);
+        $significant_version = explode('.', $version);
+        //We only care about major version
+        if (count($significant_version) >= 1) {
+            $deviceID = 'generic_ucweb_android_ver' . $significant_version[0];
+            if (in_array($deviceID, self::$constantIDs)) {
+                return $deviceID;
+            }
+        }
+
+        return 'generic_ucweb_android_ver1';
+    }
+
+    private function applyRecoveryiPhone($userAgent)
+    {
+        if (!Utils::checkIfContains($userAgent, 'iPhone')) {
+            return null;
+        }
+        if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
+            $significant_version = $matches[1];
+            $deviceID            = 'apple_iphone_ver' . $significant_version . '_subuaucweb';
+            if (in_array($deviceID, self::$constantIDs)) {
+                return $deviceID;
+            }
+        }
+
+        return 'apple_iphone_ver1_subuaucweb';
+    }
+
+    private function applyRecoveryiPad($userAgent)
+    {
+        if (!Utils::checkIfContains($userAgent, 'iPad')) {
+            return null;
+        }
+        if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
+            $significant_version = $matches[1];
+            $deviceID            = 'apple_ipad_ver1_sub' . $significant_version . '_subuaucweb';
+            if (in_array($deviceID, self::$constantIDs)) {
+                return $deviceID;
+            }
+        }
+
+        return 'apple_ipad_ver1_subuaucweb';
     }
 
     /**
@@ -174,7 +211,7 @@ class UcwebU3Handler extends AbstractHandler
             return $ucVersion;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -196,8 +233,9 @@ class UcwebU3Handler extends AbstractHandler
         return $useDefault ? AndroidHandler::ANDROID_DEFAULT_VERSION : null;
     }
 
-    //Slightly modified from Android's get model function
     /**
+     * Slightly modified from Android's get model function
+     *
      * @param $userAgent
      *
      * @return null|string
@@ -206,7 +244,7 @@ class UcwebU3Handler extends AbstractHandler
     {
         // Locales are optional for matching model name since UAs like Chrome Mobile do not contain them
         if (!preg_match('#Adr [\d\.]+; [a-zA-Z]+-[a-zA-Z]+; (.*)\) U2#', $userAgent, $matches)) {
-            return;
+            return null;
         }
 
         $model = $matches[1];

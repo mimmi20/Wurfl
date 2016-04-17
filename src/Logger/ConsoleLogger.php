@@ -16,12 +16,24 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl;
+namespace Wurfl\Logger;
 
 /**
- * WURFL PHP API Constants
+ * WURFL File Logger
  */
-class Constants
+class ConsoleLogger extends AbstractLogger
 {
-    const API_VERSION = '1.7.0.0';
+    /**
+     * Logs with an arbitrary level.
+     *
+     * @param mixed  $level
+     * @param string $message
+     * @param array  $context
+     *
+     * @return null|void
+     */
+    public function log($level, $message, array $context = array())
+    {
+        echo $message . PHP_EOL;
+    }
 }

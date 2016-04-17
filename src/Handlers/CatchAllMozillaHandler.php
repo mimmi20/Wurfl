@@ -50,6 +50,8 @@ class CatchAllMozillaHandler extends AbstractHandler
     public function applyConclusiveMatch($userAgent)
     {
         //High accuracy mode
-        return $this->getDeviceIDFromLD($userAgent, 5);
+        $tolerance = Utils::firstCloseParen($userAgent);
+
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 }

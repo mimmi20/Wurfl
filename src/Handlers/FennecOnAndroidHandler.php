@@ -45,10 +45,9 @@ class FennecOnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android') && Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Fennec', 'Firefox')
-        ));
+        return (Utils::checkIfContains($userAgent, 'Android')
+            && Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox'))
+        );
     }
 
     /**

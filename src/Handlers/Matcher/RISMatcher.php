@@ -29,9 +29,9 @@ namespace Wurfl\Handlers\Matcher;
 class RISMatcher implements MatcherInterface
 {
     /**
-     * Instance of \Wurfl\Handlers\Matcher\LDMatcher
+     * Instance of \Wurfl\Handlers\Matcher\RISMatcher
      *
-     * @var \Wurfl\Handlers\Matcher\LDMatcher
+     * @var \Wurfl\Handlers\Matcher\RISMatcher
      */
     private static $instance;
 
@@ -90,7 +90,7 @@ class RISMatcher implements MatcherInterface
         }
 
         if ($bestDistance < $tolerance) {
-            return;
+            return null;
         }
 
         if ($bestIndex === 0) {

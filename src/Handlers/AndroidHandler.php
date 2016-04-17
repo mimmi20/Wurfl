@@ -108,6 +108,10 @@ class AndroidHandler extends AbstractHandler
             return WurflConstants::NO_MATCH;
         }
 
+        if (self::getAndroidModel($userAgent, false) === null) {
+            return $this->getDeviceIDFromRIS($userAgent, strlen($userAgent));
+        }
+
         // Standard RIS Matching
         $tolerance = Utils::indexOfAnyOrLength($userAgent, array(' Build/', ' AppleWebKit'));
 
@@ -258,10 +262,14 @@ class AndroidHandler extends AbstractHandler
         // Normalize spaces in UA before capturing parts
         $userAgent = preg_replace('|;(?! )|', '; ', $userAgent);
 
-        // Different logic for Mozillite and non-Mozillite UAs to isolate model name
-        // Non-Mozillite UAs get first preference
-        if (preg_match(
-            '#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#',
+        // Logic to detect some Gionee UAs like: (must remain above the regular model name extracting regex)
+        // Mozilla/5.0 (Linux; U; Android 4.2.2; zh-cn; Build/JDQ39 ) AppleWebKit/534.30 (KHTML,like Gecko) Version/4.2.2 Mobile Safari/534.30 GiONEE-GN9000/GN9000 RV/4.2.8 GNBR/5.0.0.v Id/0470FB91EE7E5465B21531B855F06353
+        if (preg_match('#Mobile Safari/[\d\.]+ (GiONEE-[A-Za-z0-9]+)/#', $userAgent, $matches)) {
+            $model = $matches[1];
+            // Different logic for Mozillite and non-Mozillite UAs to isolate model name
+            // Non-Mozillite UAs get first preference
+        } elseif (preg_match(
+            '#(^[A-Za-z0-9_\-\+ ]+)[/ ]?(?:[A-Za-z0-9_\-\+\.]+)? +Linux/[0-9\.\+]+ +Android[ /][0-9\.]+ +Release/[0-9\.]+#',
             $userAgent,
             $matches
         )) {
@@ -279,13 +287,13 @@ class AndroidHandler extends AbstractHandler
         )) {
             $model = $matches[1];
         } else {
-            return;
+            return null;
         }
 
         // The previous RegEx may return just 'Build/.*' for UAs like:
         // HTC_Dream Mozilla/5.0 (Linux; U; Android 1.5; xx-xx; Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
         if (strpos($model, 'Build/') === 0) {
-            return;
+            return null;
         }
 
         // Replace xx-xx (locale) in the model name with ''

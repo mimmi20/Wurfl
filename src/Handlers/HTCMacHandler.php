@@ -44,10 +44,8 @@ class HTCMacHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh') && Utils::checkIfContains(
-            $userAgent,
-            'HTC'
-        );
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh')
+            && Utils::checkIfContains($userAgent, 'HTC');
     }
 
     /**
@@ -91,6 +89,6 @@ class HTCMacHandler extends AbstractHandler
             return $model;
         }
 
-        return;
+        return null;
     }
 }

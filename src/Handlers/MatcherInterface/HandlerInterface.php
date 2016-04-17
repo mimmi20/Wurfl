@@ -139,8 +139,6 @@ interface HandlerInterface
 
     public function getDeviceIDFromRIS($userAgent, $tolerance);
 
-    public function getDeviceIDFromLD($userAgent, $tolerance = null);
-
     /**
      * Applies Recovery Match
      *

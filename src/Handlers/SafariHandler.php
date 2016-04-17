@@ -44,10 +44,8 @@ class SafariHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Safari') && Utils::checkIfStartsWithAnyOf(
-            $userAgent,
-            array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows')
-        );
+        return Utils::checkIfContains($userAgent, 'Safari')
+            && Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows'));
     }
 
     /**
@@ -94,14 +92,14 @@ class SafariHandler extends AbstractHandler
         $idx    = strpos($userAgent, $search);
 
         if ($idx === false) {
-            return;
+            return null;
         }
 
         $idx += strlen($search);
         $endIdx = strpos($userAgent, '.', $idx);
 
         if ($endIdx === false) {
-            return;
+            return null;
         }
 
         return substr($userAgent, $idx, $endIdx - $idx);

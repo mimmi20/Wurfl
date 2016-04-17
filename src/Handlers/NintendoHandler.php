@@ -53,10 +53,8 @@ class NintendoHandler extends AbstractHandler
             return true;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla/') && Utils::checkIfContainsAll(
-            $userAgent,
-            array('Nitro', 'Opera')
-        );
+        return Utils::checkIfStartsWith($userAgent, 'Mozilla/')
+            && Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'));
     }
 
     /**
@@ -78,10 +76,8 @@ class NintendoHandler extends AbstractHandler
             return 'nintendo_dsi_ver1';
         }
 
-        if ((Utils::checkIfStartsWith($userAgent, 'Mozilla/') && Utils::checkIfContainsAll(
-            $userAgent,
-            array('Nitro', 'Opera')
-        ))
+        if (Utils::checkIfStartsWith($userAgent, 'Mozilla/')
+            && Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'))
         ) {
             return 'nintendo_ds_ver1';
         }

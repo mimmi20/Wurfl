@@ -42,7 +42,7 @@ class PhilipsHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfStartsWith($userAgent, 'Philips') || Utils::checkIfStartsWith($userAgent, 'PHILIPS'));
+        return Utils::checkIfStartsWithCaseInsensitive($userAgent, 'philips');
     }
 
     public function applyConclusiveMatch($userAgent)

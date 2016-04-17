@@ -38,7 +38,7 @@ class LoggerFactory
             return self::createFileLogger($wurflConfig, 'wurfl.log');
         }
 
-        return new NullLogger();
+        return $wurflConfig->getLogger();
     }
 
     /**

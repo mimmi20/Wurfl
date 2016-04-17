@@ -43,6 +43,7 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
         'generic_android_ver4_0_opera_mobi',
         'generic_android_ver4_1_opera_mobi',
         'generic_android_ver4_2_opera_mobi',
+
         'generic_android_ver2_1_opera_tablet',
         'generic_android_ver2_2_opera_tablet',
         'generic_android_ver2_3_opera_tablet',

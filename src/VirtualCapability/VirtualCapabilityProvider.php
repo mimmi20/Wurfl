@@ -124,7 +124,7 @@ class VirtualCapabilityProvider
     {
         $caps = array();
 
-        foreach (self::$virtualCapabilities as $vcName) {
+        foreach (self::$virtualCapabilities as $capabilityName => $vcName) {
             if (strpos($vcName, '.') !== false) {
                 // Group of capabilities
                 $parts = explode('.', $vcName);
@@ -137,8 +137,28 @@ class VirtualCapabilityProvider
 
             /** @var $model \Wurfl\VirtualCapability\VirtualCapability */
             $model = new $class();
-            $caps  = array_unique(array_merge($caps, $model->getRequiredCapabilities()));
+            $caps  = array_unique(
+                array_merge(
+                    $caps,
+                    $model->getRequiredCapabilities(),
+                    array(self::PREFIX_CONTROL . $capabilityName)
+                )
+            );
             unset($model);
+        }
+
+        return $caps;
+    }
+
+    /**
+     * Returns an array of all the control capabilities
+     * @return array
+     */
+    public static function getControlCapabilities()
+    {
+        $caps = array();
+        foreach (array_keys(self::$virtualCapabilities) as $capabilityName) {
+            $caps[] = self::PREFIX_CONTROL . $capabilityName;
         }
 
         return $caps;
@@ -258,14 +278,14 @@ class VirtualCapabilityProvider
     {
         // Check if loaded WURFL contains control caps
         if (!$this->device->getRootDevice()->isGroupDefined(self::WURFL_CONTROL_GROUP)) {
-            return;
+            return null;
         }
 
         $controlCap = self::PREFIX_CONTROL . $name;
 
         // Check if loaded WURFL contains the requested control cap
         if (!$this->device->getRootDevice()->isCapabilityDefined($controlCap)) {
-            return;
+            return null;
         }
 
         return $this->device->getCapability($controlCap);

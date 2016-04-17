@@ -48,10 +48,8 @@ class MotorolaHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfStartsWithAnyOf(
-            $userAgent,
-            array('Mot-', 'MOT-', 'MOTO', 'moto')
-        ) || Utils::checkIfContains($userAgent, 'Motorola'));
+        return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto'))
+            || Utils::checkIfContains($userAgent, 'Motorola'));
     }
 
     /**

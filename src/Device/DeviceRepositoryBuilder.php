@@ -27,7 +27,6 @@ use Wurfl\Device\Xml\VersionIterator;
 use Wurfl\Exception\ConsistencyException;
 use Wurfl\FileUtils;
 use Wurfl\Handlers\Chain\UserAgentHandlerChain;
-use Wurfl\Logger\LogLevel;
 use Wurfl\Storage\Storage;
 use Wurfl\VirtualCapability\VirtualCapabilityProvider;
 
@@ -109,6 +108,15 @@ class DeviceRepositoryBuilder
     public function build($wurflFile, array $wurflPatches = array(), array $capabilityFilter = array())
     {
         if (!$this->isRepositoryBuilt()) {
+            if (!empty($capabilityFilter)) {
+                $capabilityFilter = array_unique(
+                    array_merge(
+                        $capabilityFilter,
+                        VirtualCapabilityProvider::getControlCapabilities()
+                    )
+                );
+            }
+
             // If acquireLock() is false, the WURFL is being reloaded in another thread
             if ($this->acquireLock()) {
                 try {
@@ -116,7 +124,7 @@ class DeviceRepositoryBuilder
                 } catch (\InvalidArgumentException $e) {
                     $this->releaseLock();
 
-                    $this->logger->log(LogLevel::ERROR, $e);
+                    $this->logger->error($e);
 
                     throw $e;
                 }
@@ -126,7 +134,7 @@ class DeviceRepositoryBuilder
                 } catch (\InvalidArgumentException $e) {
                     $this->releaseLock();
 
-                    $this->logger->log(LogLevel::ERROR, $e);
+                    $this->logger->error($e);
 
                     throw $e;
                 }
@@ -138,7 +146,7 @@ class DeviceRepositoryBuilder
                 } catch (Exception $e) {
                     $this->releaseLock();
 
-                    $this->logger->log(LogLevel::ERROR, $e);
+                    $this->logger->error($e);
 
                     throw $e;
                 }
@@ -148,7 +156,7 @@ class DeviceRepositoryBuilder
                 } catch (ConsistencyException $e) {
                     $this->releaseLock();
 
-                    $this->logger->log(LogLevel::ERROR, $e);
+                    $this->logger->error($e);
 
                     throw $e;
                 }
@@ -209,7 +217,7 @@ class DeviceRepositoryBuilder
                 try {
                     $patchIterators[] = new DeviceIterator($wurflPatch, $capabilityFilter);
                 } catch (\InvalidArgumentException $e) {
-                    $this->logger->log(LogLevel::ERROR, $e);
+                    $this->logger->error($e);
                 }
             }
         }

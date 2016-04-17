@@ -58,9 +58,15 @@ class MSIEHandler extends AbstractHandler
         if (Utils::isMobileBrowser($userAgent)) {
             return false;
         }
+
+        if (Utils::checkIfStartsWith($userAgent, 'Mozilla') === false) {
+            return false;
+        }
+
         if (Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
             return false;
         }
+
         // Edge 12 signature
         $hasEdgeMode = Utils::checkIfContains($userAgent, ' Edge/');
 
@@ -82,11 +88,9 @@ class MSIEHandler extends AbstractHandler
     {
         $matches = array();
 
-        if (preg_match('#^Mozilla/5\.0 \(Windows NT.+? Edge/(\d+)\.(\d+)#', $userAgent, $matches) || preg_match(
-            '#^Mozilla/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)#',
-            $userAgent,
-            $matches
-        ) || preg_match('#^Mozilla/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);#', $userAgent, $matches)
+        if (preg_match('#^Mozilla/5\.0 \(Windows NT.+? Edge/(\d+)\.(\d+)#', $userAgent, $matches)
+            || preg_match('#^Mozilla/5\.0 \(.+?Trident.+?; rv:(\d\d)\.(\d+)\)#', $userAgent, $matches)
+            || preg_match('#^Mozilla/[45]\.0 \(compatible; MSIE (\d+)\.(\d+);#', $userAgent, $matches)
         ) {
             $major = (int) $matches[1];
             $minor = (int) $matches[2];

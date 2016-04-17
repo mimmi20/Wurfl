@@ -20,6 +20,7 @@ namespace Wurfl\Device;
 
 use Wurfl\Device\Xml\Info;
 use Wurfl\Storage\Storage;
+use Wurfl\VirtualCapability\VirtualCapabilityProvider;
 use Wurfl\WurflConstants;
 
 /**
@@ -189,7 +190,13 @@ class CustomDeviceRepository implements DeviceRepositoryInterface
                 $currentMap = array();
             }
 
-            $devicesId = array_merge($devicesId, array_values($currentMap));
+            $overwritten = $this->persistenceStorage->load($className . '_overwritten');
+
+            if (!is_array($overwritten)) {
+                $overwritten = array();
+            }
+
+            $devicesId = array_merge($devicesId, array_values($currentMap), $overwritten);
         }
 
         return $devicesId;
@@ -261,6 +268,7 @@ class CustomDeviceRepository implements DeviceRepositoryInterface
                 $capabilities = array_merge($capabilities, $device->capabilities);
             }
         }
+        $capabilities = array_diff_key($capabilities, array_flip(VirtualCapabilityProvider::getControlCapabilities()));
 
         return $capabilities;
     }

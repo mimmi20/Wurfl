@@ -17,6 +17,9 @@
 
 namespace Wurfl\Configuration;
 
+use Psr\Log\LoggerInterface;
+use Wurfl\Logger\NullLogger;
+
 /**
  * Abstract base class for WURFL Configuration
  *
@@ -95,6 +98,19 @@ abstract class Config
      * @var string
      */
     protected $matchMode = self::MATCH_MODE_ACCURACY;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * Creates a new WURFL Configuration object
+     */
+    public function __construct()
+    {
+        $this->logger = new NullLogger();
+    }
 
     /**
      * Initialize Configuration
@@ -198,7 +214,7 @@ abstract class Config
             $paramNameValue = explode('=', $param);
             if (count($paramNameValue) > 1) {
                 if (strcmp(self::DIR, $paramNameValue[0]) === 0) {
-                    $paramNameValue[1] = parent::getFullPath($paramNameValue[1]);
+                    $paramNameValue[1] = $this->getFullPath($paramNameValue[1]);
                 }
                 $paramsArray[trim($paramNameValue[0])] = trim($paramNameValue[1]);
             }
@@ -310,5 +326,21 @@ abstract class Config
         }
 
         throw new \InvalidArgumentException('The specified path \'' . $fullName . '\' does not exist');
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }

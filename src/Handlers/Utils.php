@@ -109,6 +109,7 @@ class Utils
         ' mb91/',
         ' mb95/',
         'vizio-dtv',
+        'bravia',
     );
 
     private static $desktopBrowsers = array(
@@ -213,24 +214,7 @@ class Utils
      */
     public static function risMatch($collection, $needle, $tolerance)
     {
-        return Matcher\RISMatcher::getInstance()
-            ->match($collection, $needle, $tolerance);
-    }
-
-    /**
-     * Alias of \Wurfl\Handlers\Matcher\LDMatcher::match()
-     *
-     * @param array  $collection
-     * @param string $needle
-     * @param int    $tolerance
-     *
-     * @return string Matched user agent
-     * @see \Wurfl\Handlers\Matcher\LDMatcher::match()
-     */
-    public static function ldMatch($collection, $needle, $tolerance = 7)
-    {
-        return Matcher\LDMatcher::getInstance()
-            ->match($collection, $needle, $tolerance);
+        return Matcher\RISMatcher::getInstance()->match($collection, $needle, $tolerance);
     }
 
     /**
@@ -268,11 +252,17 @@ class Utils
      */
     public static function indexOfAnyOrLength($userAgent, $needles = array(), $startingIndex = 0)
     {
+        $length = strlen($userAgent);
+
         if (count($needles) === 0) {
-            return strlen($userAgent);
+            return $length;
         }
 
-        $min = strlen($userAgent);
+        if ($startingIndex === false || $startingIndex > $length) {
+            return $length;
+        }
+
+        $min = $length;
         foreach ($needles as $needle) {
             $index = self::indexOfOrLength($userAgent, $needle, $startingIndex);
             if ($index < $min) {
@@ -292,17 +282,16 @@ class Utils
      */
     public static function isMobileBrowser($userAgent)
     {
-        if (self::$isMobileBrowser !== null) {
-            return self::$isMobileBrowser;
-        }
-
-        self::$isMobileBrowser = false;
-        $userAgent             = strtolower($userAgent);
-
-        foreach (self::$mobileBrowsers as $key) {
-            if (strpos($userAgent, $key) !== false) {
+        $userAgent_lower = strtolower($userAgent);
+        if (self::$isMobileBrowser === null) {
+            if (self::isDesktopBrowser($userAgent)) {
+                self::$isMobileBrowser = false;
+            } elseif (self::checkIfContainsAnyOf($userAgent_lower, self::$mobileBrowsers)) {
                 self::$isMobileBrowser = true;
-                break;
+            } elseif (self::regexContains($userAgent, '/[^\d]\d{3}x\d{3}/')) {
+                self::$isMobileBrowser = true;
+            } else {
+                self::$isMobileBrowser = false;
             }
         }
 
@@ -586,6 +575,18 @@ class Utils
     }
 
     /**
+     * The tolerance position of $char in $string.  If there are no occurrences of $char, returns null
+     * @param string $string Haystack
+     *
+     * @param $char
+     * @return int Character position
+     */
+    public static function firstChar($string, $char)
+    {
+        return self::findCharPosition($string, $char);
+    }
+
+    /**
      * First occurance of a ; character or length
      *
      * @param string $string Haystack
@@ -779,5 +780,26 @@ class Utils
         $position = strpos($string, $char, $startAt);
 
         return ($position !== false) ? $position + 1 : null;
+    }
+
+    /**
+     * Check if value contains another string using PCRE (Perl Compatible Reqular Expressions)
+     * @param $string
+     * @param  string|array $find Target regex string or array of regex strings
+     * @return bool
+     */
+    public static function regexContains($string, $find)
+    {
+        if (is_array($find)) {
+            foreach ($find as $part) {
+                if (preg_match($part, $string)) {
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            return (preg_match($find, $string));
+        }
     }
 }

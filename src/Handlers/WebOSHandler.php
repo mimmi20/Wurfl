@@ -95,7 +95,7 @@ class WebOSHandler extends AbstractHandler
         if (preg_match('# ([^/]+)/([\d\.]+)$#', $userAgent, $matches)) {
             return $matches[1] . ' ' . $matches[2];
         } else {
-            return;
+            return null;
         }
     }
 
@@ -109,7 +109,7 @@ class WebOSHandler extends AbstractHandler
         if (preg_match('#(?:hpw|web)OS.(\d)\.#', $userAgent, $matches)) {
             return 'webOS' . $matches[1];
         } else {
-            return;
+            return null;
         }
     }
 }

@@ -66,8 +66,6 @@ use Wurfl\Handlers\Normalizer\Specific\Chrome;
 use Wurfl\Handlers\Normalizer\Specific\DesktopApplication;
 use Wurfl\Handlers\Normalizer\Specific\Firefox;
 use Wurfl\Handlers\Normalizer\Specific\HTCMac;
-use Wurfl\Handlers\Normalizer\Specific\Kindle;
-use Wurfl\Handlers\Normalizer\Specific\Konqueror;
 use Wurfl\Handlers\Normalizer\Specific\LG;
 use Wurfl\Handlers\Normalizer\Specific\Maemo;
 use Wurfl\Handlers\Normalizer\Specific\MSIE;
@@ -168,9 +166,7 @@ class UserAgentHandlerChainFactory
         $userAgentHandlerChain->addUserAgentHandler(new SmartTVHandler($genericNormalizers));
 
         /**** Mobile devices ****/
-        $kindleNormalizer = clone $genericNormalizers;
-        $kindleNormalizer->add(new Kindle());
-        $userAgentHandlerChain->addUserAgentHandler(new KindleHandler($kindleNormalizer));
+        $userAgentHandlerChain->addUserAgentHandler(new KindleHandler($genericNormalizers));
 
         /**** UCWEB ****/
         $ucwebu3Normalizer = clone $genericNormalizers;
@@ -357,10 +353,8 @@ class UserAgentHandlerChainFactory
         $safariNormalizer->add(new Safari());
         $userAgentHandlerChain->addUserAgentHandler(new SafariHandler($safariNormalizer));
 
-        $konquerorNormalizer = clone $genericNormalizers;
-        $konquerorNormalizer->add(new Konqueror());
         $userAgentHandlerChain->addUserAgentHandler(
-            new KonquerorHandler($konquerorNormalizer)
+            new KonquerorHandler($genericNormalizers)
         );
 
         /**** All other requests ****/

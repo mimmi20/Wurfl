@@ -51,7 +51,10 @@ class DesktopApplicationHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContainsAnyOf($userAgent, array('Thunderbird', 'Microsoft Outlook', 'MSOffice')));
+        return Utils::checkIfContainsAnyOf(
+            $userAgent,
+            array('Thunderbird', 'Microsoft Outlook', 'MSOffice', 'DesktopApp ')
+        );
     }
 
     public function applyConclusiveMatch($userAgent)
@@ -85,14 +88,12 @@ class DesktopApplicationHandler extends AbstractHandler
     {
         if (Utils::checkIfContains($userAgent, 'Thunderbird')) {
             return 'mozilla_thunderbird';
-        } else {
-            if (Utils::checkIfContains($userAgent, 'Microsoft Outlook')) {
-                return 'ms_outlook';
-            } else {
-                if (Utils::checkIfContains($userAgent, 'MSOffice')) {
-                    return 'ms_office';
-                }
-            }
+        } elseif (Utils::checkIfContains($userAgent, 'Microsoft Outlook')) {
+            return 'ms_outlook';
+        } elseif (Utils::checkIfContains($userAgent, 'MSOffice')) {
+            return 'ms_office';
+        } elseif (Utils::checkIfContains($userAgent, 'DesktopApp ')) {
+            return 'generic_desktop_application';
         }
 
         return WurflConstants::GENERIC_WEB_BROWSER;

@@ -21,23 +21,21 @@ namespace Wurfl\Handlers\Normalizer\Generic;
 use Wurfl\Handlers\Normalizer\NormalizerInterface;
 
 /**
- * User Agent Normalizer - removes UP.Link garbage from user agent
+ * User Agent Normalizer - clean IIS Logging from user agent
  */
-class UPLink implements NormalizerInterface
+class IISLogging implements NormalizerInterface
 {
     /**
-     * This method remove the 'UP.Link' substring from user agent string.
+     * This method clean the IIS logging from user agent string.
      *
-     * @param string $userAgent
-     *
+     * @param  string $userAgent
      * @return string Normalized user agent
      */
     public function normalize($userAgent)
     {
-        $index = strpos($userAgent, 'UP.Link');
-
-        if ($index !== false) {
-            return substr($userAgent, 0, $index);
+        //If there are no spaces in a UA and more than 2 plus symbols, the UA is likely affected by IIS style logging issues
+        if (substr_count($userAgent, ' ') === 0 and substr_count($userAgent, '+') > 2) {
+            $userAgent = str_replace('+', ' ', $userAgent);
         }
 
         return $userAgent;

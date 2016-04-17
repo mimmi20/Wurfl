@@ -44,10 +44,9 @@ class UbuntuTouchOSHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return (Utils::checkIfContains($userAgent, 'Ubuntu') && Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Mobile', 'Tablet')
-        ));
+        return (Utils::checkIfContains($userAgent, 'Ubuntu')
+            && Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet'))
+        );
     }
 
     /**

@@ -76,11 +76,6 @@ class UserAgentNormalizer implements NormalizerInterface
      */
     public function normalize($userAgent)
     {
-        // Don't normalize generic user agents
-        if (substr($userAgent, 0, 12) === 'DO_NOT_MATCH') {
-            return $userAgent;
-        }
-
         $normalizedUserAgent = $userAgent;
 
         foreach ($this->normalizers as $normalizer) {

@@ -63,6 +63,8 @@ class FileLogger extends AbstractLogger
      * @param mixed  $level
      * @param string $message
      * @param array  $context
+     *
+     * @return null|void
      */
     public function log($level, $message, array $context = array())
     {

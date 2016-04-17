@@ -63,7 +63,7 @@ class MaemoHandler extends AbstractHandler
 
         $tolerance = Utils::firstSlash($userAgent);
 
-        return $this->getDeviceIDFromLD($userAgent, $tolerance);
+        return $this->getDeviceIDFromRIS($userAgent, $tolerance);
     }
 
     /**

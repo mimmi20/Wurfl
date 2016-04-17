@@ -42,10 +42,8 @@ class SanyoHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO')) || Utils::checkIfContains(
-            $userAgent,
-            'MobilePhone'
-        );
+        return Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO'))
+            || Utils::checkIfContains($userAgent, 'MobilePhone');
     }
 
     /**

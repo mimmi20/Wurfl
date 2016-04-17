@@ -59,12 +59,7 @@ class NokiaOviBrowserHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $idx = strpos($userAgent, 'Nokia');
-
-        if ($idx === false) {
-            return WurflConstants::NO_MATCH;
-        }
-
+        $idx       = strpos($userAgent, 'Nokia');
         $tolerance = Utils::indexOfAnyOrLength($userAgent, array('/', ' '), $idx);
 
         return $this->getDeviceIDFromRIS($userAgent, $tolerance);

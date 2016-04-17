@@ -64,13 +64,9 @@ class OperaMiniHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        $model = self::getOperaModel($userAgent);
-
-        if ($model !== null) {
-            $prefix    = $model . WurflConstants::RIS_DELIMITER;
-            $userAgent = $prefix . $userAgent;
-
-            return $this->getDeviceIDFromRIS($userAgent, strlen($prefix));
+        $tolerance = Utils::toleranceToRisDelimeter($userAgent);
+        if ($tolerance !== false) {
+            return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
         $operaMiniIndex = Utils::indexOfOrLength($userAgent, 'Opera Mini');

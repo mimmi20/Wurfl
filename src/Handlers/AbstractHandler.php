@@ -67,6 +67,11 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     public static $constantIDs = array();
 
     /**
+     * @var array
+     */
+    protected $overwritten_devices = array();
+
+    /**
      * @param \Wurfl\Handlers\Normalizer\NormalizerInterface $userAgentNormalizer
      */
     public function __construct(NormalizerInterface $userAgentNormalizer = null)
@@ -155,6 +160,13 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
      */
     final public function updateUserAgentsWithDeviceIDMap($userAgent, $deviceID)
     {
+        if (isset($this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)])) {
+            $this->logger->debug($this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] . "\t"); //old_id
+            $this->logger->debug($deviceID . "\t"); //new id
+            $this->logger->debug($this->normalizeUserAgent($userAgent) . "\t\n");//normalized user agent
+            //$this->logger->printMessage($userAgent . "\t");//cleaned user agent
+            $this->overwritten_devices[] = $this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)];
+        }
         $this->userAgentsWithDeviceID[$this->normalizeUserAgent($userAgent)] = $deviceID;
     }
 
@@ -188,6 +200,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
             ksort($this->userAgentsWithDeviceID);
 
             $this->persistenceProvider->save($this->getPrefix(), $this->userAgentsWithDeviceID);
+            $this->persistenceProvider->save($this->getPrefix() . '_overwritten', $this->overwritten_devices);
         }
     }
 
@@ -366,23 +379,6 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
         }
 
         $match = Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
-
-        if (!empty($match)) {
-            return $this->userAgentsWithDeviceID[$match];
-        }
-
-        return WurflConstants::NO_MATCH;
-    }
-
-    /**
-     * @param string $userAgent
-     * @param int    $tolerance
-     *
-     * @return null|string
-     */
-    public function getDeviceIDFromLD($userAgent, $tolerance = null)
-    {
-        $match = Utils::ldMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
 
         if (!empty($match)) {
             return $this->userAgentsWithDeviceID[$match];

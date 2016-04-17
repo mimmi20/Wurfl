@@ -43,6 +43,8 @@ class AppleHandler extends AbstractHandler
         'apple_ipod_touch_ver7',
         'apple_ipod_touch_ver8',
         'apple_ipod_touch_ver9',
+        'apple_ipod_touch_ver10',
+
         'apple_ipad_ver1',
         'apple_ipad_ver1_subua32',
         'apple_ipad_ver1_sub42',
@@ -51,6 +53,8 @@ class AppleHandler extends AbstractHandler
         'apple_ipad_ver1_sub7',
         'apple_ipad_ver1_sub8',
         'apple_ipad_ver1_sub9',
+        'apple_ipad_ver1_sub10',
+
         'apple_iphone_ver1',
         'apple_iphone_ver2',
         'apple_iphone_ver3',
@@ -60,6 +64,8 @@ class AppleHandler extends AbstractHandler
         'apple_iphone_ver7',
         'apple_iphone_ver8',
         'apple_iphone_ver9',
+        'apple_iphone_ver10',
+
         //iOS HW IDs
         'apple_ipad_ver1_subhw1',
         'apple_ipad_ver1_sub42_subhw1',
@@ -168,6 +174,8 @@ class AppleHandler extends AbstractHandler
         'apple_ipad_ver1_sub9_3_subhwmini3',
         'apple_ipad_ver1_sub9_3_subhwmini4',
         'apple_ipad_ver1_sub9_3_subhwpro',
+        'apple_ipad_ver1_sub9_3_subhwpro97',
+
         'apple_iphone_ver1_subhw2g',
         'apple_iphone_ver2_subhw2g',
         'apple_iphone_ver2_subhw3g',
@@ -284,6 +292,8 @@ class AppleHandler extends AbstractHandler
         'apple_iphone_ver9_3_subhw6plus',
         'apple_iphone_ver9_3_subhw6s',
         'apple_iphone_ver9_3_subhw6splus',
+        'apple_iphone_ver9_3_subhwse',
+
         'apple_ipod_touch_ver1_subhw1',
         'apple_ipod_touch_ver2_subhw1',
         'apple_ipod_touch_ver2_1_subhw1',
@@ -350,6 +360,7 @@ class AppleHandler extends AbstractHandler
         '7,2' => '6',
         '8,1' => '6s',
         '8,2' => '6splus',
+        '8,4' => 'se',
     );
 
     public static $ipadDeviceMap = array(
@@ -376,10 +387,12 @@ class AppleHandler extends AbstractHandler
         '4,7' => 'mini3',
         '4,8' => 'mini3',
         '4,9' => 'mini3',
-        '5,1' => 'mini4',
-        '5,2' => 'mini4',
         '5,3' => 'air2',
         '5,4' => 'air2',
+        '5,1' => 'mini4',
+        '5,2' => 'mini4',
+        '6,3' => 'pro97',
+        '6,4' => 'pro97',
         '6,7' => 'pro',
         '6,8' => 'pro',
     );
@@ -409,15 +422,9 @@ class AppleHandler extends AbstractHandler
         // Pippo/2.4.3 (iPad; iOS 8.0.2; Scale/2.00)
         // server-bag [iPhone OS,8.2,12D508,iPhone4,1]
         // iPhone4,1/8.2 (12D508)
-        if (preg_match(
-            '#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#',
-            $userAgent,
-            $matches
-        ) || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches) || preg_match(
-            '#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#',
-            $userAgent,
-            $matches
-        )
+        if (preg_match('#^[^/]+?/[\d\.]+? \(i[A-Za-z]+; iOS ([\d\.]+); Scale/[\d\.]+\)#', $userAgent, $matches)
+            || preg_match('#^server-bag \[iPhone OS,([\d\.]+),#', $userAgent, $matches)
+            || preg_match('#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#', $userAgent, $matches)
         ) {
             $matches[1] = str_replace('.', '_', $matches[1]);
             if (Utils::checkIfContains($userAgent, 'iPad')) {
@@ -439,7 +446,9 @@ class AppleHandler extends AbstractHandler
         // Normalize iOS {Ver} style UAs
         //Eg: Mozilla/5.0 (iPhone; U; CPU iOS 7.1.2 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Safari/528.16
         if (preg_match('#CPU iOS \d+?\.\d+?#', $userAgent)) {
-            $ua = Utils::checkIfContains($userAgent, 'iPad') ? str_replace('CPU iOS', 'CPU OS', $userAgent) : str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
+            $ua = Utils::checkIfContains($userAgent, 'iPad')
+                ? str_replace('CPU iOS', 'CPU OS', $userAgent)
+                : str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
 
             if (preg_match('#(CPU(?: iPhone)? OS [\d\.]+ like)#', $ua, $matches)) {
                 $versionUnderscore = str_replace('.', '_', $matches[1]);
@@ -483,7 +492,7 @@ class AppleHandler extends AbstractHandler
             }
         }
 
-        $tolerance = strpos($userAgent, '_');
+        $tolerance = Utils::firstChar($userAgent, '_');
 
         if ($tolerance !== false) {
             // The first char after the first underscore
@@ -514,7 +523,7 @@ class AppleHandler extends AbstractHandler
 
     public function applyRecoveryMatch($userAgent)
     {
-        if (preg_match('/ (\d)_(\d)[ _]/', $userAgent, $matches)) {
+        if (preg_match('/ (\d+)_(\d+)[ _]/', $userAgent, $matches)) {
             $majorVersion = (int) $matches[1];
         } else {
             $majorVersion = -1;
