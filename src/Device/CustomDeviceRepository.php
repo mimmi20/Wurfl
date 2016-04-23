@@ -58,7 +58,7 @@ class CustomDeviceRepository implements DeviceRepositoryInterface
     private $capabilitiesName = array();
 
     /**
-     * @var array
+     * @var \Wurfl\Device\ModelDeviceInterface[]
      */
     private $deviceCache = array();
 

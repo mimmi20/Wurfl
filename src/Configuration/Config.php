@@ -258,6 +258,7 @@ abstract class Config
     {
         if (!isset($loggerConfig[self::TYPE])) {
             $this->logger = new NullLogger();
+
             return;
         }
 

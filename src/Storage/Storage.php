@@ -18,7 +18,6 @@
 
 namespace Wurfl\Storage;
 
-use Wurfl\WurflConstants;
 use WurflCache\Adapter\AdapterInterface;
 
 /**
@@ -173,20 +172,5 @@ class Storage
     public function getAdapter()
     {
         return $this->adapter;
-    }
-
-    /**
-     * Encode the Object Id using the Persistence Identifier
-     *
-     * @param string $namespace
-     * @param string $input
-     *
-     * @param  string $namespace
-     * @param  string $input
-     * @return string $input with the given $namespace as a prefix
-     */
-    private function encode($namespace, $input)
-    {
-        return implode(':', array(WurflConstants::API_NAMESPACE, $namespace, $input));
     }
 }

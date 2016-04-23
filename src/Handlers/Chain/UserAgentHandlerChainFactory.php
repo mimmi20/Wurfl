@@ -140,6 +140,8 @@ class UserAgentHandlerChainFactory
             $cacheProvider->save('UserAgentHandlerChain', $userAgentHandlerChain, 3600);
         }
 
+        $userAgentHandlerChain->setLogger($logger);
+
         foreach ($userAgentHandlerChain->getHandlers() as $handler) {
             /* @var $handler \Wurfl\Handlers\AbstractHandler */
             $handler

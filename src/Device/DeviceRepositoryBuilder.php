@@ -29,6 +29,7 @@ use Wurfl\FileUtils;
 use Wurfl\Handlers\Chain\UserAgentHandlerChain;
 use Wurfl\Storage\Storage;
 use Wurfl\VirtualCapability\VirtualCapabilityProvider;
+use Wurfl\WurflConstants;
 
 /**
  * Builds a \Wurfl\DeviceRepositoryInterface
@@ -81,8 +82,9 @@ class DeviceRepositoryBuilder
         $this->userAgentHandlerChain = $chain;
         $this->devicePatcher         = $devicePatcher;
         $this->logger                = $logger;
+        $this->lockFile              = $this->getFileLockPath();
 
-        $this->lockFile = FileUtils::getTempDir() . '/wurfl_builder.lock';
+        $this->userAgentHandlerChain->setLogger($logger);
     }
 
     /**
@@ -472,8 +474,9 @@ class DeviceRepositoryBuilder
          * verify required capabilities
          */
         $requiredCaps  = VirtualCapabilityProvider::getRequiredCapabilities();
-        $genericDevice = new CustomDevice(array($this->persistenceProvider->load('generic')));
-        $loadedCaps    = array_keys($genericDevice->getAllCapabilities());
+        /** @var \Wurfl\Device\ModelDeviceInterface $genericDevice */
+        $genericDevice = $this->persistenceProvider->load('generic');
+        $loadedCaps    = array_keys($genericDevice->getCapabilities());
         $missingCaps   = array_diff($requiredCaps, $loadedCaps);
 
         if (count($missingCaps) > 0) {
@@ -497,6 +500,11 @@ class DeviceRepositoryBuilder
 
         $this->fallbacks = array();
         $this->devices   = array();
+    }
+
+    public function getFileLockPath()
+    {
+        return FileUtils::getTempDir() . '/wurfl_builder_' . md5(WurflConstants::API_VERSION . __DIR__) . '.lock';
     }
 
     /**

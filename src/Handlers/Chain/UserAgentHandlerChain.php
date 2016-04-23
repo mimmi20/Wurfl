@@ -18,6 +18,7 @@
 
 namespace Wurfl\Handlers\Chain;
 
+use Psr\Log\LoggerInterface;
 use Wurfl\Handlers\AbstractHandler;
 use Wurfl\Handlers\Utils;
 use Wurfl\Request\GenericRequest;
@@ -31,9 +32,22 @@ use Wurfl\WurflConstants;
 class UserAgentHandlerChain
 {
     /**
-     * @var array of \Wurfl\Handlers\AbstractHandler objects
+     * @var \Wurfl\Handlers\AbstractHandler[]
      */
     private $userAgentHandlers = array();
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger = null;
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     /**
      * Adds a \Wurfl\Handlers\AbstractHandler to the chain
@@ -76,6 +90,8 @@ class UserAgentHandlerChain
 
         foreach ($handlers as $handler) {
             /** @var $handler \Wurfl\Handlers\AbstractHandler */
+            $handler->setLogger($this->logger);
+
             if ($handler->filter($userAgent, $deviceID)) {
                 break;
             }
@@ -98,6 +114,8 @@ class UserAgentHandlerChain
 
         foreach ($handlers as $handler) {
             /** @var $handler \Wurfl\Handlers\AbstractHandler */
+            $handler->setLogger($this->logger);
+
             if ($handler->canHandle($request->getUserAgentNormalized())) {
                 $matchResult = $handler->applyMatch($request);
                 break;
@@ -117,7 +135,9 @@ class UserAgentHandlerChain
         $handlers = $this->getHandlers();
 
         foreach ($handlers as $handler) {
-            /* @var $handler \Wurfl\Handlers\AbstractHandler */
+            /** @var $handler \Wurfl\Handlers\AbstractHandler */
+            $handler->setLogger($this->logger);
+
             $handler->persistData();
         }
     }
@@ -134,6 +154,8 @@ class UserAgentHandlerChain
 
         foreach ($handlers as $handler) {
             /* @var $handler \Wurfl\Handlers\AbstractHandler */
+            $handler->setLogger($this->logger);
+
             $current = $handler->getUserAgentsWithDeviceId();
 
             if (!empty($current)) {

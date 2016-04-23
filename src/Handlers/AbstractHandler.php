@@ -49,7 +49,12 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     /**
      * @var array Array of user agents with device IDs
      */
-    protected $userAgentsWithDeviceID;
+    protected $userAgentsWithDeviceID = array();
+
+    /**
+     * @var array Array of user agents
+     */
+    protected $userAgents = array();
 
     /**
      * @var \Wurfl\Storage\Storage
@@ -70,6 +75,9 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
      * @var array
      */
     protected $overwritten_devices = array();
+
+    const PREFIX_OVERWRITTEN = '_overwritten';
+    const PREFIX_UA_BUCKET   = '_ua_bucket';
 
     /**
      * @param \Wurfl\Handlers\Normalizer\NormalizerInterface $userAgentNormalizer
@@ -200,7 +208,8 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
             ksort($this->userAgentsWithDeviceID);
 
             $this->persistenceProvider->save($this->getPrefix(), $this->userAgentsWithDeviceID);
-            $this->persistenceProvider->save($this->getPrefix() . '_overwritten', $this->overwritten_devices);
+            $this->persistenceProvider->save($this->getPrefix(self::PREFIX_OVERWRITTEN), $this->overwritten_devices);
+            $this->persistenceProvider->save($this->getPrefix(self::PREFIX_UA_BUCKET), array_keys($this->userAgentsWithDeviceID));
         }
     }
 
@@ -211,13 +220,28 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
      */
     public function getUserAgentsWithDeviceId()
     {
-        $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
+        if (empty($this->userAgentsWithDeviceID)) {
+            $this->userAgentsWithDeviceID = $this->persistenceProvider->load($this->getPrefix());
+        }
 
         if (!is_array($this->userAgentsWithDeviceID)) {
             $this->userAgentsWithDeviceID = array();
         }
 
         return $this->userAgentsWithDeviceID;
+    }
+
+    /**
+     * Returns a list of User Agents associated with the bucket
+     * @return array User agents
+     */
+    public function getUserAgentsForBucket()
+    {
+        if (empty($this->userAgents)) {
+            $this->userAgents = $this->persistenceProvider->load($this->getPrefix(self::PREFIX_UA_BUCKET));
+        }
+
+        return $this->userAgents;
     }
 
     //********************************************************
@@ -242,7 +266,8 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
         $this->logger->debug('START: Matching For ' . $userAgent);
 
         // Get The data associated with this current handler
-        $this->getUserAgentsWithDeviceId();
+        $this->userAgentsWithDeviceID = $this->getUserAgentsWithDeviceId();
+        $this->userAgents             = $this->getUserAgentsForBucket();
 
         $matches = array(
             'exact'             => array(
@@ -363,7 +388,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     {
         $tolerance = Utils::firstSlash($userAgent);
 
-        return Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+        return Utils::risMatch($this->userAgents, $userAgent, $tolerance);
     }
 
     /**
@@ -378,7 +403,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
             return WurflConstants::NO_MATCH;
         }
 
-        $match = Utils::risMatch(array_keys($this->userAgentsWithDeviceID), $userAgent, $tolerance);
+        $match = Utils::risMatch($this->userAgents, $userAgent, $tolerance);
 
         if (!empty($match)) {
             return $this->userAgentsWithDeviceID[$match];
@@ -513,11 +538,13 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
      * BlackBerry Handler.  The 'BLACKBERRY_' portion comes from the individual
      * Handler's $prefix property and '_DEVICEIDS' is added here.
      *
+     * @param string $additionalPrefix
+     *
      * @return string
      */
-    public function getPrefix()
+    public function getPrefix($additionalPrefix = '')
     {
-        return $this->prefix . '_DEVICEIDS';
+        return $this->prefix . '_DEVICEIDS' . $additionalPrefix;
     }
 
     public function getNiceName()

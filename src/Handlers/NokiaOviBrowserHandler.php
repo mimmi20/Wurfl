@@ -18,8 +18,6 @@
 
 namespace Wurfl\Handlers;
 
-use Wurfl\WurflConstants;
-
 /**
  * NokiaOviBrowserUserAgentHandler
  *

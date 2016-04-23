@@ -15,6 +15,8 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->in(__DIR__ . '/tests')
 ;
 
+ini_set('memory_limit', '-1');
+
 return Symfony\CS\Config\Config::create()
     ->level(\Symfony\CS\FixerInterface::PSR2_LEVEL)
     ->fixers(
@@ -25,7 +27,6 @@ return Symfony\CS\Config\Config::create()
             'concat_with_spaces',
             'duplicate_semicolon',
             'elseif',
-            'empty_return',
             'encoding',
             'eof_ending',
             'extra_empty_lines',

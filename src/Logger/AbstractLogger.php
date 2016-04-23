@@ -34,8 +34,6 @@ abstract class AbstractLogger implements LoggerInterface
      *
      * @param string $message
      * @param array  $context
-     *
-     * @return null
      */
     public function emergency($message, array $context = array())
     {

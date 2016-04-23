@@ -86,8 +86,8 @@ class ModelDevice implements ModelDeviceInterface
         $this->id               = $id;
         $this->userAgent        = $userAgent;
         $this->fallBack         = $fallBack;
-        $this->actualDeviceRoot = $actualDeviceRoot === true ? true : false;
-        $this->specific         = $specific === true ? true : false;
+        $this->actualDeviceRoot = (($actualDeviceRoot === true || $actualDeviceRoot === 'true') ? true : false);
+        $this->specific         = (($specific === true || $specific === 'true') ? true : false);
 
         if (is_array($groupIdCapabilitiesMap)) {
             foreach ($groupIdCapabilitiesMap as $groupId => $capabilitiesNameValue) {
