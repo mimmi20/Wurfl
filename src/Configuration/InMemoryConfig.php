@@ -109,6 +109,8 @@ class InMemoryConfig extends Config
     {
         $this->logDir = $dir;
 
+        $this->buildFileLogger($this->logDir);
+
         return $this;
     }
 

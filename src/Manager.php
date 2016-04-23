@@ -19,11 +19,9 @@
 namespace Wurfl;
 
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Wurfl\Configuration\Config;
 use Wurfl\Configuration\FileConfig;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
-use Wurfl\Logger\LoggerFactory;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\GenericRequestFactory;
 
@@ -176,7 +174,7 @@ class Manager
     public function getLogger()
     {
         if (null === $this->logger) {
-            $this->logger = LoggerFactory::create($this->wurflConfig);
+            $this->logger = $this->wurflConfig->getLogger();
         }
 
         return $this->logger;

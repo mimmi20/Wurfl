@@ -18,6 +18,8 @@
 namespace Wurfl\Configuration;
 
 use Psr\Log\LoggerInterface;
+use Wurfl\Logger\ConsoleLogger;
+use Wurfl\Logger\FileLogger;
 use Wurfl\Logger\NullLogger;
 
 /**
@@ -51,6 +53,9 @@ abstract class Config
     const MATCH_MODE             = 'match-mode';
     const MATCH_MODE_PERFORMANCE = 'performance';
     const MATCH_MODE_ACCURACY    = 'accuracy';
+    const LOGGER                 = 'logger';
+    const LOG_DIR                = 'logDir';
+    const TYPE                   = 'type';
 
     /**
      * @var string Path to the configuration file
@@ -102,7 +107,12 @@ abstract class Config
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    protected $logger;
+    protected $logger = null;
+
+    /**
+     * @var string
+     */
+    protected $logDir = 'log/';
 
     /**
      * Creates a new WURFL Configuration object
@@ -137,6 +147,12 @@ abstract class Config
 
         if (array_key_exists(self::MATCH_MODE, $configuration)) {
             $this->setMatchMode($configuration[self::MATCH_MODE]);
+        }
+
+        if (array_key_exists(self::LOGGER, $configuration)) {
+            $this->buildLoggerConfiguration($configuration[self::LOGGER]);
+        } elseif (array_key_exists(self::LOG_DIR, $configuration)) {
+            $this->buildFileLogger($configuration[self::LOG_DIR]);
         }
 
         $this->allowReload = array_key_exists(self::ALLOW_RELOAD, $configuration)
@@ -233,6 +249,51 @@ abstract class Config
         }
 
         $this->matchMode = $mode;
+    }
+
+    /**
+     * @param array $loggerConfig
+     */
+    protected function buildLoggerConfiguration(array $loggerConfig)
+    {
+        if (!isset($loggerConfig[self::TYPE])) {
+            $this->logger = new NullLogger();
+            return;
+        }
+
+        switch ($loggerConfig[self::TYPE]) {
+            case 'File':
+                if (isset($loggerConfig[self::LOG_DIR])) {
+                    $logDir = $loggerConfig[self::LOG_DIR];
+                } else {
+                    $logDir = $this->logDir;
+                }
+
+                $this->buildFileLogger($logDir);
+                break;
+            case 'Console':
+                $this->logger = new ConsoleLogger();
+                break;
+            default:
+                $this->logger = new NullLogger();
+                break;
+        }
+    }
+
+    /**
+     * @param string $logDir
+     */
+    protected function buildFileLogger($logDir = null)
+    {
+        $logFile = $logDir . DIRECTORY_SEPARATOR . 'wurfl.log';
+
+        if (file_exists($logFile) && is_writable($logFile) && false !== ($file = realpath($logFile))) {
+            touch($file);
+
+            $this->logger = new FileLogger($file);
+        } else {
+            $this->logger = new NullLogger();
+        }
     }
 
     /**

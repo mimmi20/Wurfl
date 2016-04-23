@@ -70,6 +70,6 @@ class FileLogger extends AbstractLogger
     {
         $time        = date('F jS Y, h:iA');
         $fullMessage = '[' . $time . '] [' . $level . '] ' . $message;
-        fwrite($this->filePointer, $fullMessage . '\n');
+        fwrite($this->filePointer, $fullMessage . PHP_EOL);
     }
 }
