@@ -40,17 +40,20 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $logger = new NullLogger();
+
         $persistenceProvider           = new Storage(new Memory());
         $userAgentHandlerChain         = UserAgentHandlerChainFactory::createFrom(
             $persistenceProvider,
-            $persistenceProvider
+            $persistenceProvider,
+            $logger
         );
         $devicePatcher                 = new DevicePatcher();
         $this->deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $persistenceProvider,
             $userAgentHandlerChain,
             $devicePatcher,
-            new NullLogger()
+            $logger
         );
     }
 
@@ -94,15 +97,21 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldNotRebuildTheRepositoryIfAlreadyBuild()
     {
+        $logger = new NullLogger();
+
         $persistenceProvider     = new Storage(new Memory());
         $persistenceProvider->setWURFLLoaded(true);
-        $userAgentHandlerChain   = UserAgentHandlerChainFactory::createFrom($persistenceProvider, $persistenceProvider);
+        $userAgentHandlerChain   = UserAgentHandlerChainFactory::createFrom(
+            $persistenceProvider,
+            $persistenceProvider,
+            $logger
+        );
         $devicePatcher           = new DevicePatcher();
         $deviceRepositoryBuilder = new DeviceRepositoryBuilder(
             $persistenceProvider,
             $userAgentHandlerChain,
             $devicePatcher,
-            new NullLogger()
+            $logger
         );
         self::assertNotNull($deviceRepositoryBuilder);
 

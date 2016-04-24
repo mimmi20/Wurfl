@@ -42,10 +42,13 @@ class VirtualCapabilityProviderTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
+        $logger = new NullLogger();
+
         $persistenceProvider   = new Storage(new Memory());
         $userAgentHandlerChain = UserAgentHandlerChainFactory::createFrom(
             $persistenceProvider,
-            $persistenceProvider
+            $persistenceProvider,
+            $logger
         );
 
         $devicePatcher                 = new DevicePatcher();
@@ -53,7 +56,7 @@ class VirtualCapabilityProviderTest extends \PHPUnit_Framework_TestCase
             $persistenceProvider,
             $userAgentHandlerChain,
             $devicePatcher,
-            new NullLogger()
+            $logger
         );
 
         try {
