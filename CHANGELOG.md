@@ -1,5 +1,29 @@
 ScientiaMobile WURFL PHP API change log:
 
+[2016.04.19] 1.7.1.1
+- Improved performance detection
+- Improved build lock implementation with multiple api's
+
+[2016.04.13] 1.7.1.0
+- Added detection of:
+    - Palemoon Browser
+    - Bravia SmartTV
+    - iOS 10 and new iOS devices
+    - Desktop App
+- Fixed IIS detection issues
+- Fixed controlcap mechanism
+- Fixed APC and Memcache storage namespace conflict with multiple api's
+
+[2015.03.29] 1.7.0.1
+- Fixed PHP 5.3 compatibility
+
+[2015.02.08] 1.7.0.0
+- Added WURFL.XML deviceIds consistency check
+- Improved detection of:
+    - Apple devices
+    - Edge browser
+- Added new Virtual Capability: device_name
+
 [2015.12.16] 1.6.4.2
 - Added mandatory capabilities for advertised capabilities
 
