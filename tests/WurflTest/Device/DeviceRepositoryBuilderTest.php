@@ -61,7 +61,7 @@ class DeviceRepositoryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $deviceRepository = $this->deviceRepositoryBuilder->build(self::WURFL_FILE);
         self::assertNotNull($deviceRepository);
-        self::assertEquals('2016-01-28 00:30:29 -0500', $deviceRepository->getLastUpdated());
+        self::assertEquals('2016-04-04 10:50:09 -0400', $deviceRepository->getLastUpdated());
         $genericDevice = $deviceRepository->getDevice('generic');
         self::assertNotNull($genericDevice, 'generic device is null');
     }

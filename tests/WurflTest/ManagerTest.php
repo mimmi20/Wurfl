@@ -88,8 +88,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testShouldReturnWurflVersionInfo()
     {
         $wurflInfo = $this->object->getWURFLInfo();
-        self::assertEquals('API 1.7.0 - data.scientiamobile.com - 2016-01-28 00:30:29', $wurflInfo->version);
-        self::assertEquals('2016-01-28 00:30:29 -0500', $wurflInfo->lastUpdated);
+        self::assertEquals('for API 1.7.1.0 release, db.scientiamobile.com - 2016-04-04 10:46:57', $wurflInfo->version);
+        self::assertEquals('2016-04-04 10:50:09 -0400', $wurflInfo->lastUpdated);
     }
 
     public function testGetListOfGroups()
