@@ -57,6 +57,11 @@ abstract class VirtualCapability
     protected $request = null;
 
     /**
+     * @var int Max length for the capability value
+     */
+    protected $maxLength = 255;
+
+    /**
      * @param \Wurfl\CustomDevice           $device
      * @param \Wurfl\Request\GenericRequest $request
      */
@@ -100,7 +105,11 @@ abstract class VirtualCapability
         $value = ($this->useCaching) ? $this->computeCached() : $this->compute();
 
         if (is_bool($value)) {
-            return $value ? 'true' : 'false';
+            return $value;
+        }
+
+        if (is_string($value)) {
+            return substr($value, 0, $this->maxLength);
         }
 
         return $value;

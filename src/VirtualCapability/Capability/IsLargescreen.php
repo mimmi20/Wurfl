@@ -16,25 +16,28 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class IsMobile extends VirtualCapability
+class IsLargescreen extends VirtualCapability
 {
     /**
      * @var array
      */
-    protected $requiredCapabilities = array('is_wireless_device');
+    protected $requiredCapabilities = array(
+        'resolution_width',
+        'resolution_height',
+    );
 
     /**
      * @return bool
      */
     protected function compute()
     {
-        return ('true' === $this->device->getCapability('is_wireless_device'));
+        return ($this->device->getCapability('resolution_width') >= 480 && $this->device->getCapability('resolution_height') >= 480);
     }
 }

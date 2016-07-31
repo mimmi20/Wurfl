@@ -16,25 +16,25 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class IsHtmlPreferred extends VirtualCapability
+class IsWmlPreferred extends VirtualCapability
 {
     /**
      * @var array
      */
-    protected $requiredCapabilities = array('preferred_markup');
+    protected $requiredCapabilities = array('xhtml_support_level');
 
     /**
      * @return bool
      */
     protected function compute()
     {
-        return (strpos($this->device->getCapability('preferred_markup'), 'html_web') === 0);
+        return ($this->device->getCapability('xhtml_support_level') <= 0);
     }
 }

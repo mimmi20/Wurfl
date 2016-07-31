@@ -16,39 +16,25 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class CompleteDeviceName extends VirtualCapability
+class IsWindowsPhone extends VirtualCapability
 {
     /**
      * @var array
      */
-    protected $requiredCapabilities = array(
-        'brand_name',
-        'model_name',
-        'marketing_name',
-    );
+    protected $requiredCapabilities = array('device_os');
 
     /**
-     * @return string
+     * @return bool
      */
     protected function compute()
     {
-        $parts = array($this->device->getCapability('brand_name'));
-
-        if (strlen($this->device->getCapability('model_name'))) {
-            $parts[] = $this->device->getCapability('model_name');
-        }
-
-        if (strlen($this->device->getCapability('marketing_name'))) {
-            $parts[] = '(' . $this->device->getCapability('marketing_name') . ')';
-        }
-
-        return implode(' ', $parts);
+        return ('Windows Phone OS' === $this->device->getCapability('device_os'));
     }
 }

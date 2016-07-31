@@ -70,10 +70,10 @@ class VirtualCapabilityProvider
         'is_wml_preferred'             => 'IsWmlPreferred',
         'is_xhtmlmp_preferred'         => 'IsXhtmlmpPreferred',
         'is_html_preferred'            => 'IsHtmlPreferred',
-        'advertised_device_os'         => 'DeviceBrowser.DeviceOs',
-        'advertised_device_os_version' => 'DeviceBrowser.DeviceOsVersion',
-        'advertised_browser'           => 'DeviceBrowser.Browser',
-        'advertised_browser_version'   => 'DeviceBrowser.BrowserVersion',
+        'advertised_device_os'         => 'DeviceBrowserGroup',
+        'advertised_device_os_version' => 'DeviceBrowserGroup',
+        'advertised_browser'           => 'DeviceBrowserGroup',
+        'advertised_browser_version'   => 'DeviceBrowserGroup',
         'complete_device_name'         => 'CompleteDeviceName',
         'device_name'                  => 'DeviceName',
         'form_factor'                  => 'FormFactor',
@@ -89,13 +89,6 @@ class VirtualCapabilityProvider
     private $cache = array();
 
     /**
-     * Storage for the \Wurfl\VirtualCapability\VirtualCapabilityCache objects
-     *
-     * @var array
-     */
-    private $groupCache = array();
-
-    /**
      * @param \Wurfl\CustomDevice           $device
      * @param \Wurfl\Request\GenericRequest $request
      */
@@ -109,6 +102,7 @@ class VirtualCapabilityProvider
      * Returns the names of all the available virtual capabilities
      *
      * @return array
+     * @deprecated
      */
     public function getNames()
     {
@@ -125,29 +119,20 @@ class VirtualCapabilityProvider
         $caps = array();
 
         foreach (self::$virtualCapabilities as $capabilityName => $vcName) {
-            if (strpos($vcName, '.') !== false) {
-                // Group of capabilities
-                $parts = explode('.', $vcName);
-                $group = $parts[0];
-                $class = '\\Wurfl\\VirtualCapability\\Group\\' . $group . 'Group';
-            } else {
-                // Individual capability
-                $class = '\\Wurfl\\VirtualCapability\\Single\\' . $vcName;
-            }
+            // Individual capability
+            $class = '\\Wurfl\\VirtualCapability\\Capability\\' . $vcName;
 
             /** @var $model \Wurfl\VirtualCapability\VirtualCapability */
             $model = new $class();
-            $caps  = array_unique(
-                array_merge(
-                    $caps,
-                    $model->getRequiredCapabilities(),
-                    array(self::PREFIX_CONTROL . $capabilityName)
-                )
+            $caps  = array_merge(
+                $caps,
+                $model->getRequiredCapabilities(),
+                array(self::PREFIX_CONTROL . $capabilityName)
             );
             unset($model);
         }
 
-        return $caps;
+        return array_unique($caps);
     }
 
     /**
@@ -157,6 +142,7 @@ class VirtualCapabilityProvider
     public static function getControlCapabilities()
     {
         $caps = array();
+
         foreach (array_keys(self::$virtualCapabilities) as $capabilityName) {
             $caps[] = self::PREFIX_CONTROL . $capabilityName;
         }
@@ -173,7 +159,7 @@ class VirtualCapabilityProvider
     {
         $all = array();
 
-        foreach ($this->getNames() as $name) {
+        foreach (array_keys(self::$virtualCapabilities) as $name) {
             $all[$name] = $this->get($name);
         }
 
@@ -185,10 +171,15 @@ class VirtualCapabilityProvider
      *
      * @param string $name
      *
-     * @return string|bool|int|float
+     * @return bool|float|int|string
+     * @throws \Wurfl\VirtualCapability\Exception
      */
     public function get($name)
     {
+        if (!isset(self::$virtualCapabilities[$name])) {
+            throw new Exception('Virtual capability "' . $name . '" does not exist in WURFL');
+        }
+
         $controlValue = $this->getControlValue($name);
 
         $value = $controlValue;
@@ -200,6 +191,15 @@ class VirtualCapabilityProvider
                 // The value is null if it is not in the loaded WURFL, it's default if it is loaded and not overridden
                 // The control capability was not used, use the \Wurfl\VirtualCapability\VirtualCapability provider
                 $value = $this->getObject($name)->getValue();
+
+                if (is_array($value)) {
+                    $value = $value[$name];
+                }
+
+                if (null === $value) {
+                    $value = $controlValue;
+                }
+
                 break;
             case 'force_true':
                 $value = true;
@@ -226,32 +226,9 @@ class VirtualCapabilityProvider
     public function getObject($name)
     {
         if (!array_key_exists($name, $this->cache)) {
-            if (strpos(self::$virtualCapabilities[$name], '.') !== false) {
-                // Group of capabilities
-                list($group, $property) = explode('.', self::$virtualCapabilities[$name]);
-
-                if (!array_key_exists($group, $this->groupCache)) {
-                    $class = '\\Wurfl\\VirtualCapability\\Group\\' . $group . 'Group';
-                    // Cache the group
-
-                    /** @var \Wurfl\VirtualCapability\Group\Group $groupClass */
-                    $groupClass = new $class($this->device, $this->request);
-                    $groupClass->compute();
-                    $this->groupCache[$group] = $groupClass;
-                } else {
-                    /** @var \Wurfl\VirtualCapability\Group\Group $groupClass */
-                    $groupClass = $this->groupCache[$group];
-                }
-
-                $value = $groupClass->get($property);
-
-                // Cache the capability
-                $this->cache[$name] = $value;
-            } else {
-                // Individual capability
-                $class              = '\\Wurfl\\VirtualCapability\\Single\\' . self::$virtualCapabilities[$name];
-                $this->cache[$name] = new $class($this->device, $this->request);
-            }
+            // Individual capability
+            $class              = '\\Wurfl\\VirtualCapability\\Capability\\' . self::$virtualCapabilities[$name];
+            $this->cache[$name] = new $class($this->device, $this->request);
         }
 
         return $this->cache[$name];

@@ -16,7 +16,7 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
@@ -41,20 +41,34 @@ class FormFactor extends VirtualCapability
      */
     public function compute()
     {
-        $map = array(
-            'Robot'            => $this->device->getVirtualCapability('is_robot'),
-            'Desktop'          => $this->device->getCapability('ux_full_desktop'),
-            'Smart-TV'         => $this->device->getCapability('is_smarttv'),
-            'Other Non-Mobile' => ('true' === $this->device->getCapability('is_wireless_device') ? 'false' : 'true'),
-            'Tablet'           => $this->device->getCapability('is_tablet'),
-            'Smartphone'       => $this->device->getVirtualCapability('is_smartphone'),
-            'Feature Phone'    => $this->device->getCapability('can_assign_phone_number'),
-        );
+        $vcIsRobot = new IsRobot($this->device, $this->request);
+        if ($vcIsRobot->getValue() === true) {
+            return 'Robot';
+        }
 
-        foreach ($map as $type => $condition) {
-            if ($condition === 'true') {
-                return $type;
-            }
+        if ($this->device->getCapability('ux_full_desktop') === true) {
+            return 'Desktop';
+        }
+
+        if ($this->device->getCapability('is_smarttv') === true) {
+            return 'Smart-TV';
+        }
+
+        if ($this->device->getCapability('is_wireless_device') === false) {
+            return 'Other Non-Mobile';
+        }
+
+        if ($this->device->getCapability('is_tablet') === true) {
+            return 'Tablet';
+        }
+
+        $vcIsSmartphone = new IsSmartphone($this->device, $this->request);
+        if ($vcIsSmartphone->getValue() === true) {
+            return 'Smartphone';
+        }
+
+        if ($this->device->getCapability('can_assign_phone_number') === true) {
+            return 'Feature Phone';
         }
 
         return 'Other Mobile';

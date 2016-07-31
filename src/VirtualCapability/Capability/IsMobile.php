@@ -16,30 +16,25 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Tool;
+namespace Wurfl\VirtualCapability\Capability;
+
+use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
+ * Virtual capability helper
  */
-class PropertyList
+class IsMobile extends VirtualCapability
 {
     /**
-     * @var Device
+     * @var array
      */
-    protected $device;
-
-    /**
-     * @param $device
-     */
-    public function __construct(Device $device)
-    {
-        $this->device = $device;
-    }
+    protected $requiredCapabilities = array('is_wireless_device');
 
     /**
      * @return bool
      */
-    public function set()
+    protected function compute()
     {
-        return true;
+        return ('true' === $this->device->getCapability('is_wireless_device'));
     }
 }

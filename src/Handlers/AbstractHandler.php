@@ -286,7 +286,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
                 'debug'    => 'Applying Recovery Match',
             ),
             'recovery-catchall' => array(
-                'history'  => '(recovery-catchall),',
+                'history'  => '(catchall),',
                 'function' => 'applyRecoveryCatchAllMatch',
                 'debug'    => 'Applying Catch All Recovery Match',
             ),

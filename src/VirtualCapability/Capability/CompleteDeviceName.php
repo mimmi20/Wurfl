@@ -16,25 +16,39 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class IsWmlPreferred extends VirtualCapability
+class CompleteDeviceName extends VirtualCapability
 {
     /**
      * @var array
      */
-    protected $requiredCapabilities = array('xhtml_support_level');
+    protected $requiredCapabilities = array(
+        'brand_name',
+        'model_name',
+        'marketing_name',
+    );
 
     /**
-     * @return bool
+     * @return string
      */
     protected function compute()
     {
-        return ($this->device->getCapability('xhtml_support_level') <= 0);
+        $parts = array($this->device->getCapability('brand_name'));
+
+        if (strlen($this->device->getCapability('model_name'))) {
+            $parts[] = $this->device->getCapability('model_name');
+        }
+
+        if (strlen($this->device->getCapability('marketing_name'))) {
+            $parts[] = '(' . $this->device->getCapability('marketing_name') . ')';
+        }
+
+        return implode(' ', $parts);
     }
 }

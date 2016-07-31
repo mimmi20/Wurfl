@@ -16,7 +16,7 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
@@ -36,16 +36,16 @@ class DeviceName extends VirtualCapability
      */
     protected function compute()
     {
-        $parts = array($this->device->brand_name);
+        $parts = array($this->device->getCapability('brand_name'));
 
-        if (strlen($this->device->marketing_name)) {
-            $parts[] = $this->device->marketing_name;
+        if (strlen($this->device->getCapability('marketing_name'))) {
+            $parts[] = $this->device->getCapability('marketing_name');
 
             return implode(' ', $parts);
         }
 
-        if (strlen($this->device->model_name)) {
-            $parts[] = $this->device->model_name;
+        if (strlen($this->device->getCapability('model_name'))) {
+            $parts[] = $this->device->getCapability('model_name');
         }
 
         return implode(' ', $parts);

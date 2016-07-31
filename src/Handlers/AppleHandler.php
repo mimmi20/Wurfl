@@ -412,8 +412,11 @@ class AppleHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad')))
-            && !Utils::checkIfContains($userAgent, 'Symbian');
+        if (Utils::checkIfContains($userAgent, 'Symbian')) {
+            return false;
+        }
+
+        return Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad'));
     }
 
     public function applyConclusiveMatch($userAgent)

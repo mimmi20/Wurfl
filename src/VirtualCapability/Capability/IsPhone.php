@@ -13,29 +13,25 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
-use Wurfl\Handlers\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class IsTouchscreen extends VirtualCapability
+class IsPhone extends VirtualCapability
 {
     /**
      * @var array
      */
-    protected $requiredCapabilities = array('pointing_method');
+    protected $requiredCapabilities = array('can_assign_phone_number', 'is_tablet');
 
     /**
      * @return bool
      */
     protected function compute()
     {
-        $userAgent = $this->request->getUserAgent();
-
-        return ($this->device->getCapability('pointing_method') === 'touchscreen')
-            || (Utils::checkIfContains($userAgent, 'Trident') && Utils::checkIfContains($userAgent, 'Touch'));
+        return ('true' === $this->device->getCapability('can_assign_phone_number') && 'false' === $this->device->getCapability('is_tablet'));
     }
 }

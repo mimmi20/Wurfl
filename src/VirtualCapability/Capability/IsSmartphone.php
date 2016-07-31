@@ -16,7 +16,7 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
@@ -48,29 +48,39 @@ class IsSmartphone extends VirtualCapability
      */
     protected function compute()
     {
-        if ($this->device->getCapability('is_wireless_device') !== 'true'
-            || $this->device->getCapability('is_tablet') === 'true'
-            || $this->device->getCapability('pointing_method') !== 'touchscreen'
-            || $this->device->getCapability('resolution_width') < 320
-            || $this->device->getCapability('can_assign_phone_number') === 'false'
-        ) {
+        if ($this->device->getCapability('is_wireless_device') !== true) {
             return false;
         }
 
-        $osVersion = (float) $this->device->getCapability('device_os_version');
+        if ($this->device->getCapability('is_tablet') === true) {
+            return false;
+        }
 
+        if ($this->device->getCapability('can_assign_phone_number') === false) {
+            return false;
+        }
+
+        if ($this->device->getCapability('pointing_method') != 'touchscreen') {
+            return false;
+        }
+
+        if ($this->device->getCapability('resolution_width') < 320) {
+            return false;
+        }
+
+        $osVer = (float) $this->device->getCapability('device_os_version');
         switch ($this->device->getCapability('device_os')) {
             case 'iOS':
-                return ($osVersion >= 3.0);
+                return ($osVer >= 3.0);
                 break;
             case 'Android':
-                return ($osVersion >= 2.2);
+                return ($osVer >= 2.2);
                 break;
             case 'Windows Phone OS':
                 return true;
                 break;
             case 'RIM OS':
-                return ($osVersion >= 7.0);
+                return ($osVer >= 7.0);
                 break;
             case 'webOS':
                 return true;
@@ -79,13 +89,11 @@ class IsSmartphone extends VirtualCapability
                 return true;
                 break;
             case 'Bada OS':
-                return ($osVersion >= 2.0);
+                return ($osVer >= 2.0);
                 break;
             default:
-                // nothing to do here
+                return false;
                 break;
         }
-
-        return false;
     }
 }

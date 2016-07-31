@@ -117,9 +117,13 @@ class Manager
     {
         static $instance = null;
 
-        if (is_string($config)) {
-            $config = new FileConfig($config);
+        if (null !== $instance) {
+            return $instance;
         }
+
+        if (is_string($config)) {
+        $config = new FileConfig($config);
+    }
 
         if (! $config instanceof Config) {
             throw new \InvalidArgumentException(
@@ -127,15 +131,13 @@ class Manager
             );
         }
 
-        if (null === $instance) {
-            // Create the cache instance from the configuration
-            $cacheStorage = Storage\Factory::create($config->cache);
+        // Create the cache instance from the configuration
+        $cacheStorage = Storage\Factory::create($config->cache);
 
-            // Create the persistent cache instance from the configuration
-            $persistenceStorage = Storage\Factory::create($config->persistence);
+        // Create the persistent cache instance from the configuration
+        $persistenceStorage = Storage\Factory::create($config->persistence);
 
-            $instance = new self($config, $persistenceStorage, $cacheStorage);
-        }
+        $instance = new self($config, $persistenceStorage, $cacheStorage);
 
         return $instance;
     }

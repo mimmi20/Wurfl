@@ -16,25 +16,34 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
+use Wurfl\Handlers\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class IsFullDesktop extends VirtualCapability
+class IsRobot extends VirtualCapability
 {
     /**
      * @var array
      */
-    protected $requiredCapabilities = array('ux_full_desktop');
+    protected $requiredCapabilities = array();
 
     /**
      * @return bool
      */
     protected function compute()
     {
-        return ($this->device->getCapability('ux_full_desktop') === 'true');
+        // Control cap, 'controlcap_is_robot' is checked before this function is called
+        if ($this->request->hasHeader('HTTP_ACCEPT_ENCODING')
+            && $this->request->getDeviceSpectrum()->normalized()->contains('Trident/')
+            && (strpos($this->request->getHeader('HTTP_ACCEPT_ENCODING'), 'deflate') === false)
+        ) {
+            return true;
+        }
+        // Check against standard bot list
+        return $this->request->isRobot();
     }
 }

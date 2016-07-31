@@ -16,25 +16,25 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class IsIos extends VirtualCapability
+class IsHtmlPreferred extends VirtualCapability
 {
     /**
      * @var array
      */
-    protected $requiredCapabilities = array('device_os');
+    protected $requiredCapabilities = array('preferred_markup');
 
     /**
      * @return bool
      */
     protected function compute()
     {
-        return ($this->device->getCapability('device_os') === 'iOS');
+        return (strpos($this->device->getCapability('preferred_markup'), 'html_web') === 0);
     }
 }

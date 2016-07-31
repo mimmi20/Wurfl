@@ -21,11 +21,11 @@
     "hassankhan/config": "^0.10"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8|^5.0",
+    "phpunit/phpunit": "^4.8 || ^5.0",
     "monolog/monolog": "^1.0",
     "mikey179/vfsStream": "^1.3",
     "squizlabs/php_codesniffer": "^2.0",
-    "fabpot/php-cs-fixer": "^1.11"
+    "friendsofphp/php-cs-fixer": "^1.11"
   },
   "suggest": {
     "monolog/monolog": "if you want to log to more than a file"

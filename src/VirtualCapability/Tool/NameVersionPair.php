@@ -20,7 +20,7 @@ namespace Wurfl\VirtualCapability\Tool;
 
 /**
  */
-class NameVersionPair extends PropertyList
+class NameVersionPair
 {
     /**
      * @var string|null
@@ -35,7 +35,20 @@ class NameVersionPair extends PropertyList
     /**
      * @var array
      */
-    protected $regexMatches = array();
+    private $regexMatches = array();
+
+    /**
+     * @var \Wurfl\VirtualCapability\Tool\Device
+     */
+    private $device;
+
+    /**
+     * @param $device
+     */
+    public function __construct(Device $device)
+    {
+        $this->device = $device;
+    }
 
     /**
      * @param string|null $name

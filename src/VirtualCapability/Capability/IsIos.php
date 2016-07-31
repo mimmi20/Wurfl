@@ -16,14 +16,14 @@
  * @license    GNU Affero General Public License
  */
 
-namespace Wurfl\VirtualCapability\Single;
+namespace Wurfl\VirtualCapability\Capability;
 
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
  * Virtual capability helper
  */
-class IsAndroid extends VirtualCapability
+class IsIos extends VirtualCapability
 {
     /**
      * @var array
@@ -35,6 +35,6 @@ class IsAndroid extends VirtualCapability
      */
     protected function compute()
     {
-        return ($this->device->getCapability('device_os') === 'Android');
+        return ($this->device->getCapability('device_os') === 'iOS');
     }
 }
