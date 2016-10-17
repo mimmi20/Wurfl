@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * UbuntuTouchOSUserAgentHandler
@@ -44,9 +45,9 @@ class UbuntuTouchOSHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return (Utils::checkIfContains($userAgent, 'Ubuntu')
-            && Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet'))
-        );
+        $s = \Stringy\create($userAgent);
+
+        return ($s->contains('Ubuntu') && $s->containsAny(array('Mobile', 'Tablet')));
     }
 
     /**
@@ -56,16 +57,19 @@ class UbuntuTouchOSHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
+        $s = \Stringy\create($userAgent);
+
         // Mozilla/5.0 (Ubuntu; Mobile) WebKit/537.21
         // Mozilla/5.0 (Ubuntu; Tablet) WebKit/537.21
         //                      ^ RIS tolerance
         // Mozilla/5.0 (Linux; Ubuntu 14.04 like Android 4.4) AppleWebKit/537.36 Chromium/35.0.1870.2 Mobile Safari/537.36
         //                                  ^ RIS tolerance
-        if (Utils::checkIfContains($userAgent, 'like Android')) {
+        if ($s->contains('like Android')) {
             $search = 'like Android';
         } else {
             $search = 'WebKit/';
         }
+
         $idx = strpos($userAgent, $search);
         if ($idx !== false) {
             // Match to the end of the search string
@@ -84,7 +88,9 @@ class UbuntuTouchOSHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Tablet')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Tablet')) {
             return 'generic_ubuntu_touch_os_tablet';
         } else {
             return 'generic_ubuntu_touch_os';

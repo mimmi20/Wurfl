@@ -15,6 +15,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * CatchAllUserAgentHandler
  *
@@ -49,7 +51,9 @@ class CatchAllRisHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, 'CFNetwork/')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->startsWith('CFNetwork/')) {
             $tolerance = Utils::firstSpace($userAgent);
         } else {
             $tolerance = Utils::firstSlash($userAgent);

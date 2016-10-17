@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * NintendoUserAgentHandler
  *
@@ -49,12 +51,14 @@ class NintendoHandler extends AbstractHandler
             return false;
         }
 
-        if (Utils::checkIfContains($userAgent, 'Nintendo')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Nintendo')) {
             return true;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla/')
-            && Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'));
+        return $s->startsWith('Mozilla/')
+            && $s->containsAll(array('Nitro', 'Opera'));
     }
 
     /**
@@ -64,20 +68,22 @@ class NintendoHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Nintendo WiiU')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Nintendo WiiU')) {
             return 'nintendo_wii_u_ver1';
         }
 
-        if (Utils::checkIfContains($userAgent, 'Nintendo Wii')) {
+        if ($s->contains('Nintendo Wii')) {
             return 'nintendo_wii_ver1';
         }
 
-        if (Utils::checkIfContains($userAgent, 'Nintendo DSi')) {
+        if ($s->contains('Nintendo DSi')) {
             return 'nintendo_dsi_ver1';
         }
 
-        if (Utils::checkIfStartsWith($userAgent, 'Mozilla/')
-            && Utils::checkIfContainsAll($userAgent, array('Nitro', 'Opera'))
+        if ($s->startsWith('Mozilla/')
+            && $s->containsAll(array('Nitro', 'Opera'))
         ) {
             return 'nintendo_ds_ver1';
         }

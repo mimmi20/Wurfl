@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * HTCUserAgentHandler
@@ -48,7 +49,9 @@ class HTCHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('HTC', 'XV6875'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAny(array('HTC', 'XV6875'));
     }
 
     /**
@@ -75,7 +78,9 @@ class HTCHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Windows CE;')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Windows CE;')) {
             return 'generic_ms_mobile';
         }
 

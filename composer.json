@@ -14,15 +14,18 @@
   "homepage": "https://github.com/mimmi20/Wurfl",
   "require": {
     "php": ">=5.3.3",
+    "psr/cache": "^1.0",
     "psr/log": "^1.0",
-    "mimmi20/wurflcache": "^1.7",
-    "mimmi20/wurfl-generic-request": "^1.7",
-    "mimmi20/wurfl-constants": "^1.7",
-    "hassankhan/config": "^0.10"
+    "mimmi20/wurfl-generic-request": "dev-update-1.8",
+    "mimmi20/wurfl-constants": "dev-update-1.8",
+    "hassankhan/config": "^0.10",
+    "mimmi20/ua-normalizer": "dev-master",
+    "danielstjules/stringy": "^2.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8 || ^5.0",
     "monolog/monolog": "^1.0",
+    "cache/cache": "dev-master",
     "mikey179/vfsStream": "^1.3",
     "squizlabs/php_codesniffer": "^2.0",
     "friendsofphp/php-cs-fixer": "^1.11"

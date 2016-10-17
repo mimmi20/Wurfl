@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * Ucweb7OnAndroidUserAgentHandler
  *
@@ -50,7 +52,9 @@ class Ucweb7OnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAll($userAgent, array('Android', 'UCWEB7'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAll(array('Android', 'UCWEB7'));
     }
 
     /**

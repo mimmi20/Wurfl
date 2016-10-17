@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * SmartTVUserAgentHandler
  *
@@ -68,23 +70,25 @@ class SmartTVHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'SmartTV')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('SmartTV')) {
             return 'generic_smarttv_browser';
         }
 
-        if (Utils::checkIfContains($userAgent, 'GoogleTV')) {
+        if ($s->contains('GoogleTV')) {
             return 'generic_smarttv_googletv_browser';
         }
 
-        if (Utils::checkIfContains($userAgent, 'AppleTV')) {
+        if ($s->contains('AppleTV')) {
             return 'generic_smarttv_appletv_browser';
         }
 
-        if (Utils::checkIfContains($userAgent, 'Boxee')) {
+        if ($s->contains('Boxee')) {
             return 'generic_smarttv_boxeebox_browser';
         }
 
-        if (Utils::checkIfContains($userAgent, 'CrKey')) {
+        if ($s->contains('CrKey')) {
             return 'generic_smarttv_chromecast';
         }
 

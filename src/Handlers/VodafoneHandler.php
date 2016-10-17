@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * VodafoneUserAgentHandler
  *
@@ -42,7 +44,9 @@ class VodafoneHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Vodafone');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('Vodafone');
     }
 
     /**

@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * QtekUserAgentHandler
  *
@@ -42,7 +44,9 @@ class QtekHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Qtek');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('Qtek');
     }
 
     public function applyConclusiveMatch($userAgent)

@@ -20,7 +20,7 @@ namespace Wurfl\Handlers\Chain;
 
 use Psr\Log\LoggerInterface;
 use Wurfl\Handlers\AbstractHandler;
-use Wurfl\Handlers\Utils;
+use UaNormalizer\Helper\Utils;
 use Wurfl\Request\GenericRequest;
 use Wurfl\WurflConstants;
 

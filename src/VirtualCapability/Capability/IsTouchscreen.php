@@ -15,7 +15,7 @@
 
 namespace Wurfl\VirtualCapability\Capability;
 
-use Wurfl\Handlers\Utils;
+use UaNormalizer\Helper\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
@@ -35,7 +35,9 @@ class IsTouchscreen extends VirtualCapability
     {
         $userAgent = $this->request->getUserAgent();
 
+        $s = \Stringy\create($userAgent);
+
         return ($this->device->getCapability('pointing_method') === 'touchscreen')
-            || (Utils::checkIfContainsAll($userAgent, ['Trident', 'Touch']));
+            || ($s->containsAll(['Trident', 'Touch']));
     }
 }

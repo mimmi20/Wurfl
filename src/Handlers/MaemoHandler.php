@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * MaemoUserAgentHandler
@@ -46,7 +47,9 @@ class MaemoHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfContains($userAgent, 'Maemo');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Maemo');
     }
 
     /**
@@ -73,10 +76,12 @@ class MaemoHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Opera Mobi')) {
             return 'generic_opera_mobi_maemo';
         }
-        if (Utils::checkIfContains($userAgent, 'Firefox')) {
+        if ($s->contains('Firefox')) {
             return 'nokia_generic_maemo_with_firefox';
         }
 

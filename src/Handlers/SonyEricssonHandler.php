@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * SonyEricssonUserAgentHandler
  *
@@ -42,7 +44,9 @@ class SonyEricssonHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Sony');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Sony');
     }
 
     /**
@@ -52,7 +56,9 @@ class SonyEricssonHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, 'SonyEricsson')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->startsWith('SonyEricsson')) {
             $tolerance = Utils::firstSlash($userAgent) - 2;
 
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);

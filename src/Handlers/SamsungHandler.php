@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * SamsungUserAgentHandler
  *
@@ -42,7 +44,9 @@ class SamsungHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsCaseInsensitive($userAgent, 'samsung')
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('samsung', true)
             || Utils::checkIfStartsWithAnyOf($userAgent, array('SEC-', 'SPH', 'SGH', 'SCH'));
     }
 

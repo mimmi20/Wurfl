@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * AppleUserAgentHandler
@@ -412,15 +413,19 @@ class AppleHandler extends AbstractHandler
             return false;
         }
 
-        if (Utils::checkIfContains($userAgent, 'Symbian')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Symbian')) {
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('iPhone', 'iPod', 'iPad'));
+        return $s->containsAny(array('iPhone', 'iPod', 'iPad'));
     }
 
     public function applyConclusiveMatch($userAgent)
     {
+        $s = \Stringy\create($userAgent);
+
         // Normalize AFNetworking and server-bag UAs
         // Pippo/2.4.3 (iPad; iOS 8.0.2; Scale/2.00)
         // server-bag [iPhone OS,8.2,12D508,iPhone4,1]
@@ -430,11 +435,11 @@ class AppleHandler extends AbstractHandler
             || preg_match('#^i(?:Phone|Pad|Pod)\d+?,\d+?/([\d\.]+)#', $userAgent, $matches)
         ) {
             $matches[1] = str_replace('.', '_', $matches[1]);
-            if (Utils::checkIfContains($userAgent, 'iPad')) {
+            if ($s->contains('iPad')) {
                 $userAgent = 'Mozilla/5.0 (iPad; CPU OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/538.39.2 (KHTML, like Gecko) Version/7.0 Mobile/12A4297e Safari/9537.53 ' . $userAgent;
-            } elseif (Utils::checkIfContains($userAgent, 'iPod touch')) {
+            } elseif ($s->contains('iPod touch')) {
                 $userAgent = 'Mozilla/5.0 (iPod touch; CPU iPhone OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 ' . $userAgent;
-            } elseif (Utils::checkIfContains($userAgent, 'iPod')) {
+            } elseif ($s->contains('iPod')) {
                 $userAgent = 'Mozilla/5.0 (iPod; CPU iPhone OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/538.41 (KHTML, like Gecko) Version/7.0 Mobile/12A307 Safari/9537.53 ' . $userAgent;
             } else {
                 $userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS {' . $matches[1] . '} like Mac OS X) AppleWebKit/601.1.10 (KHTML, like Gecko) Version/8.0 Mobile/12E155 Safari/600.1.4 ' . $userAgent;
@@ -449,7 +454,7 @@ class AppleHandler extends AbstractHandler
         // Normalize iOS {Ver} style UAs
         //Eg: Mozilla/5.0 (iPhone; U; CPU iOS 7.1.2 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Safari/528.16
         if (preg_match('#CPU iOS \d+?\.\d+?#', $userAgent)) {
-            $ua = Utils::checkIfContains($userAgent, 'iPad')
+            $ua = $s->contains('iPad')
                 ? str_replace('CPU iOS', 'CPU OS', $userAgent)
                 : str_replace('CPU iOS', 'CPU iPhone OS', $userAgent);
 
@@ -465,7 +470,7 @@ class AppleHandler extends AbstractHandler
         $device_version = null;
         if (preg_match('#(?:iPhone|iPad|iPod) ?(\d,\d)#', $userAgent, $matches)) {
             // Check for iPod first since they contain 'iPhone'
-            if (Utils::checkIfContains($userAgent, 'iPod')) {
+            if ($s->contains('iPod')) {
                 if (array_key_exists($matches[1], self::$ipodDeviceMap)) {
                     $device_version = str_replace(
                         array_keys(self::$ipodDeviceMap),
@@ -473,7 +478,7 @@ class AppleHandler extends AbstractHandler
                         $matches[1]
                     );
                 }
-            } elseif (Utils::checkIfContains($userAgent, 'iPad')) {
+            } elseif ($s->contains('iPad')) {
                 if (array_key_exists($matches[1], self::$ipadDeviceMap)) {
                     $device_version = str_replace(
                         array_keys(self::$ipadDeviceMap),
@@ -481,7 +486,7 @@ class AppleHandler extends AbstractHandler
                         $matches[1]
                     );
                 }
-            } elseif (Utils::checkIfContains($userAgent, 'iPhone')) {
+            } elseif ($s->contains('iPhone')) {
                 if (array_key_exists($matches[1], self::$iphoneDeviceMap)) {
                     $device_version = str_replace(
                         array_keys(self::$iphoneDeviceMap),
@@ -532,13 +537,15 @@ class AppleHandler extends AbstractHandler
             $majorVersion = -1;
         }
 
+        $s = \Stringy\create($userAgent);
+
         // Core-media
-        if (Utils::checkIfContains($userAgent, 'CoreMedia')) {
+        if ($s->contains('CoreMedia')) {
             return 'apple_iphone_coremedia_ver1';
         }
 
         // Check iPods first since they also contain 'iPhone'
-        if (Utils::checkIfContains($userAgent, 'iPod')) {
+        if ($s->contains('iPod')) {
             $deviceID = 'apple_ipod_touch_ver' . $majorVersion;
 
             if (in_array($deviceID, self::$constantIDs)) {
@@ -548,7 +555,7 @@ class AppleHandler extends AbstractHandler
             }
             // Now check for iPad
         } else {
-            if (Utils::checkIfContains($userAgent, 'iPad')) {
+            if ($s->contains('iPad')) {
                 $deviceID = 'apple_ipad_ver1_sub' . $majorVersion;
 
                 if ($majorVersion === 3) {
@@ -566,7 +573,7 @@ class AppleHandler extends AbstractHandler
                 }
                 // Check iPhone last
             } else {
-                if (Utils::checkIfContains($userAgent, 'iPhone')) {
+                if ($s->contains('iPhone')) {
                     $deviceID = 'apple_iphone_ver' . $majorVersion;
                     if (in_array($deviceID, self::$constantIDs)) {
                         return $deviceID;

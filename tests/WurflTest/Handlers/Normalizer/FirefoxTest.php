@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Specific\Firefox;
+use UaNormalizer\Specific\Firefox;
 
 /**
  * Class FirefoxTest

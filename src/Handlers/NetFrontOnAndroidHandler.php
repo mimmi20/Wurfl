@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * NetFrontOnAndroidUserAgentHandler
  *
@@ -49,7 +51,9 @@ class NetFrontOnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAll($userAgent, array('Android', 'NetFrontLifeBrowser/2.2'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAll(array('Android', 'NetFrontLifeBrowser/2.2'));
     }
 
     /**

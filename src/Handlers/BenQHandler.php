@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * BenQUserAgentHandler
  *
@@ -37,7 +39,9 @@ class BenQHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWithCaseInsensitive($userAgent, 'benq');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('benq', false);
     }
 
     public function applyConclusiveMatch($userAgent)

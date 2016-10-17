@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * LGPLUSUserAgentHandler
@@ -51,7 +52,9 @@ class LGUPLUSHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('LGUPLUS', 'lgtelecom'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAny(array('LGUPLUS', 'lgtelecom'));
     }
 
     /**
@@ -71,31 +74,21 @@ class LGUPLUSHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContainsAll(
-            $userAgent,
-            array('Windows NT 5', 'POLARIS')
-        )
-        ) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAll(array('Windows NT 5', 'POLARIS'))) {
             return 'generic_lguplus_rexos_facebook_browser';
         }
 
-        if (Utils::checkIfContains($userAgent, 'Windows NT 5')) {
+        if ($s->contains('Windows NT 5')) {
             return 'generic_lguplus_rexos_webviewer_browser';
         }
 
-        if (Utils::checkIfContainsAll(
-            $userAgent,
-            array('Windows CE', 'POLARIS')
-        )
-        ) {
+        if ($s->containsAll(array('Windows CE', 'POLARIS'))) {
             return 'generic_lguplus_winmo_facebook_browser';
         }
 
-        if (Utils::checkIfContainsAll(
-            $userAgent,
-            array('Android', 'AppleWebKit')
-        )
-        ) {
+        if ($s->containsAll(array('Android', 'AppleWebKit'))) {
             return 'generic_lguplus_android_webkit_browser';
         }
 

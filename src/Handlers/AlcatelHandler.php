@@ -17,6 +17,7 @@
  */
 
 namespace Wurfl\Handlers;
+use UaNormalizer\Helper\Utils;
 
 /**
  * AlcatelUserAgentHandler
@@ -37,7 +38,9 @@ class AlcatelHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWithCaseInsensitive($userAgent, 'alcatel');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('alcatel', false);
     }
 
     public function applyConclusiveMatch($userAgent)

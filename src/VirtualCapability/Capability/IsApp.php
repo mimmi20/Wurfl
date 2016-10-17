@@ -18,7 +18,7 @@
 
 namespace Wurfl\VirtualCapability\Capability;
 
-use Wurfl\Handlers\Utils;
+use UaNormalizer\Helper\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**
@@ -140,6 +140,7 @@ class IsApp extends VirtualCapability
         }
 
         $original = $userAgent;
+        $s        = \Stringy\create($original);
 
         foreach ($this->patterns as $pattern) {
             if ($pattern[0] === '#') {
@@ -156,7 +157,7 @@ class IsApp extends VirtualCapability
 
             if ($pattern[0] === '^') {
                 // Starts with
-                if (Utils::checkIfStartsWith($original, substr($pattern, 1))) {
+                if ($s->startsWith(substr($pattern, 1))) {
                     return true;
                 }
                 continue;
@@ -166,14 +167,15 @@ class IsApp extends VirtualCapability
                 // Ends with
                 $pattern_len--;
                 $pattern = substr($pattern, 0, $pattern_len);
-                if (Utils::indexOf($original, $pattern) === ($user_agent_len - $pattern_len)) {
+
+                if ($s->indexOf($pattern) === ($user_agent_len - $pattern_len)) {
                     return true;
                 }
                 continue;
             }
 
             // Match anywhere
-            if (Utils::checkIfContains($original, $pattern)) {
+            if ($s->contains($pattern)) {
                 return true;
             }
         }
@@ -186,7 +188,9 @@ class IsApp extends VirtualCapability
      */
     protected function isThirdPartyBrowser()
     {
-        return Utils::checkIfContains($this->request->getUserAgentNormalized(), $this->third_party_browsers);
+        $s = \Stringy\create($this->request->getUserAgentNormalized());
+
+        return $s->contains($this->third_party_browsers);
     }
 
     /**
@@ -195,10 +199,11 @@ class IsApp extends VirtualCapability
     protected function isAndroidLollipopWebView()
     {
         $userAgent = $this->request->getUserAgent();
+        $s         = \Stringy\create($userAgent);
 
         // Lollipop and above implementation of webview adds a ; wv to the UA. Webviews are automatically apps
         // This logic could have been added to the patterns array above but I added it here to maintain consistency with is_app_webview
-        return ($this->device->getCapability('device_os') == "Android" && Utils::checkIfContains($userAgent, '; wv) '));
+        return ($this->device->getCapability('device_os') == "Android" && $s->contains('; wv) '));
     }
 
     /**
@@ -206,8 +211,10 @@ class IsApp extends VirtualCapability
      */
     protected function isiOSWebView()
     {
+        $s = \Stringy\create($this->request->getUserAgentNormalized());
+
         // iOS webview logic is pretty simple
-        return ($this->device->getCapability('device_os') == "iOS" && !Utils::checkIfContains($this->request->getUserAgentNormalized(), 'Safari'));
+        return ($this->device->getCapability('device_os') == "iOS" && !$s->contains('Safari'));
     }
 
     /**
@@ -217,9 +224,11 @@ class IsApp extends VirtualCapability
     {
         $userAgent = $this->request->getUserAgent();
 
+        $s = \Stringy\create($this->request->getUserAgentNormalized());
+
         // So is Mac OS X's webview logic
         return Utils::regexContains($userAgent, '#^Mozilla.+(?:PPC|Intel) Mac OS X [0-9\._]+#')
-        && !Utils::checkIfContains($this->request->getUserAgentNormalized(), "Safari");
+        && !$s->contains('Safari');
     }
 
     /**
@@ -258,8 +267,10 @@ class IsApp extends VirtualCapability
         // Among those UAs in here, we are interested in UAs from apps that contain a webview style UA
         // and add stuff to the beginning or the end of the string(FB, Flipboard etc.)
 
+        $s = \Stringy\create($normalized);
+
         // Android >= 4.4
-        if (Utils::checkIfContains($normalized, ['Android 4.4', 'Android 5.'])
+        if ($s->containsAny(['Android 4.4', 'Android 5.'])
             && !Utils::regexContains($original, '#^Mozilla/5.0 \(Linux; Android [45]\.[\d\.]+; .+ Build/.+\) AppleWebKit/[\d\.+]+ \(KHTML, like Gecko\) Version/[\d\.]+ Chrome/([\d]+)\.[\d\.]+? (?:Mobile )?Safari/[\d\.+]+$#')
         ) {
             $matches = Utils::regexContains($normalized, '#Chrome/(\d+)\.#');

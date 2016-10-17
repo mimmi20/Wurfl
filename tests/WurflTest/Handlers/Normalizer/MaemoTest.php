@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Specific\Maemo;
+use UaNormalizer\Specific\Maemo;
 use Wurfl\WurflConstants;
 
 /**

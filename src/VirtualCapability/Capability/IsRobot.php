@@ -18,7 +18,6 @@
 
 namespace Wurfl\VirtualCapability\Capability;
 
-use Wurfl\Handlers\Utils;
 use Wurfl\VirtualCapability\VirtualCapability;
 
 /**

@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * NokiaOviBrowserUserAgentHandler
  *
@@ -47,7 +49,9 @@ class NokiaOviBrowserHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'S40OviBrowser');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('S40OviBrowser');
     }
 
     /**
@@ -70,7 +74,9 @@ class NokiaOviBrowserHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Series30Plus')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Series30Plus')) {
             return 'nokia_generic_series30plus';
         } else {
             return 'nokia_generic_series40_ovibrosr';

@@ -52,31 +52,31 @@ use Wurfl\Handlers\NetFrontOnAndroidHandler;
 use Wurfl\Handlers\NintendoHandler;
 use Wurfl\Handlers\NokiaHandler;
 use Wurfl\Handlers\NokiaOviBrowserHandler;
-use Wurfl\Handlers\Normalizer\Generic\Android as GenericAndroid;
-use Wurfl\Handlers\Normalizer\Generic\BlackBerry;
-use Wurfl\Handlers\Normalizer\Generic\CFNetwork;
-use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
-use Wurfl\Handlers\Normalizer\Generic\SerialNumbers;
-use Wurfl\Handlers\Normalizer\Generic\TransferEncoding;
-use Wurfl\Handlers\Normalizer\Generic\UCWEB;
-use Wurfl\Handlers\Normalizer\Generic\UPLink;
-use Wurfl\Handlers\Normalizer\Specific\Android;
-use Wurfl\Handlers\Normalizer\Specific\Apple;
-use Wurfl\Handlers\Normalizer\Specific\Chrome;
-use Wurfl\Handlers\Normalizer\Specific\DesktopApplication;
-use Wurfl\Handlers\Normalizer\Specific\Firefox;
-use Wurfl\Handlers\Normalizer\Specific\HTCMac;
-use Wurfl\Handlers\Normalizer\Specific\LG;
-use Wurfl\Handlers\Normalizer\Specific\Maemo;
-use Wurfl\Handlers\Normalizer\Specific\MSIE;
-use Wurfl\Handlers\Normalizer\Specific\Opera;
-use Wurfl\Handlers\Normalizer\Specific\OperaMobiOrTabletOnAndroid;
-use Wurfl\Handlers\Normalizer\Specific\Safari;
-use Wurfl\Handlers\Normalizer\Specific\UcwebU2;
-use Wurfl\Handlers\Normalizer\Specific\UcwebU3;
-use Wurfl\Handlers\Normalizer\Specific\WebOS;
-use Wurfl\Handlers\Normalizer\Specific\WindowsPhone;
-use Wurfl\Handlers\Normalizer\UserAgentNormalizer;
+use UaNormalizer\Generic\Android as GenericAndroid;
+use UaNormalizer\Generic\BlackBerry;
+use UaNormalizer\Generic\CFNetwork;
+use UaNormalizer\Generic\LocaleRemover;
+use UaNormalizer\Generic\SerialNumbers;
+use UaNormalizer\Generic\TransferEncoding;
+use UaNormalizer\Generic\UCWEB;
+use UaNormalizer\Generic\UPLink;
+use UaNormalizer\Specific\Android;
+use UaNormalizer\Specific\Apple;
+use UaNormalizer\Specific\Chrome;
+use UaNormalizer\Specific\DesktopApplication;
+use UaNormalizer\Specific\Firefox;
+use UaNormalizer\Specific\HTCMac;
+use UaNormalizer\Specific\LG;
+use UaNormalizer\Specific\Maemo;
+use UaNormalizer\Specific\MSIE;
+use UaNormalizer\Specific\Opera;
+use UaNormalizer\Specific\OperaMobiOrTabletOnAndroid;
+use UaNormalizer\Specific\Safari;
+use UaNormalizer\Specific\UcwebU2;
+use UaNormalizer\Specific\UcwebU3;
+use UaNormalizer\Specific\WebOS;
+use UaNormalizer\Specific\WindowsPhone;
+use UaNormalizer\UserAgentNormalizer;
 use Wurfl\Handlers\OperaHandler;
 use Wurfl\Handlers\OperaMiniHandler;
 use Wurfl\Handlers\OperaMiniOnAndroidHandler;
@@ -369,7 +369,7 @@ class UserAgentHandlerChainFactory
     /**
      * Returns a User Agent Normalizer chain containing all generic normalizers
      *
-     * @return \Wurfl\Handlers\Normalizer\UserAgentNormalizer
+     * @return \UaNormalizer\UserAgentNormalizer
      */
     public static function createGenericNormalizers()
     {

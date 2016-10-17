@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * TizenUserAgentHandler
@@ -49,7 +50,9 @@ class TizenHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return (Utils::checkIfStartsWith($userAgent, 'Mozilla') && Utils::checkIfContains($userAgent, 'Tizen'));
+        $s = \Stringy\create($userAgent);
+
+        return ($s->startsWith('Mozilla') && $s->contains('Tizen'));
     }
 
     /**

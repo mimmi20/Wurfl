@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers;
 
-use Wurfl\Handlers\Utils;
+use UaNormalizer\Helper\Utils;
 
 /**
  * Class ToleranceTest

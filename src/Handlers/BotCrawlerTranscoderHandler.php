@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * BotCrawlerTranscoderUserAgentHandler
@@ -57,11 +58,13 @@ class BotCrawlerTranscoderHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'GoogleImageProxy')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('GoogleImageProxy')) {
             return 'google_image_proxy';
         }
 
-        if (Utils::checkIfStartsWith($userAgent, 'Mozilla')) {
+        if ($s->startsWith('Mozilla')) {
             $tolerance = Utils::firstCloseParen($userAgent);
         } else {
             $tolerance = Utils::firstSlash($userAgent);

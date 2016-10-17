@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * FennecOnAndroidUserAgentHandler
@@ -45,8 +46,10 @@ class FennecOnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android')
-            && Utils::checkIfContainsAnyOf($userAgent, array('Fennec', 'Firefox'))
+        $s = \Stringy\create($userAgent);
+
+        return ($s->contains('Android')
+            && $s->containsAny(array('Fennec', 'Firefox'))
         );
     }
 
@@ -75,19 +78,21 @@ class FennecOnAndroidHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        $isFennec  = Utils::checkIfContains($userAgent, 'Fennec');
-        $isFirefox = Utils::checkIfContains($userAgent, 'Firefox');
+        $s = \Stringy\create($userAgent);
+
+        $isFennec  = $s->contains('Fennec');
+        $isFirefox = $s->contains('Firefox');
 
         if ($isFennec || $isFirefox) {
-            if ($isFennec || Utils::checkIfContains($userAgent, 'Mobile')) {
+            if ($isFennec || $s->contains('Mobile')) {
                 return 'generic_android_ver2_0_fennec';
             }
 
-            if (Utils::checkIfContains($userAgent, 'Tablet')) {
+            if ($s->contains('Tablet')) {
                 return 'generic_android_ver2_0_fennec_tablet';
             }
 
-            if (Utils::checkIfContains($userAgent, 'Desktop')) {
+            if ($s->contains('Desktop')) {
                 return 'generic_android_ver2_0_fennec_desktop';
             }
         }

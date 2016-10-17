@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * ChromeUserAgentHandler
  *
@@ -41,7 +43,9 @@ class ChromeHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Chrome');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Chrome');
     }
 
     public function applyConclusiveMatch($userAgent)

@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * SafariHandler
@@ -44,7 +45,9 @@ class SafariHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Safari')
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Safari')
             && Utils::checkIfStartsWithAnyOf($userAgent, array('Mozilla/5.0 (Macintosh', 'Mozilla/5.0 (Windows'));
     }
 
@@ -70,11 +73,9 @@ class SafariHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Macintosh', 'Windows')
-        )
-        ) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAny(array('Macintosh', 'Windows'))) {
             return WurflConstants::GENERIC_WEB_BROWSER;
         }
 

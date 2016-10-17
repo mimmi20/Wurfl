@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * SanyoUserAgentHandler
  *
@@ -43,7 +45,9 @@ class SkyfireHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfContains($userAgent, 'Skyfire');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Skyfire');
     }
 
     /**
@@ -66,7 +70,9 @@ class SkyfireHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Skyfire/2.')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Skyfire/2.')) {
             return 'generic_skyfire_version2';
         }
 

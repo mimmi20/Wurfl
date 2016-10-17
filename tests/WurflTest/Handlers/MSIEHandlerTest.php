@@ -3,7 +3,7 @@
 namespace WurflTest\Handlers;
 
 use Wurfl\Handlers\MSIEHandler;
-use Wurfl\Handlers\Normalizer\Specific\MSIE;
+use UaNormalizer\Specific\MSIE;
 
 /**
  * Class MSIEHandlerTest

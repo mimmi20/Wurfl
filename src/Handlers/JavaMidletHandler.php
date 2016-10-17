@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * JavaMidletUserAgentHandler
  *
@@ -40,7 +42,9 @@ class JavaMidletHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfContains($userAgent, 'UNTRUSTED/1.0');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('UNTRUSTED/1.0');
     }
 
     /**

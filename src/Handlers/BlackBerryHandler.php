@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * BlackBerryUserAgentHandler
@@ -59,23 +60,27 @@ class BlackBerryHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContainsCaseInsensitive($userAgent, 'blackberry')
-            || Utils::checkIfContains($userAgent, '(BB10;')
-            || Utils::checkIfContains($userAgent, '(PlayBook')
+        $s = \Stringy\create($userAgent);
+
+        return ($s->contains('blackberry', false)
+            || $s->contains('(BB10;')
+            || $s->contains('(PlayBook')
         );
     }
 
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'BB10')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('BB10')) {
             $tolerance = Utils::indexOfOrLength($userAgent, ')');
         } else {
-            if (Utils::checkIfStartsWith($userAgent, 'Mozilla/4')) {
+            if ($s->startsWith('Mozilla/4')) {
                 $tolerance = Utils::secondSlash($userAgent);
             } else {
-                if (Utils::checkIfStartsWith($userAgent, 'Mozilla/5')) {
+                if ($s->startsWith('Mozilla/5')) {
                     $tolerance = Utils::ordinalIndexOf($userAgent, ';', 3);
-                } elseif (Utils::checkIfStartsWith($userAgent, 'PlayBook')) {
+                } elseif ($s->startsWith('PlayBook')) {
                     $tolerance = Utils::firstCloseParen($userAgent);
                 } else {
                     $tolerance = Utils::firstSlash($userAgent);
@@ -88,14 +93,16 @@ class BlackBerryHandler extends AbstractHandler
 
     public function applyRecoveryMatch($userAgent)
     {
+        $s = \Stringy\create($userAgent);
+
         // BlackBerry 10
-        if (Utils::checkIfContains($userAgent, 'BB10')) {
-            if (Utils::checkIfContains($userAgent, 'Mobile')) {
+        if ($s->contains('BB10')) {
+            if ($s->contains('Mobile')) {
                 return 'blackberry_generic_ver10';
             } else {
                 return 'blackberry_generic_ver10_tablet';
             }
-        } elseif (Utils::checkIfContains($userAgent, 'PlayBook')) {
+        } elseif ($s->contains('PlayBook')) {
             return 'rim_playbook_ver1';
         } elseif (preg_match('#Black[Bb]erry[^/\s]+/(\d.\d)#', $userAgent, $matches)) {
             $version = $matches[1];

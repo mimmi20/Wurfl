@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * ReksioUserAgentHandler
  *
@@ -46,7 +48,9 @@ class ReksioHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Reksio');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('Reksio');
     }
 
     /**

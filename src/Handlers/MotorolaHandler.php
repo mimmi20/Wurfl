@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * MotorolaUserAgentHandler
@@ -48,8 +49,10 @@ class MotorolaHandler extends AbstractHandler
             return false;
         }
 
+        $s = \Stringy\create($userAgent);
+
         return (Utils::checkIfStartsWithAnyOf($userAgent, array('Mot-', 'MOT-', 'MOTO', 'moto'))
-            || Utils::checkIfContains($userAgent, 'Motorola'));
+            || $s->contains('Motorola'));
     }
 
     /**
@@ -71,7 +74,9 @@ class MotorolaHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContainsAnyOf($userAgent, array('MIB/2.2', 'MIB/BER2.2'))) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAny(array('MIB/2.2', 'MIB/BER2.2'))) {
             return 'mot_mib22_generic';
         }
 

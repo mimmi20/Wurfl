@@ -2,8 +2,8 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
-use Wurfl\Handlers\Normalizer\Specific\Android;
+use UaNormalizer\Generic\LocaleRemover;
+use UaNormalizer\Specific\Android;
 use Wurfl\WurflConstants;
 
 /**

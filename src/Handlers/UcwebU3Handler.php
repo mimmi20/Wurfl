@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * UcwebU3UserAgentHandler
@@ -74,7 +75,9 @@ class UcwebU3Handler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfStartsWith($userAgent, 'Mozilla') && Utils::checkIfContains($userAgent, 'UCBrowser'));
+        $s = \Stringy\create($userAgent);
+
+        return ($s->startsWith('Mozilla') && $s->contains('UCBrowser'));
     }
 
     /**
@@ -125,9 +128,12 @@ class UcwebU3Handler extends AbstractHandler
 
     private function applyRecoveryWindowsPhone($userAgent)
     {
-        if (!Utils::checkIfContains($userAgent, 'Windows Phone')) {
+        $s = \Stringy\create($userAgent);
+
+        if (!$s->contains('Windows Phone')) {
             return null;
         }
+
         $version             = WindowsPhoneHandler::getWindowsPhoneVersion($userAgent);
         $significant_version = explode('.', $version);
         //Make sure major and minor versions are both present
@@ -150,9 +156,12 @@ class UcwebU3Handler extends AbstractHandler
 
     private function applyRecoveryAndroid($userAgent)
     {
-        if (!Utils::checkIfContains($userAgent, 'Android')) {
+        $s = \Stringy\create($userAgent);
+
+        if (!$s->contains('Android')) {
             return null;
         }
+
         $version             = AndroidHandler::getAndroidVersion($userAgent, false);
         $significant_version = explode('.', $version);
         //We only care about major version
@@ -168,9 +177,12 @@ class UcwebU3Handler extends AbstractHandler
 
     private function applyRecoveryiPhone($userAgent)
     {
-        if (!Utils::checkIfContains($userAgent, 'iPhone')) {
+        $s = \Stringy\create($userAgent);
+
+        if (!$s->contains('iPhone')) {
             return null;
         }
+
         if (preg_match('/iPhone OS (\d+)(?:_\d+)?.+ like/', $userAgent, $matches)) {
             $significant_version = $matches[1];
             $deviceID            = 'apple_iphone_ver' . $significant_version . '_subuaucweb';
@@ -184,9 +196,12 @@ class UcwebU3Handler extends AbstractHandler
 
     private function applyRecoveryiPad($userAgent)
     {
-        if (!Utils::checkIfContains($userAgent, 'iPad')) {
+        $s = \Stringy\create($userAgent);
+
+        if (!$s->contains('iPad')) {
             return null;
         }
+
         if (preg_match('/CPU OS (\d+)(?:_\d+)?.+like Mac/', $userAgent, $matches)) {
             $significant_version = $matches[1];
             $deviceID            = 'apple_ipad_ver1_sub' . $significant_version . '_subuaucweb';

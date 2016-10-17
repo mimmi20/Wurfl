@@ -19,11 +19,12 @@ use Psr\Log\LoggerInterface;
 use Wurfl\Handlers\MatcherInterface\FilterInterface;
 use Wurfl\Handlers\MatcherInterface\HandlerInterface;
 use Wurfl\Handlers\MatcherInterface\MatcherCanHandleInterface;
-use Wurfl\Handlers\Normalizer\NormalizerInterface;
-use Wurfl\Handlers\Normalizer\NullNormalizer;
+use UaNormalizer\NormalizerInterface;
+use UaNormalizer\NullNormalizer;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Storage\Storage;
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * \Wurfl\Handlers\AbstractHandler is the base class that combines the classification of
@@ -37,7 +38,7 @@ use Wurfl\WurflConstants;
 abstract class AbstractHandler implements FilterInterface, HandlerInterface, MatcherCanHandleInterface
 {
     /**
-     * @var \Wurfl\Handlers\Normalizer\UserAgentNormalizer
+     * @var \UaNormalizer\UserAgentNormalizer
      */
     protected $userAgentNormalizer;
 
@@ -80,7 +81,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
     const PREFIX_UA_BUCKET   = '_ua_bucket';
 
     /**
-     * @param \Wurfl\Handlers\Normalizer\NormalizerInterface $userAgentNormalizer
+     * @param \UaNormalizer\NormalizerInterface $userAgentNormalizer
      */
     public function __construct(NormalizerInterface $userAgentNormalizer = null)
     {
@@ -183,7 +184,7 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
      * If you need to normalize the user agent you need to override the function in
      * the specific user agent handler.
      *
-     * @see $userAgentNormalizer, \Wurfl\Handlers\Normalizer\UserAgentNormalizer
+     * @see $userAgentNormalizer, \UaNormalizer\UserAgentNormalizer
      *
      * @param string $userAgent
      *
@@ -437,73 +438,75 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
             return WurflConstants::GENERIC_WEB_BROWSER;
         }
 
-        if (Utils::checkIfContains($userAgent, 'CoreMedia')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('CoreMedia')) {
             return 'apple_iphone_coremedia_ver1';
         }
 
-        if (Utils::checkIfContains($userAgent, 'Windows CE')) {
+        if ($s->contains('Windows CE')) {
             return 'generic_ms_mobile';
         }
 
-        if (Utils::checkIfContains($userAgent, 'UP.Browser/7.2')) {
+        if ($s->contains('UP.Browser/7.2')) {
             return 'opwv_v72_generic';
         }
 
-        if (Utils::checkIfContains($userAgent, 'UP.Browser/7')) {
+        if ($s->contains('UP.Browser/7')) {
             return 'opwv_v7_generic';
         }
 
-        if (Utils::checkIfContains($userAgent, 'UP.Browser/6.2')) {
+        if ($s->contains('UP.Browser/6.2')) {
             return 'opwv_v62_generic';
         }
 
-        if (Utils::checkIfContains($userAgent, 'UP.Browser/6')) {
+        if ($s->contains('UP.Browser/6')) {
             return 'opwv_v6_generic';
         }
 
-        if (Utils::checkIfContains($userAgent, 'UP.Browser/5')) {
+        if ($s->contains('UP.Browser/5')) {
             return 'upgui_generic';
         }
 
-        if (Utils::checkIfContains($userAgent, 'UP.Browser/4')) {
+        if ($s->contains('UP.Browser/4')) {
             return 'uptext_generic';
         }
 
-        if (Utils::checkIfContains($userAgent, 'UP.Browser/3')) {
+        if ($s->contains('UP.Browser/3')) {
             return 'uptext_generic';
         }
 
         // Series 60
-        if (Utils::checkIfContains($userAgent, 'Series60')) {
+        if ($s->contains('Series60')) {
             return 'nokia_generic_series60';
         }
 
         // Access/Net Front
-        if (Utils::checkIfContainsAnyOf($userAgent, array('NetFront/3.0', 'ACS-NF/3.0'))) {
+        if ($s->containsAny(array('NetFront/3.0', 'ACS-NF/3.0'))) {
             return 'generic_netfront_ver3';
         }
 
-        if (Utils::checkIfContainsAnyOf($userAgent, array('NetFront/3.1', 'ACS-NF/3.1'))) {
+        if ($s->containsAny(array('NetFront/3.1', 'ACS-NF/3.1'))) {
             return 'generic_netfront_ver3_1';
         }
 
-        if (Utils::checkIfContainsAnyOf($userAgent, array('NetFront/3.2', 'ACS-NF/3.2'))) {
+        if ($s->containsAny(array('NetFront/3.2', 'ACS-NF/3.2'))) {
             return 'generic_netfront_ver3_2';
         }
 
-        if (Utils::checkIfContainsAnyOf($userAgent, array('NetFront/3.3', 'ACS-NF/3.3'))) {
+        if ($s->containsAny(array('NetFront/3.3', 'ACS-NF/3.3'))) {
             return 'generic_netfront_ver3_3';
         }
 
-        if (Utils::checkIfContains($userAgent, 'NetFront/3.4')) {
+        if ($s->contains('NetFront/3.4')) {
             return 'generic_netfront_ver3_4';
         }
 
-        if (Utils::checkIfContains($userAgent, 'NetFront/3.5')) {
+        if ($s->contains('NetFront/3.5')) {
             return 'generic_netfront_ver3_5';
         }
 
-        if (Utils::checkIfContains($userAgent, 'NetFront/4.0')) {
+        if ($s->contains('NetFront/4.0')) {
             return 'generic_netfront_ver4_0';
         }
 
@@ -513,16 +516,12 @@ abstract class AbstractHandler implements FilterInterface, HandlerInterface, Mat
             return WurflConstants::GENERIC_XHTML;
         }
 
-        if (Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Obigo', 'AU-MIC/2', 'AU-MIC-', 'AU-OBIGO/', 'Teleca Q03B1')
-        )
-        ) {
+        if ($s->containsAny(array('Obigo', 'AU-MIC/2', 'AU-MIC-', 'AU-OBIGO/', 'Teleca Q03B1'))) {
             return WurflConstants::GENERIC_XHTML;
         }
 
         // DoCoMo
-        if (Utils::checkIfStartsWithAnyOf($userAgent, array('DoCoMo', 'KDDI'))) {
+        if ($s->startsWith('DoCoMo') || $s->startsWith('KDDI')) {
             return 'docomo_generic_jap_ver1';
         }
 

@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Generic\SerialNumbers;
+use UaNormalizer\Generic\SerialNumbers;
 
 /**
  * Class SerialNumbersTest

@@ -79,15 +79,15 @@ class FileUtils
     public static function read($file)
     {
         if (!is_readable($file)) {
-            return;
+            return null;
         }
         $data = @file_get_contents($file);
         if ($data === false) {
-            return;
+            return null;
         }
         $value = @unserialize($data);
         if ($value === false) {
-            return;
+            return null;
         }
 
         return $value;

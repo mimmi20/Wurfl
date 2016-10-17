@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * DesktopApplicationHandler
@@ -51,15 +52,16 @@ class DesktopApplicationHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf(
-            $userAgent,
-            array('Thunderbird', 'Microsoft Outlook', 'MSOffice', 'DesktopApp ')
-        );
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAny(array('Thunderbird', 'Microsoft Outlook', 'MSOffice', 'DesktopApp '));
     }
 
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Thunderbird')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Thunderbird')) {
             $idx = strpos($userAgent, '.');
             if ($idx !== false) {
                 return $this->getDeviceIDFromRIS($userAgent, $idx + 1);
@@ -86,13 +88,15 @@ class DesktopApplicationHandler extends AbstractHandler
 
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Thunderbird')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Thunderbird')) {
             return 'mozilla_thunderbird';
-        } elseif (Utils::checkIfContains($userAgent, 'Microsoft Outlook')) {
+        } elseif ($s->contains('Microsoft Outlook')) {
             return 'ms_outlook';
-        } elseif (Utils::checkIfContains($userAgent, 'MSOffice')) {
+        } elseif ($s->contains('MSOffice')) {
             return 'ms_office';
-        } elseif (Utils::checkIfContains($userAgent, 'DesktopApp ')) {
+        } elseif ($s->contains('DesktopApp ')) {
             return 'generic_desktop_application';
         }
 

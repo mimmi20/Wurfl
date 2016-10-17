@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * DoCoMoUserAgentHandler
  *
@@ -42,7 +44,9 @@ class DoCoMoHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'DoCoMo');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('DoCoMo');
     }
 
     public function applyConclusiveMatch($userAgent)

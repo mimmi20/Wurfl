@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * SiemensUserAgentHandler
  *
@@ -42,7 +44,9 @@ class SiemensHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'SIE-');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('SIE-');
     }
 
     public function applyConclusiveMatch($userAgent)

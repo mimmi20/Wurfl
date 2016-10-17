@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * OperaHandlder
  *
@@ -52,7 +54,9 @@ class OperaMiniHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAny(array('Opera Mini', 'OperaMini', 'Opera Mobi', 'OperaMobi'));
     }
 
     /**
@@ -91,13 +95,15 @@ class OperaMiniHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
+        $s = \Stringy\create($userAgent);
+
         foreach (self::$constantIDs as $keyword => $deviceId) {
-            if (Utils::checkIfContains($userAgent, $keyword)) {
+            if ($s->contains($keyword)) {
                 return $deviceId;
             }
         }
 
-        if (Utils::checkIfContains($userAgent, 'Opera Mobi')) {
+        if ($s->contains('Opera Mobi')) {
             return 'generic_opera_mini_version4';
         }
 

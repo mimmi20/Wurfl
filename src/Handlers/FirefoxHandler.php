@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * FirefoxUserAgentHandler
  *
@@ -46,11 +48,13 @@ class FirefoxHandler extends AbstractHandler
             return false;
         }
 
-        if (Utils::checkIfContainsAnyOf($userAgent, array('Tablet', 'Sony', 'Novarra', 'Opera'))) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAny(array('Tablet', 'Sony', 'Novarra', 'Opera'))) {
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Firefox');
+        return $s->contains('Firefox');
     }
 
     /**

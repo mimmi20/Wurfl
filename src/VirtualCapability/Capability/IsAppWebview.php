@@ -15,7 +15,7 @@
 
 namespace Wurfl\VirtualCapability\Capability;
 
-use Wurfl\Handlers\Utils;
+use UaNormalizer\Helper\Utils;
 
 /**
  * Virtual capability helper
@@ -70,8 +70,10 @@ class IsAppWebview extends IsApp
      */
     protected function isAndroidChrome()
     {
+        $s = \Stringy\create($this->request->getUserAgentNormalized());
+
         return $this->device->getCapability('device_os') == "Android"
-            && Utils::checkIfContains($this->request->getUserAgentNormalized(), "Chrome")
-            && !Utils::checkIfContains($this->request->getUserAgentNormalized(), "Version");
+            && $s->contains('Chrome')
+            && !$s->contains('Version');
     }
 }

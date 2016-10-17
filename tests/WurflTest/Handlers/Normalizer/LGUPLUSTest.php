@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Specific\LG;
+use UaNormalizer\Specific\LG;
 
 /**
  * Class LGUPLUSTest
@@ -11,7 +11,7 @@ use Wurfl\Handlers\Normalizer\Specific\LG;
  */
 class LGUPLUSTest extends TestBase
 {
-    /** @var  \Wurfl\Handlers\Normalizer\Specific\LG */
+    /** @var  \UaNormalizer\Specific\LG */
     protected $normalizer;
 
     protected function setUp()

@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * SanyoUserAgentHandler
  *
@@ -42,8 +44,10 @@ class SanyoHandler extends AbstractHandler
             return false;
         }
 
+        $s = \Stringy\create($userAgent);
+
         return Utils::checkIfStartsWithAnyOf($userAgent, array('Sanyo', 'SANYO'))
-            || Utils::checkIfContains($userAgent, 'MobilePhone');
+            || $s->contains('MobilePhone');
     }
 
     /**

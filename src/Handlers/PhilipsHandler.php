@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * PhilipsUserAgentHandler
  *
@@ -42,7 +44,9 @@ class PhilipsHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWithCaseInsensitive($userAgent, 'philips');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('philips', false);
     }
 
     public function applyConclusiveMatch($userAgent)

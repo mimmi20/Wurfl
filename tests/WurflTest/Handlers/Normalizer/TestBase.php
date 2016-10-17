@@ -9,7 +9,7 @@ namespace WurflTest\Handlers\Normalizer;
  */
 class TestBase extends \PHPUnit_Framework_TestCase
 {
-    /** @var  \Wurfl\Handlers\Normalizer\NormalizerInterface */
+    /** @var  \UaNormalizer\NormalizerInterface */
     protected $normalizer;
 
     public function assertNormalizeEqualsExpected($userAgent, $expected)

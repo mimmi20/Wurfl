@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * FirefoxOSUserAgentHandler
@@ -67,8 +68,10 @@ class FirefoxOSHandler extends AbstractHandler
 
     public function canHandle($userAgent)
     {
-        return (Utils::checkIfContains($userAgent, 'Firefox/')
-            && Utils::checkIfContainsAnyOf($userAgent, array('Mobile', 'Tablet'))
+        $s = \Stringy\create($userAgent);
+
+        return ($s->contains('Firefox/')
+            && $s->containsAny(array('Mobile', 'Tablet'))
         );
     }
 
@@ -116,6 +119,8 @@ class FirefoxOSHandler extends AbstractHandler
 
     /**
      * @param string $userAgent
+     *
+     * @return string
      */
     public static function getFirefoxOSVersion($userAgent)
     {

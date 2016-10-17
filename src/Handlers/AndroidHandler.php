@@ -16,6 +16,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * AndroidUserAgentHandler
@@ -86,8 +87,10 @@ class AndroidHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return !Utils::checkIfContainsAnyOf($userAgent, array('like Android', 'Symbian'))
-            && Utils::checkIfContains($userAgent, 'Android');
+        $s = \Stringy\create($userAgent);
+
+        return !$s->containsAny(array('like Android', 'Symbian'))
+            && $s->contains('Android');
     }
 
     /**
@@ -125,7 +128,9 @@ class AndroidHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Froyo')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Froyo')) {
             return 'generic_android_ver2_2';
         }
 
@@ -141,11 +146,7 @@ class AndroidHandler extends AbstractHandler
             $deviceID = 'generic_android_ver4';
         }
 
-        if (($androidVersion < 3.0 || $androidVersion >= 4.0) && Utils::checkIfContains(
-            $userAgent,
-            'Safari'
-        ) && !Utils::checkIfContains($userAgent, 'Mobile')
-        ) {
+        if (($androidVersion < 3.0 || $androidVersion >= 4.0) && $s->contains('Safari') && !$s->contains('Mobile')) {
             // This is probably a tablet (Android 3.x is always a tablet, so it doesn't have a '_tablet' ID)
             if (in_array($deviceID . '_tablet', self::$constantIDs)) {
                 return $deviceID . '_tablet';

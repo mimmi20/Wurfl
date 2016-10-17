@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * OperaMobiOrTabletOnAndroidUserAgentHandler
@@ -66,8 +67,9 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfContains($userAgent, 'Android')
-            && Utils::checkIfContainsAnyOf($userAgent, array('Opera Mobi', 'Opera Tablet'))
+        $s = \Stringy\create($userAgent);
+
+        return ($s->contains('Android') && $s->containsAny(array('Opera Mobi', 'Opera Tablet'))
         );
     }
 
@@ -94,8 +96,10 @@ class OperaMobiOrTabletOnAndroidHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        $isOperaMobi   = Utils::checkIfContains($userAgent, 'Opera Mobi');
-        $isOperaTablet = Utils::checkIfContains($userAgent, 'Opera Tablet');
+        $s = \Stringy\create($userAgent);
+
+        $isOperaMobi   = $s->contains('Opera Mobi');
+        $isOperaTablet = $s->contains('Opera Tablet');
 
         if ($isOperaMobi || $isOperaTablet) {
             $androidVersion       = AndroidHandler::getAndroidVersion($userAgent);

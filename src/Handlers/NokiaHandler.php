@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * NokiaUserAgentHandler
@@ -50,8 +51,10 @@ class NokiaHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Nokia')
-            && !Utils::checkIfContainsAnyOf($userAgent, array('Android', 'iPhone'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Nokia')
+            && !$s->containsAny(array('Android', 'iPhone'));
     }
 
     /**
@@ -77,15 +80,17 @@ class NokiaHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Series60')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Series60')) {
             return 'nokia_generic_series60';
         }
 
-        if (Utils::checkIfContains($userAgent, 'Series80')) {
+        if ($s->contains('Series80')) {
             return 'nokia_generic_series80';
         }
 
-        if (Utils::checkIfContains($userAgent, 'MeeGo')) {
+        if ($s->contains('MeeGo')) {
             return 'nokia_generic_meego';
         }
 

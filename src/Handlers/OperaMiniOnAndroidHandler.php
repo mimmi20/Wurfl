@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * OperaMiniOnAndroidUserAgentHandler
@@ -50,7 +51,9 @@ class OperaMiniOnAndroidHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAll($userAgent, array('Android', 'Opera Mini'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAll(array('Android', 'Opera Mini'));
     }
 
     /**
@@ -60,7 +63,9 @@ class OperaMiniOnAndroidHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, ' Build/')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains(' Build/')) {
             return $this->getDeviceIDFromRIS($userAgent, Utils::indexOfOrLength($userAgent, ' Build/'));
         }
         $prefixes = array(
@@ -69,7 +74,7 @@ class OperaMiniOnAndroidHandler extends AbstractHandler
             'Opera/9.80 (Android; Opera Mini/5.1' => 'uabait_opera_mini_android_v51',
         );
         foreach ($prefixes as $prefix => $defaultID) {
-            if (Utils::checkIfStartsWith($userAgent, $prefix)) {
+            if ($s->startsWith($prefix)) {
                 // If RIS returns a non-generic match, return it, else, return the default
                 $tolerance = strlen($prefix);
                 $deviceID  = $this->getDeviceIDFromRIS($userAgent, $tolerance);

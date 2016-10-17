@@ -3,7 +3,7 @@
 namespace WurflTest\Handlers;
 
 use Wurfl\Handlers\MotorolaHandler;
-use Wurfl\Handlers\Normalizer\NullNormalizer;
+use UaNormalizer\NullNormalizer;
 
 /**
  * Class MotorolaHandlerTest

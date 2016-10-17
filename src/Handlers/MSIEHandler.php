@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * MSIEAgentHandler
@@ -59,22 +60,24 @@ class MSIEHandler extends AbstractHandler
             return false;
         }
 
-        if (Utils::checkIfStartsWith($userAgent, 'Mozilla') === false) {
+        $s = \Stringy\create($userAgent);
+
+        if (!$s->startsWith('Mozilla')) {
             return false;
         }
 
-        if (Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'armv', 'MOTO', 'BREW'))) {
+        if ($s->containsAny(array('Opera', 'armv', 'MOTO', 'BREW'))) {
             return false;
         }
 
         // Edge 12 signature
-        $hasEdgeMode = Utils::checkIfContains($userAgent, ' Edge/');
+        $hasEdgeMode = $s->contains(' Edge/');
 
         // IE 11 signature
-        $hasTridentRv = (Utils::checkIfContains($userAgent, 'Trident') && Utils::checkIfContains($userAgent, 'rv:'));
+        $hasTridentRv = $s->containsAll(array('Trident', 'rv:'));
 
         // IE < 11 signature
-        $hasMsie = Utils::checkIfContains($userAgent, 'MSIE');
+        $hasMsie = $s->contains('MSIE');
 
         return ($hasMsie || $hasTridentRv || $hasEdgeMode);
     }
@@ -116,8 +119,9 @@ class MSIEHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContainsAnyOf(
-            $userAgent,
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAny(
             array(
                 'SLCC1',
                 'Media Center PC',

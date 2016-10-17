@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * KindleUserAgentHandler
@@ -49,13 +50,15 @@ class KindleHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'Android')
-            && Utils::checkIfContainsAnyOf($userAgent, array('/Kindle', 'Silk'))
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('Android')
+            && $s->containsAny(array('/Kindle', 'Silk'))
         ) {
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('Kindle', 'Silk'));
+        return $s->containsAny(array('/Kindle', 'Silk'));
     }
 
     /**
@@ -116,8 +119,10 @@ class KindleHandler extends AbstractHandler
             'Silk'        => 'amazon_kindle_fire_ver1',
         );
 
+        $s = \Stringy\create($userAgent);
+
         foreach ($map as $keyword => $id) {
-            if (Utils::checkIfContains($userAgent, $keyword)) {
+            if ($s->contains($keyword)) {
                 return $id;
             }
         }

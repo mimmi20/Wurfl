@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Specific\Chrome;
+use UaNormalizer\Specific\Chrome;
 
 /**
  * Class ChromeTest

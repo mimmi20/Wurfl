@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Generic\NovarraGoogleTranslator;
+use UaNormalizer\Generic\NovarraGoogleTranslator;
 
 /**
  * Class NovarraGoogleTranslatorTest

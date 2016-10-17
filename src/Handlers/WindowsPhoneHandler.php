@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * WindowsPhoneUserAgentHandler
@@ -64,14 +65,16 @@ class WindowsPhoneHandler extends AbstractHandler
             return false;
         }
 
+        $s = \Stringy\create($userAgent);
+
         // Capturing WP desktop mode UAs but not Windows RT UAs
-        if (Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
-            || Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))
+        if ($s->containsAny(array('WPDesktop', 'ZuneWP7'))
+            || $s->containsAll(array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))
         ) {
             return true;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('Windows Phone', 'WindowsPhone', 'NativeHost'));
+        return $s->containsAny(array('Windows Phone', 'WindowsPhone', 'NativeHost'));
     }
 
     /**
@@ -86,7 +89,9 @@ class WindowsPhoneHandler extends AbstractHandler
             return $this->getDeviceIDFromRIS($userAgent, $tolerance);
         }
 
-        if (Utils::checkIfContains($userAgent, 'NativeHost')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('NativeHost')) {
             return 'generic_ms_phone_os7';
         }
 
@@ -100,18 +105,20 @@ class WindowsPhoneHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContainsAnyOf($userAgent, array('WPDesktop', 'ZuneWP7'))
-            || Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAny(array('WPDesktop', 'ZuneWP7'))
+            || $s->containsAll(array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))
         ) {
-            if (Utils::checkIfContainsAll($userAgent, array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
+            if ($s->containsAll(array('Mozilla/5.0 (Windows NT ', ' ARM;', ' Edge/'))) {
                 return 'generic_ms_phone_os10_desktopmode';
             }
 
-            if (Utils::checkIfContains($userAgent, 'WPDesktop')) {
+            if ($s->contains('WPDesktop')) {
                 return 'generic_ms_phone_os8_desktopmode';
             }
 
-            if (Utils::checkIfContains($userAgent, 'Trident/5.0')) {
+            if ($s->contains('Trident/5.0')) {
                 return 'generic_ms_phone_os7_5_desktopmode';
             }
 

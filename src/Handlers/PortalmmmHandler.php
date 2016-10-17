@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * PortalmmmUserAgentHandler
@@ -44,7 +45,9 @@ class PortalmmmHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'portalmmm');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('portalmmm');
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Generic\BlackBerry;
+use UaNormalizer\Generic\BlackBerry;
 
 /**
  * Class BlackBerryTest

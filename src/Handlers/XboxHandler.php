@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * XboxUserAgentHandler
@@ -46,7 +47,9 @@ class XboxHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfContains($userAgent, 'Xbox');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Xbox');
     }
 
     /**
@@ -67,15 +70,13 @@ class XboxHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContains($userAgent, 'MSIE 10.0') && Utils::checkIfContains(
-            $userAgent,
-            'Xbox One'
-        )
-        ) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->contains('MSIE 10.0') && $s->contains('Xbox One')) {
             return 'microsoft_xboxone_ver1';
         }
 
-        if (Utils::checkIfContains($userAgent, 'MSIE 10.0')) {
+        if ($s->contains('MSIE 10.0')) {
             return 'microsoft_xbox360_ver1_subie10';
         }
 

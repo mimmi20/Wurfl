@@ -2,9 +2,9 @@
 
 namespace WurflTest\Request;
 
-use Wurfl\Handlers\Normalizer\Generic\BabelFish;
-use Wurfl\Handlers\Normalizer\Specific\Chrome;
-use Wurfl\Handlers\Normalizer\UserAgentNormalizer;
+use UaNormalizer\Generic\BabelFish;
+use UaNormalizer\Specific\Chrome;
+use UaNormalizer\UserAgentNormalizer;
 
 /**
  * Class UserAgentNormalizerTest

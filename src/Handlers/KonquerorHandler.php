@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * KonquerorHandler
  *
@@ -42,7 +44,9 @@ class KonquerorHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'Konqueror');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('Konqueror');
     }
 
     public function applyConclusiveMatch($userAgent)

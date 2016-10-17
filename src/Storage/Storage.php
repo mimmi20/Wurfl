@@ -18,7 +18,7 @@
 
 namespace Wurfl\Storage;
 
-use WurflCache\Adapter\AdapterInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Base Storage Provider
@@ -49,16 +49,16 @@ class Storage
     const WURFL_LOCKED = 'WURFL_LOCKED';
 
     /**
-     * @var AdapterInterface
+     * @var \Psr\Cache\CacheItemPoolInterface
      */
     private $adapter;
 
     /**
      * Creates a new WURFL_Storage_Base
      *
-     * @param \WurflCache\Adapter\AdapterInterface $adapter
+     * @param \Psr\Cache\CacheItemPoolInterface $adapter
      */
-    public function __construct(AdapterInterface $adapter)
+    public function __construct(CacheItemPoolInterface $adapter)
     {
         $this->adapter = $adapter;
     }
@@ -167,7 +167,7 @@ class Storage
     }
 
     /**
-     * @return \WurflCache\Adapter\AdapterInterface
+     * @return \Psr\Cache\CacheItemPoolInterface
      */
     public function getAdapter()
     {

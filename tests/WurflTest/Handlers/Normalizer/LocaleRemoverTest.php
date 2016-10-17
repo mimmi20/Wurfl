@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Generic\LocaleRemover;
+use UaNormalizer\Generic\LocaleRemover;
 
 /**
  * Class LocaleRemoverTest

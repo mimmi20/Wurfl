@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * WindowsRTUserAgentHandler
@@ -44,7 +45,9 @@ class WindowsRTHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfContainsAll($userAgent, array('Windows NT ', ' ARM;', 'Trident/'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAll(array('Windows NT ', ' ARM;', 'Trident/'));
     }
 
     /**
@@ -61,7 +64,9 @@ class WindowsRTHandler extends AbstractHandler
         //Mozilla/5.0 (Windows NT 6.3; ARM; Trident/7.0; Touch; rv:11.0) like Gecko
         //																    	  ^ RIS Tolerance
 
-        if (Utils::checkIfContainsAll($userAgent, array('like Gecko'))) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAll(array('like Gecko'))) {
             //Use this logic for MSIE 11 and above
             $search = ' Gecko';
             $idx    = strpos($userAgent, $search);
@@ -88,10 +93,12 @@ class WindowsRTHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        if (Utils::checkIfContainsAll($userAgent, array('like Gecko'))) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->containsAll(array('like Gecko'))) {
             return 'windows_8_rt_ver1_subos81';
-        } else {
-            return 'generic_windows_8_rt';
         }
+
+        return 'generic_windows_8_rt';
     }
 }

@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * KDDIUserAgentHandler
  *
@@ -46,7 +48,9 @@ class KDDIHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'KDDI-');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('KDDI-');
     }
 
     /**
@@ -56,7 +60,9 @@ class KDDIHandler extends AbstractHandler
      */
     public function applyConclusiveMatch($userAgent)
     {
-        if (Utils::checkIfStartsWith($userAgent, 'KDDI/')) {
+        $s = \Stringy\create($userAgent);
+
+        if ($s->startsWith('KDDI/')) {
             $tolerance = Utils::secondSlash($userAgent);
         } else {
             $tolerance = Utils::firstSlash($userAgent);

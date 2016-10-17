@@ -24,6 +24,7 @@ use Wurfl\Configuration\FileConfig;
 use Wurfl\Handlers\Chain\UserAgentHandlerChainFactory;
 use Wurfl\Request\GenericRequest;
 use Wurfl\Request\GenericRequestFactory;
+use UaNormalizer\Helper\Utils;
 
 /**
  * WURFL Manager Class - serves as the core class that the developer uses to query
@@ -122,8 +123,8 @@ class Manager
         }
 
         if (is_string($config)) {
-        $config = new FileConfig($config);
-    }
+            $config = new FileConfig($config);
+        }
 
         if (! $config instanceof Config) {
             throw new \InvalidArgumentException(
@@ -384,7 +385,7 @@ class Manager
      */
     private function getDeviceForRequest(Request\GenericRequest $request)
     {
-        Handlers\Utils::reset();
+        Utils::reset();
 
         $deviceId = $this->deviceIdForRequest($request);
 
@@ -529,7 +530,7 @@ class Manager
             $request->setUserAgentNormalized($genericNormalizer->normalize($userAgent));
 
             if ($this->getWurflConfig()->isHighPerformance()
-                && Handlers\Utils::isDesktopBrowserHeavyDutyAnalysis($request->getUserAgentNormalized())
+                && Utils::isDesktopBrowserHeavyDutyAnalysis($request->getUserAgentNormalized())
             ) {
                 // This device has been identified as a web browser programatically,
                 // so no call to WURFL is necessary

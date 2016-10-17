@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * UcwebU2UserAgentHandler
@@ -48,7 +49,9 @@ class UcwebU2Handler extends AbstractHandler
             return false;
         }
 
-        return (Utils::checkIfStartsWith($userAgent, 'UCWEB') && Utils::checkIfContains($userAgent, 'UCBrowser'));
+        $s = \Stringy\create($userAgent);
+
+        return ($s->startsWith('UCWEB') && $s->contains('UCBrowser'));
     }
 
     /**

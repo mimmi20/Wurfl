@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * OperaHandler
  *
@@ -68,7 +70,9 @@ class OperaHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('Opera', 'OPR/'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAny(array('Opera', 'OPR/'));
     }
 
     /**

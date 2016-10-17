@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * PanasonicUserAgentHandler
  *
@@ -42,7 +44,9 @@ class PanasonicHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Panasonic');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('Panasonic');
     }
 
     public function applyConclusiveMatch($userAgent)

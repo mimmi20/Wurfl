@@ -15,6 +15,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * CatchAllUserAgentHandler
  *

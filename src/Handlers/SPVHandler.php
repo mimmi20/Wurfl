@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * SPVUserAgentHandler
  *
@@ -42,7 +44,9 @@ class SPVHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContains($userAgent, 'SPV');
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('SPV');
     }
 
     /**

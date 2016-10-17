@@ -2,7 +2,7 @@
 
 namespace WurflTest\Handlers\Normalizer;
 
-use Wurfl\Handlers\Normalizer\Specific\MSIE;
+use UaNormalizer\Specific\MSIE;
 
 /**
  * Class MSIETest

@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * WebOSUserAgentHandler
@@ -49,7 +50,9 @@ class WebOSHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfContainsAnyOf($userAgent, array('webOS', 'hpwOS'));
+        $s = \Stringy\create($userAgent);
+
+        return $s->containsAny(array('webOS', 'hpwOS'));
     }
 
     /**
@@ -77,7 +80,9 @@ class WebOSHandler extends AbstractHandler
      */
     public function applyRecoveryMatch($userAgent)
     {
-        return Utils::checkIfContains($userAgent, 'hpwOS/3') ? 'hp_tablet_webos_generic' : 'hp_webos_generic';
+        $s = \Stringy\create($userAgent);
+
+        return $s->contains('hpwOS/3') ? 'hp_tablet_webos_generic' : 'hp_webos_generic';
     }
 
     /**

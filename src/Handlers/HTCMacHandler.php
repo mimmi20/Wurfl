@@ -19,6 +19,7 @@
 namespace Wurfl\Handlers;
 
 use Wurfl\WurflConstants;
+use UaNormalizer\Helper\Utils;
 
 /**
  * HTCMacUserAgentHandler
@@ -44,8 +45,10 @@ class HTCMacHandler extends AbstractHandler
      */
     public function canHandle($userAgent)
     {
-        return Utils::checkIfStartsWith($userAgent, 'Mozilla/5.0 (Macintosh')
-            && Utils::checkIfContains($userAgent, 'HTC');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('Mozilla/5.0 (Macintosh')
+            && $s->contains('HTC');
     }
 
     /**

@@ -142,7 +142,7 @@ class ModelDevice implements ModelDeviceInterface
             return $this->capabilities[$capabilityName];
         }
 
-        return;
+        return null;
     }
 
     /**

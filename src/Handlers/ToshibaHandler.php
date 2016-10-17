@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * ToshibaUserAgentHandler
  *
@@ -42,7 +44,9 @@ class ToshibaHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Toshiba');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('Toshiba');
     }
 
     public function applyConclusiveMatch($userAgent)

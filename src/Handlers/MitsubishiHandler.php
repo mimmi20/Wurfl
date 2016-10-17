@@ -18,6 +18,8 @@
 
 namespace Wurfl\Handlers;
 
+use UaNormalizer\Helper\Utils;
+
 /**
  * MitsubishiUserAgentHandler
  *
@@ -42,7 +44,9 @@ class MitsubishiHandler extends AbstractHandler
             return false;
         }
 
-        return Utils::checkIfStartsWith($userAgent, 'Mitsu');
+        $s = \Stringy\create($userAgent);
+
+        return $s->startsWith('Mitsu');
     }
 
     /**
