@@ -19,6 +19,9 @@
 namespace Wurfl\Handlers\Chain;
 
 use Psr\Log\LoggerInterface;
+use UaNormalizer\Generic\EncryptionRemover;
+use UaNormalizer\Generic\Linux;
+use UaNormalizer\Generic\Mozilla;
 use Wurfl\Handlers\AlcatelHandler;
 use Wurfl\Handlers\AndroidHandler;
 use Wurfl\Handlers\AppleHandler;
@@ -377,12 +380,15 @@ class UserAgentHandlerChainFactory
             array(
                 new UCWEB(),
                 new UPLink(),
-                new SerialNumbers(),
+                new Mozilla(),
+                new Linux(),
                 new LocaleRemover(),
+                new EncryptionRemover(),
+                new TransferEncoding(),
+                new SerialNumbers(),
                 new CFNetwork(),
                 new BlackBerry(),
                 new GenericAndroid(),
-                new TransferEncoding(),
             )
         );
     }
