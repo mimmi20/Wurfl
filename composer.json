@@ -16,10 +16,10 @@
     "php": ">=5.3.3",
     "psr/cache": "^1.0",
     "psr/log": "^1.0",
-    "mimmi20/wurfl-generic-request": "dev-update-1.8",
-    "mimmi20/wurfl-constants": "dev-update-1.8",
+    "mimmi20/wurfl-generic-request": "^1.8",
+    "mimmi20/wurfl-constants": "1.7.1.1",
     "hassankhan/config": "^0.10",
-    "mimmi20/ua-normalizer": "dev-master",
+    "mimmi20/ua-normalizer": "^1.0",
     "danielstjules/stringy": "^2.3"
   },
   "require-dev": {
